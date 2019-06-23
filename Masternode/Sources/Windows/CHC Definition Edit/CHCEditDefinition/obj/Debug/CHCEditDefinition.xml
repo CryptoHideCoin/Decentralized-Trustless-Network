@@ -1,0 +1,66 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CHCEditDefinition
+</name>
+</assembly>
+<members>
+<member name="T:CHCEditDefinition.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:CHCEditDefinition.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:CHCEditDefinition.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="M:CHCEditDefinition.frmMain.ManageCommandLine">
+ <summary>
+ This method provide to manage a command line
+ </summary>
+</member>
+<member name="M:CHCEditDefinition.Xellinter.Utilities.CommandLineParameters.AddNewToken(System.String,System.String)">
+ <summary>
+ This method provides to add a new token into list
+ </summary>
+ <param name="CommandToken"></param>
+ <param name="CommandValue"></param>
+</member>
+<member name="M:CHCEditDefinition.Xellinter.Utilities.CommandLineParameters.Exist(System.String)">
+ <summary>
+ This method provides to check if exist an token into command line
+ </summary>
+ <param name="CommandToken"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCEditDefinition.Xellinter.Utilities.CommandLineParameters.GetValue(System.String)">
+ <summary>
+ This method provides to return a value relative a CommandToken
+ </summary>
+ <param name="CommandToken"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCEditDefinition.Xellinter.Utilities.CommandLineParameters.Decode(System.String[])">
+ <summary>
+ This method provides to decode a command line
+ </summary>
+ <param name="CommandLine"></param>
+</member>
+<member name="M:CHCEditDefinition.Xellinter.Utilities.CommandLineParameters.fnComposeCommand(System.String,System.String)">
+ <summary>
+ This method provides to build an a command line
+ </summary>
+ <param name="strCommand"></param>
+ <param name="strDescription"></param>
+ <returns></returns>
+</member>
+</members>
+</doc>
