@@ -1,6 +1,6 @@
 # Crypto Hide Coin Decentralized Trustless Network
 
-Mastercoin side
--------------------------------------------------------------------------
+Masternode side
+-
 
-This directory contain 
+This directory contain all executable file to run a masternode of Crypto Hide Coin.
