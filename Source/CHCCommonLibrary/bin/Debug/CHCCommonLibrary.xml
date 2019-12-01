@@ -22,6 +22,18 @@ CHCCommonLibrary
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="M:CHCCommonLibrary.CHCEngines.Communication.ProxyWS`1.getData">
+ <summary>
+ Questo metodo si occupa di effettuare il download dei dati 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.CHCEngines.Communication.ProxyWS`1.sendData(System.String)">
+ <summary>
+ Questo metodo si occupa di inviare dei dati all' URL
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:CHCCommonLibrary.CHCEngines.Miscellaneous.CommandLineParameters.addNewToken(System.String,System.String)">
  <summary>
  This method provides to add a new token into list

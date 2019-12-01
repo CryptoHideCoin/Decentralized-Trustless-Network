@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContractOfValueRequestModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <type>coin</type>
+  <name>Bitcoin</name>
+  <shortName>BTC</shortName>
+  <symbol>B</symbol>
+  <burnable>false</burnable>
+  <mintable>false</mintable>
+  <limitless>false</limitless>
+  <numberOfDecimal>8</numberOfDecimal>
+  <preminedNumber>0.0</preminedNumber>
+  <total>0.0</total>
+  <isUsed>false</isUsed>
+  <keywords />
+  <configurationName />
+</ContractOfValueRequestModel>

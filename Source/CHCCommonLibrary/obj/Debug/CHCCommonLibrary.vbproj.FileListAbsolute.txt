@@ -1,12 +1,12 @@
-E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\bin\Debug\CHCCommonLibrary.dll
-E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\bin\Debug\CHCCommonLibrary.pdb
-E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\bin\Debug\CHCCommonLibrary.xml
+E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\obj\Debug\CHCCommonLibrary.pdb
 E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\obj\Debug\CHCCommonLibrary.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\obj\Debug\CHCCommonLibrary.Resources.resources
 E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\obj\Debug\CHCCommonLibrary.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\obj\Debug\CHCCommonLibrary.dll
 E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\obj\Debug\CHCCommonLibrary.xml
-E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\obj\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\bin\Debug\CHCCommonLibrary.xml
 E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\bin\Debug\Newtonsoft.Json.dll
 E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\bin\Debug\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\CHCCommonLibrary\obj\Debug\CHCCommonLibrary.vbproj.CopyComplete

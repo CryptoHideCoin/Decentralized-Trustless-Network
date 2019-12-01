@@ -1,15 +1,25 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports System.ComponentModel
+Imports System.Web
+Imports CHCCommonLibrary.CHCEngines.Base.CHCStringExtensions
+
 
 
 Public Class entityEditor
 
 
-    Private _Data As CHCElementDefinitionEngineLibrary.Models.EntityDefinitionModel
-    Private _Engine As New CHCCommonLibrary.CHCEngines.Common.BaseFileDB(Of CHCElementDefinitionEngineLibrary.Models.EntityDefinitionModel)
-    Private _NoSave As Boolean = False
+    Private _Data As CHCContractOfValueEngineLibrary.Models.ContractOfValueModel
+    Private _Engine As New CHCCommonLibrary.CHCEngines.Common.BaseFileDB(Of CHCContractOfValueEngineLibrary.Models.ContractOfValueModel)
+    Private _NoSave As Boolean = True
     Private _CommandLineEngine As New CHCCommonLibrary.CHCEngines.Miscellaneous.CommandLineParameters
+    Private _NoChangeTab As Boolean = True
+    Private _OriginalName As String = ""
+
+    Private _InsertMode As Boolean = False
+    Private _NoRecourse As Boolean = False
+
 
 
 
@@ -52,17 +62,57 @@ Public Class entityEditor
 
 
 
+    Private Function readRemoteData() As Boolean
+
+        Try
+
+            Dim pws As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of CHCContractOfValueEngineLibrary.Models.ContractOfValueModel)
+
+            pws.url = urlValue.Text & "/?name=" & HttpUtility.UrlEncode(completePathValue.Text)
+
+            If pws.getData() Then
+
+                _Data = pws.data
+
+                _OriginalName = completePathValue.Text
+
+                compileAllData()
+
+            Else
+
+                MessageBox.Show("No connection available or wrong address", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            End If
+
+        Catch ex As Exception
+
+        End Try
+
+        Return False
+
+    End Function
+
+
+
     Private Sub completePathValue_TextChanged(sender As Object, e As EventArgs) Handles completePathValue.TextChanged
 
         Try
 
-            If Not readData() Then
+            If radioButtonLocal.Checked Then
 
-                _Data = New CHCElementDefinitionEngineLibrary.Models.EntityDefinitionModel
+                If Not readData() Then
+
+                    _Data = New CHCContractOfValueEngineLibrary.Models.ContractOfValueModel
+
+                End If
+
+            Else
+
+                _Data = New CHCContractOfValueEngineLibrary.Models.ContractOfValueModel
 
             End If
 
-            CompileAllData()
+            compileAllData()
 
         Catch ex As Exception
 
@@ -103,6 +153,100 @@ Public Class entityEditor
     End Sub
 
 
+    Private Sub setUpdateMode()
+
+        If radioButtonRemote.Checked Then
+
+            Dim currentName As String = completePathValue.Text.ToString()
+
+            completePathValue.DropDownStyle = ComboBoxStyle.DropDownList
+
+            connectToRemote()
+
+            _InsertMode = False
+
+            If (completePathValue.Items.Count > 0) Then
+
+                For Each item In completePathValue.Items
+
+                    If (item = currentName) Then
+
+                        completePathValue.SelectedItem = item
+
+                    End If
+
+                Next
+
+            End If
+
+            addNewButton.Enabled = True
+            renameButton.Enabled = True
+            deleteButton.Enabled = True
+
+        End If
+
+    End Sub
+
+
+
+    Private Sub updateDataRemote(Optional ByVal forceNewName As String = "")
+
+        Try
+
+            Dim pws As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of CHCContractOfValueEngineLibrary.Models.ContractOfValueRequestModel)
+
+            pws.url = urlValue.Text
+
+            pws.data = _Data.copyIntoBaseModel()
+            pws.data.symbol.codeSymbol()
+
+            If (forceNewName.Length = 0) Then
+
+                pws.data.configurationName = completePathValue.Text.ToString()
+
+            Else
+
+                pws.data.configurationName = forceNewName
+
+            End If
+
+            If _InsertMode Then
+
+                If pws.sendData("POST") Then
+
+                    MessageBox.Show("Data insert successful", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    setUpdateMode()
+
+                Else
+
+                    MessageBox.Show("No connection available or wrong address", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                End If
+
+            Else
+
+                pws.url = urlValue.Text & "/?name=" & _OriginalName
+
+                If pws.sendData("PUT") Then
+
+                    MessageBox.Show("Data update successful", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                Else
+
+                    MessageBox.Show("No connection available or wrong address", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                End If
+
+            End If
+
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
+
 
     Private Function updateData() As Boolean
 
@@ -118,11 +262,21 @@ Public Class entityEditor
 
             If (identityValue.Text.ToString.Length = 64) Then
 
-                _Engine.fileName = completePathValue.Text.ToString()
+                If radioButtonLocal.Checked Then
 
-                If _Engine.save() Then
+                    _Engine.fileName = completePathValue.Text.ToString()
 
-                    Return True
+                    If _Engine.save() Then
+
+                        MessageBox.Show("Data insert successful", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        Return True
+
+                    End If
+
+                Else
+
+                    updateDataRemote()
 
                 End If
 
@@ -140,21 +294,21 @@ Public Class entityEditor
 
 
 
-    Private Sub typeValue_SelectedIndexChanged(sender As Object, e As EventArgs) Handles typeValue.SelectedIndexChanged
+    Private Sub typeValue_SelectedIndexChanged(sender As Object, e As EventArgs)
 
         If _NoSave Then Return
 
         If (typeValue.SelectedIndex = -1) Then
 
-            _Data.type = CHCElementDefinitionEngineLibrary.Models.EntityDefinitionModel.EnumEntityType.notDefined
+            _Data.type = CHCContractOfValueEngineLibrary.Models.ContractOfValueModel.EnumEntityType.notDefined
 
         ElseIf (typeValue.SelectedIndex = 0) Then
 
-            _Data.type = CHCElementDefinitionEngineLibrary.Models.EntityDefinitionModel.EnumEntityType.coin
+            _Data.type = CHCContractOfValueEngineLibrary.Models.ContractOfValueModel.EnumEntityType.coin
 
         Else
 
-            _Data.type = CHCElementDefinitionEngineLibrary.Models.EntityDefinitionModel.EnumEntityType.token
+            _Data.type = CHCContractOfValueEngineLibrary.Models.ContractOfValueModel.EnumEntityType.token
 
         End If
 
@@ -164,11 +318,11 @@ Public Class entityEditor
 
 
 
-    Private Sub typeValue_Leave(sender As Object, e As EventArgs) Handles typeValue.Leave
+    'Private Sub typeValue_Leave(sender As Object, e As EventArgs)
 
-        updateData()
+    '    updateData()
 
-    End Sub
+    'End Sub
 
 
 
@@ -180,11 +334,11 @@ Public Class entityEditor
 
             identityValue.Text = _Data.getHash()
 
-            If (_Data.type = CHCElementDefinitionEngineLibrary.Models.EntityDefinitionModel.EnumEntityType.coin) Then
+            If (_Data.type = CHCContractOfValueEngineLibrary.Models.ContractOfValueModel.EnumEntityType.coin) Then
 
                 typeValue.SelectedIndex = 0
 
-            ElseIf (_Data.type = CHCElementDefinitionEngineLibrary.Models.EntityDefinitionModel.EnumEntityType.token) Then
+            ElseIf (_Data.type = CHCContractOfValueEngineLibrary.Models.ContractOfValueModel.EnumEntityType.token) Then
 
                 typeValue.SelectedIndex = 1
 
@@ -200,8 +354,8 @@ Public Class entityEditor
 
             burnableValue.Checked = _Data.burnable
             noTotalValue.Checked = _Data.limitless
-            preminedValue.Text = _Data.preminedNumber
-            totalCoinValue.Text = _Data.total
+            preminedValue.Text = CLng(_Data.preminedNumber)
+            totalCoinValue.Text = CLng(_Data.total)
             numOfDecimalValue.Text = _Data.numberOfDecimal
             symbolLabel1.Text = _Data.symbol
             lblSymbol2.Text = _Data.symbol
@@ -238,11 +392,13 @@ Public Class entityEditor
 
     End Sub
 
-    Private Sub coinNameValue_Leave(sender As Object, e As EventArgs) Handles coinNameValue.Leave
 
-        updateData()
 
-    End Sub
+    'Private Sub coinNameValue_Leave(sender As Object, e As EventArgs)
+
+    '    updateData()
+
+    'End Sub
 
 
 
@@ -255,11 +411,13 @@ Public Class entityEditor
 
     End Sub
 
-    Private Sub shortNameValue_Leave(sender As Object, e As EventArgs) Handles shortNameValue.Leave
 
-        updateData()
 
-    End Sub
+    'Private Sub shortNameValue_Leave(sender As Object, e As EventArgs)
+
+    '    updateData()
+
+    'End Sub
 
 
 
@@ -272,15 +430,17 @@ Public Class entityEditor
 
     End Sub
 
-    Private Sub symbolValue_Leave(sender As Object, e As EventArgs) Handles symbolValue.Leave
-
-        updateData()
-
-    End Sub
 
 
+    'Private Sub symbolValue_Leave(sender As Object, e As EventArgs)
 
-    Private Sub burnableValue_CheckedChanged(sender As Object, e As EventArgs) Handles burnableValue.CheckedChanged
+    '    updateData()
+
+    'End Sub
+
+
+
+    Private Sub burnableValue_CheckedChanged(sender As Object, e As EventArgs) Handles burnableValue.TextChanged
 
         If _NoSave Then Return
 
@@ -289,15 +449,17 @@ Public Class entityEditor
 
     End Sub
 
-    Private Sub burnableValue_Leave(sender As Object, e As EventArgs) Handles burnableValue.Leave
-
-        updateData()
-
-    End Sub
 
 
+    'Private Sub burnableValue_Leave(sender As Object, e As EventArgs)
 
-    Private Sub mintableValue_CheckedChanged(sender As Object, e As EventArgs) Handles mintable.CheckedChanged
+    '    updateData()
+
+    'End Sub
+
+
+
+    Private Sub mintableValue_CheckedChanged(sender As Object, e As EventArgs) Handles mintable.TextChanged
 
         If _NoSave Then Return
 
@@ -306,15 +468,17 @@ Public Class entityEditor
 
     End Sub
 
-    Private Sub mintableValue_Leave(sender As Object, e As EventArgs) Handles mintable.Leave
-
-        updateData()
-
-    End Sub
 
 
+    'Private Sub mintableValue_Leave(sender As Object, e As EventArgs)
 
-    Private Sub noTotalValue_CheckedChanged(sender As Object, e As EventArgs) Handles noTotalValue.CheckedChanged
+    '    updateData()
+
+    'End Sub
+
+
+
+    Private Sub noTotalValue_CheckedChanged(sender As Object, e As EventArgs) Handles noTotalValue.TextChanged
 
         If _NoSave Then Return
 
@@ -342,11 +506,13 @@ Public Class entityEditor
 
     End Sub
 
-    Private Sub noTotalValue_Leave(sender As Object, e As EventArgs) Handles noTotalValue.Leave
 
-        updateData()
 
-    End Sub
+    'Private Sub noTotalValue_Leave(sender As Object, e As EventArgs)
+
+    '    updateData()
+
+    'End Sub
 
 
 
@@ -356,7 +522,16 @@ Public Class entityEditor
 
             If _NoSave Then Return
 
-            _Data.numberOfDecimal = numOfDecimalValue.Text
+            If IsNumeric(numOfDecimalValue.Text.ToString) Then
+
+                _Data.numberOfDecimal = numOfDecimalValue.Text
+
+            Else
+
+                _Data.numberOfDecimal = 0
+
+            End If
+
             identityValue.Text = _Data.getHash()
 
         Catch ex As Exception
@@ -365,11 +540,13 @@ Public Class entityEditor
 
     End Sub
 
-    Private Sub numOfDecimalValue_Leave(sender As Object, e As EventArgs) Handles numOfDecimalValue.Leave
 
-        updateData()
 
-    End Sub
+    'Private Sub numOfDecimalValue_Leave(sender As Object, e As EventArgs)
+
+    '    updateData()
+
+    'End Sub
 
 
 
@@ -377,30 +554,13 @@ Public Class entityEditor
 
         If _NoSave Then Return
 
-        _Data.preminedNumber = preminedValue.Text
-        identityValue.Text = _Data.getHash()
+        If IsNumeric(preminedValue.Text.ToString) Then
 
-    End Sub
-
-    Private Sub preminedValue_Leave(sender As Object, e As EventArgs) Handles preminedValue.Leave
-
-        updateData()
-
-    End Sub
-
-
-
-    Private Sub totalCoinValue_TextChanged(sender As Object, e As EventArgs) Handles totalCoinValue.TextChanged
-
-        If _NoSave Then Return
-
-        If totalCoinValue.Text.ToString.Length = 0 Then
-
-            _Data.total = 0
+            _Data.preminedNumber = preminedValue.Text
 
         Else
 
-            _Data.total = totalCoinValue.Text
+            _Data.preminedNumber = 0
 
         End If
 
@@ -408,11 +568,41 @@ Public Class entityEditor
 
     End Sub
 
-    Private Sub totalCoinValue_Leave(sender As Object, e As EventArgs) Handles totalCoinValue.Leave
 
-        updateData()
+
+    'Private Sub preminedValue_Leave(sender As Object, e As EventArgs)
+
+    '    updateData()
+
+    'End Sub
+
+
+
+    Private Sub totalCoinValue_TextChanged(sender As Object, e As EventArgs) Handles totalCoinValue.TextChanged
+
+        If _NoSave Then Return
+
+        If IsNumeric(totalCoinValue.Text.ToString) Then
+
+            _Data.total = totalCoinValue.Text
+
+        Else
+
+            _Data.total = 0
+
+        End If
+
+        identityValue.Text = _Data.getHash()
 
     End Sub
+
+
+
+    'Private Sub totalCoinValue_Leave(sender As Object, e As EventArgs)
+
+    '    updateData()
+
+    'End Sub
 
 
 
@@ -446,7 +636,375 @@ Public Class entityEditor
 
     End Sub
 
+    Private Sub tabControlMain_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tabControlMain.SelectedIndexChanged
 
+        confirmButton.Enabled = (tabControlMain.SelectedIndex <> 0)
+
+    End Sub
+
+
+    Private Sub insertNewContract()
+
+        completePathValue.DropDownStyle = ComboBoxStyle.Simple
+        addNewButton.Enabled = False
+
+        _InsertMode = True
+
+    End Sub
+
+
+    Private Sub connectToRemote()
+
+        Dim pws As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of List(Of String))
+
+        pws.url = urlValue.Text
+
+        If pws.getData() Then
+
+            completePathValue.Items.Clear()
+
+            renameButton.Enabled = False
+            deleteButton.Enabled = False
+
+            If (pws.data.Count = 0) Then
+
+                insertNewContract()
+
+            Else
+
+                addNewButton.Enabled = True
+
+                For Each item In pws.data
+
+                    completePathValue.Items.Add(item)
+
+                Next
+
+            End If
+
+            _NoChangeTab = False
+
+            tabControlMain.SelectedIndex = 1
+
+            browseButton.Enabled = False
+            confirmButton.Enabled = True
+
+        Else
+
+            MessageBox.Show("No connection available or wrong address", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+        End If
+
+    End Sub
+
+
+    Private Sub buttonNext_Click(sender As Object, e As EventArgs) Handles buttonNext.Click
+
+        If radioButtonLocal.Checked Then
+
+            _NoChangeTab = False
+
+            tabControlMain.SelectedIndex = 1
+
+            pathLabel.Text = "Complete file path"
+
+            browseButton.Enabled = True
+
+            completePathValue.DropDownStyle = ComboBoxStyle.Simple
+            completePathValue.Items.Clear()
+
+            _Data = New CHCContractOfValueEngineLibrary.Models.ContractOfValueModel
+
+            compileAllData()
+
+        Else
+
+            pathLabel.Text = "Configuration Name"
+
+            completePathValue.DropDownStyle = ComboBoxStyle.DropDownList
+
+            If (urlValue.Text.ToString.Trim.Length <> 0) Then
+
+                connectToRemote()
+
+                If (completePathValue.Items.Count > 0) Then
+
+                    completePathValue.SelectedIndex = 0
+
+                End If
+
+            Else
+
+                MessageBox.Show("Insert an address URL", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            End If
+
+        End If
+
+    End Sub
+
+
+    Private Sub tabControlMain_Selecting(sender As Object, e As TabControlCancelEventArgs) Handles tabControlMain.Selecting
+
+        If (tabControlMain.SelectedIndex = 1) Then
+
+            If _NoChangeTab Then
+
+                e.Cancel = True
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub radioButtonRemote_CheckedChanged(sender As Object, e As EventArgs) Handles radioButtonRemote.CheckedChanged
+
+        labelURL.Enabled = True
+        urlValue.Enabled = True
+        labelKeyword.Enabled = True
+        keyWordValue.Enabled = True
+        showKeywordValue.Enabled = True
+
+        _NoChangeTab = True
+
+    End Sub
+
+    Private Sub radioButtonLocal_CheckedChanged(sender As Object, e As EventArgs) Handles radioButtonLocal.CheckedChanged
+
+        labelURL.Enabled = False
+        urlValue.Enabled = False
+        labelKeyword.Enabled = False
+        keyWordValue.Enabled = False
+        showKeywordValue.Enabled = False
+        urlValue.Text = ""
+        keyWordValue.Text = ""
+        keyWordValue.PasswordChar = "*"
+        showKeywordValue.Checked = False
+
+    End Sub
+
+    Private Sub showKeywordValue_CheckedChanged(sender As Object, e As EventArgs) Handles showKeywordValue.CheckedChanged
+
+        If showKeywordValue.Checked Then
+
+            keyWordValue.PasswordChar = ""
+
+        Else
+
+            keyWordValue.PasswordChar = "*"
+
+        End If
+
+    End Sub
+
+
+
+    Private Sub confirmButton_Click(sender As Object, e As EventArgs) Handles confirmButton.Click
+
+        If (completePathValue.Text.ToString().Length = 0) Then
+
+            MessageBox.Show("Insert a complete name or configuration")
+
+        Else
+
+            updateData()
+
+        End If
+
+    End Sub
+
+    Private Sub tabPageConnection_Click(sender As Object, e As EventArgs) Handles tabPageConnection.Click
+
+    End Sub
+
+    Private Sub completePathValue_SelectedIndexChanged(sender As Object, e As EventArgs) Handles completePathValue.SelectedIndexChanged
+
+        If _NoRecourse Then Return
+
+        If completePathValue.SelectedIndex <> -1 Then
+
+            If Not _InsertMode Then
+
+                _NoRecourse = True
+
+                setUpdateMode()
+                readRemoteData()
+
+                _NoRecourse = False
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub clearAllFields()
+
+        _NoSave = True
+
+        typeValue.SelectedIndex = -1
+        coinNameValue.Text = ""
+        shortNameValue.Text = ""
+        symbolValue.Text = ""
+        burnableValue.Checked = False
+        mintable.Checked = False
+        noTotalValue.Checked = False
+        numOfDecimalValue.Text = ""
+        preminedValue.Text = ""
+        totalCoinValue.Text = ""
+        identityValue.Text = ""
+
+        _NoSave = False
+
+    End Sub
+
+
+    Private Sub addNewButton_Click(sender As Object, e As EventArgs) Handles addNewButton.Click
+
+        completePathValue.DropDownStyle = ComboBoxStyle.Simple
+        completePathValue.Text = ""
+
+        clearAllFields()
+
+        completePathValue.Select()
+
+        _InsertMode = True
+
+    End Sub
+
+    Private Sub coinNameValue_TextChanged_1(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub completePathValue_Validating(sender As Object, e As CancelEventArgs) Handles completePathValue.Validating
+
+        If _InsertMode Then
+
+            If (completePathValue.DropDownStyle = ComboBoxStyle.Simple) Then
+
+                For Each item In completePathValue.Items
+
+                    If completePathValue.Text.ToString.CompareTo(item) = 0 Then
+
+                        MessageBox.Show("This name is also used")
+
+                        e.Cancel = True
+
+                        Return
+
+                    End If
+
+                Next
+
+                completePathValue.Items.Add(completePathValue.Text)
+
+                For Each item In completePathValue.Items
+
+                    If (item.ToString.CompareTo(completePathValue.Text) = 0) Then
+
+                        completePathValue.SelectedItem = item
+
+                        Exit For
+
+                    End If
+
+                Next
+
+                completePathValue.DropDownStyle = ComboBoxStyle.DropDownList
+
+                _Data = New CHCContractOfValueEngineLibrary.Models.ContractOfValueModel
+
+                compileAllData()
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub entityEditor_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+    End Sub
+
+    Private Sub deleteButton_Click(sender As Object, e As EventArgs) Handles deleteButton.Click
+
+        Try
+
+            Dim pws As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of CHCContractOfValueEngineLibrary.Models.ContractOfValueRequestModel)
+
+            pws.url = urlValue.Text
+
+            pws.data = _Data.copyIntoBaseModel()
+            pws.data.symbol.codeSymbol()
+            pws.data.configurationName = completePathValue.Text.ToString()
+
+            pws.url = urlValue.Text & "/?name=" & _OriginalName
+
+            If pws.sendData("DELETE") Then
+
+                MessageBox.Show("Data delete successful", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                connectToRemote()
+
+            Else
+
+                MessageBox.Show("No connection available or wrong address", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            End If
+
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
+
+
+    Private Sub renameButton_Click(sender As Object, e As EventArgs) Handles renameButton.Click
+
+        Dim newName As String = InputBox("Insert a new name", "Request date")
+        Dim found As Boolean = False
+
+        For Each item In completePathValue.Items
+
+            If newName.CompareTo(item) = 0 Then
+
+                found = True
+
+                Exit For
+
+            End If
+
+        Next
+
+        If found Then
+
+            MessageBox.Show("This name is already exist")
+
+        Else
+
+            _InsertMode = False
+            _OriginalName = completePathValue.Text
+
+            updateDataRemote(newName)
+            connectToRemote()
+
+            For Each item In completePathValue.Items
+
+                If (item.ToString.CompareTo(newName) = 0) Then
+
+                    completePathValue.SelectedItem = item
+
+                    Return
+
+                End If
+
+            Next
+
+        End If
+
+    End Sub
 
 
 End Class

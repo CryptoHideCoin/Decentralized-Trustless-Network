@@ -67,6 +67,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communiction\ProxyWS.vb" />
     <Compile Include="Encryption\SHAInterface.vb" />
     <Compile Include="FileManager\CHCBaseEncryption.vb" />
     <Compile Include="Miscellaneous\CHCCommandListEngine.vb" />
@@ -75,6 +76,7 @@
     <Compile Include="Encryption\ModuleEncryption.vb" />
     <Compile Include="Miscellaneous\CHCDateTime.vb" />
     <Compile Include="Miscellaneous\CHCTrackEngine.vb" />
+    <Compile Include="Miscellaneous\CHCStringExtensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -111,5 +113,6 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

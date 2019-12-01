@@ -67,6 +67,12 @@ Namespace CHCEngines.Common
 
                     End If
 
+                    If Not Directory.Exists(Path.GetDirectoryName(fileName)) Then
+
+                        Directory.CreateDirectory(Path.GetDirectoryName(fileName))
+
+                    End If
+
                     streamWriter = New StreamWriter(fileName, False)
 
                     serializer.Serialize(streamWriter, data)
