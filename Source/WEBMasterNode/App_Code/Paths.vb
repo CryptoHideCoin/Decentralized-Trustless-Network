@@ -15,6 +15,12 @@ Namespace AreaSystem
 
             pathUnitOfExchangeValue = System.IO.Path.Combine(pathBaseData, "CoinDefinition")
 
+            If Not IO.Directory.Exists(pathUnitOfExchangeValue) Then
+
+                IO.Directory.CreateDirectory(pathUnitOfExchangeValue)
+
+            End If
+
             Return True
 
         End Function
