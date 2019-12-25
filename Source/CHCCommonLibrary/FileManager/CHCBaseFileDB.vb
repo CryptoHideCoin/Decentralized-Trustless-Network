@@ -56,6 +56,7 @@ Namespace CHCEngines.Common
 
             Try
 
+                Dim pathFile As String
                 Dim streamWriter As StreamWriter
                 Dim serializer As New XmlSerializer(data.GetType)
 
@@ -67,9 +68,15 @@ Namespace CHCEngines.Common
 
                     End If
 
-                    If Not Directory.Exists(Path.GetDirectoryName(fileName)) Then
+                    pathFile = Path.GetDirectoryName(fileName)
 
-                        Directory.CreateDirectory(Path.GetDirectoryName(fileName))
+                    If pathFile.Length > 0 Then
+
+                        If Not Directory.Exists(pathFile) Then
+
+                            Directory.CreateDirectory(Path.GetDirectoryName(pathFile))
+
+                        End If
 
                     End If
 
