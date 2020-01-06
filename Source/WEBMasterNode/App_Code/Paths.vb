@@ -8,16 +8,24 @@ Namespace AreaSystem
     Public Class Paths
 
         Public pathBaseData As String = ""
-        Public pathUnitOfExchangeValue As String = ""
+        Public pathCryptoAssetValue As String = ""
+        Public pathTransChainValue As String = ""
 
 
         Public Function init() As String
 
-            pathUnitOfExchangeValue = System.IO.Path.Combine(pathBaseData, "CoinDefinition")
+            pathCryptoAssetValue = IO.Path.Combine(pathBaseData, "CryptoAssetDefinition")
+            pathTransChainValue = IO.Path.Combine(pathBaseData, "TransChainDefinition")
 
-            If Not IO.Directory.Exists(pathUnitOfExchangeValue) Then
+            If Not IO.Directory.Exists(pathCryptoAssetValue) Then
 
-                IO.Directory.CreateDirectory(pathUnitOfExchangeValue)
+                IO.Directory.CreateDirectory(pathCryptoAssetValue)
+
+            End If
+
+            If Not IO.Directory.Exists(pathTransChainValue) Then
+
+                IO.Directory.CreateDirectory(pathTransChainValue)
 
             End If
 

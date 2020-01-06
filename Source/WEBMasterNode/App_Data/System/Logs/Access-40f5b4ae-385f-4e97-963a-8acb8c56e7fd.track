@@ -1,0 +1,4 @@
+1578346449955,83|2020-01-06T20:34:09|info|TransChainDefinitionController.getValue|Begin
+1578346449957,31|2020-01-06T20:34:09|info|CounterEngine.increase|Begin
+1578346449958,22|2020-01-06T20:34:09|info|CounterEngine.increase|Completed
+1578346449959,38|2020-01-06T20:34:09|info|TransChainDefinitionController.getValue|Complete

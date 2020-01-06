@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TransChainDefinitionRequestModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <mode>testNet</mode>
+  <type>mainPlatform</type>
+  <crowdFundConfigurationName />
+  <name>Crypto Hide Coin DTN Official Platform</name>
+  <cryptoAssetID>F89F5D271230282F6F8E6380ACBDAEE48394855C6FB8C837EF82B433ECF4BB91</cryptoAssetID>
+  <scheduleFirstStart>true</scheduleFirstStart>
+  <dateFirstStart>2020-02-29T23:00:00Z</dateFirstStart>
+  <walletAddressPremined>0x1</walletAddressPremined>
+  <consensusTypeDescription>Proof Of Stake</consensusTypeDescription>
+  <protocolNameDescription>CHCPTs</protocolNameDescription>
+  <intervalConsensusStake>24h</intervalConsensusStake>
+  <rewardForDays>100000.0</rewardForDays>
+  <isUsed>false</isUsed>
+  <keywords />
+  <configurationName />
+</TransChainDefinitionRequestModel>

@@ -1,0 +1,7 @@
+1578344979802,9|2020-01-06T20:09:39|info|TransChainDefinitionController.getValues|Begin
+1578344979805,01|2020-01-06T20:09:39|info|CounterEngine.increase|Begin
+1578344979806,28|2020-01-06T20:09:39|info|CounterEngine.increase|Completed
+1578344979807,13|2020-01-06T20:09:39|info|TransChainDefinitionEngine.getList|Begin
+1578344979808,94|2020-01-06T20:09:39|info|TransChainDefinitionEngine.getList|_Path is set
+1578344979809,82|2020-01-06T20:09:39|info|TransChainDefinitionEngine.getList|completed
+1578344979815,89|2020-01-06T20:09:39|info|TransChainDefinitionController.getValues|Complete

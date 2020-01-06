@@ -1,0 +1,9 @@
+1578344912363,27|2020-01-06T20:08:32|info|TransChainDefinitionController.postValue|Begin
+1578344912368,56|2020-01-06T20:08:32|info|CounterEngine.increase|Begin
+1578344912370,22|2020-01-06T20:08:32|info|CounterEngine.increase|Build new counter
+1578344912371,31|2020-01-06T20:08:32|info|CounterEngine.increase|Completed
+1578344912373,42|2020-01-06T20:08:32|info|TransChainDefinitionEngine.addNew|Enter with name = Crypto Hide Coin Official Platform
+1578344912375,29|2020-01-06T20:08:32|info|TransChainDefinitionEngine.addNew|copyIntoBaseModel executed
+1578344912376,24|2020-01-06T20:08:32|info|TransChainDefinitionEngine.addNew|fileName = E:\CryptoHideCoinDTN\Source\WEBMasterNode\App_Data\TransChainDefinition\Crypto Hide Coin DTN.transChainDefinition
+1578344912481,23|2020-01-06T20:08:32|info|TransChainDefinitionEngine.save|After save()
+1578344912554,26|2020-01-06T20:08:32|info|TransChainDefinitionController.postValue|Complete

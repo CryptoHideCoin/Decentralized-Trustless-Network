@@ -1,0 +1,9 @@
+1578343619872,21|2020-01-06T19:46:59|info|CryptoAssetDefinitionController.getValue|Begin
+1578343619873,2|2020-01-06T19:46:59|info|CounterEngine.increase|Begin
+1578343619874,42|2020-01-06T19:46:59|info|CounterEngine.increase|Build new counter
+1578343619875,26|2020-01-06T19:46:59|info|CounterEngine.increase|Completed
+1578343619876,24|2020-01-06T19:46:59|info|CryptoAssetDefinitionEngine.item|Begin
+1578343619877,23|2020-01-06T19:46:59|info|CryptoAssetDefinitionEngine.item|fileName = E:\CryptoHideCoinDTN\Source\WEBMasterNode\App_Data\CryptoAssetDefinition\Crypto Hide Coin.CryptoAssetDefinition
+1578343619885,19|2020-01-06T19:46:59|info|CryptoAssetDefinitionEngine.item|READ OK
+1578343619886,41|2020-01-06T19:46:59|info|CryptoAssetDefinitionEngine.item|Complete
+1578343619887,22|2020-01-06T19:46:59|info|CryptoAssetDefinitionController.getValue|Complete

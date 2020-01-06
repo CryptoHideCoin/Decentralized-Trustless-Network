@@ -53,10 +53,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCContractOfValueEngineLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\CHCContractOfValueEngineLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -161,6 +157,7 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Code\AppSettings.vb" />
     <Compile Include="App_Code\CodeCommon.vb" />
     <Compile Include="App_Code\Paths.vb" />
     <Compile Include="App_Start\BundleConfig.vb" />
@@ -195,6 +192,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.vb" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
+    <Compile Include="Controllers\Configure\TransChainDefinitionController.vb" />
     <Compile Include="Controllers\PeerInformations\ValueContractSupportedController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
@@ -215,7 +213,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Controllers\HomeController.vb" />
-    <Compile Include="Controllers\Configure\BaseExchangeValueController.vb" />
+    <Compile Include="Controllers\Configure\CryptoAssetDefinitionController.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -304,6 +302,17 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Properties\" />
+    <Folder Include="Views\NetworkDefinition\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\CHCServerSupport.vbproj">
+      <Project>{f87b02ed-de8e-4e2d-894f-8b67d80abe6b}</Project>
+      <Name>CHCServerSupport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CHCElementDefinitionEngineLibrary\CHCDefinitionEngineLibrary.vbproj">
+      <Project>{478482e5-b67d-41f7-aea5-0e02086057d3}</Project>
+      <Name>CHCDefinitionEngineLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

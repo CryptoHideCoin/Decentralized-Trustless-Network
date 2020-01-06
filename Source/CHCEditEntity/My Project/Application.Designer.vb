@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.CHCEditExchangeOfValue.entityEditor
+            Me.MainForm = Global.CHCEditExchangeOfValue.MenuEditor
         End Sub
     End Class
 End Namespace

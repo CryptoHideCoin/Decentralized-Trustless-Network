@@ -1,0 +1,7 @@
+1578344993772,13|2020-01-06T20:09:53|info|CryptoAssetDefinitionController.getValues|Begin
+1578344993779,14|2020-01-06T20:09:53|info|CounterEngine.increase|Begin
+1578344993780,06|2020-01-06T20:09:53|info|CounterEngine.increase|Completed
+1578344993786,11|2020-01-06T20:09:53|info|CryptoAssetDefinitionEngine.getList|Begin
+1578344993789,14|2020-01-06T20:09:53|info|CryptoAssetDefinitionEngine.getList|_Path is set
+1578344993791,04|2020-01-06T20:09:53|info|CryptoAssetDefinitionEngine.getList|completed
+1578344993791,04|2020-01-06T20:09:53|info|CryptoAssetDefinitionController.getValues|Complete

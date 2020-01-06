@@ -1,0 +1,7 @@
+1578346492509,52|2020-01-06T20:34:52|info|TransChainDefinitionController.putValue|Begin
+1578346492512,36|2020-01-06T20:34:52|info|CounterEngine.increase|Begin
+1578346492513,51|2020-01-06T20:34:52|info|CounterEngine.increase|Completed
+1578346492515,33|2020-01-06T20:34:52|info|TransChainDefinitionEngine.update|Enter with name = Crypto Hide Coin DTN Official Platform
+1578346492516,25|2020-01-06T20:34:52|info|TransChainDefinitionEngine.update|set data
+1578346492517,72|2020-01-06T20:34:52|info|TransChainDefinitionEngine.update|set fileName = E:\CryptoHideCoinDTN\Source\WEBMasterNode\App_Data\TransChainDefinition\Crypto Hide Coin DTN Official Platform.transChainDefinition
+1578346492523,33|2020-01-06T20:34:52|info|TransChainDefinitionController.putValue|Complete

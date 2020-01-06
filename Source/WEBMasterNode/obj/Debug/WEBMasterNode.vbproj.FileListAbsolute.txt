@@ -49,6 +49,8 @@ E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\roslyn\vbc.rsp
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\roslyn\VBCSCompiler.exe
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\roslyn\VBCSCompiler.exe.config
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\Antlr3.Runtime.dll
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCDefinitionEngineLibrary.dll
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCServerSupport.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\Microsoft.Web.Infrastructure.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\Newtonsoft.Json.dll
@@ -63,6 +65,10 @@ E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\System.Web.WebPages.Deployment.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\System.Web.WebPages.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\System.Web.WebPages.Razor.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\WebGrease.dll
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCServerSupport.pdb
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCServerSupport.xml
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCDefinitionEngineLibrary.pdb
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCDefinitionEngineLibrary.xml
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\System.Net.Http.Formatting.xml
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\System.Web.Helpers.xml

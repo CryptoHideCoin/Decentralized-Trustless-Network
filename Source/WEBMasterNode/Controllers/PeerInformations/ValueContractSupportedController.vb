@@ -5,8 +5,8 @@
 
 
 
-<RoutePrefix("api/v1/PeerInformation/ValueContractSupported")>
-Public Class ValueContractSupportedController
+<RoutePrefix("api/v1/PeerInformation/CryptoAssetSupported")>
+Public Class CryptoAssetSupportedController
 
     Inherits ApiController
 
@@ -14,19 +14,19 @@ Public Class ValueContractSupportedController
 
 
 
-    ' GET api/ValueContractSupported
-    '<HttpGet> <Route("api/v1/PeerInformation/ValueContractSupported")>
+    ' GET api/CryptoAssetSupported
+    '<HttpGet> <Route("api/v1/PeerInformation/CryptoAssetSupported")>
     Public Function getValues() As IEnumerable(Of String)
 
-        Return AreaCommon.contractsOfValueManager.getUsedList()
+        Return AreaCommon.cryptoAssetDefinitionManager.getUsedList()
 
     End Function
 
-    ' GET api/ValueContractSupported/id
-    '<HttpGet> <Route("api/v1/PeerInformation/ValueContractSupported")>
-    Public Function getValue(ByVal id As String) As CHCContractOfValueEngineLibrary.Models.ContractOfValueModel
+    ' GET api/CryptoAssetSupported/id
+    '<HttpGet> <Route("api/v1/PeerInformation/CryptoAssetSupported")>
+    Public Function getValue(ByVal id As String) As CHCDefinitionEngineLibrary.Models.CryptoAssetModel
 
-        Return AreaCommon.contractsOfValueManager.item(False, id)
+        Return AreaCommon.cryptoAssetDefinitionManager.item(False, id)
 
     End Function
 
