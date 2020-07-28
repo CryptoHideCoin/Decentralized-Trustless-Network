@@ -1,3 +1,0 @@
-1578343524989,7|2020-01-06T19:45:24|info|AppModule.run|Begin
-1578343525017,47|2020-01-06T19:45:25|info|AppModule.run|before coinArchive.init
-1578343525031,35|2020-01-06T19:45:25|warning|moduleMain.run|coinArchive.init failed

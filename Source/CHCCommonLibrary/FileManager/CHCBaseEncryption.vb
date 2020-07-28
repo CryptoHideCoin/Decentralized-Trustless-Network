@@ -66,7 +66,15 @@ Namespace CHCEngines.Common
 
                     stream = New System.IO.StreamReader(fileName)
 
-                    memory = New MemoryStream(System.Text.Encoding.ASCII.GetBytes(CHCEngines.Common.Encryption.AES.decrypt(stream.ReadToEnd(), _combineCryptoKEY)))
+                    If _combineCryptoKEY = "-" Then
+
+                        memory = New MemoryStream(System.Text.Encoding.ASCII.GetBytes(stream.ReadToEnd()))
+
+                    Else
+
+                        memory = New MemoryStream(System.Text.Encoding.ASCII.GetBytes(CHCEngines.Common.Encryption.AES.decrypt(stream.ReadToEnd(), _combineCryptoKEY)))
+
+                    End If
 
                     stream = New StreamReader(memory)
 
@@ -75,6 +83,8 @@ Namespace CHCEngines.Common
                     Return True
 
                 Else
+
+                    data = New ClassType
 
                     Return False
 
@@ -115,8 +125,17 @@ Namespace CHCEngines.Common
 
                 If Not noCrypt Then
 
-                    IO.File.WriteAllText(fileName, CHCEngines.Common.Encryption.AES.encrypt(File.ReadAllText(temp), _combineCryptoKEY))
-                    File.Delete(temp)
+                    If (_combineCryptoKEY = "-") Then
+
+                        IO.File.Move(temp, fileName)
+
+                    Else
+
+                        IO.File.WriteAllText(fileName, CHCEngines.Common.Encryption.AES.encrypt(File.ReadAllText(temp), _combineCryptoKEY))
+
+                        File.Delete(temp)
+
+                    End If
 
                 End If
 

@@ -13,7 +13,7 @@ Public Class WebApiApplication
         BundleConfig.RegisterBundles(BundleTable.Bundles)
 
         AreaCommon.paths.pathBaseData = HttpContext.Current.Server.MapPath("~/App_Data")
-        AreaCommon.Run()
+        AreaCommon.run()
 
     End Sub
 

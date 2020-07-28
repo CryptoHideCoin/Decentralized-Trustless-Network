@@ -46,6 +46,8 @@ Namespace CHCEngines.Common
 
             End Try
 
+            data = New ClassType
+
             Return False
 
         End Function

@@ -43,6 +43,8 @@ Namespace CHCEngines.Common
 
                 End If
 
+                data = New ClassType
+
             Catch ex As Exception
 
             End Try

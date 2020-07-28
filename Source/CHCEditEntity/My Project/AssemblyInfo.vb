@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("CHC Definition Editor")>
-<Assembly: AssemblyDescription("Crypto Hide Coin Definition Editor")>
+<Assembly: AssemblyTitle("CHC Client Masternode")>
+<Assembly: AssemblyDescription("Crypto Hide Coin Client Masternode")>
 <Assembly: AssemblyCompany("Crypto Technology Alliances")>
-<Assembly: AssemblyProduct("CHCDefinitionEditor")>
+<Assembly: AssemblyProduct("CHCClientNode")>
 <Assembly: AssemblyCopyright("Copyright © Crypto Technology Alliances 2019")>
 <Assembly: AssemblyTrademark("")>
 

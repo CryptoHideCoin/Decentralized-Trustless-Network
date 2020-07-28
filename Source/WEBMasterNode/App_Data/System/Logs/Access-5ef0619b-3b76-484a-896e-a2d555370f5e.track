@@ -1,9 +1,0 @@
-1578343556598,39|2020-01-06T19:45:56|info|CryptoAssetDefinitionController.getValues|Begin
-1578343556606,21|2020-01-06T19:45:56|info|CounterEngine.increase|Begin
-1578343556606,88|2020-01-06T19:45:56|info|CounterEngine.increase|Change data
-1578343556608,53|2020-01-06T19:45:56|info|CounterEngine.increase|Build new counter
-1578343556608,53|2020-01-06T19:45:56|info|CounterEngine.increase|Completed
-1578343556611,75|2020-01-06T19:45:56|info|CryptoAssetDefinitionEngine.getList|Begin
-1578343556612,39|2020-01-06T19:45:56|info|CryptoAssetDefinitionEngine.getList|_Path is set
-1578343556613,39|2020-01-06T19:45:56|info|CryptoAssetDefinitionEngine.getList|completed
-1578343556614,41|2020-01-06T19:45:56|info|CryptoAssetDefinitionController.getValues|Complete

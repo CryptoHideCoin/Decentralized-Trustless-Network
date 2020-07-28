@@ -8,8 +8,8 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("CHCDefinitionEngineLibrary")>
-<Assembly: AssemblyDescription("Library of Definition Engine")>
+<Assembly: AssemblyTitle("CHCMasterNodeEngineLibrary")>
+<Assembly: AssemblyDescription("Library of Masternode Engine")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("CHC Definition of Engine Library")>
 <Assembly: AssemblyCopyright("Copyright ©  2019")>

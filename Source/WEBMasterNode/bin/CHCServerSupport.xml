@@ -28,5 +28,13 @@ CHCServerSupport
  </summary>
  <returns></returns>
 </member>
+<member name="M:CHCServerSupport.Support.RegistryEngine.init(System.String)">
+ <summary>
+ This method provide to create path into base directory
+ and set file name
+ </summary>
+ <param name="path"></param>
+ <returns></returns>
+</member>
 </members>
 </doc>

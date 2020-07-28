@@ -24,13 +24,25 @@ CHCCommonLibrary
 </member>
 <member name="M:CHCCommonLibrary.CHCEngines.Communication.ProxyWS`1.getData">
  <summary>
- Questo metodo si occupa di effettuare il download dei dati 
+ This method's provides to get a remote data
  </summary>
  <returns></returns>
 </member>
 <member name="M:CHCCommonLibrary.CHCEngines.Communication.ProxyWS`1.sendData(System.String)">
  <summary>
- Questo metodo si occupa di inviare dei dati all' URL
+ This method's provides to send a remote data
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.CHCEngines.Communication.ProxySimplyWS`1.getData">
+ <summary>
+ This method's provides to get a remote data
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.CHCEngines.Communication.ProxySimplyWS`1.sendData(System.String)">
+ <summary>
+ This method's provides to send a remote data
  </summary>
  <returns></returns>
 </member>

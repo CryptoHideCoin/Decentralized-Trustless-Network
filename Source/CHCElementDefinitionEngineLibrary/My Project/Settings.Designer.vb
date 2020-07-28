@@ -64,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.CHCDefinitionEngineLibrary.My.MySettings
+        Friend ReadOnly Property Settings() As Global.CHCMasterNodeEngineLibrary.My.MySettings
             Get
-                Return Global.CHCDefinitionEngineLibrary.My.MySettings.Default
+                Return Global.CHCMasterNodeEngineLibrary.My.MySettings.Default
             End Get
         End Property
     End Module

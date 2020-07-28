@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRegistryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <RegistryData>
+    <istant>2020-02-10T23:29:41.2202681+01:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-02-10T23:47:45.8592927+01:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-02-10T23:55:06.06462+01:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+</ArrayOfRegistryData>

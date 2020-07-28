@@ -10,3 +10,14 @@ C:\Lavoro\Sviluppo.Decentralized\Node\Windows\CHCEditDefinition\CHCEditDefinitio
 C:\Lavoro\Sviluppo.Decentralized\Node\Windows\CHCEditDefinition\CHCEditDefinition\obj\Debug\CHCEditDefinition.exe
 C:\Lavoro\Sviluppo.Decentralized\Node\Windows\CHCEditDefinition\CHCEditDefinition\obj\Debug\CHCEditDefinition.xml
 C:\Lavoro\Sviluppo.Decentralized\Node\Windows\CHCEditDefinition\CHCEditDefinition\obj\Debug\CHCEditDefinition.pdb
+E:\CryptoHideCoinDTN\Masternode\Old Release Sources\Windows\CHC Definition Edit\CHCEditDefinition\bin\Debug\CHCEditDefinition.exe.config
+E:\CryptoHideCoinDTN\Masternode\Old Release Sources\Windows\CHC Definition Edit\CHCEditDefinition\bin\Debug\CHCEditDefinition.exe
+E:\CryptoHideCoinDTN\Masternode\Old Release Sources\Windows\CHC Definition Edit\CHCEditDefinition\bin\Debug\CHCEditDefinition.pdb
+E:\CryptoHideCoinDTN\Masternode\Old Release Sources\Windows\CHC Definition Edit\CHCEditDefinition\bin\Debug\CHCEditDefinition.xml
+E:\CryptoHideCoinDTN\Masternode\Old Release Sources\Windows\CHC Definition Edit\CHCEditDefinition\obj\Debug\CHCEditDefinition.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Masternode\Old Release Sources\Windows\CHC Definition Edit\CHCEditDefinition\obj\Debug\CHCEditDefinition.frmMain.resources
+E:\CryptoHideCoinDTN\Masternode\Old Release Sources\Windows\CHC Definition Edit\CHCEditDefinition\obj\Debug\CHCEditDefinition.Resources.resources
+E:\CryptoHideCoinDTN\Masternode\Old Release Sources\Windows\CHC Definition Edit\CHCEditDefinition\obj\Debug\CHCEditDefinition.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Masternode\Old Release Sources\Windows\CHC Definition Edit\CHCEditDefinition\obj\Debug\CHCEditDefinition.exe
+E:\CryptoHideCoinDTN\Masternode\Old Release Sources\Windows\CHC Definition Edit\CHCEditDefinition\obj\Debug\CHCEditDefinition.xml
+E:\CryptoHideCoinDTN\Masternode\Old Release Sources\Windows\CHC Definition Edit\CHCEditDefinition\obj\Debug\CHCEditDefinition.pdb

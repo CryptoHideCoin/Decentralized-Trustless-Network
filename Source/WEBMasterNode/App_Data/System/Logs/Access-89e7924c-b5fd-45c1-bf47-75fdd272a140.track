@@ -1,7 +1,0 @@
-1578346303278,38|2020-01-06T20:31:43|info|TransChainDefinitionController.getValues|Begin
-1578346303281,24|2020-01-06T20:31:43|info|CounterEngine.increase|Begin
-1578346303282,18|2020-01-06T20:31:43|info|CounterEngine.increase|Completed
-1578346303283,19|2020-01-06T20:31:43|info|TransChainDefinitionEngine.getList|Begin
-1578346303284,25|2020-01-06T20:31:43|info|TransChainDefinitionEngine.getList|_Path is set
-1578346303285,17|2020-01-06T20:31:43|info|TransChainDefinitionEngine.getList|completed
-1578346303285,17|2020-01-06T20:31:43|info|TransChainDefinitionController.getValues|Complete

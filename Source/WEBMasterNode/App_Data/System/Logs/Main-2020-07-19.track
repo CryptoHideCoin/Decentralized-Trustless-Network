@@ -1,0 +1,6 @@
+1595204133548,35|2020-07-19T22:15:33|info|AppModule.run|Begin
+1595204133681,32|2020-07-19T22:15:33|info|AppModule.run|before coinArchive.init
+1595204133806,71|2020-07-19T22:15:33|info|PeerSettingEngine (constructor)|Begin
+1595204133808,32|2020-07-19T22:15:33|info|PeerSettingEngine (constructor)|Set fileName = E:\CryptoHideCoinDTN\Source\WEBMasterNode\App_Data\System\Data.settings
+1595204133853,32|2020-07-19T22:15:33|info|PeerSettingEngine (constructor)|Read data
+1595204133854,31|2020-07-19T22:15:33|info|PeerSettingEngine (constructor)|Complete

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRegistryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <RegistryData>
+    <istant>2020-02-13T23:09:19.5958146+01:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+</ArrayOfRegistryData>

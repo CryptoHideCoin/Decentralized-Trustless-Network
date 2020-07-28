@@ -1,3 +1,6 @@
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\obj\Debug\WEBMasterNode.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\obj\Debug\WEBMasterNode.Resources.resources
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\obj\Debug\WEBMasterNode.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\WEBMasterNode.dll.config
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\WEBMasterNode.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\WEBMasterNode.pdb
@@ -49,7 +52,7 @@ E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\roslyn\vbc.rsp
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\roslyn\VBCSCompiler.exe
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\roslyn\VBCSCompiler.exe.config
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\Antlr3.Runtime.dll
-E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCDefinitionEngineLibrary.dll
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCMasterNodeEngineLibrary.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCServerSupport.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\Microsoft.Web.Infrastructure.dll
@@ -67,8 +70,8 @@ E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\System.Web.WebPages.Razor.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\WebGrease.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCServerSupport.pdb
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCServerSupport.xml
-E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCDefinitionEngineLibrary.pdb
-E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCDefinitionEngineLibrary.xml
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCMasterNodeEngineLibrary.pdb
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCMasterNodeEngineLibrary.xml
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\System.Net.Http.Formatting.xml
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\System.Web.Helpers.xml
@@ -92,10 +95,10 @@ E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\it\System.Web.Razor.resources.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\it\System.Web.WebPages.resources.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\it\System.Web.WebPages.Deployment.resources.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\it\System.Web.WebPages.Razor.resources.dll
-E:\CryptoHideCoinDTN\Source\WEBMasterNode\obj\Debug\WEBMasterNode.vbprojAssemblyReference.cache
-E:\CryptoHideCoinDTN\Source\WEBMasterNode\obj\Debug\WEBMasterNode.Resources.resources
-E:\CryptoHideCoinDTN\Source\WEBMasterNode\obj\Debug\WEBMasterNode.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\obj\Debug\WEBMasterNode.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\obj\Debug\WEBMasterNode.dll
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\obj\Debug\WEBMasterNode.xml
 E:\CryptoHideCoinDTN\Source\WEBMasterNode\obj\Debug\WEBMasterNode.pdb
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\WEBMasterNode\bin\CHCCommonLibrary.xml

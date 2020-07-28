@@ -51,7 +51,7 @@
   <ItemGroup>
     <Reference Include="CHCCommonLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\CHCCommonLibrary.dll</HintPath>
+      <HintPath>..\CHCCommonLibrary\bin\Debug\CHCCommonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -157,7 +157,6 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Code\AppSettings.vb" />
     <Compile Include="App_Code\CodeCommon.vb" />
     <Compile Include="App_Code\Paths.vb" />
     <Compile Include="App_Start\BundleConfig.vb" />
@@ -192,8 +191,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.vb" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.vb" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.vb" />
-    <Compile Include="Controllers\Configure\TransChainDefinitionController.vb" />
-    <Compile Include="Controllers\PeerInformations\ValueContractSupportedController.vb" />
+    <Compile Include="Controllers\Archive\TransChainDefinitionController.vb" />
+    <Compile Include="Controllers\Authorization\GetToken\AdminTokenController.vb" />
+    <Compile Include="Controllers\Authorization\GetToken\PrivateTokenController.vb" />
+    <Compile Include="Controllers\Authorization\GetToken\GetPublicTokenController.vb" />
+    <Compile Include="Controllers\Peer\Admin\PeerSettingsController.vb" />
+    <Compile Include="Controllers\Peer\Service\PeerCryptoAssetSupportedController.vb" />
+    <Compile Include="Controllers\Peer\Admin\PeerManagerStatusController.vb" />
+    <Compile Include="Controllers\Peer\Service\PeerCurrentStatusController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -213,7 +218,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Controllers\HomeController.vb" />
-    <Compile Include="Controllers\Configure\CryptoAssetDefinitionController.vb" />
+    <Compile Include="Controllers\Archive\CryptoAssetDefinitionController.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -303,15 +308,16 @@
     <Folder Include="Models\" />
     <Folder Include="Properties\" />
     <Folder Include="Views\NetworkDefinition\" />
+    <Folder Include="Views\PeerConfig\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\CHCServerSupport.vbproj">
       <Project>{f87b02ed-de8e-4e2d-894f-8b67d80abe6b}</Project>
       <Name>CHCServerSupport</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CHCElementDefinitionEngineLibrary\CHCDefinitionEngineLibrary.vbproj">
+    <ProjectReference Include="..\CHCElementDefinitionEngineLibrary\CHCMasterNodeEngineLibrary.vbproj">
       <Project>{478482e5-b67d-41f7-aea5-0e02086057d3}</Project>
-      <Name>CHCDefinitionEngineLibrary</Name>
+      <Name>CHCMasterNodeEngineLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
