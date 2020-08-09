@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SettingsData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <gui>true</gui>
+  <dataPath>E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug1</dataPath>
+  <portNumber>1122</portNumber>
+  <useTrack>trackAllRuntime</useTrack>
+  <trackRotate>
+    <frequency>every12h</frequency>
+    <keepLast>lastWeek</keepLast>
+    <keepFile>nothingFiles</keepFile>
+  </trackRotate>
+  <useEventRegistry>true</useEventRegistry>
+  <urlMasternodeStart />
+  <certificateMasternodeStart />
+  <urlMasternodeRuntime />
+  <certificateMasternodeRuntime />
+  <certificateClient />
+  <tokenExpirationMinutes>1</tokenExpirationMinutes>
+</SettingsData>

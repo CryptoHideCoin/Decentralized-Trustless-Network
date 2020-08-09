@@ -1,0 +1,48 @@
+1596917605316,99|2020-08-08T18:13:25|info|moduleMain.run|Begin
+1596917605339,93|2020-08-08T18:13:25|info|moduleMain.run|Commandline process execute is "E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\AdminService.exe" 
+1596917605339,93|2020-08-08T18:13:25|info|moduleMain.run|DataPath is E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug1
+1596917605339,93|2020-08-08T18:13:25|info|moduleMain.run|User Interface visible = false
+1596917605369,56|2020-08-08T18:13:25|info|moduleMain.run|System Registry is running
+1596917605372,55|2020-08-08T18:13:25|info|moduleMain.run|Log engine is running
+1596917605373,51|2020-08-08T18:13:25|info|LogRotate.run|Begin
+1596917605374,56|2020-08-08T18:13:25|info|LogRotate.run|It's now
+1596917605374,56|2020-08-08T18:13:25|info|LogRotate.runWork|Begin
+1596917605377,52|2020-08-08T18:13:25|info|LogRotate.run|Complete
+1596917605379,5|2020-08-08T18:13:25|info|moduleMain.run|Trackrotate is running
+1596917605380,69|2020-08-08T18:13:25|info|LogRotate.runExecuteWork|Begin
+1596917605381,77|2020-08-08T18:13:25|info|LogRotate.runExecuteWork|Complete
+1596917605407,8|2020-08-08T18:13:25|info|moduleMain.run|Counter is running
+1596917605408,51|2020-08-08T18:13:25|info|moduleMain.run|Log.noSave = False
+1596917605408,51|2020-08-08T18:13:25|info|Controllers.WebserviceThread|Begin
+1596917605409,51|2020-08-08T18:13:25|info|moduleMain.run|webserviceThread
+1596917605410,54|2020-08-08T18:13:25|info|moduleMain.run|Completed
+1596917605462,71|2020-08-08T18:13:25|info|Controllers.StartWebService|Begin
+1596917605554,54|2020-08-08T18:13:25|info|Controllers.StartWebService|New Configuration Port 1122
+1596917605564,52|2020-08-08T18:13:25|info|Controllers.StartWebService|Map route
+1596917605567,52|2020-08-08T18:13:25|info|Controllers.StartWebService|Enter in the using
+1596917605655,57|2020-08-08T18:13:25|info|Controllers.StartWebService|WS Listen
+1596917605656,65|2020-08-08T18:13:25|info|Controllers.StartWebService|Webservice Run at 1122 port
+1596917621061,7|2020-08-08T18:13:41|info|moduleMain.run|Begin
+1596917621085,65|2020-08-08T18:13:41|info|moduleMain.run|Commandline process execute is "E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\AdminService.exe" 
+1596917621085,65|2020-08-08T18:13:41|info|moduleMain.run|DataPath is E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug1
+1596917621085,65|2020-08-08T18:13:41|info|moduleMain.run|User Interface visible = false
+1596917621121,43|2020-08-08T18:13:41|info|moduleMain.run|System Registry is running
+1596917621124,58|2020-08-08T18:13:41|info|moduleMain.run|Log engine is running
+1596917621125,58|2020-08-08T18:13:41|info|LogRotate.run|Begin
+1596917621125,58|2020-08-08T18:13:41|info|LogRotate.run|It's now
+1596917621126,57|2020-08-08T18:13:41|info|LogRotate.runWork|Begin
+1596917621128,43|2020-08-08T18:13:41|info|LogRotate.run|Complete
+1596917621131,43|2020-08-08T18:13:41|info|moduleMain.run|Trackrotate is running
+1596917621132,56|2020-08-08T18:13:41|info|LogRotate.runExecuteWork|Begin
+1596917621134,44|2020-08-08T18:13:41|info|LogRotate.runExecuteWork|Complete
+1596917621156,41|2020-08-08T18:13:41|info|moduleMain.run|Counter is running
+1596917621157,52|2020-08-08T18:13:41|info|moduleMain.run|Log.noSave = False
+1596917621158,41|2020-08-08T18:13:41|info|Controllers.WebserviceThread|Begin
+1596917621159,44|2020-08-08T18:13:41|info|moduleMain.run|webserviceThread
+1596917621161,43|2020-08-08T18:13:41|info|moduleMain.run|Completed
+1596917621217,41|2020-08-08T18:13:41|info|Controllers.StartWebService|Begin
+1596917621300,43|2020-08-08T18:13:41|info|Controllers.StartWebService|New Configuration Port 1122
+1596917621314,48|2020-08-08T18:13:41|info|Controllers.StartWebService|Map route
+1596917621323,43|2020-08-08T18:13:41|info|Controllers.StartWebService|Enter in the using
+1596917621445,47|2020-08-08T18:13:41|info|Controllers.StartWebService|WS Listen
+1596917621445,47|2020-08-08T18:13:41|info|Controllers.StartWebService|Webservice Run at 1122 port
