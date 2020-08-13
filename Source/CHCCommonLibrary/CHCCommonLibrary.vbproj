@@ -75,7 +75,6 @@
     <Compile Include="FileManager\CHCBaseFileJson.vb" />
     <Compile Include="Encryption\ModuleEncryption.vb" />
     <Compile Include="Miscellaneous\CHCDateTime.vb" />
-    <Compile Include="Miscellaneous\CHCTrackEngine.vb" />
     <Compile Include="Miscellaneous\CHCStringExtensions.vb" />
     <Compile Include="Models\EngineStandardInterface.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

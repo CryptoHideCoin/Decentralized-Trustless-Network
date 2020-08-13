@@ -30,6 +30,37 @@ Namespace AreaCommon
 
 
         ''' <summary>
+        ''' This method provide to copy a command Parameters
+        ''' </summary>
+        ''' <param name="command"></param>
+        Private Sub copyCommandParameters(ByRef command As ManageCommandLine)
+
+            Try
+
+                With command.parameters.data
+
+                    If (.certificateClient.Trim.Length > 0) Then settings.data.certificateClient = .certificateClient
+                    If (.certificateMasternodeEngine.Trim.Length > 0) Then settings.data.certificateMasternodeEngine = .certificateMasternodeEngine
+                    If (.certificateMasternodeStart.Trim.Length > 0) Then settings.data.certificateMasternodeStart = .certificateMasternodeStart
+                    If (.dataPath.Trim.Length > 0) Then settings.data.dataPath = .dataPath
+                    If (.gui) Then settings.data.gui = .gui
+                    If (.noConsoleMessage) Then settings.data.noConsoleMessage = .noConsoleMessage
+                    If (.portNumber <> 1122) Then settings.data.portNumber = .portNumber
+                    If (.recallStarter) Then settings.data.recallStarter = .recallStarter
+                    If (.urlMasternodeEngine.Trim.Length > 0) Then settings.data.urlMasternodeEngine = .urlMasternodeEngine
+                    If (.urlMasternodeStart.Trim.Length > 0) Then settings.data.urlMasternodeStart = .urlMasternodeStart
+                    If (.walletPublicAddress.Trim.Length > 0) Then settings.data.walletPublicAddress = .walletPublicAddress
+
+                End With
+
+            Catch ex As Exception
+
+            End Try
+
+        End Sub
+
+
+        ''' <summary>
         ''' This method provide to prepare a startup of application
         ''' </summary>
         ''' <returns></returns>
@@ -40,6 +71,8 @@ Namespace AreaCommon
                 Dim command As New ManageCommandLine
 
                 command.run(Environment.CommandLine.Split("/"))
+
+                log.noPrintConsole = settings.data.noConsoleMessage
 
                 printWelcome()
 
@@ -55,7 +88,7 @@ Namespace AreaCommon
 
                         paths.pathBaseData = settings.data.dataPath
 
-                        haveSettings = True
+                        haveSettings = Not settings.data.gui
 
                     Else
 
@@ -66,6 +99,18 @@ Namespace AreaCommon
                     If Not haveSettings Then
 
                         state.uiVisible = True
+
+                    Else
+
+                        If command.useLastSettings Then
+
+                            copyCommandParameters(command)
+
+                            state.uiVisible = False
+
+                            paths.pathBaseData = settings.data.dataPath
+
+                        End If
 
                     End If
 
@@ -93,6 +138,8 @@ Namespace AreaCommon
                 End If
 
                 log.trackIntoConsole("Root paths set " & paths.pathBaseData)
+
+                state.currentApplication = AppState.enumStateApplication.waitingToStart
 
                 If state.uiVisible Then
 
@@ -122,9 +169,47 @@ Namespace AreaCommon
 
 
         ''' <summary>
+        ''' This method provide to recall the Starter Service
+        ''' </summary>
+        Private Sub recallStarter()
+
+            Try
+
+                log.track("moduleMain.recallStarter", "Begin")
+
+                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of Models.BooleanModel)
+
+                handShakeEngine.url = "http://" & AreaCommon.settings.data.urlMasternodeStart & "/api/v1.0/System/handShake/?serviceAdministrative=true&serviceEngine=false&certificateValue=" & settings.data.certificateMasternodeStart
+
+                If handShakeEngine.getData() Then
+
+                    If Not handShakeEngine.data.value Then
+
+                        log.track("moduleMain.recallStarter", "Cannot connection with the service or wrong certificate", "fatal")
+
+                    End If
+
+                End If
+
+            Catch ex As Exception
+
+                log.track("moduleMain.recallStarter", "Error:" & ex.Message, "fatal")
+
+                CloseApplication()
+
+            Finally
+
+                log.track("moduleMain.recallStarter", "Complete")
+
+            End Try
+
+        End Sub
+
+
+        ''' <summary>
         ''' This method provide to run the service
         ''' </summary>
-        Sub run()
+        Sub run(Optional ByVal saveSettings As Boolean = False)
 
             Try
 
@@ -176,6 +261,14 @@ Namespace AreaCommon
 
                 log.track("moduleMain.run", "Log.noSave = " & log.noSave)
 
+                If saveSettings Then
+
+                    settings.save()
+
+                    log.track("moduleMain.run", "Settings saved")
+
+                End If
+
                 If webserviceThread() Then
 
                     log.trackIntoConsole("Service is in run")
@@ -184,13 +277,21 @@ Namespace AreaCommon
 
                     log.trackIntoConsole("Problem during start service")
 
+                    End
+
                 End If
 
-                log.track("moduleMain.run", "webserviceThread")
+                If settings.data.recallStarter Then
+
+                    recallStarter()
+
+                End If
 
             Catch ex As Exception
 
                 log.track("moduleMain.run", "Error:" & ex.Message, "fatal")
+
+                CloseApplication()
 
             Finally
 

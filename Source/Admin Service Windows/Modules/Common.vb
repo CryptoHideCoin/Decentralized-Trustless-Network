@@ -23,6 +23,31 @@ Namespace AreaCommon
 
 
 
+
+
+        ''' <summary>
+        ''' This application provides to close application
+        ''' </summary>
+        Public Sub CloseApplication(Optional ByVal NotWait As Boolean = False)
+
+            Console.WriteLine("")
+            Console.WriteLine("")
+
+            If Not NotWait Then
+
+                Console.Write("Press key to continue")
+                Console.ReadKey()
+                Console.WriteLine("")
+                Console.WriteLine("")
+
+            End If
+
+            End
+
+        End Sub
+
+
+
         Public Function refreshBatch(ByRef adapterLog As CHCServerSupport.Support.LogEngine) As Boolean
 
             Try

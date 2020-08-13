@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRegistryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <RegistryData>
+    <istant>2020-08-12T23:54:14.3957107+02:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-08-12T23:54:14.4857379+02:00</istant>
+    <type>applicationError</type>
+    <description>Enable start a webservice; check admin authorizathion - Error:Il file non è stato trovato.</description>
+    <fileDetail>E:\CryptoHideCoinDTN\Masternode\Applications\0.1.0 - First Edition\System\Logs\Starter\main-2020-08-12.track</fileDetail>
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-08-12T23:54:14.6828119+02:00</istant>
+    <type>applicationError</type>
+    <description>Enable start a webservice; check admin authorizathion - Error:Si sono verificati uno o più errori.</description>
+    <fileDetail>E:\CryptoHideCoinDTN\Masternode\Applications\0.1.0 - First Edition\System\Logs\Starter\main-2020-08-12.track</fileDetail>
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-08-12T23:54:45.4919305+02:00</istant>
+    <type>applicationError</type>
+    <description>Timeout to connect Admin Service</description>
+    <fileDetail>E:\CryptoHideCoinDTN\Masternode\Applications\0.1.0 - First Edition\System\Logs\Starter\main-2020-08-12.track</fileDetail>
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-08-12T23:55:25.6213703+02:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-08-12T23:55:56.6595769+02:00</istant>
+    <type>applicationError</type>
+    <description>Timeout to connect Admin Service</description>
+    <fileDetail>E:\CryptoHideCoinDTN\Masternode\Applications\0.1.0 - First Edition\System\Logs\Starter\main-2020-08-12.track</fileDetail>
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-08-12T23:56:16.6457622+02:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-08-12T23:56:55.2825989+02:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-08-12T23:57:33.7443148+02:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-08-12T23:58:09.0225363+02:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+</ArrayOfRegistryData>

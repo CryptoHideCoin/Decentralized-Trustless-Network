@@ -1,7 +1,6 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports System.Runtime.InteropServices
 
 
 Namespace AreaCommon
@@ -13,8 +12,8 @@ Namespace AreaCommon
         Private _completePathSettingFile As String = ""
 
         Public parameters As New AppSettings
-
         Public haveParameters As Boolean = False
+        Public useLastSettings As Boolean = False
 
 
 
@@ -26,7 +25,25 @@ Namespace AreaCommon
 
                     parameters.data.dataPath = _commandLine.GetValue("DataPath".ToLower())
 
-                    haveParameters = True
+                    If (parameters.data.dataPath.Length > 0) Then
+
+                        If Not IO.Directory.Exists(parameters.data.dataPath) Then
+
+                            parameters.data.dataPath = ""
+
+                        Else
+
+                            haveParameters = True
+
+                        End If
+
+                    End If
+
+                End If
+
+                If _commandLine.exist("PublicWalletAddress".ToLower()) Then
+
+                    parameters.data.walletPublicAddress = _commandLine.GetValue("PublicWalletAddress")
 
                 End If
 
@@ -62,29 +79,25 @@ Namespace AreaCommon
 
                     parameters.data.urlMasternodeStart = _commandLine.GetValue("MasternodeStartURL".ToLower())
 
-                    haveParameters = True
-
                 End If
 
                 If _commandLine.exist("MasternodeStartCertificate".ToLower()) Then
 
                     parameters.data.certificateMasternodeStart = _commandLine.GetValue("MasternodeStartCertificate".ToLower())
 
+                End If
+
+                If _commandLine.exist("MasternodeEngineURL".ToLower()) Then
+
+                    parameters.data.urlMasternodeEngine = _commandLine.GetValue("MasternodeEngineURL".ToLower())
+
                     haveParameters = True
 
                 End If
 
-                If _commandLine.exist("MasternodeRuntimeURL".ToLower()) Then
+                If _commandLine.exist("MasternodeEngineCertificate".ToLower()) Then
 
-                    parameters.data.urlMasternodeRuntime = _commandLine.GetValue("MasternodeRuntimeURL".ToLower())
-
-                    haveParameters = True
-
-                End If
-
-                If _commandLine.exist("MasternodeRuntimeCertificate".ToLower()) Then
-
-                    parameters.data.certificateMasternodeRuntime = _commandLine.GetValue("MasternodeRuntimeCertificate".ToLower())
+                    parameters.data.certificateMasternodeEngine = _commandLine.GetValue("MasternodeEngineCertificate".ToLower())
 
                     haveParameters = True
 
@@ -101,6 +114,18 @@ Namespace AreaCommon
                 If _commandLine.exist("ConfigFileName".ToLower()) Then
 
                     _completePathSettingFile = _commandLine.GetValue("ConfigFileName".ToLower())
+
+                End If
+
+                If _commandLine.exist("NoConsoleMessage".ToLower()) Then
+
+                    parameters.data.noConsoleMessage = True
+
+                End If
+
+                If _commandLine.exist("RecallStarter".ToLower()) Then
+
+                    parameters.data.recallStarter = True
 
                 End If
 
@@ -122,19 +147,31 @@ Namespace AreaCommon
                     log.trackIntoConsole("  /UseEventRegistry             Enable writing of system events")
                     log.trackIntoConsole("  /MasternodeStartURL           Set the url of the masternode start")
                     log.trackIntoConsole("  /MasternodeStartCertificate   Set the certificate of the masternode start")
-                    log.trackIntoConsole("  /MasternodeRuntimeURL         Set the url of the masternode runtime")
-                    log.trackIntoConsole("  /MasternodeRuntimeCertificate Set the certificate of the masternode runtime")
+                    log.trackIntoConsole("  /MasternodeEngineURL          Set the url of the masternode engine")
+                    log.trackIntoConsole("  /MasternodeEngineCertificate  Set the certificate of the masternode engine")
                     log.trackIntoConsole("  /ClientCertificate            Set the certificate of the client")
                     log.trackIntoConsole("  /ConfigFileName               Complete path of a config file")
                     log.trackIntoConsole("  /Gui                          Activates GUI mode")
+                    log.trackIntoConsole("  /PublicWalletAddress          Specify the public wallet address")
+                    log.trackIntoConsole("  /NoConsoleMessage             Disable console write message")
+                    log.trackIntoConsole("  /Help                         Show this panel")
 
                     End
 
                 End If
 
+                If _commandLine.exist("UseLastSettings".ToLower()) Then
+
+                    haveParameters = False
+                    useLastSettings = True
+
+                End If
+
             Catch ex As Exception
 
-                log.track("AdminService.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "error")
+                log.track("AdminService.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "fatal")
+
+                CloseApplication()
 
             End Try
 

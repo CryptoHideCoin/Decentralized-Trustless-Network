@@ -15,13 +15,14 @@ Public Class Main
             With AreaCommon.settings.data
 
                 localPathData.Text = .dataPath
+                publicWalletAddress.Text = .walletPublicAddress
                 localPortNumber.Text = .portNumber
 
                 masternodeStartUrl.Text = .urlMasternodeStart
                 certificateMasternodeStart.Text = .certificateMasternodeStart
 
-                masternodeRuntimeURL.Text = .urlMasternodeRuntime
-                certificateMasternodeRuntime.Text = .urlMasternodeRuntime
+                masternodeEngineURL.Text = .urlMasternodeEngine
+                certificateMasternodeEngine.Text = .certificateMasternodeEngine
 
                 certificateClient.Text = .certificateClient
                 writeLogFile.Checked = (.useTrack <> AppSettings.TrackRuntimeModeEnum.dontTrack)
@@ -47,13 +48,14 @@ Public Class Main
                 .gui = True
 
                 .dataPath = localPathData.Text
+                .walletPublicAddress = publicWalletAddress.Text
                 .portNumber = localPortNumber.Text
 
                 .urlMasternodeStart = masternodeStartUrl.Text
                 .certificateMasternodeStart = certificateMasternodeStart.Text
 
-                .urlMasternodeRuntime = masternodeRuntimeURL.Text
-                .urlMasternodeRuntime = certificateMasternodeRuntime.Text
+                .urlMasternodeEngine = masternodeEngineURL.Text
+                .certificateMasternodeEngine = certificateMasternodeEngine.Text
 
                 .certificateClient = certificateClient.Text
 
@@ -97,6 +99,27 @@ Public Class Main
             localPathData.Enabled = stateValue
             browseLocalPath.Enabled = stateValue
             portNumberLabel.Enabled = stateValue
+
+            masternodeStartGroup.Enabled = stateValue
+            urlMasternodeStartLabel.Enabled = stateValue
+            masternodeStartUrl.Enabled = stateValue
+
+            certificateMasternodeLabel.Enabled = stateValue
+            certificateMasternodeBrowserButton.Enabled = stateValue
+            testMasternodeServiceButton.Enabled = stateValue
+
+            masternodeEngineGroup.Enabled = stateValue
+            urlMasternodeEngineLabel.Enabled = stateValue
+            masternodeEngineURL.Enabled = stateValue
+            certificateMasternodeEngineLabel.Enabled = stateValue
+            certificateMasternodeEngine.Enabled = stateValue
+            certificateMasternodeEngineBrowserButton.Enabled = stateValue
+            testMasternodeEngineServiceButton.Enabled = stateValue
+
+            masternodeClientGroup.Enabled = stateValue
+            certificateMasternodeClientLabel.Enabled = stateValue
+            certificateClient.Enabled = stateValue
+            certificateMasternodeClientBrowserButton.Enabled = stateValue
 
         Catch ex As Exception
 
@@ -150,12 +173,6 @@ Public Class Main
                 loadDataIntoSettings()
                 changeStateEntireInterface()
 
-                If rememberThis.Checked Then
-
-                    AreaCommon.settings.save()
-
-                End If
-
                 _canChangeTab = True
 
                 startButton.Enabled = False
@@ -166,7 +183,7 @@ Public Class Main
                 tabControl.SelectedIndex = 1
                 AreaCommon.log.objectConsoleGUI = logConsoleText
 
-                AreaCommon.run()
+                AreaCommon.run(rememberThis.Checked)
 
             End If
 
@@ -219,7 +236,7 @@ Public Class Main
 
     End Sub
 
-    Private Sub browseLocalPath_Click(sender As Object, e As EventArgs)
+    Private Sub browseLocalPath_Click(sender As Object, e As EventArgs) Handles browseLocalPath.Click
 
         Try
 
@@ -310,5 +327,131 @@ Public Class Main
 
     End Sub
 
+    Private Sub testMasternodeServiceButton_Click(sender As Object, e As EventArgs) Handles testMasternodeServiceButton.Click
 
+        If (masternodeStartUrl.Text.ToString.Trim.Length > 0) Then
+
+            Try
+
+                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.BooleanModel)
+
+                handShakeEngine.url = "http://" & masternodeStartUrl.Text & "/api/v1.0/system/testService"
+
+                If (handShakeEngine.getData() = "") Then
+
+                    If handShakeEngine.data.value Then
+
+                        MessageBox.Show("Test connection succesful", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    Else
+
+                        MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                    End If
+
+                End If
+
+            Catch ex As Exception
+
+                MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            End Try
+
+        End If
+
+    End Sub
+
+    Private Sub certificateMasternodeBrowserButton_Click(sender As Object, e As EventArgs) Handles certificateMasternodeBrowserButton.Click
+
+        Try
+
+            openFileDialog.FileName = ""
+
+            If (openFileDialog.ShowDialog() = DialogResult.OK) Then
+
+                certificateMasternodeStart.Text = My.Computer.FileSystem.ReadAllText(openFileDialog.FileName)
+
+            End If
+
+        Catch ex As Exception
+
+            MessageBox.Show("An error occurrent during certificateMasternodeBrowserButton_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+        End Try
+
+    End Sub
+
+    Private Sub certificateMasternodeEngineBrowserButton_Click(sender As Object, e As EventArgs) Handles certificateMasternodeEngineBrowserButton.Click
+
+        Try
+
+            openFileDialog.FileName = ""
+
+            If (openFileDialog.ShowDialog() = DialogResult.OK) Then
+
+                certificateMasternodeEngine.Text = My.Computer.FileSystem.ReadAllText(openFileDialog.FileName)
+
+            End If
+
+        Catch ex As Exception
+
+            MessageBox.Show("An error occurrent during certificateMasternodeEngineBrowserButton_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+        End Try
+
+    End Sub
+
+    Private Sub certificateMasternodeClientBrowserButton_Click(sender As Object, e As EventArgs) Handles certificateMasternodeClientBrowserButton.Click
+
+        Try
+
+            openFileDialog.FileName = ""
+
+            If (openFileDialog.ShowDialog() = DialogResult.OK) Then
+
+                certificateClient.Text = My.Computer.FileSystem.ReadAllText(openFileDialog.FileName)
+
+            End If
+
+        Catch ex As Exception
+
+            MessageBox.Show("An error occurrent during certificateMasternodeClientBrowserButton_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+        End Try
+
+    End Sub
+
+    Private Sub testMasternodeEngineServiceButton_Click(sender As Object, e As EventArgs) Handles testMasternodeEngineServiceButton.Click
+
+        If (masternodeEngineURL.Text.ToString.Trim.Length > 0) Then
+
+            Try
+
+                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.BooleanModel)
+
+                handShakeEngine.url = "http://" & masternodeEngineURL.Text & "/api/v1.0/system/testService"
+
+                If (handShakeEngine.getData() = "") Then
+
+                    If handShakeEngine.data.value Then
+
+                        MessageBox.Show("Test connection succesful", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    Else
+
+                        MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                    End If
+
+                End If
+
+            Catch ex As Exception
+
+                MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            End Try
+
+        End If
+
+    End Sub
 End Class

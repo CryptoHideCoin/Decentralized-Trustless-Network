@@ -10,6 +10,8 @@ Namespace AreaCommon
 
     Module Controllers
 
+        Private _controllerComplete As Boolean = False
+
 
         ''' <summary>
         ''' This method provide to start a webservice
@@ -28,7 +30,7 @@ Namespace AreaCommon
 
                 log.track("Controllers.StartWebService", "New Configuration Port " & strPort)
 
-                httpConfig.Routes.MapHttpRoute(name:="SystemApi", routeTemplate:="api/v1.0/System/{controller}")
+                httpConfig.Routes.MapHttpRoute(name:="SystemApi", routeTemplate:="api/v1.0/system/{controller}")
 
                 log.track("Controllers.StartWebService", "Map route")
 
@@ -48,6 +50,8 @@ Namespace AreaCommon
 
                         log.track("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion - Error:" & aggEx.Message, "fatal")
 
+                        CloseApplication()
+
                     End Try
 
                     Do
@@ -56,9 +60,17 @@ Namespace AreaCommon
 
                 End Using
 
+                registry.addNew(CHCServerSupport.Support.RegistryEngine.RegistryData.TypeEvent.applicationShutdown)
+
+                state.currentApplication = AppState.enumStateApplication.waitingToStart
+
+                _controllerComplete = True
+
             Catch ex As Exception
 
                 log.track("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion - Error:" & ex.Message, "fatal")
+
+                CloseApplication()
 
             End Try
 
@@ -77,6 +89,12 @@ Namespace AreaCommon
                 Dim objWS As New Threading.Thread(AddressOf startWebService)
 
                 objWS.Start()
+
+                Do While Not _controllerComplete
+
+                    Application.DoEvents()
+
+                Loop
 
                 Return True
 

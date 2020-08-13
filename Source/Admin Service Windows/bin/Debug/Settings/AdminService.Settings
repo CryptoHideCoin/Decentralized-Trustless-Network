@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SettingsData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <gui>true</gui>
+  <dataPath>E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug</dataPath>
+  <walletPublicAddress>1E99423A4ED27608A15A2616A2B0E9E52CED330AC530EDCC32C8FFC6A526AEDD</walletPublicAddress>
+  <portNumber>1122</portNumber>
+  <useTrack>trackAllRuntime</useTrack>
+  <trackRotate>
+    <frequency>everyDay</frequency>
+    <keepLast>lastWeek</keepLast>
+    <keepFile>onlyMainTracks</keepFile>
+  </trackRotate>
+  <useEventRegistry>true</useEventRegistry>
+  <urlMasternodeStart>localhost:1123</urlMasternodeStart>
+  <certificateMasternodeStart>0231fds3gf1sgf31vgd3s1gs3d1gd3f</certificateMasternodeStart>
+  <urlMasternodeEngine>localhost:1124</urlMasternodeEngine>
+  <certificateMasternodeEngine>0231fds3gf1sgf31vgd3s1gs3d1gd3f</certificateMasternodeEngine>
+  <certificateClient>0231fds3gf1sgf31vgd3s1gs3d1gd3f</certificateClient>
+  <noConsoleMessage>false</noConsoleMessage>
+  <recallStarter>false</recallStarter>
+</SettingsData>

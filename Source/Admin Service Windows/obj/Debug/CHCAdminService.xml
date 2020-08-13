@@ -1,0 +1,78 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CHCAdminService
+</name>
+</assembly>
+<members>
+<member name="T:AdminService.My.Resources.Resources">
+<summary>
+  Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
+</summary>
+</member>
+<member name="P:AdminService.My.Resources.Resources.ResourceManager">
+<summary>
+  Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
+</summary>
+</member>
+<member name="P:AdminService.My.Resources.Resources.Culture">
+<summary>
+  Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
+  ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
+</summary>
+</member>
+<member name="M:AdminService.AreaCommon.moduleMain.CloseApplication(System.Boolean)">
+ <summary>
+ This application provides to close application
+ </summary>
+</member>
+<member name="M:AdminService.AreaCommon.Controllers.startWebService">
+ <summary>
+ This method provide to start a webservice
+ </summary>
+</member>
+<member name="M:AdminService.AreaCommon.Controllers.webserviceThread">
+ <summary>
+ This method provide to start a webservice in a new thread
+ </summary>
+</member>
+<member name="M:AdminService.AreaCommon.StartUp.printWelcome">
+ <summary>
+ This method provide to print a welcome message into console
+ </summary>
+</member>
+<member name="M:AdminService.AreaCommon.StartUp.copyCommandParameters(AdminService.AreaCommon.ManageCommandLine@)">
+ <summary>
+ This method provide to copy a command Parameters
+ </summary>
+ <param name="command"></param>
+</member>
+<member name="M:AdminService.AreaCommon.StartUp.firstProcedureStartup">
+ <summary>
+ This method provide to prepare a startup of application
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AdminService.AreaCommon.StartUp.recallStarter">
+ <summary>
+ This method provide to recall the Starter Service
+ </summary>
+</member>
+<member name="M:AdminService.AreaCommon.StartUp.run(System.Boolean)">
+ <summary>
+ This method provide to run the service
+ </summary>
+</member>
+<member name="M:AdminService.AreaCommon.StartUp.Main">
+ <summary>
+ This method provide to prepare to start the application
+ </summary>
+</member>
+<member name="M:AdminService.AreaCommon.StartUp.stop">
+ <summary>
+ This method provide to stop the application
+ </summary>
+</member>
+</members>
+</doc>

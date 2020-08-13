@@ -1,0 +1,94 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CHCStarterService
+</name>
+</assembly>
+<members>
+<member name="T:StarterService.My.Resources.Resources">
+<summary>
+  Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
+</summary>
+</member>
+<member name="P:StarterService.My.Resources.Resources.ResourceManager">
+<summary>
+  Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
+</summary>
+</member>
+<member name="P:StarterService.My.Resources.Resources.Culture">
+<summary>
+  Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
+  ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
+</summary>
+</member>
+<member name="M:StarterService.AreaCommon.moduleMain.closeApplication(System.Boolean)">
+ <summary>
+ This application provides to close application
+ </summary>
+</member>
+<member name="M:StarterService.AreaCommon.moduleMain.executeExternalApplication(System.String,System.String)">
+ <summary>
+ This method provide to run an external application with parameters
+ </summary>
+ <param name="applicationName"></param>
+ <param name="parameterValue"></param>
+</member>
+<member name="M:StarterService.AreaCommon.Controllers.startWebService">
+ <summary>
+ This method provide to start a webservice
+ </summary>
+</member>
+<member name="M:StarterService.AreaCommon.Controllers.webserviceThread">
+ <summary>
+ This method provide to start a webservice in a new thread
+ </summary>
+</member>
+<member name="M:StarterService.AreaCommon.StartUp.printWelcome">
+ <summary>
+ This method provide to print a welcome message into console
+ </summary>
+</member>
+<member name="M:StarterService.AreaCommon.StartUp.firstProcedureStartup">
+ <summary>
+ This method provide to prepare a startup of application
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StarterService.AreaCommon.StartUp.runAdminService">
+ <summary>
+ This method provide to run the admin service
+ </summary>
+</member>
+<member name="M:StarterService.AreaCommon.StartUp.runCheckUpdate">
+ <summary>
+ This method provide to execute a check an update of a service
+ </summary>
+</member>
+<member name="M:StarterService.AreaCommon.StartUp.runEngine">
+ <summary>
+ This method provide to run and engine of masternode
+ </summary>
+</member>
+<member name="M:StarterService.AreaCommon.StartUp.runApplication">
+ <summary>
+ This method provide to execute the application
+ </summary>
+</member>
+<member name="M:StarterService.AreaCommon.StartUp.run">
+ <summary>
+ This method provide to run the service
+ </summary>
+</member>
+<member name="M:StarterService.AreaCommon.StartUp.Main">
+ <summary>
+ This method provide to prepare to start the application
+ </summary>
+</member>
+<member name="M:StarterService.AreaCommon.StartUp.stop">
+ <summary>
+ This method provide to stop the application
+ </summary>
+</member>
+</members>
+</doc>

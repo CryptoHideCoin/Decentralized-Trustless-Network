@@ -23,6 +23,7 @@ Public Class AppSettings
         Public gui As Boolean = False
 
         Public dataPath As String = ""
+        Public walletPublicAddress As String = ""
         Public portNumber As Integer = 1122
 
         Public useTrack As TrackRuntimeModeEnum = TrackRuntimeModeEnum.trackAllRuntime
@@ -33,10 +34,13 @@ Public Class AppSettings
         Public urlMasternodeStart As String = ""
         Public certificateMasternodeStart As String = ""
 
-        Public urlMasternodeRuntime As String = ""
-        Public certificateMasternodeRuntime As String = ""
+        Public urlMasternodeEngine As String = ""
+        Public certificateMasternodeEngine As String = ""
 
         Public certificateClient As String = ""
+
+        Public noConsoleMessage As Boolean = False
+        Public recallStarter As Boolean = False
 
     End Class
 

@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <StartupObject>Sub Main</StartupObject>
     <RootNamespace>AdminService</RootNamespace>
-    <AssemblyName>AdminService</AssemblyName>
+    <AssemblyName>CHCAdminService</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>AdminService.xml</DocumentationFile>
+    <DocumentationFile>CHCAdminService.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>AdminService.xml</DocumentationFile>
+    <DocumentationFile>CHCAdminService.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -51,8 +51,9 @@
     <ApplicationIcon>64.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CHCCommonLibrary">
-      <HintPath>..\CHCCommonLibrary\bin\Debug\CHCCommonLibrary.dll</HintPath>
+    <Reference Include="CHCServerSupport, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CHCServerSupport.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -96,6 +97,7 @@
     <Compile Include="Classes\AppState.vb" />
     <Compile Include="Classes\Paths.vb" />
     <Compile Include="Controllers\v1.0\System\TestController.vb" />
+    <Compile Include="Models\GeneralResponseModel.vb" />
     <Compile Include="Modules\Common.vb" />
     <Compile Include="Forms\Main.vb">
       <SubType>Form</SubType>
@@ -126,6 +128,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -151,11 +154,10 @@
     <Content Include="64.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\CHCServerSupport.vbproj">
-      <Project>{f87b02ed-de8e-4e2d-894f-8b67d80abe6b}</Project>
-      <Name>CHCServerSupport</Name>
+    <ProjectReference Include="..\CHCCommonLibrary\CHCCommonLibrary.vbproj">
+      <Project>{89648581-c73c-4d51-97df-81d9860c9fa3}</Project>
+      <Name>CHCCommonLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

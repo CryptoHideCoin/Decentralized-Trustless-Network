@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRegistryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <RegistryData>
+    <istant>2020-08-12T17:45:52.1673485+02:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-08-12T17:46:51.6047626+02:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-08-12T18:05:23.4172145+02:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+  <RegistryData>
+    <istant>2020-08-12T18:05:28.0582302+02:00</istant>
+    <type>applicationShutdown</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+</ArrayOfRegistryData>

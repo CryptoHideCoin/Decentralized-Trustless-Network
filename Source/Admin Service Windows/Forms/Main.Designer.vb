@@ -32,24 +32,27 @@ Partial Class Main
         Me.rememberThis = New System.Windows.Forms.CheckBox()
         Me.useEventRegistry = New System.Windows.Forms.CheckBox()
         Me.writeLogFile = New System.Windows.Forms.CheckBox()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.masternodeClientGroup = New System.Windows.Forms.GroupBox()
+        Me.certificateMasternodeClientBrowserButton = New System.Windows.Forms.Button()
         Me.certificateClient = New System.Windows.Forms.TextBox()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.Button6 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.certificateMasternodeClientLabel = New System.Windows.Forms.Label()
+        Me.masternodeStartGroup = New System.Windows.Forms.GroupBox()
+        Me.certificateMasternodeBrowserButton = New System.Windows.Forms.Button()
+        Me.testMasternodeServiceButton = New System.Windows.Forms.Button()
         Me.certificateMasternodeStart = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.certificateMasternodeLabel = New System.Windows.Forms.Label()
         Me.masternodeStartUrl = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.Button7 = New System.Windows.Forms.Button()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.certificateMasternodeRuntime = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.masternodeRuntimeURL = New System.Windows.Forms.TextBox()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.urlMasternodeStartLabel = New System.Windows.Forms.Label()
+        Me.masternodeEngineGroup = New System.Windows.Forms.GroupBox()
+        Me.certificateMasternodeEngineBrowserButton = New System.Windows.Forms.Button()
+        Me.testMasternodeEngineServiceButton = New System.Windows.Forms.Button()
+        Me.certificateMasternodeEngine = New System.Windows.Forms.TextBox()
+        Me.certificateMasternodeEngineLabel = New System.Windows.Forms.Label()
+        Me.masternodeEngineURL = New System.Windows.Forms.TextBox()
+        Me.urlMasternodeEngineLabel = New System.Windows.Forms.Label()
         Me.localPathAndDataPortNumber = New System.Windows.Forms.GroupBox()
+        Me.publicWalletAddress = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
         Me.localPortNumber = New System.Windows.Forms.TextBox()
         Me.portNumberLabel = New System.Windows.Forms.Label()
         Me.browseLocalPath = New System.Windows.Forms.Button()
@@ -58,72 +61,78 @@ Partial Class Main
         Me.logConsoleText = New System.Windows.Forms.TextBox()
         Me.logFileButton = New System.Windows.Forms.Button()
         Me.registryEventButton = New System.Windows.Forms.Button()
+        Me.openFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.tabControl.SuspendLayout()
         Me.TabPage1.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
+        Me.masternodeClientGroup.SuspendLayout()
+        Me.masternodeStartGroup.SuspendLayout()
+        Me.masternodeEngineGroup.SuspendLayout()
         Me.localPathAndDataPortNumber.SuspendLayout()
         Me.LogTab.SuspendLayout()
         Me.SuspendLayout()
         '
         'refreshButton
         '
+        Me.refreshButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.refreshButton.Enabled = False
         Me.refreshButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.refreshButton.Location = New System.Drawing.Point(626, 361)
+        Me.refreshButton.Location = New System.Drawing.Point(626, 366)
         Me.refreshButton.Name = "refreshButton"
         Me.refreshButton.Size = New System.Drawing.Size(91, 49)
-        Me.refreshButton.TabIndex = 13
+        Me.refreshButton.TabIndex = 11
         Me.refreshButton.Text = "Refresh"
         Me.refreshButton.UseVisualStyleBackColor = True
         '
         'stopButton
         '
+        Me.stopButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.stopButton.Enabled = False
         Me.stopButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.stopButton.Location = New System.Drawing.Point(626, 111)
         Me.stopButton.Name = "stopButton"
         Me.stopButton.Size = New System.Drawing.Size(91, 49)
-        Me.stopButton.TabIndex = 11
+        Me.stopButton.TabIndex = 8
         Me.stopButton.Text = "STOP []"
         Me.stopButton.UseVisualStyleBackColor = True
         '
         'startButton
         '
+        Me.startButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.startButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.startButton.Location = New System.Drawing.Point(626, 52)
         Me.startButton.Name = "startButton"
         Me.startButton.Size = New System.Drawing.Size(91, 49)
-        Me.startButton.TabIndex = 10
+        Me.startButton.TabIndex = 7
         Me.startButton.Text = "RUN >>"
         Me.startButton.UseVisualStyleBackColor = True
         '
         'tabControl
         '
+        Me.tabControl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tabControl.Controls.Add(Me.TabPage1)
         Me.tabControl.Controls.Add(Me.LogTab)
         Me.tabControl.Location = New System.Drawing.Point(12, 16)
         Me.tabControl.Name = "tabControl"
         Me.tabControl.SelectedIndex = 0
-        Me.tabControl.Size = New System.Drawing.Size(608, 455)
-        Me.tabControl.TabIndex = 17
+        Me.tabControl.Size = New System.Drawing.Size(608, 460)
+        Me.tabControl.TabIndex = 0
         '
         'TabPage1
         '
         Me.TabPage1.Controls.Add(Me.rememberThis)
         Me.TabPage1.Controls.Add(Me.useEventRegistry)
         Me.TabPage1.Controls.Add(Me.writeLogFile)
-        Me.TabPage1.Controls.Add(Me.GroupBox4)
-        Me.TabPage1.Controls.Add(Me.GroupBox2)
-        Me.TabPage1.Controls.Add(Me.GroupBox3)
+        Me.TabPage1.Controls.Add(Me.masternodeClientGroup)
+        Me.TabPage1.Controls.Add(Me.masternodeStartGroup)
+        Me.TabPage1.Controls.Add(Me.masternodeEngineGroup)
         Me.TabPage1.Controls.Add(Me.localPathAndDataPortNumber)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(600, 429)
+        Me.TabPage1.Size = New System.Drawing.Size(600, 434)
         Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Console"
+        Me.TabPage1.Text = "Parameter"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'rememberThis
@@ -131,10 +140,10 @@ Partial Class Main
         Me.rememberThis.AutoSize = True
         Me.rememberThis.Checked = True
         Me.rememberThis.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.rememberThis.Location = New System.Drawing.Point(85, 401)
+        Me.rememberThis.Location = New System.Drawing.Point(85, 413)
         Me.rememberThis.Name = "rememberThis"
         Me.rememberThis.Size = New System.Drawing.Size(135, 17)
-        Me.rememberThis.TabIndex = 23
+        Me.rememberThis.TabIndex = 6
         Me.rememberThis.Text = "Remember this settings"
         Me.rememberThis.UseVisualStyleBackColor = True
         '
@@ -143,10 +152,10 @@ Partial Class Main
         Me.useEventRegistry.AutoSize = True
         Me.useEventRegistry.Checked = True
         Me.useEventRegistry.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.useEventRegistry.Location = New System.Drawing.Point(284, 378)
+        Me.useEventRegistry.Location = New System.Drawing.Point(284, 390)
         Me.useEventRegistry.Name = "useEventRegistry"
         Me.useEventRegistry.Size = New System.Drawing.Size(117, 17)
-        Me.useEventRegistry.TabIndex = 22
+        Me.useEventRegistry.TabIndex = 5
         Me.useEventRegistry.Text = "Use Event Registry"
         Me.useEventRegistry.UseVisualStyleBackColor = True
         '
@@ -155,206 +164,225 @@ Partial Class Main
         Me.writeLogFile.AutoSize = True
         Me.writeLogFile.Checked = True
         Me.writeLogFile.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.writeLogFile.Location = New System.Drawing.Point(85, 378)
+        Me.writeLogFile.Location = New System.Drawing.Point(85, 390)
         Me.writeLogFile.Name = "writeLogFile"
         Me.writeLogFile.Size = New System.Drawing.Size(91, 17)
-        Me.writeLogFile.TabIndex = 21
+        Me.writeLogFile.TabIndex = 4
         Me.writeLogFile.Text = "Write Log File"
         Me.writeLogFile.UseVisualStyleBackColor = True
         '
-        'GroupBox4
+        'masternodeClientGroup
         '
-        Me.GroupBox4.Controls.Add(Me.certificateClient)
-        Me.GroupBox4.Controls.Add(Me.Label5)
-        Me.GroupBox4.Enabled = False
-        Me.GroupBox4.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox4.Location = New System.Drawing.Point(5, 310)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(589, 61)
-        Me.GroupBox4.TabIndex = 20
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Client"
+        Me.masternodeClientGroup.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.masternodeClientGroup.Controls.Add(Me.certificateMasternodeClientBrowserButton)
+        Me.masternodeClientGroup.Controls.Add(Me.certificateClient)
+        Me.masternodeClientGroup.Controls.Add(Me.certificateMasternodeClientLabel)
+        Me.masternodeClientGroup.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.masternodeClientGroup.Location = New System.Drawing.Point(5, 322)
+        Me.masternodeClientGroup.Name = "masternodeClientGroup"
+        Me.masternodeClientGroup.Size = New System.Drawing.Size(589, 61)
+        Me.masternodeClientGroup.TabIndex = 3
+        Me.masternodeClientGroup.TabStop = False
+        Me.masternodeClientGroup.Text = "Client"
+        '
+        'certificateMasternodeClientBrowserButton
+        '
+        Me.certificateMasternodeClientBrowserButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.certificateMasternodeClientBrowserButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.certificateMasternodeClientBrowserButton.Location = New System.Drawing.Point(556, 27)
+        Me.certificateMasternodeClientBrowserButton.Name = "certificateMasternodeClientBrowserButton"
+        Me.certificateMasternodeClientBrowserButton.Size = New System.Drawing.Size(27, 22)
+        Me.certificateMasternodeClientBrowserButton.TabIndex = 1
+        Me.certificateMasternodeClientBrowserButton.Text = "..."
+        Me.certificateMasternodeClientBrowserButton.UseVisualStyleBackColor = True
         '
         'certificateClient
         '
-        Me.certificateClient.Enabled = False
+        Me.certificateClient.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.certificateClient.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.certificateClient.Location = New System.Drawing.Point(80, 28)
         Me.certificateClient.Name = "certificateClient"
-        Me.certificateClient.Size = New System.Drawing.Size(503, 21)
-        Me.certificateClient.TabIndex = 3
+        Me.certificateClient.Size = New System.Drawing.Size(472, 21)
+        Me.certificateClient.TabIndex = 0
         '
-        'Label5
+        'certificateMasternodeClientLabel
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Enabled = False
-        Me.Label5.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(7, 31)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(66, 13)
-        Me.Label5.TabIndex = 2
-        Me.Label5.Text = "Certificate"
+        Me.certificateMasternodeClientLabel.AutoSize = True
+        Me.certificateMasternodeClientLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.certificateMasternodeClientLabel.Location = New System.Drawing.Point(7, 31)
+        Me.certificateMasternodeClientLabel.Name = "certificateMasternodeClientLabel"
+        Me.certificateMasternodeClientLabel.Size = New System.Drawing.Size(66, 13)
+        Me.certificateMasternodeClientLabel.TabIndex = 2
+        Me.certificateMasternodeClientLabel.Text = "Certificate"
         '
-        'GroupBox2
+        'masternodeStartGroup
         '
-        Me.GroupBox2.Controls.Add(Me.Button6)
-        Me.GroupBox2.Controls.Add(Me.Button2)
-        Me.GroupBox2.Controls.Add(Me.certificateMasternodeStart)
-        Me.GroupBox2.Controls.Add(Me.Label2)
-        Me.GroupBox2.Controls.Add(Me.masternodeStartUrl)
-        Me.GroupBox2.Controls.Add(Me.Label1)
-        Me.GroupBox2.Enabled = False
-        Me.GroupBox2.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox2.Location = New System.Drawing.Point(6, 116)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(588, 91)
-        Me.GroupBox2.TabIndex = 18
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "Masternode Start"
+        Me.masternodeStartGroup.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.masternodeStartGroup.Controls.Add(Me.certificateMasternodeBrowserButton)
+        Me.masternodeStartGroup.Controls.Add(Me.testMasternodeServiceButton)
+        Me.masternodeStartGroup.Controls.Add(Me.certificateMasternodeStart)
+        Me.masternodeStartGroup.Controls.Add(Me.certificateMasternodeLabel)
+        Me.masternodeStartGroup.Controls.Add(Me.masternodeStartUrl)
+        Me.masternodeStartGroup.Controls.Add(Me.urlMasternodeStartLabel)
+        Me.masternodeStartGroup.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.masternodeStartGroup.Location = New System.Drawing.Point(6, 128)
+        Me.masternodeStartGroup.Name = "masternodeStartGroup"
+        Me.masternodeStartGroup.Size = New System.Drawing.Size(588, 91)
+        Me.masternodeStartGroup.TabIndex = 1
+        Me.masternodeStartGroup.TabStop = False
+        Me.masternodeStartGroup.Text = "Masternode Start"
         '
-        'Button6
+        'certificateMasternodeBrowserButton
         '
-        Me.Button6.Enabled = False
-        Me.Button6.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button6.Location = New System.Drawing.Point(506, 51)
-        Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(27, 22)
-        Me.Button6.TabIndex = 5
-        Me.Button6.Text = "..."
-        Me.Button6.UseVisualStyleBackColor = True
+        Me.certificateMasternodeBrowserButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.certificateMasternodeBrowserButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.certificateMasternodeBrowserButton.Location = New System.Drawing.Point(506, 51)
+        Me.certificateMasternodeBrowserButton.Name = "certificateMasternodeBrowserButton"
+        Me.certificateMasternodeBrowserButton.Size = New System.Drawing.Size(27, 22)
+        Me.certificateMasternodeBrowserButton.TabIndex = 3
+        Me.certificateMasternodeBrowserButton.Text = "..."
+        Me.certificateMasternodeBrowserButton.UseVisualStyleBackColor = True
         '
-        'Button2
+        'testMasternodeServiceButton
         '
-        Me.Button2.Enabled = False
-        Me.Button2.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(539, 25)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(43, 48)
-        Me.Button2.TabIndex = 4
-        Me.Button2.Text = "Test"
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.testMasternodeServiceButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.testMasternodeServiceButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.testMasternodeServiceButton.Location = New System.Drawing.Point(539, 25)
+        Me.testMasternodeServiceButton.Name = "testMasternodeServiceButton"
+        Me.testMasternodeServiceButton.Size = New System.Drawing.Size(43, 48)
+        Me.testMasternodeServiceButton.TabIndex = 1
+        Me.testMasternodeServiceButton.Text = "Test"
+        Me.testMasternodeServiceButton.UseVisualStyleBackColor = True
         '
         'certificateMasternodeStart
         '
-        Me.certificateMasternodeStart.Enabled = False
+        Me.certificateMasternodeStart.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.certificateMasternodeStart.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.certificateMasternodeStart.Location = New System.Drawing.Point(79, 52)
         Me.certificateMasternodeStart.Name = "certificateMasternodeStart"
         Me.certificateMasternodeStart.Size = New System.Drawing.Size(423, 21)
-        Me.certificateMasternodeStart.TabIndex = 3
+        Me.certificateMasternodeStart.TabIndex = 2
         '
-        'Label2
+        'certificateMasternodeLabel
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Enabled = False
-        Me.Label2.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(7, 55)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(66, 13)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Certificate"
+        Me.certificateMasternodeLabel.AutoSize = True
+        Me.certificateMasternodeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.certificateMasternodeLabel.Location = New System.Drawing.Point(7, 55)
+        Me.certificateMasternodeLabel.Name = "certificateMasternodeLabel"
+        Me.certificateMasternodeLabel.Size = New System.Drawing.Size(66, 13)
+        Me.certificateMasternodeLabel.TabIndex = 2
+        Me.certificateMasternodeLabel.Text = "Certificate"
         '
         'masternodeStartUrl
         '
-        Me.masternodeStartUrl.Enabled = False
+        Me.masternodeStartUrl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.masternodeStartUrl.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.masternodeStartUrl.Location = New System.Drawing.Point(79, 26)
         Me.masternodeStartUrl.Name = "masternodeStartUrl"
         Me.masternodeStartUrl.Size = New System.Drawing.Size(454, 21)
-        Me.masternodeStartUrl.TabIndex = 1
+        Me.masternodeStartUrl.TabIndex = 0
         '
-        'Label1
+        'urlMasternodeStartLabel
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Enabled = False
-        Me.Label1.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(43, 29)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(29, 13)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "URL"
+        Me.urlMasternodeStartLabel.AutoSize = True
+        Me.urlMasternodeStartLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.urlMasternodeStartLabel.Location = New System.Drawing.Point(43, 29)
+        Me.urlMasternodeStartLabel.Name = "urlMasternodeStartLabel"
+        Me.urlMasternodeStartLabel.Size = New System.Drawing.Size(29, 13)
+        Me.urlMasternodeStartLabel.TabIndex = 0
+        Me.urlMasternodeStartLabel.Text = "URL"
         '
-        'GroupBox3
+        'masternodeEngineGroup
         '
-        Me.GroupBox3.Controls.Add(Me.Button7)
-        Me.GroupBox3.Controls.Add(Me.Button3)
-        Me.GroupBox3.Controls.Add(Me.certificateMasternodeRuntime)
-        Me.GroupBox3.Controls.Add(Me.Label3)
-        Me.GroupBox3.Controls.Add(Me.masternodeRuntimeURL)
-        Me.GroupBox3.Controls.Add(Me.Label4)
-        Me.GroupBox3.Enabled = False
-        Me.GroupBox3.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox3.Location = New System.Drawing.Point(5, 213)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(589, 91)
-        Me.GroupBox3.TabIndex = 19
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Masternode Runtime"
+        Me.masternodeEngineGroup.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.masternodeEngineGroup.Controls.Add(Me.certificateMasternodeEngineBrowserButton)
+        Me.masternodeEngineGroup.Controls.Add(Me.testMasternodeEngineServiceButton)
+        Me.masternodeEngineGroup.Controls.Add(Me.certificateMasternodeEngine)
+        Me.masternodeEngineGroup.Controls.Add(Me.certificateMasternodeEngineLabel)
+        Me.masternodeEngineGroup.Controls.Add(Me.masternodeEngineURL)
+        Me.masternodeEngineGroup.Controls.Add(Me.urlMasternodeEngineLabel)
+        Me.masternodeEngineGroup.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.masternodeEngineGroup.Location = New System.Drawing.Point(5, 225)
+        Me.masternodeEngineGroup.Name = "masternodeEngineGroup"
+        Me.masternodeEngineGroup.Size = New System.Drawing.Size(589, 91)
+        Me.masternodeEngineGroup.TabIndex = 2
+        Me.masternodeEngineGroup.TabStop = False
+        Me.masternodeEngineGroup.Text = "Masternode Engine"
         '
-        'Button7
+        'certificateMasternodeEngineBrowserButton
         '
-        Me.Button7.Enabled = False
-        Me.Button7.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button7.Location = New System.Drawing.Point(507, 51)
-        Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(27, 22)
-        Me.Button7.TabIndex = 6
-        Me.Button7.Text = "..."
-        Me.Button7.UseVisualStyleBackColor = True
+        Me.certificateMasternodeEngineBrowserButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.certificateMasternodeEngineBrowserButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.certificateMasternodeEngineBrowserButton.Location = New System.Drawing.Point(507, 51)
+        Me.certificateMasternodeEngineBrowserButton.Name = "certificateMasternodeEngineBrowserButton"
+        Me.certificateMasternodeEngineBrowserButton.Size = New System.Drawing.Size(27, 22)
+        Me.certificateMasternodeEngineBrowserButton.TabIndex = 3
+        Me.certificateMasternodeEngineBrowserButton.Text = "..."
+        Me.certificateMasternodeEngineBrowserButton.UseVisualStyleBackColor = True
         '
-        'Button3
+        'testMasternodeEngineServiceButton
         '
-        Me.Button3.Enabled = False
-        Me.Button3.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button3.Location = New System.Drawing.Point(540, 25)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(43, 48)
-        Me.Button3.TabIndex = 4
-        Me.Button3.Text = "Test"
-        Me.Button3.UseVisualStyleBackColor = True
+        Me.testMasternodeEngineServiceButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.testMasternodeEngineServiceButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.testMasternodeEngineServiceButton.Location = New System.Drawing.Point(540, 25)
+        Me.testMasternodeEngineServiceButton.Name = "testMasternodeEngineServiceButton"
+        Me.testMasternodeEngineServiceButton.Size = New System.Drawing.Size(43, 48)
+        Me.testMasternodeEngineServiceButton.TabIndex = 1
+        Me.testMasternodeEngineServiceButton.Text = "Test"
+        Me.testMasternodeEngineServiceButton.UseVisualStyleBackColor = True
         '
-        'certificateMasternodeRuntime
+        'certificateMasternodeEngine
         '
-        Me.certificateMasternodeRuntime.Enabled = False
-        Me.certificateMasternodeRuntime.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.certificateMasternodeRuntime.Location = New System.Drawing.Point(80, 52)
-        Me.certificateMasternodeRuntime.Name = "certificateMasternodeRuntime"
-        Me.certificateMasternodeRuntime.Size = New System.Drawing.Size(423, 21)
-        Me.certificateMasternodeRuntime.TabIndex = 3
+        Me.certificateMasternodeEngine.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.certificateMasternodeEngine.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.certificateMasternodeEngine.Location = New System.Drawing.Point(80, 52)
+        Me.certificateMasternodeEngine.Name = "certificateMasternodeEngine"
+        Me.certificateMasternodeEngine.Size = New System.Drawing.Size(423, 21)
+        Me.certificateMasternodeEngine.TabIndex = 2
         '
-        'Label3
+        'certificateMasternodeEngineLabel
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Enabled = False
-        Me.Label3.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(7, 55)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(66, 13)
-        Me.Label3.TabIndex = 2
-        Me.Label3.Text = "Certificate"
+        Me.certificateMasternodeEngineLabel.AutoSize = True
+        Me.certificateMasternodeEngineLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.certificateMasternodeEngineLabel.Location = New System.Drawing.Point(7, 55)
+        Me.certificateMasternodeEngineLabel.Name = "certificateMasternodeEngineLabel"
+        Me.certificateMasternodeEngineLabel.Size = New System.Drawing.Size(66, 13)
+        Me.certificateMasternodeEngineLabel.TabIndex = 2
+        Me.certificateMasternodeEngineLabel.Text = "Certificate"
         '
-        'masternodeRuntimeURL
+        'masternodeEngineURL
         '
-        Me.masternodeRuntimeURL.Enabled = False
-        Me.masternodeRuntimeURL.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.masternodeRuntimeURL.Location = New System.Drawing.Point(80, 26)
-        Me.masternodeRuntimeURL.Name = "masternodeRuntimeURL"
-        Me.masternodeRuntimeURL.Size = New System.Drawing.Size(454, 21)
-        Me.masternodeRuntimeURL.TabIndex = 1
+        Me.masternodeEngineURL.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.masternodeEngineURL.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.masternodeEngineURL.Location = New System.Drawing.Point(80, 26)
+        Me.masternodeEngineURL.Name = "masternodeEngineURL"
+        Me.masternodeEngineURL.Size = New System.Drawing.Size(454, 21)
+        Me.masternodeEngineURL.TabIndex = 0
         '
-        'Label4
+        'urlMasternodeEngineLabel
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Enabled = False
-        Me.Label4.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(44, 29)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(29, 13)
-        Me.Label4.TabIndex = 0
-        Me.Label4.Text = "URL"
+        Me.urlMasternodeEngineLabel.AutoSize = True
+        Me.urlMasternodeEngineLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.urlMasternodeEngineLabel.Location = New System.Drawing.Point(44, 29)
+        Me.urlMasternodeEngineLabel.Name = "urlMasternodeEngineLabel"
+        Me.urlMasternodeEngineLabel.Size = New System.Drawing.Size(29, 13)
+        Me.urlMasternodeEngineLabel.TabIndex = 0
+        Me.urlMasternodeEngineLabel.Text = "URL"
         '
         'localPathAndDataPortNumber
         '
+        Me.localPathAndDataPortNumber.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.localPathAndDataPortNumber.Controls.Add(Me.publicWalletAddress)
+        Me.localPathAndDataPortNumber.Controls.Add(Me.Label6)
         Me.localPathAndDataPortNumber.Controls.Add(Me.localPortNumber)
         Me.localPathAndDataPortNumber.Controls.Add(Me.portNumberLabel)
         Me.localPathAndDataPortNumber.Controls.Add(Me.browseLocalPath)
@@ -362,15 +390,36 @@ Partial Class Main
         Me.localPathAndDataPortNumber.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.localPathAndDataPortNumber.Location = New System.Drawing.Point(6, 6)
         Me.localPathAndDataPortNumber.Name = "localPathAndDataPortNumber"
-        Me.localPathAndDataPortNumber.Size = New System.Drawing.Size(588, 104)
-        Me.localPathAndDataPortNumber.TabIndex = 17
+        Me.localPathAndDataPortNumber.Size = New System.Drawing.Size(588, 116)
+        Me.localPathAndDataPortNumber.TabIndex = 0
         Me.localPathAndDataPortNumber.TabStop = False
         Me.localPathAndDataPortNumber.Text = "Local path data and port number"
         '
+        'publicWalletAddress
+        '
+        Me.publicWalletAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.publicWalletAddress.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.publicWalletAddress.Location = New System.Drawing.Point(136, 58)
+        Me.publicWalletAddress.Name = "publicWalletAddress"
+        Me.publicWalletAddress.Size = New System.Drawing.Size(410, 21)
+        Me.publicWalletAddress.TabIndex = 2
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(4, 61)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(126, 13)
+        Me.Label6.TabIndex = 4
+        Me.Label6.Text = "Public wallet address"
+        '
         'localPortNumber
         '
+        Me.localPortNumber.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.localPortNumber.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.localPortNumber.Location = New System.Drawing.Point(471, 66)
+        Me.localPortNumber.Location = New System.Drawing.Point(471, 85)
         Me.localPortNumber.Name = "localPortNumber"
         Me.localPortNumber.Size = New System.Drawing.Size(75, 21)
         Me.localPortNumber.TabIndex = 3
@@ -378,9 +427,10 @@ Partial Class Main
         '
         'portNumberLabel
         '
+        Me.portNumberLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.portNumberLabel.AutoSize = True
         Me.portNumberLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.portNumberLabel.Location = New System.Drawing.Point(323, 69)
+        Me.portNumberLabel.Location = New System.Drawing.Point(323, 88)
         Me.portNumberLabel.Name = "portNumberLabel"
         Me.portNumberLabel.Size = New System.Drawing.Size(142, 13)
         Me.portNumberLabel.TabIndex = 2
@@ -388,6 +438,7 @@ Partial Class Main
         '
         'browseLocalPath
         '
+        Me.browseLocalPath.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.browseLocalPath.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.browseLocalPath.Location = New System.Drawing.Point(552, 28)
         Me.browseLocalPath.Name = "browseLocalPath"
@@ -398,6 +449,8 @@ Partial Class Main
         '
         'localPathData
         '
+        Me.localPathData.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.localPathData.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.localPathData.Location = New System.Drawing.Point(7, 30)
         Me.localPathData.Name = "localPathData"
@@ -410,13 +463,16 @@ Partial Class Main
         Me.LogTab.Location = New System.Drawing.Point(4, 22)
         Me.LogTab.Name = "LogTab"
         Me.LogTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.LogTab.Size = New System.Drawing.Size(600, 429)
+        Me.LogTab.Size = New System.Drawing.Size(600, 434)
         Me.LogTab.TabIndex = 1
         Me.LogTab.Text = "Output"
         Me.LogTab.UseVisualStyleBackColor = True
         '
         'logConsoleText
         '
+        Me.logConsoleText.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.logConsoleText.BackColor = System.Drawing.Color.Black
         Me.logConsoleText.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.logConsoleText.ForeColor = System.Drawing.SystemColors.Info
@@ -431,32 +487,38 @@ Partial Class Main
         '
         'logFileButton
         '
+        Me.logFileButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.logFileButton.Enabled = False
         Me.logFileButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.logFileButton.Location = New System.Drawing.Point(626, 198)
         Me.logFileButton.Name = "logFileButton"
         Me.logFileButton.Size = New System.Drawing.Size(91, 49)
-        Me.logFileButton.TabIndex = 18
+        Me.logFileButton.TabIndex = 9
         Me.logFileButton.Text = "Log file"
         Me.logFileButton.UseVisualStyleBackColor = True
         '
         'registryEventButton
         '
+        Me.registryEventButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.registryEventButton.Enabled = False
         Me.registryEventButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.registryEventButton.Location = New System.Drawing.Point(626, 253)
         Me.registryEventButton.Name = "registryEventButton"
         Me.registryEventButton.Size = New System.Drawing.Size(91, 49)
-        Me.registryEventButton.TabIndex = 19
+        Me.registryEventButton.TabIndex = 10
         Me.registryEventButton.Text = "Registry Events"
         Me.registryEventButton.UseVisualStyleBackColor = True
+        '
+        'openFileDialog
+        '
+        Me.openFileDialog.FileName = "OpenFileDialog1"
         '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(729, 483)
+        Me.ClientSize = New System.Drawing.Size(729, 488)
         Me.Controls.Add(Me.registryEventButton)
         Me.Controls.Add(Me.logFileButton)
         Me.Controls.Add(Me.tabControl)
@@ -472,12 +534,12 @@ Partial Class Main
         Me.tabControl.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
-        Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
+        Me.masternodeClientGroup.ResumeLayout(False)
+        Me.masternodeClientGroup.PerformLayout()
+        Me.masternodeStartGroup.ResumeLayout(False)
+        Me.masternodeStartGroup.PerformLayout()
+        Me.masternodeEngineGroup.ResumeLayout(False)
+        Me.masternodeEngineGroup.PerformLayout()
         Me.localPathAndDataPortNumber.ResumeLayout(False)
         Me.localPathAndDataPortNumber.PerformLayout()
         Me.LogTab.ResumeLayout(False)
@@ -494,23 +556,23 @@ Partial Class Main
     Friend WithEvents rememberThis As CheckBox
     Friend WithEvents useEventRegistry As CheckBox
     Friend WithEvents writeLogFile As CheckBox
-    Friend WithEvents GroupBox4 As GroupBox
+    Friend WithEvents masternodeClientGroup As GroupBox
     Friend WithEvents certificateClient As TextBox
-    Friend WithEvents Label5 As Label
-    Friend WithEvents GroupBox2 As GroupBox
-    Friend WithEvents Button6 As Button
-    Friend WithEvents Button2 As Button
+    Friend WithEvents certificateMasternodeClientLabel As Label
+    Friend WithEvents masternodeStartGroup As GroupBox
+    Friend WithEvents certificateMasternodeBrowserButton As Button
+    Friend WithEvents testMasternodeServiceButton As Button
     Friend WithEvents certificateMasternodeStart As TextBox
-    Friend WithEvents Label2 As Label
+    Friend WithEvents certificateMasternodeLabel As Label
     Friend WithEvents masternodeStartUrl As TextBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents GroupBox3 As GroupBox
-    Friend WithEvents Button7 As Button
-    Friend WithEvents Button3 As Button
-    Friend WithEvents certificateMasternodeRuntime As TextBox
-    Friend WithEvents Label3 As Label
-    Friend WithEvents masternodeRuntimeURL As TextBox
-    Friend WithEvents Label4 As Label
+    Friend WithEvents urlMasternodeStartLabel As Label
+    Friend WithEvents masternodeEngineGroup As GroupBox
+    Friend WithEvents certificateMasternodeEngineBrowserButton As Button
+    Friend WithEvents testMasternodeEngineServiceButton As Button
+    Friend WithEvents certificateMasternodeEngine As TextBox
+    Friend WithEvents certificateMasternodeEngineLabel As Label
+    Friend WithEvents masternodeEngineURL As TextBox
+    Friend WithEvents urlMasternodeEngineLabel As Label
     Friend WithEvents localPathAndDataPortNumber As GroupBox
     Friend WithEvents localPortNumber As TextBox
     Friend WithEvents portNumberLabel As Label
@@ -520,4 +582,8 @@ Partial Class Main
     Friend WithEvents logConsoleText As TextBox
     Friend WithEvents logFileButton As Button
     Friend WithEvents registryEventButton As Button
+    Friend WithEvents publicWalletAddress As TextBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents certificateMasternodeClientBrowserButton As Button
+    Friend WithEvents openFileDialog As OpenFileDialog
 End Class
