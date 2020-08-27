@@ -80,9 +80,9 @@ Namespace AreaSystem
 
             Try
 
-                path = IO.Path.Combine(path, AreaSystem.Paths.settingsFolderName)
+                path = IO.Path.Combine(path, "define.path")
 
-                Return IO.Directory.Exists(path)
+                Return IO.File.Exists(path)
 
             Catch ex As Exception
 
@@ -95,14 +95,15 @@ Namespace AreaSystem
 
         Private Function tryWritePath(ByVal path As String) As Boolean
 
-
-            path = IO.Path.Combine(path, settingsFolderName)
+            path = IO.Path.Combine(path, "define.path")
 
             Try
 
-                If IO.Directory.CreateDirectory(path).Exists Then
+                IO.File.WriteAllText(path, "Test")
 
-                    IO.Directory.Delete(path)
+                If IO.File.Exists(path) Then
+
+                    IO.File.Delete(path)
 
                     Return True
 
@@ -117,52 +118,43 @@ Namespace AreaSystem
         End Function
 
 
-        Public Function searchRootPath() As String
+        Private Function testPath(ByVal found As Boolean, ByRef path As String, ByVal newPath As String, Optional ByVal trySettings As Boolean = False) As Boolean
+
+            If Not found Then
+
+                path = newPath
+
+                If trySettings Then
+
+                    Return trySettingsPath(path)
+
+                Else
+
+                    Return tryWritePath(path)
+
+                End If
+
+            End If
+
+            Return found
+
+        End Function
+
+
+        Public Function searchDefinePath() As String
 
             Dim found As Boolean = False
             Dim path As String = ""
 
             Try
 
-                If Not found Then
+                found = testPath(found, path, Application.StartupPath, True)
+                found = testPath(found, path, Application.LocalUserAppDataPath, True)
+                found = testPath(found, path, Application.UserAppDataPath, True)
 
-                    path = IO.Path.Combine(Application.StartupPath)
-                    found = trySettingsPath(path)
+                If found Then
 
-                End If
-
-                If Not found Then
-
-                    path = Application.LocalUserAppDataPath
-                    found = trySettingsPath(path)
-
-                End If
-
-                If Not found Then
-
-                    path = Application.UserAppDataPath
-                    found = trySettingsPath(path)
-
-                End If
-
-                If Not found Then
-
-                    path = Application.StartupPath
-                    found = tryWritePath(path)
-
-                End If
-
-                If Not found Then
-
-                    path = Application.LocalUserAppDataPath
-                    found = tryWritePath(path)
-
-                End If
-
-                If Not found Then
-
-                    path = Application.UserAppDataPath
-                    found = trySettingsPath(path)
+                    Return path
 
                 End If
 
@@ -170,17 +162,57 @@ Namespace AreaSystem
 
             End Try
 
-            If found Then
-
-                Return path
-
-            Else
-
-                Return ""
-
-            End If
+            Return ""
 
         End Function
+
+
+        Public Function readDefinePath() As String
+
+            Try
+
+                Dim path As String = searchDefinePath()
+
+                If (path.Length > 0) Then
+
+                    Return IO.File.ReadAllText(IO.Path.Combine(searchDefinePath, "define.path"))
+
+                End If
+
+            Catch ex As Exception
+
+            End Try
+
+            Return ""
+
+        End Function
+
+
+        Public Sub updateRootPath(ByVal dataPath As String)
+
+            Dim found As Boolean = False
+            Dim path As String = ""
+
+            Try
+
+                found = testPath(found, path, Application.StartupPath, True)
+                found = testPath(found, path, Application.LocalUserAppDataPath, True)
+                found = testPath(found, path, Application.UserAppDataPath, True)
+                found = testPath(found, path, Application.StartupPath)
+                found = testPath(found, path, Application.LocalUserAppDataPath)
+                found = testPath(found, path, Application.UserAppDataPath)
+
+                If found Then
+
+                    IO.File.WriteAllText(IO.Path.Combine(path, "define.path"), dataPath)
+
+                End If
+
+            Catch ex As Exception
+
+            End Try
+
+        End Sub
 
 
     End Class

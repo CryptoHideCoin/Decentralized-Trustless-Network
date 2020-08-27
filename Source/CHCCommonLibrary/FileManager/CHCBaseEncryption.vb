@@ -76,9 +76,15 @@ Namespace CHCEngines.Common
 
                     End If
 
+                    stream.Close()
+
                     stream = New StreamReader(memory)
 
                     data = DirectCast(serializer.Deserialize(stream), ClassType)
+
+                    stream.Close()
+
+                    stream = Nothing
 
                     Return True
 
@@ -126,6 +132,8 @@ Namespace CHCEngines.Common
                 If Not noCrypt Then
 
                     If (_combineCryptoKEY = "-") Then
+
+                        File.Delete(fileName)
 
                         IO.File.Move(temp, fileName)
 

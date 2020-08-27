@@ -38,6 +38,7 @@ Namespace AreaCommon
             Try
 
                 Dim command As New ManageCommandLine
+                Dim definePath As String = paths.searchDefinePath()
 
                 command.run(Environment.CommandLine.Split("/"))
 
@@ -47,9 +48,17 @@ Namespace AreaCommon
 
                     Dim haveSettings As Boolean = False
 
-                    paths.pathBaseData = paths.searchRootPath()
+                    If (definePath.Length() = 0) Then
 
-                    settings.fileName = IO.Path.Combine(paths.pathBaseData, "Settings", paths.settingFileName)
+                        MessageBox.Show("File settings is missing", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                        End
+
+                    End If
+
+                    paths.pathBaseData = paths.readDefinePath()
+
+                    settings.fileName = IO.Path.Combine(paths.pathSettings, "Settings", paths.settingFileName)
 
                     If settings.read() Then
 
@@ -86,7 +95,15 @@ Namespace AreaCommon
 
                 If (paths.pathBaseData.Trim().Length = 0) Then
 
-                    paths.pathBaseData = paths.searchRootPath()
+                    If (definePath.Length() = 0) Then
+
+                        MessageBox.Show("File settings is missing", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                        End
+
+                    End If
+
+                    paths.pathBaseData = paths.readDefinePath()
 
                     settings.data.dataPath = paths.pathBaseData
 

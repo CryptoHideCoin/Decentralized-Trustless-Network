@@ -22,3 +22,4 @@ E:\CryptoHideCoinDTN\Source\Starter Service Windows\bin\Debug\CHCStarterService.
 E:\CryptoHideCoinDTN\Source\Starter Service Windows\obj\Debug\CHCStarterService.exe
 E:\CryptoHideCoinDTN\Source\Starter Service Windows\obj\Debug\CHCStarterService.xml
 E:\CryptoHideCoinDTN\Source\Starter Service Windows\obj\Debug\CHCStarterService.pdb
+E:\CryptoHideCoinDTN\Source\Starter Service Windows\obj\Debug\StarterService.Settings.resources

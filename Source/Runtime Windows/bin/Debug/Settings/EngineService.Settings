@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SettingsData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <virtualName>Commodore 128</virtualName>
+  <intranetMode>false</intranetMode>
+  <noUpdateSystemDate>false</noUpdateSystemDate>
+  <dataPath>E:\DATA</dataPath>
+  <walletAddress>345235423</walletAddress>
+  <walletKey>2544242342</walletKey>
+  <useTrack>trackAllRuntime</useTrack>
+  <trackRotate>
+    <frequency>every12h</frequency>
+    <keepLast>lastWeek</keepLast>
+    <keepFile>nothingFiles</keepFile>
+  </trackRotate>
+  <useEventRegistry>true</useEventRegistry>
+  <urlMasternodeAdmin>52345</urlMasternodeAdmin>
+  <certificateMasternodeAdmin>5345</certificateMasternodeAdmin>
+  <urlMasternodeStart>5345</urlMasternodeStart>
+  <certificateMasternodeStart>534235</certificateMasternodeStart>
+  <autoStart>false</autoStart>
+  <transactionChainConfig />
+  <services>
+    <configurationPort>
+      <type>public</type>
+      <port>12</port>
+    </configurationPort>
+    <configurationPort>
+      <type>service</type>
+      <port>12</port>
+    </configurationPort>
+  </services>
+</SettingsData>

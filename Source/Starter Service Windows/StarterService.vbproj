@@ -107,6 +107,12 @@
     <Compile Include="Forms\Main.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Settings.Designer.vb">
+      <DependentUpon>Settings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Settings.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Models\GeneralResponseModel.vb" />
     <Compile Include="Modules\Common.vb" />
     <Compile Include="Modules\Controllers.vb" />
@@ -130,6 +136,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Settings.resx">
+      <DependentUpon>Settings.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

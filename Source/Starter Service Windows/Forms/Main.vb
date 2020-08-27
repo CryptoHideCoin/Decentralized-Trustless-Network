@@ -7,21 +7,39 @@ Public Class Main
 
     Private _canChangeTab As Boolean = False
 
+    Public SettingsMode As Boolean = False
+
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Try
+
+            If SettingsMode Then
+
+                refreshButton.Visible = False
+                registryEventButton.Visible = False
+                logFileButton.Visible = False
+                stopButton.Visible = False
+                rememberThis.Visible = False
+
+                tabControl.TabPages.RemoveByKey("LogTab")
+
+                startButton.Text = "SAVE"
+
+            End If
 
             With AreaCommon.settings.data
 
                 localPathData.Text = .dataPath
                 localPortNumber.Text = .portNumber
 
+                publicWalletAddress.Text = .walletPublicAddress
+
                 masternodeAdminUrl.Text = .urlMasternodeAdmin
                 certificateMasternodeAdmin.Text = .certificateMasternodeAdmin
 
                 masternodeRuntimeURL.Text = .urlMasternodeRuntime
-                certificateMasternodeRuntime.Text = .urlMasternodeRuntime
+                certificateMasternodeRuntime.Text = .certificateMasternodeRuntime
 
                 writeLogFile.Checked = (.useTrack <> AppSettings.TrackRuntimeModeEnum.dontTrack)
                 useEventRegistry.Checked = .useEventRegistry
@@ -50,11 +68,13 @@ Public Class Main
                 .dataPath = localPathData.Text
                 .portNumber = localPortNumber.Text
 
+                .walletPublicAddress = publicWalletAddress.Text
+
                 .urlMasternodeAdmin = masternodeAdminUrl.Text
                 .certificateMasternodeAdmin = certificateMasternodeAdmin.Text
 
                 .urlMasternodeRuntime = masternodeRuntimeURL.Text
-                .urlMasternodeRuntime = certificateMasternodeRuntime.Text
+                .certificateMasternodeRuntime = certificateMasternodeRuntime.Text
 
                 If writeLogFile.Checked Then
 
@@ -166,27 +186,50 @@ Public Class Main
             If verifyParameter() Then
 
                 loadDataIntoSettings()
-                changeStateEntireInterface()
 
-                If rememberThis.Checked Then
+                If (AreaCommon.paths.pathBaseData.Trim.Length() = 0) Then
 
-                    AreaCommon.settings.save()
+                    AreaCommon.paths.pathBaseData = localPathData.Text
+
+                    AreaCommon.paths.init()
+
+                    AreaCommon.settings.fileName = IO.Path.Combine(AreaCommon.paths.pathSettings, AreaCommon.paths.settingFileName)
 
                 End If
 
-                _canChangeTab = True
+                AreaCommon.paths.updateRootPath(localPathData.Text)
 
-                startButton.Enabled = False
-                stopButton.Enabled = True
-                refreshButton.Enabled = True
-                logFileButton.Enabled = writeLogFile.Checked
-                registryEventButton.Enabled = useEventRegistry.Checked
-                tabControl.SelectedIndex = 1
-                AreaCommon.log.objectConsoleGUI = logConsoleText
+                If Not SettingsMode Then
 
-                Application.DoEvents()
+                    changeStateEntireInterface()
 
-                AreaCommon.run()
+                    If rememberThis.Checked Then
+
+                        AreaCommon.settings.save()
+
+                    End If
+
+                    _canChangeTab = True
+
+                    startButton.Enabled = False
+                    stopButton.Enabled = True
+                    refreshButton.Enabled = True
+                    logFileButton.Enabled = writeLogFile.Checked
+                    registryEventButton.Enabled = useEventRegistry.Checked
+                    tabControl.SelectedIndex = 1
+                    AreaCommon.log.objectConsoleGUI = logConsoleText
+
+                    Application.DoEvents()
+
+                    AreaCommon.run()
+
+                Else
+
+                    AreaCommon.settings.save()
+
+                    Me.Close()
+
+                End If
 
             End If
 
@@ -281,7 +324,11 @@ Public Class Main
 
     Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
-        AreaCommon.stop()
+        If Not SettingsMode Then
+
+            AreaCommon.stop()
+
+        End If
 
     End Sub
 

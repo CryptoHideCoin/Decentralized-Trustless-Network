@@ -41,6 +41,38 @@ Namespace AreaCommon
 
                 End If
 
+                If _commandLine.exist("Settings".ToLower()) Then
+
+                    If (parameters.data.dataPath.Trim.Length() = 0) Then
+
+                        paths.pathBaseData = paths.readDefinePath()
+
+                        If (paths.pathBaseData.Trim.Length() > 0) Then
+
+                            paths.init()
+
+                        End If
+
+                    End If
+
+                    If (paths.pathBaseData.Trim.Length() > 0) Then
+
+                        settings.fileName = IO.Path.Combine(paths.pathSettings, paths.settingFileName)
+
+                        settings.read()
+
+                    End If
+
+                    Dim tmp As New Main
+
+                    tmp.SettingsMode = True
+
+                    tmp.ShowDialog()
+
+                    End
+
+                End If
+
                 If _commandLine.exist("PublicWalletAddress".ToLower()) Then
 
                     parameters.data.walletPublicAddress = _commandLine.GetValue("PublicWalletAddress")

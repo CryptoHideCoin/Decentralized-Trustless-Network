@@ -25,7 +25,49 @@ Namespace AreaCommon
 
                     parameters.data.dataPath = _commandLine.GetValue("DataPath".ToLower())
 
-                    haveParameters = True
+                    If (parameters.data.dataPath.Length > 0) Then
+
+                        If Not IO.Directory.Exists(parameters.data.dataPath) Then
+
+                            parameters.data.dataPath = ""
+
+                        Else
+
+                            haveParameters = True
+
+                        End If
+
+                    End If
+
+                End If
+
+                If _commandLine.exist("Settings".ToLower()) Then
+
+                    If (parameters.data.dataPath.Trim.Length() = 0) Then
+
+                        paths.pathBaseData = paths.readDefinePath()
+
+                        If (paths.pathBaseData.Trim.Length() > 0) Then
+
+                            paths.init()
+
+                        End If
+
+                    End If
+
+                    If (paths.pathBaseData.Trim.Length() > 0) Then
+
+                        settings.fileName = IO.Path.Combine(paths.pathSettings, paths.settingFileName)
+
+                        settings.read()
+
+                    End If
+
+                    Dim tmp As New Settings
+
+                    tmp.ShowDialog()
+
+                    End
 
                 End If
 
@@ -105,16 +147,16 @@ Namespace AreaCommon
 
                 If _commandLine.exist("?") Or _commandLine.exist("help".ToLower()) Then
 
-                    Log.trackIntoConsole("Allows remote administration service to run")
-                    Log.trackIntoConsole()
-                    Log.trackIntoConsole("  /DataPath                     Force a main path when the application work")
-                    Log.trackIntoConsole("  /PortNumber                   Force port number to remotely control")
-                    Log.trackIntoConsole("  /WriteLogFile                 Enable log file writing")
-                    Log.trackIntoConsole("  /UseEventRegistry             Enable writing of system events")
-                    Log.trackIntoConsole("  /MasternodeStartURL           Set the url of the masternode start")
-                    Log.trackIntoConsole("  /MasternodeStartCertificate   Set the certificate of the masternode start")
-                    Log.trackIntoConsole("  /MasternodeRuntimeURL         Set the url of the masternode runtime")
-                    Log.trackIntoConsole("  /MasternodeRuntimeCertificate Set the certificate of the masternode runtime")
+                    log.trackIntoConsole("Allows remote administration service to run")
+                    log.trackIntoConsole()
+                    log.trackIntoConsole("  /DataPath                     Force a main path when the application work")
+                    log.trackIntoConsole("  /PortNumber                   Force port number to remotely control")
+                    log.trackIntoConsole("  /WriteLogFile                 Enable log file writing")
+                    log.trackIntoConsole("  /UseEventRegistry             Enable writing of system events")
+                    log.trackIntoConsole("  /MasternodeStartURL           Set the url of the masternode start")
+                    log.trackIntoConsole("  /MasternodeStartCertificate   Set the certificate of the masternode start")
+                    log.trackIntoConsole("  /MasternodeRuntimeURL         Set the url of the masternode runtime")
+                    log.trackIntoConsole("  /MasternodeRuntimeCertificate Set the certificate of the masternode runtime")
                     log.trackIntoConsole("  /ConfigFileName               Complete path of a config file")
                     log.trackIntoConsole("  /Gui                          Activates GUI mode")
 
@@ -124,7 +166,7 @@ Namespace AreaCommon
 
             Catch ex As Exception
 
-                Log.track("StarterService.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "error")
+                log.track("StarterService.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "error")
 
             End Try
 

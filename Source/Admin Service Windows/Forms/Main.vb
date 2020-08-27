@@ -7,10 +7,26 @@ Public Class Main
 
     Private _canChangeTab As Boolean = False
 
+    Public SettingsMode As Boolean = False
+
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Try
+
+            If SettingsMode Then
+
+                refreshButton.Visible = False
+                registryEventButton.Visible = False
+                logFileButton.Visible = False
+                stopButton.Visible = False
+                rememberThis.Visible = False
+
+                tabControl.TabPages.RemoveByKey("LogTab")
+
+                startButton.Text = "SAVE"
+
+            End If
 
             With AreaCommon.settings.data
 
@@ -130,7 +146,6 @@ Public Class Main
     End Sub
 
 
-
     Private Function verifyParameter() As Boolean
 
         If (localPathData.Text.ToString.Trim.Length() = 0) Then
@@ -163,7 +178,6 @@ Public Class Main
     End Function
 
 
-
     Private Sub startButton_Click(sender As Object, e As EventArgs) Handles startButton.Click
 
         Try
@@ -171,19 +185,42 @@ Public Class Main
             If verifyParameter() Then
 
                 loadDataIntoSettings()
-                changeStateEntireInterface()
 
-                _canChangeTab = True
+                If (AreaCommon.paths.pathBaseData.Trim.Length() = 0) Then
 
-                startButton.Enabled = False
-                stopButton.Enabled = True
-                refreshButton.Enabled = True
-                logFileButton.Enabled = writeLogFile.Checked
-                registryEventButton.Enabled = useEventRegistry.Checked
-                tabControl.SelectedIndex = 1
-                AreaCommon.log.objectConsoleGUI = logConsoleText
+                    AreaCommon.paths.pathBaseData = localPathData.Text
 
-                AreaCommon.run(rememberThis.Checked)
+                    AreaCommon.paths.init()
+
+                    AreaCommon.settings.fileName = IO.Path.Combine(AreaCommon.paths.pathSettings, AreaCommon.paths.settingFileName)
+
+                End If
+
+                AreaCommon.paths.updateRootPath(localPathData.Text)
+
+                If Not SettingsMode Then
+
+                    changeStateEntireInterface()
+
+                    _canChangeTab = True
+
+                    startButton.Enabled = False
+                    stopButton.Enabled = True
+                    refreshButton.Enabled = True
+                    logFileButton.Enabled = writeLogFile.Checked
+                    registryEventButton.Enabled = useEventRegistry.Checked
+                    tabControl.SelectedIndex = 1
+                    AreaCommon.log.objectConsoleGUI = logConsoleText
+
+                    AreaCommon.run(rememberThis.Checked)
+
+                Else
+
+                    AreaCommon.settings.save()
+
+                    Me.Close()
+
+                End If
 
             End If
 
@@ -278,7 +315,11 @@ Public Class Main
 
     Private Sub Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
 
-        AreaCommon.stop()
+        If Not SettingsMode Then
+
+            AreaCommon.stop()
+
+        End If
 
     End Sub
 

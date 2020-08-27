@@ -1,0 +1,16 @@
+1598217940881,53|2020-08-23T19:25:40|info|LogRotate.run|Begin
+1598217940893,5|2020-08-23T19:25:40|info|LogRotate.run|It's now
+1598217940894,48|2020-08-23T19:25:40|info|LogRotate.runWork|Begin
+1598217940900,52|2020-08-23T19:25:40|info|LogRotate.run|Complete
+1598217940903,51|2020-08-23T19:25:40|info|LogRotate.runExecuteWork|Begin
+1598217941769,62|2020-08-23T19:25:41|info|startUp.run|Trackrotate is running
+1598217942179,79|2020-08-23T19:25:42|Fatal|LogRotate.runExecuteWork|Error:Formato del percorso non valido.
+1598217944039,84|2020-08-23T19:25:44|info|startUp.run|Counter is running
+1598217944722,69|2020-08-23T19:25:44|info|startUp.run|Log.noSave = False
+1598217944986,74|2020-08-23T19:25:44|info|Controllers.WebserviceThread|Begin
+1598217953535,23|2020-08-23T19:25:53|info|startUp.runApplication|Begin
+1598217965294,87|2020-08-23T19:26:05|info|Controllers.StartWebService|Begin
+1598217968214,14|2020-08-23T19:26:08|info|Controllers.StartWebService|New Configuration Port 
+1598217968241,48|2020-08-23T19:26:08|info|Controllers.StartWebService|Map route
+1598217968247,17|2020-08-23T19:26:08|info|Controllers.StartWebService|Enter in the using
+1598217968584,1|2020-08-23T19:26:08|fatal|Controllers.StartWebService|Enable start a webservice; check admin authorizathion - Error:Si sono verificati uno o più errori.
