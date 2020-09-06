@@ -31,6 +31,8 @@ Namespace AreaCommon
                 log.track("Controllers.StartWebService", "New Configuration Port " & strPort)
 
                 httpConfig.Routes.MapHttpRoute(name:="SystemApi", routeTemplate:="api/v1.0/system/{controller}")
+                httpConfig.Routes.MapHttpRoute(name:="DefineApi", routeTemplate:="api/v1.0/define/{controller}")
+                httpConfig.Routes.MapHttpRoute(name:="SecurityApi", routeTemplate:="api/v1.0/security/{controller}")
 
                 log.track("Controllers.StartWebService", "Map route")
 
@@ -54,6 +56,8 @@ Namespace AreaCommon
 
                     End Try
 
+                    _controllerComplete = True
+
                     Do
                         Application.DoEvents()
                     Loop Until (state.currentApplication = AppState.enumStateApplication.inShutDown)
@@ -63,8 +67,6 @@ Namespace AreaCommon
                 registry.addNew(CHCServerSupport.Support.RegistryEngine.RegistryData.TypeEvent.applicationShutdown)
 
                 state.currentApplication = AppState.enumStateApplication.waitingToStart
-
-                _controllerComplete = True
 
             Catch ex As Exception
 

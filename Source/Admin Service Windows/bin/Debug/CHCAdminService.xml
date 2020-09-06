@@ -22,7 +22,27 @@ CHCAdminService
   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
 </summary>
 </member>
-<member name="M:AdminService.AreaCommon.moduleMain.CloseApplication(System.Boolean)">
+<member name="T:AdminService.Controllers.AssetController">
+ <summary>
+ ...
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.ChangeCertificateController">
+ <summary>
+ This API permit to change a certificate of a Admin service
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.StatusServiceController">
+ <summary>
+ This API permit a client to know if the Masternode is in work mode or not
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.TestServiceController">
+ <summary>
+ This API permit a client application of know if the masternode is alive
+ </summary>
+</member>
+<member name="M:AdminService.AreaCommon.moduleMain.closeApplication(System.Boolean)">
  <summary>
  This application provides to close application
  </summary>

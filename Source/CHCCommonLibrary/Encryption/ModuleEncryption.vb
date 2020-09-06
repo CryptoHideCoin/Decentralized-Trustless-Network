@@ -8,10 +8,10 @@ Option Explicit On
 Namespace CHCEngines.Common.Encryption
 
 
-    Module AES
+    Public Class AES
 
 
-        Public Function encrypt(ByVal content As String, ByVal key As String) As String
+        Public Shared Function encrypt(ByVal content As String, ByVal key As String) As String
 
             Dim aes As New System.Security.Cryptography.RijndaelManaged
             Dim hash_AES As New System.Security.Cryptography.MD5CryptoServiceProvider
@@ -42,7 +42,7 @@ Namespace CHCEngines.Common.Encryption
         End Function
 
 
-        Public Function decrypt(ByVal content As String, ByVal key As String) As String
+        Public Shared Function decrypt(ByVal content As String, ByVal key As String) As String
 
             Dim AES As New System.Security.Cryptography.RijndaelManaged
             Dim Hash_AES As New System.Security.Cryptography.MD5CryptoServiceProvider
@@ -74,6 +74,6 @@ Namespace CHCEngines.Common.Encryption
 
 
 
-    End Module
+    End Class
 
 End Namespace

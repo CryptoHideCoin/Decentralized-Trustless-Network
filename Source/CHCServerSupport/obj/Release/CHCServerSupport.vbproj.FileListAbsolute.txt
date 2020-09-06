@@ -1,0 +1,11 @@
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\bin\Release\CHCServerSupport.dll
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\bin\Release\CHCServerSupport.pdb
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\bin\Release\CHCServerSupport.xml
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\bin\Release\CHCCommonLibrary.dll
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Release\CHCServerSupport.vbprojAssemblyReference.cache
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Release\CHCServerSupport.Resources.resources
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Release\CHCServerSupport.vbproj.GenerateResource.cache
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Release\CHCServerSupport.vbproj.CopyComplete
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Release\CHCServerSupport.dll
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Release\CHCServerSupport.xml
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Release\CHCServerSupport.pdb

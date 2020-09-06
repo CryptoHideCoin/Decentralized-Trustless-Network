@@ -157,8 +157,6 @@ Namespace AreaCommon
 
                 log.trackIntoConsole("Root paths set " & paths.pathBaseData)
 
-                state.currentApplication = AppState.enumStateApplication.waitingToStart
-
                 If state.uiVisible Then
 
                     Dim tmp As New Main
@@ -195,7 +193,7 @@ Namespace AreaCommon
 
                 log.track("moduleMain.recallStarter", "Begin")
 
-                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of Models.BooleanModel)
+                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of Models.General.BooleanModel)
 
                 handShakeEngine.url = "http://" & AreaCommon.settings.data.urlMasternodeStart & "/api/v1.0/System/handShake/?serviceAdministrative=true&serviceEngine=false&certificateValue=" & settings.data.certificateMasternodeStart
 
@@ -232,6 +230,8 @@ Namespace AreaCommon
             Try
 
                 log.trackIntoConsole("Start Service")
+
+                state.currentApplication = AppState.enumStateApplication.inStarting
 
                 log.track("moduleMain.run", "Begin")
                 log.track("moduleMain.run", "Commandline process execute is " & Environment.CommandLine)
@@ -299,11 +299,15 @@ Namespace AreaCommon
 
                 End If
 
+                AreaApplication.Application.assets.init()
+
                 If settings.data.recallStarter Then
 
                     recallStarter()
 
                 End If
+
+                state.currentApplication = AppState.enumStateApplication.inRunning
 
             Catch ex As Exception
 
@@ -359,6 +363,8 @@ Namespace AreaCommon
                 state.currentApplication = AppState.enumStateApplication.inShutDown
 
                 log.track("moduleMain.[Stop]", "Complete")
+
+                state.currentApplication = AppState.enumStateApplication.waitingToStart
 
                 log.trackIntoConsole("System is shutdown")
 

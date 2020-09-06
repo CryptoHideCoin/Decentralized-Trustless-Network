@@ -60,6 +60,11 @@ Public Class Settings
                                         chainService.Checked = True
                                         chainPort.Text = item.port
 
+                                    Case AreaChain.NodesEngine.NodeInformation.EnumPeerServiceType.vote
+
+                                        voteService.Checked = True
+                                        voteServicePort.Text = item.port
+
                                 End Select
 
                             End If
@@ -216,6 +221,20 @@ Public Class Settings
 
                         item.type = AreaChain.NodesEngine.NodeInformation.EnumPeerServiceType.exChange
                         item.port = exChangePort.Text
+
+                        .services.Add(item)
+
+                    End If
+
+                End If
+                If voteService.Checked Then
+
+                    If IsNumeric(voteServicePort.Text) Then
+
+                        item = New AreaChain.NodesEngine.NodeInformation.configurationPort
+
+                        item.type = AreaChain.NodesEngine.NodeInformation.EnumPeerServiceType.vote
+                        item.port = voteServicePort.Text
 
                         .services.Add(item)
 
@@ -448,7 +467,7 @@ Public Class Settings
 
         End If
 
-        If Not publicService.Checked And Not chainService.Checked And Not fileService.Checked And Not dnsService.Checked And Not exChangeService.Checked Then
+        If Not publicService.Checked And Not chainService.Checked And Not fileService.Checked And Not dnsService.Checked And Not exChangeService.Checked And Not voteService.Checked Then
 
             MessageBox.Show("Select one ore more services", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return False
@@ -460,6 +479,7 @@ Public Class Settings
         If portMissing(fileService, filePort) Then Return False
         If portMissing(dnsService, dnsPort) Then Return False
         If portMissing(exChangeService, exChangePort) Then Return False
+        If portMissing(voteService, voteServicePort) Then Return False
 
         Return True
 
@@ -489,6 +509,12 @@ Public Class Settings
             Me.Close()
 
         End If
+
+    End Sub
+
+    Private Sub voteService_CheckedChanged(sender As Object, e As EventArgs) Handles voteService.CheckedChanged
+
+        manageEnableCheck(voteService, voteServicePort)
 
     End Sub
 

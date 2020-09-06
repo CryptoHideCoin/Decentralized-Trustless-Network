@@ -463,7 +463,7 @@ Partial Class Main
         Me.LogTab.Location = New System.Drawing.Point(4, 22)
         Me.LogTab.Name = "LogTab"
         Me.LogTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.LogTab.Size = New System.Drawing.Size(701, 434)
+        Me.LogTab.Size = New System.Drawing.Size(485, 434)
         Me.LogTab.TabIndex = 1
         Me.LogTab.Text = "Output"
         Me.LogTab.UseVisualStyleBackColor = True

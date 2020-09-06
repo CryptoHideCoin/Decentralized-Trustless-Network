@@ -1,0 +1,24 @@
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Debug\CHCServerSupport.pdb
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\bin\Debug\CHCServerSupport.dll
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\bin\Debug\CHCServerSupport.pdb
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\bin\Debug\CHCServerSupport.xml
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\bin\Debug\CHCCommonLibrary.dll
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\bin\Debug\Newtonsoft.Json.dll
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Debug\CHCServerSupport.vbprojAssemblyReference.cache
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Debug\CHCServerSupport.Resources.resources
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Debug\CHCServerSupport.vbproj.GenerateResource.cache
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Debug\CHCServerSupport.vbproj.CopyComplete
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Debug\CHCServerSupport.dll
+E:\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\obj\Debug\CHCServerSupport.xml
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\CHCServerSupport.dll
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\CHCServerSupport.pdb
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\CHCServerSupport.xml
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupport.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupport.Resources.resources
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupport.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupport.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupport.dll
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupport.xml
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupport.pdb

@@ -15,6 +15,7 @@ Namespace AreaChain
                 file
                 dns
                 exChange
+                vote
             End Enum
 
             Public Class configurationPort

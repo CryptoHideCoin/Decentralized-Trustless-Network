@@ -24,11 +24,10 @@ Namespace AreaCommon
 
 
 
-
         ''' <summary>
         ''' This application provides to close application
         ''' </summary>
-        Public Sub CloseApplication(Optional ByVal NotWait As Boolean = False)
+        Public Sub closeApplication(Optional ByVal NotWait As Boolean = False)
 
             Console.WriteLine("")
             Console.WriteLine("")

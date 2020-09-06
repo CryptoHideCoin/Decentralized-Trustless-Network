@@ -10,6 +10,20 @@ Public Class Main
     Public SettingsMode As Boolean = False
 
 
+
+    Private Sub showCertificateData()
+
+        With AreaCommon.settings.data
+
+            certificateMasternodeStart.Text = .certificateMasternodeStart
+            certificateMasternodeEngine.Text = .certificateMasternodeEngine
+            certificateClient.Text = .certificateClient
+
+        End With
+
+    End Sub
+
+
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Try
@@ -28,6 +42,8 @@ Public Class Main
 
             End If
 
+            showCertificateData()
+
             With AreaCommon.settings.data
 
                 localPathData.Text = .dataPath
@@ -35,12 +51,8 @@ Public Class Main
                 localPortNumber.Text = .portNumber
 
                 masternodeStartUrl.Text = .urlMasternodeStart
-                certificateMasternodeStart.Text = .certificateMasternodeStart
-
                 masternodeEngineURL.Text = .urlMasternodeEngine
-                certificateMasternodeEngine.Text = .certificateMasternodeEngine
 
-                certificateClient.Text = .certificateClient
                 writeLogFile.Checked = (.useTrack <> AppSettings.TrackRuntimeModeEnum.dontTrack)
                 useEventRegistry.Checked = .useEventRegistry
 
@@ -317,7 +329,23 @@ Public Class Main
 
         If Not SettingsMode Then
 
-            AreaCommon.stop()
+            If AreaCommon.moduleMain.state.currentApplication = AppState.enumStateApplication.inRunning Then
+
+                AreaCommon.stop()
+
+            Else
+
+                Me.Dispose()
+
+                AreaCommon.closeApplication()
+
+            End If
+
+        Else
+
+            Me.Dispose()
+
+            AreaCommon.closeApplication()
 
         End If
 
@@ -374,7 +402,7 @@ Public Class Main
 
             Try
 
-                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.BooleanModel)
+                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.General.BooleanModel)
 
                 handShakeEngine.url = "http://" & masternodeStartUrl.Text & "/api/v1.0/system/testService"
 
@@ -468,7 +496,7 @@ Public Class Main
 
             Try
 
-                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.BooleanModel)
+                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.General.BooleanModel)
 
                 handShakeEngine.url = "http://" & masternodeEngineURL.Text & "/api/v1.0/system/testService"
 
@@ -495,4 +523,12 @@ Public Class Main
         End If
 
     End Sub
+
+    Private Sub refreshButton_Click(sender As Object, e As EventArgs) Handles refreshButton.Click
+
+        showCertificateData()
+
+    End Sub
+
+
 End Class

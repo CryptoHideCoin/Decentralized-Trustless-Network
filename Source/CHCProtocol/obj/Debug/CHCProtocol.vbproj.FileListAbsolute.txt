@@ -1,0 +1,12 @@
+E:\CryptoHideCoinDTN\Source\CHCProtocol\bin\Debug\CHCProtocol.dll
+E:\CryptoHideCoinDTN\Source\CHCProtocol\bin\Debug\CHCProtocol.pdb
+E:\CryptoHideCoinDTN\Source\CHCProtocol\bin\Debug\CHCProtocol.xml
+E:\CryptoHideCoinDTN\Source\CHCProtocol\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\CHCProtocol\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\CHCProtocol\obj\Debug\CHCProtocol.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\CHCProtocol\obj\Debug\CHCProtocol.Resources.resources
+E:\CryptoHideCoinDTN\Source\CHCProtocol\obj\Debug\CHCProtocol.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\CHCProtocol\obj\Debug\CHCProtocol.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\CHCProtocol\obj\Debug\CHCProtocol.dll
+E:\CryptoHideCoinDTN\Source\CHCProtocol\obj\Debug\CHCProtocol.xml
+E:\CryptoHideCoinDTN\Source\CHCProtocol\obj\Debug\CHCProtocol.pdb

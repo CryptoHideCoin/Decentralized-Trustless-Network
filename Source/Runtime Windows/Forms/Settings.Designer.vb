@@ -72,6 +72,8 @@ Partial Class Settings
         Me.folderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.startButton = New System.Windows.Forms.Button()
         Me.openFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.voteServicePort = New System.Windows.Forms.TextBox()
+        Me.voteService = New System.Windows.Forms.CheckBox()
         Me.tabMain.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -497,6 +499,8 @@ Partial Class Settings
         '
         Me.localPathAndDataPortNumber.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.localPathAndDataPortNumber.Controls.Add(Me.voteServicePort)
+        Me.localPathAndDataPortNumber.Controls.Add(Me.voteService)
         Me.localPathAndDataPortNumber.Controls.Add(Me.exChangePort)
         Me.localPathAndDataPortNumber.Controls.Add(Me.exChangeService)
         Me.localPathAndDataPortNumber.Controls.Add(Me.dnsPort)
@@ -510,7 +514,7 @@ Partial Class Settings
         Me.localPathAndDataPortNumber.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.localPathAndDataPortNumber.Location = New System.Drawing.Point(7, 3)
         Me.localPathAndDataPortNumber.Name = "localPathAndDataPortNumber"
-        Me.localPathAndDataPortNumber.Size = New System.Drawing.Size(686, 182)
+        Me.localPathAndDataPortNumber.Size = New System.Drawing.Size(686, 219)
         Me.localPathAndDataPortNumber.TabIndex = 0
         Me.localPathAndDataPortNumber.TabStop = False
         Me.localPathAndDataPortNumber.Text = "Configuration Port"
@@ -628,6 +632,26 @@ Partial Class Settings
         '
         Me.openFileDialog.FileName = "OpenFileDialog1"
         '
+        'voteServicePort
+        '
+        Me.voteServicePort.Enabled = False
+        Me.voteServicePort.Location = New System.Drawing.Point(322, 163)
+        Me.voteServicePort.Name = "voteServicePort"
+        Me.voteServicePort.Size = New System.Drawing.Size(116, 21)
+        Me.voteServicePort.TabIndex = 11
+        Me.voteServicePort.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'voteService
+        '
+        Me.voteService.AutoSize = True
+        Me.voteService.Enabled = False
+        Me.voteService.Location = New System.Drawing.Point(167, 165)
+        Me.voteService.Name = "voteService"
+        Me.voteService.Size = New System.Drawing.Size(96, 17)
+        Me.voteService.TabIndex = 10
+        Me.voteService.Text = "Vote service"
+        Me.voteService.UseVisualStyleBackColor = True
+        '
         'Settings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -711,4 +735,6 @@ Partial Class Settings
     Friend WithEvents urlMasternodeRuntimeLabel As Label
     Friend WithEvents chainConfiguration As ComboBox
     Friend WithEvents Label4 As Label
+    Friend WithEvents voteServicePort As TextBox
+    Friend WithEvents voteService As CheckBox
 End Class
