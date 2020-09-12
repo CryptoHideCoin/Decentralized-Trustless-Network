@@ -51,6 +51,19 @@ Namespace AreaCommon
 
                     paths.pathBaseData = settings.data.dataPath
 
+                    paths.init()
+
+                    If command.forceReadSettings Then
+
+                        settings.fileName = IO.Path.Combine(paths.pathSettings, paths.settingFileName)
+                        settings.cryptoKEY = command.fileSecurityKey
+
+                        settings.read()
+
+                        log.trackIntoConsole("Settings data read ")
+
+                    End If
+
                     log.trackIntoConsole("Root paths set " & paths.pathBaseData)
 
                 End If
@@ -83,6 +96,8 @@ Namespace AreaCommon
             Try
 
                 Dim lastCheckUpdate As DateTime = Now.AddDays(-1)
+
+                state.stateApplication = AppState.enumStateApplication.inRunning
 
                 Do
 
@@ -168,8 +183,6 @@ Namespace AreaCommon
                 log.track("startUp.run", "Begin")
                 log.track("startUp.run", "Commandline process execute is " & Environment.CommandLine)
                 log.track("startUp.run", "DataPath is " & paths.pathBaseData)
-
-                paths.init()
 
                 registry.noSave = Not settings.data.useEventRegistry
 

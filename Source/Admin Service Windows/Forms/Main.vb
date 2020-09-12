@@ -15,8 +15,8 @@ Public Class Main
 
         With AreaCommon.settings.data
 
-            certificateMasternodeStart.Text = .certificateMasternodeStart
-            certificateMasternodeEngine.Text = .certificateMasternodeEngine
+            certificateMasternodeStart.Text = .serviceStart.certificate
+            certificateMasternodeEngine.Text = .serviceRuntime.certificate
             certificateClient.Text = .certificateClient
 
         End With
@@ -50,11 +50,37 @@ Public Class Main
                 publicWalletAddress.Text = .walletPublicAddress
                 localPortNumber.Text = .portNumber
 
-                masternodeStartUrl.Text = .urlMasternodeStart
-                masternodeEngineURL.Text = .urlMasternodeEngine
+                If .serviceStart.useSecure Then protocolMasternodeStart.SelectedIndex = 1 Else protocolMasternodeStart.SelectedIndex = 0
+                If .serviceRuntime.useSecure Then protocolMasternodeEngine.SelectedIndex = 1 Else protocolMasternodeEngine.SelectedIndex = 0
+
+                masternodeStartUrl.Text = .serviceStart.url
+                masternodeEngineURL.Text = .serviceRuntime.url
 
                 writeLogFile.Checked = (.useTrack <> AppSettings.TrackRuntimeModeEnum.dontTrack)
                 useEventRegistry.Checked = .useEventRegistry
+
+                autoCleanOption.Checked = .useTrackRotate
+
+                If .useTrackRotate Then
+
+                    Select Case .trackRotate.frequency
+                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h : startCleanEveryValue.SelectedIndex = 0
+                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.everyDay : startCleanEveryValue.SelectedIndex = 1
+                    End Select
+
+                    Select Case .trackRotate.keepFile
+                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles : keepFileTypeValue.SelectedIndex = 0
+                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.onlyMainTracks : keepFileTypeValue.SelectedIndex = 1
+                    End Select
+
+                    Select Case .trackRotate.keepLast
+                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay : keepOnlyRecentFileValue.SelectedIndex = 0
+                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastMonth : keepOnlyRecentFileValue.SelectedIndex = 1
+                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastWeek : keepOnlyRecentFileValue.SelectedIndex = 2
+                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastYear : keepOnlyRecentFileValue.SelectedIndex = 3
+                    End Select
+
+                End If
 
             End With
 
@@ -79,11 +105,13 @@ Public Class Main
                 .walletPublicAddress = publicWalletAddress.Text
                 .portNumber = localPortNumber.Text
 
-                .urlMasternodeStart = masternodeStartUrl.Text
-                .certificateMasternodeStart = certificateMasternodeStart.Text
+                .serviceStart.useSecure = (protocolMasternodeStart.SelectedIndex > 0)
+                .serviceStart.url = masternodeStartUrl.Text
+                .serviceStart.certificate = certificateMasternodeStart.Text
 
-                .urlMasternodeEngine = masternodeEngineURL.Text
-                .certificateMasternodeEngine = certificateMasternodeEngine.Text
+                .serviceRuntime.useSecure = (protocolMasternodeEngine.SelectedIndex > 0)
+                .serviceRuntime.url = masternodeEngineURL.Text
+                .serviceRuntime.certificate = certificateMasternodeEngine.Text
 
                 .certificateClient = certificateClient.Text
 
@@ -106,6 +134,25 @@ Public Class Main
                     .useEventRegistry = AppSettings.TrackRuntimeModeEnum.dontTrack
 
                 End If
+
+                .useTrackRotate = autoCleanOption.Checked
+
+                Select Case startCleanEveryValue.SelectedIndex
+                    Case 0 : .trackRotate.frequency = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
+                    Case 1 : .trackRotate.frequency = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.everyDay
+                End Select
+
+                Select Case keepFileTypeValue.SelectedIndex
+                    Case 0 : .trackRotate.keepFile = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
+                    Case 1 : .trackRotate.keepFile = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.onlyMainTracks
+                End Select
+
+                Select Case keepOnlyRecentFileValue.SelectedIndex
+                    Case 0 : .trackRotate.keepLast = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
+                    Case 1 : .trackRotate.keepLast = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastWeek
+                    Case 2 : .trackRotate.keepLast = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastMonth
+                    Case 3 : .trackRotate.keepLast = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastYear
+                End Select
 
             End With
 
@@ -181,6 +228,18 @@ Public Class Main
         If Not IsNumeric(localPortNumber.Text) Then
 
             MessageBox.Show("The local port number must be a numeric.", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+
+        End If
+        If (publicWalletAddress.Text.ToString.Trim.Length = 0) Then
+
+            MessageBox.Show("The wallet address is missing.", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+
+        End If
+        If Not CHCProtocol.AreaWallet.Support.WalletAddressEngine.checkFormatPublicAddress(publicWalletAddress.Text) Then
+
+            MessageBox.Show("The wallet address is wrong.", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return False
 
         End If
@@ -337,7 +396,7 @@ Public Class Main
 
                 Me.Dispose()
 
-                AreaCommon.closeApplication()
+                AreaCommon.closeApplication(True)
 
             End If
 
@@ -345,7 +404,7 @@ Public Class Main
 
             Me.Dispose()
 
-            AreaCommon.closeApplication()
+            AreaCommon.closeApplication(True)
 
         End If
 
@@ -378,7 +437,7 @@ Public Class Main
 
     Private Sub tabControl_Selecting(sender As Object, e As TabControlCancelEventArgs) Handles tabControl.Selecting
 
-        If (tabControl.SelectedIndex = 1) Then
+        If (tabControl.SelectedIndex = 2) Then
 
             If _canChangeTab Then
 
@@ -396,13 +455,13 @@ Public Class Main
 
     End Sub
 
-    Private Sub testMasternodeServiceButton_Click(sender As Object, e As EventArgs) Handles testMasternodeServiceButton.Click
+    Private Sub testMasternodeServiceButton_Click(sender As Object, e As EventArgs)
 
         If (masternodeStartUrl.Text.ToString.Trim.Length > 0) Then
 
             Try
 
-                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.General.BooleanModel)
+                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of CHCProtocol.AreaCommon.Models.General.BooleanModel)
 
                 handShakeEngine.url = "http://" & masternodeStartUrl.Text & "/api/v1.0/system/testService"
 
@@ -490,13 +549,13 @@ Public Class Main
 
     End Sub
 
-    Private Sub testMasternodeEngineServiceButton_Click(sender As Object, e As EventArgs) Handles testMasternodeEngineServiceButton.Click
+    Private Sub testMasternodeEngineServiceButton_Click(sender As Object, e As EventArgs)
 
         If (masternodeEngineURL.Text.ToString.Trim.Length > 0) Then
 
             Try
 
-                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.General.BooleanModel)
+                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of CHCProtocol.AreaCommon.Models.General.BooleanModel)
 
                 handShakeEngine.url = "http://" & masternodeEngineURL.Text & "/api/v1.0/system/testService"
 
@@ -527,6 +586,67 @@ Public Class Main
     Private Sub refreshButton_Click(sender As Object, e As EventArgs) Handles refreshButton.Click
 
         showCertificateData()
+
+    End Sub
+
+    Private Sub Main_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+
+    End Sub
+
+    Private Sub localPathData_TextChanged(sender As Object, e As EventArgs) Handles localPathData.TextChanged
+
+    End Sub
+
+    Private Sub localPathData_DoubleClick(sender As Object, e As EventArgs) Handles localPathData.DoubleClick
+
+        Try
+
+            Process.Start("explorer.exe", localPathData.Text)
+
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
+    Private Sub createNewCertificateStart_Click(sender As Object, e As EventArgs) Handles createNewCertificateStart.Click
+
+        certificateMasternodeStart.Text = CHCProtocol.AreaBase.Certificate.createNew()
+
+    End Sub
+
+    Private Sub createNewCertificateEngine_Click(sender As Object, e As EventArgs) Handles createNewCertificateEngine.Click
+
+        certificateMasternodeEngine.Text = CHCProtocol.AreaBase.Certificate.createNew()
+
+    End Sub
+
+    Private Sub createNewCertificateClient_Click(sender As Object, e As EventArgs) Handles createNewCertificateClient.Click
+
+        certificateClient.Text = CHCProtocol.AreaBase.Certificate.createNew()
+
+    End Sub
+
+    Private Sub enableLogRotate(ByVal value As Boolean)
+
+        startCleanEvery.Enabled = value
+        startCleanEveryValue.Enabled = value
+        keepOnlyRecentFile.Enabled = value
+        keepOnlyRecentFileValue.Enabled = value
+        keepFileType.Enabled = value
+        keepFileTypeValue.Enabled = value
+
+    End Sub
+
+    Private Sub autoCleanOption_CheckedChanged(sender As Object, e As EventArgs) Handles autoCleanOption.CheckedChanged
+
+        enableLogRotate(autoCleanOption.Checked)
+
+    End Sub
+
+    Private Sub informationButton_Click(sender As Object, e As EventArgs) Handles informationButton.Click
+
+        MessageBox.Show(Application.ProductName & vbNewLine & vbNewLine & "Release " & Application.ProductVersion, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
     End Sub
 

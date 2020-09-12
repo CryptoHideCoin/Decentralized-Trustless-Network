@@ -10,35 +10,29 @@ Namespace Controllers
     ''' ...
     ''' </summary>
     <Route("DefinitionApi")>
-    Public Class AssetController
+    Public Class AssetsController
 
         Inherits ApiController
 
 
         ' GET api/values
-        Public Function GetValues(ByVal certificate As String) As IEnumerable(Of AreaCommon.Models.Define.CryptoAssetKeyDescriptionModel)
+        Public Function GetValues(ByVal certificate As String) As IEnumerable(Of AreaCommon.Models.Define.CryptoItemKeyDescriptionModel)
 
-            Dim response As New List(Of AreaCommon.Models.Define.CryptoAssetKeyDescriptionModel)
-            Dim item As New AreaCommon.Models.Define.CryptoAssetKeyDescriptionModel
+            Dim response As New List(Of AreaCommon.Models.Define.CryptoItemKeyDescriptionModel)
+            Dim item As New AreaCommon.Models.Define.CryptoItemKeyDescriptionModel
 
             Try
 
                 If (AreaCommon.state.currentApplication = AppState.enumStateApplication.inRunning) Then
 
                     If AreaSecurity.checkClientCertification(certificate) Then
-
-                        Return AreaApplication.assets.cacheList
-
+                        Return AreaApplication.Application.assets.cacheList
                     Else
-
                         item.response.unAuthorized = True
-
                     End If
 
                 Else
-
                     item.response.offline = True
-
                 End If
 
             Catch ex As Exception
@@ -63,19 +57,13 @@ Namespace Controllers
                 If (AreaCommon.state.currentApplication = AppState.enumStateApplication.inRunning) Then
 
                     If AreaSecurity.checkClientCertification(certificate) Then
-
                         Return AreaApplication.Application.assets.getData(id)
-
                     Else
-
                         singleItem.response.unAuthorized = True
-
                     End If
 
                 Else
-
                     singleItem.response.offline = True
-
                 End If
 
             Catch ex As Exception
@@ -126,7 +114,7 @@ Namespace Controllers
 
                     If AreaSecurity.checkClientCertification(certificate) Then
 
-                        AreaApplication.assets.delete(id)
+                        AreaApplication.Application.assets.delete(id)
 
                     End If
 

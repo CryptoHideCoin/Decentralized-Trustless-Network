@@ -58,6 +58,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCProtocol, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CHCProtocol\CHCProtocol.dll</HintPath>
+    </Reference>
     <Reference Include="CHCServerSupport, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CHCServerSupport\CHCServerSupport.dll</HintPath>
@@ -103,7 +107,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Models\GeneralResponseModel.vb" />
+    <Compile Include="Models\NetworkModel.vb" />
     <Compile Include="Modules\Common.vb" />
+    <Compile Include="Models\MasternodeModel.vb" />
     <Compile Include="Modules\SecurityModel.vb" />
     <Compile Include="Modules\StartUp.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -152,10 +158,7 @@
     <Content Include="64.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CHCProtocol\CHCProtocol.vbproj">
-      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
-      <Name>CHCProtocol</Name>
-    </ProjectReference>
+    <Folder Include="Forms\Edit\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

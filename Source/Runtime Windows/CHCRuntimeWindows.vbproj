@@ -54,6 +54,10 @@
     <Reference Include="CHCCommonLibrary">
       <HintPath>..\CHCCommonLibrary\bin\Debug\CHCCommonLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCServerSupport, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CHCServerSupport\CHCServerSupport.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -98,6 +102,7 @@
     <Compile Include="Classes\Application\Paths.vb" />
     <Compile Include="Controllers\v1.0\Chain\CurrentMasternodeListController.vb" />
     <Compile Include="Controllers\v1.0\Chain\MasternodeInfoController.vb" />
+    <Compile Include="Controllers\v1.0\Chain\StatusController.vb" />
     <Compile Include="Controllers\v1.0\System\TestController.vb" />
     <Compile Include="Forms\Settings.Designer.vb">
       <DependentUpon>Settings.vb</DependentUpon>
@@ -106,7 +111,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Models\GeneralResponseModel.vb" />
+    <Compile Include="Models\NetworkModel.vb" />
     <Compile Include="Modules\Service\Network.vb" />
+    <Compile Include="Modules\Service\Security.vb" />
     <Compile Include="Modules\Startup\Bootstrap.vb" />
     <Compile Include="Modules\Basic\Common.vb" />
     <Compile Include="Modules\Basic\Controllers.vb" />
@@ -150,12 +157,6 @@
     </None>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\TakeMyTokens\Private Market\Server\PrivateCoinExchangeEngine\CHCServerSupport\CHCServerSupport.vbproj">
-      <Project>{f87b02ed-de8e-4e2d-894f-8b67d80abe6b}</Project>
-      <Name>CHCServerSupport</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="64.ico" />

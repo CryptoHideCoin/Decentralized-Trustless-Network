@@ -4,8 +4,6 @@ E:\CryptoHideCoinDTN\Source\Runtime Windows\bin\Debug\Newtonsoft.Json.dll
 E:\CryptoHideCoinDTN\Source\Runtime Windows\bin\Debug\System.Net.Http.Formatting.dll
 E:\CryptoHideCoinDTN\Source\Runtime Windows\bin\Debug\System.Web.Http.dll
 E:\CryptoHideCoinDTN\Source\Runtime Windows\bin\Debug\System.Web.Http.SelfHost.dll
-E:\CryptoHideCoinDTN\Source\Runtime Windows\bin\Debug\CHCServerSupport.pdb
-E:\CryptoHideCoinDTN\Source\Runtime Windows\bin\Debug\CHCServerSupport.xml
 E:\CryptoHideCoinDTN\Source\Runtime Windows\bin\Debug\CHCCommonLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Runtime Windows\bin\Debug\CHCCommonLibrary.xml
 E:\CryptoHideCoinDTN\Source\Runtime Windows\bin\Debug\Newtonsoft.Json.xml

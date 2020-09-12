@@ -15,13 +15,10 @@ Namespace Controllers
         Inherits ApiController
 
 
-        Public Function GetValue() As AreaCommon.Models.General.BooleanModel
 
-            Dim result As New AreaCommon.Models.General.BooleanModel
+        Public Function GetValue() As CHCProtocol.AreaCommon.Models.General.BooleanModel
 
-            result.value = True
-
-            Return result
+            Return New CHCProtocol.AreaCommon.Models.General.BooleanModel With {.value = True}
 
         End Function
 

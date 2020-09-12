@@ -5,8 +5,8 @@
 Namespace Controllers
 
 
-    ' GET: api/v1.0/Chain/MasternodeInfoController
-    <Route("ChainApi")>
+    ' GET: api/v1.0/System/MasternodeInfoController
+    <Route("SystemApi")>
     Public Class MasternodeInfoController
 
         Inherits ApiController
@@ -20,30 +20,42 @@ Namespace Controllers
 
             Try
 
-                If AreaCommon.settings.data.intranetMode Then
+                If (AreaCommon.state.stateApplication = AppState.enumStateApplication.inRunning) Then
 
-                    result.address = AreaCommon.state.localIpAddress
+                    If AreaCommon.settings.data.intranetMode Then
+
+                        result.address = AreaCommon.state.localIpAddress
+
+                    Else
+
+                        result.address = AreaCommon.state.publicIpAddress
+
+                    End If
+
+                    result.associatedWalletAddress = AreaCommon.settings.data.walletAddress
+                    result.virtualName = AreaCommon.settings.data.virtualName
+
+                    For Each item In AreaCommon.settings.data.services
+
+                        result.serviceList.Add(item)
+
+                    Next
+
+                    result.configureTransactionDefinitionID = AreaCommon.state.transactionChainConfigID
+                    result.masternodeConnectedChainStartUp = AreaCommon.state.connectedMoment
+                    result.warrantyCoin = 0
 
                 Else
 
-                    result.address = AreaCommon.state.publicIpAddress
+                    result.response.error = True
+                    result.response.offline = True
 
                 End If
 
-                result.associatedWalletAddress = AreaCommon.settings.data.walletAddress
-                result.virtualName = AreaCommon.settings.data.virtualName
-
-                For Each item In AreaCommon.settings.data.services
-
-                    result.serviceList.Add(item)
-
-                Next
-
-                result.configureTransactionDefinitionID = AreaCommon.state.transactionChainConfigID
-                result.masternodeConnectedChainStartUp = AreaCommon.state.connectedMoment
-                result.warrantyCoin = 0
-
             Catch ex As Exception
+
+                result.response.error = True
+                result.response.offline = True
 
             End Try
 

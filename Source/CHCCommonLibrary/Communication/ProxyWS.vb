@@ -17,7 +17,6 @@ Namespace CHCEngines.Communication
 
     Public Class ProxyWS(Of ClassType As {New})
 
-
         Public data As New ClassType
 
 
@@ -100,13 +99,11 @@ Namespace CHCEngines.Communication
         End Function
 
 
-
     End Class
 
 
 
     Public Class ProxySimplyWS(Of ClassType)
-
 
         Public data As ClassType
 
@@ -190,7 +187,7 @@ Namespace CHCEngines.Communication
         End Function
 
 
-
     End Class
+
 
 End Namespace

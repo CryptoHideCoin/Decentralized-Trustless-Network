@@ -75,6 +75,11 @@ CHCRuntimeService
  This method provide to stop the application
  </summary>
 </member>
+<member name="T:CHCRuntimeService.Controllers.StatusController">
+ <summary>
+ This API permit a client to know if the Masternode is in work mode or not
+ </summary>
+</member>
 <member name="M:CHCRuntimeService.AreaNetwork.Address.acquirePublicIP(System.Boolean)">
  <summary>
  This method provides to return a Public IP

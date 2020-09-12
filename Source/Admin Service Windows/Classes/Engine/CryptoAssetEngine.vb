@@ -8,9 +8,10 @@ Namespace AreaEngine
 
     Public Class CryptoAssetEngine
 
-        Public cacheList As New List(Of AreaCommon.Models.Define.CryptoAssetKeyDescriptionModel)
+        Public cacheList As New List(Of AreaCommon.Models.Define.CryptoItemKeyDescriptionModel)
 
         Private _Keys As New Dictionary(Of String, String)
+
 
 
 
@@ -44,7 +45,7 @@ Namespace AreaEngine
             Try
 
                 Dim engine As New CHCCommonLibrary.CHCEngines.Common.BaseFileDB(Of AreaCommon.Models.Define.CryptoAssetModel)
-                Dim singleItem As AreaCommon.Models.Define.CryptoAssetKeyDescriptionModel
+                Dim singleItem As AreaCommon.Models.Define.CryptoItemKeyDescriptionModel
 
                 AreaCommon.log.track("CryptoAssetEngine.init", "Begin")
 
@@ -56,7 +57,7 @@ Namespace AreaEngine
 
                         If engine.read() Then
 
-                            singleItem = New AreaCommon.Models.Define.CryptoAssetKeyDescriptionModel
+                            singleItem = New AreaCommon.Models.Define.CryptoItemKeyDescriptionModel
 
                             singleItem.identity = engine.data.identity
                             singleItem.name = engine.data.name
@@ -167,9 +168,9 @@ Namespace AreaEngine
         End Function
 
 
-        Public Function createKeyDescription(ByVal id As String, ByVal name As String) As AreaCommon.Models.Define.CryptoAssetKeyDescriptionModel
+        Public Function createKeyDescription(ByVal id As String, ByVal name As String) As AreaCommon.Models.Define.CryptoItemKeyDescriptionModel
 
-            Dim tmp As New AreaCommon.Models.Define.CryptoAssetKeyDescriptionModel
+            Dim tmp As New AreaCommon.Models.Define.CryptoItemKeyDescriptionModel
 
             tmp.identity = id
             tmp.name = name

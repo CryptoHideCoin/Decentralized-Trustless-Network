@@ -1,0 +1,11 @@
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\CHCCreatePackage.exe.config
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\CHCCreatePackage.exe
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\CHCCreatePackage.pdb
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\CHCCreatePackage.xml
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\CreatePackage.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\CHCCreatePackage.Main.resources
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\CHCCreatePackage.Resources.resources
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\CreatePackage.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\CHCCreatePackage.exe
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\CHCCreatePackage.xml
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\CHCCreatePackage.pdb

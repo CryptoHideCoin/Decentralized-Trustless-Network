@@ -9,6 +9,7 @@ Namespace AreaApplication
     Module Cache
 
 
+        'Public assets As New List(Of String)
         Public chains As New List(Of String)
         Public priceList As New List(Of String)
         Public distributionSchemes As New List(Of String)

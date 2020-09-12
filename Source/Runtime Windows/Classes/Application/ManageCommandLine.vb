@@ -13,6 +13,9 @@ Namespace AreaCommon
 
         Public parameters As New AppSettings
         Public haveParameters As Boolean = False
+        Public forceReadSettings As Boolean = False
+
+        Public fileSecurityKey As String = ""
 
 
 
@@ -42,17 +45,33 @@ Namespace AreaCommon
 
                 End If
 
+                If _commandLine.exist("forceReadSettings".ToLower) Then
+
+                    forceReadSettings = True
+
+                End If
+
+                If _commandLine.exist("FileSecurityKey".ToLower()) Then
+
+                    fileSecurityKey = _commandLine.GetValue("FileSecurityKey".ToLower())
+
+                End If
+
                 If _commandLine.exist("Settings".ToLower()) Then
 
                     If (parameters.data.dataPath.Trim.Length() = 0) Then
 
                         paths.pathBaseData = paths.readDefinePath()
 
-                        If (paths.pathBaseData.Trim.Length() > 0) Then
+                    Else
 
-                            paths.init()
+                        paths.pathBaseData = parameters.data.dataPath
 
-                        End If
+                    End If
+
+                    If (paths.pathBaseData.Trim.Length() > 0) Then
+
+                        paths.init()
 
                     End If
 
@@ -60,11 +79,15 @@ Namespace AreaCommon
 
                         settings.fileName = IO.Path.Combine(paths.pathSettings, paths.settingFileName)
 
+                        settings.cryptoKEY = fileSecurityKey
+
                         settings.read()
 
                     End If
 
                     Dim tmp As New Settings
+
+
 
                     tmp.ShowDialog()
 
@@ -79,9 +102,9 @@ Namespace AreaCommon
 
                 End If
 
-                If _commandLine.exist("PrivateWalletAddress".ToLower()) Then
+                If _commandLine.exist("PrivateWalletKey".ToLower()) Then
 
-                    parameters.data.walletKey = _commandLine.GetValue("PrivateWalletAddress")
+                    parameters.data.walletKey = _commandLine.GetValue("PrivateWalletKey")
                     haveParameters = True
 
                 End If
@@ -209,7 +232,7 @@ Namespace AreaCommon
                     log.trackIntoConsole("  /Settings                     Show a settings page")
                     log.trackIntoConsole("  /DataPath                     Force a main path when the application work")
                     log.trackIntoConsole("  /PublicWalletAddress          Set a public wallet address")
-                    log.trackIntoConsole("  /PrivateWalletAddress         Set a private wallet key")
+                    log.trackIntoConsole("  /PrivateWalletKey             Set a private wallet key")
                     log.trackIntoConsole("  /PublicPort                   Set a public port")
                     log.trackIntoConsole("  /ServicePort                  Set a service port")
                     log.trackIntoConsole("  /WriteLogFile                 Enable log file writing")

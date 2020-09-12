@@ -24,15 +24,18 @@ Namespace AreaCommon
 
                 Dim httpConfig As HttpSelfHostConfiguration
 
-                Dim strPort As String = settings.data.portNumber
+                If (settings.data.portNumber = "0") Then
+                    httpConfig = New HttpSelfHostConfiguration("http://127.0.0.1")
+                Else
+                    httpConfig = New HttpSelfHostConfiguration("http://127.0.0.1:" & settings.data.portNumber)
+                End If
 
-                httpConfig = New HttpSelfHostConfiguration("http://127.0.0.1:" & strPort)
-
-                log.track("Controllers.StartWebService", "New Configuration Port " & strPort)
+                log.track("Controllers.StartWebService", "New Configuration Port " & settings.data.portNumber)
 
                 httpConfig.Routes.MapHttpRoute(name:="SystemApi", routeTemplate:="api/v1.0/system/{controller}")
                 httpConfig.Routes.MapHttpRoute(name:="DefineApi", routeTemplate:="api/v1.0/define/{controller}")
                 httpConfig.Routes.MapHttpRoute(name:="SecurityApi", routeTemplate:="api/v1.0/security/{controller}")
+                httpConfig.Routes.MapHttpRoute(name:="NetworkApi", routeTemplate:="api/v1.0/network/{controller}")
 
                 log.track("Controllers.StartWebService", "Map route")
 
@@ -45,8 +48,7 @@ Namespace AreaCommon
                         server.OpenAsync().Wait()
 
                         log.track("Controllers.StartWebService", "WS Listen")
-
-                        log.track("Controllers.StartWebService", "Webservice Run at " & strPort & " port")
+                        log.track("Controllers.StartWebService", "Webservice Run at " & settings.data.portNumber & " port")
 
                     Catch aggEx As AggregateException
 
@@ -61,6 +63,11 @@ Namespace AreaCommon
                     Do
                         Application.DoEvents()
                     Loop Until (state.currentApplication = AppState.enumStateApplication.inShutDown)
+
+                    server.CloseAsync().Wait()
+                    server.Dispose()
+
+                    log.track("Controllers.StartWebService", "Close webservice at " & settings.data.portNumber & " port")
 
                 End Using
 

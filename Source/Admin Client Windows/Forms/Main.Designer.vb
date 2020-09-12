@@ -47,25 +47,48 @@ Partial Class Main
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.infoGroup = New System.Windows.Forms.GroupBox()
+        Me.addressValue = New System.Windows.Forms.TextBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.responseTime = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.requestTime = New System.Windows.Forms.TextBox()
+        Me.Label9 = New System.Windows.Forms.Label()
         Me.protocolReleaseValue = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.softwareRelease = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.platformValue = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.serviceOffered = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.walletAddress = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.masternodeLocalTime = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.virtualNameValue = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.changeStatus = New System.Windows.Forms.Button()
         Me.currentStatusValue = New System.Windows.Forms.TextBox()
         Me.statusMasternode = New System.Windows.Forms.Label()
         Me.refreshGeneralButton = New System.Windows.Forms.Button()
         Me.networkTab = New System.Windows.Forms.TabPage()
+        Me.startStopGroup = New System.Windows.Forms.GroupBox()
+        Me.valueCoinToLock = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.privateKeyValue = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.operationNetwork = New System.Windows.Forms.Button()
+        Me.infoStatusNetwork = New System.Windows.Forms.GroupBox()
+        Me.responseNetworkTimeValue = New System.Windows.Forms.TextBox()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.requestNetworkTimeValue = New System.Windows.Forms.TextBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.networkProtocolReleaseValue = New System.Windows.Forms.TextBox()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.transactionChainNameValue = New System.Windows.Forms.TextBox()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.networkStatusValue = New System.Windows.Forms.TextBox()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.refreshDataNetwork = New System.Windows.Forms.Button()
         Me.peerNodeListTab = New System.Windows.Forms.TabPage()
         Me.advancedTab = New System.Windows.Forms.TabPage()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -79,6 +102,9 @@ Partial Class Main
         Me.generalTab.SuspendLayout()
         Me.commondGroup.SuspendLayout()
         Me.infoGroup.SuspendLayout()
+        Me.networkTab.SuspendLayout()
+        Me.startStopGroup.SuspendLayout()
+        Me.infoStatusNetwork.SuspendLayout()
         Me.advancedTab.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -97,7 +123,7 @@ Partial Class Main
         Me.mainTab.Multiline = True
         Me.mainTab.Name = "mainTab"
         Me.mainTab.SelectedIndex = 0
-        Me.mainTab.Size = New System.Drawing.Size(695, 449)
+        Me.mainTab.Size = New System.Drawing.Size(695, 524)
         Me.mainTab.TabIndex = 0
         '
         'connectionTab
@@ -107,7 +133,7 @@ Partial Class Main
         Me.connectionTab.Location = New System.Drawing.Point(4, 22)
         Me.connectionTab.Name = "connectionTab"
         Me.connectionTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.connectionTab.Size = New System.Drawing.Size(687, 423)
+        Me.connectionTab.Size = New System.Drawing.Size(687, 498)
         Me.connectionTab.TabIndex = 0
         Me.connectionTab.Text = "Settings"
         Me.connectionTab.UseVisualStyleBackColor = True
@@ -122,7 +148,7 @@ Partial Class Main
         Me.localPathAndDataPortNumber.Location = New System.Drawing.Point(8, 6)
         Me.localPathAndDataPortNumber.Name = "localPathAndDataPortNumber"
         Me.localPathAndDataPortNumber.Size = New System.Drawing.Size(668, 96)
-        Me.localPathAndDataPortNumber.TabIndex = 4
+        Me.localPathAndDataPortNumber.TabIndex = 0
         Me.localPathAndDataPortNumber.TabStop = False
         Me.localPathAndDataPortNumber.Text = "Local path data"
         '
@@ -162,7 +188,7 @@ Partial Class Main
         Me.adminServiceConnectionGroup.Location = New System.Drawing.Point(8, 108)
         Me.adminServiceConnectionGroup.Name = "adminServiceConnectionGroup"
         Me.adminServiceConnectionGroup.Size = New System.Drawing.Size(668, 93)
-        Me.adminServiceConnectionGroup.TabIndex = 3
+        Me.adminServiceConnectionGroup.TabIndex = 1
         Me.adminServiceConnectionGroup.TabStop = False
         Me.adminServiceConnectionGroup.Text = "Admin Service Connections"
         '
@@ -173,7 +199,7 @@ Partial Class Main
         Me.changeButton.Location = New System.Drawing.Point(535, 56)
         Me.changeButton.Name = "changeButton"
         Me.changeButton.Size = New System.Drawing.Size(65, 23)
-        Me.changeButton.TabIndex = 10
+        Me.changeButton.TabIndex = 4
         Me.changeButton.Text = "Change"
         Me.changeButton.UseVisualStyleBackColor = True
         '
@@ -194,7 +220,7 @@ Partial Class Main
         Me.certificateMasternodeBrowserButton.Location = New System.Drawing.Point(498, 56)
         Me.certificateMasternodeBrowserButton.Name = "certificateMasternodeBrowserButton"
         Me.certificateMasternodeBrowserButton.Size = New System.Drawing.Size(31, 23)
-        Me.certificateMasternodeBrowserButton.TabIndex = 8
+        Me.certificateMasternodeBrowserButton.TabIndex = 3
         Me.certificateMasternodeBrowserButton.Text = "..."
         Me.certificateMasternodeBrowserButton.UseVisualStyleBackColor = True
         '
@@ -206,7 +232,7 @@ Partial Class Main
         Me.certificateMasternodeAdmin.Location = New System.Drawing.Point(155, 57)
         Me.certificateMasternodeAdmin.Name = "certificateMasternodeAdmin"
         Me.certificateMasternodeAdmin.Size = New System.Drawing.Size(337, 21)
-        Me.certificateMasternodeAdmin.TabIndex = 6
+        Me.certificateMasternodeAdmin.TabIndex = 2
         '
         'certificateMasternodeLabel
         '
@@ -221,6 +247,7 @@ Partial Class Main
         'testButton
         '
         Me.testButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.testButton.Enabled = False
         Me.testButton.Location = New System.Drawing.Point(606, 29)
         Me.testButton.Name = "testButton"
         Me.testButton.Size = New System.Drawing.Size(55, 49)
@@ -235,7 +262,7 @@ Partial Class Main
         Me.masternodeAdminUrl.Location = New System.Drawing.Point(155, 30)
         Me.masternodeAdminUrl.Name = "masternodeAdminUrl"
         Me.masternodeAdminUrl.Size = New System.Drawing.Size(445, 21)
-        Me.masternodeAdminUrl.TabIndex = 4
+        Me.masternodeAdminUrl.TabIndex = 1
         '
         'protocol
         '
@@ -245,7 +272,7 @@ Partial Class Main
         Me.protocol.Location = New System.Drawing.Point(79, 31)
         Me.protocol.Name = "protocol"
         Me.protocol.Size = New System.Drawing.Size(70, 21)
-        Me.protocol.TabIndex = 3
+        Me.protocol.TabIndex = 0
         '
         'generalTab
         '
@@ -255,7 +282,7 @@ Partial Class Main
         Me.generalTab.Location = New System.Drawing.Point(4, 22)
         Me.generalTab.Name = "generalTab"
         Me.generalTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.generalTab.Size = New System.Drawing.Size(687, 423)
+        Me.generalTab.Size = New System.Drawing.Size(687, 498)
         Me.generalTab.TabIndex = 1
         Me.generalTab.Text = "General"
         Me.generalTab.UseVisualStyleBackColor = True
@@ -269,12 +296,13 @@ Partial Class Main
         Me.commondGroup.Controls.Add(Me.Button3)
         Me.commondGroup.Controls.Add(Me.Button2)
         Me.commondGroup.Controls.Add(Me.Button1)
-        Me.commondGroup.Location = New System.Drawing.Point(7, 308)
+        Me.commondGroup.Location = New System.Drawing.Point(7, 383)
         Me.commondGroup.Name = "commondGroup"
         Me.commondGroup.Size = New System.Drawing.Size(671, 106)
-        Me.commondGroup.TabIndex = 8
+        Me.commondGroup.TabIndex = 2
         Me.commondGroup.TabStop = False
         Me.commondGroup.Text = "Commands"
+        Me.commondGroup.Visible = False
         '
         'Button7
         '
@@ -284,6 +312,7 @@ Partial Class Main
         Me.Button7.TabIndex = 14
         Me.Button7.Text = "Votes Management"
         Me.Button7.UseVisualStyleBackColor = True
+        Me.Button7.Visible = False
         '
         'Button6
         '
@@ -293,77 +322,151 @@ Partial Class Main
         Me.Button6.TabIndex = 13
         Me.Button6.Text = "Profiler"
         Me.Button6.UseVisualStyleBackColor = True
+        Me.Button6.Visible = False
         '
         'Button5
         '
-        Me.Button5.Location = New System.Drawing.Point(374, 39)
+        Me.Button5.Location = New System.Drawing.Point(374, 38)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(92, 50)
         Me.Button5.TabIndex = 12
         Me.Button5.Text = "Statistics"
         Me.Button5.UseVisualStyleBackColor = True
+        Me.Button5.Visible = False
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(282, 39)
+        Me.Button4.Location = New System.Drawing.Point(282, 38)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(92, 50)
         Me.Button4.TabIndex = 11
         Me.Button4.Text = "Update Management"
         Me.Button4.UseVisualStyleBackColor = True
+        Me.Button4.Visible = False
         '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(190, 39)
+        Me.Button3.Location = New System.Drawing.Point(190, 38)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(92, 50)
         Me.Button3.TabIndex = 10
         Me.Button3.Text = "View Counters"
         Me.Button3.UseVisualStyleBackColor = True
+        Me.Button3.Visible = False
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(98, 39)
+        Me.Button2.Location = New System.Drawing.Point(98, 38)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(92, 50)
         Me.Button2.TabIndex = 9
         Me.Button2.Text = "View Events"
         Me.Button2.UseVisualStyleBackColor = True
+        Me.Button2.Visible = False
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(6, 39)
+        Me.Button1.Location = New System.Drawing.Point(6, 38)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(92, 50)
         Me.Button1.TabIndex = 8
         Me.Button1.Text = "View Logs"
         Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.Visible = False
         '
         'infoGroup
         '
+        Me.infoGroup.Controls.Add(Me.addressValue)
+        Me.infoGroup.Controls.Add(Me.Label11)
+        Me.infoGroup.Controls.Add(Me.responseTime)
+        Me.infoGroup.Controls.Add(Me.Label10)
+        Me.infoGroup.Controls.Add(Me.requestTime)
+        Me.infoGroup.Controls.Add(Me.Label9)
         Me.infoGroup.Controls.Add(Me.protocolReleaseValue)
         Me.infoGroup.Controls.Add(Me.Label8)
-        Me.infoGroup.Controls.Add(Me.TextBox4)
+        Me.infoGroup.Controls.Add(Me.softwareRelease)
         Me.infoGroup.Controls.Add(Me.Label7)
         Me.infoGroup.Controls.Add(Me.platformValue)
         Me.infoGroup.Controls.Add(Me.Label6)
-        Me.infoGroup.Controls.Add(Me.TextBox3)
+        Me.infoGroup.Controls.Add(Me.serviceOffered)
         Me.infoGroup.Controls.Add(Me.Label5)
         Me.infoGroup.Controls.Add(Me.walletAddress)
         Me.infoGroup.Controls.Add(Me.Label4)
-        Me.infoGroup.Controls.Add(Me.TextBox2)
+        Me.infoGroup.Controls.Add(Me.masternodeLocalTime)
         Me.infoGroup.Controls.Add(Me.Label3)
         Me.infoGroup.Controls.Add(Me.virtualNameValue)
         Me.infoGroup.Controls.Add(Me.Label2)
-        Me.infoGroup.Controls.Add(Me.changeStatus)
         Me.infoGroup.Controls.Add(Me.currentStatusValue)
         Me.infoGroup.Controls.Add(Me.statusMasternode)
         Me.infoGroup.Location = New System.Drawing.Point(7, 48)
         Me.infoGroup.Name = "infoGroup"
-        Me.infoGroup.Size = New System.Drawing.Size(673, 254)
+        Me.infoGroup.Size = New System.Drawing.Size(673, 329)
         Me.infoGroup.TabIndex = 1
         Me.infoGroup.TabStop = False
         Me.infoGroup.Text = "Info Masternode"
+        '
+        'addressValue
+        '
+        Me.addressValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.addressValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.addressValue.Location = New System.Drawing.Point(165, 238)
+        Me.addressValue.Name = "addressValue"
+        Me.addressValue.ReadOnly = True
+        Me.addressValue.Size = New System.Drawing.Size(421, 21)
+        Me.addressValue.TabIndex = 21
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Location = New System.Drawing.Point(102, 241)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(53, 13)
+        Me.Label11.TabIndex = 22
+        Me.Label11.Text = "Address"
+        '
+        'responseTime
+        '
+        Me.responseTime.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.responseTime.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.responseTime.Location = New System.Drawing.Point(165, 292)
+        Me.responseTime.Name = "responseTime"
+        Me.responseTime.ReadOnly = True
+        Me.responseTime.Size = New System.Drawing.Size(421, 21)
+        Me.responseTime.TabIndex = 10
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(61, 295)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(94, 13)
+        Me.Label10.TabIndex = 20
+        Me.Label10.Text = "Response Time"
+        '
+        'requestTime
+        '
+        Me.requestTime.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.requestTime.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.requestTime.Location = New System.Drawing.Point(165, 265)
+        Me.requestTime.Name = "requestTime"
+        Me.requestTime.ReadOnly = True
+        Me.requestTime.Size = New System.Drawing.Size(421, 21)
+        Me.requestTime.TabIndex = 9
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(70, 268)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(85, 13)
+        Me.Label9.TabIndex = 18
+        Me.Label9.Text = "Request Time"
         '
         'protocolReleaseValue
         '
@@ -372,8 +475,9 @@ Partial Class Main
         Me.protocolReleaseValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.protocolReleaseValue.Location = New System.Drawing.Point(165, 211)
         Me.protocolReleaseValue.Name = "protocolReleaseValue"
+        Me.protocolReleaseValue.ReadOnly = True
         Me.protocolReleaseValue.Size = New System.Drawing.Size(421, 21)
-        Me.protocolReleaseValue.TabIndex = 15
+        Me.protocolReleaseValue.TabIndex = 8
         '
         'Label8
         '
@@ -385,15 +489,16 @@ Partial Class Main
         Me.Label8.TabIndex = 16
         Me.Label8.Text = "Protocol release"
         '
-        'TextBox4
+        'softwareRelease
         '
-        Me.TextBox4.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.softwareRelease.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox4.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox4.Location = New System.Drawing.Point(165, 184)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(421, 21)
-        Me.TextBox4.TabIndex = 13
+        Me.softwareRelease.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.softwareRelease.Location = New System.Drawing.Point(165, 184)
+        Me.softwareRelease.Name = "softwareRelease"
+        Me.softwareRelease.ReadOnly = True
+        Me.softwareRelease.Size = New System.Drawing.Size(421, 21)
+        Me.softwareRelease.TabIndex = 7
         '
         'Label7
         '
@@ -412,8 +517,9 @@ Partial Class Main
         Me.platformValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.platformValue.Location = New System.Drawing.Point(165, 157)
         Me.platformValue.Name = "platformValue"
+        Me.platformValue.ReadOnly = True
         Me.platformValue.Size = New System.Drawing.Size(421, 21)
-        Me.platformValue.TabIndex = 11
+        Me.platformValue.TabIndex = 6
         '
         'Label6
         '
@@ -425,25 +531,26 @@ Partial Class Main
         Me.Label6.TabIndex = 12
         Me.Label6.Text = "Platform host"
         '
-        'TextBox3
+        'serviceOffered
         '
-        Me.TextBox3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.serviceOffered.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox3.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox3.Location = New System.Drawing.Point(165, 130)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(421, 21)
-        Me.TextBox3.TabIndex = 9
+        Me.serviceOffered.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.serviceOffered.Location = New System.Drawing.Point(165, 130)
+        Me.serviceOffered.Name = "serviceOffered"
+        Me.serviceOffered.ReadOnly = True
+        Me.serviceOffered.Size = New System.Drawing.Size(421, 21)
+        Me.serviceOffered.TabIndex = 5
         '
         'Label5
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(58, 133)
+        Me.Label5.Location = New System.Drawing.Point(52, 133)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(97, 13)
+        Me.Label5.Size = New System.Drawing.Size(103, 13)
         Me.Label5.TabIndex = 10
-        Me.Label5.Text = "Service Offered"
+        Me.Label5.Text = "Services Offered"
         '
         'walletAddress
         '
@@ -452,8 +559,9 @@ Partial Class Main
         Me.walletAddress.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.walletAddress.Location = New System.Drawing.Point(165, 103)
         Me.walletAddress.Name = "walletAddress"
+        Me.walletAddress.ReadOnly = True
         Me.walletAddress.Size = New System.Drawing.Size(421, 21)
-        Me.walletAddress.TabIndex = 7
+        Me.walletAddress.TabIndex = 4
         '
         'Label4
         '
@@ -465,12 +573,13 @@ Partial Class Main
         Me.Label4.TabIndex = 8
         Me.Label4.Text = "Public wallet address"
         '
-        'TextBox2
+        'masternodeLocalTime
         '
-        Me.TextBox2.Location = New System.Drawing.Point(165, 76)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(421, 21)
-        Me.TextBox2.TabIndex = 6
+        Me.masternodeLocalTime.Location = New System.Drawing.Point(165, 76)
+        Me.masternodeLocalTime.Name = "masternodeLocalTime"
+        Me.masternodeLocalTime.ReadOnly = True
+        Me.masternodeLocalTime.Size = New System.Drawing.Size(421, 21)
+        Me.masternodeLocalTime.TabIndex = 3
         '
         'Label3
         '
@@ -485,8 +594,9 @@ Partial Class Main
         '
         Me.virtualNameValue.Location = New System.Drawing.Point(165, 49)
         Me.virtualNameValue.Name = "virtualNameValue"
+        Me.virtualNameValue.ReadOnly = True
         Me.virtualNameValue.Size = New System.Drawing.Size(421, 21)
-        Me.virtualNameValue.TabIndex = 4
+        Me.virtualNameValue.TabIndex = 2
         '
         'Label2
         '
@@ -497,21 +607,13 @@ Partial Class Main
         Me.Label2.TabIndex = 3
         Me.Label2.Text = "Virtual Name"
         '
-        'changeStatus
-        '
-        Me.changeStatus.Location = New System.Drawing.Point(592, 20)
-        Me.changeStatus.Name = "changeStatus"
-        Me.changeStatus.Size = New System.Drawing.Size(75, 23)
-        Me.changeStatus.TabIndex = 2
-        Me.changeStatus.Text = "START"
-        Me.changeStatus.UseVisualStyleBackColor = True
-        '
         'currentStatusValue
         '
         Me.currentStatusValue.Location = New System.Drawing.Point(165, 21)
         Me.currentStatusValue.Name = "currentStatusValue"
+        Me.currentStatusValue.ReadOnly = True
         Me.currentStatusValue.Size = New System.Drawing.Size(421, 21)
-        Me.currentStatusValue.TabIndex = 1
+        Me.currentStatusValue.TabIndex = 0
         '
         'statusMasternode
         '
@@ -524,6 +626,7 @@ Partial Class Main
         '
         'refreshGeneralButton
         '
+        Me.refreshGeneralButton.Enabled = False
         Me.refreshGeneralButton.Location = New System.Drawing.Point(605, 6)
         Me.refreshGeneralButton.Name = "refreshGeneralButton"
         Me.refreshGeneralButton.Size = New System.Drawing.Size(75, 36)
@@ -533,18 +636,212 @@ Partial Class Main
         '
         'networkTab
         '
+        Me.networkTab.Controls.Add(Me.startStopGroup)
+        Me.networkTab.Controls.Add(Me.infoStatusNetwork)
+        Me.networkTab.Controls.Add(Me.refreshDataNetwork)
         Me.networkTab.Location = New System.Drawing.Point(4, 22)
         Me.networkTab.Name = "networkTab"
-        Me.networkTab.Size = New System.Drawing.Size(687, 423)
+        Me.networkTab.Size = New System.Drawing.Size(687, 498)
         Me.networkTab.TabIndex = 2
         Me.networkTab.Text = "Network"
         Me.networkTab.UseVisualStyleBackColor = True
+        '
+        'startStopGroup
+        '
+        Me.startStopGroup.Controls.Add(Me.valueCoinToLock)
+        Me.startStopGroup.Controls.Add(Me.Label16)
+        Me.startStopGroup.Controls.Add(Me.privateKeyValue)
+        Me.startStopGroup.Controls.Add(Me.Label12)
+        Me.startStopGroup.Controls.Add(Me.operationNetwork)
+        Me.startStopGroup.Location = New System.Drawing.Point(7, 223)
+        Me.startStopGroup.Name = "startStopGroup"
+        Me.startStopGroup.Size = New System.Drawing.Size(671, 179)
+        Me.startStopGroup.TabIndex = 5
+        Me.startStopGroup.TabStop = False
+        Me.startStopGroup.Text = "Commands"
+        Me.startStopGroup.Visible = False
+        '
+        'valueCoinToLock
+        '
+        Me.valueCoinToLock.Location = New System.Drawing.Point(468, 133)
+        Me.valueCoinToLock.Name = "valueCoinToLock"
+        Me.valueCoinToLock.Size = New System.Drawing.Size(136, 21)
+        Me.valueCoinToLock.TabIndex = 12
+        Me.valueCoinToLock.Text = "0,00"
+        Me.valueCoinToLock.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.valueCoinToLock.Visible = False
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(247, 136)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(215, 13)
+        Me.Label16.TabIndex = 11
+        Me.Label16.Text = "Amount of CHCS to lock in warranty"
+        Me.Label16.Visible = False
+        '
+        'privateKeyValue
+        '
+        Me.privateKeyValue.Location = New System.Drawing.Point(165, 55)
+        Me.privateKeyValue.Multiline = True
+        Me.privateKeyValue.Name = "privateKeyValue"
+        Me.privateKeyValue.Size = New System.Drawing.Size(439, 72)
+        Me.privateKeyValue.TabIndex = 10
+        Me.privateKeyValue.Text = resources.GetString("privateKeyValue.Text")
+        Me.privateKeyValue.Visible = False
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(162, 38)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(73, 13)
+        Me.Label12.TabIndex = 9
+        Me.Label12.Text = "Private Key"
+        Me.Label12.Visible = False
+        '
+        'operationNetwork
+        '
+        Me.operationNetwork.Location = New System.Drawing.Point(59, 55)
+        Me.operationNetwork.Name = "operationNetwork"
+        Me.operationNetwork.Size = New System.Drawing.Size(92, 50)
+        Me.operationNetwork.TabIndex = 8
+        Me.operationNetwork.Text = "START >>"
+        Me.operationNetwork.UseVisualStyleBackColor = True
+        Me.operationNetwork.Visible = False
+        '
+        'infoStatusNetwork
+        '
+        Me.infoStatusNetwork.Controls.Add(Me.responseNetworkTimeValue)
+        Me.infoStatusNetwork.Controls.Add(Me.Label13)
+        Me.infoStatusNetwork.Controls.Add(Me.requestNetworkTimeValue)
+        Me.infoStatusNetwork.Controls.Add(Me.Label14)
+        Me.infoStatusNetwork.Controls.Add(Me.networkProtocolReleaseValue)
+        Me.infoStatusNetwork.Controls.Add(Me.Label15)
+        Me.infoStatusNetwork.Controls.Add(Me.transactionChainNameValue)
+        Me.infoStatusNetwork.Controls.Add(Me.Label21)
+        Me.infoStatusNetwork.Controls.Add(Me.networkStatusValue)
+        Me.infoStatusNetwork.Controls.Add(Me.Label22)
+        Me.infoStatusNetwork.Location = New System.Drawing.Point(7, 48)
+        Me.infoStatusNetwork.Name = "infoStatusNetwork"
+        Me.infoStatusNetwork.Size = New System.Drawing.Size(673, 167)
+        Me.infoStatusNetwork.TabIndex = 4
+        Me.infoStatusNetwork.TabStop = False
+        Me.infoStatusNetwork.Text = "Info Masternode"
+        '
+        'responseNetworkTimeValue
+        '
+        Me.responseNetworkTimeValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.responseNetworkTimeValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.responseNetworkTimeValue.Location = New System.Drawing.Point(165, 130)
+        Me.responseNetworkTimeValue.Name = "responseNetworkTimeValue"
+        Me.responseNetworkTimeValue.ReadOnly = True
+        Me.responseNetworkTimeValue.Size = New System.Drawing.Size(421, 21)
+        Me.responseNetworkTimeValue.TabIndex = 10
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Location = New System.Drawing.Point(61, 133)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(94, 13)
+        Me.Label13.TabIndex = 20
+        Me.Label13.Text = "Response Time"
+        '
+        'requestNetworkTimeValue
+        '
+        Me.requestNetworkTimeValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.requestNetworkTimeValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.requestNetworkTimeValue.Location = New System.Drawing.Point(165, 103)
+        Me.requestNetworkTimeValue.Name = "requestNetworkTimeValue"
+        Me.requestNetworkTimeValue.ReadOnly = True
+        Me.requestNetworkTimeValue.Size = New System.Drawing.Size(421, 21)
+        Me.requestNetworkTimeValue.TabIndex = 9
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Location = New System.Drawing.Point(70, 106)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(85, 13)
+        Me.Label14.TabIndex = 18
+        Me.Label14.Text = "Request Time"
+        '
+        'networkProtocolReleaseValue
+        '
+        Me.networkProtocolReleaseValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.networkProtocolReleaseValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.networkProtocolReleaseValue.Location = New System.Drawing.Point(165, 76)
+        Me.networkProtocolReleaseValue.Name = "networkProtocolReleaseValue"
+        Me.networkProtocolReleaseValue.ReadOnly = True
+        Me.networkProtocolReleaseValue.Size = New System.Drawing.Size(421, 21)
+        Me.networkProtocolReleaseValue.TabIndex = 8
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.Location = New System.Drawing.Point(56, 79)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(99, 13)
+        Me.Label15.TabIndex = 16
+        Me.Label15.Text = "Protocol release"
+        '
+        'transactionChainNameValue
+        '
+        Me.transactionChainNameValue.Location = New System.Drawing.Point(165, 49)
+        Me.transactionChainNameValue.Name = "transactionChainNameValue"
+        Me.transactionChainNameValue.ReadOnly = True
+        Me.transactionChainNameValue.Size = New System.Drawing.Size(421, 21)
+        Me.transactionChainNameValue.TabIndex = 2
+        '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(10, 53)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(145, 13)
+        Me.Label21.TabIndex = 3
+        Me.Label21.Text = "Transaction Chain name"
+        '
+        'networkStatusValue
+        '
+        Me.networkStatusValue.Location = New System.Drawing.Point(165, 21)
+        Me.networkStatusValue.Name = "networkStatusValue"
+        Me.networkStatusValue.ReadOnly = True
+        Me.networkStatusValue.Size = New System.Drawing.Size(421, 21)
+        Me.networkStatusValue.TabIndex = 0
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(64, 25)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(91, 13)
+        Me.Label22.TabIndex = 0
+        Me.Label22.Text = "Current Status"
+        '
+        'refreshDataNetwork
+        '
+        Me.refreshDataNetwork.Enabled = False
+        Me.refreshDataNetwork.Location = New System.Drawing.Point(605, 6)
+        Me.refreshDataNetwork.Name = "refreshDataNetwork"
+        Me.refreshDataNetwork.Size = New System.Drawing.Size(75, 36)
+        Me.refreshDataNetwork.TabIndex = 3
+        Me.refreshDataNetwork.Text = "Refresh"
+        Me.refreshDataNetwork.UseVisualStyleBackColor = True
         '
         'peerNodeListTab
         '
         Me.peerNodeListTab.Location = New System.Drawing.Point(4, 22)
         Me.peerNodeListTab.Name = "peerNodeListTab"
-        Me.peerNodeListTab.Size = New System.Drawing.Size(687, 423)
+        Me.peerNodeListTab.Size = New System.Drawing.Size(687, 498)
         Me.peerNodeListTab.TabIndex = 3
         Me.peerNodeListTab.Text = "Peer node List"
         Me.peerNodeListTab.UseVisualStyleBackColor = True
@@ -554,7 +851,7 @@ Partial Class Main
         Me.advancedTab.Controls.Add(Me.GroupBox1)
         Me.advancedTab.Location = New System.Drawing.Point(4, 22)
         Me.advancedTab.Name = "advancedTab"
-        Me.advancedTab.Size = New System.Drawing.Size(687, 423)
+        Me.advancedTab.Size = New System.Drawing.Size(687, 498)
         Me.advancedTab.TabIndex = 4
         Me.advancedTab.Text = "Advanced"
         Me.advancedTab.UseVisualStyleBackColor = True
@@ -587,13 +884,13 @@ Partial Class Main
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(698, 450)
+        Me.ClientSize = New System.Drawing.Size(698, 525)
         Me.Controls.Add(Me.mainTab)
         Me.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Main"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Crypto Hide Coin - Masternode Admin Client"
+        Me.Text = "Masternode Admin Client - Crypto Hide Coin"
         Me.mainTab.ResumeLayout(False)
         Me.connectionTab.ResumeLayout(False)
         Me.localPathAndDataPortNumber.ResumeLayout(False)
@@ -604,6 +901,11 @@ Partial Class Main
         Me.commondGroup.ResumeLayout(False)
         Me.infoGroup.ResumeLayout(False)
         Me.infoGroup.PerformLayout()
+        Me.networkTab.ResumeLayout(False)
+        Me.startStopGroup.ResumeLayout(False)
+        Me.startStopGroup.PerformLayout()
+        Me.infoStatusNetwork.ResumeLayout(False)
+        Me.infoStatusNetwork.PerformLayout()
         Me.advancedTab.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
         Me.ResumeLayout(False)
@@ -633,15 +935,14 @@ Partial Class Main
     Friend WithEvents Button2 As Button
     Friend WithEvents Button1 As Button
     Friend WithEvents infoGroup As GroupBox
-    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents serviceOffered As TextBox
     Friend WithEvents Label5 As Label
     Friend WithEvents walletAddress As TextBox
     Friend WithEvents Label4 As Label
-    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents masternodeLocalTime As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents virtualNameValue As TextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents changeStatus As Button
     Friend WithEvents currentStatusValue As TextBox
     Friend WithEvents statusMasternode As Label
     Friend WithEvents refreshGeneralButton As Button
@@ -649,7 +950,7 @@ Partial Class Main
     Friend WithEvents changeButton As Button
     Friend WithEvents protocolReleaseValue As TextBox
     Friend WithEvents Label8 As Label
-    Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents softwareRelease As TextBox
     Friend WithEvents Label7 As Label
     Friend WithEvents platformValue As TextBox
     Friend WithEvents Label6 As Label
@@ -659,4 +960,28 @@ Partial Class Main
     Friend WithEvents Button14 As Button
     Friend WithEvents folderBrowserDialog As FolderBrowserDialog
     Friend WithEvents openFileDialog As OpenFileDialog
+    Friend WithEvents responseTime As TextBox
+    Friend WithEvents Label10 As Label
+    Friend WithEvents requestTime As TextBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents addressValue As TextBox
+    Friend WithEvents Label11 As Label
+    Friend WithEvents startStopGroup As GroupBox
+    Friend WithEvents operationNetwork As Button
+    Friend WithEvents infoStatusNetwork As GroupBox
+    Friend WithEvents responseNetworkTimeValue As TextBox
+    Friend WithEvents Label13 As Label
+    Friend WithEvents requestNetworkTimeValue As TextBox
+    Friend WithEvents Label14 As Label
+    Friend WithEvents networkProtocolReleaseValue As TextBox
+    Friend WithEvents Label15 As Label
+    Friend WithEvents transactionChainNameValue As TextBox
+    Friend WithEvents Label21 As Label
+    Friend WithEvents networkStatusValue As TextBox
+    Friend WithEvents Label22 As Label
+    Friend WithEvents refreshDataNetwork As Button
+    Friend WithEvents valueCoinToLock As TextBox
+    Friend WithEvents Label16 As Label
+    Friend WithEvents privateKeyValue As TextBox
+    Friend WithEvents Label12 As Label
 End Class

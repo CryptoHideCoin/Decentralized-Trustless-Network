@@ -12,6 +12,7 @@ Namespace AreaChain
                 notDefined
                 [public]
                 service
+                thanksTo
                 file
                 dns
                 exChange
@@ -32,7 +33,10 @@ Namespace AreaChain
 
             Public configureTransactionDefinitionID As String = ""
             Public masternodeConnectedChainStartUp As Date = Date.MinValue
+            Public transactionIDConnected As String = ""
             Public warrantyCoin As Double = 0
+
+            Public response As New AreaCommon.Models.General.RemoteResponse
 
         End Class
 

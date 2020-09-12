@@ -58,16 +58,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocol, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CHCProtocol\CHCProtocol.dll</HintPath>
-    </Reference>
     <Reference Include="CHCServerSupport, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CHCServerSupport.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -109,11 +102,15 @@
     <Compile Include="Classes\Base\Paths.vb" />
     <Compile Include="Classes\Engine\CryptoAssetEngine.vb" />
     <Compile Include="Controllers\v1.0\Define\AssetController.vb" />
+    <Compile Include="Controllers\v1.0\Chain\NetworkStatusController.vb" />
     <Compile Include="Controllers\v1.0\Security\ChangeCertificateController.vb" />
+    <Compile Include="Controllers\v1.0\System\MasternodeController.vb" />
     <Compile Include="Controllers\v1.0\System\StatusController.vb" />
     <Compile Include="Controllers\v1.0\System\TestController.vb" />
     <Compile Include="Models\DefinitionModel.vb" />
     <Compile Include="Models\GeneralResponseModel.vb" />
+    <Compile Include="Models\InfoMasternodeModel.vb" />
+    <Compile Include="Models\NetworkModel.vb" />
     <Compile Include="Models\SecurityModel.vb" />
     <Compile Include="Modules\Application.vb" />
     <Compile Include="Modules\Cache.vb" />
@@ -172,6 +169,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CHCProtocol\CHCProtocol.vbproj">
+      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
+      <Name>CHCProtocol</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

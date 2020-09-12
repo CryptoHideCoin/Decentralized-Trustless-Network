@@ -59,6 +59,8 @@ Partial Class Settings
         Me.urlMasternodeAdministrationLabel = New System.Windows.Forms.Label()
         Me.tabServices = New System.Windows.Forms.TabPage()
         Me.localPathAndDataPortNumber = New System.Windows.Forms.GroupBox()
+        Me.voteServicePort = New System.Windows.Forms.TextBox()
+        Me.voteService = New System.Windows.Forms.CheckBox()
         Me.exChangePort = New System.Windows.Forms.TextBox()
         Me.exChangeService = New System.Windows.Forms.CheckBox()
         Me.dnsPort = New System.Windows.Forms.TextBox()
@@ -72,8 +74,8 @@ Partial Class Settings
         Me.folderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.startButton = New System.Windows.Forms.Button()
         Me.openFileDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.voteServicePort = New System.Windows.Forms.TextBox()
-        Me.voteService = New System.Windows.Forms.CheckBox()
+        Me.thanksToPort = New System.Windows.Forms.TextBox()
+        Me.thanksToService = New System.Windows.Forms.CheckBox()
         Me.tabMain.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -196,9 +198,9 @@ Partial Class Settings
         Me.Label3.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(24, 87)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(109, 13)
+        Me.Label3.Size = New System.Drawing.Size(72, 13)
         Me.Label3.TabIndex = 8
-        Me.Label3.Text = "Private wallet key"
+        Me.Label3.Text = "Private key"
         '
         'walletAddress
         '
@@ -499,6 +501,8 @@ Partial Class Settings
         '
         Me.localPathAndDataPortNumber.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.localPathAndDataPortNumber.Controls.Add(Me.thanksToPort)
+        Me.localPathAndDataPortNumber.Controls.Add(Me.thanksToService)
         Me.localPathAndDataPortNumber.Controls.Add(Me.voteServicePort)
         Me.localPathAndDataPortNumber.Controls.Add(Me.voteService)
         Me.localPathAndDataPortNumber.Controls.Add(Me.exChangePort)
@@ -514,15 +518,35 @@ Partial Class Settings
         Me.localPathAndDataPortNumber.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.localPathAndDataPortNumber.Location = New System.Drawing.Point(7, 3)
         Me.localPathAndDataPortNumber.Name = "localPathAndDataPortNumber"
-        Me.localPathAndDataPortNumber.Size = New System.Drawing.Size(686, 219)
+        Me.localPathAndDataPortNumber.Size = New System.Drawing.Size(686, 224)
         Me.localPathAndDataPortNumber.TabIndex = 0
         Me.localPathAndDataPortNumber.TabStop = False
         Me.localPathAndDataPortNumber.Text = "Configuration Port"
         '
+        'voteServicePort
+        '
+        Me.voteServicePort.Enabled = False
+        Me.voteServicePort.Location = New System.Drawing.Point(322, 190)
+        Me.voteServicePort.Name = "voteServicePort"
+        Me.voteServicePort.Size = New System.Drawing.Size(116, 21)
+        Me.voteServicePort.TabIndex = 11
+        Me.voteServicePort.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'voteService
+        '
+        Me.voteService.AutoSize = True
+        Me.voteService.Enabled = False
+        Me.voteService.Location = New System.Drawing.Point(167, 192)
+        Me.voteService.Name = "voteService"
+        Me.voteService.Size = New System.Drawing.Size(96, 17)
+        Me.voteService.TabIndex = 10
+        Me.voteService.Text = "Vote service"
+        Me.voteService.UseVisualStyleBackColor = True
+        '
         'exChangePort
         '
         Me.exChangePort.Enabled = False
-        Me.exChangePort.Location = New System.Drawing.Point(322, 136)
+        Me.exChangePort.Location = New System.Drawing.Point(322, 163)
         Me.exChangePort.Name = "exChangePort"
         Me.exChangePort.Size = New System.Drawing.Size(116, 21)
         Me.exChangePort.TabIndex = 9
@@ -532,7 +556,7 @@ Partial Class Settings
         '
         Me.exChangeService.AutoSize = True
         Me.exChangeService.Enabled = False
-        Me.exChangeService.Location = New System.Drawing.Point(167, 138)
+        Me.exChangeService.Location = New System.Drawing.Point(167, 165)
         Me.exChangeService.Name = "exChangeService"
         Me.exChangeService.Size = New System.Drawing.Size(126, 17)
         Me.exChangeService.TabIndex = 8
@@ -542,7 +566,7 @@ Partial Class Settings
         'dnsPort
         '
         Me.dnsPort.Enabled = False
-        Me.dnsPort.Location = New System.Drawing.Point(322, 109)
+        Me.dnsPort.Location = New System.Drawing.Point(322, 136)
         Me.dnsPort.Name = "dnsPort"
         Me.dnsPort.Size = New System.Drawing.Size(116, 21)
         Me.dnsPort.TabIndex = 7
@@ -552,7 +576,7 @@ Partial Class Settings
         '
         Me.dnsService.AutoSize = True
         Me.dnsService.Enabled = False
-        Me.dnsService.Location = New System.Drawing.Point(167, 110)
+        Me.dnsService.Location = New System.Drawing.Point(167, 137)
         Me.dnsService.Name = "dnsService"
         Me.dnsService.Size = New System.Drawing.Size(96, 17)
         Me.dnsService.TabIndex = 6
@@ -562,7 +586,7 @@ Partial Class Settings
         'filePort
         '
         Me.filePort.Enabled = False
-        Me.filePort.Location = New System.Drawing.Point(322, 82)
+        Me.filePort.Location = New System.Drawing.Point(322, 109)
         Me.filePort.Name = "filePort"
         Me.filePort.Size = New System.Drawing.Size(116, 21)
         Me.filePort.TabIndex = 5
@@ -572,7 +596,7 @@ Partial Class Settings
         '
         Me.fileService.AutoSize = True
         Me.fileService.Enabled = False
-        Me.fileService.Location = New System.Drawing.Point(167, 83)
+        Me.fileService.Location = New System.Drawing.Point(167, 110)
         Me.fileService.Name = "fileService"
         Me.fileService.Size = New System.Drawing.Size(90, 17)
         Me.fileService.TabIndex = 4
@@ -632,25 +656,25 @@ Partial Class Settings
         '
         Me.openFileDialog.FileName = "OpenFileDialog1"
         '
-        'voteServicePort
+        'thanksToPort
         '
-        Me.voteServicePort.Enabled = False
-        Me.voteServicePort.Location = New System.Drawing.Point(322, 163)
-        Me.voteServicePort.Name = "voteServicePort"
-        Me.voteServicePort.Size = New System.Drawing.Size(116, 21)
-        Me.voteServicePort.TabIndex = 11
-        Me.voteServicePort.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.thanksToPort.Enabled = False
+        Me.thanksToPort.Location = New System.Drawing.Point(322, 82)
+        Me.thanksToPort.Name = "thanksToPort"
+        Me.thanksToPort.Size = New System.Drawing.Size(116, 21)
+        Me.thanksToPort.TabIndex = 13
+        Me.thanksToPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'voteService
+        'thanksToService
         '
-        Me.voteService.AutoSize = True
-        Me.voteService.Enabled = False
-        Me.voteService.Location = New System.Drawing.Point(167, 165)
-        Me.voteService.Name = "voteService"
-        Me.voteService.Size = New System.Drawing.Size(96, 17)
-        Me.voteService.TabIndex = 10
-        Me.voteService.Text = "Vote service"
-        Me.voteService.UseVisualStyleBackColor = True
+        Me.thanksToService.AutoSize = True
+        Me.thanksToService.Enabled = False
+        Me.thanksToService.Location = New System.Drawing.Point(167, 83)
+        Me.thanksToService.Name = "thanksToService"
+        Me.thanksToService.Size = New System.Drawing.Size(84, 17)
+        Me.thanksToService.TabIndex = 12
+        Me.thanksToService.Text = "Thanks To"
+        Me.thanksToService.UseVisualStyleBackColor = True
         '
         'Settings
         '
@@ -667,7 +691,7 @@ Partial Class Settings
         Me.MinimumSize = New System.Drawing.Size(700, 425)
         Me.Name = "Settings"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Crypto Hide Coin - Masternode Runtime Settings"
+        Me.Text = "Masternode Runtime Settings - Crypto Hide Coin"
         Me.tabMain.ResumeLayout(False)
         Me.tabMain.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
@@ -737,4 +761,6 @@ Partial Class Settings
     Friend WithEvents Label4 As Label
     Friend WithEvents voteServicePort As TextBox
     Friend WithEvents voteService As CheckBox
+    Friend WithEvents thanksToPort As TextBox
+    Friend WithEvents thanksToService As CheckBox
 End Class

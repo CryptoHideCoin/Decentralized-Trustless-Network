@@ -157,6 +157,8 @@ Public Class Settings
                 .intranetMode = intranetMode.Checked
                 .noUpdateSystemDate = noUpdateSystemDate.Checked
 
+                .services.Clear()
+
                 If publicService.Checked Then
 
                     If IsNumeric(publicPort.Text) Then
@@ -270,7 +272,7 @@ Public Class Settings
 
             Try
 
-                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of Models.BooleanModel)
+                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.General.BooleanModel)
 
                 handShakeEngine.url = "http://" & masternodeAdminUrl.Text & "/api/v1.0/system/testService"
 
@@ -304,7 +306,7 @@ Public Class Settings
 
             Try
 
-                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of Models.BooleanModel)
+                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.General.BooleanModel)
 
                 handShakeEngine.url = "http://" & masternodeStartURL.Text & "/api/v1.0/system/testService"
 

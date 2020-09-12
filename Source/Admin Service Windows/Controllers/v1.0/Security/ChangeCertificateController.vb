@@ -33,13 +33,27 @@ Namespace Controllers
 
                             AreaSecurity.changeCertificate(value)
 
+                        Else
+
+                            Throw New ApplicationException("Wrong Signature")
+
                         End If
 
+                    Else
+
+                        Throw New ApplicationException("Service Unauthorized")
+
                     End If
+
+                Else
+
+                    Throw New ApplicationException("Service Offline")
 
                 End If
 
             Catch ex As Exception
+
+                Throw New ApplicationException("Service Error")
 
             End Try
 

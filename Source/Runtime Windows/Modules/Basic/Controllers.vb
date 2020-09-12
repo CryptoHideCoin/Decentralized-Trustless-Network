@@ -10,6 +10,8 @@ Namespace AreaCommon
 
     Module Controllers
 
+        Private _controllerComplete As Boolean = False
+
 
         ''' <summary>
         ''' This method provide to start a webservice
@@ -39,6 +41,7 @@ Namespace AreaCommon
                 log.track("Controllers.StartWebService", "New Configuration Port " & strPort)
 
                 httpConfig.Routes.MapHttpRoute(name:="SystemApi", routeTemplate:="api/v1.0/System/{controller}")
+                httpConfig.Routes.MapHttpRoute(name:="NetworkApi", routeTemplate:="api/v1.0/Network/{controller}")
 
                 log.track("Controllers.StartWebService", "Map route")
 
@@ -61,6 +64,8 @@ Namespace AreaCommon
                         closeApplication()
 
                     End Try
+
+                    _controllerComplete = True
 
                     Do
                         Application.DoEvents()
@@ -91,6 +96,12 @@ Namespace AreaCommon
                 Dim objWS As New Threading.Thread(AddressOf startWebService)
 
                 objWS.Start()
+
+                Do While Not _controllerComplete
+
+                    Application.DoEvents()
+
+                Loop
 
                 Return True
 

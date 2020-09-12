@@ -22,9 +22,7 @@ Namespace CHCEngines.Miscellaneous
             Try
 
                 If _ErrorFormatDate Then
-
                     Return Now.ToUniversalTime().ToString("yyyy-MM-dd") & "T" & Now.ToUniversalTime().ToLongTimeString
-
                 End If
 
                 Return Now.ToUniversalTime().GetDateTimeFormats()(78).ToString()
@@ -40,35 +38,22 @@ Namespace CHCEngines.Miscellaneous
         End Function
 
 
-
         Function dateTimeFromTimestamp(value As Double) As DateTime
 
-            Dim UnixEpoch As New DateTime(1970, 1, 1, 0, 0, 0, 0)
-
-            Return UnixEpoch.AddMilliseconds(value)
+            Return New DateTime(1970, 1, 1, 0, 0, 0, 0).AddMilliseconds(value)
 
         End Function
-
 
 
         Public Function timestampFromDateTime(Optional ByVal value As DateTime = Nothing) As Double
 
-            Dim ts As TimeSpan
-
             If (value = DateTime.MinValue) Then
-
-                ts = (Now - New DateTime(1970, 1, 1, 0, 0, 0, 0))
-
+                Return (Now - New DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds
             Else
-
-                ts = (value - New DateTime(1970, 1, 1, 0, 0, 0, 0))
-
+                Return (value - New DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds
             End If
 
-            Return ts.TotalMilliseconds
-
         End Function
-
 
 
     End Module

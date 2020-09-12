@@ -23,15 +23,15 @@ Namespace CHCEngines.Common
     Public Class BaseEncryption(Of ClassType As {New})
 
 
-        Public data As New ClassType
-
-        Public fileName As String = ""
-
-
-        Public Property noCrypt As Boolean = False
-
         Private _originalCryptoKEY As String
         Private _combineCryptoKEY As String
+
+
+        Public data As New ClassType
+
+        Public Property fileName As String = ""
+
+        Public Property noCrypt As Boolean = False
 
         Public Property cryptoKEY() As String
             Get
@@ -44,6 +44,7 @@ Namespace CHCEngines.Common
 
             End Set
         End Property
+
 
 
         Public Sub New()
@@ -64,15 +65,15 @@ Namespace CHCEngines.Common
 
                 If File.Exists(fileName) Then
 
-                    stream = New System.IO.StreamReader(fileName)
+                    stream = New StreamReader(fileName)
 
                     If _combineCryptoKEY = "-" Then
 
-                        memory = New MemoryStream(System.Text.Encoding.ASCII.GetBytes(stream.ReadToEnd()))
+                        memory = New MemoryStream(Text.Encoding.ASCII.GetBytes(stream.ReadToEnd()))
 
                     Else
 
-                        memory = New MemoryStream(System.Text.Encoding.ASCII.GetBytes(CHCEngines.Common.Encryption.AES.decrypt(stream.ReadToEnd(), _combineCryptoKEY)))
+                        memory = New MemoryStream(Text.Encoding.ASCII.GetBytes(Encryption.AES.decrypt(stream.ReadToEnd(), _combineCryptoKEY)))
 
                     End If
 

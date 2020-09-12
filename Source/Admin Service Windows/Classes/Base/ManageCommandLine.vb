@@ -76,6 +76,7 @@ Namespace AreaCommon
                 If _commandLine.exist("PublicWalletAddress".ToLower()) Then
 
                     parameters.data.walletPublicAddress = _commandLine.GetValue("PublicWalletAddress")
+                    haveParameters = True
 
                 End If
 
@@ -84,7 +85,6 @@ Namespace AreaCommon
                     If IsNumeric(_commandLine.GetValue("PortNumber".ToLower())) Then
 
                         parameters.data.portNumber = _commandLine.GetValue("PortNumber".ToLower())
-
                         haveParameters = True
 
                     End If
@@ -94,7 +94,6 @@ Namespace AreaCommon
                 If _commandLine.exist("WriteLogFile".ToLower()) Then
 
                     parameters.data.useTrack = _commandLine.GetValue("WriteLogFile".ToLower())
-
                     haveParameters = True
 
                 End If
@@ -102,35 +101,48 @@ Namespace AreaCommon
                 If _commandLine.exist("UseEventRegistry".ToLower()) Then
 
                     parameters.data.useEventRegistry = _commandLine.GetValue("UseEventRegistry".ToLower())
+                    haveParameters = True
 
+                End If
+
+                If _commandLine.exist("MasternodeStartUseSecure".ToLower()) Then
+
+                    parameters.data.serviceStart.useSecure = True
                     haveParameters = True
 
                 End If
 
                 If _commandLine.exist("MasternodeStartURL".ToLower()) Then
 
-                    parameters.data.urlMasternodeStart = _commandLine.GetValue("MasternodeStartURL".ToLower())
+                    parameters.data.serviceStart.url = _commandLine.GetValue("MasternodeStartURL".ToLower())
+                    haveParameters = True
 
                 End If
 
                 If _commandLine.exist("MasternodeStartCertificate".ToLower()) Then
 
-                    parameters.data.certificateMasternodeStart = _commandLine.GetValue("MasternodeStartCertificate".ToLower())
+                    parameters.data.serviceStart.certificate = _commandLine.GetValue("MasternodeStartCertificate".ToLower())
+                    haveParameters = True
+
+                End If
+
+                If _commandLine.exist("MasternodeEngineUseSecure".ToLower()) Then
+
+                    parameters.data.serviceRuntime.useSecure = _commandLine.GetValue("MasternodeEngineUseSecure".ToLower())
+                    haveParameters = True
 
                 End If
 
                 If _commandLine.exist("MasternodeEngineURL".ToLower()) Then
 
-                    parameters.data.urlMasternodeEngine = _commandLine.GetValue("MasternodeEngineURL".ToLower())
-
+                    parameters.data.serviceRuntime.url = _commandLine.GetValue("MasternodeEngineURL".ToLower())
                     haveParameters = True
 
                 End If
 
                 If _commandLine.exist("MasternodeEngineCertificate".ToLower()) Then
 
-                    parameters.data.certificateMasternodeEngine = _commandLine.GetValue("MasternodeEngineCertificate".ToLower())
-
+                    parameters.data.serviceRuntime.certificate = _commandLine.GetValue("MasternodeEngineCertificate".ToLower())
                     haveParameters = True
 
                 End If
@@ -138,7 +150,6 @@ Namespace AreaCommon
                 If _commandLine.exist("ClientCertificate".ToLower()) Then
 
                     parameters.data.certificateClient = _commandLine.GetValue("ClientCertificate".ToLower())
-
                     haveParameters = True
 
                 End If

@@ -40,7 +40,6 @@ Namespace AreaCommon.Models.Define
 
     End Class
 
-
     Public Class CryptoAssetBaseModel
 
         Public name As String = ""
@@ -95,16 +94,17 @@ Namespace AreaCommon.Models.Define
 
         Public identity As String = ""
 
-        Public response As New AreaCommon.Models.General.RemoteResponse
+        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
 
     End Class
 
-    Public Class CryptoAssetKeyDescriptionModel
+
+    Public Class CryptoItemKeyDescriptionModel
 
         Public identity As String = ""
         Public name As String = ""
 
-        Public response As New AreaCommon.Models.General.RemoteResponse
+        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
 
     End Class
 
@@ -127,7 +127,7 @@ Namespace AreaCommon.Models.Define
 
         Public identity As String = ""
 
-        Public response As New AreaCommon.Models.General.RemoteResponse
+        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
 
     End Class
 
@@ -145,7 +145,7 @@ Namespace AreaCommon.Models.Define
 
         Public identity As String = ""
 
-        Public response As New AreaCommon.Models.General.RemoteResponse
+        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
 
     End Class
 
@@ -165,7 +165,7 @@ Namespace AreaCommon.Models.Define
 
         Public identity As String = ""
 
-        Public response As New AreaCommon.Models.General.RemoteResponse
+        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
 
     End Class
 
@@ -189,7 +189,7 @@ Namespace AreaCommon.Models.Define
 
         Public identity As String = ""
 
-        Public response As New AreaCommon.Models.General.RemoteResponse
+        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
 
     End Class
 

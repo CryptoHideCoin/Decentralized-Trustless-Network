@@ -17,5 +17,3 @@ E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\CHCBasicCryptographyL
 E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\BouncyCastle.Crypto.dll
 E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\CHCProtocol.dll
 E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\CHCServerSupport.dll
-E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\CHCProtocol.pdb
-E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\CHCProtocol.xml

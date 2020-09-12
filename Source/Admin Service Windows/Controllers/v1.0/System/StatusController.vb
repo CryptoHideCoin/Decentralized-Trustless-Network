@@ -16,26 +16,20 @@ Namespace Controllers
 
 
 
-        Public Function GetValue(ByVal certificate As String) As AreaCommon.Models.General.StatusWorkModel
+        Public Function GetValue(ByVal certificate As String) As CHCProtocol.AreaCommon.Models.General.StatusWorkModel
 
-            Dim status As New AreaCommon.Models.General.StatusWorkModel
+            Dim status As New CHCProtocol.AreaCommon.Models.General.StatusWorkModel
 
             If AreaSecurity.authorization.checkInAllCertification(certificate) Then
 
                 If AreaCommon.state.currentApplication = AppState.enumStateApplication.inRunning Then
-
-                    status.value = AreaCommon.Models.General.StatusWorkModel.EnumStatusWork.onWork
-
+                    status.value = CHCProtocol.AreaCommon.Models.General.StatusWorkModel.EnumStatusWork.onWork
                 Else
-
-                    status.value = AreaCommon.Models.General.StatusWorkModel.EnumStatusWork.offWork
-
+                    status.value = CHCProtocol.AreaCommon.Models.General.StatusWorkModel.EnumStatusWork.offWork
                 End If
 
             Else
-
-                status.value = AreaCommon.Models.General.StatusWorkModel.EnumStatusWork.unAuthorized
-
+                status.value = CHCProtocol.AreaCommon.Models.General.StatusWorkModel.EnumStatusWork.unAuthorized
             End If
 
             Return status

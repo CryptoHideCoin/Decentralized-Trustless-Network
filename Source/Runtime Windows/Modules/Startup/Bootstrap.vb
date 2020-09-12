@@ -86,8 +86,8 @@ Namespace AreaBootstrap
 
                 AreaCommon.log.track("bootStrap.testConnectNode", "Begin")
 
-                Dim webReader As New CHCCommonLibrary.CHCEngines.Communication.ProxySimplyWS(Of Models.BooleanModel)
-                Dim result As Models.BooleanModel
+                Dim webReader As New CHCCommonLibrary.CHCEngines.Communication.ProxySimplyWS(Of AreaCommon.Models.General.BooleanModel)
+                Dim result As AreaCommon.Models.General.BooleanModel
 
                 webReader.url = singleNode.address & ":" & singleNode.chainServicePort & "/api/v1.0/system/testService"
 

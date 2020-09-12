@@ -12,7 +12,9 @@ Imports System.Runtime.CompilerServices
 
 Namespace CHCEngines.Base
 
+
     Public Module CHCStringExtensions
+
 
         <Extension()> Public Sub codeSymbol(ByRef baseString As String)
 

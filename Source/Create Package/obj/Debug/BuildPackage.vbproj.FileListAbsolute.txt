@@ -1,0 +1,17 @@
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\CHCProtocol.dll
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\BuildPackage.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\BuildPackage.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\BuildPackage.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\CHCBuildPackage.exe.config
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\CHCBuildPackage.exe
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\CHCBuildPackage.pdb
+E:\CryptoHideCoinDTN\Source\Create Package\bin\Debug\CHCBuildPackage.xml
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\CHCBuildPackage.Main.resources
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\CHCBuildPackage.Resources.resources
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\CHCBuildPackage.exe
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\CHCBuildPackage.xml
+E:\CryptoHideCoinDTN\Source\Create Package\obj\Debug\CHCBuildPackage.pdb

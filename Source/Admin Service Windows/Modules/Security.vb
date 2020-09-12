@@ -15,9 +15,9 @@ Namespace AreaSecurity
 
                 If (AreaCommon.settings.data.certificateClient.CompareTo(value) = 0) Then
                     Return True
-                ElseIf (AreaCommon.settings.data.certificateMasternodeEngine.CompareTo(value) = 0) Then
+                ElseIf (AreaCommon.settings.data.serviceRuntime.certificate.CompareTo(value) = 0) Then
                     Return True
-                ElseIf (AreaCommon.settings.data.certificateMasternodeStart.CompareTo(value) = 0) Then
+                ElseIf (AreaCommon.settings.data.serviceStart.certificate.CompareTo(value) = 0) Then
                     Return True
                 Else
                     Return False
@@ -51,8 +51,8 @@ Namespace AreaSecurity
 
                 Select Case value.typeCommunication
 
-                    Case AreaCommon.Models.Security.enumOfService.start : AreaCommon.settings.data.certificateMasternodeStart = value.newCertificate
-                    Case AreaCommon.Models.Security.enumOfService.runTime : AreaCommon.settings.data.certificateMasternodeEngine = value.newCertificate
+                    Case AreaCommon.Models.Security.enumOfService.start : AreaCommon.settings.data.serviceRuntime.certificate = value.newCertificate
+                    Case AreaCommon.Models.Security.enumOfService.runTime : AreaCommon.settings.data.serviceStart.certificate = value.newCertificate
                     Case AreaCommon.Models.Security.enumOfService.client : AreaCommon.settings.data.certificateClient = value.newCertificate
 
                 End Select

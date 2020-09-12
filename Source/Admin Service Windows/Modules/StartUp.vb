@@ -40,15 +40,25 @@ Namespace AreaCommon
                 With command.parameters.data
 
                     If (.certificateClient.Trim.Length > 0) Then settings.data.certificateClient = .certificateClient
-                    If (.certificateMasternodeEngine.Trim.Length > 0) Then settings.data.certificateMasternodeEngine = .certificateMasternodeEngine
-                    If (.certificateMasternodeStart.Trim.Length > 0) Then settings.data.certificateMasternodeStart = .certificateMasternodeStart
+                    If (.serviceRuntime.url.Trim.Length > 0) Then
+
+                        settings.data.serviceRuntime.useSecure = .serviceRuntime.useSecure
+                        settings.data.serviceRuntime.url = .serviceRuntime.url
+                        settings.data.serviceRuntime.certificate = .serviceRuntime.certificate
+
+                    End If
+                    If (.serviceStart.url.Trim.Length > 0) Then
+
+                        settings.data.serviceStart.useSecure = .serviceStart.useSecure
+                        settings.data.serviceStart.url = .serviceStart.url
+                        settings.data.serviceStart.certificate = .serviceStart.certificate
+
+                    End If
                     If (.dataPath.Trim.Length > 0) Then settings.data.dataPath = .dataPath
                     If (.gui) Then settings.data.gui = .gui
                     If (.noConsoleMessage) Then settings.data.noConsoleMessage = .noConsoleMessage
                     If (.portNumber <> 1122) Then settings.data.portNumber = .portNumber
                     If (.recallStarter) Then settings.data.recallStarter = .recallStarter
-                    If (.urlMasternodeEngine.Trim.Length > 0) Then settings.data.urlMasternodeEngine = .urlMasternodeEngine
-                    If (.urlMasternodeStart.Trim.Length > 0) Then settings.data.urlMasternodeStart = .urlMasternodeStart
                     If (.walletPublicAddress.Trim.Length > 0) Then settings.data.walletPublicAddress = .walletPublicAddress
 
                 End With
@@ -58,7 +68,6 @@ Namespace AreaCommon
             End Try
 
         End Sub
-
 
 
         ''' <summary>
@@ -193,9 +202,9 @@ Namespace AreaCommon
 
                 log.track("moduleMain.recallStarter", "Begin")
 
-                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of Models.General.BooleanModel)
+                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of CHCProtocol.AreaCommon.Models.General.BooleanModel)
 
-                handShakeEngine.url = "http://" & AreaCommon.settings.data.urlMasternodeStart & "/api/v1.0/System/handShake/?serviceAdministrative=true&serviceEngine=false&certificateValue=" & settings.data.certificateMasternodeStart
+                handShakeEngine.url = AreaCommon.settings.data.serviceStart.composeURL("/api/v1.0/System/handShake/?serviceAdministrative=true&serviceEngine=false&certificateValue=" & AreaCommon.settings.data.serviceStart.certificate)
 
                 If handShakeEngine.getData() Then
 
@@ -253,21 +262,21 @@ Namespace AreaCommon
 
                 log.track("moduleMain.run", "Log engine is running")
 
-                With settings.data.trackRotate
+                If settings.data.useTrackRotate Then
 
-                    .frequency = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.everyDay
-                    .keepFile = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.onlyMainTracks
-                    .keepLast = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastWeek
+                    With settings.data.trackRotate
 
-                    logRotate.configuration.frequency = .frequency
-                    logRotate.configuration.keepFile = .keepFile
-                    logRotate.configuration.keepLast = .keepLast
+                        logRotate.configuration.frequency = .frequency
+                        logRotate.configuration.keepFile = .keepFile
+                        logRotate.configuration.keepLast = .keepLast
 
-                End With
+                    End With
 
-                logRotate.path = paths.pathLogs
+                    logRotate.path = paths.pathLogs
 
-                logRotate.run(log)
+                    logRotate.run(log)
+
+                End If
 
                 log.track("moduleMain.run", "Trackrotate is running")
 

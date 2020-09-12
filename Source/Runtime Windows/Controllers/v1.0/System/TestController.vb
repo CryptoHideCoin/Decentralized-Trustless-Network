@@ -14,9 +14,9 @@ Namespace Controllers
 
 
 
-        Public Function GetValue() As Models.BooleanModel
+        Public Function GetValue() As AreaCommon.Models.General.BooleanModel
 
-            Return New Models.BooleanModel() With {.value = True}
+            Return New AreaCommon.Models.General.BooleanModel() With {.value = True}
 
         End Function
 

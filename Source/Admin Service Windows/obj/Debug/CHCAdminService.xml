@@ -22,14 +22,24 @@ CHCAdminService
   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
 </summary>
 </member>
-<member name="T:AdminService.Controllers.AssetController">
+<member name="T:AdminService.Controllers.AssetsController">
  <summary>
  ...
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.StatusController">
+ <summary>
+ This API permit a client to know if the Masternode is in work mode or not
  </summary>
 </member>
 <member name="T:AdminService.Controllers.ChangeCertificateController">
  <summary>
  This API permit to change a certificate of a Admin service
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.InfoMasternodeController">
+ <summary>
+ This API permit a client to know if the Masternode is in work mode or not
  </summary>
 </member>
 <member name="T:AdminService.Controllers.StatusServiceController">

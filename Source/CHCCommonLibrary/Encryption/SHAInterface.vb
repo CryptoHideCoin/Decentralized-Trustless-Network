@@ -17,31 +17,47 @@ Namespace CHCEngines.Encryption
 
         Public Shared Function generateSHA256(ByVal inputString) As String
 
-            Dim sha256 As SHA256 = SHA256Managed.Create()
-            Dim bytes As Byte() = Encoding.UTF8.GetBytes(inputString)
-            Dim hash As Byte() = sha256.ComputeHash(bytes)
-            Dim stringBuilder As New StringBuilder()
+            Try
 
-            For i As Integer = 0 To hash.Length - 1
-                stringBuilder.Append(hash(i).ToString("X2"))
-            Next
+                Dim sha256 As SHA256 = SHA256Managed.Create()
+                Dim bytes As Byte() = Encoding.UTF8.GetBytes(inputString)
+                Dim hash As Byte() = sha256.ComputeHash(bytes)
+                Dim stringBuilder As New StringBuilder()
 
-            Return stringBuilder.ToString()
+                For i As Integer = 0 To hash.Length - 1
+                    stringBuilder.Append(hash(i).ToString("X2"))
+                Next
+
+                Return stringBuilder.ToString()
+
+            Catch ex As Exception
+
+                Return ""
+
+            End Try
 
         End Function
 
         Public Shared Function generateSHA512(ByVal inputString) As String
 
-            Dim sha512 As SHA512 = SHA512Managed.Create()
-            Dim bytes As Byte() = Encoding.UTF8.GetBytes(inputString)
-            Dim hash As Byte() = sha512.ComputeHash(bytes)
-            Dim stringBuilder As New StringBuilder()
+            Try
 
-            For i As Integer = 0 To hash.Length - 1
-                stringBuilder.Append(hash(i).ToString("X2"))
-            Next
+                Dim sha512 As SHA512 = SHA512Managed.Create()
+                Dim bytes As Byte() = Encoding.UTF8.GetBytes(inputString)
+                Dim hash As Byte() = sha512.ComputeHash(bytes)
+                Dim stringBuilder As New StringBuilder()
 
-            Return stringBuilder.ToString()
+                For i As Integer = 0 To hash.Length - 1
+                    stringBuilder.Append(hash(i).ToString("X2"))
+                Next
+
+                Return stringBuilder.ToString()
+
+            Catch ex As Exception
+
+                Return ""
+
+            End Try
 
         End Function
 

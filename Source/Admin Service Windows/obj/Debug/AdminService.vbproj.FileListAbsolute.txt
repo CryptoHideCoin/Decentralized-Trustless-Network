@@ -7,7 +7,6 @@ E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\Newtonsoft.Json.dll
 E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\System.Net.Http.Formatting.dll
 E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\System.Web.Http.dll
 E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\System.Web.Http.SelfHost.dll
-E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\System.Net.Http.Formatting.xml
 E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\System.Web.Http.xml
 E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\System.Web.Http.SelfHost.xml
@@ -22,3 +21,6 @@ E:\CryptoHideCoinDTN\Source\Admin Service Windows\obj\Debug\CHCAdminService.pdb
 E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\CHCBasicCryptographyLibrary.dll
 E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\BouncyCastle.Crypto.dll
 E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\CHCProtocol.dll
+E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\CHCProtocol.pdb
+E:\CryptoHideCoinDTN\Source\Admin Service Windows\bin\Debug\CHCProtocol.xml
+E:\CryptoHideCoinDTN\Source\Admin Service Windows\obj\Debug\CHCAdminService.exe.config

@@ -325,5 +325,139 @@ Public Class Main
 
     End Sub
 
+    Private Sub refreshGeneralButton_Click(sender As Object, e As EventArgs) Handles refreshGeneralButton.Click
+
+        If (masternodeAdminUrl.Text.ToString.Trim.Length > 0) Then
+
+            Try
+
+                Dim remote As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.Masternode.InfoMasternodeModel)
+                Dim rt As DateTime = Now
+
+                If (protocol.SelectedIndex = 0) Then
+
+                    remote.url = "http://"
+
+                Else
+
+                    remote.url = "https://"
+
+                End If
+
+                remote.url += masternodeAdminUrl.Text & "/api/v1.0/system/infoMasternode/?certificate=" & certificateMasternodeAdmin.Text
+
+                If (remote.getData() = "") Then
+
+                    If Not remote.data.response.error Then
+
+                        currentStatusValue.Text = remote.data.currentStatus
+                        virtualNameValue.Text = remote.data.virtualName
+                        masternodeLocalTime.Text = remote.data.masternodeLocalTime
+                        walletAddress.Text = remote.data.publicWalletAddress
+                        serviceOffered.Text = remote.data.serviceOffered
+                        platformValue.Text = remote.data.platformHost
+                        softwareRelease.Text = remote.data.softwareRelease
+                        protocolReleaseValue.Text = remote.data.protocolRelease
+                        addressValue.Text = remote.data.ipAddress
+                        requestTime.Text = rt
+                        responseTime.Text = Now
+
+                    Else
+
+                        MessageBox.Show("Masternode is offline", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                    End If
+
+                Else
+
+                    MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                End If
+
+            Catch ex As Exception
+
+                MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            End Try
+
+        End If
+
+    End Sub
+
+    Private Sub masternodeAdminUrl_TextChanged(sender As Object, e As EventArgs) Handles masternodeAdminUrl.TextChanged
+
+        testButton.Enabled = (masternodeAdminUrl.Text.Trim.ToString.Length > 0)
+        refreshGeneralButton.Enabled = testButton.Enabled
+        refreshDataNetwork.Enabled = testButton.Enabled
+
+    End Sub
+
+    Private Sub refreshDataNetwork_Click(sender As Object, e As EventArgs) Handles refreshDataNetwork.Click
+
+        If (masternodeAdminUrl.Text.ToString.Trim.Length > 0) Then
+
+            Try
+
+                Dim remote As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.Network.InfoNetworkModel)
+                Dim rt As DateTime = Now
+
+                If (protocol.SelectedIndex = 0) Then
+
+                    remote.url = "http://"
+
+                Else
+
+                    remote.url = "https://"
+
+                End If
+
+                remote.url += masternodeAdminUrl.Text & "/api/v1.0/network/status/?certificate=" & AreaCommon.settings.data.certificateMasternodeAdmin
+
+                If (remote.getData() = "") Then
+
+                    With remote.data
+
+                        If Not .response.error Then
+
+                            Select Case .currentStatus
+
+                                Case AreaCommon.Models.Network.InfoNetworkModel.EnumNetworkStatus.off : networkStatusValue.Text = "Offline"
+                                Case AreaCommon.Models.Network.InfoNetworkModel.EnumNetworkStatus.prepareToConnect : networkStatusValue.Text = "Prepare to connect"
+                                Case AreaCommon.Models.Network.InfoNetworkModel.EnumNetworkStatus.inConnection : networkStatusValue.Text = "In connection"
+                                Case AreaCommon.Models.Network.InfoNetworkModel.EnumNetworkStatus.connected : networkStatusValue.Text = "Connect"
+                                Case AreaCommon.Models.Network.InfoNetworkModel.EnumNetworkStatus.duringDisconnected : networkStatusValue.Text = "During disconnect"
+
+                            End Select
+
+                            transactionChainNameValue.Text = .transactionChainName
+                            networkProtocolReleaseValue.Text = .protocolRelease
+
+                            requestNetworkTimeValue.Text = rt
+                            responseNetworkTimeValue.Text = Now
+
+                        Else
+
+                            MessageBox.Show("Masternode is offline", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                        End If
+
+                    End With
+
+                Else
+
+                    MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                End If
+
+            Catch ex As Exception
+
+                MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            End Try
+
+        End If
+
+    End Sub
+
 
 End Class
