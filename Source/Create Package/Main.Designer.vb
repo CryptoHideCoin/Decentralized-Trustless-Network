@@ -173,8 +173,9 @@ Partial Class Main
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Main"
+        Me.Opacity = 0R
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Build Package - Crypto Hide Coin"
+        Me.Text = "Build Package - Crypto Hide Coin DT"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

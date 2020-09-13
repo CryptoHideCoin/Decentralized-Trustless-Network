@@ -54,14 +54,6 @@
     <Reference Include="CHCBasicCryptographyLibrary">
       <HintPath>..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCServerSupport, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CHCServerSupport.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -112,9 +104,9 @@
     <Compile Include="Models\InfoMasternodeModel.vb" />
     <Compile Include="Models\NetworkModel.vb" />
     <Compile Include="Models\SecurityModel.vb" />
-    <Compile Include="Modules\Application.vb" />
-    <Compile Include="Modules\Cache.vb" />
-    <Compile Include="Modules\Common.vb" />
+    <Compile Include="Modules\Service\Application.vb" />
+    <Compile Include="Modules\Service\Cache.vb" />
+    <Compile Include="Modules\Basic\Common.vb" />
     <Compile Include="Forms\Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -123,9 +115,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\Base\ManageCommandLine.vb" />
-    <Compile Include="Modules\Controllers.vb" />
-    <Compile Include="Modules\Security.vb" />
-    <Compile Include="Modules\StartUp.vb" />
+    <Compile Include="Modules\Basic\Controllers.vb" />
+    <Compile Include="Modules\Service\Security.vb" />
+    <Compile Include="Modules\Startup\StartUp.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -171,9 +163,17 @@
     <Content Include="64.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CHCProtocol\CHCProtocol.vbproj">
+    <ProjectReference Include="..\CHCCommonLibrary\CHCCommonLibrary.vbproj">
+      <Project>{89648581-c73c-4d51-97df-81d9860c9fa3}</Project>
+      <Name>CHCCommonLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CHCProtocol\CHCProtocolLibrary.vbproj">
       <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
-      <Name>CHCProtocol</Name>
+      <Name>CHCProtocolLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CHCServerSupport\CHCServerSupportLibrary.vbproj">
+      <Project>{f87b02ed-de8e-4e2d-894f-8b67d80abe6b}</Project>
+      <Name>CHCServerSupportLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

@@ -22,3 +22,4 @@ E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupport.vbproj.C
 E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupport.dll
 E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupport.xml
 E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupport.pdb
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupportLibrary.Resources.resources

@@ -7,7 +7,7 @@ Imports System.Xml.Serialization
 
 
 
-Namespace CHCEngines.Common
+Namespace AreaEngine.DataFileManagement
 
 
 

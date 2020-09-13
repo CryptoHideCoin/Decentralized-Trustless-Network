@@ -1,4 +1,8 @@
-﻿Imports System.Web.Http
+﻿Option Compare Text
+Option Explicit On
+
+Imports System.Web.Http
+Imports CHCProtocolLibrary.AreaCommon.Models.Settings
 
 
 
@@ -23,7 +27,7 @@ Namespace Controllers
 
             Try
 
-                If (AreaCommon.state.currentApplication = AppState.enumStateApplication.inRunning) Then
+                If (AreaCommon.state.currentApplication = EnumStateApplication.inRunning) Then
 
                     If AreaSecurity.checkClientCertification(certificate) Then
                         Return AreaApplication.Application.assets.cacheList
@@ -36,9 +40,7 @@ Namespace Controllers
                 End If
 
             Catch ex As Exception
-
                 item.response.description = "503 - Internal Error"
-
             End Try
 
             item.response.error = True
@@ -54,7 +56,7 @@ Namespace Controllers
 
             Try
 
-                If (AreaCommon.state.currentApplication = AppState.enumStateApplication.inRunning) Then
+                If (AreaCommon.state.currentApplication = EnumStateApplication.inRunning) Then
 
                     If AreaSecurity.checkClientCertification(certificate) Then
                         Return AreaApplication.Application.assets.getData(id)
@@ -67,9 +69,7 @@ Namespace Controllers
                 End If
 
             Catch ex As Exception
-
                 singleItem.response.description = "503 - Internal Error"
-
             End Try
 
             singleItem.response.error = True
@@ -86,18 +86,15 @@ Namespace Controllers
 
             Try
 
-                If (AreaCommon.state.currentApplication = AppState.enumStateApplication.inRunning) Then
+                If (AreaCommon.state.currentApplication = EnumStateApplication.inRunning) Then
 
                     If AreaSecurity.checkClientCertification(certificate) Then
-
                         AreaApplication.Application.assets.update(id, value)
-
                     End If
 
                 End If
 
             Catch ex As Exception
-
             End Try
 
         End Sub
@@ -110,18 +107,15 @@ Namespace Controllers
 
             Try
 
-                If (AreaCommon.state.currentApplication = AppState.enumStateApplication.inRunning) Then
+                If (AreaCommon.state.currentApplication = EnumStateApplication.inRunning) Then
 
                     If AreaSecurity.checkClientCertification(certificate) Then
-
                         AreaApplication.Application.assets.delete(id)
-
                     End If
 
                 End If
 
             Catch ex As Exception
-
             End Try
 
         End Sub

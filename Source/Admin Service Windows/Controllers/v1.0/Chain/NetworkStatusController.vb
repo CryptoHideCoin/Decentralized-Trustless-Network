@@ -1,5 +1,8 @@
 ﻿Imports System.Web.Http
 
+Imports CHCCommonLibrary.AreaEngine.Communication
+Imports CHCProtocolLibrary.AreaCommon.Models.Settings
+
 
 
 Namespace Controllers
@@ -24,30 +27,22 @@ Namespace Controllers
 
                 If (AreaCommon.settings.data.serviceRuntime.url.Trim.Length > 0) Then
 
-                    Dim remote As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.Network.InfoNetworkModel)
+                    Dim remote As New ProxyWS(Of AreaCommon.Models.Network.InfoNetworkModel)
 
                     remote.url = AreaCommon.settings.data.serviceRuntime.composeURL("/api/v1.0/network/status/", True)
 
                     If (remote.getData() = "") Then
-
                         Return remote.data
-
                     Else
-
                         Throw New Exception("StatusController.getDataFromRuntime(): Error connection")
-
                     End If
 
                 Else
-
                     Throw New Exception("StatusController.getDataFromRuntime(): data no set")
-
                 End If
 
             Catch ex As Exception
-
                 Throw New Exception("StatusController.getDataFromRuntime(): " & ex.Message, ex)
-
             End Try
 
         End Function
@@ -62,7 +57,7 @@ Namespace Controllers
 
                 If AreaSecurity.authorization.checkClientCertification(certificate) Then
 
-                    If (AreaCommon.state.currentApplication = AppState.enumStateApplication.inRunning) Then
+                    If (AreaCommon.state.currentApplication = EnumStateApplication.inRunning) Then
 
                         Try
 

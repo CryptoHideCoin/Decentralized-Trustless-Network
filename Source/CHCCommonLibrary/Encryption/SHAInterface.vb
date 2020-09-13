@@ -8,7 +8,7 @@ Imports System.Security.Cryptography
 
 
 
-Namespace CHCEngines.Encryption
+Namespace AreaEngine.Encryption
 
 
 
@@ -31,9 +31,7 @@ Namespace CHCEngines.Encryption
                 Return stringBuilder.ToString()
 
             Catch ex As Exception
-
                 Return ""
-
             End Try
 
         End Function
@@ -54,12 +52,11 @@ Namespace CHCEngines.Encryption
                 Return stringBuilder.ToString()
 
             Catch ex As Exception
-
                 Return ""
-
             End Try
 
         End Function
+
 
     End Class
 

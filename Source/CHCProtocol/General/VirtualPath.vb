@@ -55,9 +55,9 @@ Namespace AreaSystem
 
         Public Property settingFileName As String = ""
 
-        Public Property mainData As String = ""
-        Public Property system As String = ""
-        Public Property settings As New SystemPath
+        Public Property directoryData As String = ""
+        Public Property system As New SystemPath
+        Public Property settings As String = ""
         Public Property transactionChain As TransactionChainPath
 
 
@@ -87,11 +87,11 @@ Namespace AreaSystem
         End Function
 
 
-        Public Function init(ByVal [type] As EnumSystemType, Optional ByVal sideChainName As String = "") As Boolean
+        Public Function init(ByVal [type] As EnumSystemType, Optional ByVal sideChainName As String = "Primary") As Boolean
 
             Try
 
-                If (mainData.Trim.Length > 0) Then
+                If (directoryData.Trim.Length > 0) Then
 
                     Dim folderName As String
 
@@ -107,21 +107,21 @@ Namespace AreaSystem
                             folderName = "Loader"
                     End Select
 
-                    system = manageSinglePath(mainData, "System")
+                    settings = manageSinglePath(directoryData, "Settings")
 
-                    With settings
+                    With system
 
-                        .path = manageSinglePath(mainData, settingsFolderName)
+                        .path = manageSinglePath(directoryData, settingsFolderName)
 
-                        .counters = manageSinglePath(system, "Counters", folderName)
-                        .events = manageSinglePath(system, "Events", folderName)
-                        .logs = manageSinglePath(system, "Logs", folderName)
+                        .counters = manageSinglePath(.path, "Counters", folderName)
+                        .events = manageSinglePath(.path, "Events", folderName)
+                        .logs = manageSinglePath(.path, "Logs", folderName)
 
                     End With
 
                     With transactionChain
 
-                        .path = manageSinglePath(mainData, "TransactionChain")
+                        .path = manageSinglePath(directoryData, "TransactionChain")
 
                         With .defines
 
@@ -148,7 +148,6 @@ Namespace AreaSystem
                 End If
 
             Catch ex As Exception
-
             End Try
 
             Return True
@@ -161,11 +160,9 @@ Namespace AreaSystem
             Try
 
                 path = IO.Path.Combine(path, "define.path")
-
                 Return IO.File.Exists(path)
 
             Catch ex As Exception
-
             End Try
 
             Return False
@@ -182,11 +179,8 @@ Namespace AreaSystem
                 IO.File.WriteAllText(path, "Test")
 
                 If IO.File.Exists(path) Then
-
                     IO.File.Delete(path)
-
                     Return True
-
                 End If
 
             Catch ex As Exception
@@ -205,13 +199,9 @@ Namespace AreaSystem
                 path = newPath
 
                 If trySettings Then
-
                     Return trySettingsPath(path)
-
                 Else
-
                     Return tryWritePath(path)
-
                 End If
 
             End If
@@ -233,13 +223,10 @@ Namespace AreaSystem
                 found = testPath(found, path, Application.UserAppDataPath, True)
 
                 If found Then
-
                     Return path
-
                 End If
 
             Catch ex As Exception
-
             End Try
 
             Return ""
@@ -254,13 +241,10 @@ Namespace AreaSystem
                 Dim path As String = searchDefinePath()
 
                 If (path.Length > 0) Then
-
                     Return IO.File.ReadAllText(IO.Path.Combine(searchDefinePath, "define.path"))
-
                 End If
 
             Catch ex As Exception
-
             End Try
 
             Return ""
@@ -283,13 +267,10 @@ Namespace AreaSystem
                 found = testPath(found, path, Application.UserAppDataPath)
 
                 If found Then
-
                     IO.File.WriteAllText(IO.Path.Combine(path, "define.path"), dataPath)
-
                 End If
 
             Catch ex As Exception
-
             End Try
 
         End Sub

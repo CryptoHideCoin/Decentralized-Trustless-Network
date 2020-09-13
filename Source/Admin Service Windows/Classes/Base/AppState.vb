@@ -1,23 +1,14 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCProtocolLibrary.AreaCommon.Models
+
 
 
 Public Class AppState
 
-    Public Enum enumStateApplication
-
-        notDefined
-        waitingToStart
-        inStarting
-        inRunning
-        inShutDown
-        inRestart
-
-    End Enum
-
 
     Public uiVisible As Boolean = False
-    Public currentApplication As enumStateApplication
+    Public currentApplication As Settings.EnumStateApplication
 
 End Class

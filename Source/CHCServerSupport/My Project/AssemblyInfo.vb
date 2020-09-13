@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("CHCServerSupport")>
+<Assembly: AssemblyTitle("CHCServerSupportLibrary")>
 <Assembly: AssemblyDescription("Library Support for server")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CHC Server Support")>
+<Assembly: AssemblyProduct("CHC Server Support Library")>
 <Assembly: AssemblyCopyright("Copyright ©  2019")>
 <Assembly: AssemblyTrademark("")>
 

@@ -1,5 +1,7 @@
 ﻿Imports System.Web.Http
 
+Imports CHCProtocolLibrary.AreaCommon.Models
+
 
 
 Namespace Controllers
@@ -16,9 +18,9 @@ Namespace Controllers
 
 
 
-        Public Function GetValue() As CHCProtocol.AreaCommon.Models.General.BooleanModel
+        Public Function GetValue() As General.BooleanModel
 
-            Return New CHCProtocol.AreaCommon.Models.General.BooleanModel With {.value = True}
+            Return New General.BooleanModel With {.value = True}
 
         End Function
 

@@ -36,13 +36,9 @@ Namespace AreaWallet.Support
             Public Sub generatePublicAddress()
 
                 Try
-
                     publicAddress = CHCEngine.Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(privateKey)
-
                 Catch ex As Exception
-
                     Throw New Exception("SingleWallet.generatePublicAddress():" & ex.Message, ex)
-
                 End Try
 
             End Sub
@@ -50,14 +46,10 @@ Namespace AreaWallet.Support
             Public Sub decoreDataWallet(ByVal publicValue As String)
 
                 Try
-
                     publicAddress = baseAddr & publicValue & closeAddr
                     privateKey = basePvt & privateKey & closeBasePvt
-
                 Catch ex As Exception
-
                     Throw New Exception("SingleWallet.decoreDataWallet():" & ex.Message, ex)
-
                 End Try
 
             End Sub
@@ -65,13 +57,9 @@ Namespace AreaWallet.Support
             Public Shared Function startAllowed(ByVal value As String) As Boolean
 
                 Try
-
                     Return value.StartsWith(basePvt)
-
                 Catch ex As Exception
-
                     Throw New Exception("SingleWallet.startAllowed():" & ex.Message, ex)
-
                 End Try
 
             End Function
@@ -80,13 +68,9 @@ Namespace AreaWallet.Support
             Public Shared Function endAllowed(ByVal value As String) As Boolean
 
                 Try
-
                     Return value.EndsWith(closeBasePvt)
-
                 Catch ex As Exception
-
                     Throw New Exception("SingleWallet.endAllowed():" & ex.Message, ex)
-
                 End Try
 
 
@@ -97,19 +81,13 @@ Namespace AreaWallet.Support
                 Get
 
                     If (addressValue.Length <= (baseAddr & closeAddr).Length) Then
-
                         Return ""
-
                     End If
 
                     If (addressValue.StartsWith(baseAddr)) Then
-
                         Return addressValue.Substring(baseAddr.Length, addressValue.Length - baseAddr.Length - closeAddr.Length)
-
                     Else
-
                         Return addressValue
-
                     End If
 
                 End Get
@@ -130,14 +108,11 @@ Namespace AreaWallet.Support
 
         Private Shared ReadOnly Property getFixCharLenght() As Byte
             Get
+
                 Try
-
                     Return (numCharMaxFormatPrivateKey - basePvt.Length - closeBasePvt.Length)
-
                 Catch ex As Exception
-
                     Throw New Exception("WalletComplete.getFixCharLenght():" & ex.Message, ex)
-
                 End Try
 
             End Get
@@ -149,13 +124,9 @@ Namespace AreaWallet.Support
             Get
 
                 Try
-
                     Return (charList.IndexOf(charValue) > -1)
-
                 Catch ex As Exception
-
                     Throw New Exception("WalletComplete.charAllowed():" & ex.Message, ex)
-
                 End Try
 
             End Get
@@ -185,9 +156,7 @@ Namespace AreaWallet.Support
                 result.official.decoreDataWallet(result.raw.publicAddress)
 
             Catch ex As Exception
-
                 Throw New Exception("WalletComplete.createNew():" & ex.Message, ex)
-
             End Try
 
             Return result
@@ -228,9 +197,7 @@ Namespace AreaWallet.Support
                 result.official.decoreDataWallet(result.raw.publicAddress)
 
             Catch ex As Exception
-
                 Throw New Exception("WalletComplete.createNew():" & ex.Message, ex)
-
             End Try
 
             Return result
@@ -277,9 +244,7 @@ Namespace AreaWallet.Support
                 End If
 
             Catch ex As Exception
-
                 Throw New Exception("WalletComplete.createNew():" & ex.Message, ex)
-
             End Try
 
             Return result
@@ -296,23 +261,17 @@ Namespace AreaWallet.Support
                 If privateKey.StartsWith(basePvt) And privateKey.EndsWith(closeBasePvt) Then
 
                     With createNew(privateKey)
-
                         privateRaw = .raw.privateKey
-
                     End With
 
                 Else
-
                     privateRaw = privateKey
-
                 End If
 
                 Return CHCEngine.Encryption.Base58Signature.getSignature(privateRaw, message)
 
             Catch ex As Exception
-
                 Throw New Exception("WalletComplete.createSignature():" & ex.Message, ex)
-
             End Try
 
 
@@ -328,9 +287,7 @@ Namespace AreaWallet.Support
                 Return CHCEngine.Encryption.Base58Signature.verifySignature(message, address, signature)
 
             Catch ex As Exception
-
                 Throw New Exception("WalletComplete.verifySignature():" & ex.Message, ex)
-
             End Try
 
         End Function
@@ -345,7 +302,6 @@ Namespace AreaWallet.Support
             Return (value.StartsWith(baseAddr) And value.EndsWith(closeAddr))
 
         End Function
-
 
 
     End Class

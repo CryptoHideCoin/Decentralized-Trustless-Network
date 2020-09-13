@@ -1,4 +1,9 @@
-﻿Imports System.Web.Http
+﻿Option Compare Text
+Option Explicit On
+
+Imports System.Web.Http
+Imports CHCProtocolLibrary.AreaWallet.Support
+Imports CHCProtocolLibrary.AreaCommon.Models.Settings
 
 
 
@@ -23,11 +28,11 @@ Namespace Controllers
 
             Try
 
-                If (AreaCommon.state.currentApplication = AppState.enumStateApplication.inRunning) Then
+                If (AreaCommon.state.currentApplication = EnumStateApplication.inRunning) Then
 
                     If AreaSecurity.checkClientCertification(value.currentCertificate) Then
 
-                        Dim address As String = CHCProtocol.AreaWallet.Support.WalletAddressEngine.SingleWallet.cleanAddress(AreaCommon.settings.data.walletPublicAddress)
+                        Dim address As String = WalletAddressEngine.SingleWallet.cleanAddress(AreaCommon.settings.data.walletPublicAddress)
 
                         If CHCEngine.Encryption.Base58Signature.verifySignature(value.newCertificate, address, value.signature) Then
 

@@ -4,12 +4,13 @@ Option Explicit On
 
 Imports System.IO
 Imports System.Xml.Serialization
+Imports CHCCommonLibrary.AreaEngine.Encryption
 
 
 
 
 
-Namespace CHCEngines.Common
+Namespace AreaEngine.DataFileManagement
 
 
     Public Module ModuleMain
@@ -40,7 +41,7 @@ Namespace CHCEngines.Common
             Set(value As String)
 
                 _originalCryptoKEY = value
-                _combineCryptoKEY = SecureBaseKey & "-" & value
+                _combineCryptoKEY = secureBaseKey & "-" & value
 
             End Set
         End Property
@@ -140,7 +141,7 @@ Namespace CHCEngines.Common
 
                     Else
 
-                        IO.File.WriteAllText(fileName, CHCEngines.Common.Encryption.AES.encrypt(File.ReadAllText(temp), _combineCryptoKEY))
+                        IO.File.WriteAllText(fileName, AES.encrypt(File.ReadAllText(temp), _combineCryptoKEY))
 
                         File.Delete(temp)
 

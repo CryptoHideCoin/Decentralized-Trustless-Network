@@ -1,6 +1,8 @@
 ﻿Option Explicit On
 Option Compare Text
 
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+
 
 
 
@@ -12,7 +14,7 @@ Namespace Support
 
     Public Class CounterEngine
 
-        Inherits CHCCommonLibrary.CHCEngines.Common.BaseFileDB(Of List(Of CounterData))
+        Inherits BaseFileDB(Of List(Of CounterData))
 
 
         Public Class CounterData
@@ -35,7 +37,7 @@ Namespace Support
 
 
 
-        Private Sub trackLog(ByVal position As String, ByVal content As String, Optional ByVal messageType As String = "info", Optional ByVal adapterLog As CHCServerSupport.Support.LogEngine = Nothing)
+        Private Sub trackLog(ByVal position As String, ByVal content As String, Optional ByVal messageType As String = "info", Optional ByVal adapterLog As Support.LogEngine = Nothing)
 
             If Not IsNothing(adapterLog) Then
 
@@ -55,7 +57,7 @@ Namespace Support
         ''' This method provide to rebuild a complete list
         ''' </summary>
         ''' <returns></returns>
-        Private Function rebuildIndex(Optional adapterLog As CHCServerSupport.Support.LogEngine = Nothing) As Boolean
+        Private Function rebuildIndex(Optional adapterLog As Support.LogEngine = Nothing) As Boolean
 
             Try
 
@@ -87,7 +89,7 @@ Namespace Support
 
 
 
-        Public Function init(ByVal path As String, Optional ByVal useLogEngineAccess As Boolean = False, Optional adapterLog As CHCServerSupport.Support.LogEngine = Nothing) As Boolean
+        Public Function init(ByVal path As String, Optional ByVal useLogEngineAccess As Boolean = False, Optional adapterLog As Support.LogEngine = Nothing) As Boolean
 
             If useLogEngineAccess Then
 
@@ -129,7 +131,7 @@ Namespace Support
 
 
 
-        Public Function increase(ByVal counterName As String, Optional ByVal useLogEngineAccess As Boolean = False, Optional adapterLog As CHCServerSupport.Support.LogEngine = Nothing) As Boolean
+        Public Function increase(ByVal counterName As String, Optional ByVal useLogEngineAccess As Boolean = False, Optional adapterLog As Support.LogEngine = Nothing) As Boolean
 
             If useLogEngineAccess Then
 
@@ -201,7 +203,7 @@ Namespace Support
 
 
 
-        Public Overloads Function read(Optional forceDate As String = "", Optional ByVal useLogEngineAccess As Boolean = False, Optional adapterLog As CHCServerSupport.Support.LogEngine = Nothing) As Boolean
+        Public Overloads Function read(Optional forceDate As String = "", Optional ByVal useLogEngineAccess As Boolean = False, Optional adapterLog As Support.LogEngine = Nothing) As Boolean
 
             If useLogEngineAccess Then
 
@@ -247,7 +249,7 @@ Namespace Support
 
 
 
-        Public Overloads Function Save(Optional ByVal useLogEngineAccess As Boolean = False, Optional adapterLog As CHCServerSupport.Support.LogEngine = Nothing) As Boolean
+        Public Overloads Function Save(Optional ByVal useLogEngineAccess As Boolean = False, Optional adapterLog As Support.LogEngine = Nothing) As Boolean
 
             If useLogEngineAccess Then
 

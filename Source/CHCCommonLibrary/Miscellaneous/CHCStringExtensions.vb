@@ -10,7 +10,7 @@ Imports System.Runtime.CompilerServices
 
 
 
-Namespace CHCEngines.Base
+Namespace AreaEngine.Base
 
 
     Public Module CHCStringExtensions

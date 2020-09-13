@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("CHCProtocol")>
+<Assembly: AssemblyTitle("CHCProtocolLibrary")>
 <Assembly: AssemblyDescription("Library Protocol")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CHCProtocol")>
+<Assembly: AssemblyProduct("CHC Protocol Library")>
 <Assembly: AssemblyCopyright("Copyright ©  2020")>
 <Assembly: AssemblyTrademark("")>
 

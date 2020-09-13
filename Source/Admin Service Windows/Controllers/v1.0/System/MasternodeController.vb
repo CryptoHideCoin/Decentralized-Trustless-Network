@@ -1,4 +1,11 @@
-﻿Imports System.Web.Http
+﻿Option Compare Text
+Option Explicit On
+
+Imports System.Web.Http
+Imports CHCCommonLibrary.AreaEngine
+Imports CHCProtocolLibrary.AreaBase
+Imports CHCProtocolLibrary.AreaCommon
+
 
 
 
@@ -24,7 +31,7 @@ Namespace Controllers
 
                 If (AreaCommon.settings.data.serviceRuntime.url.Trim.Length > 0) Then
 
-                    Dim remote As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.Masternode.NodeInformation)
+                    Dim remote As New Communication.ProxyWS(Of AreaCommon.Models.Masternode.NodeInformation)
 
                     remote.url = AreaCommon.settings.data.serviceRuntime.composeURL("/api/v1.0/system/MasternodeInfo")
 
@@ -56,13 +63,13 @@ Namespace Controllers
 
                 If AreaSecurity.authorization.checkClientCertification(certificate) Then
 
-                    If (AreaCommon.state.currentApplication = AppState.enumStateApplication.inRunning) Then
+                    If (AreaCommon.state.currentApplication = Models.Settings.EnumStateApplication.inRunning) Then
 
-                        result.masternodeLocalTime = Now & " - " & CHCCommonLibrary.CHCEngines.Miscellaneous.atMomentGMT()
+                        result.masternodeLocalTime = Now & " - " & Miscellaneous.atMomentGMT()
                         result.platformHost = "Microsoft Windows / Desktop application"
                         result.publicWalletAddress = AreaCommon.settings.data.walletPublicAddress
-                        result.protocolRelease = "rel. " & CHCProtocol.AreaBase.InfoSystem.ProtocolRelease
-                        result.softwareRelease = "rel. " & CHCProtocol.AreaBase.InfoSystem.ApplicationRelease
+                        result.protocolRelease = "rel. " & InfoSystem.ProtocolRelease
+                        result.softwareRelease = "rel. " & InfoSystem.ApplicationRelease
 
                         Try
 

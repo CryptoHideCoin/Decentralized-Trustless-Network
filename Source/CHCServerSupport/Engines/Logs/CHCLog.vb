@@ -1,6 +1,8 @@
 ﻿Option Explicit On
 Option Compare Text
 
+Imports CHCCommonLibrary.AreaEngine.Miscellaneous
+
 
 
 
@@ -10,6 +12,14 @@ Namespace Support
 
 
     Public Class LogEngine
+
+        Public Enum TrackRuntimeModeEnum
+
+            dontTrack
+            trackOnlyMain
+            trackAllRuntime
+
+        End Enum
 
         Public Class TrackData
 
@@ -51,7 +61,7 @@ Namespace Support
         ''' <summary>
         ''' This method provide to write into a console GUI
         ''' </summary>
-        ''' <param name="tmp"></param>
+        ''' <param name="rowTmp"></param>
         Private Sub writeConsoleGUI(Optional ByVal rowTmp As String = "")
 
             Try
@@ -120,7 +130,7 @@ Namespace Support
         ''' <param name="fileName"></param>
         ''' <param name="registryPointer"></param>
         ''' <returns></returns>
-        Public Function init(ByVal basePath As String, Optional ByVal fileName As String = "Main", Optional ByVal registryPointer As CHCServerSupport.Support.RegistryEngine = Nothing) As Boolean
+        Public Function init(ByVal basePath As String, Optional ByVal fileName As String = "Main", Optional ByVal registryPointer As Support.RegistryEngine = Nothing) As Boolean
 
             Try
 
@@ -160,7 +170,7 @@ Namespace Support
 
             Try
 
-                _lastInfoTrack = CHCCommonLibrary.CHCEngines.Miscellaneous.timestampFromDateTime() & "|" & CHCCommonLibrary.CHCEngines.Miscellaneous.atMomentGMT() & "|" & messageType & "|" & position & "|" & content
+                _lastInfoTrack = timestampFromDateTime() & "|" & atMomentGMT() & "|" & messageType & "|" & position & "|" & content
 
                 If IsNothing(completeFileName) And useCache Then
 

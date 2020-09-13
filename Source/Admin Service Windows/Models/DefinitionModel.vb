@@ -1,6 +1,9 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.AreaEngine.Encryption
+Imports CHCProtocolLibrary.AreaCommon.Models
+
 
 
 Namespace AreaCommon.Models.Define
@@ -73,7 +76,7 @@ Namespace AreaCommon.Models.Define
 
         Public Function getHash() As String
 
-            Return CHCCommonLibrary.CHCEngines.Encryption.HashSHA.generateSHA256(Me.toString())
+            Return HashSHA.generateSHA256(Me.toString())
 
         End Function
 
@@ -94,7 +97,7 @@ Namespace AreaCommon.Models.Define
 
         Public identity As String = ""
 
-        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
+        Public response As New General.RemoteResponse
 
     End Class
 
@@ -104,7 +107,7 @@ Namespace AreaCommon.Models.Define
         Public identity As String = ""
         Public name As String = ""
 
-        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
+        Public response As New General.RemoteResponse
 
     End Class
 
@@ -127,7 +130,7 @@ Namespace AreaCommon.Models.Define
 
         Public identity As String = ""
 
-        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
+        Public response As New General.RemoteResponse
 
     End Class
 
@@ -145,7 +148,7 @@ Namespace AreaCommon.Models.Define
 
         Public identity As String = ""
 
-        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
+        Public response As New General.RemoteResponse
 
     End Class
 
@@ -165,7 +168,7 @@ Namespace AreaCommon.Models.Define
 
         Public identity As String = ""
 
-        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
+        Public response As New General.RemoteResponse
 
     End Class
 
@@ -189,7 +192,7 @@ Namespace AreaCommon.Models.Define
 
         Public identity As String = ""
 
-        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
+        Public response As New General.RemoteResponse
 
     End Class
 

@@ -3,7 +3,7 @@
 
 Module CHCModule
 
-    Public supportLogRotate As CHCServerSupport.Support.LogRotateEngine
+    Public supportLogRotate As Support.LogRotateEngine
 
 
 

@@ -25,13 +25,7 @@ Namespace AreaBase
                         If engine.read() Then
 
                             For Each item In engine.data
-
-                                If item.fileName = "Package" Then
-
-                                    Return item.release
-
-                                End If
-
+                                If item.fileName.ToLower = "package" Then Return item.release
                             Next
 
                         End If

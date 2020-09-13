@@ -1,6 +1,8 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCProtocolLibrary.AreaCommon.Models
+
 
 
 Namespace AreaCommon.Models.Network
@@ -24,7 +26,7 @@ Namespace AreaCommon.Models.Network
         Public transactionChainName As String = ""
         Public protocolRelease As String = ""
 
-        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
+        Public response As New General.RemoteResponse
 
     End Class
 

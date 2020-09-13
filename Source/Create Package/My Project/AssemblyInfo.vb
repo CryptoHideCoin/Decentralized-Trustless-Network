@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("CHCBuildPackage")>
-<Assembly: AssemblyDescription("Crypto Hide Coin Build Package")>
+<Assembly: AssemblyTitle("CHCManagePackage")>
+<Assembly: AssemblyDescription("Crypto Hide Coin Manage Package")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CHC Build Package")>
+<Assembly: AssemblyProduct("CHC Manage Package")>
 <Assembly: AssemblyCopyright("Copyright ©  2020")>
 <Assembly: AssemblyTrademark("")>
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' usando l'asterisco '*' come illustrato di seguito:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("0.1.0.0")>
-<Assembly: AssemblyFileVersion("0.1.0.0")>
+<Assembly: AssemblyVersion("1.0.0.0")>
+<Assembly: AssemblyFileVersion("1.0.0.0")>

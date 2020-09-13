@@ -1,6 +1,9 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.AreaEngine
+Imports CHCProtocolLibrary.AreaSystem
+
 
 
 Namespace AreaCommon
@@ -8,7 +11,7 @@ Namespace AreaCommon
 
     Public Class ManageCommandLine
 
-        Private _commandLine As New CHCCommonLibrary.CHCEngines.Miscellaneous.CommandLineParameters
+        Private _commandLine As New Miscellaneous.CommandLineParameters
         Private _completePathSettingFile As String = ""
 
         Public parameters As New AppSettings
@@ -45,22 +48,18 @@ Namespace AreaCommon
 
                     If (parameters.data.dataPath.Trim.Length() = 0) Then
 
-                        paths.pathBaseData = paths.readDefinePath()
+                        paths.directoryData = paths.readDefinePath()
 
-                        If (paths.pathBaseData.Trim.Length() > 0) Then
-
-                            paths.init()
-
+                        If (paths.directoryData.Trim.Length() > 0) Then
+                            paths.init(VirtualPathEngine.EnumSystemType.admin)
                         End If
 
                     End If
 
-                    If (paths.pathBaseData.Trim.Length() > 0) Then
-
-                        settings.fileName = IO.Path.Combine(paths.pathSettings, paths.settingFileName)
+                    If (paths.directoryData.Trim.Length() > 0) Then
+                        settings.fileName = IO.Path.Combine(paths.directoryData, paths.settingFileName)
 
                         settings.read()
-
                     End If
 
                     Dim tmp As New Main

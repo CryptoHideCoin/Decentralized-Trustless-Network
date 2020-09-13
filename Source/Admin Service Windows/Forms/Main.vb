@@ -1,6 +1,16 @@
 ﻿Option Compare Text
 Option Explicit On
+
 Imports System.ComponentModel
+Imports CHCCommonLibrary.AreaEngine.Communication
+Imports CHCProtocolLibrary.AreaCommon.Models
+Imports CHCProtocolLibrary.AreaBase
+Imports CHCProtocolLibrary.AreaCommon.Models.Settings
+Imports CHCProtocolLibrary.AreaWallet
+Imports CHCProtocolLibrary.AreaSystem
+Imports CHCServerSupportLibrary.Support.LogEngine
+Imports CHCServerSupportLibrary.Support.LogRotateEngine
+
 
 
 Public Class Main
@@ -56,7 +66,7 @@ Public Class Main
                 masternodeStartUrl.Text = .serviceStart.url
                 masternodeEngineURL.Text = .serviceRuntime.url
 
-                writeLogFile.Checked = (.useTrack <> AppSettings.TrackRuntimeModeEnum.dontTrack)
+                writeLogFile.Checked = (.useTrack <> TrackRuntimeModeEnum.dontTrack)
                 useEventRegistry.Checked = .useEventRegistry
 
                 autoCleanOption.Checked = .useTrackRotate
@@ -64,20 +74,20 @@ Public Class Main
                 If .useTrackRotate Then
 
                     Select Case .trackRotate.frequency
-                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h : startCleanEveryValue.SelectedIndex = 0
-                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.everyDay : startCleanEveryValue.SelectedIndex = 1
+                        Case LogRotateConfig.FrequencyEnum.every12h : startCleanEveryValue.SelectedIndex = 0
+                        Case LogRotateConfig.FrequencyEnum.everyDay : startCleanEveryValue.SelectedIndex = 1
                     End Select
 
                     Select Case .trackRotate.keepFile
-                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles : keepFileTypeValue.SelectedIndex = 0
-                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.onlyMainTracks : keepFileTypeValue.SelectedIndex = 1
+                        Case LogRotateConfig.KeepFileEnum.nothingFiles : keepFileTypeValue.SelectedIndex = 0
+                        Case LogRotateConfig.KeepFileEnum.onlyMainTracks : keepFileTypeValue.SelectedIndex = 1
                     End Select
 
                     Select Case .trackRotate.keepLast
-                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay : keepOnlyRecentFileValue.SelectedIndex = 0
-                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastMonth : keepOnlyRecentFileValue.SelectedIndex = 1
-                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastWeek : keepOnlyRecentFileValue.SelectedIndex = 2
-                        Case CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastYear : keepOnlyRecentFileValue.SelectedIndex = 3
+                        Case LogRotateConfig.KeepEnum.lastDay : keepOnlyRecentFileValue.SelectedIndex = 0
+                        Case LogRotateConfig.KeepEnum.lastMonth : keepOnlyRecentFileValue.SelectedIndex = 1
+                        Case LogRotateConfig.KeepEnum.lastWeek : keepOnlyRecentFileValue.SelectedIndex = 2
+                        Case LogRotateConfig.KeepEnum.lastYear : keepOnlyRecentFileValue.SelectedIndex = 3
                     End Select
 
                 End If
@@ -117,41 +127,41 @@ Public Class Main
 
                 If writeLogFile.Checked Then
 
-                    .useTrack = AppSettings.TrackRuntimeModeEnum.trackAllRuntime
+                    .useTrack = TrackRuntimeModeEnum.trackAllRuntime
 
                 Else
 
-                    .useTrack = AppSettings.TrackRuntimeModeEnum.dontTrack
+                    .useTrack = TrackRuntimeModeEnum.dontTrack
 
                 End If
 
                 If useEventRegistry.Checked Then
 
-                    .useEventRegistry = AppSettings.TrackRuntimeModeEnum.trackAllRuntime
+                    .useEventRegistry = TrackRuntimeModeEnum.trackAllRuntime
 
                 Else
 
-                    .useEventRegistry = AppSettings.TrackRuntimeModeEnum.dontTrack
+                    .useEventRegistry = TrackRuntimeModeEnum.dontTrack
 
                 End If
 
                 .useTrackRotate = autoCleanOption.Checked
 
                 Select Case startCleanEveryValue.SelectedIndex
-                    Case 0 : .trackRotate.frequency = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
-                    Case 1 : .trackRotate.frequency = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.everyDay
+                    Case 0 : .trackRotate.frequency = LogRotateConfig.FrequencyEnum.every12h
+                    Case 1 : .trackRotate.frequency = LogRotateConfig.FrequencyEnum.everyDay
                 End Select
 
                 Select Case keepFileTypeValue.SelectedIndex
-                    Case 0 : .trackRotate.keepFile = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
-                    Case 1 : .trackRotate.keepFile = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.onlyMainTracks
+                    Case 0 : .trackRotate.keepFile = LogRotateConfig.KeepFileEnum.nothingFiles
+                    Case 1 : .trackRotate.keepFile = LogRotateConfig.KeepFileEnum.onlyMainTracks
                 End Select
 
                 Select Case keepOnlyRecentFileValue.SelectedIndex
-                    Case 0 : .trackRotate.keepLast = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
-                    Case 1 : .trackRotate.keepLast = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastWeek
-                    Case 2 : .trackRotate.keepLast = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastMonth
-                    Case 3 : .trackRotate.keepLast = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastYear
+                    Case 0 : .trackRotate.keepLast = LogRotateConfig.KeepEnum.lastDay
+                    Case 1 : .trackRotate.keepLast = LogRotateConfig.KeepEnum.lastWeek
+                    Case 2 : .trackRotate.keepLast = LogRotateConfig.KeepEnum.lastMonth
+                    Case 3 : .trackRotate.keepLast = LogRotateConfig.KeepEnum.lastYear
                 End Select
 
             End With
@@ -237,7 +247,7 @@ Public Class Main
             Return False
 
         End If
-        If Not CHCProtocol.AreaWallet.Support.WalletAddressEngine.checkFormatPublicAddress(publicWalletAddress.Text) Then
+        If Not Support.WalletAddressEngine.checkFormatPublicAddress(publicWalletAddress.Text) Then
 
             MessageBox.Show("The wallet address is wrong.", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return False
@@ -257,13 +267,18 @@ Public Class Main
 
                 loadDataIntoSettings()
 
-                If (AreaCommon.paths.pathBaseData.Trim.Length() = 0) Then
+                '13/09/2020
+                If (AreaCommon.paths.directoryData.Trim.Length() = 0) Then
+                    'If (AreaCommon.paths.pathBaseData.Trim.Length() = 0) Then
 
-                    AreaCommon.paths.pathBaseData = localPathData.Text
+                    'AreaCommon.paths.pathBaseData = localPathData.Text
+                    AreaCommon.paths.directoryData = localPathData.Text
 
-                    AreaCommon.paths.init()
+                    'AreaCommon.paths.init()
+                    AreaCommon.paths.init(VirtualPathEngine.EnumSystemType.admin)
 
-                    AreaCommon.settings.fileName = IO.Path.Combine(AreaCommon.paths.pathSettings, AreaCommon.paths.settingFileName)
+                    'AreaCommon.settings.fileName = IO.Path.Combine(AreaCommon.paths.pathSettings, AreaCommon.paths.settingFileName)
+                    AreaCommon.settings.fileName = IO.Path.Combine(AreaCommon.paths.settings, AreaCommon.paths.settingFileName)
 
                 End If
 
@@ -388,24 +403,18 @@ Public Class Main
 
         If Not SettingsMode Then
 
-            If AreaCommon.moduleMain.state.currentApplication = AppState.enumStateApplication.inRunning Then
-
+            If AreaCommon.moduleMain.state.currentApplication = EnumStateApplication.inRunning Then
                 AreaCommon.stop()
-
             Else
-
                 Me.Dispose()
 
                 AreaCommon.closeApplication(True)
-
             End If
 
         Else
-
             Me.Dispose()
 
             AreaCommon.closeApplication(True)
-
         End If
 
     End Sub
@@ -413,11 +422,8 @@ Public Class Main
     Private Sub logFileButton_Click(sender As Object, e As EventArgs) Handles logFileButton.Click
 
         Try
-
             Process.Start(AreaCommon.log.completeFileName)
-
         Catch ex As Exception
-
         End Try
 
     End Sub
@@ -425,11 +431,8 @@ Public Class Main
     Private Sub registryEventButton_Click(sender As Object, e As EventArgs) Handles registryEventButton.Click
 
         Try
-
             Process.Start(AreaCommon.registry.fileName)
-
         Catch ex As Exception
-
         End Try
 
     End Sub
@@ -445,7 +448,7 @@ Public Class Main
 
             End If
 
-            If (AreaCommon.state.currentApplication <> AppState.enumStateApplication.inRunning) Then
+            If (AreaCommon.state.currentApplication <> EnumStateApplication.inRunning) Then
 
                 e.Cancel = True
 
@@ -461,7 +464,7 @@ Public Class Main
 
             Try
 
-                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of CHCProtocol.AreaCommon.Models.General.BooleanModel)
+                Dim handShakeEngine As New ProxyWS(Of General.BooleanModel)
 
                 handShakeEngine.url = "http://" & masternodeStartUrl.Text & "/api/v1.0/system/testService"
 
@@ -555,7 +558,7 @@ Public Class Main
 
             Try
 
-                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of CHCProtocol.AreaCommon.Models.General.BooleanModel)
+                Dim handShakeEngine As New ProxyWS(Of General.BooleanModel)
 
                 handShakeEngine.url = "http://" & masternodeEngineURL.Text & "/api/v1.0/system/testService"
 
@@ -611,19 +614,19 @@ Public Class Main
 
     Private Sub createNewCertificateStart_Click(sender As Object, e As EventArgs) Handles createNewCertificateStart.Click
 
-        certificateMasternodeStart.Text = CHCProtocol.AreaBase.Certificate.createNew()
+        certificateMasternodeStart.Text = Certificate.createNew()
 
     End Sub
 
     Private Sub createNewCertificateEngine_Click(sender As Object, e As EventArgs) Handles createNewCertificateEngine.Click
 
-        certificateMasternodeEngine.Text = CHCProtocol.AreaBase.Certificate.createNew()
+        certificateMasternodeEngine.Text = Certificate.createNew()
 
     End Sub
 
     Private Sub createNewCertificateClient_Click(sender As Object, e As EventArgs) Handles createNewCertificateClient.Click
 
-        certificateClient.Text = CHCProtocol.AreaBase.Certificate.createNew()
+        certificateClient.Text = Certificate.createNew()
 
     End Sub
 

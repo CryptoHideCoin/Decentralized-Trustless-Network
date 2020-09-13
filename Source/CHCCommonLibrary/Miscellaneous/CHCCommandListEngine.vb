@@ -4,7 +4,7 @@ Option Explicit On
 
 
 
-Namespace CHCEngines.Miscellaneous
+Namespace AreaEngine.Miscellaneous
 
 
 

@@ -12,7 +12,7 @@ Imports System.Text
 
 
 
-Namespace CHCEngines.Communication
+Namespace AreaEngine.Communication
 
 
     Public Class ProxyWS(Of ClassType As {New})
@@ -50,9 +50,7 @@ Namespace CHCEngines.Communication
                 Return ""
 
             Catch ex As Exception
-
                 Return ex.Message
-
             End Try
 
         End Function
@@ -91,9 +89,7 @@ Namespace CHCEngines.Communication
                 Return ""
 
             Catch ex As Exception
-
                 Return ex.Message
-
             End Try
 
         End Function
@@ -138,9 +134,7 @@ Namespace CHCEngines.Communication
                 Return ""
 
             Catch ex As Exception
-
                 Return ex.Message
-
             End Try
 
         End Function
@@ -179,10 +173,9 @@ Namespace CHCEngines.Communication
                 Return ""
 
             Catch ex As Exception
-
                 Return ex.Message
-
             End Try
+
 
         End Function
 

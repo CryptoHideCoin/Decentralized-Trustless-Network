@@ -1,6 +1,8 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+
 
 
 Namespace AreaEngine
@@ -44,12 +46,12 @@ Namespace AreaEngine
 
             Try
 
-                Dim engine As New CHCCommonLibrary.CHCEngines.Common.BaseFileDB(Of AreaCommon.Models.Define.CryptoAssetModel)
+                Dim engine As New BaseFileDB(Of AreaCommon.Models.Define.CryptoAssetModel)
                 Dim singleItem As AreaCommon.Models.Define.CryptoItemKeyDescriptionModel
 
                 AreaCommon.log.track("CryptoAssetEngine.init", "Begin")
 
-                For Each singleFile In IO.Directory.GetFiles(AreaCommon.paths.pathTransactionChainDefineAssets)
+                For Each singleFile In IO.Directory.GetFiles(AreaCommon.paths.transactionChain.defines.assets)
 
                     If (IO.Path.GetExtension(singleFile).CompareTo("Definition") = 0) Then
 
@@ -99,11 +101,11 @@ Namespace AreaEngine
                 If _Keys.ContainsKey(id) Then
 
                     Dim pathFile As String
-                    Dim engine As New CHCCommonLibrary.CHCEngines.Common.BaseFileDB(Of AreaCommon.Models.Define.CryptoAssetModel)
+                    Dim engine As New BaseFileDB(Of AreaCommon.Models.Define.CryptoAssetModel)
 
                     AreaCommon.log.track("CryptoAssetEngine.getData", "Begin")
 
-                    pathFile = IO.Path.Combine(AreaCommon.paths.pathBaseData, "TransactionChain", "Definition", "Assets", id & ".Definition")
+                    pathFile = IO.Path.Combine(AreaCommon.paths.directoryData, "TransactionChain", "Definition", "Assets", id & ".Definition")
 
                     engine.fileName = pathFile
 
@@ -160,7 +162,6 @@ Namespace AreaEngine
                 item.totalCoin = value.totalCoin
 
             Catch ex As Exception
-
             End Try
 
             Return item
@@ -186,7 +187,7 @@ Namespace AreaEngine
 
             Try
 
-                Dim engine As New CHCCommonLibrary.CHCEngines.Common.BaseFileDB(Of AreaCommon.Models.Define.CryptoAssetModel)
+                Dim engine As New BaseFileDB(Of AreaCommon.Models.Define.CryptoAssetModel)
                 Dim pathFile As String
 
                 AreaCommon.log.track("CryptoAssetEngine.update", "Begin")
@@ -201,7 +202,7 @@ Namespace AreaEngine
 
                 End If
 
-                pathFile = IO.Path.Combine(AreaCommon.paths.pathBaseData, "TransactionChain", "Definition", "Assets", id & ".Definition")
+                pathFile = IO.Path.Combine(AreaCommon.paths.directoryData, "TransactionChain", "Definition", "Assets", id & ".Definition")
 
                 engine.fileName = pathFile
 
@@ -210,15 +211,10 @@ Namespace AreaEngine
                 Return engine.save()
 
             Catch ex As Exception
-
                 AreaCommon.log.track("CryptoAssetEngine.update", "Error:" & ex.Message, "fatal")
-
                 Return False
-
             Finally
-
                 AreaCommon.log.track("CryptoAssetEngine.update", "Complete")
-
             End Try
 
         End Function
@@ -230,21 +226,18 @@ Namespace AreaEngine
 
             Try
 
-                Dim engine As New CHCCommonLibrary.CHCEngines.Common.BaseFileDB(Of AreaCommon.Models.Define.CryptoAssetModel)
+                Dim engine As New BaseFileDB(Of AreaCommon.Models.Define.CryptoAssetModel)
                 Dim pathFile As String
 
                 AreaCommon.log.track("CryptoAssetEngine.delete", "Begin")
 
                 If _Keys.ContainsKey(id) Then
 
-                    pathFile = IO.Path.Combine(AreaCommon.paths.pathBaseData, "TransactionChain", "Definition", "Assets", id & ".Definition")
+                    pathFile = IO.Path.Combine(AreaCommon.paths.directoryData, "TransactionChain", "Definition", "Assets", id & ".Definition")
 
                     Try
-
                         IO.File.Delete(pathFile)
-
                     Catch ex As Exception
-
                     End Try
 
                     _Keys.Remove(id)
@@ -252,9 +245,7 @@ Namespace AreaEngine
                     For Each tmp In cacheList
 
                         If tmp.identity.CompareTo(id) = 0 Then
-
                             cacheList.Remove(tmp)
-
                         End If
 
                     Next
@@ -264,15 +255,11 @@ Namespace AreaEngine
                 Return True
 
             Catch ex As Exception
-
                 AreaCommon.log.track("CryptoAssetEngine.delete", "Error:" & ex.Message, "fatal")
-
                 Return False
 
             Finally
-
                 AreaCommon.log.track("CryptoAssetEngine.delete", "Complete")
-
             End Try
 
         End Function

@@ -1,6 +1,8 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCProtocolLibrary.AreaCommon.Models
+
 
 
 Namespace AreaCommon.Models.Masternode
@@ -18,7 +20,7 @@ Namespace AreaCommon.Models.Masternode
         Public protocolRelease As String = ""
         Public ipAddress As String = ""
 
-        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
+        Public response As New General.RemoteResponse
 
     End Class
 
@@ -51,7 +53,7 @@ Namespace AreaCommon.Models.Masternode
         Public masternodeConnectedChainStartUp As Date = Date.MinValue
         Public warrantyCoin As Double = 0
 
-        Public response As New CHCProtocol.AreaCommon.Models.General.RemoteResponse
+        Public response As New General.RemoteResponse
 
     End Class
 

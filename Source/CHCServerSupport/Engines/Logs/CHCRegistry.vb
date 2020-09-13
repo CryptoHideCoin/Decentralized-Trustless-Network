@@ -1,6 +1,8 @@
 ﻿Option Explicit On
 Option Compare Text
 
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+
 
 
 
@@ -13,7 +15,7 @@ Namespace Support
 
     Public Class RegistryEngine
 
-        Inherits CHCCommonLibrary.CHCEngines.Common.BaseFileDB(Of List(Of RegistryData))
+        Inherits BaseFileDB(Of List(Of RegistryData))
 
 
         Public Class RegistryData

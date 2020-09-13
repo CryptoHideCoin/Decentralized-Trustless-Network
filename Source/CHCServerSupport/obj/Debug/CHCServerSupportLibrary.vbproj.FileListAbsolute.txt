@@ -1,0 +1,15 @@
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupportLibrary.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupportLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupportLibrary.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\CHCServerSupportLibrary.dll
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\CHCServerSupportLibrary.pdb
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\CHCServerSupportLibrary.xml
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\CHCCommonLibrary.xml
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupportLibrary.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupportLibrary.dll
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupportLibrary.xml
+E:\CryptoHideCoinDTN\Source\CHCServerSupport\obj\Debug\CHCServerSupportLibrary.pdb

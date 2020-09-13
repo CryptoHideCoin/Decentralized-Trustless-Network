@@ -5,12 +5,18 @@ Option Explicit On
 
 
 
-Namespace CHCEngines.Common.Encryption
+Namespace AreaEngine.Encryption
 
 
     Public Class AES
 
 
+        ''' <summary>
+        ''' This method provide to encrypt a string with a simmetric encryption (AES)
+        ''' </summary>
+        ''' <param name="content"></param>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
         Public Shared Function encrypt(ByVal content As String, ByVal key As String) As String
 
             Dim aes As New Security.Cryptography.RijndaelManaged
@@ -34,7 +40,6 @@ Namespace CHCEngines.Common.Encryption
                 encrypted = Convert.ToBase64String(DESEncrypter.TransformFinalBlock(Buffer, 0, Buffer.Length))
 
             Catch ex As Exception
-
             End Try
 
             Return encrypted
@@ -42,6 +47,12 @@ Namespace CHCEngines.Common.Encryption
         End Function
 
 
+        ''' <summary>
+        ''' This method provide to crypt a string with a simmetric crypt (AES)
+        ''' </summary>
+        ''' <param name="content"></param>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
         Public Shared Function decrypt(ByVal content As String, ByVal key As String) As String
 
             Dim AES As New Security.Cryptography.RijndaelManaged
@@ -71,7 +82,6 @@ Namespace CHCEngines.Common.Encryption
             Return decrypted
 
         End Function
-
 
 
     End Class

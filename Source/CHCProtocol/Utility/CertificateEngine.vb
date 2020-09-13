@@ -34,9 +34,7 @@ Namespace AreaBase
                 Next
 
             Catch ex As Exception
-
                 Throw New Exception("CertificateEngine.createNew():" & ex.Message, ex)
-
             End Try
 
             Return result
