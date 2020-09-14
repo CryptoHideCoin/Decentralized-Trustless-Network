@@ -19,9 +19,7 @@ Namespace Controllers
 
 
         Public Function GetValue() As General.BooleanModel
-
             Return New General.BooleanModel With {.value = True}
-
         End Function
 
 

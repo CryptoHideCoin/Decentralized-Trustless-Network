@@ -1,6 +1,8 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCProtocolLibrary.AreaCommon.Models
+
 
 
 Namespace AreaCommon.Models.Network

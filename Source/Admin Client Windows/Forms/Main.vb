@@ -1,6 +1,14 @@
 ﻿Option Compare Text
 Option Explicit On
+
 Imports System.ComponentModel
+Imports CHCBasicCryptographyLibrary.AreaEngine
+Imports CHCCommonLibrary.AreaEngine.Communication
+Imports CHCProtocolLibrary.AreaWallet.Support
+Imports CHCProtocolLibrary.AreaCommon.Models
+
+
+
 
 Public Class Main
 
@@ -34,9 +42,7 @@ Public Class Main
             End If
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during browseLocalPath_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -79,9 +85,7 @@ Public Class Main
             End If
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during Main_Load " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -101,9 +105,7 @@ Public Class Main
             End With
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during loadDataIntoSettings " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -133,9 +135,7 @@ Public Class Main
             End If
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during Main_Closing " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -165,9 +165,7 @@ Public Class Main
             End If
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during localPathData_TextChanged " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -178,7 +176,7 @@ Public Class Main
 
             Try
 
-                Dim handShakeEngine As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.General.BooleanModel)
+                Dim handShakeEngine As New ProxyWS(Of General.BooleanModel)
 
                 If (protocol.SelectedIndex = 0) Then
 
@@ -211,9 +209,7 @@ Public Class Main
                 End If
 
             Catch ex As Exception
-
                 MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
             End Try
 
         End If
@@ -233,9 +229,7 @@ Public Class Main
             End If
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during certificateMasternodeBrowserButton_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -247,9 +241,9 @@ Public Class Main
 
             Dim privateRaw As String = ""
 
-            If privateKey.StartsWith(CHCProtocol.AreaWallet.Support.WalletAddressEngine.basePvt) Then
+            If privateKey.StartsWith(WalletAddressEngine.basePvt) Then
 
-                With CHCProtocol.AreaWallet.Support.WalletAddressEngine.createNew(privateKey)
+                With WalletAddressEngine.createNew(privateKey)
 
                     privateRaw = .raw.privateKey
 
@@ -257,12 +251,10 @@ Public Class Main
 
             End If
 
-            Return CHCEngine.Encryption.Base58Signature.getSignature(privateRaw, newCertificate)
+            Return Encryption.Base58Signature.getSignature(privateRaw, newCertificate)
 
         Catch ex As Exception
-
             Return ""
-
         End Try
 
     End Function
@@ -279,13 +271,13 @@ Public Class Main
 
                 Dim url As String = ""
                 Dim changeData As New AreaCommon.Models.Security.changeCertificate
-                Dim webSender As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.Security.changeCertificate)
+                Dim webSender As New ProxyWS(Of AreaCommon.Models.Security.changeCertificate)
 
                 changeData.currentCertificate = certificateMasternodeAdmin.Text
                 changeData.newCertificate = change.certificate
                 changeData.typeCommunication = AreaCommon.Models.Security.enumOfService.client
 
-                changeData.signature = CHCProtocol.AreaWallet.Support.WalletAddressEngine.createSignature(change.privateKey, change.certificate)
+                changeData.signature = WalletAddressEngine.createSignature(change.privateKey, change.certificate)
 
                 If protocol.SelectedIndex = 0 Then
 
@@ -318,9 +310,7 @@ Public Class Main
             End If
 
         Catch ex As Exception
-
             MessageBox.Show("Error during a changeButton_Click", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -331,7 +321,7 @@ Public Class Main
 
             Try
 
-                Dim remote As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.Masternode.InfoMasternodeModel)
+                Dim remote As New ProxyWS(Of AreaCommon.Models.Masternode.InfoMasternodeModel)
                 Dim rt As DateTime = Now
 
                 If (protocol.SelectedIndex = 0) Then
@@ -375,9 +365,7 @@ Public Class Main
                 End If
 
             Catch ex As Exception
-
                 MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
             End Try
 
         End If
@@ -398,7 +386,7 @@ Public Class Main
 
             Try
 
-                Dim remote As New CHCCommonLibrary.CHCEngines.Communication.ProxyWS(Of AreaCommon.Models.Network.InfoNetworkModel)
+                Dim remote As New ProxyWS(Of AreaCommon.Models.Network.InfoNetworkModel)
                 Dim rt As DateTime = Now
 
                 If (protocol.SelectedIndex = 0) Then
@@ -436,23 +424,17 @@ Public Class Main
                             responseNetworkTimeValue.Text = Now
 
                         Else
-
                             MessageBox.Show("Masternode is offline", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
                         End If
 
                     End With
 
                 Else
-
                     MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
                 End If
 
             Catch ex As Exception
-
                 MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
             End Try
 
         End If

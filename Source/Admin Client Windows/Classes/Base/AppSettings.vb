@@ -1,21 +1,16 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCServerSupportLibrary.Support
+
 
 
 
 Public Class AppSettings
 
-    Inherits CHCCommonLibrary.CHCEngines.Common.BaseEncryption(Of SettingsData)
+    Inherits BaseEncryption(Of SettingsData)
 
-
-    Public Enum TrackRuntimeModeEnum
-
-        dontTrack
-        trackOnlyMain
-        trackAllRuntime
-
-    End Enum
 
 
     Public Class SettingsData
@@ -23,8 +18,8 @@ Public Class AppSettings
         Public dataPath As String = ""
         Public walletPublicAddress As String = ""
 
-        Public useTrack As TrackRuntimeModeEnum = TrackRuntimeModeEnum.trackAllRuntime
-        Public trackRotate As New CHCServerSupport.Support.LogRotateEngine.LogRotateConfig
+        Public useTrack As LogEngine.TrackRuntimeModeEnum = LogEngine.TrackRuntimeModeEnum.trackAllRuntime
+        Public trackRotate As New LogRotateEngine.LogRotateConfig
 
         Public useSecureAddress As Boolean = False
         Public urlMasternodeAdmin As String = ""

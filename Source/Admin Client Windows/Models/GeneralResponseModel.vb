@@ -1,39 +1,39 @@
-﻿Option Compare Text
-Option Explicit On
+﻿'Option Compare Text
+'Option Explicit On
 
 
 
-Namespace AreaCommon.Models.General
+'Namespace AreaCommon.Models.General
 
 
-    Public Class BooleanModel
+'    Public Class BooleanModel
 
-        Public value As Boolean
+'        Public value As Boolean
 
-    End Class
+'    End Class
 
-    Public Class StatusWorkModel
+'    Public Class StatusWorkModel
 
-        Public Enum EnumStatusWork
+'        Public Enum EnumStatusWork
 
-            unAuthorized
-            onWork
-            offWork
+'            unAuthorized
+'            onWork
+'            offWork
 
-        End Enum
+'        End Enum
 
-        Public value As EnumStatusWork = EnumStatusWork.unAuthorized
+'        Public value As EnumStatusWork = EnumStatusWork.unAuthorized
 
-    End Class
+'    End Class
 
-    Public Class RemoteResponse
+'    Public Class RemoteResponse
 
-        Public [error] As Boolean = False
-        Public unAuthorized As Boolean = False
-        Public offline As Boolean = False
-        Public description As String = ""
+'        Public [error] As Boolean = False
+'        Public unAuthorized As Boolean = False
+'        Public offline As Boolean = False
+'        Public description As String = ""
 
-    End Class
+'    End Class
 
 
-End Namespace
+'End Namespace

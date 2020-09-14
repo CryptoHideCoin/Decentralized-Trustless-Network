@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CHCProtocol", "CHCProtocol.vbproj", "{CF7B6BC6-E6AE-408F-B452-CE73A17941C2}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CHCProtocolLibrary", "CHCProtocolLibrary.vbproj", "{CF7B6BC6-E6AE-408F-B452-CE73A17941C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

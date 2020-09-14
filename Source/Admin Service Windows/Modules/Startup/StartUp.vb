@@ -72,7 +72,6 @@ Namespace AreaCommon
                 End With
 
             Catch ex As Exception
-
             End Try
 
         End Sub
@@ -138,7 +137,6 @@ Namespace AreaCommon
                             state.uiVisible = False
 
                             paths.directoryData = settings.data.dataPath
-                            'paths.pathBaseData = settings.data.dataPath
 
                         End If
 
@@ -151,7 +149,6 @@ Namespace AreaCommon
                     state.uiVisible = settings.data.gui
 
                     paths.directoryData = settings.data.dataPath
-                    'paths.pathBaseData = settings.data.dataPath
 
                 End If
 
@@ -161,7 +158,6 @@ Namespace AreaCommon
                 log.trackIntoConsole("Parameters read")
 
                 If (paths.directoryData.Trim().Length = 0) Then
-                    'If (paths.pathBaseData.Trim().Length = 0) Then
 
                     If (definePath.Length() = 0) Then
 
@@ -172,14 +168,11 @@ Namespace AreaCommon
                     End If
 
                     paths.directoryData = paths.readDefinePath()
-                    'paths.pathBaseData = paths.readDefinePath()
 
-                    'settings.data.dataPath = paths.pathBaseData
                     settings.data.dataPath = paths.directoryData
 
                 End If
 
-                'log.trackIntoConsole("Root paths set " & paths.pathBaseData)
                 log.trackIntoConsole("Root paths set " & paths.directoryData)
 
                 If state.uiVisible Then
@@ -199,11 +192,9 @@ Namespace AreaCommon
                 Return True
 
             Catch ex As Exception
-
                 MessageBox.Show("An error occurrent during firstProcedureStartup " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                 Return False
-
             End Try
 
         End Function
@@ -233,15 +224,11 @@ Namespace AreaCommon
                 End If
 
             Catch ex As Exception
-
                 log.track("moduleMain.recallStarter", "Error:" & ex.Message, "fatal")
 
-                CloseApplication()
-
+                closeApplication()
             Finally
-
                 log.track("moduleMain.recallStarter", "Complete")
-
             End Try
 
         End Sub
@@ -260,7 +247,6 @@ Namespace AreaCommon
 
                 log.track("moduleMain.run", "Begin")
                 log.track("moduleMain.run", "Commandline process execute is " & Environment.CommandLine)
-                'log.track("moduleMain.run", "DataPath is " & paths.pathBaseData)
                 log.track("moduleMain.run", "DataPath is " & paths.directoryData)
                 log.track("moduleMain.run", "User Interface visible = " & IIf(state.uiVisible, "true", "false"))
 
@@ -353,9 +339,7 @@ Namespace AreaCommon
                 End If
 
             Catch ex As Exception
-
                 MessageBox.Show("An error occurrent during moduleMain.startup " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
             End Try
 
         End Sub

@@ -60,9 +60,7 @@ Namespace Controllers
                     If (AreaCommon.state.currentApplication = EnumStateApplication.inRunning) Then
 
                         Try
-
                             result = getDataFromRuntime()
-
                         Catch ex As Exception
 
                             result.currentStatus = AreaCommon.Models.Network.InfoNetworkModel.EnumNetworkStatus.off
@@ -74,24 +72,17 @@ Namespace Controllers
                         End Try
 
                     Else
-
                         result.response.error = True
                         result.response.offline = True
-
                     End If
-
                 Else
-
                     result.response.error = True
                     result.response.unAuthorized = True
-
                 End If
 
             Catch ex As Exception
-
                 result.response.error = True
                 result.response.description = "Error = " & ex.Message
-
             End Try
 
             Return result

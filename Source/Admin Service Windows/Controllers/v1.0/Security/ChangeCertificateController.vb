@@ -2,6 +2,7 @@
 Option Explicit On
 
 Imports System.Web.Http
+Imports CHCBasicCryptographyLibrary.AreaEngine
 Imports CHCProtocolLibrary.AreaWallet.Support
 Imports CHCProtocolLibrary.AreaCommon.Models.Settings
 
@@ -34,32 +35,22 @@ Namespace Controllers
 
                         Dim address As String = WalletAddressEngine.SingleWallet.cleanAddress(AreaCommon.settings.data.walletPublicAddress)
 
-                        If CHCEngine.Encryption.Base58Signature.verifySignature(value.newCertificate, address, value.signature) Then
-
+                        If Encryption.Base58Signature.verifySignature(value.newCertificate, address, value.signature) Then
                             AreaSecurity.changeCertificate(value)
-
                         Else
-
                             Throw New ApplicationException("Wrong Signature")
-
                         End If
 
                     Else
-
                         Throw New ApplicationException("Service Unauthorized")
-
                     End If
 
                 Else
-
                     Throw New ApplicationException("Service Offline")
-
                 End If
 
             Catch ex As Exception
-
                 Throw New ApplicationException("Service Error")
-
             End Try
 
         End Sub

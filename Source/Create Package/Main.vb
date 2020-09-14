@@ -2,6 +2,9 @@
 Option Explicit On
 
 Imports System.IO.Compression
+Imports CHCProtocolLibrary.AreaUpdate
+
+
 
 
 Public Class Main
@@ -39,9 +42,9 @@ Public Class Main
     End Sub
 
 
-    Private Function addSinglePackage(ByVal fileName As String, ByVal dirName As String, ByVal releaseValue As String) As CHCProtocol.AreaUpdate.PackageRelease
+    Private Function addSinglePackage(ByVal fileName As String, ByVal dirName As String, ByVal releaseValue As String) As PackageRelease
 
-        Dim singleFile As New CHCProtocol.AreaUpdate.PackageRelease
+        Dim singleFile As New PackageRelease
 
         singleFile.fileName = fileName
         singleFile.relativePath = dirName
@@ -50,6 +53,7 @@ Public Class Main
         Return singleFile
 
     End Function
+
 
     Private Function createCompleteRelease() As String
 
@@ -75,8 +79,8 @@ Public Class Main
 
     Private Sub processWork(ByVal rootPath As String)
 
-        Dim package As New CHCProtocol.AreaUpdate.PackageReleaseEngine
-        Dim packageList As New List(Of CHCProtocol.AreaUpdate.PackageRelease)
+        Dim package As New PackageReleaseEngine
+        Dim packageList As New List(Of PackageRelease)
         Dim processDir As String, fileName As String, packageFileName As String = makePackageFile(rootPath)
 
         Try
@@ -174,11 +178,13 @@ Public Class Main
 
     End Sub
 
+
     Private Sub cancelButton_Click(sender As Object, e As EventArgs) Handles cancelButton.Click
 
         Me.Dispose()
 
     End Sub
+
 
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 

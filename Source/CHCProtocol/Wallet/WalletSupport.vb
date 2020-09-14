@@ -1,6 +1,8 @@
 Option Compare Text
 Option Explicit On
 
+Imports CHCBasicCryptographyLibrary.AreaEngine
+
 
 
 
@@ -36,7 +38,7 @@ Namespace AreaWallet.Support
             Public Sub generatePublicAddress()
 
                 Try
-                    publicAddress = CHCEngine.Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(privateKey)
+                    publicAddress = CHCBasicCryptographyLibrary.AreaEngine.Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(privateKey)
                 Catch ex As Exception
                     Throw New Exception("SingleWallet.generatePublicAddress():" & ex.Message, ex)
                 End Try
@@ -193,7 +195,7 @@ Namespace AreaWallet.Support
 
                 Next
 
-                result.raw.publicAddress = CHCEngine.Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(result.raw.privateKey)
+                result.raw.publicAddress = Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(result.raw.privateKey)
                 result.official.decoreDataWallet(result.raw.publicAddress)
 
             Catch ex As Exception
@@ -234,7 +236,7 @@ Namespace AreaWallet.Support
                     Next
 
                     result.official.privateKey = basePvt & result.official.privateKey & closeBasePvt
-                    result.raw.publicAddress = CHCEngine.Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(result.raw.privateKey)
+                    result.raw.publicAddress = Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(result.raw.privateKey)
                     result.official.decoreDataWallet(result.raw.publicAddress)
 
                 Else
@@ -268,7 +270,7 @@ Namespace AreaWallet.Support
                     privateRaw = privateKey
                 End If
 
-                Return CHCEngine.Encryption.Base58Signature.getSignature(privateRaw, message)
+                Return Encryption.Base58Signature.getSignature(privateRaw, message)
 
             Catch ex As Exception
                 Throw New Exception("WalletComplete.createSignature():" & ex.Message, ex)
@@ -284,7 +286,7 @@ Namespace AreaWallet.Support
 
                 Dim address As String = SingleWallet.cleanAddress(publicAddress)
 
-                Return CHCEngine.Encryption.Base58Signature.verifySignature(message, address, signature)
+                Return Encryption.Base58Signature.verifySignature(message, address, signature)
 
             Catch ex As Exception
                 Throw New Exception("WalletComplete.verifySignature():" & ex.Message, ex)

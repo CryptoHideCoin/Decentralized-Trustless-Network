@@ -1,6 +1,8 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCServerSupportLibrary.Support
+
 
 
 Namespace AreaCommon
@@ -10,13 +12,8 @@ Namespace AreaCommon
 
 
         Public paths As New AreaSystem.Paths
-        Public log As New CHCServerSupport.Support.LogEngine
+        Public log As New LogEngine
         Public settings As New AppSettings
-
-
-
-
-
 
 
     End Module

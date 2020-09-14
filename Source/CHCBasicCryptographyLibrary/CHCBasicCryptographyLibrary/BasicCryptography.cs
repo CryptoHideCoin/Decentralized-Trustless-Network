@@ -11,7 +11,7 @@ using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
 
 
-namespace CHCEngine.Encryption
+namespace CHCBasicCryptographyLibrary.AreaEngine.Encryption
 {
 
     /*

@@ -104,11 +104,5 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CHCCommonLibrary\CHCCommonLibrary.vbproj">
-      <Project>{89648581-c73c-4d51-97df-81d9860c9fa3}</Project>
-      <Name>CHCCommonLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

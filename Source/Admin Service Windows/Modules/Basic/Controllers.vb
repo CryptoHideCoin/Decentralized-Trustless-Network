@@ -15,6 +15,7 @@ Namespace AreaCommon
         Private _controllerComplete As Boolean = False
 
 
+
         ''' <summary>
         ''' This method provide to start a webservice
         ''' </summary>
@@ -53,11 +54,9 @@ Namespace AreaCommon
                         log.track("Controllers.StartWebService", "Webservice Run at " & settings.data.portNumber & " port")
 
                     Catch aggEx As AggregateException
-
                         log.track("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion - Error:" & aggEx.Message, "fatal")
 
-                        CloseApplication()
-
+                        closeApplication()
                     End Try
 
                     _controllerComplete = True
@@ -78,11 +77,9 @@ Namespace AreaCommon
                 state.currentApplication = EnumStateApplication.waitingToStart
 
             Catch ex As Exception
-
                 log.track("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion - Error:" & ex.Message, "fatal")
 
-                CloseApplication()
-
+                closeApplication()
             End Try
 
         End Sub
@@ -102,19 +99,15 @@ Namespace AreaCommon
                 objWS.Start()
 
                 Do While Not _controllerComplete
-
                     Application.DoEvents()
-
                 Loop
 
                 Return True
 
             Catch ex As Exception
-
                 log.track("Controllers.WebserviceThread", "Error:" & ex.Message, "fatal")
 
                 Return False
-
             End Try
 
         End Function

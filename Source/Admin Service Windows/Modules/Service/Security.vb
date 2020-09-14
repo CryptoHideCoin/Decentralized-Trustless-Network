@@ -34,13 +34,9 @@ Namespace AreaSecurity
         Public Function checkClientCertification(ByVal value As String) As Boolean
 
             Try
-
                 Return (AreaCommon.settings.data.certificateClient.CompareTo(value) = 0)
-
             Catch ex As Exception
-
                 Return False
-
             End Try
 
         End Function
@@ -62,9 +58,7 @@ Namespace AreaSecurity
                 Return True
 
             Catch ex As Exception
-
                 Return False
-
             End Try
 
         End Function

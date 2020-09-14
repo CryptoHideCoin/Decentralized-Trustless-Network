@@ -1,6 +1,9 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCServerSupportLibrary.Support.LogEngine
+Imports CHCServerSupportLibrary.Support.LogRotateEngine
+
 
 
 
@@ -29,34 +32,24 @@ Namespace AreaCommon
 
                 log.track("startUp.firstProcedureStart", "settings read")
 
-                log.noSave = (settings.data.useTrack = AppSettings.TrackRuntimeModeEnum.dontTrack)
+                log.noSave = (settings.data.useTrack = TrackRuntimeModeEnum.dontTrack)
 
                 log.init(paths.pathLogs, "main")
 
                 With settings.data.trackRotate
 
-                    .frequency = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.everyDay
-                    .keepFile = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.onlyMainTracks
-                    .keepLast = CHCServerSupport.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastWeek
-
-                    logRotate.configuration.frequency = .frequency
-                    logRotate.configuration.keepFile = .keepFile
-                    logRotate.configuration.keepLast = .keepLast
+                    .frequency = LogRotateConfig.FrequencyEnum.everyDay
+                    .keepFile = LogRotateConfig.KeepFileEnum.onlyMainTracks
+                    .keepLast = LogRotateConfig.KeepEnum.lastWeek
 
                 End With
-
-                logRotate.path = paths.pathLogs
-
-                logRotate.run(log)
 
                 log.track("startUp.firstProcedureStart", "Trackrotate in execute")
 
                 Return True
 
             Catch ex As Exception
-
                 Return False
-
             End Try
 
         End Function
@@ -91,11 +84,9 @@ Namespace AreaCommon
                 Return True
 
             Catch ex As Exception
-
                 MessageBox.Show("An error occurrent during Startup.main " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                 Return False
-
             End Try
 
         End Function

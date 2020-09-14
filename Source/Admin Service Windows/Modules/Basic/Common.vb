@@ -53,21 +53,15 @@ Namespace AreaCommon
         Public Function refreshBatch(ByRef adapterLog As LogEngine) As Boolean
 
             Try
-
                 adapterLog.track("moduleMain.refreshBatch", "Begin")
 
                 Return logRotate.run(adapterLog)
-
             Catch ex As Exception
-
                 adapterLog.track("moduleMain.refreshBatch", "Error:" & ex.Message, "Fatal")
 
                 Return False
-
             Finally
-
                 adapterLog.track("moduleMain.refreshBatch", "Complete")
-
             End Try
 
         End Function

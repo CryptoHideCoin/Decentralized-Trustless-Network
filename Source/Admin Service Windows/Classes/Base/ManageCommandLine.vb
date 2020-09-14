@@ -31,13 +31,9 @@ Namespace AreaCommon
                     If (parameters.data.dataPath.Length > 0) Then
 
                         If Not IO.Directory.Exists(parameters.data.dataPath) Then
-
                             parameters.data.dataPath = ""
-
                         Else
-
                             haveParameters = True
-
                         End If
 
                     End If
@@ -78,7 +74,6 @@ Namespace AreaCommon
                     haveParameters = True
 
                 End If
-
                 If _commandLine.exist("PortNumber".ToLower()) Then
 
                     If IsNumeric(_commandLine.GetValue("PortNumber".ToLower())) Then
@@ -89,94 +84,79 @@ Namespace AreaCommon
                     End If
 
                 End If
-
                 If _commandLine.exist("WriteLogFile".ToLower()) Then
 
                     parameters.data.useTrack = _commandLine.GetValue("WriteLogFile".ToLower())
                     haveParameters = True
 
                 End If
-
                 If _commandLine.exist("UseEventRegistry".ToLower()) Then
 
                     parameters.data.useEventRegistry = _commandLine.GetValue("UseEventRegistry".ToLower())
                     haveParameters = True
 
                 End If
-
                 If _commandLine.exist("MasternodeStartUseSecure".ToLower()) Then
 
                     parameters.data.serviceStart.useSecure = True
                     haveParameters = True
 
                 End If
-
                 If _commandLine.exist("MasternodeStartURL".ToLower()) Then
 
                     parameters.data.serviceStart.url = _commandLine.GetValue("MasternodeStartURL".ToLower())
                     haveParameters = True
 
                 End If
-
                 If _commandLine.exist("MasternodeStartCertificate".ToLower()) Then
 
                     parameters.data.serviceStart.certificate = _commandLine.GetValue("MasternodeStartCertificate".ToLower())
                     haveParameters = True
 
                 End If
-
                 If _commandLine.exist("MasternodeEngineUseSecure".ToLower()) Then
 
                     parameters.data.serviceRuntime.useSecure = _commandLine.GetValue("MasternodeEngineUseSecure".ToLower())
                     haveParameters = True
 
                 End If
-
                 If _commandLine.exist("MasternodeEngineURL".ToLower()) Then
 
                     parameters.data.serviceRuntime.url = _commandLine.GetValue("MasternodeEngineURL".ToLower())
                     haveParameters = True
 
                 End If
-
                 If _commandLine.exist("MasternodeEngineCertificate".ToLower()) Then
 
                     parameters.data.serviceRuntime.certificate = _commandLine.GetValue("MasternodeEngineCertificate".ToLower())
                     haveParameters = True
 
                 End If
-
                 If _commandLine.exist("ClientCertificate".ToLower()) Then
 
                     parameters.data.certificateClient = _commandLine.GetValue("ClientCertificate".ToLower())
                     haveParameters = True
 
                 End If
-
                 If _commandLine.exist("ConfigFileName".ToLower()) Then
 
                     _completePathSettingFile = _commandLine.GetValue("ConfigFileName".ToLower())
 
                 End If
-
                 If _commandLine.exist("NoConsoleMessage".ToLower()) Then
 
                     parameters.data.noConsoleMessage = True
 
                 End If
-
                 If _commandLine.exist("RecallStarter".ToLower()) Then
 
                     parameters.data.recallStarter = True
 
                 End If
-
                 If _commandLine.exist("Gui".ToLower()) Then
-
                     parameters.data.gui = True
 
                     haveParameters = True
-
                 End If
 
                 If _commandLine.exist("?") Or _commandLine.exist("help".ToLower()) Then
@@ -201,20 +181,16 @@ Namespace AreaCommon
                     End
 
                 End If
-
                 If _commandLine.exist("UseLastSettings".ToLower()) Then
-
                     haveParameters = False
-                    useLastSettings = True
 
+                    useLastSettings = True
                 End If
 
             Catch ex As Exception
-
                 log.track("AdminService.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "fatal")
 
-                CloseApplication()
-
+                closeApplication()
             End Try
 
         End Sub
@@ -235,29 +211,23 @@ Namespace AreaCommon
                     settings.fileName = _completePathSettingFile
 
                     If settings.read() Then
-
                         parameters.data = settings.data
 
                         haveParameters = True
-
                     End If
 
                 End If
 
             Catch ex As Exception
-
                 parameters = New AppSettings
 
                 log.track("AdminService.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "error")
-
             End Try
 
         End Sub
 
 
-
     End Class
-
 
 
 End Namespace

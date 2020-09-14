@@ -46,9 +46,7 @@ Namespace Controllers
                 End If
 
             Catch ex As Exception
-
                 Throw New Exception("InfoMasternodeController.getDataFromRuntime(): " & ex.Message, ex)
-
             End Try
 
         End Function
@@ -123,7 +121,6 @@ Namespace Controllers
                 End If
 
             Catch ex As Exception
-
             End Try
 
             Return result

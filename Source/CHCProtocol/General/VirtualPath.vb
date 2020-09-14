@@ -58,7 +58,7 @@ Namespace AreaSystem
         Public Property directoryData As String = ""
         Public Property system As New SystemPath
         Public Property settings As String = ""
-        Public Property transactionChain As TransactionChainPath
+        Public Property transactionChain As New TransactionChainPath
 
 
 

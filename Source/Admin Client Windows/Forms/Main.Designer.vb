@@ -289,6 +289,7 @@ Partial Class Main
         '
         'commondGroup
         '
+        Me.commondGroup.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.commondGroup.Controls.Add(Me.Button7)
         Me.commondGroup.Controls.Add(Me.Button6)
         Me.commondGroup.Controls.Add(Me.Button5)
@@ -376,6 +377,7 @@ Partial Class Main
         '
         'infoGroup
         '
+        Me.infoGroup.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.infoGroup.Controls.Add(Me.addressValue)
         Me.infoGroup.Controls.Add(Me.Label11)
         Me.infoGroup.Controls.Add(Me.responseTime)
@@ -407,13 +409,12 @@ Partial Class Main
         '
         'addressValue
         '
-        Me.addressValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.addressValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.addressValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.addressValue.Location = New System.Drawing.Point(165, 238)
         Me.addressValue.Name = "addressValue"
         Me.addressValue.ReadOnly = True
-        Me.addressValue.Size = New System.Drawing.Size(421, 21)
+        Me.addressValue.Size = New System.Drawing.Size(482, 21)
         Me.addressValue.TabIndex = 21
         '
         'Label11
@@ -428,13 +429,12 @@ Partial Class Main
         '
         'responseTime
         '
-        Me.responseTime.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.responseTime.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.responseTime.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.responseTime.Location = New System.Drawing.Point(165, 292)
         Me.responseTime.Name = "responseTime"
         Me.responseTime.ReadOnly = True
-        Me.responseTime.Size = New System.Drawing.Size(421, 21)
+        Me.responseTime.Size = New System.Drawing.Size(482, 21)
         Me.responseTime.TabIndex = 10
         '
         'Label10
@@ -449,13 +449,12 @@ Partial Class Main
         '
         'requestTime
         '
-        Me.requestTime.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.requestTime.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.requestTime.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.requestTime.Location = New System.Drawing.Point(165, 265)
         Me.requestTime.Name = "requestTime"
         Me.requestTime.ReadOnly = True
-        Me.requestTime.Size = New System.Drawing.Size(421, 21)
+        Me.requestTime.Size = New System.Drawing.Size(482, 21)
         Me.requestTime.TabIndex = 9
         '
         'Label9
@@ -470,13 +469,12 @@ Partial Class Main
         '
         'protocolReleaseValue
         '
-        Me.protocolReleaseValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.protocolReleaseValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.protocolReleaseValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.protocolReleaseValue.Location = New System.Drawing.Point(165, 211)
         Me.protocolReleaseValue.Name = "protocolReleaseValue"
         Me.protocolReleaseValue.ReadOnly = True
-        Me.protocolReleaseValue.Size = New System.Drawing.Size(421, 21)
+        Me.protocolReleaseValue.Size = New System.Drawing.Size(482, 21)
         Me.protocolReleaseValue.TabIndex = 8
         '
         'Label8
@@ -491,13 +489,12 @@ Partial Class Main
         '
         'softwareRelease
         '
-        Me.softwareRelease.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.softwareRelease.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.softwareRelease.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.softwareRelease.Location = New System.Drawing.Point(165, 184)
         Me.softwareRelease.Name = "softwareRelease"
         Me.softwareRelease.ReadOnly = True
-        Me.softwareRelease.Size = New System.Drawing.Size(421, 21)
+        Me.softwareRelease.Size = New System.Drawing.Size(482, 21)
         Me.softwareRelease.TabIndex = 7
         '
         'Label7
@@ -512,13 +509,12 @@ Partial Class Main
         '
         'platformValue
         '
-        Me.platformValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.platformValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.platformValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.platformValue.Location = New System.Drawing.Point(165, 157)
         Me.platformValue.Name = "platformValue"
         Me.platformValue.ReadOnly = True
-        Me.platformValue.Size = New System.Drawing.Size(421, 21)
+        Me.platformValue.Size = New System.Drawing.Size(482, 21)
         Me.platformValue.TabIndex = 6
         '
         'Label6
@@ -533,13 +529,12 @@ Partial Class Main
         '
         'serviceOffered
         '
-        Me.serviceOffered.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.serviceOffered.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.serviceOffered.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.serviceOffered.Location = New System.Drawing.Point(165, 130)
         Me.serviceOffered.Name = "serviceOffered"
         Me.serviceOffered.ReadOnly = True
-        Me.serviceOffered.Size = New System.Drawing.Size(421, 21)
+        Me.serviceOffered.Size = New System.Drawing.Size(482, 21)
         Me.serviceOffered.TabIndex = 5
         '
         'Label5
@@ -554,13 +549,12 @@ Partial Class Main
         '
         'walletAddress
         '
-        Me.walletAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.walletAddress.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.walletAddress.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.walletAddress.Location = New System.Drawing.Point(165, 103)
         Me.walletAddress.Name = "walletAddress"
         Me.walletAddress.ReadOnly = True
-        Me.walletAddress.Size = New System.Drawing.Size(421, 21)
+        Me.walletAddress.Size = New System.Drawing.Size(482, 21)
         Me.walletAddress.TabIndex = 4
         '
         'Label4
@@ -575,10 +569,11 @@ Partial Class Main
         '
         'masternodeLocalTime
         '
+        Me.masternodeLocalTime.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.masternodeLocalTime.Location = New System.Drawing.Point(165, 76)
         Me.masternodeLocalTime.Name = "masternodeLocalTime"
         Me.masternodeLocalTime.ReadOnly = True
-        Me.masternodeLocalTime.Size = New System.Drawing.Size(421, 21)
+        Me.masternodeLocalTime.Size = New System.Drawing.Size(482, 21)
         Me.masternodeLocalTime.TabIndex = 3
         '
         'Label3
@@ -592,10 +587,11 @@ Partial Class Main
         '
         'virtualNameValue
         '
+        Me.virtualNameValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.virtualNameValue.Location = New System.Drawing.Point(165, 49)
         Me.virtualNameValue.Name = "virtualNameValue"
         Me.virtualNameValue.ReadOnly = True
-        Me.virtualNameValue.Size = New System.Drawing.Size(421, 21)
+        Me.virtualNameValue.Size = New System.Drawing.Size(482, 21)
         Me.virtualNameValue.TabIndex = 2
         '
         'Label2
@@ -609,10 +605,11 @@ Partial Class Main
         '
         'currentStatusValue
         '
+        Me.currentStatusValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.currentStatusValue.Location = New System.Drawing.Point(165, 21)
         Me.currentStatusValue.Name = "currentStatusValue"
         Me.currentStatusValue.ReadOnly = True
-        Me.currentStatusValue.Size = New System.Drawing.Size(421, 21)
+        Me.currentStatusValue.Size = New System.Drawing.Size(482, 21)
         Me.currentStatusValue.TabIndex = 0
         '
         'statusMasternode
@@ -626,6 +623,7 @@ Partial Class Main
         '
         'refreshGeneralButton
         '
+        Me.refreshGeneralButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.refreshGeneralButton.Enabled = False
         Me.refreshGeneralButton.Location = New System.Drawing.Point(605, 6)
         Me.refreshGeneralButton.Name = "refreshGeneralButton"
@@ -655,7 +653,7 @@ Partial Class Main
         Me.startStopGroup.Controls.Add(Me.operationNetwork)
         Me.startStopGroup.Location = New System.Drawing.Point(7, 223)
         Me.startStopGroup.Name = "startStopGroup"
-        Me.startStopGroup.Size = New System.Drawing.Size(671, 179)
+        Me.startStopGroup.Size = New System.Drawing.Size(673, 179)
         Me.startStopGroup.TabIndex = 5
         Me.startStopGroup.TabStop = False
         Me.startStopGroup.Text = "Commands"
@@ -663,7 +661,7 @@ Partial Class Main
         '
         'valueCoinToLock
         '
-        Me.valueCoinToLock.Location = New System.Drawing.Point(468, 133)
+        Me.valueCoinToLock.Location = New System.Drawing.Point(517, 133)
         Me.valueCoinToLock.Name = "valueCoinToLock"
         Me.valueCoinToLock.Size = New System.Drawing.Size(136, 21)
         Me.valueCoinToLock.TabIndex = 12
@@ -674,7 +672,7 @@ Partial Class Main
         'Label16
         '
         Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(247, 136)
+        Me.Label16.Location = New System.Drawing.Point(296, 136)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(215, 13)
         Me.Label16.TabIndex = 11
@@ -686,7 +684,7 @@ Partial Class Main
         Me.privateKeyValue.Location = New System.Drawing.Point(165, 55)
         Me.privateKeyValue.Multiline = True
         Me.privateKeyValue.Name = "privateKeyValue"
-        Me.privateKeyValue.Size = New System.Drawing.Size(439, 72)
+        Me.privateKeyValue.Size = New System.Drawing.Size(488, 72)
         Me.privateKeyValue.TabIndex = 10
         Me.privateKeyValue.Text = resources.GetString("privateKeyValue.Text")
         Me.privateKeyValue.Visible = False
@@ -738,7 +736,7 @@ Partial Class Main
         Me.responseNetworkTimeValue.Location = New System.Drawing.Point(165, 130)
         Me.responseNetworkTimeValue.Name = "responseNetworkTimeValue"
         Me.responseNetworkTimeValue.ReadOnly = True
-        Me.responseNetworkTimeValue.Size = New System.Drawing.Size(421, 21)
+        Me.responseNetworkTimeValue.Size = New System.Drawing.Size(488, 21)
         Me.responseNetworkTimeValue.TabIndex = 10
         '
         'Label13
@@ -759,7 +757,7 @@ Partial Class Main
         Me.requestNetworkTimeValue.Location = New System.Drawing.Point(165, 103)
         Me.requestNetworkTimeValue.Name = "requestNetworkTimeValue"
         Me.requestNetworkTimeValue.ReadOnly = True
-        Me.requestNetworkTimeValue.Size = New System.Drawing.Size(421, 21)
+        Me.requestNetworkTimeValue.Size = New System.Drawing.Size(488, 21)
         Me.requestNetworkTimeValue.TabIndex = 9
         '
         'Label14
@@ -780,7 +778,7 @@ Partial Class Main
         Me.networkProtocolReleaseValue.Location = New System.Drawing.Point(165, 76)
         Me.networkProtocolReleaseValue.Name = "networkProtocolReleaseValue"
         Me.networkProtocolReleaseValue.ReadOnly = True
-        Me.networkProtocolReleaseValue.Size = New System.Drawing.Size(421, 21)
+        Me.networkProtocolReleaseValue.Size = New System.Drawing.Size(488, 21)
         Me.networkProtocolReleaseValue.TabIndex = 8
         '
         'Label15
@@ -798,7 +796,7 @@ Partial Class Main
         Me.transactionChainNameValue.Location = New System.Drawing.Point(165, 49)
         Me.transactionChainNameValue.Name = "transactionChainNameValue"
         Me.transactionChainNameValue.ReadOnly = True
-        Me.transactionChainNameValue.Size = New System.Drawing.Size(421, 21)
+        Me.transactionChainNameValue.Size = New System.Drawing.Size(488, 21)
         Me.transactionChainNameValue.TabIndex = 2
         '
         'Label21
@@ -815,7 +813,7 @@ Partial Class Main
         Me.networkStatusValue.Location = New System.Drawing.Point(165, 21)
         Me.networkStatusValue.Name = "networkStatusValue"
         Me.networkStatusValue.ReadOnly = True
-        Me.networkStatusValue.Size = New System.Drawing.Size(421, 21)
+        Me.networkStatusValue.Size = New System.Drawing.Size(488, 21)
         Me.networkStatusValue.TabIndex = 0
         '
         'Label22

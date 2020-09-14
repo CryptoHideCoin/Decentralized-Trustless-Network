@@ -1,6 +1,8 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+
 
 
 Namespace AreaUpdate
@@ -16,7 +18,7 @@ Namespace AreaUpdate
 
     Public Class PackageReleaseEngine
 
-        Inherits CHCCommonLibrary.CHCEngines.Common.BaseFileDB(Of List(Of PackageRelease))
+        Inherits BaseFileDB(Of List(Of PackageRelease))
 
     End Class
 

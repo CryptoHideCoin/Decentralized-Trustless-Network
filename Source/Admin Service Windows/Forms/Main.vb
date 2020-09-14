@@ -95,9 +95,7 @@ Public Class Main
             End With
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during Main_Load " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -167,9 +165,7 @@ Public Class Main
             End With
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during loadDataIntoSettings " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -207,9 +203,7 @@ Public Class Main
             certificateMasternodeClientBrowserButton.Enabled = stateValue
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during changeStateEntireInterface " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -267,17 +261,12 @@ Public Class Main
 
                 loadDataIntoSettings()
 
-                '13/09/2020
                 If (AreaCommon.paths.directoryData.Trim.Length() = 0) Then
-                    'If (AreaCommon.paths.pathBaseData.Trim.Length() = 0) Then
 
-                    'AreaCommon.paths.pathBaseData = localPathData.Text
                     AreaCommon.paths.directoryData = localPathData.Text
 
-                    'AreaCommon.paths.init()
                     AreaCommon.paths.init(VirtualPathEngine.EnumSystemType.admin)
 
-                    'AreaCommon.settings.fileName = IO.Path.Combine(AreaCommon.paths.pathSettings, AreaCommon.paths.settingFileName)
                     AreaCommon.settings.fileName = IO.Path.Combine(AreaCommon.paths.settings, AreaCommon.paths.settingFileName)
 
                 End If
@@ -311,9 +300,7 @@ Public Class Main
             End If
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during startButton_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -342,9 +329,7 @@ Public Class Main
             End If
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during startButton_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -368,13 +353,9 @@ Public Class Main
             Dim dirName As String
 
             If (path.Trim().Length > 0) Then
-
                 dirName = IO.Path.GetDirectoryName(localPathData.Text)
-
             Else
-
                 dirName = ""
-
             End If
 
             Dim fileName As String = IO.Path.GetFileName(localPathData.Text)
@@ -388,9 +369,7 @@ Public Class Main
             End If
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during browseLocalPath_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -443,15 +422,11 @@ Public Class Main
         If (tabControl.SelectedIndex = 2) Then
 
             If _canChangeTab Then
-
                 Return
-
             End If
 
             If (AreaCommon.state.currentApplication <> EnumStateApplication.inRunning) Then
-
                 e.Cancel = True
-
             End If
 
         End If
@@ -471,21 +446,15 @@ Public Class Main
                 If (handShakeEngine.getData() = "") Then
 
                     If handShakeEngine.data.value Then
-
                         MessageBox.Show("Test connection succesful", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
                     Else
-
                         MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
                     End If
 
                 End If
 
             Catch ex As Exception
-
                 MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
             End Try
 
         End If
@@ -505,9 +474,7 @@ Public Class Main
             End If
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during certificateMasternodeBrowserButton_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -525,9 +492,7 @@ Public Class Main
             End If
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during certificateMasternodeEngineBrowserButton_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -545,9 +510,7 @@ Public Class Main
             End If
 
         Catch ex As Exception
-
             MessageBox.Show("An error occurrent during certificateMasternodeClientBrowserButton_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
         End Try
 
     End Sub
@@ -577,9 +540,7 @@ Public Class Main
                 End If
 
             Catch ex As Exception
-
                 MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
             End Try
 
         End If
@@ -603,11 +564,8 @@ Public Class Main
     Private Sub localPathData_DoubleClick(sender As Object, e As EventArgs) Handles localPathData.DoubleClick
 
         Try
-
             Process.Start("explorer.exe", localPathData.Text)
-
         Catch ex As Exception
-
         End Try
 
     End Sub
@@ -653,5 +611,8 @@ Public Class Main
 
     End Sub
 
+    Private Sub Main_Scroll(sender As Object, e As ScrollEventArgs) Handles Me.Scroll
+
+    End Sub
 
 End Class
