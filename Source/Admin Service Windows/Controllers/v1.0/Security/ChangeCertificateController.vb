@@ -25,7 +25,7 @@ Namespace Controllers
 
 
         ' PUT api/v1.0/security/changeCertificate
-        Public Sub PutValue(<FromBody()> ByVal value As AreaCommon.Models.Security.changeCertificate)
+        Public Function PutValue(<FromBody()> ByVal value As AreaCommon.Models.Security.changeCertificate) As String
 
             Try
 
@@ -36,24 +36,28 @@ Namespace Controllers
                         Dim address As String = WalletAddressEngine.SingleWallet.cleanAddress(AreaCommon.settings.data.walletPublicAddress)
 
                         If Encryption.Base58Signature.verifySignature(value.newCertificate, address, value.signature) Then
-                            AreaSecurity.changeCertificate(value)
+                            If AreaSecurity.changeCertificate(value) Then
+                                Return "Service Error"
+                            Else
+                                Return ""
+                            End If
                         Else
-                            Throw New ApplicationException("Wrong Signature")
+                            Return "Wrong Signature"
                         End If
 
                     Else
-                        Throw New ApplicationException("Service Unauthorized")
+                        Return "Service Unauthorized"
                     End If
 
                 Else
-                    Throw New ApplicationException("Service Offline")
+                    Return "Service Offline"
                 End If
 
             Catch ex As Exception
-                Throw New ApplicationException("Service Error")
+                Return "Service Error"
             End Try
 
-        End Sub
+        End Function
 
 
     End Class

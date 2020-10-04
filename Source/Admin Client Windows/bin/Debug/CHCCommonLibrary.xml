@@ -1,0 +1,101 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CHCCommonLibrary
+</name>
+</assembly>
+<members>
+<member name="T:CHCCommonLibrary.My.Resources.Resources">
+<summary>
+  Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
+</summary>
+</member>
+<member name="P:CHCCommonLibrary.My.Resources.Resources.ResourceManager">
+<summary>
+  Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
+</summary>
+</member>
+<member name="P:CHCCommonLibrary.My.Resources.Resources.Culture">
+<summary>
+  Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
+  ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
+</summary>
+</member>
+<member name="M:CHCCommonLibrary.AreaEngine.Communication.ProxyWS`1.getData">
+ <summary>
+ This method's provides to get a remote data
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.AreaEngine.Communication.ProxyWS`1.sendData(System.String)">
+ <summary>
+ This method's provides to send a remote data
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.AreaEngine.Communication.ProxySimplyWS`1.getData">
+ <summary>
+ This method's provides to get a remote data
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.AreaEngine.Communication.ProxySimplyWS`1.sendData(System.String)">
+ <summary>
+ This method's provides to send a remote data
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.AreaEngine.Encryption.AES.encrypt(System.String,System.String)">
+ <summary>
+ This method provide to encrypt a string with a simmetric encryption (AES)
+ </summary>
+ <param name="content"></param>
+ <param name="key"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.AreaEngine.Encryption.AES.decrypt(System.String,System.String)">
+ <summary>
+ This method provide to crypt a string with a simmetric crypt (AES)
+ </summary>
+ <param name="content"></param>
+ <param name="key"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.AreaEngine.Miscellaneous.CommandLineParameters.addNewToken(System.String,System.String)">
+ <summary>
+ This method provides to add a new token into list
+ </summary>
+ <param name="CommandToken"></param>
+ <param name="CommandValue"></param>
+</member>
+<member name="M:CHCCommonLibrary.AreaEngine.Miscellaneous.CommandLineParameters.exist(System.String)">
+ <summary>
+ This method provides to check if exist an token into command line
+ </summary>
+ <param name="CommandToken"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.AreaEngine.Miscellaneous.CommandLineParameters.GetValue(System.String)">
+ <summary>
+ This method provides to return a value relative a CommandToken
+ </summary>
+ <param name="CommandToken"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.AreaEngine.Miscellaneous.CommandLineParameters.decode(System.String[])">
+ <summary>
+ This method provides to decode a command line
+ </summary>
+ <param name="CommandLine"></param>
+</member>
+<member name="M:CHCCommonLibrary.AreaEngine.Miscellaneous.CommandLineParameters.composeCommand(System.String,System.String)">
+ <summary>
+ This method provides to build an a command line
+ </summary>
+ <param name="command"></param>
+ <param name="description"></param>
+ <returns></returns>
+</member>
+</members>
+</doc>

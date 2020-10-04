@@ -92,7 +92,16 @@ Partial Class Main
         Me.peerNodeListTab = New System.Windows.Forms.TabPage()
         Me.advancedTab = New System.Windows.Forms.TabPage()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Button14 = New System.Windows.Forms.Button()
+        Me.termsAndConditionsButton = New System.Windows.Forms.Button()
+        Me.privacyPaperButton = New System.Windows.Forms.Button()
+        Me.sideChainConfiguration = New System.Windows.Forms.Button()
+        Me.refundPlanButton = New System.Windows.Forms.Button()
+        Me.referenceProtocolButton = New System.Windows.Forms.Button()
+        Me.priceTableButton = New System.Windows.Forms.Button()
+        Me.yellowPapersButton = New System.Windows.Forms.Button()
+        Me.whitePapersButton = New System.Windows.Forms.Button()
+        Me.visionPapersButton = New System.Windows.Forms.Button()
+        Me.assetsButton = New System.Windows.Forms.Button()
         Me.folderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.openFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.mainTab.SuspendLayout()
@@ -856,22 +865,115 @@ Partial Class Main
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.Button14)
-        Me.GroupBox1.Location = New System.Drawing.Point(8, 158)
+        Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.termsAndConditionsButton)
+        Me.GroupBox1.Controls.Add(Me.privacyPaperButton)
+        Me.GroupBox1.Controls.Add(Me.sideChainConfiguration)
+        Me.GroupBox1.Controls.Add(Me.refundPlanButton)
+        Me.GroupBox1.Controls.Add(Me.referenceProtocolButton)
+        Me.GroupBox1.Controls.Add(Me.priceTableButton)
+        Me.GroupBox1.Controls.Add(Me.yellowPapersButton)
+        Me.GroupBox1.Controls.Add(Me.whitePapersButton)
+        Me.GroupBox1.Controls.Add(Me.visionPapersButton)
+        Me.GroupBox1.Controls.Add(Me.assetsButton)
+        Me.GroupBox1.Location = New System.Drawing.Point(8, 3)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(671, 106)
+        Me.GroupBox1.Size = New System.Drawing.Size(671, 495)
         Me.GroupBox1.TabIndex = 9
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Commands"
+        Me.GroupBox1.Text = "Control Panel workarea elements contracts"
         '
-        'Button14
+        'termsAndConditionsButton
         '
-        Me.Button14.Location = New System.Drawing.Point(6, 39)
-        Me.Button14.Name = "Button14"
-        Me.Button14.Size = New System.Drawing.Size(92, 50)
-        Me.Button14.TabIndex = 8
-        Me.Button14.Text = "Assets"
-        Me.Button14.UseVisualStyleBackColor = True
+        Me.termsAndConditionsButton.Location = New System.Drawing.Point(194, 104)
+        Me.termsAndConditionsButton.Name = "termsAndConditionsButton"
+        Me.termsAndConditionsButton.Size = New System.Drawing.Size(134, 50)
+        Me.termsAndConditionsButton.TabIndex = 17
+        Me.termsAndConditionsButton.Text = "Terms and Conditions Papers"
+        Me.termsAndConditionsButton.UseVisualStyleBackColor = True
+        '
+        'privacyPaperButton
+        '
+        Me.privacyPaperButton.Location = New System.Drawing.Point(54, 104)
+        Me.privacyPaperButton.Name = "privacyPaperButton"
+        Me.privacyPaperButton.Size = New System.Drawing.Size(134, 50)
+        Me.privacyPaperButton.TabIndex = 16
+        Me.privacyPaperButton.Text = "Policy Privacy Papers"
+        Me.privacyPaperButton.UseVisualStyleBackColor = True
+        '
+        'sideChainConfiguration
+        '
+        Me.sideChainConfiguration.Location = New System.Drawing.Point(194, 160)
+        Me.sideChainConfiguration.Name = "sideChainConfiguration"
+        Me.sideChainConfiguration.Size = New System.Drawing.Size(134, 50)
+        Me.sideChainConfiguration.TabIndex = 15
+        Me.sideChainConfiguration.Text = "Sidechain Contract"
+        Me.sideChainConfiguration.UseVisualStyleBackColor = True
+        '
+        'refundPlanButton
+        '
+        Me.refundPlanButton.Location = New System.Drawing.Point(54, 160)
+        Me.refundPlanButton.Name = "refundPlanButton"
+        Me.refundPlanButton.Size = New System.Drawing.Size(134, 50)
+        Me.refundPlanButton.TabIndex = 14
+        Me.refundPlanButton.Text = "Refund Plan"
+        Me.refundPlanButton.UseVisualStyleBackColor = True
+        '
+        'referenceProtocolButton
+        '
+        Me.referenceProtocolButton.Location = New System.Drawing.Point(334, 104)
+        Me.referenceProtocolButton.Name = "referenceProtocolButton"
+        Me.referenceProtocolButton.Size = New System.Drawing.Size(134, 50)
+        Me.referenceProtocolButton.TabIndex = 13
+        Me.referenceProtocolButton.Text = "Reference Protocol"
+        Me.referenceProtocolButton.UseVisualStyleBackColor = True
+        '
+        'priceTableButton
+        '
+        Me.priceTableButton.Location = New System.Drawing.Point(474, 104)
+        Me.priceTableButton.Name = "priceTableButton"
+        Me.priceTableButton.Size = New System.Drawing.Size(134, 50)
+        Me.priceTableButton.TabIndex = 12
+        Me.priceTableButton.Text = "Price Table"
+        Me.priceTableButton.UseVisualStyleBackColor = True
+        '
+        'yellowPapersButton
+        '
+        Me.yellowPapersButton.Location = New System.Drawing.Point(474, 48)
+        Me.yellowPapersButton.Name = "yellowPapersButton"
+        Me.yellowPapersButton.Size = New System.Drawing.Size(134, 50)
+        Me.yellowPapersButton.TabIndex = 11
+        Me.yellowPapersButton.Text = "Yellow Papers"
+        Me.yellowPapersButton.UseVisualStyleBackColor = True
+        '
+        'whitePapersButton
+        '
+        Me.whitePapersButton.Location = New System.Drawing.Point(334, 48)
+        Me.whitePapersButton.Name = "whitePapersButton"
+        Me.whitePapersButton.Size = New System.Drawing.Size(134, 50)
+        Me.whitePapersButton.TabIndex = 10
+        Me.whitePapersButton.Text = "White Papers"
+        Me.whitePapersButton.UseVisualStyleBackColor = True
+        '
+        'visionPapersButton
+        '
+        Me.visionPapersButton.Location = New System.Drawing.Point(194, 48)
+        Me.visionPapersButton.Name = "visionPapersButton"
+        Me.visionPapersButton.Size = New System.Drawing.Size(134, 50)
+        Me.visionPapersButton.TabIndex = 9
+        Me.visionPapersButton.Text = "Vision Papers"
+        Me.visionPapersButton.UseVisualStyleBackColor = True
+        '
+        'assetsButton
+        '
+        Me.assetsButton.Location = New System.Drawing.Point(54, 48)
+        Me.assetsButton.Name = "assetsButton"
+        Me.assetsButton.Size = New System.Drawing.Size(134, 50)
+        Me.assetsButton.TabIndex = 8
+        Me.assetsButton.Text = "Assets"
+        Me.assetsButton.UseVisualStyleBackColor = True
         '
         'openFileDialog
         '
@@ -955,7 +1057,7 @@ Partial Class Main
     Friend WithEvents peerNodeListTab As TabPage
     Friend WithEvents advancedTab As TabPage
     Friend WithEvents GroupBox1 As GroupBox
-    Friend WithEvents Button14 As Button
+    Friend WithEvents assetsButton As Button
     Friend WithEvents folderBrowserDialog As FolderBrowserDialog
     Friend WithEvents openFileDialog As OpenFileDialog
     Friend WithEvents responseTime As TextBox
@@ -982,4 +1084,13 @@ Partial Class Main
     Friend WithEvents Label16 As Label
     Friend WithEvents privateKeyValue As TextBox
     Friend WithEvents Label12 As Label
+    Friend WithEvents visionPapersButton As Button
+    Friend WithEvents whitePapersButton As Button
+    Friend WithEvents yellowPapersButton As Button
+    Friend WithEvents priceTableButton As Button
+    Friend WithEvents referenceProtocolButton As Button
+    Friend WithEvents sideChainConfiguration As Button
+    Friend WithEvents refundPlanButton As Button
+    Friend WithEvents privacyPaperButton As Button
+    Friend WithEvents termsAndConditionsButton As Button
 End Class

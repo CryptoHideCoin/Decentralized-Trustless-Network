@@ -17,3 +17,13 @@ E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\CHCBasicCryptographyL
 E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\BouncyCastle.Crypto.dll
 E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\CHCProtocolLibrary.dll
 E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\CHCServerSupportLibrary.dll
+E:\CryptoHideCoinDTN\Source\Admin Client Windows\obj\Debug\CHCAdminClient.AssetsForm.resources
+E:\CryptoHideCoinDTN\Source\Admin Client Windows\obj\Debug\CHCAdminClient.PriceTableForm.resources
+E:\CryptoHideCoinDTN\Source\Admin Client Windows\obj\Debug\CHCAdminClient.ReferenceProtocolForm.resources
+E:\CryptoHideCoinDTN\Source\Admin Client Windows\obj\Debug\CHCAdminClient.GenericPapersForm.resources
+E:\CryptoHideCoinDTN\Source\Admin Client Windows\obj\Debug\CHCAdminClient.RefundPlanForm.resources
+E:\CryptoHideCoinDTN\Source\Admin Client Windows\obj\Debug\CHCAdminClient.RefundDetailGroup.resources
+E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\CHCCommonLibrary.xml
+E:\CryptoHideCoinDTN\Source\Admin Client Windows\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Admin Client Windows\obj\Debug\CHCAdminClient.SideChainConfigurationForm.resources

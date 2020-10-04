@@ -86,7 +86,7 @@ Namespace AreaEngine.Communication
                 reader.Close()
                 response.Close()
 
-                Return ""
+                Return res.Replace(Chr(34) & Chr(34), "")
 
             Catch ex As Exception
                 Return ex.Message
@@ -170,7 +170,7 @@ Namespace AreaEngine.Communication
                 reader.Close()
                 response.Close()
 
-                Return ""
+                Return res
 
             Catch ex As Exception
                 Return ex.Message

@@ -58,10 +58,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCServerSupportLibrary, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CHCServerSupportLibrary\CHCServerSupportLibrary.dll</HintPath>
@@ -104,8 +100,23 @@
     <Compile Include="Classes\Base\AppSettings.vb" />
     <Compile Include="Classes\Base\AppState.vb" />
     <Compile Include="Classes\Engine\CryptoAssetEngine.vb" />
+    <Compile Include="Classes\Engine\GenericPaperEngine.vb" />
+    <Compile Include="Classes\Engine\GenericControllerResponseEngine.vb" />
+    <Compile Include="Classes\Engine\ReferenceProtocolEngine.vb" />
+    <Compile Include="Classes\Engine\PriceTableEngine.vb" />
+    <Compile Include="Classes\Engine\RefundPlanEngine.vb" />
+    <Compile Include="Classes\Engine\SidechainConfigurationEngine.vb" />
     <Compile Include="Controllers\v1.0\Define\AssetController.vb" />
     <Compile Include="Controllers\v1.0\Chain\NetworkStatusController.vb" />
+    <Compile Include="Controllers\v1.0\Define\PrivacyPaperController.vb" />
+    <Compile Include="Controllers\v1.0\Define\ReferenceProtocol.vb" />
+    <Compile Include="Controllers\v1.0\Define\RefundPlansController.vb" />
+    <Compile Include="Controllers\v1.0\Define\SideChainContractController.vb" />
+    <Compile Include="Controllers\v1.0\Define\TermsAndConditionsController.vb" />
+    <Compile Include="Controllers\v1.0\Define\VisionPaperController.vb" />
+    <Compile Include="Controllers\v1.0\Define\PriceTableController.vb" />
+    <Compile Include="Controllers\v1.0\Define\WhitePaperController.vb" />
+    <Compile Include="Controllers\v1.0\Define\YellowPaperController.vb" />
     <Compile Include="Controllers\v1.0\Security\ChangeCertificateController.vb" />
     <Compile Include="Controllers\v1.0\System\MasternodeController.vb" />
     <Compile Include="Controllers\v1.0\System\StatusController.vb" />
@@ -126,6 +137,7 @@
     </Compile>
     <Compile Include="Classes\Base\ManageCommandLine.vb" />
     <Compile Include="Modules\Basic\Controllers.vb" />
+    <Compile Include="Modules\Service\Controller.vb" />
     <Compile Include="Modules\Service\Security.vb" />
     <Compile Include="Modules\Startup\StartUp.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -171,6 +183,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CHCProtocol\CHCProtocolLibrary.vbproj">
+      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
+      <Name>CHCProtocolLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

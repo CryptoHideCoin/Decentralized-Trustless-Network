@@ -29,10 +29,15 @@ Namespace AreaSystem
             Public Property path As String = ""
 
             Public Property assets As String = ""
-            Public Property TaransactionChain As String = ""
+            Public Property visionPapers As String = ""
+            Public Property whitePapers As String = ""
+            Public Property yellowPapers As String = ""
+            Public Property privacyPapers As String = ""
+            Public Property termsAndConditionsPapers As String = ""
+            Public Property referenceProtocols As String = ""
             Public Property pricesList As String = ""
             Public Property refundPlans As String = ""
-            Public Property protocols As String = ""
+            Public Property sideChainContracts As String = ""
 
         End Class
 
@@ -127,10 +132,15 @@ Namespace AreaSystem
 
                             .path = manageSinglePath(transactionChain.path, "Define")
                             .assets = manageSinglePath(transactionChain.defines.path, "Assets")
+                            .visionPapers = manageSinglePath(transactionChain.defines.path, "VisionPapers")
+                            .whitePapers = manageSinglePath(transactionChain.defines.path, "WhitePapers")
+                            .yellowPapers = manageSinglePath(transactionChain.defines.path, "YellowPapers")
+                            .privacyPapers = manageSinglePath(transactionChain.defines.path, "PrivacyPapers")
+                            .termsAndConditionsPapers = manageSinglePath(transactionChain.defines.path, "TermsAndConditionPapers")
+                            .referenceProtocols = manageSinglePath(transactionChain.defines.path, "ReferenceProtocols")
+                            .sideChainContracts = manageSinglePath(transactionChain.defines.path, "SideChainContracts")
                             .pricesList = manageSinglePath(transactionChain.defines.path, "PricesList")
-                            .protocols = manageSinglePath(transactionChain.defines.path, "Protocols")
-                            .refundPlans = manageSinglePath(transactionChain.defines.path, "refundPlans")
-                            .TaransactionChain = manageSinglePath(transactionChain.defines.path, "TaransactionChain")
+                            .refundPlans = manageSinglePath(transactionChain.defines.path, "RefundPlans")
 
                         End With
 

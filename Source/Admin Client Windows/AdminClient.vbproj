@@ -54,10 +54,6 @@
     <Reference Include="CHCBasicCryptographyLibrary">
       <HintPath>..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCProtocolLibrary">
       <HintPath>..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
@@ -97,6 +93,48 @@
     <Compile Include="Forms\ChangeCertificate.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Edit\Assets.Designer.vb">
+      <DependentUpon>Assets.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Edit\Assets.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Edit\ReferenceProtocol.Designer.vb">
+      <DependentUpon>ReferenceProtocol.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Edit\ReferenceProtocol.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Edit\GenericPapers.Designer.vb">
+      <DependentUpon>GenericPapers.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Edit\GenericPapers.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Edit\PriceTable.Designer.vb">
+      <DependentUpon>PriceTable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Edit\PriceTable.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Edit\RefundDetailGroup.Designer.vb">
+      <DependentUpon>RefundDetailGroup.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Edit\RefundDetailGroup.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Edit\RefundPlan.Designer.vb">
+      <DependentUpon>RefundPlan.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Edit\RefundPlan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Edit\SideChainContract.Designer.vb">
+      <DependentUpon>SideChainContract.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Edit\SideChainContract.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -104,12 +142,13 @@
       <DependentUpon>Main.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Models\GeneralResponseModel.vb" />
+    <Compile Include="Models\DefinitionModel.vb" />
     <Compile Include="Models\NetworkModel.vb" />
-    <Compile Include="Modules\Common.vb" />
+    <Compile Include="Modules\Base\Common.vb" />
     <Compile Include="Models\MasternodeModel.vb" />
-    <Compile Include="Modules\SecurityModel.vb" />
-    <Compile Include="Modules\StartUp.vb" />
+    <Compile Include="Modules\Base\SecurityModel.vb" />
+    <Compile Include="Modules\Base\StartUp.vb" />
+    <Compile Include="Modules\Interface\Interface.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -129,6 +168,27 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\ChangeCertificate.resx">
       <DependentUpon>ChangeCertificate.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Edit\Assets.resx">
+      <DependentUpon>Assets.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Edit\ReferenceProtocol.resx">
+      <DependentUpon>ReferenceProtocol.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Edit\GenericPapers.resx">
+      <DependentUpon>GenericPapers.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Edit\PriceTable.resx">
+      <DependentUpon>PriceTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Edit\RefundDetailGroup.resx">
+      <DependentUpon>RefundDetailGroup.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Edit\RefundPlan.resx">
+      <DependentUpon>RefundPlan.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Edit\SideChainContract.resx">
+      <DependentUpon>SideChainContract.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.vb</DependentUpon>
@@ -156,7 +216,10 @@
     <Content Include="64.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Forms\Edit\" />
+    <ProjectReference Include="..\CHCCommonLibrary\CHCCommonLibrary.vbproj">
+      <Project>{89648581-c73c-4d51-97df-81d9860c9fa3}</Project>
+      <Name>CHCCommonLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

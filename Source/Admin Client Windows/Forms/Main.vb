@@ -13,6 +13,8 @@ Imports CHCProtocolLibrary.AreaCommon.Models
 Public Class Main
 
 
+
+
     Private Sub browseLocalPath_Click(sender As Object, e As EventArgs) Handles browseLocalPath.Click
 
         Try
@@ -22,13 +24,9 @@ Public Class Main
             Dim dirName As String
 
             If (path.Trim().Length > 0) Then
-
                 dirName = IO.Path.GetDirectoryName(localPathData.Text)
-
             Else
-
                 dirName = ""
-
             End If
 
             Dim fileName As String = IO.Path.GetFileName(localPathData.Text)
@@ -36,9 +34,7 @@ Public Class Main
             folderBrowserDialog.SelectedPath = dirName
 
             If (folderBrowserDialog.ShowDialog() = DialogResult.OK) Then
-
                 localPathData.Text = folderBrowserDialog.SelectedPath
-
             End If
 
         Catch ex As Exception
@@ -54,13 +50,9 @@ Public Class Main
             localPathData.Text = .dataPath
 
             If .useSecureAddress Then
-
                 protocol.SelectedIndex = 1
-
             Else
-
                 protocol.SelectedIndex = 0
-
             End If
 
             masternodeAdminUrl.Text = .urlMasternodeAdmin
@@ -75,13 +67,9 @@ Public Class Main
         Try
 
             If AreaCommon.StartUp.main() Then
-
                 showSettings()
-
             Else
-
                 End
-
             End If
 
         Catch ex As Exception
@@ -113,9 +101,7 @@ Public Class Main
     Private Function verifyParameter() As Boolean
 
         If (localPathData.Text.ToString.Trim.Length() = 0) Then
-
             Return False
-
         End If
 
         Return True
@@ -127,11 +113,9 @@ Public Class Main
         Try
 
             If verifyParameter() Then
-
                 loadDataIntoSettings()
 
                 AreaCommon.settings.save()
-
             End If
 
         Catch ex As Exception
@@ -179,13 +163,9 @@ Public Class Main
                 Dim handShakeEngine As New ProxyWS(Of General.BooleanModel)
 
                 If (protocol.SelectedIndex = 0) Then
-
                     handShakeEngine.url = "http://"
-
                 Else
-
                     handShakeEngine.url = "https://"
-
                 End If
 
                 handShakeEngine.url += masternodeAdminUrl.Text & "/api/v1.0/system/testService"
@@ -193,19 +173,13 @@ Public Class Main
                 If (handShakeEngine.getData() = "") Then
 
                     If handShakeEngine.data.value Then
-
                         MessageBox.Show("Test connection succesful", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
                     Else
-
                         MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
                     End If
 
                 Else
-
                     MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
                 End If
 
             Catch ex As Exception
@@ -223,9 +197,7 @@ Public Class Main
             openFileDialog.FileName = ""
 
             If (openFileDialog.ShowDialog() = DialogResult.OK) Then
-
                 certificateMasternodeAdmin.Text = My.Computer.FileSystem.ReadAllText(openFileDialog.FileName)
-
             End If
 
         Catch ex As Exception
@@ -244,9 +216,7 @@ Public Class Main
             If privateKey.StartsWith(WalletAddressEngine.basePvt) Then
 
                 With WalletAddressEngine.createNew(privateKey)
-
                     privateRaw = .raw.privateKey
-
                 End With
 
             End If
@@ -280,19 +250,14 @@ Public Class Main
                 changeData.signature = WalletAddressEngine.createSignature(change.privateKey, change.certificate)
 
                 If protocol.SelectedIndex = 0 Then
-
                     url = "http://"
-
                 Else
-
                     url = "https://"
-
                 End If
 
                 url += masternodeAdminUrl.Text & "/api/v1.0/security/changeCertificate"
 
                 webSender.url = url
-
                 webSender.data = changeData
 
                 If (webSender.sendData("PUT") = "") Then
@@ -302,9 +267,7 @@ Public Class Main
                     certificateMasternodeAdmin.Text = change.certificate
 
                 Else
-
                     MessageBox.Show("Error during update data")
-
                 End If
 
             End If
@@ -314,6 +277,7 @@ Public Class Main
         End Try
 
     End Sub
+
 
     Private Sub refreshGeneralButton_Click(sender As Object, e As EventArgs) Handles refreshGeneralButton.Click
 
@@ -325,13 +289,9 @@ Public Class Main
                 Dim rt As DateTime = Now
 
                 If (protocol.SelectedIndex = 0) Then
-
                     remote.url = "http://"
-
                 Else
-
                     remote.url = "https://"
-
                 End If
 
                 remote.url += masternodeAdminUrl.Text & "/api/v1.0/system/infoMasternode/?certificate=" & certificateMasternodeAdmin.Text
@@ -353,15 +313,11 @@ Public Class Main
                         responseTime.Text = Now
 
                     Else
-
                         MessageBox.Show("Masternode is offline", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
                     End If
 
                 Else
-
                     MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
                 End If
 
             Catch ex As Exception
@@ -390,13 +346,9 @@ Public Class Main
                 Dim rt As DateTime = Now
 
                 If (protocol.SelectedIndex = 0) Then
-
                     remote.url = "http://"
-
                 Else
-
                     remote.url = "https://"
-
                 End If
 
                 remote.url += masternodeAdminUrl.Text & "/api/v1.0/network/status/?certificate=" & AreaCommon.settings.data.certificateMasternodeAdmin
@@ -441,5 +393,212 @@ Public Class Main
 
     End Sub
 
+    Private Sub assetsButton_Click(sender As Object, e As EventArgs) Handles assetsButton.Click
+
+        If (masternodeAdminUrl.Text.ToString.Trim.Length > 0) Then
+
+            Try
+
+                Dim tmp As New AssetsForm
+
+                If (protocol.SelectedIndex = 0) Then
+                    tmp.adminURL = "http://"
+                Else
+                    tmp.adminURL = "https://"
+                End If
+
+                tmp.adminURL += masternodeAdminUrl.Text
+                tmp.certificate = certificateMasternodeAdmin.Text
+
+                tmp.ShowDialog()
+
+                tmp = Nothing
+
+            Catch ex As Exception
+                MessageBox.Show("Error during assetsButton_Click " & ex.Message, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
+        End If
+
+    End Sub
+
+    Private Sub openDocumentPapers(ByVal apiSegment As String, ByVal caption As String)
+
+        If (masternodeAdminUrl.Text.ToString.Trim.Length > 0) Then
+
+            Try
+
+                Dim tmp As New GenericPapersForm
+
+                If (protocol.SelectedIndex = 0) Then
+                    tmp.adminURL = "http://"
+                Else
+                    tmp.adminURL = "https://"
+                End If
+
+                tmp.adminURL += masternodeAdminUrl.Text
+                tmp.certificate = certificateMasternodeAdmin.Text
+
+                tmp.apiSegment = apiSegment
+                tmp.managerTitle = caption
+
+                tmp.ShowDialog()
+
+                tmp = Nothing
+
+            Catch ex As Exception
+                MessageBox.Show("Error during openDocumentPapers " & ex.Message, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
+        End If
+
+    End Sub
+
+    Private Sub policyPapersButton_Click(sender As Object, e As EventArgs) Handles visionPapersButton.Click
+
+        openDocumentPapers("VisionPapers", "Vision")
+
+    End Sub
+
+    Private Sub whitePapersButton_Click(sender As Object, e As EventArgs) Handles whitePapersButton.Click
+
+        openDocumentPapers("WhitePapers", "White")
+
+    End Sub
+
+    Private Sub yellowPapersButton_Click(sender As Object, e As EventArgs) Handles yellowPapersButton.Click
+
+        openDocumentPapers("YellowPapers", "Yellow")
+
+    End Sub
+
+    Private Sub priceTableButton_Click(sender As Object, e As EventArgs) Handles priceTableButton.Click
+
+        If (masternodeAdminUrl.Text.ToString.Trim.Length > 0) Then
+
+            Try
+
+                Dim tmp As New PriceTableForm
+
+                If (protocol.SelectedIndex = 0) Then
+                    tmp.adminURL = "http://"
+                Else
+                    tmp.adminURL = "https://"
+                End If
+
+                tmp.adminURL += masternodeAdminUrl.Text
+                tmp.certificate = certificateMasternodeAdmin.Text
+
+                tmp.ShowDialog()
+
+                tmp = Nothing
+
+            Catch ex As Exception
+                MessageBox.Show("Error during PriceTableButton_Click " & ex.Message, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
+        End If
+
+    End Sub
+
+    Private Sub referenceProtocolButton_Click(sender As Object, e As EventArgs) Handles referenceProtocolButton.Click
+
+        If (masternodeAdminUrl.Text.ToString.Trim.Length > 0) Then
+
+            Try
+
+                Dim tmp As New ReferenceProtocolForm
+
+                If (protocol.SelectedIndex = 0) Then
+                    tmp.adminURL = "http://"
+                Else
+                    tmp.adminURL = "https://"
+                End If
+
+                tmp.adminURL += masternodeAdminUrl.Text
+                tmp.certificate = certificateMasternodeAdmin.Text
+
+                tmp.ShowDialog()
+
+                tmp = Nothing
+
+            Catch ex As Exception
+                MessageBox.Show("Error during referenceProtocolButton_Click " & ex.Message, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
+        End If
+
+    End Sub
+
+    Private Sub privacyPaperButton_Click(sender As Object, e As EventArgs) Handles privacyPaperButton.Click
+
+        openDocumentPapers("privacypapers", "Privacy Policy ")
+
+    End Sub
+
+    Private Sub termsAndConditionsButton_Click(sender As Object, e As EventArgs) Handles termsAndConditionsButton.Click
+
+        openDocumentPapers("termsandconditionspapers", "Terms and Conditions ")
+
+    End Sub
+
+    Private Sub refundPlanButton_Click(sender As Object, e As EventArgs) Handles refundPlanButton.Click
+
+        If (masternodeAdminUrl.Text.ToString.Trim.Length > 0) Then
+
+            Try
+
+                Dim tmp As New RefundPlanForm
+
+                If (protocol.SelectedIndex = 0) Then
+                    tmp.adminURL = "http://"
+                Else
+                    tmp.adminURL = "https://"
+                End If
+
+                tmp.adminURL += masternodeAdminUrl.Text
+                tmp.certificate = certificateMasternodeAdmin.Text
+
+                tmp.ShowDialog()
+
+                tmp = Nothing
+
+            Catch ex As Exception
+                MessageBox.Show("Error during refundPlanButton_Click " & ex.Message, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
+        End If
+
+    End Sub
+
+
+    Private Sub sideChainConfiguration_Click(sender As Object, e As EventArgs) Handles sideChainConfiguration.Click
+
+        If (masternodeAdminUrl.Text.ToString.Trim.Length > 0) Then
+
+            Try
+
+                Dim tmp As New SideChainConfigurationForm
+
+                If (protocol.SelectedIndex = 0) Then
+                    tmp.adminURL = "http://"
+                Else
+                    tmp.adminURL = "https://"
+                End If
+
+                tmp.adminURL += masternodeAdminUrl.Text
+                tmp.certificate = certificateMasternodeAdmin.Text
+
+                tmp.ShowDialog()
+
+                tmp = Nothing
+
+            Catch ex As Exception
+                MessageBox.Show("Error during sideChainConfiguration_Click " & ex.Message, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
+        End If
+
+    End Sub
 
 End Class

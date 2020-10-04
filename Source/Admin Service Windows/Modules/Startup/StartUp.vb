@@ -303,7 +303,18 @@ Namespace AreaCommon
                     End
                 End If
 
-                AreaApplication.Application.assets.init()
+                AreaApplication.assets.init()
+
+                AreaApplication.visionPapers.init(paths.transactionChain.defines.visionPapers)
+                AreaApplication.whitePapers.init(paths.transactionChain.defines.whitePapers)
+                AreaApplication.yellowPapers.init(paths.transactionChain.defines.yellowPapers)
+                AreaApplication.privacyPapers.init(paths.transactionChain.defines.privacyPapers)
+                AreaApplication.termsAndConditionsPapers.init(paths.transactionChain.defines.termsAndConditionsPapers)
+
+                AreaApplication.referenceProtocol.init()
+                AreaApplication.priceTables.init()
+                AreaApplication.refundPlans.init()
+                AreaApplication.sideChainContracts.init()
 
                 If settings.data.recallStarter Then
                     recallStarter()

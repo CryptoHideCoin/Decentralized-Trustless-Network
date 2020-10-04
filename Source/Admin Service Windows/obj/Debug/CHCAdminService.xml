@@ -32,6 +32,51 @@ CHCAdminService
  This API permit a client to know if the Masternode is in work mode or not
  </summary>
 </member>
+<member name="T:AdminService.Controllers.PrivacyPapersController">
+ <summary>
+ ...
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.ReferenceProtocolsController">
+ <summary>
+ ...
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.RefundPlansController">
+ <summary>
+ ...
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.SideChainContractsController">
+ <summary>
+ ...
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.TermsAndConditionsPapersController">
+ <summary>
+ ...
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.VisionPapersController">
+ <summary>
+ ...
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.PriceTablesController">
+ <summary>
+ ...
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.WhitePapersController">
+ <summary>
+ ...
+ </summary>
+</member>
+<member name="T:AdminService.Controllers.YellowPapersController">
+ <summary>
+ ...
+ </summary>
+</member>
 <member name="T:AdminService.Controllers.ChangeCertificateController">
  <summary>
  This API permit to change a certificate of a Admin service
