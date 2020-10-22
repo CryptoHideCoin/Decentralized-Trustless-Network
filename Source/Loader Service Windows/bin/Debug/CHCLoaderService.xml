@@ -2,90 +2,96 @@
 <doc>
 <assembly>
 <name>
-CHCStarterService
+CHCLoaderService
 </name>
 </assembly>
 <members>
-<member name="T:StarterService.My.Resources.Resources">
+<member name="T:LoaderService.My.Resources.Resources">
 <summary>
   Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
 </summary>
 </member>
-<member name="P:StarterService.My.Resources.Resources.ResourceManager">
+<member name="P:LoaderService.My.Resources.Resources.ResourceManager">
 <summary>
   Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
 </summary>
 </member>
-<member name="P:StarterService.My.Resources.Resources.Culture">
+<member name="P:LoaderService.My.Resources.Resources.Culture">
 <summary>
   Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
 </summary>
 </member>
-<member name="M:StarterService.AreaCommon.moduleMain.closeApplication(System.Boolean)">
+<member name="M:LoaderService.AreaCommon.moduleMain.closeApplication(System.Boolean)">
  <summary>
  This application provides to close application
  </summary>
 </member>
-<member name="M:StarterService.AreaCommon.moduleMain.executeExternalApplication(System.String,System.String)">
+<member name="M:LoaderService.AreaCommon.moduleMain.executeExternalApplication(System.String,System.String)">
  <summary>
  This method provide to run an external application with parameters
  </summary>
  <param name="applicationName"></param>
  <param name="parameterValue"></param>
 </member>
-<member name="M:StarterService.AreaCommon.Controllers.startWebService">
+<member name="M:LoaderService.AreaCommon.Controllers.startWebService">
  <summary>
  This method provide to start a webservice
  </summary>
 </member>
-<member name="M:StarterService.AreaCommon.Controllers.webserviceThread">
+<member name="M:LoaderService.AreaCommon.Controllers.webserviceThread">
  <summary>
  This method provide to start a webservice in a new thread
  </summary>
 </member>
-<member name="M:StarterService.AreaCommon.StartUp.printWelcome">
+<member name="M:LoaderService.AreaCommon.StartUp.printWelcome">
  <summary>
  This method provide to print a welcome message into console
  </summary>
 </member>
-<member name="M:StarterService.AreaCommon.StartUp.firstProcedureStartup">
+<member name="M:LoaderService.AreaCommon.StartUp.firstProcedureStartup">
  <summary>
  This method provide to prepare a startup of application
  </summary>
  <returns></returns>
 </member>
-<member name="M:StarterService.AreaCommon.StartUp.runAdminService">
+<member name="M:LoaderService.AreaCommon.StartUp.runAdminService">
  <summary>
  This method provide to run the admin service
  </summary>
 </member>
-<member name="M:StarterService.AreaCommon.StartUp.runCheckUpdate">
+<member name="M:LoaderService.AreaCommon.StartUp.runUpdateManager">
  <summary>
- This method provide to execute a check an update of a service
+ This method provide to run the update Manager
  </summary>
 </member>
-<member name="M:StarterService.AreaCommon.StartUp.runEngine">
+<member name="M:LoaderService.AreaCommon.StartUp.buildServices">
  <summary>
- This method provide to run and engine of masternode
+ This method provide to create an internal structure's of state service
  </summary>
 </member>
-<member name="M:StarterService.AreaCommon.StartUp.runApplication">
+<member name="M:LoaderService.AreaCommon.StartUp.runEngine(LoaderService.AppState.ServiceStatus@)">
+ <summary>
+ This method provide to run and engine
+ </summary>
+ <param name="service"></param>
+</member>
+<member name="M:LoaderService.AreaCommon.StartUp.runApplication">
  <summary>
  This method provide to execute the application
  </summary>
 </member>
-<member name="M:StarterService.AreaCommon.StartUp.run">
+<member name="M:LoaderService.AreaCommon.StartUp.run">
  <summary>
  This method provide to run the service
  </summary>
 </member>
-<member name="M:StarterService.AreaCommon.StartUp.Main">
+<member name="M:LoaderService.AreaCommon.StartUp.Main">
  <summary>
  This method provide to prepare to start the application
  </summary>
 </member>
-<member name="M:StarterService.AreaCommon.StartUp.stop">
+<member name="M:LoaderService.AreaCommon.StartUp.stop">
  <summary>
  This method provide to stop the application
  </summary>

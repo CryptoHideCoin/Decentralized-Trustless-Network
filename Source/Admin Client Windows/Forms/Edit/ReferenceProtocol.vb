@@ -458,7 +458,6 @@ Public Class ReferenceProtocolForm
             identityValue.Text = _item.getHash()
 
             reloadDataDetail()
-
             selectGridDetailRow()
         End If
 

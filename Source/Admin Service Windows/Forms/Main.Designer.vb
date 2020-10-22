@@ -55,7 +55,7 @@ Partial Class Main
         Me.certificateMasternodeClientLabel = New System.Windows.Forms.Label()
         Me.masternodeStartGroup = New System.Windows.Forms.GroupBox()
         Me.protocolMasternodeStart = New System.Windows.Forms.ComboBox()
-        Me.createNewCertificateStart = New System.Windows.Forms.Button()
+        Me.createNewCertificateUpgrade = New System.Windows.Forms.Button()
         Me.certificateMasternodeBrowserButton = New System.Windows.Forms.Button()
         Me.testMasternodeServiceButton = New System.Windows.Forms.Button()
         Me.certificateMasternodeStart = New System.Windows.Forms.TextBox()
@@ -434,7 +434,7 @@ Partial Class Main
         Me.masternodeStartGroup.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.masternodeStartGroup.Controls.Add(Me.protocolMasternodeStart)
-        Me.masternodeStartGroup.Controls.Add(Me.createNewCertificateStart)
+        Me.masternodeStartGroup.Controls.Add(Me.createNewCertificateUpgrade)
         Me.masternodeStartGroup.Controls.Add(Me.certificateMasternodeBrowserButton)
         Me.masternodeStartGroup.Controls.Add(Me.testMasternodeServiceButton)
         Me.masternodeStartGroup.Controls.Add(Me.certificateMasternodeStart)
@@ -459,16 +459,16 @@ Partial Class Main
         Me.protocolMasternodeStart.Size = New System.Drawing.Size(70, 21)
         Me.protocolMasternodeStart.TabIndex = 0
         '
-        'createNewCertificateStart
+        'createNewCertificateUpgrade
         '
-        Me.createNewCertificateStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.createNewCertificateStart.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.createNewCertificateStart.Location = New System.Drawing.Point(740, 51)
-        Me.createNewCertificateStart.Name = "createNewCertificateStart"
-        Me.createNewCertificateStart.Size = New System.Drawing.Size(49, 22)
-        Me.createNewCertificateStart.TabIndex = 3
-        Me.createNewCertificateStart.Text = "New"
-        Me.createNewCertificateStart.UseVisualStyleBackColor = True
+        Me.createNewCertificateUpgrade.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.createNewCertificateUpgrade.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.createNewCertificateUpgrade.Location = New System.Drawing.Point(740, 51)
+        Me.createNewCertificateUpgrade.Name = "createNewCertificateUpgrade"
+        Me.createNewCertificateUpgrade.Size = New System.Drawing.Size(49, 22)
+        Me.createNewCertificateUpgrade.TabIndex = 3
+        Me.createNewCertificateUpgrade.Text = "New"
+        Me.createNewCertificateUpgrade.UseVisualStyleBackColor = True
         '
         'certificateMasternodeBrowserButton
         '
@@ -550,7 +550,7 @@ Partial Class Main
         Me.masternodeEngineGroup.Size = New System.Drawing.Size(891, 91)
         Me.masternodeEngineGroup.TabIndex = 1
         Me.masternodeEngineGroup.TabStop = False
-        Me.masternodeEngineGroup.Text = "Masternode Engine (main service)"
+        Me.masternodeEngineGroup.Text = "Masternode Primary Runtime"
         '
         'protocolMasternodeEngine
         '
@@ -784,7 +784,7 @@ Partial Class Main
     Friend WithEvents urlMasternodeEngineLabel As Label
     Friend WithEvents createNewCertificateClient As Button
     Friend WithEvents protocolMasternodeStart As ComboBox
-    Friend WithEvents createNewCertificateStart As Button
+    Friend WithEvents createNewCertificateUpgrade As Button
     Friend WithEvents protocolMasternodeEngine As ComboBox
     Friend WithEvents createNewCertificateEngine As Button
     Friend WithEvents autoCleanGroup As GroupBox

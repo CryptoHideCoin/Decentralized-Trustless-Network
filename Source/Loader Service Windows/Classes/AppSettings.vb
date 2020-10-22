@@ -16,25 +16,50 @@ Public Class AppSettings
 
     Public Class SettingsData
 
+        Public Enum SourceOfUpgradeEnum
+            notDefined
+            staticAddress
+            blockChainAddress
+        End Enum
+
+        Public Enum FrequencyUpgradeEnum
+            notDefined
+            every12h
+            every24h
+        End Enum
+
+        Public Class ServiceData
+            Public protocolSecure As Boolean = False
+            Public url As String = ""
+            Public certificate As String = ""
+            Public applicationPath As String = ""
+        End Class
+
         Public dataPath As String = ""
         Public walletPublicAddress As String = ""
         Public portNumber As Integer = 1123
 
-        Public useTrack As LogEngine.TrackRuntimeModeEnum = LogEngine.TrackRuntimeModeEnum.trackAllRuntime
+        Public trackMode As LogEngine.TrackRuntimeModeEnum = LogEngine.TrackRuntimeModeEnum.trackAllRuntime
+        Public useTrackRotate As Boolean = False
         Public trackRotate As New LogRotateEngine.LogRotateConfig
 
-        Public useEventRegistry As Boolean = True
-
-        Public urlMasternodeAdmin As String = ""
-        Public certificateMasternodeAdmin As String = ""
-
-        Public urlMasternodeRuntime As String = ""
-        Public certificateMasternodeRuntime As String = ""
+        Public protocolSecureServiceAdmin As Boolean = False
+        Public urlServiceAdmin As String = ""
+        Public certificateServiceAdmin As String = ""
 
         Public gui As Boolean = False
 
+        Public useEventRegistry As Boolean = True
         Public autoStart As Boolean = False
         Public debugMode As Boolean = False
+
+        Public automaticCheckUpdate As Boolean = False
+        Public sourceOfUpgrade As SourceOfUpgradeEnum = SourceOfUpgradeEnum.notDefined
+        Public sourceOfUpgradeAddress As String = ""
+        Public upgradeCertificate As String = ""
+        Public frequencyUpgrade As FrequencyUpgradeEnum = FrequencyUpgradeEnum.notDefined
+
+        Public services As New List(Of ServiceData)
 
     End Class
 

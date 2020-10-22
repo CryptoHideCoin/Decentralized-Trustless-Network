@@ -30,29 +30,29 @@ Partial Class Settings
         '
         'adminSettingsButton
         '
-        Me.adminSettingsButton.Location = New System.Drawing.Point(132, 25)
+        Me.adminSettingsButton.Location = New System.Drawing.Point(129, 23)
         Me.adminSettingsButton.Name = "adminSettingsButton"
-        Me.adminSettingsButton.Size = New System.Drawing.Size(106, 46)
+        Me.adminSettingsButton.Size = New System.Drawing.Size(110, 46)
         Me.adminSettingsButton.TabIndex = 0
         Me.adminSettingsButton.Text = "Admin Setings"
         Me.adminSettingsButton.UseVisualStyleBackColor = True
         '
         'starterSettingsButton
         '
-        Me.starterSettingsButton.Location = New System.Drawing.Point(132, 77)
+        Me.starterSettingsButton.Location = New System.Drawing.Point(129, 75)
         Me.starterSettingsButton.Name = "starterSettingsButton"
-        Me.starterSettingsButton.Size = New System.Drawing.Size(106, 46)
+        Me.starterSettingsButton.Size = New System.Drawing.Size(110, 46)
         Me.starterSettingsButton.TabIndex = 1
-        Me.starterSettingsButton.Text = "Starter Setings"
+        Me.starterSettingsButton.Text = "Loader Setings"
         Me.starterSettingsButton.UseVisualStyleBackColor = True
         '
         'runTimeSettingsButton
         '
-        Me.runTimeSettingsButton.Location = New System.Drawing.Point(132, 129)
+        Me.runTimeSettingsButton.Location = New System.Drawing.Point(129, 127)
         Me.runTimeSettingsButton.Name = "runTimeSettingsButton"
-        Me.runTimeSettingsButton.Size = New System.Drawing.Size(106, 46)
+        Me.runTimeSettingsButton.Size = New System.Drawing.Size(110, 46)
         Me.runTimeSettingsButton.TabIndex = 2
-        Me.runTimeSettingsButton.Text = "Runtime Setings"
+        Me.runTimeSettingsButton.Text = "Primary Runtime Setings"
         Me.runTimeSettingsButton.UseVisualStyleBackColor = True
         '
         'Settings

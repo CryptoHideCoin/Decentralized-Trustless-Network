@@ -59,6 +59,8 @@ Partial Class Settings
         Me.urlMasternodeAdministrationLabel = New System.Windows.Forms.Label()
         Me.tabServices = New System.Windows.Forms.TabPage()
         Me.localPathAndDataPortNumber = New System.Windows.Forms.GroupBox()
+        Me.thanksToPort = New System.Windows.Forms.TextBox()
+        Me.thanksToService = New System.Windows.Forms.CheckBox()
         Me.voteServicePort = New System.Windows.Forms.TextBox()
         Me.voteService = New System.Windows.Forms.CheckBox()
         Me.exChangePort = New System.Windows.Forms.TextBox()
@@ -74,8 +76,6 @@ Partial Class Settings
         Me.folderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.startButton = New System.Windows.Forms.Button()
         Me.openFileDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.thanksToPort = New System.Windows.Forms.TextBox()
-        Me.thanksToService = New System.Windows.Forms.CheckBox()
         Me.tabMain.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -523,6 +523,26 @@ Partial Class Settings
         Me.localPathAndDataPortNumber.TabStop = False
         Me.localPathAndDataPortNumber.Text = "Configuration Port"
         '
+        'thanksToPort
+        '
+        Me.thanksToPort.Enabled = False
+        Me.thanksToPort.Location = New System.Drawing.Point(322, 82)
+        Me.thanksToPort.Name = "thanksToPort"
+        Me.thanksToPort.Size = New System.Drawing.Size(116, 21)
+        Me.thanksToPort.TabIndex = 13
+        Me.thanksToPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'thanksToService
+        '
+        Me.thanksToService.AutoSize = True
+        Me.thanksToService.Enabled = False
+        Me.thanksToService.Location = New System.Drawing.Point(167, 83)
+        Me.thanksToService.Name = "thanksToService"
+        Me.thanksToService.Size = New System.Drawing.Size(84, 17)
+        Me.thanksToService.TabIndex = 12
+        Me.thanksToService.Text = "Thanks To"
+        Me.thanksToService.UseVisualStyleBackColor = True
+        '
         'voteServicePort
         '
         Me.voteServicePort.Enabled = False
@@ -656,26 +676,6 @@ Partial Class Settings
         '
         Me.openFileDialog.FileName = "OpenFileDialog1"
         '
-        'thanksToPort
-        '
-        Me.thanksToPort.Enabled = False
-        Me.thanksToPort.Location = New System.Drawing.Point(322, 82)
-        Me.thanksToPort.Name = "thanksToPort"
-        Me.thanksToPort.Size = New System.Drawing.Size(116, 21)
-        Me.thanksToPort.TabIndex = 13
-        Me.thanksToPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'thanksToService
-        '
-        Me.thanksToService.AutoSize = True
-        Me.thanksToService.Enabled = False
-        Me.thanksToService.Location = New System.Drawing.Point(167, 83)
-        Me.thanksToService.Name = "thanksToService"
-        Me.thanksToService.Size = New System.Drawing.Size(84, 17)
-        Me.thanksToService.TabIndex = 12
-        Me.thanksToService.Text = "Thanks To"
-        Me.thanksToService.UseVisualStyleBackColor = True
-        '
         'Settings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -691,7 +691,7 @@ Partial Class Settings
         Me.MinimumSize = New System.Drawing.Size(700, 425)
         Me.Name = "Settings"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Masternode Runtime Settings - Crypto Hide Coin"
+        Me.Text = "Masternode Primary Runtime Settings - Crypto Hide Coin"
         Me.tabMain.ResumeLayout(False)
         Me.tabMain.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)

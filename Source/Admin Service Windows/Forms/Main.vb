@@ -570,7 +570,7 @@ Public Class Main
 
     End Sub
 
-    Private Sub createNewCertificateStart_Click(sender As Object, e As EventArgs) Handles createNewCertificateStart.Click
+    Private Sub createNewCertificateStart_Click(sender As Object, e As EventArgs) Handles createNewCertificateUpgrade.Click
 
         certificateMasternodeStart.Text = Certificate.createNew()
 

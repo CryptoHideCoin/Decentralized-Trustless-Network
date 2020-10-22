@@ -26,9 +26,9 @@ Namespace Controllers
 
             If serviceAdministrative Then
 
-                If (AreaCommon.settings.data.certificateMasternodeAdmin.CompareTo(certificateValue) > 0) Then
+                If (AreaCommon.settings.data.certificateServiceAdmin.CompareTo(certificateValue) > 0) Then
 
-                    AreaCommon.state.adminConnection = True
+                    AreaCommon.state.adminStateData.connection = True
 
                     Return New Models.General.BooleanModel() With {.value = True}
 
@@ -38,13 +38,13 @@ Namespace Controllers
 
             If serviceEngine Then
 
-                If (AreaCommon.settings.data.certificateMasternodeRuntime.CompareTo(certificateValue) > 0) Then
+                'If (AreaCommon.settings.data.certificateServiceRuntime.CompareTo(certificateValue) > 0) Then
 
-                    AreaCommon.state.engineConnection = True
+                '    AreaCommon.state.engineConnection = True
 
-                    Return New Models.General.BooleanModel() With {.value = True}
+                '    Return New Models.General.BooleanModel() With {.value = True}
 
-                End If
+                'End If
 
             End If
 

@@ -11,6 +11,9 @@ Namespace AreaCommon
 
     Module moduleMain
 
+        Public Const adminFileService As String = "CHCAdminService.exe"
+        Public Const updateFileService As String = "CHCUpdateManager.exe"
+
 
         Public paths As New VirtualPathEngine
         Public log As New LogEngine
@@ -52,15 +55,19 @@ Namespace AreaCommon
         ''' </summary>
         ''' <param name="applicationName"></param>
         ''' <param name="parameterValue"></param>
-        Public Sub executeExternalApplication(ByVal applicationName As String, Optional ByVal parameterValue As String = "")
+        Public Function executeExternalApplication(ByVal applicationName As String, Optional ByVal parameterValue As String = "") As Boolean
 
             Try
                 Shell(applicationName & " " & parameterValue, AppWinStyle.NormalFocus)
+
+                Return True
             Catch ex As Exception
                 log.track("moduleMain.ExecuteExternalApplication", "Enable start a webservice; check admin authorizathion - Error:" & ex.Message, "fatal")
+
+                Return False
             End Try
 
-        End Sub
+        End Function
 
 
         Public Function refreshBatch(ByRef adapterLog As LogEngine) As Boolean

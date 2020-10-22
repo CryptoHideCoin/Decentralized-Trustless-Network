@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("CHCMasterNodeStarterService")>
-<Assembly: AssemblyDescription("Masternode Starter Service Application")>
+<Assembly: AssemblyTitle("CHCMasternodeLoaderService")>
+<Assembly: AssemblyDescription("Masternode Loader Service Application")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CHC Masternode Starter Service")>
+<Assembly: AssemblyProduct("CHC Masternode Loader Service")>
 <Assembly: AssemblyCopyright("Copyright ©  2020")>
 <Assembly: AssemblyTrademark("")>
 

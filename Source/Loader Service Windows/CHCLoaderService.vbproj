@@ -7,8 +7,8 @@
     <ProjectGuid>{38A963C6-4EB7-494B-9EBF-D21AC063B8AA}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <StartupObject>Sub Main</StartupObject>
-    <RootNamespace>StarterService</RootNamespace>
-    <AssemblyName>CHCStarterService</AssemblyName>
+    <RootNamespace>LoaderService</RootNamespace>
+    <AssemblyName>CHCLoaderService</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>CHCStarterService.xml</DocumentationFile>
+    <DocumentationFile>CHCLoaderService.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>CHCStarterService.xml</DocumentationFile>
+    <DocumentationFile>CHCLoaderService.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -116,9 +116,10 @@
     <Compile Include="Forms\Settings.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modules\Common.vb" />
-    <Compile Include="Modules\Controllers.vb" />
-    <Compile Include="Modules\StartUp.vb" />
+    <Compile Include="Modules\Main\Common.vb" />
+    <Compile Include="Modules\Main\Controllers.vb" />
+    <Compile Include="Modules\Main\StartUp.vb" />
+    <Compile Include="Modules\Utility\Utility.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

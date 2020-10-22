@@ -95,15 +95,12 @@ Namespace AreaCommon
                 printWelcome()
 
                 If Not command.haveParameters Then
-
                     Dim haveSettings As Boolean = False
 
                     If (definePath.Length() = 0) Then
-
                         MessageBox.Show("File settings is missing", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                         End
-
                     End If
 
                     paths.directoryData = paths.readDefinePath()
@@ -113,43 +110,30 @@ Namespace AreaCommon
                     settings.fileName = IO.Path.Combine(paths.directoryData, "Settings", paths.settingFileName)
 
                     If settings.read() Then
-
                         paths.directoryData = settings.data.dataPath
 
                         haveSettings = Not settings.data.gui
-
                     Else
-
                         settings.data.dataPath = paths.directoryData
-
                     End If
 
                     If Not haveSettings Then
-
                         state.uiVisible = True
-
                     Else
 
                         If command.useLastSettings Then
-
                             copyCommandParameters(command)
 
                             state.uiVisible = False
-
                             paths.directoryData = settings.data.dataPath
-
                         End If
 
                     End If
 
                 Else
-
                     settings.data = command.parameters.data
-
                     state.uiVisible = settings.data.gui
-
                     paths.directoryData = settings.data.dataPath
-
                 End If
 
                 command.parameters = Nothing
@@ -160,15 +144,12 @@ Namespace AreaCommon
                 If (paths.directoryData.Trim().Length = 0) Then
 
                     If (definePath.Length() = 0) Then
-
                         MessageBox.Show("File settings is missing", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                         End
-
                     End If
 
                     paths.directoryData = paths.readDefinePath()
-
                     settings.data.dataPath = paths.directoryData
 
                 End If
@@ -176,7 +157,6 @@ Namespace AreaCommon
                 log.trackIntoConsole("Root paths set " & paths.directoryData)
 
                 If state.uiVisible Then
-
                     Dim tmp As New Main
 
                     log.trackIntoConsole("User interface active")
@@ -184,7 +164,6 @@ Namespace AreaCommon
                     tmp.ShowDialog()
 
                     Return False
-
                 End If
 
                 log.trackIntoConsole("Silent mode active")

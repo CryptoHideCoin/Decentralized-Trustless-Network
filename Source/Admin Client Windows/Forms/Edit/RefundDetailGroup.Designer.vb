@@ -261,6 +261,7 @@ Partial Class refundDetailGroup
         'recipientValue
         '
         Me.recipientValue.FormattingEnabled = True
+        Me.recipientValue.Items.AddRange(New Object() {"Staking_Reward_Primary", "Staking_Reward_Storage", "Staking_Reward_NetworkStat", "Staking_Reward_Value", "Staking_Reward_Vote", "Staking_Reward_Faucet", "Staking_Reward_Discussion", ""})
         Me.recipientValue.Location = New System.Drawing.Point(10, 289)
         Me.recipientValue.Name = "recipientValue"
         Me.recipientValue.Size = New System.Drawing.Size(687, 21)
