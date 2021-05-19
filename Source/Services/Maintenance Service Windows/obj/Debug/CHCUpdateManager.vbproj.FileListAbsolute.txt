@@ -1,0 +1,36 @@
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\obj\Debug\CHCUpdateManager.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\obj\Debug\CHCUpdateManager.Resources.resources
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\obj\Debug\CHCUpdateManager.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\bin\Debug\CHCUpdateManager.exe.config
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\bin\Debug\CHCUpdateManager.exe
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\bin\Debug\CHCUpdateManager.pdb
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\bin\Debug\CHCUpdateManager.xml
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\bin\Debug\CHCServerSupportLibrary.dll
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\obj\Debug\CHCUpdateManager.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\obj\Debug\CHCUpdateManager.exe
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\obj\Debug\CHCUpdateManager.xml
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\obj\Debug\CHCUpdateManager.pdb
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\bin\Debug\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\Update Manager Windows\bin\Debug\CHCProtocolLibrary.xml
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\obj\Debug\CHCUpdateManager.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\obj\Debug\CHCUpdateManager.Resources.resources
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\obj\Debug\CHCUpdateManager.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\obj\Debug\CHCUpdateManager.exe
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\obj\Debug\CHCUpdateManager.xml
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\obj\Debug\CHCUpdateManager.pdb
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\bin\Debug\CHCUpdateManager.exe.config
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\bin\Debug\CHCUpdateManager.exe
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\bin\Debug\CHCUpdateManager.pdb
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\bin\Debug\CHCUpdateManager.xml
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\bin\Debug\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\bin\Debug\CHCProtocolLibrary.xml
+E:\CryptoHideCoinDTN\Source\Update Manager Windows\obj\Debug\CHCUpdateManager.vbproj.CopyComplete

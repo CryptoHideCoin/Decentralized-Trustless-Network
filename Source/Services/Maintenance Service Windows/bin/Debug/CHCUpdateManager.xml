@@ -1,0 +1,84 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CHCUpdateManager
+</name>
+</assembly>
+<members>
+<member name="T:CHCUpdateManager.My.Resources.Resources">
+<summary>
+  Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
+</summary>
+</member>
+<member name="P:CHCUpdateManager.My.Resources.Resources.ResourceManager">
+<summary>
+  Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
+</summary>
+</member>
+<member name="P:CHCUpdateManager.My.Resources.Resources.Culture">
+<summary>
+  Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
+  ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
+</summary>
+</member>
+<member name="M:CHCUpdateManager.AreaCommon.moduleMain.closeApplication(System.Boolean)">
+ <summary>
+ This application provides to close application
+ </summary>
+</member>
+<member name="M:CHCUpdateManager.AreaCommon.moduleMain.executeExternalApplication(System.String,System.String)">
+ <summary>
+ This method provide to run an external application with parameters
+ </summary>
+ <param name="applicationName"></param>
+ <param name="parameterValue"></param>
+</member>
+<member name="M:CHCUpdateManager.AreaCommon.Service.buildServices">
+ <summary>
+ This method provide to create an internal structure's of state service
+ </summary>
+</member>
+<member name="M:CHCUpdateManager.AreaCommon.Service.checkNewUpdates">
+ <summary>
+ This method provide to check a new update online
+ </summary>
+</member>
+<member name="M:CHCUpdateManager.AreaCommon.Service.recallLoader">
+ <summary>
+ This method provide to recall the Starter Service
+ </summary>
+</member>
+<member name="M:CHCUpdateManager.AreaCommon.StartUp.printWelcome">
+ <summary>
+ This method provide to print a welcome message into console
+ </summary>
+</member>
+<member name="M:CHCUpdateManager.AreaCommon.StartUp.firstProcedureStartup">
+ <summary>
+ This method provide to prepare a startup of application
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCUpdateManager.AreaCommon.StartUp.runApplication">
+ <summary>
+ This method provide to execute the application
+ </summary>
+</member>
+<member name="M:CHCUpdateManager.AreaCommon.StartUp.run">
+ <summary>
+ This method provide to run the service
+ </summary>
+</member>
+<member name="M:CHCUpdateManager.AreaCommon.StartUp.Main">
+ <summary>
+ This method provide to prepare to start the application
+ </summary>
+</member>
+<member name="M:CHCUpdateManager.AreaCommon.StartUp.stop">
+ <summary>
+ This method provide to stop the application
+ </summary>
+</member>
+</members>
+</doc>

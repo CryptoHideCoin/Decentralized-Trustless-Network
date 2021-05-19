@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CHCMaintenanceService", "CHCMaintenanceService.vbproj", "{E854690E-D628-4FF9-949D-30C992299496}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CHCProtocolLibrary", "..\CHCProtocolLibrary\CHCProtocolLibrary.vbproj", "{CF7B6BC6-E6AE-408F-B452-CE73A17941C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E854690E-D628-4FF9-949D-30C992299496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E854690E-D628-4FF9-949D-30C992299496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E854690E-D628-4FF9-949D-30C992299496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E854690E-D628-4FF9-949D-30C992299496}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF7B6BC6-E6AE-408F-B452-CE73A17941C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF7B6BC6-E6AE-408F-B452-CE73A17941C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF7B6BC6-E6AE-408F-B452-CE73A17941C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF7B6BC6-E6AE-408F-B452-CE73A17941C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4C57F57B-4DDE-4767-82FE-BB3535AE1319}
+	EndGlobalSection
+EndGlobal

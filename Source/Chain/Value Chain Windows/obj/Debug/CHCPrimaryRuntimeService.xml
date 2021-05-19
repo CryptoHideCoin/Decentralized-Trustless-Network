@@ -1,0 +1,96 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CHCPrimaryRuntimeService
+</name>
+</assembly>
+<members>
+<member name="T:CHCPrimaryRuntimeService.My.Resources.Resources">
+<summary>
+  Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
+</summary>
+</member>
+<member name="P:CHCPrimaryRuntimeService.My.Resources.Resources.ResourceManager">
+<summary>
+  Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
+</summary>
+</member>
+<member name="P:CHCPrimaryRuntimeService.My.Resources.Resources.Culture">
+<summary>
+  Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
+  ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
+</summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.moduleMain.closeApplication(System.Boolean)">
+ <summary>
+ This application provides to close application
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.moduleMain.executeExternalApplication(System.String,System.String)">
+ <summary>
+ This method provide to run an external application with parameters
+ </summary>
+ <param name="applicationName"></param>
+ <param name="parameterValue"></param>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Controllers.startWebService">
+ <summary>
+ This method provide to start a webservice
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Controllers.webserviceThread">
+ <summary>
+ This method provide to start a webservice in a new thread
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.printWelcome">
+ <summary>
+ This method provide to print a welcome message into console
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.firstProcedureStartup">
+ <summary>
+ This method provide to prepare a startup of application
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.runApplication">
+ <summary>
+ This method provide to execute the application
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.run">
+ <summary>
+ This method provide to run the service
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.Main">
+ <summary>
+ This method provide to prepare to start the application
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.stop">
+ <summary>
+ This method provide to stop the application
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.Controllers.StatusController">
+ <summary>
+ This API permit a client to know if the Masternode is in work mode or not
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaNetwork.Address.acquirePublicIP(System.Boolean)">
+ <summary>
+ This method provides to return a Public IP
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaNetwork.Address.acquireLocalIP">
+ <summary>
+ This method provides to return a Local IP
+ </summary>
+ <returns></returns>
+</member>
+</members>
+</doc>
