@@ -87,6 +87,7 @@ Namespace AreaSystem
         End Class
 
 
+        Private Const keyStoreFolderName As String = "KeyStore"
         Private Const settingsFolderName As String = "Settings"
         Private Const systemFolderName As String = "System"
         Private Const workFolderName As String = "Work"
@@ -129,6 +130,7 @@ Namespace AreaSystem
         Public Property activeChain As String = ""
 
         Public Property directoryData As String = ""
+        Public Property keyStore As String = ""
         Public Property system As New SystemPath
         Public Property settings As String = ""
         Public Property workData As New WorkPath
@@ -138,9 +140,7 @@ Namespace AreaSystem
 
 
         Private Function manageSinglePath(ByVal pathParent As String, ByVal pathDirectory As String, Optional ByVal pathOptional As String = "") As String
-
             Try
-
                 If (pathOptional.Length = 0) Then
                     pathParent = IO.Path.Combine(pathParent, pathDirectory)
                 Else
@@ -152,20 +152,14 @@ Namespace AreaSystem
                 End If
 
                 Return pathParent
-
             Catch ex As Exception
-
                 Return ""
-
             End Try
-
         End Function
 
 
         Public Function init(ByVal [type] As EnumSystemType, Optional ByVal chainName As String = "Primary") As Boolean
-
             Try
-
                 If (directoryData.Trim.Length > 0) Then
                     Dim folderName As String
 
@@ -186,18 +180,27 @@ Namespace AreaSystem
                             folderName = loaderFolderName
                     End Select
 
+                    keyStore = manageSinglePath(directoryData, keyStoreFolderName)
+
+                    Try
+                        Dim fileName As String = IO.Path.Combine(keyStore, "define.path")
+
+                        If (IO.File.Exists(fileName)) Then
+                            keyStore = IO.File.ReadAllText(fileName)
+                        End If
+                    Catch ex As Exception
+                    End Try
+
                     settings = manageSinglePath(directoryData, settingsFolderName)
 
                     With system
                         .path = manageSinglePath(directoryData, systemFolderName)
-
                         .counters = manageSinglePath(.path, countersFolderName, folderName)
                         .events = manageSinglePath(.path, eventsFolderName, folderName)
                         .logs = manageSinglePath(.path, logsFolderName, folderName)
                     End With
 
                     With workData
-
                         folderName = manageSinglePath(directoryData, workFolderName, chainFolderName & chainName)
 
                         .path = folderName
@@ -224,11 +227,9 @@ Namespace AreaSystem
                         .temporally = manageSinglePath(.path, temporallyName)
                         .state = manageSinglePath(.path, stateName)
                         .internal = manageSinglePath(.path, internalName)
-
                     End With
 
                     With workDefine
-
                         .path = manageSinglePath(directoryData, workFolderName, defineName)
 
                         .assets = manageSinglePath(.path, assetsName)
@@ -241,7 +242,6 @@ Namespace AreaSystem
                         .visionPapers = manageSinglePath(.path, visionPapersName)
                         .whitePapers = manageSinglePath(.path, whitePapersName)
                         .yellowPapers = manageSinglePath(.path, yellowPapersName)
-
                     End With
 
                     Dim engine As New OtherPathEngine
@@ -261,19 +261,15 @@ Namespace AreaSystem
                     If (storage = "") Then
                         storage = manageSinglePath(directoryData, storageFolderName, chainFolderName & chainName)
                     End If
-
                 End If
-
             Catch ex As Exception
             End Try
 
             Return True
-
         End Function
 
 
         Private Function trySettingsPath(ByVal path As String) As Boolean
-
             Try
 
                 path = IO.Path.Combine(path, "define.path")
@@ -283,11 +279,9 @@ Namespace AreaSystem
             End Try
 
             Return False
-
         End Function
 
         Private Function tryWritePath(ByVal path As String) As Boolean
-
             path = IO.Path.Combine(path, "define.path")
 
             Try
@@ -304,11 +298,9 @@ Namespace AreaSystem
             End Try
 
             Return False
-
         End Function
 
         Private Function testPath(ByVal found As Boolean, ByRef path As String, ByVal newPath As String, Optional ByVal trySettings As Boolean = False) As Boolean
-
             If Not found Then
 
                 path = newPath
@@ -322,12 +314,10 @@ Namespace AreaSystem
             End If
 
             Return found
-
         End Function
 
 
         Public Function searchDefinePath() As String
-
             Dim found As Boolean = False
             Dim path As String = ""
 
@@ -345,11 +335,9 @@ Namespace AreaSystem
             End Try
 
             Return ""
-
         End Function
 
         Public Function readDefinePath() As String
-
             Try
 
                 Dim path As String = searchDefinePath()
@@ -362,11 +350,9 @@ Namespace AreaSystem
             End Try
 
             Return ""
-
         End Function
 
         Public Sub updateRootPath(ByVal dataPath As String)
-
             Dim found As Boolean = False
             Dim path As String = ""
 
@@ -385,7 +371,6 @@ Namespace AreaSystem
 
             Catch ex As Exception
             End Try
-
         End Sub
 
 

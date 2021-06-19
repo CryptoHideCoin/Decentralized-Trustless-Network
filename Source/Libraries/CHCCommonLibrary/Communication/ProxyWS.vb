@@ -5,6 +5,7 @@ Option Compare Text
 Imports System.Net
 Imports Newtonsoft.Json
 Imports System.Text
+Imports System.Xml.Serialization
 
 
 
@@ -15,9 +16,11 @@ Imports System.Text
 Namespace AreaEngine.Communication
 
 
+
     Public Class ProxyWS(Of ClassType As {New})
 
         Public data As New ClassType
+        Public remoteResponse As AreaCommon.Models.General.RemoteResponse
 
 
 
@@ -79,15 +82,16 @@ Namespace AreaEngine.Communication
                 stream.Write(reqString, 0, reqString.Length)
                 stream.Close()
 
-                Dim response = req.GetResponse().GetResponseStream()
+                Dim dataStream As IO.Stream = req.GetResponse().GetResponseStream()
+                Dim reader As New IO.StreamReader(dataStream)
+                Dim responseFromServer As String = reader.ReadToEnd()
 
-                Dim reader As New IO.StreamReader(response)
-                Dim res = reader.ReadToEnd()
+                remoteResponse = JsonConvert.DeserializeObject(Of AreaCommon.Models.General.RemoteResponse)(responseFromServer)
+
                 reader.Close()
-                response.Close()
+                dataStream.Close()
 
-                Return res.Replace(Chr(34) & Chr(34), "")
-
+                Return ""
             Catch ex As Exception
                 Return ex.Message
             End Try

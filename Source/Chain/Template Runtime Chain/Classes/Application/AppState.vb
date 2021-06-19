@@ -37,7 +37,7 @@ Public Class AppState
         Public Property intranetMode As Boolean = False
         Public Property addressIP As String = ""
         Public Property networkName As String = ""
-        Public Property chainName As String = ""
+        Public Property chainName As String = AreaCommon.Customize.chainName
         Public Property platformHost As String = ""
         Public Property softwareRelease As String = ""
 
@@ -74,7 +74,7 @@ Public Class AppState
     End Class
 
 
-    Public service As AreaCommon.Models.ServiceModel.InformationResponseModel.enumServiceState = AreaCommon.Models.ServiceModel.InformationResponseModel.enumServiceState.notDefined
+    Public service As AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState = AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.notDefined
     Public information As New ServiceInformation
     Public keys As New TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine
 
@@ -83,8 +83,6 @@ Public Class AppState
     Public serviceState As New AreaCommon.Models.Administration.AdministrationModel.ServiceStateResponse
     Public network As New ConnectionNetwork
     Public component As New ComponentElement
-
-    Public serviceGUID As String
 
     Public noConsoleMessage As Boolean = False
 

@@ -1,4 +1,9 @@
-﻿Imports System.Web.Http
+﻿Option Compare Text
+Option Explicit On
+
+Imports System.Web.Http
+
+Imports CHCCommonLibrary.AreaCommon.Models.General
 
 
 
@@ -16,7 +21,6 @@ Namespace Controllers
 
 
         Public Function GetValue() As AreaCommon.Models.QoSModel.RequestNewTicketResponseModel
-
             Dim newTicket As TransactionChainLibrary.AreaEngine.Requests.QueueEngine.NewTicketResponse
             Dim result As New AreaCommon.Models.QoSModel.RequestNewTicketResponseModel
 
@@ -26,28 +30,22 @@ Namespace Controllers
                 If (AreaCommon.state.network.position = AppState.enumConnectionState.onLine) Then
                     newTicket = AreaCommon.state.queues.getNewTicket()
 
-                    result.error = False
-                    result.errorDescription = ""
-                    result.offline = False
                     result.ofPriorityNumber = newTicket.queueOfPriorNumber
                     result.ofStandardNumber = newTicket.queueOfStandardNumber
                     result.queueNumber = newTicket.queueRequestNumber
                     result.ofUnclassified = newTicket.queueOfUnclassified
                     result.ticketNumber = newTicket.ticketId
-                    result.unAuthorized = False
                 Else
-                    result.offline = True
+                    result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                 End If
             Catch ex As Exception
-                result.error = True
-                result.offline = True
+                result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
             End Try
 
             result.responseTime = Now
 
             Return result
-
         End Function
 
 

@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="Classes\Application\AppSettings.vb" />
     <Compile Include="Classes\Application\AppState.vb" />
+    <Compile Include="Classes\Application\Customize.vb" />
     <Compile Include="Classes\Application\ManageCommandLine.vb" />
     <Compile Include="Controllers\Administration\DoActionController.vb" />
     <Compile Include="Controllers\Administration\ServiceStateController.vb" />
@@ -111,6 +112,18 @@
     <Compile Include="Controllers\Service\TestController.vb" />
     <Compile Include="Controllers\v1.0\Chain\MasternodeInfoController.vb" />
     <Compile Include="Controllers\v1.0\Chain\StatusController.vb" />
+    <Compile Include="Forms\KeyPairDetail.Designer.vb">
+      <DependentUpon>KeyPairDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\KeyPairDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\KeyStoreManager.Designer.vb">
+      <DependentUpon>KeyStoreManager.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\KeyStoreManager.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Settings.Designer.vb">
       <DependentUpon>Settings.vb</DependentUpon>
     </Compile>
@@ -146,6 +159,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\KeyPairDetail.resx">
+      <DependentUpon>KeyPairDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\KeyStoreManager.resx">
+      <DependentUpon>KeyStoreManager.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Settings.resx">
       <DependentUpon>Settings.vb</DependentUpon>
     </EmbeddedResource>
@@ -181,6 +200,10 @@
     <ProjectReference Include="..\..\Libraries\CHCProtocolLibrary\CHCProtocolLibrary.vbproj">
       <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
       <Name>CHCProtocolLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\CHCSupportUIControls\CHCSupportUIControls.vbproj">
+      <Project>{2b477a78-3139-4570-bb5e-3fc09475c316}</Project>
+      <Name>CHCSupportUIControls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\TransactionChain.Ledger\TransactionChainLibrary.vbproj">
       <Project>{f363e384-0372-480a-92a6-0031fd8456f7}</Project>

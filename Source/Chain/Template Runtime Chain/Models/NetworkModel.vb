@@ -1,20 +1,11 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCProtocolLibrary.AreaCommon.Models
+Imports CHCCommonLibrary.AreaCommon.Models
 
 
 
 Namespace AreaCommon.Models.Network
-
-
-    'Public Class SingleNodeResponseModel
-
-    '    Inherits TransactionChainNodeLibrary.AreaTransactionChain.Models.SingleNodeModel
-
-    '    Public response As New General.RemoteResponse
-
-    'End Class
 
 
 

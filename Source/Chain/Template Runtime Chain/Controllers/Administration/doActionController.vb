@@ -3,7 +3,7 @@ Option Explicit On
 
 
 Imports System.Web.Http
-Imports CHCProtocolLibrary.AreaCommon.Models
+Imports CHCCommonLibrary.AreaCommon.Models
 Imports CHCBasicCryptographyLibrary.AreaEngine.Encryption.Base58Signature
 
 
@@ -29,7 +29,7 @@ Namespace Controllers
                 result.requestTime = Now
 
                 If (AreaCommon.state.network.position = AppState.enumConnectionState.onLine) Then
-                    If verifySignature(certificate, AreaCommon.state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).publicWalletID, signature) Then
+                    If verifySignature(certificate, AreaCommon.state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).publicAddress, signature) Then
 
                         Select Case action
                             Case AreaCommon.Models.Administration.AdministrationModel.enumActionAdministration.verifyData
@@ -38,22 +38,20 @@ Namespace Controllers
                                  AreaCommon.Models.Administration.AdministrationModel.enumActionAdministration.buildNetwork,
                                  AreaCommon.Models.Administration.AdministrationModel.enumActionAdministration.resumeSystemFirstNode
 
-                                AreaCommon.state.queues.init(AreaCommon.paths.workData.internal, 1000, 3, AreaCommon.state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).privateWalletKey)
+                                AreaCommon.state.queues.init(AreaCommon.paths.workData.internal, 1000, 3, AreaCommon.state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).privateKey)
                         End Select
 
                     Else
-                        result.unAuthorized = True
+                        result.responseStatus = General.RemoteResponse.EnumResponseStatus.missingAuthorization
                     End If
                 Else
-                    result.offline = True
+                    result.responseStatus = General.RemoteResponse.EnumResponseStatus.systemOffline
                 End If
             Catch ex As Exception
-                result.error = True
-                result.offline = True
+                result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
             End Try
 
-            result.unAuthorized = False
             result.responseTime = Now
 
             Return result

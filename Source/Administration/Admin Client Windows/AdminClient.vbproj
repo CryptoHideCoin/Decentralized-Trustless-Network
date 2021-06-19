@@ -54,6 +54,10 @@
     <Reference Include="CHCBasicCryptographyLibrary">
       <HintPath>..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCCommonLibrary, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="CHCProtocolLibrary">
       <HintPath>..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
@@ -214,12 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="64.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CHCCommonLibrary\CHCCommonLibrary.vbproj">
-      <Project>{89648581-c73c-4d51-97df-81d9860c9fa3}</Project>
-      <Name>CHCCommonLibrary</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

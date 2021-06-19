@@ -12,133 +12,78 @@ Public Class Settings
 
 
     Private Sub Settings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
         Try
-
             With AreaCommon.settings.data
-
                 If (.networkName.Trim().Length = 0) Then
                     networkName.Text = AreaCommon.state.information.networkName
                 Else
                     networkName.Text = .networkName
                 End If
 
-                If (.chainName.Trim().Length = 0) Then
-                    chainName.Text = AreaCommon.state.information.chainName
-                Else
-                    chainName.Text = .chainName
-                End If
+                chainName.Text = AreaCommon.state.information.chainName
 
                 intranetMode.Checked = .intranetMode
                 noUpdateSystemDate.Checked = .noUpdateSystemDate
 
                 dataPath.Text = .dataPath
-                walletAddress.Text = .walletAddress
+                adminWalletAddress.value = .walletAddress
 
-                publicPortNumber.Text = .publicPort
-                servicePortNumber.Text = .servicePort
+                serviceIDText.Text = .serviceId
 
-                certificateClient.Text = .clientCertificate
+                selectPublicPort.value = .publicPort
+                selectServicePort.value = .servicePort
 
-                Select Case .trackConfiguration
-                    Case CHCServerSupportLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrack : trackConfiguration.SelectedIndex = 0
-                    Case CHCServerSupportLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackAllRuntime : trackConfiguration.SelectedIndex = 1
-                    Case CHCServerSupportLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackOnlyMain : trackConfiguration.SelectedIndex = 2
-                End Select
+                certificateClient.value = .clientCertificate
 
-                autoCleanOption.Checked = .useTrackRotate
-
-                Select Case .trackRotateConfig.frequency
-                    Case CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h : startCleanEveryValue.SelectedIndex = 0
-                    Case CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.everyDay : startCleanEveryValue.SelectedIndex = 1
-                End Select
-
-                Select Case .trackRotateConfig.keepLast
-                    Case CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay : keepOnlyRecentFileValue.SelectedIndex = 0
-                    Case CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastMonth : keepOnlyRecentFileValue.SelectedIndex = 1
-                    Case CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastWeek : keepOnlyRecentFileValue.SelectedIndex = 2
-                    Case CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastYear : keepOnlyRecentFileValue.SelectedIndex = 3
-                End Select
-
-                Select Case .trackRotateConfig.keepFile
-                    Case CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles : keepFileTypeValue.SelectedIndex = 0
-                    Case CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.onlyMainTracks : keepFileTypeValue.SelectedIndex = 1
-                End Select
+                logConfiguration.trackConfiguration = .trackConfiguration
+                logConfiguration.useTrackRotate = .useTrackRotate
+                logConfiguration.trackRotateFrequency = .trackRotateConfig.frequency
+                logConfiguration.trackRotateKeepLast = .trackRotateConfig.keepLast
+                logConfiguration.trackRotateKeepFile = .trackRotateConfig.keepFile
 
                 useEventRegistry.Checked = .useEventRegistry
-
             End With
-
         Catch ex As Exception
             MessageBox.Show("An error occurrent during Main_Load " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
     End Sub
 
 
     Private Sub loadDataIntoSettings()
-
         Try
-
             With AreaCommon.settings.data
-
                 .networkName = networkName.Text
-                .chainName = chainName.Text
 
                 .intranetMode = intranetMode.Checked
                 .noUpdateSystemDate = noUpdateSystemDate.Checked
 
                 .dataPath = dataPath.Text
-                .walletAddress = walletAddress.Text
+                .walletAddress = adminWalletAddress.value
 
-                .publicPort = publicPortNumber.Text
-                .servicePort = servicePortNumber.Text
+                .serviceId = serviceIDText.Text
 
-                .clientCertificate = certificateClient.Text
+                .publicPort = selectPublicPort.value
+                .servicePort = selectServicePort.value
 
-                Select Case trackConfiguration.SelectedIndex
-                    Case 0 : .trackConfiguration = CHCServerSupportLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrack
-                    Case 1 : .trackConfiguration = CHCServerSupportLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackAllRuntime
-                    Case 2 : .trackConfiguration = CHCServerSupportLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackOnlyMain
-                End Select
+                .clientCertificate = certificateClient.value
 
-                .useTrackRotate = autoCleanOption.Checked
+                .trackConfiguration = logConfiguration.trackConfiguration
+                .useTrackRotate = logConfiguration.useTrackRotate
 
-                If (startCleanEveryValue.SelectedIndex = 0) Then
-                    .trackRotateConfig.frequency = CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
-                Else
-                    .trackRotateConfig.frequency = CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.everyDay
-                End If
-
-                Select Case keepOnlyRecentFileValue.SelectedIndex
-                    Case 0 : .trackRotateConfig.keepLast = CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
-                    Case 1 : .trackRotateConfig.keepLast = CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastMonth
-                    Case 2 : .trackRotateConfig.keepLast = CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastWeek
-                    Case 3 : .trackRotateConfig.keepLast = CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastYear
-                End Select
-
-                If keepFileTypeValue.SelectedIndex = 0 Then
-                    .trackRotateConfig.keepFile = CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
-                Else
-                    .trackRotateConfig.keepFile = CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.onlyMainTracks
-                End If
+                .trackRotateConfig.frequency = logConfiguration.trackRotateFrequency
+                .trackRotateConfig.keepLast = logConfiguration.trackRotateKeepLast
+                .trackRotateConfig.keepFile = logConfiguration.trackRotateKeepFile
 
                 .useEventRegistry = useEventRegistry.Checked
-
             End With
-
         Catch ex As Exception
         End Try
-
     End Sub
 
 
-    Private Sub browseLocalPath_Click(sender As Object, e As EventArgs)
-
+    Private Sub browseLocalPath_Click(sender As Object, e As EventArgs) Handles browseLocalPath.Click
         Try
-
             Dim path As String = dataPath.Text
-
             Dim dirName As String
 
             If (path.Trim().Length > 0) Then
@@ -154,150 +99,116 @@ Public Class Settings
             If (folderBrowserDialog.ShowDialog() = DialogResult.OK) Then
                 dataPath.Text = folderBrowserDialog.SelectedPath
             End If
-
         Catch ex As Exception
             MessageBox.Show("An error occurrent during dataPath_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
-
     End Sub
 
 
     Private Function fieldValueMissing(ByRef field As TextBox, ByVal name As String) As Boolean
-
         If (field.Text.ToString.Trim.Length() = 0) Then
-
             MessageBox.Show("The '" & name & "' is missing.", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return True
-
         Else
             Return False
         End If
-
     End Function
 
 
     Private Function portMissing(ByRef portValue As TextBox, ByVal fieldName As String) As Boolean
-
         If Not IsNumeric(portValue.Text) Then
-
             MessageBox.Show("The " & fieldName & " port must be a number", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return True
 
+            Return True
         End If
 
         Return False
-
     End Function
 
 
     Private Function verifyParameter() As Boolean
+        Try
+            If fieldValueMissing(dataPath, "local data path") Then
+                Return False
+            End If
+            If fieldValueMissing(serviceIDText, "Service ID") Then
+                Return False
+            End If
+            If Not IO.Directory.Exists(dataPath.Text) Then
+                MessageBox.Show("The local path entered is incorrect", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-        If fieldValueMissing(dataPath, "local data path") Then Return False
-        If fieldValueMissing(walletAddress, "wallet address") Then Return False
-        If fieldValueMissing(publicPortNumber, "public port number") Then Return False
-        If portMissing(publicPortNumber, "public port number") Then Return False
-        If portMissing(servicePortNumber, "service port number") Then Return False
+                Return False
+            End If
+            If (adminWalletAddress.value.ToString.Trim.Length() = 0) Then
+                MessageBox.Show("The '" & Name & "' is missing.", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-        If Not IO.Directory.Exists(dataPath.Text) Then
+                Return False
+            End If
+            If Not selectPublicPort.checkValue() Then
+                Return False
+            End If
+            If Not selectServicePort.checkValue() Then
+                Return False
+            End If
 
-            MessageBox.Show("The local path entered is incorrect", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return True
+        Catch ex As Exception
             Return False
-
-        End If
-
-        Return True
-
+        End Try
     End Function
 
 
     Private Sub startButton_Click(sender As Object, e As EventArgs) Handles saveButton.Click
-
         If verifyParameter() Then
-
             loadDataIntoSettings()
 
             If (AreaCommon.paths.directoryData.Trim.Length() = 0) Then
-
                 AreaCommon.paths.directoryData = dataPath.Text
 
                 AreaCommon.paths.init(CHCProtocolLibrary.AreaSystem.VirtualPathEngine.EnumSystemType.runTime)
 
                 AreaCommon.settings.fileName = IO.Path.Combine(AreaCommon.paths.settings, AreaCommon.paths.settingFileName)
-
             End If
 
             AreaCommon.paths.updateRootPath(dataPath.Text)
-
             AreaCommon.settings.save()
 
             Me.Close()
-
         End If
-
     End Sub
 
     Private Sub certificateMasternodeBrowserButton_Click(sender As Object, e As EventArgs)
-
         Try
-
             openFileDialog.FileName = ""
 
             If (openFileDialog.ShowDialog() = DialogResult.OK) Then
                 certificateClient.Text = My.Computer.FileSystem.ReadAllText(openFileDialog.FileName)
             End If
-
         Catch ex As Exception
             MessageBox.Show("An error occurrent during certificateMasternodeBrowserButton_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
     End Sub
 
     Private Sub createNewCertificateUpgrade_Click(sender As Object, e As EventArgs)
-
         certificateClient.Text = Certificate.createNew()
+    End Sub
+
+    Private Sub adminWalletAddress_Load(sender As Object, e As EventArgs) Handles adminWalletAddress.Load
 
     End Sub
 
-    Private Sub autoCleanOption_CheckedChanged(sender As Object, e As EventArgs) Handles autoCleanOption.CheckedChanged
+    Private Sub certificateClient_TextChanged(sender As Object, e As EventArgs)
 
-        startCleanEvery.Enabled = autoCleanOption.Checked
-        startCleanEveryValue.Enabled = autoCleanOption.Checked
-        keepOnlyRecentFile.Enabled = autoCleanOption.Checked
-        keepOnlyRecentFileValue.Enabled = autoCleanOption.Checked
-        keepFileType.Enabled = autoCleanOption.Checked
-        keepFileTypeValue.Enabled = autoCleanOption.Checked
+    End Sub
 
-        If Not autoCleanOption.Checked Then
+    Private Sub publicPortNumber_TextChanged(sender As Object, e As EventArgs)
 
-            startCleanEveryValue.SelectedIndex = -1
-            keepOnlyRecentFileValue.SelectedIndex = -1
-            keepFileTypeValue.SelectedIndex = -1
+    End Sub
 
+    Private Sub dataPath_TextChanged(sender As Object, e As EventArgs) Handles dataPath.TextChanged
+        If IO.Directory.Exists(dataPath.Text) Then
+            adminWalletAddress.dataPath = dataPath.Text
         End If
-
-    End Sub
-
-    Private Sub createNewCertificateClient_Click(sender As Object, e As EventArgs) Handles createNewCertificateClient.Click
-
-        certificateClient.Text = Certificate.createNew()
-
-    End Sub
-
-    Private Sub browseCertificate_Click(sender As Object, e As EventArgs) Handles browseCertificate.Click
-
-        Try
-
-            openFileDialog.FileName = ""
-
-            If (openFileDialog.ShowDialog() = DialogResult.OK) Then
-                certificateClient.Text = My.Computer.FileSystem.ReadAllText(openFileDialog.FileName)
-            End If
-
-        Catch ex As Exception
-            MessageBox.Show("An error occurrent during certificateMasternodeClientBrowserButton_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-
     End Sub
 
 End Class

@@ -20,9 +20,9 @@ Namespace AreaCommon.Models.Security
     Public Class changeCertificate
 
         Public typeCommunication As enumOfService
-        Public currentCertificate As String
-        Public newCertificate As String
-        Public signature As String
+        Public currentCertificate As String = ""
+        Public newCertificate As String = ""
+        Public signature As String = ""
 
     End Class
 

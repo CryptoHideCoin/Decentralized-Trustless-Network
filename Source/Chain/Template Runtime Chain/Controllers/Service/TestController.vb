@@ -1,6 +1,10 @@
-﻿Imports System.Web.Http
+﻿Option Compare Text
+Option Explicit On
 
-Imports CHCProtocolLibrary.AreaCommon.Models.General
+Imports System.Web.Http
+Imports CHCCommonLibrary.AreaCommon.Models.General
+
+
 
 
 
@@ -17,22 +21,17 @@ Namespace Controllers
 
 
         Public Function GetValue() As RemoteResponse
-
             Dim result As New RemoteResponse
 
             Try
-
                 result.requestTime = Now
                 result.responseTime = Now
-
             Catch ex As Exception
-                result.error = True
-                result.offline = True
+                result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
             End Try
 
             Return result
-
         End Function
 
 

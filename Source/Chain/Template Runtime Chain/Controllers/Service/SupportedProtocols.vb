@@ -1,4 +1,9 @@
-﻿Imports System.Web.Http
+﻿Option Compare Text
+Option Explicit On
+
+
+Imports System.Web.Http
+Imports CHCCommonLibrary.AreaCommon.Models.General
 
 
 
@@ -17,7 +22,6 @@ Namespace Controllers
 
 
         Public Function GetValue() As AreaCommon.Models.ServiceModel.SupportedProtocolsResponseModel
-
             Dim result As New AreaCommon.Models.ServiceModel.SupportedProtocolsResponseModel
 
             Try
@@ -26,13 +30,11 @@ Namespace Controllers
                 result.requestTime = Now
                 result.responseTime = Now
             Catch ex As Exception
-                result.error = True
-                result.offline = True
+                result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
             End Try
 
             Return result
-
         End Function
 
 

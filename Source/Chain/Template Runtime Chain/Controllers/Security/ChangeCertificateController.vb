@@ -4,7 +4,7 @@ Option Explicit On
 Imports System.Web.Http
 Imports CHCBasicCryptographyLibrary.AreaEngine
 Imports CHCProtocolLibrary.AreaWallet.Support
-Imports CHCProtocolLibrary.AreaCommon.Models
+Imports CHCCommonLibrary.AreaCommon.Models
 
 
 
@@ -22,47 +22,33 @@ Namespace Controllers
 
 
         Public Function PutValue(<FromBody()> ByVal value As AreaCommon.Models.Security.changeCertificate) As General.RemoteResponse
-
             Dim result As New General.RemoteResponse
 
             result.requestTime = Now
 
             Try
-
-                If (AreaCommon.state.service = AreaCommon.Models.ServiceModel.InformationResponseModel.enumServiceState.started) Then
-
-                    If AreaSecurity.checkClientCertification(value.currentCertificate) Then
-
-                        Dim address As String = WalletAddressEngine.SingleWallet.cleanAddress(AreaCommon.state.information.adminPublicWalletID)
-
-                        If Encryption.Base58Signature.verifySignature(value.newCertificate, address, value.signature) Then
-                            If AreaSecurity.changeCertificate(value) Then
-                                result.error = True
-                                result.errorDescription = "Service Error"
-                            End If
+                If (AreaCommon.state.service = AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.started) Then
+                    If AreaSecurity.checkSignature(value.signature) Then
+                        If AreaSecurity.changeCertificate(value) Then
+                            result.responseStatus = General.RemoteResponse.EnumResponseStatus.responseComplete
                         Else
-                            result.error = True
-                            result.errorDescription = "Wrong Signature"
+                            result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
+                            result.errorDescription = "Service Error"
                         End If
                     Else
-                        result.error = True
-                        result.errorDescription = "Service Unauthorized"
+                        result.responseStatus = General.RemoteResponse.EnumResponseStatus.missingAuthorization
                     End If
                 Else
-                    result.error = True
-                    result.offline = True
-                    result.errorDescription = "Service Offline"
+                    result.responseStatus = General.RemoteResponse.EnumResponseStatus.systemOffline
                 End If
-
             Catch ex As Exception
-                result.error = True
-                result.errorDescription = "Service Error"
+                result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
+                result.errorDescription = "503 - Generic Error"
             End Try
 
             result.responseTime = Now
 
             Return result
-
         End Function
 
 

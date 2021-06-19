@@ -1,7 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCProtocolLibrary.AreaCommon.Models
+Imports CHCCommonLibrary.AreaCommon.Models
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCBasicCryptographyLibrary.AreaEngine.Encryption.Base58Signature
 
@@ -40,7 +40,7 @@ Namespace AreaCommon.Models.QoSModel
 
         Public ReadOnly Property signature() As String
             Get
-                Dim privateWalletKey As String = AreaCommon.state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).privateWalletKey
+                Dim privateWalletKey As String = AreaCommon.state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).privateKey
 
                 Return getSignature(privateWalletKey, toHash())
             End Get
@@ -78,7 +78,7 @@ Namespace AreaCommon.Models.QoSModel
 
         Public ReadOnly Property signature() As String
             Get
-                Dim privateWalletKey As String = AreaCommon.state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).privateWalletKey
+                Dim privateWalletKey As String = state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).privateKey
 
                 Return getSignature(privateWalletKey, toHash())
             End Get
@@ -114,7 +114,7 @@ Namespace AreaCommon.Models.QoSModel
 
         Public ReadOnly Property signature() As String
             Get
-                Dim privateWalletKey As String = AreaCommon.state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).privateWalletKey
+                Dim privateWalletKey As String = state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).privateKey
 
                 Return getSignature(privateWalletKey, toHash())
             End Get

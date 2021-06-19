@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Controllare i valori degli attributi degli assembly
 
 <Assembly: AssemblyTitle("CHCCommonLibrary")>
-<Assembly: AssemblyDescription("Library Common")>
+<Assembly: AssemblyDescription("Crypto Hide Coin Library Common")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("CHC Common Library")>
 <Assembly: AssemblyCopyright("Copyright ©  2019")>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' usando l'asterisco '*' come illustrato di seguito:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.4.1.0")>
-<Assembly: AssemblyFileVersion("1.4.1.0")>
+<Assembly: AssemblyVersion("1.7.0.0")>
+<Assembly: AssemblyFileVersion("1.7.0.0")>

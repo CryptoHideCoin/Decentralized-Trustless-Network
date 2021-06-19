@@ -2,7 +2,7 @@
 Option Explicit On
 
 Imports CHCCommonLibrary.AreaEngine.Communication
-Imports CHCProtocolLibrary.AreaCommon.Models
+Imports CHCCommonLibrary.AreaCommon.Models
 
 
 

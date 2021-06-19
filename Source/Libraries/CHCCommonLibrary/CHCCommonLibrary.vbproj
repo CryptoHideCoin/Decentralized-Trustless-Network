@@ -71,6 +71,7 @@
     <Compile Include="Encryption\SHAInterface.vb" />
     <Compile Include="FileManager\CHCBaseEncryption.vb" />
     <Compile Include="FileManager\CHCFile.vb" />
+    <Compile Include="Miscellaneous\CHCCheckSum.vb" />
     <Compile Include="Miscellaneous\CHCCommandListEngine.vb" />
     <Compile Include="FileManager\CHCBaseFileDB.vb" />
     <Compile Include="FileManager\CHCBaseFileJson.vb" />
@@ -78,6 +79,7 @@
     <Compile Include="Miscellaneous\CHCDateTime.vb" />
     <Compile Include="Miscellaneous\CHCStringExtensions.vb" />
     <Compile Include="Models\EngineStandardInterface.vb" />
+    <Compile Include="Models\GeneralResponseModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

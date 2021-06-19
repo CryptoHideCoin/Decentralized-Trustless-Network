@@ -37,11 +37,11 @@ Namespace AreaCommon
                 log.track("Controllers.StartWebService", "New Configuration Port " & _portNumber)
 
                 If _servicePort Then
-                    httpConfig.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & state.serviceGUID & "/service/{controller}")
-                    httpConfig.Routes.MapHttpRoute(name:="SecurityApi", routeTemplate:="api/" & state.serviceGUID & "/security/{controller}")
-                    httpConfig.Routes.MapHttpRoute(name:="QoSTicketApi", routeTemplate:="api/" & state.serviceGUID & "/qos/{controller}")
-                    httpConfig.Routes.MapHttpRoute(name:="AdministrationApi", routeTemplate:="api/" & state.serviceGUID & "/administration/{controller}")
+                    httpConfig.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & settings.data.serviceId & "/service/{controller}")
+                    httpConfig.Routes.MapHttpRoute(name:="SecurityApi", routeTemplate:="api/" & settings.data.serviceId & "/security/{controller}")
+                    httpConfig.Routes.MapHttpRoute(name:="AdministrationApi", routeTemplate:="api/" & settings.data.serviceId & "/administration/{controller}")
                 Else
+                    httpConfig.Routes.MapHttpRoute(name:="QoSTicketApi", routeTemplate:="api/" & settings.data.serviceId & "/qos/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="SystemApi", routeTemplate:="api/v1.0/System/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="NetworkApi", routeTemplate:="api/v1.0/Network/{controller}")
                 End If
@@ -72,7 +72,7 @@ Namespace AreaCommon
 
                     Do
                         Application.DoEvents()
-                    Loop Until (AreaCommon.state.service = AreaCommon.Models.ServiceModel.InformationResponseModel.enumServiceState.shutDown)
+                    Loop Until (AreaCommon.state.service = AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.shutDown)
 
                     server.CloseAsync().Wait()
                     server.Dispose()
@@ -83,7 +83,7 @@ Namespace AreaCommon
 
                 registry.addNew(RegistryEngine.RegistryData.TypeEvent.applicationShutdown)
 
-                state.service = AreaCommon.Models.ServiceModel.InformationResponseModel.enumServiceState.starting
+                state.service = AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.starting
 
             Catch ex As Exception
                 log.track("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion - Error:" & ex.Message, "fatal")

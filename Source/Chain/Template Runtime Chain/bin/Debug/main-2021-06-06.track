@@ -1,0 +1,33 @@
+1623021352384,73|2021-06-06T21:15:52|info|LogRotate.run|Begin
+1623021352400,03|2021-06-06T21:15:52|info|LogRotate.run|It's now
+1623021352400,03|2021-06-06T21:15:52|info|LogRotate.runWork|Begin
+1623021352400,03|2021-06-06T21:15:52|info|LogRotate.run|Complete
+1623021353063,43|2021-06-06T21:15:53|info|LogRotate.runExecuteWork|Begin
+1623021353063,43|2021-06-06T21:15:53|info|startUp.run|Trackrotate in execute
+1623021353548,31|2021-06-06T21:15:53|Fatal|LogRotate.runExecuteWork|Error:Formato del percorso non valido.
+1623021354184,81|2021-06-06T21:15:54|info|startUp.run|Counter is running
+1623021378410,58|2021-06-06T21:16:21|info|LogRotate.run|Begin
+1623021387660,41|2021-06-06T21:16:30|info|LogRotate.run|It's now
+1623021392384,13|2021-06-06T21:16:34|info|LogRotate.runWork|Begin
+1623021397025,49|2021-06-06T21:16:37|info|LogRotate.runExecuteWork|Begin
+1623021397630,16|2021-06-06T21:16:37|Fatal|LogRotate.runExecuteWork|Error:Formato del percorso non valido.
+1623021397025,49|2021-06-06T21:16:39|info|LogRotate.run|Complete
+1623021402642,87|2021-06-06T21:16:42|info|startUp.run|Trackrotate in execute
+1623021413464,46|2021-06-06T21:16:53|info|startUp.run|Counter is running
+1623021423346,5|2021-06-06T21:17:03|info|LogRotate.run|Begin
+1623021423346,5|2021-06-06T21:17:03|info|LogRotate.run|It's now
+1623021423346,5|2021-06-06T21:17:03|info|LogRotate.runWork|Begin
+1623021423346,5|2021-06-06T21:17:03|info|LogRotate.run|Complete
+1623021423378,5|2021-06-06T21:17:03|info|startUp.run|Trackrotate in execute
+1623021425687,78|2021-06-06T21:17:05|info|LogRotate.runExecuteWork|Begin
+1623021425687,78|2021-06-06T21:17:05|Fatal|LogRotate.runExecuteWork|Error:Formato del percorso non valido.
+1623021454929,38|2021-06-06T21:17:34|info|LogRotate.run|Begin
+1623021454929,38|2021-06-06T21:17:34|info|LogRotate.run|It's now
+1623021454929,38|2021-06-06T21:17:34|info|LogRotate.runWork|Begin
+1623021454929,38|2021-06-06T21:17:34|info|LogRotate.runExecuteWork|Begin
+1623021454929,38|2021-06-06T21:17:34|info|startUp.run|Trackrotate in execute
+1623022542171,18|2021-06-06T21:35:42|info|LogRotate.run|Begin
+1623022542171,18|2021-06-06T21:35:42|info|LogRotate.run|It's now
+1623022542186,78|2021-06-06T21:35:42|info|LogRotate.runWork|Begin
+1623022542186,78|2021-06-06T21:35:42|info|LogRotate.run|Complete
+1623022542186,78|2021-06-06T21:35:42|info|startUp.run|Trackrotate in execute

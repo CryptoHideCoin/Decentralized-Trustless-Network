@@ -1,0 +1,18 @@
+1622364457362,27|2021-05-30T06:47:37|info|startUp.main|Begin
+1622364457474,92|2021-05-30T06:47:37|info|startUp.main|The path is E:\CryptoHideCoinDTN\Source\Utilities\KeyStore Manager\bin\Debug
+1622364457474,92|2021-05-30T06:47:37|info|startUp.main|DataPath is E:\CryptoHideCoinDTN\Source\Utilities\KeyStore Manager\bin\Debug
+1622364457476,22|2021-05-30T06:47:37|info|startUp.startApplication|paths.init execute
+1622364457546,16|2021-05-30T06:47:37|info|startUp.startApplication|settings read
+1622364457550,98|2021-05-30T06:47:37|info|startUp.startApplication|Trackrotate in execute
+1622387007187,08|2021-05-30T13:03:27|info|startUp.main|Begin
+1622387007296,41|2021-05-30T13:03:27|info|startUp.main|The path is E:\CryptoHideCoinDTN\Source\Utilities\KeyStore Manager\bin\Debug
+1622387007296,41|2021-05-30T13:03:27|info|startUp.main|DataPath is E:\CryptoHideCoinDTN\Source\Utilities\KeyStore Manager\bin\Debug
+1622387007296,41|2021-05-30T13:03:27|info|startUp.startApplication|paths.init execute
+1622387007358,91|2021-05-30T13:03:27|info|startUp.startApplication|settings read
+1622387007358,91|2021-05-30T13:03:27|info|startUp.startApplication|Trackrotate in execute
+1622414147759,27|2021-05-30T20:35:47|info|startUp.main|Begin
+1622414147884,52|2021-05-30T20:35:47|info|startUp.main|The path is E:\CryptoHideCoinDTN\Source\Utilities\KeyStore Manager\bin\Debug
+1622414147884,52|2021-05-30T20:35:47|info|startUp.main|DataPath is E:\CryptoHideCoinDTN\Source\Utilities\KeyStore Manager\bin\Debug
+1622414147884,52|2021-05-30T20:35:47|info|startUp.startApplication|paths.init execute
+1622414147977,66|2021-05-30T20:35:47|info|startUp.startApplication|settings read
+1622414147993,83|2021-05-30T20:35:47|info|startUp.startApplication|Trackrotate in execute

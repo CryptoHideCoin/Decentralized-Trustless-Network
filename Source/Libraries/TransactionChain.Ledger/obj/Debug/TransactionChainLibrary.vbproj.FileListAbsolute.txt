@@ -6,10 +6,6 @@ E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCCommo
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCProtocolLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\Newtonsoft.Json.dll
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\BouncyCastle.Crypto.dll
-E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCCommonLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCCommonLibrary.xml
-E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCProtocolLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCProtocolLibrary.xml
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\obj\Debug\TransactionChainLibrary.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\obj\Debug\TransactionChainLibrary.Resources.resources

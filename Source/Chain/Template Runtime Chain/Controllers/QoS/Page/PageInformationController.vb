@@ -1,5 +1,7 @@
 ﻿Imports System.Web.Http
 
+Imports CHCCommonLibrary.AreaCommon.Models.General
+
 
 
 
@@ -25,20 +27,14 @@ Namespace Controllers
                 If (AreaCommon.state.network.position = AppState.enumConnectionState.onLine) Then
                     result.blockSize = AreaCommon.state.queues.getMaxBlockInternalLedgerSize
                     result.pages = AreaCommon.state.queues.getDataPages()
-
-                    result.error = False
-                    result.errorDescription = ""
-                    result.offline = False
                 Else
-                    result.offline = True
+                    result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                 End If
             Catch ex As Exception
-                result.error = True
-                result.offline = True
+                result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
             End Try
 
-            result.unAuthorized = False
             result.responseTime = Now
 
             Return result

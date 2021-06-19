@@ -1,6 +1,9 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCBasicCryptographyLibrary.AreaEngine
+Imports CHCProtocolLibrary.AreaWallet.Support
+
 
 
 Namespace AreaSecurity
@@ -10,34 +13,35 @@ Namespace AreaSecurity
 
 
         Public Function checkClientCertification(ByVal value As String) As Boolean
-
             Try
                 Return (AreaCommon.settings.data.clientCertificate.CompareTo(value) = 0)
             Catch ex As Exception
                 Return False
             End Try
+        End Function
 
+        Public Function checkSignature(ByVal value As String) As Boolean
+            Try
+                Dim publicAddress As String = AreaCommon.state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).publicAddress
+
+                publicAddress = WalletAddressEngine.SingleKeyPair.cleanAddress(publicAddress)
+
+                Return Encryption.Base58Signature.verifySignature(AreaCommon.settings.data.clientCertificate, publicAddress, value)
+            Catch ex As Exception
+                Return False
+            End Try
         End Function
 
         Public Function changeCertificate(ByVal value As AreaCommon.Models.Security.changeCertificate) As Boolean
-
             Try
-                Select Case value.typeCommunication
-                    Case AreaCommon.Models.Security.enumOfService.loader,
-                         AreaCommon.Models.Security.enumOfService.runTime,
-                         AreaCommon.Models.Security.enumOfService.client,
-                         AreaCommon.Models.Security.enumOfService.administration
+                AreaCommon.settings.data.clientCertificate = value.newCertificate
+                AreaCommon.settings.save()
 
-                        AreaCommon.settings.data.clientCertificate = value.newCertificate
-                        AreaCommon.settings.save()
-
-                End Select
-
+                AreaCommon.log.trackIntoConsole("Admin certificate change")
                 Return True
             Catch ex As Exception
                 Return False
             End Try
-
         End Function
 
 

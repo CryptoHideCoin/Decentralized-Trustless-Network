@@ -13,16 +13,15 @@ Public Class AppSettings
 
 
     Public Class SettingsData
-
         Public networkName As String = ""
-        Public chainName As String = ""
+        Public serviceId As String = ""
         Public intranetMode As Boolean = False
         Public noUpdateSystemDate As Boolean = False
         Public dataPath As String = ""
         Public walletAddress As String = ""
 
-        Public publicPort As String = ""
-        Public servicePort As String = ""
+        Public publicPort As Integer = 0
+        Public servicePort As Integer = 0
 
         Public clientCertificate As String = ""
 
@@ -31,7 +30,6 @@ Public Class AppSettings
         Public trackRotateConfig As New LogRotateEngine.LogRotateConfig
 
         Public useEventRegistry As Boolean = True
-
     End Class
 
 End Class

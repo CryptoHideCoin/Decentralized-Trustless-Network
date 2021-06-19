@@ -18,13 +18,12 @@ Namespace AreaCommon
         Public forceReadSettings As Boolean = False
 
         Public fileSecurityKey As String = ""
+        Public keyStoreSecurityKey As String = ""
 
 
 
         Private Sub decodeCommandLine()
-
             Try
-
                 If _commandLine.exist("DataPath".ToLower()) Then
                     parameters.data.dataPath = _commandLine.GetValue("DataPath".ToLower())
 
@@ -44,18 +43,18 @@ Namespace AreaCommon
                 If _commandLine.exist("FileSecurityKey".ToLower()) Then
                     fileSecurityKey = _commandLine.GetValue("FileSecurityKey".ToLower())
                 End If
+                If _commandLine.exist("KeystoreSecurityKey".ToLower()) Then
+                    keyStoreSecurityKey = _commandLine.GetValue("KeystoreSecurityKey".ToLower())
+                End If
                 If _commandLine.exist("Settings".ToLower()) Then
-
                     If (parameters.data.dataPath.Trim.Length() = 0) Then
                         paths.directoryData = paths.readDefinePath()
                     Else
                         paths.directoryData = parameters.data.dataPath
                     End If
-
                     If (paths.directoryData.Trim.Length() > 0) Then
                         paths.init(CHCProtocolLibrary.AreaSystem.VirtualPathEngine.EnumSystemType.runTime)
                     End If
-
                     If (paths.directoryData.Trim.Length() > 0) Then
                         settings.fileName = IO.Path.Combine(paths.settings, paths.settingFileName)
                         settings.cryptoKEY = fileSecurityKey
@@ -65,7 +64,9 @@ Namespace AreaCommon
 
                     Dim tmp As New Settings : tmp.ShowDialog() : End
                 End If
-
+                If _commandLine.exist("NetworkName".ToLower()) Then
+                    parameters.data.networkName = _commandLine.GetValue("NetworkName")
+                End If
                 If _commandLine.exist("IntranetMode".ToLower()) Then
                     parameters.data.intranetMode = True
                 End If
@@ -74,6 +75,10 @@ Namespace AreaCommon
                 End If
                 If _commandLine.exist("PublicWalletAddress".ToLower()) Then
                     parameters.data.walletAddress = _commandLine.GetValue("PublicWalletAddress")
+                    haveParameters = True
+                End If
+                If _commandLine.exist("Certificate".ToLower()) Then
+                    parameters.data.walletAddress = _commandLine.GetValue("Certificate")
                     haveParameters = True
                 End If
                 If _commandLine.exist("PublicPort".ToLower()) Then
@@ -111,14 +116,13 @@ Namespace AreaCommon
                     haveParameters = True
                 End If
                 If _commandLine.exist("?") Or _commandLine.exist("Help".ToLower()) Then
-
                     log.trackIntoConsole("Allows remote administration service to run")
                     log.trackIntoConsole()
                     log.trackIntoConsole("  /DataPath                     Force a main path when the application work")
                     log.trackIntoConsole("  /ForceReadSettings            Force application to read a local settings")
                     log.trackIntoConsole("  /FileSecurityKey              Set a security key to read a local settings file")
                     log.trackIntoConsole("  /Settings                     Show a settings page")
-                    log.trackIntoConsole("  /VirtualName                  Set a virtual name of a service of a chain")
+                    log.trackIntoConsole("  /NetworkName                  Set a intranet mode")
                     log.trackIntoConsole("  /IntranetMode                 Set a intranet mode")
                     log.trackIntoConsole("  /NoUpdateDate                 Disable automatic update of a date of a system")
                     log.trackIntoConsole("  /PublicWalletAddress          Set a public wallet address")
@@ -137,48 +141,37 @@ Namespace AreaCommon
                     log.trackIntoConsole("  /Help                         Show this panel")
 
                     End
-
                 End If
-
             Catch ex As Exception
                 log.track("TemplateRuntimeChain.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "fatal")
 
                 closeApplication()
             End Try
-
         End Sub
 
 
         Public Sub run(ByRef commandLine As String())
-
             Try
-
                 _commandLine.decode(commandLine)
 
                 decodeCommandLine()
 
                 If (_completePathSettingFile.Trim().Length > 0) Then
-
                     Dim settings As New AppSettings
 
                     settings.fileName = _completePathSettingFile
 
                     If settings.read() Then
-
                         parameters.data = settings.data
 
                         haveParameters = True
-
                     End If
-
                 End If
-
             Catch ex As Exception
                 parameters = New AppSettings
 
                 log.track("TemplateRuntimeChain.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "error")
             End Try
-
         End Sub
 
 

@@ -1,5 +1,7 @@
 ﻿Imports System.Web.Http
 
+Imports CHCCommonLibrary.AreaCommon.Models.General
+
 
 
 
@@ -25,24 +27,17 @@ Namespace Controllers
 
                 If (AreaCommon.state.network.position = AppState.enumConnectionState.onLine) Then
                     dataTicket = AreaCommon.state.queues.getDataTicket(ticketValue, AreaCommon.paths.workData.currentVolume.requests, AreaCommon.paths.workData.previousVolume.requests)
-
-                    result.error = False
-                    result.errorDescription = ""
-                    result.offline = False
-
                     result.queueNumber = dataTicket.queueNumber
                     result.position = dataTicket.position
                     result.ticketNumber = dataTicket.ticketId
                 Else
-                    result.offline = True
+                    result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                 End If
             Catch ex As Exception
-                result.error = True
-                result.offline = True
+                result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
             End Try
 
-            result.unAuthorized = False
             result.responseTime = Now
 
             Return result

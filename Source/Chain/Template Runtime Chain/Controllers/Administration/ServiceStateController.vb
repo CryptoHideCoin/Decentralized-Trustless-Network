@@ -1,6 +1,11 @@
-﻿Imports System.Web.Http
+﻿Option Compare Text
+Option Explicit On
+
+Imports System.Web.Http
 
 Imports CHCBasicCryptographyLibrary.AreaEngine.Encryption.Base58Signature
+Imports CHCCommonLibrary.AreaCommon.Models.General
+
 
 
 Namespace Controllers
@@ -22,23 +27,19 @@ Namespace Controllers
                 result.requestTime = Now
 
                 If (AreaCommon.state.network.position = AppState.enumConnectionState.onLine) Then
-                    If verifySignature(certificate, AreaCommon.state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).publicWalletID, signature) Then
-
+                    If verifySignature(certificate, AreaCommon.state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).publicAddress, signature) Then
                         Return AreaCommon.state.serviceState
-
                     Else
-                        result.unAuthorized = True
+                        result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
                     End If
                 Else
-                    result.offline = True
+                    result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                 End If
             Catch ex As Exception
-                result.error = True
-                result.offline = True
+                result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
             End Try
 
-            result.unAuthorized = False
             result.responseTime = Now
 
             Return result

@@ -1,0 +1,14 @@
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\bin\Debug\CHCWalletControls.dll
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\bin\Debug\CHCWalletControls.pdb
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\bin\Debug\CHCWalletControls.xml
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\obj\Debug\WalletControls.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\obj\Debug\CHCWalletControls.KeyPair.resources
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\obj\Debug\CHCWalletControls.Resources.resources
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\obj\Debug\WalletControls.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\obj\Debug\CHCWalletControls.dll
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\obj\Debug\CHCWalletControls.xml
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\obj\Debug\CHCWalletControls.pdb
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\obj\Debug\CHCWalletControls.CustomizeWalletButton.resources
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Services\WalletControls\obj\Debug\WalletControls.vbproj.CopyComplete

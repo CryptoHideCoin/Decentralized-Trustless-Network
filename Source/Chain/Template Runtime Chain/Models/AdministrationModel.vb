@@ -1,7 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCProtocolLibrary.AreaCommon.Models
+Imports CHCCommonLibrary.AreaCommon.Models
 
 
 
