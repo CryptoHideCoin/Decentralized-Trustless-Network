@@ -5,6 +5,7 @@ Imports System.Web.Http
 
 Imports CHCBasicCryptographyLibrary.AreaEngine.Encryption.Base58Signature
 Imports CHCCommonLibrary.AreaCommon.Models.General
+Imports CHCProtocolLibrary.AreaCommon
 
 
 
@@ -20,17 +21,22 @@ Namespace Controllers
 
 
 
-        Public Function GetValue(ByVal certificate As String, ByVal signature As String) As AreaCommon.Models.Administration.AdministrationModel.ServiceStateResponse
-            Dim result As New AreaCommon.Models.Administration.AdministrationModel.ServiceStateResponse
+        Public Function GetValue(ByVal signature As String) As Models.Administration.ServiceStateResponse
+            Dim result As New Models.Administration.ServiceStateResponse
 
             Try
                 result.requestTime = Now
 
-                If (AreaCommon.state.network.position = AppState.enumConnectionState.onLine) Then
-                    If verifySignature(certificate, AreaCommon.state.keys.Key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).publicAddress, signature) Then
-                        Return AreaCommon.state.serviceState
-                    Else
+                If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
+                    If Not AreaSecurity.checkSignature(signature) Then
                         result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
+                    Else
+                        result.componentPosition = AreaCommon.state.serviceState.componentPosition
+                        result.currentAction = AreaCommon.state.serviceState.currentAction
+                        result.listAvailableCommand = AreaCommon.state.serviceState.listAvailableCommand
+                        result.servicePosition = AreaCommon.state.serviceState.servicePosition
+                        result.currentRunCommand = AreaCommon.state.serviceState.currentRunCommand
+                        result.requestCancelCurrentRunCommand = AreaCommon.state.serviceState.requestCancelCurrentRunCommand
                     End If
                 Else
                     result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
@@ -43,7 +49,6 @@ Namespace Controllers
             result.responseTime = Now
 
             Return result
-
         End Function
 
 

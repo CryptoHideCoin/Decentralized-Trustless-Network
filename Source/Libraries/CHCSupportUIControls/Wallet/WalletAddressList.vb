@@ -72,23 +72,7 @@ Public Class WalletAddressList
         End If
     End Function
 
-
-    Public Property dataPath() As String
-        Get
-            Return _dataPath
-        End Get
-        Set(value As String)
-            _BaseDataPath = value
-            _DataPath = readUserKeyStorePath(value)
-
-            If (_DataPath.Trim.Length > 0) Then
-                loadListData()
-            End If
-        End Set
-    End Property
-
-
-    Public Function createButtonInGrid(ByVal textValue As String, ByVal nameValue As String) As DataGridViewButtonColumn
+    Private Function createButtonInGrid(ByVal textValue As String, ByVal nameValue As String) As DataGridViewButtonColumn
 
         Dim buttonColumn As DataGridViewButtonColumn
 
@@ -104,6 +88,23 @@ Public Class WalletAddressList
 
     End Function
 
+
+    Public Property dataPath() As String
+        Get
+            Return _dataPath
+        End Get
+        Set(value As String)
+            _BaseDataPath = value
+            _DataPath = readUserKeyStorePath(value)
+
+            If (_DataPath.Trim.Length > 0) Then
+                loadListData()
+            End If
+        End Set
+    End Property
+    Public Property autonomous() As Boolean = False
+
+
     Private Sub WalletAddressList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         walletAddressDataGrid.Columns(0).Visible = False
         walletAddressDataGrid.Columns(2).HeaderCell.Style.Alignment = DataGridViewContentAlignment.TopCenter
@@ -114,13 +115,32 @@ Public Class WalletAddressList
     End Sub
 
     Private Sub addNewButton_Click(sender As Object, e As EventArgs) Handles addNewButton.Click
-        RaiseEvent RequestAddNew()
+        Try
+            If autonomous Then
+                Dim form As New KeyPairDetail
 
-        loadListData()
+                form.pathData = dataPath
+
+                form.ShowDialog(Me)
+
+                form.Close()
+                form.Dispose()
+
+                form = Nothing
+            Else
+                RaiseEvent RequestAddNew()
+            End If
+
+            loadListData()
+        Catch ex As Exception
+            MessageBox.Show("Error during addNewButton_Click - " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub resizeControl()
         Try
+            configureButton.Left = 16
+
             listLabel.Left = 13
             listLabel.Width = 141
 
@@ -134,6 +154,34 @@ Public Class WalletAddressList
         End Try
     End Sub
 
+    Private Sub updateRowGrid(ByVal rowGridNumber As Integer)
+        Try
+            Dim id As String = walletAddressDataGrid.Item(2, rowGridNumber).Value.ToString()
+
+            If autonomous Then
+                Dim form As New KeyPairDetail
+
+                form.pathData = dataPath
+                form.loadData(id)
+
+                If Not form.closeMe Then
+                    form.ShowDialog(Me)
+                End If
+
+                form.Close()
+                form.Dispose()
+
+                form = Nothing
+            Else
+                RaiseEvent RequestUpdate(id)
+            End If
+
+            loadListData()
+        Catch ex As Exception
+            MessageBox.Show("Error during updateRowGrid " & Err.Description, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
     Private Sub WalletAddressList_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         resizeControl()
     End Sub
@@ -144,12 +192,7 @@ Public Class WalletAddressList
             Dim name As String
 
             Select Case e.ColumnIndex
-                Case 3
-                    id = walletAddressDataGrid.Item(2, e.RowIndex).Value.ToString()
-
-                    RaiseEvent RequestUpdate(id)
-
-                    loadListData()
+                Case 3 : updateRowGrid(e.RowIndex)
                 Case 4
                     name = walletAddressDataGrid.Item(1, e.RowIndex).Value.ToString()
                     id = walletAddressDataGrid.Item(2, e.RowIndex).Value.ToString()
@@ -175,7 +218,6 @@ Public Class WalletAddressList
         Catch ex As Exception
             MessageBox.Show("Error during walletAddressDataGrid_CellContentClick " & Err.Description, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
     End Sub
 
     Private Sub WalletAddressList_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged

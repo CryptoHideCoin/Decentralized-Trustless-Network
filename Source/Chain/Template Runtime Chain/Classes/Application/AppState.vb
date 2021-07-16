@@ -3,6 +3,7 @@ Option Explicit On
 
 
 Imports TransactionChainLibrary.AreaEngine.Ledger
+Imports CHCProtocolLibrary.AreaCommon
 
 
 
@@ -43,15 +44,6 @@ Public Class AppState
 
     End Class
 
-    Public Class ActionElement
-
-        Public Property codeAction As String = ""
-        Public Property descriptionAction As String = ""
-        Public Property codeError As String = ""
-        Public Property descriptionError As String = ""
-
-    End Class
-
     Public Class ConnectionNetwork
 
         Public Property position As enumConnectionState = enumConnectionState.notDefined
@@ -59,7 +51,7 @@ Public Class AppState
         Public Property coinWarranty As Decimal = 0.000000001
         Public Property connectedMoment As Date = Date.MinValue
         Public Property walletWarrantyID As String = ""
-        Public Property currentAction As New ActionElement
+        Public Property currentAction As New Models.Administration.ActionElement
 
     End Class
 
@@ -74,15 +66,17 @@ Public Class AppState
     End Class
 
 
-    Public service As AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState = AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.notDefined
+    Public service As Models.Service.InformationResponseModel.EnumInternalServiceState = Models.Service.InformationResponseModel.EnumInternalServiceState.notDefined
     Public information As New ServiceInformation
     Public keys As New TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine
 
     Public queues As New TransactionChainLibrary.AreaEngine.Requests.QueueEngine
 
-    Public serviceState As New AreaCommon.Models.Administration.AdministrationModel.ServiceStateResponse
+    Public serviceState As New Models.Administration.ServiceStateResponse
     Public network As New ConnectionNetwork
     Public component As New ComponentElement
+    Public runtimeState As New AreaState.ChainStateEngine
+    Public currentBlockLedger As New TransactionChainLibrary.AreaLedger.LedgerEngine
 
     Public noConsoleMessage As Boolean = False
 

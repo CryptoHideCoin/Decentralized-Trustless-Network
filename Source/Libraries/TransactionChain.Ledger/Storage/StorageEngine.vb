@@ -16,14 +16,6 @@ Namespace AreaEngine.Ledger
 
     Namespace Storage
 
-        Public Enum enumCheckResult
-
-            notDefined
-            checkControlPassed
-            checkControlNotPassed
-
-        End Enum
-
         Public Class VolumesIndexInformation
 
             Public Class VolumeInformation
@@ -87,7 +79,7 @@ Namespace AreaEngine.Ledger
 
             Public Class VolumeDataExt
 
-                Inherits Storage.VolumesIndexInformation.VolumeInformation
+                Inherits VolumesIndexInformation.VolumeInformation
 
                 Public Property compressedExist As Boolean = False
                 Public Property databaseExist As Boolean = False
@@ -188,7 +180,7 @@ Namespace AreaEngine.Ledger
                 Private _problemDescription As String = ""
 
                 Public volumes As New Dictionary(Of String, StorageEngine.VolumeDataExt)
-                Public Property generalState As enumCheckResult = enumCheckResult.notDefined
+                Public Property generalState As CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.notChecked
                 Public ReadOnly Property problemDescription() As String
                     Get
                         Return _problemDescription
@@ -263,13 +255,13 @@ Namespace AreaEngine.Ledger
                             End If
 
                             If Not result.fileDBIntact Or Not result.fileZIPIntact Or Not result.fileDBExist Or Not result.fileZIPExist Then
-                                generalState = enumCheckResult.checkControlNotPassed
+                                generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
 
                                 Return
                             End If
                         Next
 
-                        generalState = enumCheckResult.checkControlPassed
+                        generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
                     Catch ex As Exception
                     End Try
                 End Sub
@@ -279,15 +271,17 @@ Namespace AreaEngine.Ledger
             Private _volumesEngine As New volumesFileEngine
 
 
-            Public Property generalState As enumCheckResult = enumCheckResult.notDefined
+            Public Property generalState As CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.notChecked
             Public Property volumesIndex As New volumesIndexEngine
             Public Property volumesData As New Dictionary(Of String, VolumeDataExt)
+            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
             Public ReadOnly Property problemDescription As String
                 Get
                     If Not volumesIndex.fileVolumeIndexCorrect Then
                         Return volumesIndex.problemDescription
-                    ElseIf (_volumesEngine.generalState = enumCheckResult.checkControlNotPassed) Then
+                    ElseIf (_volumesEngine.generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed) Then
                         Return _volumesEngine.problemDescription
                     Else
                         Return ""
@@ -295,23 +289,53 @@ Namespace AreaEngine.Ledger
                 End Get
             End Property
 
-            Public Sub init(ByRef networkReferement As Common.NetworkChain, ByRef paths As AreaSystem.VirtualPathEngine, ByRef walletIDOwner As String)
-                volumesIndex.fileName = IO.Path.Combine(paths.storage, "Volumes.Index")
+            Public Function init(ByRef networkReferement As Common.NetworkChain, ByRef paths As AreaSystem.VirtualPathEngine, ByRef walletIDOwner As String) As Boolean
+                Try
+                    log.track("StorageEngine.init", "Begin")
 
-                volumesIndex.init(networkReferement, walletIDOwner)
+                    serviceState.currentAction.setAction("0x0001", "VerifyData - Storage - Volumes")
 
-                If Not volumesIndex.fileVolumeIndexCorrect Then
-                    generalState = enumCheckResult.checkControlNotPassed
-                ElseIf volumesIndex.fileExist Then
-                    _volumesEngine.init(paths.storage, paths.workData.temporally, volumesIndex)
+                    volumesIndex.fileName = IO.Path.Combine(paths.storage, "Volumes.Index")
 
-                    If _volumesEngine.generalState = enumCheckResult.checkControlPassed Then
-                        volumesData = _volumesEngine.volumes
+                    If serviceState.requestCancelCurrentRunCommand Then Return False
+
+                    volumesIndex.init(networkReferement, walletIDOwner)
+
+                    log.track("StorageEngine.init", "volumesIndex.init complete")
+
+                    If Not volumesIndex.fileVolumeIndexCorrect Then
+                        log.track("StorageEngine.init", "volumesIndex.init fileVolumeIndex not correct")
+
+                        If volumesIndex.fileExist() Then
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
+                        Else
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.missing
+                        End If
+                    Else
+                        log.track("StorageEngine.init", "volumesIndex.init fileVolumeIndex exist")
+
+                        If serviceState.requestCancelCurrentRunCommand Then Return False
+
+                        _volumesEngine.init(paths.storage, paths.workData.temporally, volumesIndex)
+
+                        log.track("StorageEngine.init", "Execute volumesEngine.init")
+
+                        If _volumesEngine.generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed Then
+                            volumesData = _volumesEngine.volumes
+                        End If
+
+                        generalState = _volumesEngine.generalState
                     End If
 
-                    generalState = _volumesEngine.generalState
-                End If
-            End Sub
+                    Return True
+                Catch ex As Exception
+                    serviceState.currentAction.setError(Err.Number, ex.Message)
+
+                    log.track("StorageEngine.init", "Error:" & ex.Message, "fatal")
+
+                    Return False
+                End Try
+            End Function
 
         End Class
 

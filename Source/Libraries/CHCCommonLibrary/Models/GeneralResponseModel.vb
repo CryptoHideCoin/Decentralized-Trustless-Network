@@ -28,6 +28,7 @@ Namespace AreaCommon.Models.General
         Public Enum EnumResponseStatus
 
             responseComplete
+            commandNotAllowed
             missingAuthorization
             systemOffline
             inError

@@ -13,14 +13,6 @@ Namespace AreaEngine.Ledger
 
     Namespace State
 
-        Public Enum enumCheckResult
-
-            notDefined
-            checkControlPassed
-            checkControlNotPassed
-
-        End Enum
-
         Public Class StateInformation
 
             Public Property networkName As String = ""
@@ -49,6 +41,32 @@ Namespace AreaEngine.Ledger
         End Class
 
         Public Class StateEngine
+
+            Public Shared Function readContentFromFile(ByVal statePath As String, ByVal contentHash As String) As String
+                Try
+                    Dim fileName As String = IO.Path.Combine(statePath, "Contents", contentHash & ".content")
+
+                    Dim value As String = IO.File.ReadAllText(fileName)
+
+                    Return value
+                Catch ex As Exception
+                    Return ""
+                End Try
+            End Function
+
+            Public Shared Function writeDataContent(ByVal statePath As String, ByVal content As String, ByVal contentHash As String) As Boolean
+                Try
+                    Dim fileName As String = IO.Path.Combine(statePath, "Contents", contentHash & ".content")
+
+                    If IO.File.Exists(fileName) Then
+                        IO.File.WriteAllText(fileName, content)
+                    End If
+
+                    Return True
+                Catch ex As Exception
+                    Return False
+                End Try
+            End Function
 
             Public Class StateCheckResult
 
@@ -134,8 +152,11 @@ Namespace AreaEngine.Ledger
             End Class
 
 
-            Public Property generalState As enumCheckResult = enumCheckResult.notDefined
+            Public Property generalState As CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.notChecked
             Public Property stateIndex As New StateIndexEngine
+            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
+
 
             Public ReadOnly Property problemDescription As String
                 Get
@@ -148,23 +169,46 @@ Namespace AreaEngine.Ledger
             End Property
 
 
-            Public Sub init(ByVal networkReferement As Common.NetworkChain, ByRef paths As AreaSystem.VirtualPathEngine, ByRef walletIDOwner As String)
-                stateIndex.fileName = IO.Path.Combine(paths.workData.state, "State.Index")
+            Public Function init(ByVal networkReferement As Common.NetworkChain, ByRef paths As AreaSystem.VirtualPathEngine, ByRef walletIDOwner As String) As Boolean
+                Try
+                    log.track("StateEngine.init", "Begin")
 
-                stateIndex.init(networkReferement, walletIDOwner)
+                    serviceState.currentAction.setAction("0x0004", "VerifyData - State")
 
-                If stateIndex.fileCorrupted Or stateIndex.mismatchedSignature Then
-                    generalState = enumCheckResult.checkControlNotPassed
-                ElseIf stateIndex.fileExist Then
-                    generalState = enumCheckResult.checkControlPassed
-                Else
-                    If (CHCCommonLibrary.AreaEngine.FileManagement.getMD5FromFile(IO.Path.Combine(paths.workData.state, "State.Index")) = stateIndex.data.fileStateMD5) Then
-                        generalState = enumCheckResult.checkControlPassed
+                    stateIndex.fileName = IO.Path.Combine(paths.workData.state, "State.Index")
+
+                    If serviceState.requestCancelCurrentRunCommand Then Return False
+
+                    stateIndex.init(networkReferement, walletIDOwner)
+
+                    log.track("StateEngine.init", "StateEngine.init complete")
+
+                    If stateIndex.fileCorrupted Or stateIndex.mismatchedSignature Then
+                        If stateIndex.fileExist Then
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
+                        Else
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.missing
+                        End If
+
+                    ElseIf stateIndex.fileExist Then
+                        generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
                     Else
-                        generalState = enumCheckResult.checkControlPassed
+                        If (CHCCommonLibrary.AreaEngine.FileManagement.getMD5FromFile(IO.Path.Combine(paths.workData.state, "State.Index")) = stateIndex.data.fileStateMD5) Then
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
+                        Else
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
+                        End If
                     End If
-                End If
-            End Sub
+
+                    Return True
+                Catch ex As Exception
+                    serviceState.currentAction.setError(Err.Number, ex.Message)
+
+                    log.track("StateEngine.init", "Error:" & ex.Message, "fatal")
+
+                    Return False
+                End Try
+            End Function
 
         End Class
 

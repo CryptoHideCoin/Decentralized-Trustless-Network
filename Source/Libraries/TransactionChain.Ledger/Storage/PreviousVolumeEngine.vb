@@ -16,14 +16,6 @@ Namespace AreaEngine.Ledger
 
     Namespace PreviousVolume
 
-        Public Enum enumCheckResult
-
-            notDefined
-            checkControlPassed
-            checkControlNotPassed
-
-        End Enum
-
         Public Class PreviousIndexInformation
 
             Public Class BlockInformation
@@ -38,7 +30,7 @@ Namespace AreaEngine.Ledger
                     Dim tmp As String = ""
 
                     tmp += blockName
-                    tmp += MD5value
+                    tmp += MD5Value
 
                     Return tmp
                 End Function
@@ -180,7 +172,7 @@ Namespace AreaEngine.Ledger
 
                 Private _problemDescription As String = ""
 
-                Public Property generalState As enumCheckResult = enumCheckResult.notDefined
+                Public Property generalState As CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.notChecked
                 Public ReadOnly Property problemDescription As String
                     Get
                         Return _problemDescription
@@ -302,7 +294,7 @@ Namespace AreaEngine.Ledger
                     End Try
                 End Function
 
-                Public Sub init(ByVal pathPreviousVolume As String, ByVal previousVolumeIndex As PreviousVolumesIndexEngine)
+                Public Function init(ByVal pathPreviousVolume As String, ByVal previousVolumeIndex As PreviousVolumesIndexEngine) As Boolean
                     Try
                         Dim result As New BlockCheckResult
 
@@ -310,28 +302,33 @@ Namespace AreaEngine.Ledger
                             result = verifyBlock(pathPreviousVolume, item)
 
                             If Not result.fileBlockExist Or Not result.fileBlockIntact Then
-                                generalState = enumCheckResult.checkControlNotPassed
+                                generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
 
-                                Return
+                                Return True
                             End If
                         Next
+
+                        Return True
                     Catch ex As Exception
+                        Return False
                     End Try
-                End Sub
+                End Function
 
             End Class
 
 
             Private _previousVolumesEngine As New PreviousVolumeFileEngine
 
-            Public Property generalState As enumCheckResult = enumCheckResult.notDefined
+            Public Property generalState As CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.notChecked
             Public Property previousVolumesIndex As New PreviousVolumesIndexEngine
+            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
             Public ReadOnly Property problemDescription As String
                 Get
                     If Not previousVolumesIndex.filePreviousVolumesIndexCorrect Then
                         Return previousVolumesIndex.problemDescription
-                    ElseIf (_previousVolumesEngine.generalState = enumCheckResult.checkControlNotPassed) Then
+                    ElseIf (_previousVolumesEngine.generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed) Then
                         Return _previousVolumesEngine.problemDescription
                     Else
                         Return ""
@@ -339,19 +336,52 @@ Namespace AreaEngine.Ledger
                 End Get
             End Property
 
-            Public Sub init(ByRef networkReferement As Common.NetworkChain, ByRef paths As AreaSystem.VirtualPathEngine, ByRef walletIDOwner As String)
-                previousVolumesIndex.fileName = IO.Path.Combine(paths.workData.previousVolume.path, "PreviousVolumes.Index")
+            Public Function init(ByRef networkReferement As Common.NetworkChain, ByRef paths As AreaSystem.VirtualPathEngine, ByRef walletIDOwner As String) As Boolean
+                Try
+                    log.track("PreviousVolumeEngine.init", "Begin")
 
-                previousVolumesIndex.init(networkReferement, walletIDOwner)
+                    serviceState.currentAction.setAction("0x0002", "VerifyData - Previous - Volumes")
 
-                If previousVolumesIndex.fileCorrupted Or previousVolumesIndex.mismatchedSignature Then
-                    generalState = enumCheckResult.checkControlNotPassed
-                ElseIf Not previousVolumesIndex.fileExist Then
-                    _previousVolumesEngine.init(paths.workData.previousVolume.path, previousVolumesIndex)
+                    previousVolumesIndex.fileName = IO.Path.Combine(paths.workData.previousVolume.path, "PreviousVolumes.Index")
 
-                    generalState = _previousVolumesEngine.generalState
-                End If
-            End Sub
+                    If serviceState.requestCancelCurrentRunCommand Then Return False
+
+                    previousVolumesIndex.init(networkReferement, walletIDOwner)
+
+                    log.track("PreviousVolumeEngine.init", "previousVolumesIndex.init complete")
+
+                    If previousVolumesIndex.fileCorrupted Or previousVolumesIndex.mismatchedSignature Then
+                        If previousVolumesIndex.fileExist Then
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
+                        Else
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.missing
+                        End If
+                    Else
+                        log.track("PreviousVolumeEngine.init", "_previousVolumesEngine.init")
+
+                        If serviceState.requestCancelCurrentRunCommand Then Return False
+
+                        If _previousVolumesEngine.init(paths.workData.previousVolume.path, previousVolumesIndex) Then
+                            log.track("PreviousVolumeEngine.init", "_previousVolumesEngine.init completed")
+                        Else
+                            serviceState.currentAction.setError(-1, "Error _PreviousVolumeEngine")
+
+                            log.track("PreviousVolumeEngine.init", "Error: generic", "fatal")
+                        End If
+
+                        generalState = _previousVolumesEngine.generalState
+                    End If
+
+                    Return True
+                Catch ex As Exception
+                    serviceState.currentAction.setError(Err.Number, ex.Message)
+
+                    log.track("PreviousVolumeEngine.init", "Error:" & ex.Message, "fatal")
+
+                    Return False
+                End Try
+
+            End Function
 
         End Class
 

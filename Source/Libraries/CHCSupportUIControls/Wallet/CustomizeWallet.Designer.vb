@@ -59,11 +59,14 @@ Partial Class CustomizeWalletAddress
         Me.ppdMain = New System.Windows.Forms.PrintPreviewDialog()
         Me.pdMain = New System.Drawing.Printing.PrintDocument()
         Me.pDialogMain = New System.Windows.Forms.PrintDialog()
+        Me.userNotePage = New System.Windows.Forms.TabPage()
+        Me.noteText = New System.Windows.Forms.TextBox()
         Me.mainTab.SuspendLayout()
         Me.securityPage.SuspendLayout()
         Me.seedPage.SuspendLayout()
         Me.userPage.SuspendLayout()
         Me.rawPage.SuspendLayout()
+        Me.userNotePage.SuspendLayout()
         Me.SuspendLayout()
         '
         'mainTab
@@ -72,6 +75,7 @@ Partial Class CustomizeWalletAddress
         Me.mainTab.Controls.Add(Me.seedPage)
         Me.mainTab.Controls.Add(Me.userPage)
         Me.mainTab.Controls.Add(Me.rawPage)
+        Me.mainTab.Controls.Add(Me.userNotePage)
         Me.mainTab.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.mainTab.Location = New System.Drawing.Point(14, 95)
         Me.mainTab.Name = "mainTab"
@@ -450,6 +454,25 @@ Partial Class CustomizeWalletAddress
         '
         Me.pDialogMain.UseEXDialog = True
         '
+        'userNotePage
+        '
+        Me.userNotePage.Controls.Add(Me.noteText)
+        Me.userNotePage.Location = New System.Drawing.Point(4, 22)
+        Me.userNotePage.Name = "userNotePage"
+        Me.userNotePage.Padding = New System.Windows.Forms.Padding(3)
+        Me.userNotePage.Size = New System.Drawing.Size(538, 353)
+        Me.userNotePage.TabIndex = 4
+        Me.userNotePage.Text = "Note"
+        Me.userNotePage.UseVisualStyleBackColor = True
+        '
+        'noteText
+        '
+        Me.noteText.Location = New System.Drawing.Point(6, 22)
+        Me.noteText.Multiline = True
+        Me.noteText.Name = "noteText"
+        Me.noteText.Size = New System.Drawing.Size(526, 325)
+        Me.noteText.TabIndex = 0
+        '
         'CustomizeWalletAddress
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -474,6 +497,8 @@ Partial Class CustomizeWalletAddress
         Me.seedPage.PerformLayout()
         Me.userPage.ResumeLayout(False)
         Me.rawPage.ResumeLayout(False)
+        Me.userNotePage.ResumeLayout(False)
+        Me.userNotePage.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -515,4 +540,6 @@ Partial Class CustomizeWalletAddress
     Friend WithEvents ppdMain As PrintPreviewDialog
     Friend WithEvents pDialogMain As PrintDialog
     Friend WithEvents pdMain As Printing.PrintDocument
+    Friend WithEvents userNotePage As TabPage
+    Friend WithEvents noteText As TextBox
 End Class

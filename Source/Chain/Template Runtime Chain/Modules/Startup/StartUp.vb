@@ -25,7 +25,7 @@ Namespace AreaCommon
             log.trackIntoConsole("System bootstrap " & atMomentGMT() & " (gmt)")
             log.trackIntoConsole()
 
-            state.service = Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.starting
+            state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.starting
         End Sub
 
 
@@ -172,11 +172,13 @@ Namespace AreaCommon
             log.track("startUp.runApplication", "Begin")
 
             Try
-                state.service = Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.started
+                state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.started
+
+                state.serviceState.init()
 
                 Do
                     Application.DoEvents()
-                Loop While (state.service <> Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.shutDown)
+                Loop While (state.service <> CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown)
             Catch ex As Exception
                 log.track("startUp.runApplication", "Error:" & ex.Message, "fatal")
 
@@ -217,25 +219,6 @@ Namespace AreaCommon
             Finally
                 log.track("startUp.acquireIPAddress", "Completed")
             End Try
-        End Sub
-
-
-        Private Sub analyzeInternalState()
-            Dim dataCommon As New TransactionChainLibrary.AreaEngine.Ledger.Common.NetworkChain
-
-            dataCommon.chainName = state.information.chainName
-            dataCommon.networkName = state.information.networkName
-
-            With state.component
-                .storage.init(dataCommon, paths, settings.data.walletAddress)
-                .previousVolume.init(dataCommon, paths, settings.data.walletAddress)
-                .currentVolume.init(dataCommon, paths, settings.data.walletAddress)
-                .stateDB.init(dataCommon, paths, settings.data.walletAddress)
-
-                'state.component.nodes.init(state.information.chainName, paths, settings.data.walletAddress)
-            End With
-
-            state.serviceState.init()
         End Sub
 
 
@@ -288,7 +271,7 @@ Namespace AreaCommon
                 If webServiceThread(True) Then
                     log.trackIntoConsole("Service is in run")
 
-                    analyzeInternalState()
+                    'analyzeInternalState()
                     runApplication()
                 Else
                     log.trackIntoConsole("Problem during start service")
@@ -334,7 +317,7 @@ Namespace AreaCommon
 
                 log.track("startUp.[Stop]", "Begin")
 
-                state.service = Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.shutDown
+                state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown
 
                 log.track("startUp.[Stop]", "Complete")
 

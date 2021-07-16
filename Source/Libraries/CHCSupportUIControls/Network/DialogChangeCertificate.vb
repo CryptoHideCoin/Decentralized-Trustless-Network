@@ -35,12 +35,12 @@ Public Class DialogChangeCertificate
     Private Sub certificateChange_Confirm() Handles certificateChange.Confirm
         Try
             Dim url As String = ""
-            Dim changeData As New AreaCommon.Models.Security.changeCertificate
-            Dim webSender As New ProxyWS(Of AreaCommon.Models.Security.changeCertificate)
+            Dim changeData As New CHCProtocolLibrary.AreaCommon.Models.Security.changeCertificate
+            Dim webSender As New ProxyWS(Of CHCProtocolLibrary.AreaCommon.Models.Security.changeCertificate)
 
             changeData.currentCertificate = _Certificate
             changeData.newCertificate = certificateChange.certificate
-            changeData.typeCommunication = AreaCommon.Models.Security.enumOfService.client
+            changeData.typeCommunication = CHCProtocolLibrary.AreaCommon.Models.Security.enumOfService.client
 
             changeData.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKey, _Certificate)
 

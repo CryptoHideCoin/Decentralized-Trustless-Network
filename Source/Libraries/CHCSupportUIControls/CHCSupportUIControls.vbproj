@@ -54,10 +54,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCServerSupportLibrary">
       <HintPath>..\..\packages\CHCServerSupportLibrary\CHCServerSupportLibrary.dll</HintPath>
     </Reference>
@@ -90,7 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\PrintWalletCreatedEngine.vb" />
-    <Compile Include="Classes\WalletEngine.vb" />
     <Compile Include="Keystore\ConfigurePath.Designer.vb">
       <DependentUpon>ConfigurePath.vb</DependentUpon>
     </Compile>
@@ -115,7 +110,6 @@
     <Compile Include="Keystore\PrivateKey.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Models\SecurityModel.vb" />
     <Compile Include="Network\Base\SelectPort.Designer.vb">
       <DependentUpon>SelectPort.vb</DependentUpon>
     </Compile>
@@ -274,6 +268,15 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CHCProtocolLibrary\CHCProtocolLibrary.vbproj">
+      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
+      <Name>CHCProtocolLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

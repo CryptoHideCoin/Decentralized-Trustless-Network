@@ -5,7 +5,7 @@ Imports CHCCommonLibrary.AreaCommon.Models
 
 
 
-Namespace AreaCommon.Models.ServiceModel
+Namespace AreaCommon.Models.Service
 
 
     Public Class InformationResponseModel

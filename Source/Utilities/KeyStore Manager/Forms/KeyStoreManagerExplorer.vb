@@ -13,41 +13,13 @@ Public Class KeyStoreManagerExplorer
                 pathData = AreaCommon.paths.pathWalletData
 
                 mainWalletAddressList.dataPath = pathData
+
+                mainWalletAddressList.autonomous = True
             Else
                 End
             End If
         Catch ex As Exception
             MessageBox.Show("An error occurrent during Main_Load " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    Private Sub mainWalletAddressList_RequestAddNew() Handles mainWalletAddressList.RequestAddNew
-        Try
-            Dim form As New WalletAddressDetailForm
-
-            form.pathData = pathData
-
-            form.ShowDialog(Me)
-        Catch ex As Exception
-        End Try
-    End Sub
-
-    Private Sub mainWalletAddressList_RequestUpdate(UUID As String) Handles mainWalletAddressList.RequestUpdate
-        Try
-            Dim form As New WalletAddressDetailForm
-
-            form.pathData = pathData
-            form.loadData(UUID)
-
-            If Not form.closeMe Then
-                form.ShowDialog(Me)
-            End If
-
-            form.Close()
-            form.Dispose()
-
-            form = Nothing
-        Catch ex As Exception
         End Try
     End Sub
 

@@ -6,14 +6,6 @@ Namespace AreaEngine.Ledger
 
     Namespace Common
 
-        Public Enum enumCheckResult
-
-            notDefined
-            checkControlPassed
-            checkControlNotPassed
-
-        End Enum
-
         Public Class NetworkChain
 
             Public Property networkName As String = ""

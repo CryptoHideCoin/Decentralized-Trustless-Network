@@ -5,6 +5,7 @@ Imports System.ComponentModel
 Imports CHCBasicCryptographyLibrary.AreaEngine
 Imports CHCProtocolLibrary.AreaWallet.Support
 Imports CHCCommonLibrary.AreaEngine.Communication
+Imports CHCProtocolLibrary.AreaCommon
 
 
 
@@ -211,7 +212,7 @@ Public Class Main
            (serviceCertificate.value.Trim.Length > 0) And
            (adminWalletAddress.value.Trim.Length > 0) Then
             Try
-                Dim remote As New ProxyWS(Of AreaCommon.Models.ServiceModel.InformationResponseModel)
+                Dim remote As New ProxyWS(Of Models.Service.InformationResponseModel)
                 Dim privateKeyValue As String = adminWalletAddress.privateKey
 
                 If (privateKeyValue.Length = 0) Then
@@ -229,12 +230,12 @@ Public Class Main
                         walletAddressText.Text = remote.data.adminPublicAddress
 
                         Select Case remote.data.currentStatus
-                            Case AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.notDefined : currentStatusText.Text = "Not defined"
-                            Case AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.shutDown : currentStatusText.Text = "Shutdown"
-                            Case AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.started : currentStatusText.Text = "Started"
-                            Case AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.starting : currentStatusText.Text = "Starting"
-                            Case AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.swithOff : currentStatusText.Text = "Switch off"
-                            Case AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.waitToMaintenance : currentStatusText.Text = "Wait to maintenance"
+                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.notDefined : currentStatusText.Text = "Not defined"
+                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown : currentStatusText.Text = "Shutdown"
+                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.started : currentStatusText.Text = "Started"
+                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.starting : currentStatusText.Text = "Starting"
+                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.swithOff : currentStatusText.Text = "Switch off"
+                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.waitToMaintenance : currentStatusText.Text = "Wait to maintenance"
                         End Select
 
                         chainNameText.Text = remote.data.chainName
@@ -276,7 +277,7 @@ Public Class Main
 
         If (serviceUrlProtocol.baseUrlComplete.Trim.Length > 0) Then
             Try
-                Dim remote As New ProxyWS(Of AreaCommon.Models.ServiceModel.SupportedProtocolsResponseModel)
+                Dim remote As New ProxyWS(Of Models.Service.SupportedProtocolsResponseModel)
 
                 remote.url = serviceUrlProtocol.baseUrlComplete & "/api/" & serviceIDText.Text & "/service/supportedProtocols"
 
@@ -285,6 +286,8 @@ Public Class Main
                 If (remote.getData() = "") Then
                     If (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete) Then
                         protocolList.Text = String.Join(vbNewLine, remote.data.protocols)
+                        requestProtocolTimeText.Text = rt.ToString()
+                        responseProtocolTimeText.Text = remote.data.responseTime
                     ElseIf (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.systemOffline) Then
                         MessageBox.Show("Peer is offline", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     ElseIf (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.missingAuthorization) Then
@@ -421,10 +424,6 @@ Public Class Main
         Me.Cursor = Cursors.Default
     End Sub
 
-    Private Sub serviceCertificate_Load(sender As Object, e As EventArgs) Handles serviceCertificate.Load
-
-    End Sub
-
     Private Sub serviceUrlProtocol_TextChanged() Handles serviceUrlProtocol.TextChanged
         serviceCertificate.urlService = serviceUrlProtocol.baseUrlComplete
     End Sub
@@ -450,6 +449,8 @@ Public Class Main
     Private Sub mainTab_SelectedIndexChanged(sender As Object, e As EventArgs) Handles mainTab.SelectedIndexChanged
         mainTab.TabPages(1).Enabled = _SystemActive
         mainTab.TabPages(2).Enabled = _SystemActive
+        mainTab.TabPages(3).Enabled = _SystemActive
+        mainTab.TabPages(4).Enabled = _SystemActive
     End Sub
 
     Private Sub connectServiceButton_Click(sender As Object, e As EventArgs) Handles connectServiceButton.Click
@@ -464,14 +465,6 @@ Public Class Main
                 adminWalletAddress.dataPath = AreaCommon.paths.pathKeystore
             End If
         End If
-    End Sub
-
-    Private Sub serviceUrlProtocol_Load(sender As Object, e As EventArgs) Handles serviceUrlProtocol.Load
-
-    End Sub
-
-    Private Sub adminWalletAddress_Load(sender As Object, e As EventArgs) Handles adminWalletAddress.Load
-
     End Sub
 
     Private Sub serviceCertificate_LockScreen() Handles serviceCertificate.LockScreen
@@ -499,5 +492,171 @@ Public Class Main
         End Try
     End Sub
 
+    Private Function decodeComponentPosition(ByVal value As Models.Administration.EnumDataPosition) As String
+        Select Case value
+            Case Models.Administration.EnumDataPosition.checkControlNotPassed : Return "Check control not passed"
+            Case Models.Administration.EnumDataPosition.checkControlPassed : Return "Check control passed"
+            Case Models.Administration.EnumDataPosition.missing : Return "Missing"
+            Case Else : Return "Not checked"
+        End Select
+    End Function
+
+    Private Sub refreshMonitor()
+
+        If (serviceUrlProtocol.baseUrlComplete.Trim.Length > 0) And
+           (serviceCertificate.value.Trim.Length > 0) And
+           (adminWalletAddress.value.Trim.Length > 0) Then
+            Try
+                Dim remote As New ProxyWS(Of Models.Administration.ServiceStateResponse)
+                Dim privateKeyValue As String = adminWalletAddress.privateKey
+
+                If (privateKeyValue.Length = 0) Then
+                    Return
+                End If
+
+                Dim signature As String = WalletAddressEngine.createSignature(privateKeyValue, serviceCertificate.value)
+
+                remote.url = serviceUrlProtocol.baseUrlComplete & "/api/" & serviceIDText.Text & "/administration/serviceState/?signature=" & signature
+
+                Dim rt As DateTime = Now
+
+                If (remote.getData() = "") Then
+                    If (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete) Then
+
+                        Select Case remote.data.servicePosition
+                            Case Models.Administration.EnumServicePosition.offline : servicePositionText.Text = "Offline"
+                            Case Models.Administration.EnumServicePosition.online : servicePositionText.Text = "Online"
+                            Case Models.Administration.EnumServicePosition.requestToConnection : servicePositionText.Text = "Request to connection"
+                            Case Models.Administration.EnumServicePosition.requestToDisconnection : servicePositionText.Text = "Request to disconnection"
+                        End Select
+
+                        Select Case remote.data.currentRunCommand
+                            Case Models.Administration.EnumActionAdministration.buildNetwork : currentOperationText.Text = "Build network"
+                            Case Models.Administration.EnumActionAdministration.checkTrustedNodelist : currentOperationText.Text = "Check trusted node list"
+                            Case Models.Administration.EnumActionAdministration.cleanLocalData : currentOperationText.Text = "Clean local data"
+                            Case Models.Administration.EnumActionAdministration.downloadHistory : currentOperationText.Text = "Download history"
+                            Case Models.Administration.EnumActionAdministration.rebuildState : currentOperationText.Text = "Rebuild state"
+                            Case Models.Administration.EnumActionAdministration.requestNetworkConnection : currentOperationText.Text = "Request network connection"
+                            Case Models.Administration.EnumActionAdministration.requestNetworkDisconnect : currentOperationText.Text = "Request network disconnect"
+                            Case Models.Administration.EnumActionAdministration.resumeSystemFirstNode : currentOperationText.Text = "Resume system first node"
+                            Case Models.Administration.EnumActionAdministration.setTrustedIPAddress : currentOperationText.Text = "Set trusted ip address"
+                            Case Models.Administration.EnumActionAdministration.synchroNetwork : currentOperationText.Text = "Synchronize network"
+                            Case Models.Administration.EnumActionAdministration.verifyData : currentOperationText.Text = "Verify data"
+                            Case Models.Administration.EnumActionAdministration.requestNetworkDisconnect : currentOperationText.Text = "Request network disconnect"
+                            Case Models.Administration.EnumActionAdministration.notDefined : currentOperationText.Text = "Nothing operation run"
+                        End Select
+
+                        cancelOperationText.Text = remote.data.requestCancelCurrentRunCommand
+
+                        requestMonitorTimeText.Text = rt.ToString()
+                        responseMonitorTimeText.Text = remote.data.responseTime
+
+                        codeActionText.Text = remote.data.currentAction.codeAction
+                        descriptionActionText.Text = remote.data.currentAction.descriptionAction
+                        codeErrorText.Text = remote.data.currentAction.codeError
+                        descriptionErrorText.Text = remote.data.currentAction.descriptionError
+
+                        For Each item In remote.data.componentPosition
+                            Select Case item.element
+                                Case Models.Administration.EnumDataElement.storage : storageText.Text = decodeComponentPosition(item.position)
+                                Case Models.Administration.EnumDataElement.previousWork : previousVolumeText.Text = decodeComponentPosition(item.position)
+                                Case Models.Administration.EnumDataElement.currentWork : currentWorkText.Text = decodeComponentPosition(item.position)
+                                Case Models.Administration.EnumDataElement.state : stateText.Text = decodeComponentPosition(item.position)
+                                Case Models.Administration.EnumDataElement.nodeList : nodeListText.Text = decodeComponentPosition(item.position)
+                            End Select
+                        Next
+
+                        buildNetworkButton.Enabled = False : checkTrustedNodeListButton.Enabled = False
+                        cleanLocalDataButton.Enabled = False : downloadHistoryButton.Enabled = False
+                        rebuildStateButton.Enabled = False : requestNetworkConnectionButton.Enabled = False
+                        abortCurrentCommandButton.Enabled = False : resumeSystemFirstNodeButton.Enabled = False
+                        setTrustedIPAddressButton.Enabled = False : synchroNetworkButton.Enabled = False
+                        verifyButton.Enabled = False
+
+                        For Each item In remote.data.listAvailableCommand
+                            Select Case item
+                                Case Models.Administration.EnumActionAdministration.buildNetwork : buildNetworkButton.Enabled = True
+                                Case Models.Administration.EnumActionAdministration.checkTrustedNodelist : checkTrustedNodeListButton.Enabled = True
+                                Case Models.Administration.EnumActionAdministration.cleanLocalData : cleanLocalDataButton.Enabled = True
+                                Case Models.Administration.EnumActionAdministration.downloadHistory : downloadHistoryButton.Enabled = True
+                                Case Models.Administration.EnumActionAdministration.rebuildState : rebuildStateButton.Enabled = True
+                                Case Models.Administration.EnumActionAdministration.requestNetworkConnection : requestNetworkConnectionButton.Enabled = True
+                                Case Models.Administration.EnumActionAdministration.requestNetworkDisconnect : abortCurrentCommandButton.Enabled = True
+                                Case Models.Administration.EnumActionAdministration.resumeSystemFirstNode : resumeSystemFirstNodeButton.Enabled = True
+                                Case Models.Administration.EnumActionAdministration.setTrustedIPAddress : setTrustedIPAddressButton.Enabled = True
+                                Case Models.Administration.EnumActionAdministration.synchroNetwork : synchroNetworkButton.Enabled = True
+                                Case Models.Administration.EnumActionAdministration.verifyData : verifyButton.Enabled = True
+                                Case Models.Administration.EnumActionAdministration.requestNetworkDisconnect : requestNetworkDisconnect.Enabled = True
+                                Case Models.Administration.EnumActionAdministration.cancelCurrentAction : abortCurrentCommandButton.Enabled = True
+                            End Select
+                        Next
+
+                    ElseIf (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.systemOffline) Then
+                        MessageBox.Show("Peer is offline", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    ElseIf (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.missingAuthorization) Then
+                        MessageBox.Show("Unauthorize access", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Else
+                        MessageBox.Show("Remote Error", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                Else
+                    MessageBox.Show("Connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            Catch ex As Exception
+                MessageBox.Show("Connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        Else
+            MessageBox.Show("Select URL of service / Certificate / Admin Wallet Address", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+    End Sub
+
+    Private Sub refreshDataMonitor_Click(sender As Object, e As EventArgs) Handles refreshDataMonitor.Click
+        refreshMonitor()
+    End Sub
+
+    Private Sub verifyButton_Click(sender As Object, e As EventArgs) Handles verifyButton.Click
+
+        If (serviceUrlProtocol.baseUrlComplete.Trim.Length > 0) And
+           (serviceCertificate.value.Trim.Length > 0) And
+           (adminWalletAddress.value.Trim.Length > 0) Then
+            Try
+                Dim remote As New ProxyWS(Of Models.Service.InformationResponseModel)
+                Dim privateKeyValue As String = adminWalletAddress.privateKey
+
+                If (privateKeyValue.Length = 0) Then
+                    Return
+                End If
+
+                Dim signature As String = WalletAddressEngine.createSignature(privateKeyValue, serviceCertificate.value)
+
+                remote.url = serviceUrlProtocol.baseUrlComplete & "/api/" & serviceIDText.Text & "/administration/doAction/verifyData/?signature=" & signature
+
+                Dim rt As DateTime = Now
+
+                If (remote.getData() = "") Then
+                    If (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete) Then
+                        MessageBox.Show("Verify data operation start", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        refreshMonitor()
+                    ElseIf (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.commandNotAllowed) Then
+                        MessageBox.Show("Command not allowed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    ElseIf (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.systemOffline) Then
+                        MessageBox.Show("Peer is offline", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    ElseIf (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.missingAuthorization) Then
+                        MessageBox.Show("Unauthorize access", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Else
+                        MessageBox.Show("Remote Error", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                Else
+                    MessageBox.Show("Connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            Catch ex As Exception
+                MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        Else
+            MessageBox.Show("Select URL of service / Certificate / Admin Wallet Address", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+    End Sub
 
 End Class

@@ -4,6 +4,7 @@ Option Explicit On
 Imports System.Web.Http
 
 Imports CHCCommonLibrary.AreaCommon.Models.General
+Imports CHCProtocolLibrary.AreaCommon
 
 
 
@@ -20,12 +21,12 @@ Namespace Controllers
 
 
 
-        Public Function GetValue(ByVal signature As String) As AreaCommon.Models.ServiceModel.InformationResponseModel
-            Dim result As New AreaCommon.Models.ServiceModel.InformationResponseModel
+        Public Function GetValue(ByVal signature As String) As Models.Service.InformationResponseModel
+            Dim result As New Models.Service.InformationResponseModel
             Try
                 result.requestTime = Now
 
-                If (AreaCommon.state.service = AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.started) Then
+                If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
                     If AreaSecurity.checkSignature(signature) Then
                         result.adminPublicAddress = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).publicAddress
                         result.currentStatus = AreaCommon.state.service

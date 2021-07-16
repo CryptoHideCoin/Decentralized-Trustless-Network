@@ -55,8 +55,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCServerSupportLibrary">
-      <HintPath>..\packages\CHCServerSupportLibrary\CHCServerSupportLibrary.dll</HintPath>
+    <Reference Include="CHCServerSupportLibrary, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\CHCServerSupportLibrary\CHCServerSupportLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCSupportUIControls, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\CHCSupportUIControls\CHCSupportUIControls.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -99,7 +104,25 @@
     <Compile Include="Classes\Application\AppState.vb" />
     <Compile Include="Classes\Application\Customize.vb" />
     <Compile Include="Classes\Application\ManageCommandLine.vb" />
-    <Compile Include="Controllers\Administration\DoActionController.vb" />
+    <Compile Include="Classes\Protocol\A0\A0x0Engine.vb" />
+    <Compile Include="Classes\Protocol\A0\A0x1Engine.vb" />
+    <Compile Include="Classes\Protocol\A0\A0x2Engine.vb" />
+    <Compile Include="Classes\Protocol\A0\A0x3Engine.vb" />
+    <Compile Include="Classes\Protocol\A0\A0x4Engine.vb" />
+    <Compile Include="Classes\Protocol\A0\A0x5Engine.vb" />
+    <Compile Include="Classes\Protocol\A0\A0x6Engine.vb" />
+    <Compile Include="Classes\Protocol\A0\A0x7Engine.vb" />
+    <Compile Include="Classes\Protocol\A1\A1x0Engine.vb" />
+    <Compile Include="Classes\Protocol\A1\A1x1Engine.vb" />
+    <Compile Include="Classes\Protocol\A1\A1x2Engine.vb" />
+    <Compile Include="Classes\Protocol\A1\A1x3Engine.vb" />
+    <Compile Include="Classes\Protocol\A1\A1x4Engine.vb" />
+    <Compile Include="Classes\Protocol\A1\A1x5Engine.vb" />
+    <Compile Include="Classes\Protocol\A1\A1x6Engine.vb" />
+    <Compile Include="Classes\Protocol\A2\A2x0Engine.vb" />
+    <Compile Include="Classes\State\ChainStateEngine.vb" />
+    <Compile Include="Controllers\Administration\DoAction\DoActionBuildNetworkController.vb" />
+    <Compile Include="Controllers\Administration\DoAction\VerifyDataController.vb" />
     <Compile Include="Controllers\Administration\ServiceStateController.vb" />
     <Compile Include="Controllers\QoS\Page\DataPageController.vb" />
     <Compile Include="Controllers\QoS\Page\PageInformationController.vb" />
@@ -130,13 +153,12 @@
     <Compile Include="Forms\Settings.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Models\AdministrationModel.vb" />
     <Compile Include="Models\NetworkModel.vb" />
     <Compile Include="Models\QosModel.vb" />
-    <Compile Include="Models\SecurityModel.vb" />
-    <Compile Include="Models\ServiceModel.vb" />
+    <Compile Include="Modules\Service\BuildNetworkData.vb" />
     <Compile Include="Modules\Service\Network.vb" />
     <Compile Include="Modules\Service\Security.vb" />
+    <Compile Include="Modules\Service\VerifyData.vb" />
     <Compile Include="Modules\Startup\Bootstrap.vb" />
     <Compile Include="Modules\Basic\Common.vb" />
     <Compile Include="Modules\Basic\Controllers.vb" />
@@ -200,10 +222,6 @@
     <ProjectReference Include="..\..\Libraries\CHCProtocolLibrary\CHCProtocolLibrary.vbproj">
       <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
       <Name>CHCProtocolLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\CHCSupportUIControls\CHCSupportUIControls.vbproj">
-      <Project>{2b477a78-3139-4570-bb5e-3fc09475c316}</Project>
-      <Name>CHCSupportUIControls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\TransactionChain.Ledger\TransactionChainLibrary.vbproj">
       <Project>{f363e384-0372-480a-92a6-0031fd8456f7}</Project>

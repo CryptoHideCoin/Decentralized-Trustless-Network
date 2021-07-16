@@ -2,7 +2,6 @@
 Option Explicit On
 
 Imports System.Web.Http
-Imports CHCProtocolLibrary.AreaCommon.Models.Settings
 Imports CHCServerSupportLibrary.Support
 
 
@@ -25,7 +24,6 @@ Namespace AreaCommon
             log.track("Controllers.StartWebService", "Begin")
 
             Try
-
                 Dim httpConfig As HttpSelfHostConfiguration
 
                 If (_portNumber = "0") Then
@@ -40,39 +38,34 @@ Namespace AreaCommon
                     httpConfig.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & settings.data.serviceId & "/service/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="SecurityApi", routeTemplate:="api/" & settings.data.serviceId & "/security/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="AdministrationApi", routeTemplate:="api/" & settings.data.serviceId & "/administration/{controller}")
+                    httpConfig.Routes.MapHttpRoute(name:="AdministrationDoActionApi", routeTemplate:="api/" & settings.data.serviceId & "/administration/doAction/{controller}")
                 Else
                     httpConfig.Routes.MapHttpRoute(name:="QoSTicketApi", routeTemplate:="api/" & settings.data.serviceId & "/qos/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="SystemApi", routeTemplate:="api/v1.0/System/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="NetworkApi", routeTemplate:="api/v1.0/Network/{controller}")
                 End If
 
-
                 log.track("Controllers.StartWebService", "Map route")
 
                 Using server As New HttpSelfHostServer(httpConfig)
-
                     Try
-
                         log.track("Controllers.StartWebService", "Enter in the using")
 
                         server.OpenAsync().Wait()
 
                         log.track("Controllers.StartWebService", "WS Listen")
                         log.track("Controllers.StartWebService", "Webservice Run at " & _portNumber & " port")
-
                     Catch aggEx As AggregateException
-
                         log.track("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion - Error:" & aggEx.Message, "fatal")
 
                         closeApplication()
-
                     End Try
 
                     _controllerComplete = True
 
                     Do
                         Application.DoEvents()
-                    Loop Until (AreaCommon.state.service = AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.shutDown)
+                    Loop Until (state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown)
 
                     server.CloseAsync().Wait()
                     server.Dispose()
@@ -83,8 +76,7 @@ Namespace AreaCommon
 
                 registry.addNew(RegistryEngine.RegistryData.TypeEvent.applicationShutdown)
 
-                state.service = AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.starting
-
+                state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.starting
             Catch ex As Exception
                 log.track("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion - Error:" & ex.Message, "fatal")
 
@@ -102,7 +94,6 @@ Namespace AreaCommon
             log.track("Controllers.WebserviceThread", "Begin")
 
             Try
-
                 Dim objWS As New Threading.Thread(AddressOf startWebService)
 
                 If useServicePort Then
@@ -120,7 +111,6 @@ Namespace AreaCommon
                 Loop
 
                 Return True
-
             Catch ex As Exception
                 log.track("Controllers.WebserviceThread", "Error:" & ex.Message, "fatal")
 

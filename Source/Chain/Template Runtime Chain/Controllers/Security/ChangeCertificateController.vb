@@ -5,6 +5,7 @@ Imports System.Web.Http
 Imports CHCBasicCryptographyLibrary.AreaEngine
 Imports CHCProtocolLibrary.AreaWallet.Support
 Imports CHCCommonLibrary.AreaCommon.Models
+Imports CHCProtocolLibrary.AreaCommon
 
 
 
@@ -21,13 +22,13 @@ Namespace Controllers
 
 
 
-        Public Function PutValue(<FromBody()> ByVal value As AreaCommon.Models.Security.changeCertificate) As General.RemoteResponse
+        Public Function PutValue(<FromBody()> ByVal value As Models.Security.changeCertificate) As General.RemoteResponse
             Dim result As New General.RemoteResponse
 
             result.requestTime = Now
 
             Try
-                If (AreaCommon.state.service = AreaCommon.Models.ServiceModel.InformationResponseModel.EnumInternalServiceState.started) Then
+                If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
                     If AreaSecurity.checkSignature(value.signature) Then
                         If AreaSecurity.changeCertificate(value) Then
                             result.responseStatus = General.RemoteResponse.EnumResponseStatus.responseComplete

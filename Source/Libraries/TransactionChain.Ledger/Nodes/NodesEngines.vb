@@ -197,8 +197,10 @@ Namespace AreaEngine.Ledger
             End Class
 
 
-            Public Property generalState As Common.enumCheckResult = Common.enumCheckResult.notDefined
+            Public Property generalState As CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.notChecked
             Public Property nodeChainEngine As New NodeChainTrustedEngine
+            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
             Public ReadOnly Property problemDescription As String
                 Get
@@ -211,15 +213,38 @@ Namespace AreaEngine.Ledger
             End Property
 
 
-            Public Sub init(ByRef networkReferement As Common.NetworkChain, ByRef paths As AreaSystem.VirtualPathEngine, ByRef walletIDOwner As String)
-                nodeChainEngine.fileName = IO.Path.Combine(paths.workData.state, "NodeChain.Trusted")
+            Public Function init(ByRef networkReferement As Common.NetworkChain, ByRef paths As AreaSystem.VirtualPathEngine, ByRef walletIDOwner As String) As Boolean
+                Try
+                    log.track("NodesEngine.init", "Begin")
 
-                If nodeChainEngine.fileCorrupted Or nodeChainEngine.mismatchedSignature Then
-                    generalState = Common.enumCheckResult.checkControlNotPassed
-                Else
-                    generalState = Common.enumCheckResult.checkControlPassed
-                End If
-            End Sub
+                    serviceState.currentAction.setAction("0x0005", "VerifyData - Nodelist")
+
+                    nodeChainEngine.fileName = IO.Path.Combine(paths.workData.state, "NodeChain.Trusted")
+
+                    If serviceState.requestCancelCurrentRunCommand Then Return False
+
+                    If nodeChainEngine.fileCorrupted Or nodeChainEngine.mismatchedSignature Then
+
+                        generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
+                    Else
+                        If nodeChainEngine.fileExist() Then
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
+                        Else
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.missing
+                        End If
+                    End If
+
+                    log.track("NodesEngine.init", "NodesEngine.init complete")
+
+                    Return True
+                Catch ex As Exception
+                    serviceState.currentAction.setError(Err.Number, ex.Message)
+
+                    log.track("NodesEngine.analyzeInternalState", "Error:" & ex.Message, "fatal")
+
+                    Return False
+                End Try
+            End Function
 
         End Class
 

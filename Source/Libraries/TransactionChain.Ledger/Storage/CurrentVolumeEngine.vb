@@ -177,7 +177,7 @@ Namespace AreaEngine.Ledger
 
                 Private _problemDescription As String = ""
 
-                Public Property generalState As Common.enumCheckResult = Common.enumCheckResult.notDefined
+                Public Property generalState As CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.notChecked
                 Public ReadOnly Property problemDescription As String
                     Get
                         Return _problemDescription
@@ -343,7 +343,7 @@ Namespace AreaEngine.Ledger
                             result = verifyBlock(pathCurrentVolume, item)
 
                             If Not result.fileBlockExist Or Not result.fileBlockIntact Then
-                                generalState = Common.enumCheckResult.checkControlNotPassed
+                                generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
 
                                 Return
                             End If
@@ -357,14 +357,16 @@ Namespace AreaEngine.Ledger
 
             Private _currentVolumesEngine As New CurrentVolumeFileEngine
 
-            Public Property generalState As Common.enumCheckResult = Common.enumCheckResult.notDefined
+            Public Property generalState As CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.notChecked
             Public Property currentVolumesIndex As New CurrentVolumesIndexEngine
+            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
             Public ReadOnly Property problemDescription As String
                 Get
                     If Not currentVolumesIndex.filePreviousVolumesIndexCorrect Then
                         Return currentVolumesIndex.problemDescription
-                    ElseIf (_currentVolumesEngine.generalState = Common.enumCheckResult.checkControlNotPassed) Then
+                    ElseIf (_currentVolumesEngine.generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed) Then
                         Return _currentVolumesEngine.problemDescription
                     Else
                         Return ""
@@ -372,19 +374,43 @@ Namespace AreaEngine.Ledger
                 End Get
             End Property
 
-            Public Sub init(ByRef networkReferement As Common.NetworkChain, ByRef paths As AreaSystem.VirtualPathEngine, ByRef walletIDOwner As String)
-                currentVolumesIndex.fileName = IO.Path.Combine(paths.workData.currentVolume.path, "CurrentVolumes.Index")
+            Public Function init(ByRef networkReferement As Common.NetworkChain, ByRef paths As AreaSystem.VirtualPathEngine, ByRef walletIDOwner As String) As Boolean
+                Try
+                    log.track("CurrentVolumeEngine.init", "Begin")
 
-                currentVolumesIndex.init(networkReferement, walletIDOwner)
+                    serviceState.currentAction.setAction("0x0003", "VerifyData - Current - Work")
 
-                If currentVolumesIndex.fileCorrupted Or currentVolumesIndex.mismatchedSignature Then
-                    generalState = Common.enumCheckResult.checkControlNotPassed
-                ElseIf Not currentVolumesIndex.fileExist Then
-                    _currentVolumesEngine.init(paths.workData.previousVolume.path, currentVolumesIndex)
+                    currentVolumesIndex.fileName = IO.Path.Combine(paths.workData.currentVolume.path, "CurrentVolumes.Index")
 
-                    generalState = _currentVolumesEngine.generalState
-                End If
-            End Sub
+                    If serviceState.requestCancelCurrentRunCommand Then Return False
+
+                    currentVolumesIndex.init(networkReferement, walletIDOwner)
+
+                    log.track("CurrentVolumeEngine.init", "CurrentVolumeEngine.init complete")
+
+                    If currentVolumesIndex.fileCorrupted Or currentVolumesIndex.mismatchedSignature Then
+                        If currentVolumesIndex.fileExist Then
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
+                        Else
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.missing
+                        End If
+                    Else
+                        log.track("CurrentVolumeEngine.init", "CurrentVolumeEngine exist")
+
+                        _currentVolumesEngine.init(paths.workData.previousVolume.path, currentVolumesIndex)
+
+                        generalState = _currentVolumesEngine.generalState
+                    End If
+
+                    Return generalState
+                Catch ex As Exception
+                    serviceState.currentAction.setError(Err.Number, ex.Message)
+
+                    log.track("CurrentVolumeEngine.init", "Error:" & ex.Message, "fatal")
+
+                    Return False
+                End Try
+            End Function
 
         End Class
 

@@ -184,18 +184,6 @@ Public Class CustomizeWalletAddress
 
     End Sub
 
-    Private Sub CustomizeWalletButton_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-
-        'Try
-        '    mainTab.Width = Me.Width - 141
-        '    mainTab.Height = Me.Height - 117
-        '    mainTab.Visible = True
-        'Catch ex As Exception
-        '    mainTab.Visible = False
-        'End Try
-
-    End Sub
-
     Private Sub rawPage_Resize(sender As Object, e As EventArgs) Handles rawPage.Resize
 
         Return
@@ -223,7 +211,7 @@ Public Class CustomizeWalletAddress
         Try
             seedValueTextArea.Text = ""
 
-            With CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createNew()
+            With WalletAddressEngine.createNew()
 
                 userKeyPair.noCheck = True
                 userKeyPair.privateKey = .official.privateKey
@@ -248,7 +236,7 @@ Public Class CustomizeWalletAddress
 
     Private Sub createWalletFromSeedButton_Click(sender As Object, e As EventArgs) Handles createWalletFromSeedButton.Click
         Try
-            With CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createNew(seedValueTextArea.Text.Replace(" ", "+"), False)
+            With WalletAddressEngine.createNew(seedValueTextArea.Text.Replace(" ", "+"), False)
 
                 userKeyPair.noCheck = True
                 userKeyPair.privateKey = .official.privateKey
@@ -321,7 +309,7 @@ Public Class CustomizeWalletAddress
             End If
         End If
 
-        If (CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.extractPrivateKeyRAW(userKeyPair.privateKeyText.Text).Length > 0) Then
+        If (WalletAddressEngine.extractPrivateKeyRAW(userKeyPair.privateKeyText.Text).Length > 0) Then
             Return True
         Else
             MessageBox.Show("The format of PrivateKey is wrong", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -356,9 +344,13 @@ Public Class CustomizeWalletAddress
                 engine.data.authorizationKey = ""
             End If
 
+            engine.data.publicRAWAddress = rawKeyPair.publicKeyText.Text
             engine.data.privateRAWKey = rawKeyPair.privateKeyText.Text
+            engine.data.note = noteText.Text
 
-            engine.save()
+            If Not engine.save() Then
+                MessageBox.Show("Problem during save information", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
         Catch ex As Exception
             MessageBox.Show("Problem during save information", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -399,7 +391,7 @@ Public Class CustomizeWalletAddress
                     repeatAuthorizationKeyTextArea.Text = engine.data.authorizationKey
                 End If
 
-                With CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createNew(engine.data.privateRAWKey, True)
+                With WalletAddressEngine.createNew(engine.data.privateRAWKey, True, engine.data.publicRAWAddress)
                     userKeyPair.noCheck = True
                     userKeyPair.privateKeyText.Text = .official.privateKey
                     userKeyPair.publicKeyText.Text = .official.publicKey
@@ -409,6 +401,8 @@ Public Class CustomizeWalletAddress
                     rawKeyPair.publicKeyText.Text = .raw.publicKey
                     rawKeyPair.noCheck = False
                 End With
+
+                noteText.Text = engine.data.note
 
                 manageAdvanceButton()
             Else
@@ -441,14 +435,6 @@ Public Class CustomizeWalletAddress
 
             RaiseEvent CloseMe()
         End If
-    End Sub
-
-    Private Sub seedPage_Click(sender As Object, e As EventArgs) Handles seedPage.Click
-
-    End Sub
-
-    Private Sub rawKeyPair_Load(sender As Object, e As EventArgs) Handles rawKeyPair.Load
-
     End Sub
 
     Private Sub paperWalletButton_Click(sender As Object, e As EventArgs) Handles paperWalletButton.Click

@@ -1,11 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfKeyStoreItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <KeyStoreItem>
-    <name>Administration Chain Primary</name>
-    <uuid>0bfd7185-bd02-468e-a525-318fddaad4c0</uuid>
-  </KeyStoreItem>
-  <KeyStoreItem>
-    <name>Warranty Chain Primary</name>
-    <uuid>da8710b9-8259-401a-8e6e-08303d38bd4d</uuid>
-  </KeyStoreItem>
-</ArrayOfKeyStoreItem>
+<ArrayOfKeyStoreItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />

@@ -26,7 +26,6 @@ E:\CryptoHideCoinDTN\Source\CHCProtocolLibrary\obj\Debug\CHCProtocolLibrary.vbpr
 E:\CryptoHideCoinDTN\Source\CHCProtocolLibrary\obj\Debug\CHCProtocolLibrary.dll
 E:\CryptoHideCoinDTN\Source\CHCProtocolLibrary\obj\Debug\CHCProtocolLibrary.xml
 E:\CryptoHideCoinDTN\Source\CHCProtocolLibrary\obj\Debug\CHCProtocolLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\CHCProtocolLibrary\obj\Debug\CHCProtocolLibrary.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\Libraries\CHCProtocolLibrary\obj\Debug\CHCProtocolLibrary.Resources.resources
 E:\CryptoHideCoinDTN\Source\Libraries\CHCProtocolLibrary\obj\Debug\CHCProtocolLibrary.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Libraries\CHCProtocolLibrary\bin\Debug\CHCProtocolLibrary.dll
@@ -38,3 +37,6 @@ E:\CryptoHideCoinDTN\Source\Libraries\CHCProtocolLibrary\obj\Debug\CHCProtocolLi
 E:\CryptoHideCoinDTN\Source\Libraries\CHCProtocolLibrary\obj\Debug\CHCProtocolLibrary.xml
 E:\CryptoHideCoinDTN\Source\Libraries\CHCProtocolLibrary\obj\Debug\CHCProtocolLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\CHCProtocolLibrary\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHCProtocolLibrary\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHCProtocolLibrary\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHCProtocolLibrary\obj\Debug\CHCProtocolLibrary.vbprojAssemblyReference.cache

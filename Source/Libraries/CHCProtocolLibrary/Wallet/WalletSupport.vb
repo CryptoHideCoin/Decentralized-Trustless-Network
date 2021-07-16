@@ -139,6 +139,30 @@ Namespace AreaWallet.Support
         End Property
 
 
+        Private Shared Function generatePrivateKey(ByVal privateKeyValue As String) As String
+            Try
+                Dim index As Integer = 0
+                Dim doubleChar As String = ""
+                Dim value As Integer = 0
+                Dim result As String = ""
+
+                For Each singleChar In privateKeyValue
+                    doubleChar += singleChar
+
+                    If (doubleChar.Length = 2) Then
+                        value = doubleChar
+                        result += charList.Substring(value, 1)
+                        doubleChar = ""
+                    End If
+                Next
+
+                Return result
+            Catch ex As Exception
+                Return ""
+            End Try
+        End Function
+
+
         Public Shared Function createNew() As KeyPairComplete
             Dim result As New KeyPairComplete
 
@@ -199,29 +223,40 @@ Namespace AreaWallet.Support
             Return result
         End Function
 
-        Public Shared Function createNew(ByVal privateKeyValue As String, Optional ByVal fromRaw As Boolean = False) As KeyPairComplete
+        Private Shared Function createNew(ByVal privateKeyValue As String, Optional ByVal fromRaw As Boolean = False) As KeyPairComplete
             Dim result As New KeyPairComplete
             Try
                 If fromRaw Then
-                    Dim index As Integer = 0
-                    Dim doubleChar As String = ""
-                    Dim value As Integer = 0
-
                     result.raw.privateKey = privateKeyValue
-
-                    For Each singleChar In privateKeyValue
-                        doubleChar += singleChar
-
-                        If (doubleChar.Length = 2) Then
-                            value = doubleChar
-                            result.official.privateKey += charList.Substring(value, 1)
-                            doubleChar = ""
-                        End If
-                    Next
+                    result.official.privateKey = generatePrivateKey(privateKeyValue)
 
                     result.raw.publicKey = Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(result.raw.privateKey)
 
                     result.official.decoreDataAddress(result.raw.publicKey)
+                Else
+                    result = createNew(privateKeyValue)
+                End If
+            Catch ex As Exception
+                Throw New Exception("WalletComplete.createNew():" & ex.Message, ex)
+            End Try
+
+            Return result
+        End Function
+
+        Public Shared Function createNew(ByVal privateKeyValue As String, Optional ByVal fromRaw As Boolean = False, Optional ByVal forcePublicAddress As String = "") As KeyPairComplete
+            Dim result As New KeyPairComplete
+            Try
+                If fromRaw Then
+                    If (forcePublicAddress.Length > 0) Then
+                        result.raw.privateKey = privateKeyValue
+                        result.official.privateKey = generatePrivateKey(privateKeyValue)
+
+                        result.raw.publicKey = forcePublicAddress
+
+                        result.official.decoreDataAddress(result.raw.publicKey)
+                    Else
+                        result = createNew(privateKeyValue, True)
+                    End If
                 Else
                     result = createNew(privateKeyValue)
                 End If
