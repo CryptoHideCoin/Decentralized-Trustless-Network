@@ -13,7 +13,7 @@ Namespace AreaLedger
 
         Public Class SingleRecordLedger
 
-            Public Property id As Integer = 1
+            Public Property id As Integer = 0
             Public Property approvedDate As Double = 0
             Public Property actionCode As String = ""
             Public Property requester As String = ""
@@ -24,6 +24,14 @@ Namespace AreaLedger
             Public Property currentHash As String = ""
             Public Property progressiveHash As String = ""
 
+
+            Private Function fillEmptyText(ByVal value As String) As String
+                If (value.Trim.Length > 0) Then
+                    Return value
+                Else
+                    Return "---"
+                End If
+            End Function
 
             Public Function toMemoryFromFile(ByVal value As String) As Boolean
                 Try
@@ -74,8 +82,8 @@ Namespace AreaLedger
                 tmp += requester & separator
                 tmp += detailInformation & separator
                 tmp += requestHash & separator
-                tmp += approvedHash & separator
-                tmp += consensusHash & separator
+                tmp += fillEmptyText(approvedHash) & separator
+                tmp += fillEmptyText(consensusHash) & separator
 
                 If Not limited Then
                     tmp += currentHash & separator
@@ -136,6 +144,7 @@ Namespace AreaLedger
 
         Public Function saveAndClean() As Boolean
             Try
+                currentRecord.id = _NewIdTransaction
                 currentRecord.currentHash = currentRecord.getHash()
 
                 Using fileData As IO.StreamWriter = IO.File.AppendText(_CompleteFileName)

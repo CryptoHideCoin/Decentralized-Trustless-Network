@@ -1,6 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.Support
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement
 Imports CHCCommonLibrary.AreaEngine.Encryption
 
@@ -19,7 +20,10 @@ Namespace AreaProtocol
 
         Public Class RequestModel
 
-            Inherits TransactionChainLibrary.AreaCommon.Request.RequestModel
+            Public Property requestDateTimeStamp As Double = 0
+            Public Property publicWalletAddressRequester As String = ""
+            Public Property requestHash As String = ""
+            Public Property signature As String = ""
 
             Public Property refundPlan As New CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList
 
@@ -57,7 +61,7 @@ Namespace AreaProtocol
                     newItem = New CHCProtocolLibrary.AreaCommon.Models.Network.RefundItem
 
                     newItem.fixValue = item.fixValue
-                    newItem.percentage = item.percentage
+                    newItem.percentageValue = item.percentageValue
                     newItem.recipient = item.recipient
 
                     AreaCommon.state.runtimeState.activeNetwork.refundPlan.items.Add(newItem)
@@ -92,18 +96,18 @@ Namespace AreaProtocol
 
             Private data As New RequestModel
 
-            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property log As LogEngine
             Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
 
-            Private Function writeDataContent(ByVal statePath As String, ByVal refundPlanContent As CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList, ByVal refundPlanHash As String) As Boolean
+            Private Function writeDataContent(ByVal contentStatePath As String, ByVal refundPlanContent As CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList, ByVal refundPlanHash As String) As Boolean
                 Try
                     Dim engine As New RefundPlanFile
 
                     engine.data = refundPlanContent
 
-                    engine.fileName = IO.Path.Combine(statePath, "Contents", refundPlanHash & ".content")
+                    engine.fileName = IO.Path.Combine(contentStatePath, refundPlanHash & ".content")
 
                     Return engine.save()
                 Catch ex As Exception
@@ -115,17 +119,17 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Private Function writeDataIntoLedger(ByVal statePath As String) As Boolean
+            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As Boolean
                 Try
                     With AreaCommon.state.currentBlockLedger.currentRecord
                         .actionCode = "a0x7"
                         .approvedDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
-                        .detailInformation = HashSHA.generateSHA256(data.refundPlan)
+                        .detailInformation = HashSHA.generateSHA256(data.refundPlan.toString())
                         .requester = data.publicWalletAddressRequester
                         .requestHash = data.requestHash
                     End With
 
-                    writeDataContent(statePath, data.refundPlan, AreaCommon.state.currentBlockLedger.currentRecord.detailInformation)
+                    writeDataContent(contentStatePath, data.refundPlan, AreaCommon.state.currentBlockLedger.currentRecord.detailInformation)
 
                     If AreaCommon.state.currentBlockLedger.BlockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
@@ -160,12 +164,12 @@ Namespace AreaProtocol
 
                     requestFileEngine.data = data
 
-                    requestFileEngine.fileName = IO.Path.Combine(paths.workData.messages, data.requestHash & ".request")
+                    requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, data.requestHash & ".request")
 
                     If requestFileEngine.save() Then
                         log.track("A0x7Manager.init", "request - Saved")
 
-                        If Not writeDataIntoLedger(paths.workData.state) Then
+                        If Not writeDataIntoLedger(paths.workData.state.contents) Then
                             serviceState.currentAction.setError("-1", "Error during update ledger")
                             serviceState.currentAction.reset()
 

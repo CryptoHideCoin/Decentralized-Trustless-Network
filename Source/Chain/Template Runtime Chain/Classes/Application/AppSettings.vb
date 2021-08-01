@@ -1,7 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCServerSupportLibrary.Support
+Imports CHCCommonLibrary.Support
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement
 
 

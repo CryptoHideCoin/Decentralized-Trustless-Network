@@ -3,8 +3,6 @@ E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\bin\Debug\Transactio
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\bin\Debug\TransactionChainNodeLibrary.xml
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\bin\Debug\CHCCommonLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\bin\Debug\Newtonsoft.Json.dll
-E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\bin\Debug\CHCCommonLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\bin\Debug\CHCCommonLibrary.xml
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\bin\Debug\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\obj\Debug\TransactionChainNodeLibrary.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\obj\Debug\TransactionChainNodeLibrary.Resources.resources
@@ -16,5 +14,3 @@ E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\obj\Debug\Transactio
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\bin\Debug\CHCBasicCryptographyLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\bin\Debug\CHCProtocolLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\bin\Debug\BouncyCastle.Crypto.dll
-E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\bin\Debug\CHCProtocolLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Node\bin\Debug\CHCProtocolLibrary.xml

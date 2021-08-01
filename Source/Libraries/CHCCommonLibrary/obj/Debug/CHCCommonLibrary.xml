@@ -24,13 +24,19 @@ CHCCommonLibrary
 </member>
 <member name="M:CHCCommonLibrary.AreaEngine.Communication.ProxyWS`1.getData">
  <summary>
- This method's provides to get a remote data
+ This method provides to get a remote data
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.AreaEngine.Communication.ProxyWS`1.standardize">
+ <summary>
+ This method provide to standardize a data to prepare to communicate
  </summary>
  <returns></returns>
 </member>
 <member name="M:CHCCommonLibrary.AreaEngine.Communication.ProxyWS`1.sendData(System.String)">
  <summary>
- This method's provides to send a remote data
+ This method provides to send a remote data
  </summary>
  <returns></returns>
 </member>
@@ -95,6 +101,66 @@ CHCCommonLibrary
  </summary>
  <param name="command"></param>
  <param name="description"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.Support.LogEngine.writeConsoleGUI(System.String)">
+ <summary>
+ This method provide to write into a console GUI
+ </summary>
+ <param name="rowTmp"></param>
+</member>
+<member name="M:CHCCommonLibrary.Support.LogEngine.flushCache">
+ <summary>
+ This method provide to flush a cache
+ </summary>
+</member>
+<member name="M:CHCCommonLibrary.Support.LogEngine.init(System.String,System.String,CHCCommonLibrary.Support.RegistryEngine)">
+ <summary>
+ This method provide to initialize the log component
+ </summary>
+ <param name="basePath"></param>
+ <param name="fileName"></param>
+ <param name="registryPointer"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.Support.LogEngine.track(System.String,System.String,System.String,System.Boolean)">
+ <summary>
+ This method to provide to track a specific message
+ </summary>
+ <param name="position"></param>
+ <param name="content"></param>
+ <param name="messageType"></param>
+</member>
+<member name="M:CHCCommonLibrary.Support.LogEngine.trackIntoConsole(System.String)">
+ <summary>
+ This method provide to track into console
+ </summary>
+ <param name="message"></param>
+</member>
+<member name="M:CHCCommonLibrary.Support.LogEngine.getLastTrack">
+ <summary>
+ This method provide to return a Last Track of log
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.Support.LogEngine.createAccess">
+ <summary>
+ This method provide to create an access Log
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.Support.RegistryEngine.init(System.String)">
+ <summary>
+ This method provide to create path into base directory
+ and set file name
+ </summary>
+ <param name="path"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.Support.CounterEngine.rebuildIndex(CHCCommonLibrary.Support.LogEngine)">
+ <summary>
+ This method provide to rebuild a complete list
+ </summary>
  <returns></returns>
 </member>
 </members>

@@ -236,11 +236,11 @@ Namespace AreaCommon
                 registry.noSave = Not settings.data.useEventRegistry
 
                 registry.init(paths.system.events)
-                registry.addNew(RegistryEngine.RegistryData.TypeEvent.applicationStartUp)
+                registry.addNew(CHCCommonLibrary.Support.RegistryEngine.RegistryData.TypeEvent.applicationStartUp)
 
                 log.track("startUp.run", "System Registry is running")
 
-                log.noSave = (settings.data.trackConfiguration = TrackRuntimeModeEnum.dontTrack)
+                log.noSave = (settings.data.trackConfiguration = CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrack)
 
                 log.init(paths.system.logs, "main", registry)
 
@@ -260,7 +260,7 @@ Namespace AreaCommon
 
                 log.track("startUp.run", "Counter is running")
 
-                log.noSave = (settings.data.trackConfiguration = TrackRuntimeModeEnum.dontTrack)
+                log.noSave = (settings.data.trackConfiguration = CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrack)
 
                 log.track("startUp.run", "Log.noSave = " & log.noSave)
 

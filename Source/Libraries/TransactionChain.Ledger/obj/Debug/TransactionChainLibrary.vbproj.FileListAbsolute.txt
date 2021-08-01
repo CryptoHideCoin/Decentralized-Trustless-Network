@@ -14,8 +14,5 @@ E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\obj\Debug\Transact
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\obj\Debug\TransactionChainLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\obj\Debug\TransactionChainLibrary.xml
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\obj\Debug\TransactionChainLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCServerSupportLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCProtocolLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCProtocolLibrary.xml
-E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCCommonLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCCommonLibrary.xml

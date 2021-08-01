@@ -13,7 +13,7 @@ Namespace Controllers
 
     ' GET: api/{GUID service}/administration/doAction/verifyData
     <Route("AdministrationDoActionApi")>
-    Public Class verifyDataController
+    Public Class VerifyDataController
 
         Inherits ApiController
 

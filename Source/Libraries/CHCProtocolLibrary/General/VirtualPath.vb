@@ -11,12 +11,10 @@ Namespace AreaSystem
     Public Class VirtualPathEngine
 
         Public Enum EnumSystemType
-
             admin
             loader
             maintenance
             runTime
-
         End Enum
 
         Public Class OtherPathEngine
@@ -25,25 +23,20 @@ Namespace AreaSystem
 
 
             Public Class OtherPath
-
                 Public Property context As String = ""
                 Public Property alternativePath As String = ""
-
             End Class
 
         End Class
 
         Public Class SystemPath
-
             Public Property path As String = ""
             Public Property counters As String = ""
             Public Property events As String = ""
             Public Property logs As String = ""
-
         End Class
 
         Public Class DefinePath
-
             Public Property path As String = ""
 
             Public Property assets As String = ""
@@ -59,31 +52,33 @@ Namespace AreaSystem
             Public Property visionPapers As String = ""
             Public Property whitePapers As String = ""
             Public Property yellowPapers As String = ""
-
         End Class
 
         Public Class WorkVolumePath
-
             Public Property path As String = ""
 
             Public Property requests As String = ""
             Public Property ledger As String = ""
             Public Property evaluate As String = ""
             Public Property consensus As String = ""
+        End Class
 
+        Public Class StateWorkPath
+            Public Property path As String = ""
+
+            Public Property db As String = ""
+            Public Property contents As String = ""
         End Class
 
         Public Class WorkPath
-
             Public Property path As String = ""
 
             Public Property currentVolume As New WorkVolumePath
             Public Property previousVolume As New WorkVolumePath
             Public Property messages As String = ""
             Public Property temporally As String = ""
-            Public Property state As String = ""
+            Public Property state As StateWorkPath = New StateWorkPath
             Public Property internal As String = ""
-
         End Class
 
 
@@ -105,6 +100,8 @@ Namespace AreaSystem
         Private Const messagesName As String = "Messages"
         Private Const temporallyName As String = "Temporally"
         Private Const stateName As String = "State"
+        Private Const dbName As String = "Db"
+        Private Const contentsName As String = "Contents"
         Private Const internalName As String = "Internal"
         Private Const evaluateName As String = "Evaluate"
         Private Const consensusName As String = "Consensus"
@@ -225,7 +222,14 @@ Namespace AreaSystem
 
                         .messages = manageSinglePath(.path, messagesName)
                         .temporally = manageSinglePath(.path, temporallyName)
-                        .state = manageSinglePath(.path, stateName)
+
+                        With .state
+                            .path = manageSinglePath(folderName, stateName)
+
+                            .db = manageSinglePath(.path, dbName)
+                            .contents = manageSinglePath(.path, contentsName)
+                        End With
+
                         .internal = manageSinglePath(.path, internalName)
                     End With
 
@@ -271,10 +275,8 @@ Namespace AreaSystem
 
         Private Function trySettingsPath(ByVal path As String) As Boolean
             Try
-
                 path = IO.Path.Combine(path, "define.path")
                 Return IO.File.Exists(path)
-
             Catch ex As Exception
             End Try
 
@@ -285,16 +287,13 @@ Namespace AreaSystem
             path = IO.Path.Combine(path, "define.path")
 
             Try
-
                 IO.File.WriteAllText(path, "Test")
 
                 If IO.File.Exists(path) Then
                     IO.File.Delete(path)
                     Return True
                 End If
-
             Catch ex As Exception
-
             End Try
 
             Return False
@@ -322,7 +321,6 @@ Namespace AreaSystem
             Dim path As String = ""
 
             Try
-
                 found = testPath(found, path, Application.StartupPath, True)
                 found = testPath(found, path, Application.LocalUserAppDataPath, True)
                 found = testPath(found, path, Application.UserAppDataPath, True)
@@ -330,7 +328,6 @@ Namespace AreaSystem
                 If found Then
                     Return path
                 End If
-
             Catch ex As Exception
             End Try
 
@@ -339,13 +336,11 @@ Namespace AreaSystem
 
         Public Function readDefinePath() As String
             Try
-
                 Dim path As String = searchDefinePath()
 
                 If (path.Length > 0) Then
                     Return IO.File.ReadAllText(IO.Path.Combine(searchDefinePath, "define.path"))
                 End If
-
             Catch ex As Exception
             End Try
 
@@ -357,7 +352,6 @@ Namespace AreaSystem
             Dim path As String = ""
 
             Try
-
                 found = testPath(found, path, Application.StartupPath, True)
                 found = testPath(found, path, Application.LocalUserAppDataPath, True)
                 found = testPath(found, path, Application.UserAppDataPath, True)

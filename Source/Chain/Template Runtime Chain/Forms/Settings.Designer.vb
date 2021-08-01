@@ -299,10 +299,6 @@ Partial Class Settings
         Me.logConfiguration.Name = "logConfiguration"
         Me.logConfiguration.Size = New System.Drawing.Size(669, 105)
         Me.logConfiguration.TabIndex = 11
-        Me.logConfiguration.trackConfiguration = CHCServerSupportLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrack
-        Me.logConfiguration.trackRotateFrequency = CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
-        Me.logConfiguration.trackRotateKeepFile = CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
-        Me.logConfiguration.trackRotateKeepLast = CHCServerSupportLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
         Me.logConfiguration.useTrackRotate = False
         '
         'useEventRegistry

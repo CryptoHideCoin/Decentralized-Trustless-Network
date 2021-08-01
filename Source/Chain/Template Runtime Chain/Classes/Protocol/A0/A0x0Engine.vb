@@ -1,6 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.Support
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement
 Imports CHCCommonLibrary.AreaEngine.Encryption
 
@@ -12,15 +13,18 @@ Namespace AreaProtocol
     Public Class A0x0
 
         Public Class RequestModel
-
-            Inherits TransactionChainLibrary.AreaCommon.Request.RequestModel
+            Public Property requestDateTimeStamp As Double = 0
+            Public Property publicWalletAddressRequester As String = ""
+            Public Property requestHash As String = ""
+            Public Property signature As String = ""
 
             Public Property netName As String = ""
 
             Public Overrides Function toString() As String
                 Dim tmp As String = ""
 
-                tmp += MyBase.toString()
+                tmp += requestDateTimeStamp.ToString()
+                tmp += publicWalletAddressRequester
                 tmp += netName
 
                 Return tmp
@@ -29,13 +33,10 @@ Namespace AreaProtocol
             Public Function getHash() As String
                 Return HashSHA.generateSHA256(Me.toString())
             End Function
-
         End Class
 
         Public Class FileEngine
-
             Inherits BaseFileDB(Of RequestModel)
-
         End Class
 
         Public Class RecoveryState
@@ -43,7 +44,7 @@ Namespace AreaProtocol
             Public Shared Function fromRequest(ByRef value As RequestModel) As Boolean
                 With AreaCommon.state.runtimeState.activeNetwork
                     .networkName = value.netName
-                    .creationDateNetwork = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+                    .creationDateNetwork = value.requestDateTimeStamp
                 End With
 
                 Return True
@@ -64,7 +65,7 @@ Namespace AreaProtocol
 
             Private data As New RequestModel
 
-            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property log As LogEngine
             Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
@@ -93,7 +94,7 @@ Namespace AreaProtocol
             End Function
 
 
-            Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal networkNameParameter As String, ByVal networkNameNode As String, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
+            Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal networkNameParameter As String, ByVal networkNameNode As String, ByVal dataCreationNetwork As Double, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
                 Try
                     Dim requestFileEngine As New FileEngine
 
@@ -114,13 +115,13 @@ Namespace AreaProtocol
 
                     data.netName = networkNameParameter
                     data.publicWalletAddressRequester = publicWalletIdAddress
-                    data.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+                    data.requestDateTimeStamp = dataCreationNetwork
                     data.requestHash = data.getHash
                     data.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, data.requestHash)
 
                     requestFileEngine.data = data
 
-                    requestFileEngine.fileName = IO.Path.Combine(paths.workData.messages, data.requestHash & ".request")
+                    requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, data.requestHash & ".request")
 
                     If requestFileEngine.save() Then
                         log.track("A0x0Manager.init", "request - Saved")

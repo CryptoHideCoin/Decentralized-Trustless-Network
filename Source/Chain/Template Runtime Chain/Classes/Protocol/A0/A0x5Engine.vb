@@ -1,6 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.Support
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement
 Imports CHCCommonLibrary.AreaEngine.Encryption
 
@@ -13,7 +14,10 @@ Namespace AreaProtocol
 
         Public Class RequestModel
 
-            Inherits TransactionChainLibrary.AreaCommon.Request.RequestModel
+            Public Property requestDateTimeStamp As Double = 0
+            Public Property publicWalletAddressRequester As String = ""
+            Public Property requestHash As String = ""
+            Public Property signature As String = ""
 
             Public Property policyPrivacy As String = ""
 
@@ -62,12 +66,12 @@ Namespace AreaProtocol
 
             Private data As New RequestModel
 
-            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property log As LogEngine
             Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
 
-            Private Function writeDataIntoLedger(ByVal statePath As String) As Boolean
+            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As Boolean
                 Try
                     With AreaCommon.state.currentBlockLedger.currentRecord
                         .actionCode = "a0x5"
@@ -77,7 +81,7 @@ Namespace AreaProtocol
                         .requestHash = data.requestHash
                     End With
 
-                    TransactionChainLibrary.AreaEngine.Ledger.State.StateEngine.writeDataContent(statePath, data.policyPrivacy, AreaCommon.state.currentBlockLedger.currentRecord.detailInformation)
+                    TransactionChainLibrary.AreaEngine.Ledger.State.StateEngine.writeDataContent(contentStatePath, data.policyPrivacy, AreaCommon.state.currentBlockLedger.currentRecord.detailInformation)
 
                     If AreaCommon.state.currentBlockLedger.BlockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
@@ -117,7 +121,7 @@ Namespace AreaProtocol
                     If requestFileEngine.save() Then
                         log.track("A0x5Manager.init", "request - Saved")
 
-                        If Not writeDataIntoLedger(paths.workData.state) Then
+                        If Not writeDataIntoLedger(paths.workData.state.contents) Then
                             serviceState.currentAction.setError("-1", "Error during update ledger")
                             serviceState.currentAction.reset()
 

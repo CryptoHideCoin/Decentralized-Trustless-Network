@@ -7,8 +7,6 @@ Imports CHCProtocolLibrary.AreaWallet.Support
 
 Public Class WalletAddress
 
-    'Public Event GetPrivateKey(ByRef privateKeyValue As String)
-
     Public Shadows Event TextChanged()
 
     Private _NoChange As Boolean = False
@@ -68,13 +66,15 @@ Public Class WalletAddress
         Catch ex As Exception
             MessageBox.Show("Error during a adminWalletAddress_GetPrivateKey - " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
+        Return ""
     End Function
 
     Public ReadOnly Property privateKey() As String
         Get
             If (value.Trim.Length > 0) Then
 
-                If CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.SingleKeyPair.checkFormatPublicAddress(value.Trim) Then
+                If WalletAddressEngine.SingleKeyPair.checkFormatPublicAddress(value.Trim) Then
                     Return getPrivateKey()
                 ElseIf (value.ToLower.Substring(0, 11).CompareTo("keystoreid:") = 0) Then
                     Return getPrivateKeyFromStore()
@@ -86,6 +86,27 @@ Public Class WalletAddress
             Else
                 Return ""
             End If
+        End Get
+    End Property
+
+    Public ReadOnly Property keyPairRAW() As WalletAddressEngine.SingleKeyPair
+        Get
+            Dim result As New WalletAddressEngine.SingleKeyPair
+
+            If (value.Trim.Length > 0) Then
+
+                If WalletAddressEngine.SingleKeyPair.checkFormatPublicAddress(value.Trim) Then
+                    result.publicKey = value.Trim()
+                    result.privateKey = getPrivateKey()
+                ElseIf (value.ToLower.Substring(0, 11).CompareTo("keystoreid:") = 0) Then
+                    Return getKeyPairRAWFromStore()
+                Else
+                    MessageBox.Show("Wallet address wrong or missing.", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+
+            End If
+
+            Return New WalletAddressEngine.SingleKeyPair
         End Get
     End Property
 
@@ -172,10 +193,10 @@ Public Class WalletAddress
             If dataLoaded Then
                 If engine.data.authorizationKey <> "" Then
                     If requestAuthorizationKey(engine.data.authorizationKey) Then
-                        Return CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createNew(engine.data.privateRAWKey, True).official.privateKey
+                        Return WalletAddressEngine.createNew(engine.data.privateRAWKey, True).official.privateKey
                     End If
                 Else
-                    Return CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createNew(engine.data.privateRAWKey, True).official.privateKey
+                    Return WalletAddressEngine.createNew(engine.data.privateRAWKey, True).official.privateKey
                 End If
             End If
 
@@ -184,6 +205,133 @@ Public Class WalletAddress
             MessageBox.Show("Problem during read KeyStore List information", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             Return False
+        End Try
+    End Function
+
+    Private Function getPrivateKeyRAWFromStore() As String
+        Try
+            Dim engine As New WalletAddressDataEngine
+            Dim dataLoaded As Boolean = False
+            Dim securityValue As String = ""
+
+            engine.fileName = IO.Path.Combine(readUserKeyStorePath(_DataPath), value.ToLower.Substring(11), "walletAddress.private")
+
+            If Not engine.load() Then
+                If requestAccessSecurityKey(securityValue) Then
+                    engine.securityKey = securityValue
+
+                    dataLoaded = engine.load()
+
+                    If Not dataLoaded Then
+                        MessageBox.Show("The secret key is wrong", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                End If
+            Else
+                dataLoaded = True
+            End If
+
+            If dataLoaded Then
+                If engine.data.authorizationKey <> "" Then
+                    If requestAuthorizationKey(engine.data.authorizationKey) Then
+                        Return engine.data.privateRAWKey
+                    End If
+                Else
+                    Return engine.data.privateRAWKey
+                End If
+            End If
+
+            Return ""
+        Catch ex As Exception
+            MessageBox.Show("Problem during read KeyStore List information", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return False
+        End Try
+    End Function
+
+    Private Function getPublicAddressRAWFromStore() As String
+        Try
+            Dim engine As New WalletAddressDataEngine
+            Dim dataLoaded As Boolean = False
+            Dim securityValue As String = ""
+
+            engine.fileName = IO.Path.Combine(readUserKeyStorePath(_DataPath), value.ToLower.Substring(11), "walletAddress.private")
+
+            If Not engine.load() Then
+                If requestAccessSecurityKey(securityValue) Then
+                    engine.securityKey = securityValue
+
+                    dataLoaded = engine.load()
+
+                    If Not dataLoaded Then
+                        MessageBox.Show("The secret key is wrong", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                End If
+            Else
+                dataLoaded = True
+            End If
+
+            If dataLoaded Then
+                If (engine.data.authorizationKey <> "") Then
+                    If requestAuthorizationKey(engine.data.authorizationKey) Then
+                        Return engine.data.publicRAWAddress
+                    End If
+                Else
+                    Return engine.data.publicRAWAddress
+                End If
+            End If
+
+            Return ""
+        Catch ex As Exception
+            MessageBox.Show("Problem during read KeyStore List information", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return False
+        End Try
+    End Function
+
+    Private Function getKeyPairRAWFromStore() As WalletAddressEngine.SingleKeyPair
+        Try
+            Dim engine As New WalletAddressDataEngine
+            Dim dataLoaded As Boolean = False
+            Dim securityValue As String = ""
+            Dim result As New WalletAddressEngine.SingleKeyPair
+
+            engine.fileName = IO.Path.Combine(readUserKeyStorePath(_DataPath), value.ToLower.Substring(11), "walletAddress.private")
+
+            If Not engine.load() Then
+                If requestAccessSecurityKey(securityValue) Then
+                    engine.securityKey = securityValue
+
+                    dataLoaded = engine.load()
+
+                    If Not dataLoaded Then
+                        MessageBox.Show("The secret key is wrong", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                End If
+            Else
+                dataLoaded = True
+            End If
+
+            If dataLoaded Then
+                If (engine.data.authorizationKey <> "") Then
+                    If requestAuthorizationKey(engine.data.authorizationKey) Then
+                        result.privateKey = engine.data.privateRAWKey
+                        result.publicKey = engine.data.publicRAWAddress
+
+                        Return result
+                    End If
+                Else
+                    result.privateKey = engine.data.privateRAWKey
+                    result.publicKey = engine.data.publicRAWAddress
+
+                    Return result
+                End If
+            End If
+
+            Return result
+        Catch ex As Exception
+            MessageBox.Show("Problem during read KeyStore List information", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return New WalletAddressEngine.SingleKeyPair
         End Try
     End Function
 

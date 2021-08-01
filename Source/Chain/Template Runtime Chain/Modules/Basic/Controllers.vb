@@ -74,7 +74,7 @@ Namespace AreaCommon
 
                 End Using
 
-                registry.addNew(RegistryEngine.RegistryData.TypeEvent.applicationShutdown)
+                registry.addNew(CHCCommonLibrary.Support.RegistryEngine.RegistryData.TypeEvent.applicationShutdown)
 
                 state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.starting
             Catch ex As Exception

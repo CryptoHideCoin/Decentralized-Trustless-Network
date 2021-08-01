@@ -5,7 +5,7 @@ Option Compare Text
 Imports System.Net
 Imports Newtonsoft.Json
 Imports System.Text
-Imports System.Xml.Serialization
+
 
 
 
@@ -14,7 +14,6 @@ Imports System.Xml.Serialization
 
 
 Namespace AreaEngine.Communication
-
 
 
     Public Class ProxyWS(Of ClassType As {New})
@@ -28,17 +27,12 @@ Namespace AreaEngine.Communication
 
 
 
-
-
-
         ''' <summary>
-        ''' This method's provides to get a remote data
+        ''' This method provides to get a remote data
         ''' </summary>
         ''' <returns></returns>
         Public Function getData() As String
-
             Try
-
                 Dim request As WebRequest = WebRequest.Create(url)
                 Dim response As WebResponse = request.GetResponse()
                 Dim dataStream As IO.Stream = response.GetResponseStream()
@@ -51,25 +45,36 @@ Namespace AreaEngine.Communication
                 response.Close()
 
                 Return ""
-
             Catch ex As Exception
                 Return ex.Message
             End Try
-
         End Function
 
 
         ''' <summary>
-        ''' This method's provides to send a remote data
+        ''' This method provide to standardize a data to prepare to communicate
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function standardize() As Boolean
+            Try
+                data = JsonConvert.DeserializeObject(Of ClassType)(JsonConvert.SerializeObject(data, Formatting.Indented))
+
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+
+        ''' <summary>
+        ''' This method provides to send a remote data
         ''' </summary>
         ''' <returns></returns>
         Public Function sendData(Optional ByVal methodType As String = "PUT") As String
-
             Dim webClient As New WebClient()
             Dim reqString() As Byte
 
             Try
-
                 reqString = Encoding.Default.GetBytes(JsonConvert.SerializeObject(data, Formatting.Indented))
 
                 Dim req As WebRequest = WebRequest.Create(url)
@@ -95,9 +100,7 @@ Namespace AreaEngine.Communication
             Catch ex As Exception
                 Return ex.Message
             End Try
-
         End Function
-
 
     End Class
 
@@ -107,10 +110,7 @@ Namespace AreaEngine.Communication
 
         Public data As ClassType
 
-
-
         Public url As String
-
 
 
 
@@ -121,9 +121,7 @@ Namespace AreaEngine.Communication
         ''' </summary>
         ''' <returns></returns>
         Public Function getData() As String
-
             Try
-
                 Dim request As WebRequest = WebRequest.Create(url)
                 Dim response As WebResponse = request.GetResponse()
                 Dim dataStream As IO.Stream = response.GetResponseStream()
@@ -136,11 +134,9 @@ Namespace AreaEngine.Communication
                 response.Close()
 
                 Return ""
-
             Catch ex As Exception
                 Return ex.Message
             End Try
-
         End Function
 
 
@@ -149,12 +145,10 @@ Namespace AreaEngine.Communication
         ''' </summary>
         ''' <returns></returns>
         Public Function sendData(Optional ByVal methodType As String = "PUT") As String
-
             Dim webClient As New WebClient()
             Dim reqString() As Byte
 
             Try
-
                 reqString = Encoding.Default.GetBytes(JsonConvert.SerializeObject(data, Formatting.Indented))
 
                 Dim req As WebRequest = WebRequest.Create(url)
@@ -175,14 +169,10 @@ Namespace AreaEngine.Communication
                 response.Close()
 
                 Return res
-
             Catch ex As Exception
                 Return ex.Message
             End Try
-
-
         End Function
-
 
     End Class
 

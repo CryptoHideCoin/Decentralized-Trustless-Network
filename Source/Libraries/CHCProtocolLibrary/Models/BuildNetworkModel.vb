@@ -2,6 +2,7 @@
 Option Compare Text
 
 Imports CHCCommonLibrary.AreaEngine.Encryption
+Imports CHCCommonLibrary.AreaEngine.Base.CHCStringExtensions
 
 
 
@@ -18,8 +19,15 @@ Namespace AreaCommon.Models.Network
         Public Property prestake As Boolean = False
         Public Property burnable As Boolean = False
         Public Property nameUnit As String = ""
-        Public Property intervalStaking As String = ""
         Public Property qtaInitialStake As Decimal = 0
+
+        Public Sub codeSymbol()
+            symbol.codeSymbol()
+        End Sub
+
+        Public Sub deCodeSymbol()
+            symbol.decodeSymbol()
+        End Sub
 
         Public Overrides Function toString() As String
             Dim tmp As String = ""
@@ -33,7 +41,6 @@ Namespace AreaCommon.Models.Network
             If prestake Then tmp += "1" Else tmp += "0"
             If burnable Then tmp += "1" Else tmp += "0"
             tmp += nameUnit
-            tmp += intervalStaking
             tmp += qtaInitialStake.ToString()
 
             Return tmp
@@ -48,14 +55,16 @@ Namespace AreaCommon.Models.Network
     Public Class RefundItem
 
         Public Property recipient As String = ""
-        Public Property percentage As Double = 0
+        Public Property description As String = ""
+        Public Property percentageValue As Single = 0
         Public Property fixValue As Decimal = 0
 
         Public Overrides Function toString() As String
             Dim tmp As String = ""
 
             tmp += recipient
-            tmp += percentage.ToString()
+            tmp += description
+            tmp += percentageValue.ToString()
             tmp += fixValue.ToString()
 
             Return tmp
@@ -155,12 +164,8 @@ Namespace AreaCommon.Models.Network
 
     Public Class BuildNetworkModel
 
-        Private _NetworkCreationDate As DateTime
-
         Public Property name As String = ""
-        Public Property chainType As String = ""
         Public Property publicAddressGenesis As String = ""
-        Public Property privateKeyRAWGenesis As String = ""
         Public Property whitePaper As New Document.DocumentModel
         Public Property yellowPaper As New Document.DocumentModel
         Public Property primaryAsset As New AssetModel
@@ -168,31 +173,21 @@ Namespace AreaCommon.Models.Network
         Public Property refundPlan As New RefundItemList
         Public Property privacyPolicy As New Document.DocumentModel
         Public Property generalCondition As New Document.DocumentModel
-        Public ReadOnly Property networkCreationDateTimeStamp As String
-            Get
-                Return CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime(_NetworkCreationDate)
-            End Get
-        End Property
+        Public Property signature As String = ""
 
 
-        Public Sub setNetworkCreationDate(ByVal value As DateTime)
-            _NetworkCreationDate = value
-        End Sub
 
         Public Overrides Function toString() As String
             Dim tmp As String = ""
 
             tmp += name
-            tmp += chainType
             tmp += publicAddressGenesis
-            tmp += privateKeyRAWGenesis
             tmp += whitePaper.toString()
             tmp += yellowPaper.toString()
             tmp += primaryAsset.toString()
             tmp += transactionChainParameter.toString()
-            tmp += refundPlan.ToString()
+            tmp += refundPlan.toString()
             tmp += privacyPolicy.toString()
-            tmp += networkCreationDateTimeStamp
 
             Return tmp
         End Function

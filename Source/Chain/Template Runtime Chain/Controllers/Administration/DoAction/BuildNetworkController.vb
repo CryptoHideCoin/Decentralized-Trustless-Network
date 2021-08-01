@@ -4,6 +4,7 @@ Option Explicit On
 
 Imports System.Web.Http
 Imports CHCCommonLibrary.AreaCommon.Models
+Imports CHCProtocolLibrary.AreaCommon
 
 
 
@@ -13,7 +14,7 @@ Namespace Controllers
 
     ' GET: api/{GUID service}/administration/doAction/buildNetwork
     <Route("AdministrationDoActionApi")>
-    Public Class buildNetworkController
+    Public Class BuildNetworkController
 
         Inherits ApiController
 
@@ -21,14 +22,17 @@ Namespace Controllers
 
 
 
-        Public Function GetValue(ByVal dataNetwork As CHCProtocolLibrary.AreaCommon.Models.Network.BuildNetworkModel, ByVal signature As String) As General.RemoteResponse
+        Public Function PutValue(ByVal signature As String, <FromBody()> ByVal value As Models.Network.BuildNetworkModel) As General.RemoteResponse
             Dim result As New General.RemoteResponse
 
             Try
                 result.requestTime = Now
 
                 If (AreaCommon.state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
-                    If AreaSecurity.checkSignature(dataNetwork.getHash, signature) Then
+                    If AreaSecurity.checkSignature(signature) And
+                       AreaSecurity.checkSignature(value.getHash, value.signature, TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity) Then
+                        value.primaryAsset.deCodeSymbol()
+
                         For Each item In AreaCommon.state.serviceState.listAvailableCommand
                             If (item = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.buildNetwork) Then
                                 AreaCommon.state.serviceState.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.buildNetwork
@@ -36,9 +40,7 @@ Namespace Controllers
                                 AreaCommon.state.serviceState.listAvailableCommand.Clear()
                                 AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cancelCurrentAction)
 
-                                AreaCommon.state.keys.addNew(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity, dataNetwork.publicAddressGenesis, dataNetwork.privateKeyRAWGenesis)
-
-                                AreaData.dataNetwork = dataNetwork
+                                AreaData.dataNetwork = value
 
                                 Dim ais As New Threading.Thread(AddressOf AreaData.buildNetwork)
 

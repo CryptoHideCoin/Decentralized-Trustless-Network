@@ -11,18 +11,33 @@ Namespace AreaData
 
         Public dataNetwork As New CHCProtocolLibrary.AreaCommon.Models.Network.BuildNetworkModel
         Private _Proceed As Boolean = True
+        Private _CompleteProcess As Boolean = True
 
 
 
         Private Sub rebuildCommandList()
             If _Proceed Then
-
                 With AreaCommon.state.serviceState
                     .listAvailableCommand.Clear()
 
-                    .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.requestNetworkDisconnect)
+                    .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cancelCurrentAction)
                 End With
             End If
+        End Sub
+
+        Private Sub rebuildFinalCommandList()
+            With AreaCommon.state.serviceState
+                .listAvailableCommand.Clear()
+
+                If _CompleteProcess Then
+                    .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.requestNetworkDisconnect)
+                ElseIf _Proceed Then
+                    .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cleanLocalData)
+                Else
+                    .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.verifyData)
+                End If
+
+            End With
         End Sub
 
         Private Sub createLedger()
@@ -37,7 +52,7 @@ Namespace AreaData
                 commandA0x0.serviceState = AreaCommon.state.serviceState
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA0x0.init(AreaCommon.paths, dataNetwork.name, AreaCommon.state.information.networkName, .publicAddress, .privateKey)
+                    _Proceed = commandA0x0.init(AreaCommon.paths, dataNetwork.name, AreaCommon.state.information.networkName, CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime(), .publicAddress, .privateKey)
                 End With
 
                 commandA0x0 = Nothing
@@ -65,7 +80,7 @@ Namespace AreaData
                 commandA0x2.serviceState = AreaCommon.state.serviceState
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA0x2.init(AreaCommon.paths, dataNetwork.whitePaper.content, .publicAddress, .privateKey)
+                    _Proceed = commandA0x2.init(AreaCommon.paths, dataNetwork.yellowPaper.content, .publicAddress, .privateKey)
                 End With
             End If
         End Sub
@@ -237,6 +252,8 @@ Namespace AreaData
                 End With
 
                 commandA1x6 = Nothing
+
+                _CompleteProcess = True
             End If
         End Sub
 
@@ -247,6 +264,7 @@ Namespace AreaData
                 AreaCommon.log.track("BuildNetwork.run", "Begin")
 
                 createLedger()
+                rebuildCommandList()
 
                 manageA0x0()
                 manageA0x1()
@@ -265,9 +283,9 @@ Namespace AreaData
                 manageA1x5()
                 manageA1x6()
 
-                rebuildCommandList()
+                rebuildFinalCommandList()
 
-                AreaCommon.log.trackIntoConsole("Analize internal state complete")
+                AreaCommon.log.trackIntoConsole("Build Network complete")
 
                 Return True
             Catch ex As Exception

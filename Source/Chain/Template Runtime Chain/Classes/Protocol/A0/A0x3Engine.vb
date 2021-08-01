@@ -1,6 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.Support
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement
 Imports CHCCommonLibrary.AreaEngine.Encryption
 
@@ -19,7 +20,10 @@ Namespace AreaProtocol
 
         Public Class RequestModel
 
-            Inherits TransactionChainLibrary.AreaCommon.Request.RequestModel
+            Public Property requestDateTimeStamp As Double = 0
+            Public Property publicWalletAddressRequester As String = ""
+            Public Property requestHash As String = ""
+            Public Property signature As String = ""
 
             Public Property primaryAsset As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel
 
@@ -50,7 +54,6 @@ Namespace AreaProtocol
                 With AreaCommon.state.runtimeState.activeNetwork.primaryAssetData
                     .burnable = value.primaryAsset.burnable
                     .digit = value.primaryAsset.digit
-                    .intervalStaking = value.primaryAsset.intervalStaking
                     .stakeable = value.primaryAsset.stakeable
                     .name = value.primaryAsset.name
                     .nameUnit = value.primaryAsset.nameUnit
@@ -91,17 +94,17 @@ Namespace AreaProtocol
 
             Private data As New RequestModel
 
-            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property log As LogEngine
             Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
-            Private Function writeDataContent(ByVal statePath As String, ByRef primaryAsset As CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel, ByVal primaryAssetHash As String) As Boolean
+            Private Function writeDataContent(ByVal contentStatePath As String, ByRef primaryAsset As CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel, ByVal primaryAssetHash As String) As Boolean
                 Try
                     Dim engine As New PrimaryAssetFile
 
                     engine.data = primaryAsset
 
-                    engine.fileName = IO.Path.Combine(statePath, "Contents", primaryAssetHash & ".content")
+                    engine.fileName = IO.Path.Combine(contentStatePath, "Contents", primaryAssetHash & ".content")
 
                     Return engine.save()
                 Catch ex As Exception
@@ -113,7 +116,7 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Private Function writeDataIntoLedger(ByVal statePath As String) As Boolean
+            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As Boolean
                 Try
                     With AreaCommon.state.currentBlockLedger.currentRecord
                         .actionCode = "a0x3"
@@ -123,7 +126,7 @@ Namespace AreaProtocol
                         .requestHash = data.requestHash
                     End With
 
-                    writeDataContent(statePath, data.primaryAsset, AreaCommon.state.currentBlockLedger.currentRecord.detailInformation)
+                    writeDataContent(contentStatePath, data.primaryAsset, AreaCommon.state.currentBlockLedger.currentRecord.detailInformation)
 
                     If AreaCommon.state.currentBlockLedger.BlockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
@@ -163,7 +166,7 @@ Namespace AreaProtocol
                     If requestFileEngine.save() Then
                         log.track("A0x3Manager.init", "request - Saved")
 
-                        If Not writeDataIntoLedger(paths.workData.state) Then
+                        If Not writeDataIntoLedger(paths.workData.state.contents) Then
                             serviceState.currentAction.setError("-1", "Error during update ledger")
                             serviceState.currentAction.reset()
 

@@ -9,14 +9,13 @@ Namespace AreaCommon.Models.General
         Public value As Boolean
     End Class
 
+
     Public Class StatusWorkModel
 
         Public Enum EnumStatusWork
-
             unAuthorized
             onWork
             offWork
-
         End Enum
 
         Public value As EnumStatusWork = EnumStatusWork.unAuthorized
@@ -26,13 +25,11 @@ Namespace AreaCommon.Models.General
     Public Class RemoteResponse
 
         Public Enum EnumResponseStatus
-
             responseComplete
             commandNotAllowed
             missingAuthorization
             systemOffline
             inError
-
         End Enum
 
         Public responseStatus As EnumResponseStatus = EnumResponseStatus.responseComplete

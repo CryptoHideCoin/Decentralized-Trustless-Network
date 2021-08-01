@@ -2,7 +2,7 @@
 Option Explicit On
 
 Imports CHCProtocolLibrary.AreaSystem
-Imports CHCServerSupportLibrary.Support
+Imports CHCCommonLibrary.Support
 
 
 

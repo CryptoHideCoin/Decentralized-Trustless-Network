@@ -1,8 +1,6 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCProtocolLibrary.AreaCommon.Models
-Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCProtocolLibrary.AreaBase
 
 
@@ -35,11 +33,7 @@ Public Class Settings
 
                 certificateClient.value = .clientCertificate
 
-                logConfiguration.trackConfiguration = .trackConfiguration
                 logConfiguration.useTrackRotate = .useTrackRotate
-                logConfiguration.trackRotateFrequency = .trackRotateConfig.frequency
-                logConfiguration.trackRotateKeepLast = .trackRotateConfig.keepLast
-                logConfiguration.trackRotateKeepFile = .trackRotateConfig.keepFile
 
                 useEventRegistry.Checked = .useEventRegistry
             End With
@@ -67,12 +61,7 @@ Public Class Settings
 
                 .clientCertificate = certificateClient.value
 
-                .trackConfiguration = logConfiguration.trackConfiguration
                 .useTrackRotate = logConfiguration.useTrackRotate
-
-                .trackRotateConfig.frequency = logConfiguration.trackRotateFrequency
-                .trackRotateConfig.keepLast = logConfiguration.trackRotateKeepLast
-                .trackRotateConfig.keepFile = logConfiguration.trackRotateKeepFile
 
                 .useEventRegistry = useEventRegistry.Checked
             End With

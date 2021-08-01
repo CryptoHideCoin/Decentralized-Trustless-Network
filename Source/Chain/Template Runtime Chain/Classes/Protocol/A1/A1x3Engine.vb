@@ -1,6 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.Support
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement
 Imports CHCCommonLibrary.AreaEngine.Encryption
 
@@ -13,7 +14,10 @@ Namespace AreaProtocol
 
         Public Class RequestModel
 
-            Inherits TransactionChainLibrary.AreaCommon.Request.RequestModel
+            Public Property requestDateTimeStamp As Double = 0
+            Public Property publicWalletAddressRequester As String = ""
+            Public Property requestHash As String = ""
+            Public Property signature As String = ""
 
             Public Property chainName As String = ""
             Public Property additionalSetProtocol As String = ""
@@ -60,7 +64,7 @@ Namespace AreaProtocol
 
             Private data As New RequestModel
 
-            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property log As LogEngine
             Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
@@ -107,7 +111,7 @@ Namespace AreaProtocol
 
                     requestFileEngine.data = data
 
-                    requestFileEngine.fileName = IO.Path.Combine(paths.workData.messages, data.requestHash & ".request")
+                    requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, data.requestHash & ".request")
 
                     If requestFileEngine.save() Then
                         log.track("A1x3Manager.init", "request - Saved")

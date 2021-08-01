@@ -1,6 +1,7 @@
 ﻿Option Explicit On
 Option Compare Text
 
+Imports CHCCommonLibrary.Support
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement
 Imports CHCBasicCryptographyLibrary.AreaEngine.Encryption.Base58Signature
 Imports CHCCommonLibrary.AreaEngine.Encryption
@@ -54,11 +55,11 @@ Namespace AreaEngine.Ledger
                 End Try
             End Function
 
-            Public Shared Function writeDataContent(ByVal statePath As String, ByVal content As String, ByVal contentHash As String) As Boolean
+            Public Shared Function writeDataContent(ByVal contentStatePath As String, ByVal content As String, ByVal contentHash As String) As Boolean
                 Try
-                    Dim fileName As String = IO.Path.Combine(statePath, "Contents", contentHash & ".content")
+                    Dim fileName As String = IO.Path.Combine(contentStatePath, contentHash & ".content")
 
-                    If IO.File.Exists(fileName) Then
+                    If Not IO.File.Exists(fileName) Then
                         IO.File.WriteAllText(fileName, content)
                     End If
 
@@ -154,7 +155,7 @@ Namespace AreaEngine.Ledger
 
             Public Property generalState As CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.notChecked
             Public Property stateIndex As New StateIndexEngine
-            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property log As LogEngine
             Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
@@ -175,7 +176,7 @@ Namespace AreaEngine.Ledger
 
                     serviceState.currentAction.setAction("0x0004", "VerifyData - State")
 
-                    stateIndex.fileName = IO.Path.Combine(paths.workData.state, "State.Index")
+                    stateIndex.fileName = IO.Path.Combine(paths.workData.state.db, "State.Index")
 
                     If serviceState.requestCancelCurrentRunCommand Then Return False
 
@@ -185,18 +186,18 @@ Namespace AreaEngine.Ledger
 
                     If stateIndex.fileCorrupted Or stateIndex.mismatchedSignature Then
                         If stateIndex.fileExist Then
-                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
+                            generalState = AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
                         Else
-                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.missing
+                            generalState = AreaCommon.Models.Administration.EnumDataPosition.missing
                         End If
 
                     ElseIf stateIndex.fileExist Then
-                        generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
+                        generalState = AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
                     Else
-                        If (CHCCommonLibrary.AreaEngine.FileManagement.getMD5FromFile(IO.Path.Combine(paths.workData.state, "State.Index")) = stateIndex.data.fileStateMD5) Then
-                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
+                        If (CHCCommonLibrary.AreaEngine.FileManagement.getMD5FromFile(IO.Path.Combine(paths.workData.state.db, "State.Index")) = stateIndex.data.fileStateMD5) Then
+                            generalState = AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
                         Else
-                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
+                            generalState = AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
                         End If
                     End If
 

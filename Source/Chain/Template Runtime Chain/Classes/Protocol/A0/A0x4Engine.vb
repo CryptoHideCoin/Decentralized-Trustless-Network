@@ -1,6 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.Support
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement
 Imports CHCCommonLibrary.AreaEngine.Encryption
 
@@ -19,7 +20,10 @@ Namespace AreaProtocol
 
         Public Class RequestModel
 
-            Inherits TransactionChainLibrary.AreaCommon.Request.RequestModel
+            Public Property requestDateTimeStamp As Double = 0
+            Public Property publicWalletAddressRequester As String = ""
+            Public Property requestHash As String = ""
+            Public Property signature As String = ""
 
             Public Property transactionChainSettings As New CHCProtocolLibrary.AreaCommon.Models.Network.TransactionChainModel
 
@@ -86,18 +90,18 @@ Namespace AreaProtocol
 
             Private data As New RequestModel
 
-            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property log As LogEngine
             Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
 
-            Private Function writeDataContent(ByVal statePath As String, ByRef transactionChainSettings As CHCProtocolLibrary.AreaCommon.Models.Network.TransactionChainModel, ByVal transactionChainSettingsHash As String) As Boolean
+            Private Function writeDataContent(ByVal contentStatePath As String, ByRef transactionChainSettings As CHCProtocolLibrary.AreaCommon.Models.Network.TransactionChainModel, ByVal transactionChainSettingsHash As String) As Boolean
                 Try
                     Dim engine As New TransactionChainFile
 
                     engine.data = transactionChainSettings
 
-                    engine.fileName = IO.Path.Combine(statePath, "Contents", transactionChainSettingsHash & ".content")
+                    engine.fileName = IO.Path.Combine(contentStatePath, transactionChainSettingsHash & ".content")
 
                     Return engine.save()
                 Catch ex As Exception
@@ -109,7 +113,7 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Private Function writeDataIntoLedger(ByVal statePath As String) As Boolean
+            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As Boolean
                 Try
                     With AreaCommon.state.currentBlockLedger.currentRecord
                         .actionCode = "a0x4"
@@ -119,7 +123,7 @@ Namespace AreaProtocol
                         .requestHash = data.requestHash
                     End With
 
-                    writeDataContent(statePath, data.transactionChainSettings, AreaCommon.state.currentBlockLedger.currentRecord.detailInformation)
+                    writeDataContent(contentStatePath, data.transactionChainSettings, AreaCommon.state.currentBlockLedger.currentRecord.detailInformation)
 
                     If AreaCommon.state.currentBlockLedger.BlockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
@@ -159,7 +163,7 @@ Namespace AreaProtocol
                     If requestFileEngine.save() Then
                         log.track("A0x4Manager.init", "request - Saved")
 
-                        If Not writeDataIntoLedger(paths.workData.state) Then
+                        If Not writeDataIntoLedger(paths.workData.state.contents) Then
                             serviceState.currentAction.setError("-1", "Error during update ledger")
                             serviceState.currentAction.reset()
 

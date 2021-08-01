@@ -18,13 +18,11 @@ Namespace AreaEngine.Encryption
         ''' <param name="key"></param>
         ''' <returns></returns>
         Public Shared Function encrypt(ByVal content As String, ByVal key As String) As String
-
             Dim aes As New Security.Cryptography.RijndaelManaged
             Dim hash_AES As New Security.Cryptography.MD5CryptoServiceProvider
             Dim encrypted As String = ""
 
             Try
-
                 Dim hash(31) As Byte
                 Dim temp As Byte() = hash_AES.ComputeHash(Text.Encoding.ASCII.GetBytes(key))
 
@@ -43,7 +41,6 @@ Namespace AreaEngine.Encryption
             End Try
 
             Return encrypted
-
         End Function
 
 
@@ -54,13 +51,11 @@ Namespace AreaEngine.Encryption
         ''' <param name="key"></param>
         ''' <returns></returns>
         Public Shared Function decrypt(ByVal content As String, ByVal key As String) As String
-
             Dim AES As New Security.Cryptography.RijndaelManaged
             Dim Hash_AES As New Security.Cryptography.MD5CryptoServiceProvider
             Dim decrypted As String = ""
 
             Try
-
                 Dim hash(31) As Byte
                 Dim temp As Byte() = Hash_AES.ComputeHash(Text.Encoding.ASCII.GetBytes(key))
 
@@ -74,13 +69,10 @@ Namespace AreaEngine.Encryption
                 Dim Buffer As Byte() = Convert.FromBase64String(content)
 
                 decrypted = Text.Encoding.ASCII.GetString(DESDecrypter.TransformFinalBlock(Buffer, 0, Buffer.Length))
-
             Catch ex As Exception
-
             End Try
 
             Return decrypted
-
         End Function
 
 

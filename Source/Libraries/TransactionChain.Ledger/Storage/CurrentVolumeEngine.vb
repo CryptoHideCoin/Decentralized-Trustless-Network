@@ -1,6 +1,7 @@
 ﻿Option Explicit On
 Option Compare Text
 
+Imports CHCCommonLibrary.Support
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement
 Imports CHCBasicCryptographyLibrary.AreaEngine.Encryption.Base58Signature
 Imports CHCCommonLibrary.AreaEngine.Encryption
@@ -359,7 +360,7 @@ Namespace AreaEngine.Ledger
 
             Public Property generalState As CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.notChecked
             Public Property currentVolumesIndex As New CurrentVolumesIndexEngine
-            Public Property log As CHCServerSupportLibrary.Support.LogEngine
+            Public Property log As LogEngine
             Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
             Public ReadOnly Property problemDescription As String

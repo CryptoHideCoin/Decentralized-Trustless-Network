@@ -55,9 +55,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCServerSupportLibrary, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCServerSupportLibrary\CHCServerSupportLibrary.dll</HintPath>
+      <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCSupportUIControls, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -121,7 +121,7 @@
     <Compile Include="Classes\Protocol\A1\A1x6Engine.vb" />
     <Compile Include="Classes\Protocol\A2\A2x0Engine.vb" />
     <Compile Include="Classes\State\ChainStateEngine.vb" />
-    <Compile Include="Controllers\Administration\DoAction\DoActionBuildNetworkController.vb" />
+    <Compile Include="Controllers\Administration\DoAction\BuildNetworkController.vb" />
     <Compile Include="Controllers\Administration\DoAction\VerifyDataController.vb" />
     <Compile Include="Controllers\Administration\ServiceStateController.vb" />
     <Compile Include="Controllers\QoS\Page\DataPageController.vb" />
@@ -130,6 +130,7 @@
     <Compile Include="Controllers\QoS\Ticket\QueueTickets.vb" />
     <Compile Include="Controllers\QoS\Ticket\RequestNewController.vb" />
     <Compile Include="Controllers\Security\ChangeCertificateController.vb" />
+    <Compile Include="Controllers\Security\SetIdentityKeyPairController.vb" />
     <Compile Include="Controllers\Service\InformationController.vb" />
     <Compile Include="Controllers\Service\SupportedProtocols.vb" />
     <Compile Include="Controllers\Service\TestController.vb" />
@@ -215,10 +216,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\CHCCommonLibrary\CHCCommonLibrary.vbproj">
-      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
-      <Name>CHCCommonLibrary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\CHCProtocolLibrary\CHCProtocolLibrary.vbproj">
       <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
       <Name>CHCProtocolLibrary</Name>

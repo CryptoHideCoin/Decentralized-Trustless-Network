@@ -55,13 +55,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCServerSupportLibrary, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCServerSupportLibrary\CHCServerSupportLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCSupportUIControls, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCSupportUIControls\CHCSupportUIControls.dll</HintPath>
+      <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -90,11 +86,23 @@
   <ItemGroup>
     <Compile Include="Classes\Base\AppSettings.vb" />
     <Compile Include="Classes\Base\Paths.vb" />
+    <Compile Include="Forms\BuildNetwork.Designer.vb">
+      <DependentUpon>BuildNetwork.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BuildNetwork.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Main.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Main.Designer.vb">
       <DependentUpon>Main.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RefundPlanDetail.Designer.vb">
+      <DependentUpon>RefundPlanDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RefundPlanDetail.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Models\NetworkModel.vb" />
@@ -119,8 +127,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\BuildNetwork.resx">
+      <DependentUpon>BuildNetwork.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RefundPlanDetail.resx">
+      <DependentUpon>RefundPlanDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -145,13 +159,13 @@
     <Content Include="64.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\CHCCommonLibrary\CHCCommonLibrary.vbproj">
-      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
-      <Name>CHCCommonLibrary</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\CHCProtocolLibrary\CHCProtocolLibrary.vbproj">
       <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
       <Name>CHCProtocolLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\CHCSupportUIControls\CHCSupportUIControls.vbproj">
+      <Project>{2b477a78-3139-4570-bb5e-3fc09475c316}</Project>
+      <Name>CHCSupportUIControls</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

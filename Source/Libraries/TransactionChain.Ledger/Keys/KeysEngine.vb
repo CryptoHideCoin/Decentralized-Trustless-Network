@@ -29,6 +29,10 @@ Namespace AreaEngine.KeyPair
             Dim result As New KeyPair
 
             Try
+                If _keys.ContainsKey(typeKey) Then
+                    _keys.Remove(typeKey)
+                End If
+
                 result.walletType = typeKey
                 result.publicAddress = publicWalletID
                 result.privateKey = privateWalletKey
