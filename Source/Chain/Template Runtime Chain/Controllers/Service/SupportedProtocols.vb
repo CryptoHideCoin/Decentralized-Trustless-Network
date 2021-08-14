@@ -26,10 +26,11 @@ Namespace Controllers
             Dim result As New Models.Service.SupportedProtocolsResponseModel
 
             Try
+                result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
+
                 result.protocols.Add("SuperminimalAdmin")
 
-                result.requestTime = Now
-                result.responseTime = Now
+                result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"

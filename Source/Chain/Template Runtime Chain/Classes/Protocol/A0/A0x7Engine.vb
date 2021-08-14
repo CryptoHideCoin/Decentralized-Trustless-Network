@@ -50,22 +50,24 @@ Namespace AreaProtocol
 
         Public Class RecoveryState
 
-            Public Shared Function fromRequest(ByRef value As RequestModel) As Boolean
-
+            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger) As Boolean
                 Dim newItem As CHCProtocolLibrary.AreaCommon.Models.Network.RefundItem
 
-                AreaCommon.state.runtimeState.activeNetwork.refundPlan = New CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList
+                With AreaCommon.state.runtimeState.activeNetwork.refundPlan
+                    .recordCoordinate = transactionChainRecord.recordCoordinate
+                    .recordHash = transactionChainRecord.recordHash
 
-                For Each item In value.refundPlan.items
+                    For Each item In value.refundPlan.items
+                        newItem = New CHCProtocolLibrary.AreaCommon.Models.Network.RefundItem
 
-                    newItem = New CHCProtocolLibrary.AreaCommon.Models.Network.RefundItem
+                        newItem.description = item.description
+                        newItem.fixValue = item.fixValue
+                        newItem.percentageValue = item.percentageValue
+                        newItem.recipient = item.recipient
 
-                    newItem.fixValue = item.fixValue
-                    newItem.percentageValue = item.percentageValue
-                    newItem.recipient = item.recipient
-
-                    AreaCommon.state.runtimeState.activeNetwork.refundPlan.items.Add(newItem)
-                Next
+                        .value.items.Add(newItem)
+                    Next
+                End With
 
                 Return True
             End Function
@@ -77,7 +79,7 @@ Namespace AreaProtocol
                     engine.fileName = IO.Path.Combine(statePath, "Contents", data.detailInformation & ".content")
 
                     If engine.read() Then
-                        AreaCommon.state.runtimeState.activeNetwork.refundPlan = engine.data
+                        AreaCommon.state.runtimeState.activeNetwork.refundPlan.value = engine.data
                     End If
 
                     engine.data = Nothing
@@ -119,7 +121,7 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As Boolean
+            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
                 Try
                     With AreaCommon.state.currentBlockLedger.currentRecord
                         .actionCode = "a0x7"
@@ -134,21 +136,20 @@ Namespace AreaProtocol
                     If AreaCommon.state.currentBlockLedger.BlockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
                     End If
-
-                    Return False
                 Catch ex As Exception
                     serviceState.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A0x7Manager.init", "Error:" & ex.Message, "error")
-
-                    Return False
                 End Try
+
+                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
             End Function
 
 
             Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal refundPlan As CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
                 Try
                     Dim requestFileEngine As New FileEngine
+                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
 
                     log.track("A0x7Manager.init", "Begin")
 
@@ -169,7 +170,9 @@ Namespace AreaProtocol
                     If requestFileEngine.save() Then
                         log.track("A0x7Manager.init", "request - Saved")
 
-                        If Not writeDataIntoLedger(paths.workData.state.contents) Then
+                        ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents)
+
+                        If (ledgerCoordinate.recordCoordinate.Length = 0) Then
                             serviceState.currentAction.setError("-1", "Error during update ledger")
                             serviceState.currentAction.reset()
 
@@ -180,7 +183,7 @@ Namespace AreaProtocol
 
                         log.track("A0x7Manager.init", "Ledger updated")
 
-                        If Not RecoveryState.fromRequest(data) Then
+                        If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
                             serviceState.currentAction.setError("-1", "Error during update State")
                             serviceState.currentAction.reset()
 

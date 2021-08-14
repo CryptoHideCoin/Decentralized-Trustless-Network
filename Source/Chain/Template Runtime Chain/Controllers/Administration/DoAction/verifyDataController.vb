@@ -25,7 +25,7 @@ Namespace Controllers
             Dim result As New General.RemoteResponse
 
             Try
-                result.requestTime = Now
+                result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If (AreaCommon.state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
                     If AreaSecurity.checkSignature(signature) Then
@@ -60,7 +60,7 @@ Namespace Controllers
                 result.errorDescription = "503 - Generic Error"
             End Try
 
-            result.responseTime = Now
+            result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Return result
 

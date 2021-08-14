@@ -41,7 +41,9 @@ Namespace AreaData
         End Sub
 
         Private Sub createLedger()
-            AreaCommon.state.currentBlockLedger.init(AreaCommon.paths.workData.currentVolume.ledger, AreaCommon.state.runtimeState.activeNetwork.creationDateNetwork)
+            AreaCommon.state.runtimeState.activeNetwork.networkCreationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+
+            AreaCommon.state.currentBlockLedger.init(AreaCommon.paths.workData.currentVolume.ledger, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate)
         End Sub
 
         Private Sub manageA0x0()
@@ -52,7 +54,7 @@ Namespace AreaData
                 commandA0x0.serviceState = AreaCommon.state.serviceState
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA0x0.init(AreaCommon.paths, dataNetwork.name, AreaCommon.state.information.networkName, CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime(), .publicAddress, .privateKey)
+                    _Proceed = commandA0x0.init(AreaCommon.paths, dataNetwork.name, AreaCommon.state.information.networkName, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate, .publicAddress, .privateKey)
                 End With
 
                 commandA0x0 = Nothing
@@ -263,6 +265,8 @@ Namespace AreaData
 
                 AreaCommon.log.track("BuildNetwork.run", "Begin")
 
+                AreaCommon.state.network.position = AppState.EnumConnectionState.genesisOperation
+
                 createLedger()
                 rebuildCommandList()
 
@@ -284,6 +288,10 @@ Namespace AreaData
                 manageA1x6()
 
                 rebuildFinalCommandList()
+
+                If AreaCommon.webServiceThread() Then
+                    AreaCommon.log.trackIntoConsole("Service is in run")
+                End If
 
                 AreaCommon.log.trackIntoConsole("Build Network complete")
 

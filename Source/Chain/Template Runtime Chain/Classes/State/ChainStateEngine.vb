@@ -8,30 +8,62 @@ Namespace AreaState
 
     Public Class ChainStateEngine
 
+        Public Class itemIdentityStructure
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+
+            Public Property value As String = ""
+        End Class
+
+        Public Class NetworkAssetStructure
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+
+            Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel
+        End Class
+
+        Public Class NetworkTransactionStructure
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+
+            Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.TransactionChainModel
+        End Class
+
+        Public Class NetworkRefundItemListStructure
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+
+            Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList
+        End Class
+
+        Public Class ChainPriceListStructure
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+
+            Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel
+        End Class
+
         Public Class DataNetwork
 
-            Public Property networkName As String = ""
-            Public Property whitePaper As String = ""
-            Public Property yellowPaper As String = ""
-            Public Property primaryAssetData As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel
-            Public Property transactionChainSettings As New CHCProtocolLibrary.AreaCommon.Models.Network.TransactionChainModel
-            Public Property policyPrivacy As String = ""
-            Public Property generalCondition As String = ""
-            Public Property refundPlan As CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList
+            Public Property networkName As New itemIdentityStructure
+            Public Property whitePaper As New itemIdentityStructure
+            Public Property yellowPaper As New itemIdentityStructure
+            Public Property primaryAssetData As New NetworkAssetStructure
+            Public Property transactionChainSettings As New NetworkTransactionStructure
+            Public Property privacyPolicy As New itemIdentityStructure
+            Public Property generalCondition As New itemIdentityStructure
 
-            Public Property creationDateNetwork As Double = 0
+            Public Property refundPlan As New NetworkRefundItemListStructure
 
+            Public Property networkCreationDate As Double = 0
+
+            Public Property genesisPublicAddress As String = ""
         End Class
 
         Public Class DataChain
 
-            Public Property name As String = ""
-            Public Property description As String = ""
-            Public Property protocolDocument As String = ""
-            Public Property protocolSets As New List(Of String)
-            Public Property priceLists As New CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel
-            Public Property policyPrivacy As String = ""
-            Public Property generalCondition As String = ""
+            Public Property name As New itemIdentityStructure
+            Public Property description As New itemIdentityStructure
+            Public Property protocolDocument As New itemIdentityStructure
+            Public Property protocolSets As New List(Of itemIdentityStructure)
+            Public Property priceLists As New ChainPriceListStructure
+            Public Property privacyPolicy As New itemIdentityStructure
+            Public Property generalCondition As New itemIdentityStructure
 
             Public Property creationDateLedger As Double = 0
 
@@ -39,28 +71,28 @@ Namespace AreaState
 
         Public Class DataPeer
 
-            Public Enum roleMasterNode
+                Public Enum roleMasterNode
 
-                fullService
-                light
-                frontOffice
-                consensus
-                arbitration
+                    fullService
+                    light
+                    frontOffice
+                    consensus
+                    arbitration
 
-            End Enum
+                End Enum
 
-            Public Property identityAddressWalletId As String = ""
-            Public Property warrantyAddressWalletId As String = ""
-            Public Property refundAddressWalletId As String = ""
-            Public Property ipAddress As String = ""
-            Public Property warrantyCoin As Decimal = 0
-            Public Property chainName As String = ""
-            Public Property role As roleMasterNode = roleMasterNode.arbitration
-            Public Property startConnectionDate As DateTime
-            Public Property dayConnection As Short = 0
-            Public Property lastConnectionDate As DateTime
+                Public Property identityAddressWalletId As String = ""
+                Public Property warrantyAddressWalletId As String = ""
+                Public Property refundAddressWalletId As String = ""
+                Public Property ipAddress As String = ""
+                Public Property warrantyCoin As Decimal = 0
+                Public Property chainName As String = ""
+                Public Property role As roleMasterNode = roleMasterNode.arbitration
+                Public Property startConnectionDate As DateTime
+                Public Property dayConnection As Short = 0
+                Public Property lastConnectionDate As DateTime
 
-        End Class
+            End Class
 
         Public Class PeerKey
 
@@ -69,10 +101,10 @@ Namespace AreaState
 
         End Class
 
-        Public Function addNewChain(ByVal name As String) As DataChain
+        Public Function addNewChain(ByVal name As String, ByVal ledgerCoordinate As String, ByVal ledgerHash As String) As DataChain
             Dim newValue As New DataChain
 
-            newValue.name = name
+            newValue.name.value = name
 
             activeChains.Add(name, newValue)
 
@@ -102,17 +134,17 @@ Namespace AreaState
         End Function
 
         Public Function getDataPeer(ByVal chainName As String, ByVal publicAddress As String) As DataPeer
-            Dim newKey As New PeerKey
+                Dim newKey As New PeerKey
 
-            newKey.chainName = chainName
-            newKey.identityAddressWalletId = publicAddress
+                newKey.chainName = chainName
+                newKey.identityAddressWalletId = publicAddress
 
-            If activePeers.ContainsKey(newKey) Then
-                Return activePeers.Item(newKey)
-            Else
-                Return New DataPeer
-            End If
-        End Function
+                If activePeers.ContainsKey(newKey) Then
+                    Return activePeers.Item(newKey)
+                Else
+                    Return New DataPeer
+                End If
+            End Function
 
         Public activeNetwork As New DataNetwork
         Public activeChains As New Dictionary(Of String, DataChain)

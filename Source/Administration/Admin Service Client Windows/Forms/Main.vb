@@ -518,7 +518,7 @@ Public Class Main
 
                 remote.url = serviceUrlProtocol.baseUrlComplete & "/api/" & serviceIDText.Text & "/administration/serviceState/?signature=" & signature
 
-                Dim rt As DateTime = Now
+                Dim rt As String = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT
 
                 If (remote.getData() = "") Then
                     If (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete) Then
@@ -548,7 +548,7 @@ Public Class Main
 
                         cancelOperationText.Text = remote.data.requestCancelCurrentRunCommand
 
-                        requestMonitorTimeText.Text = rt.ToString()
+                        requestMonitorTimeText.Text = rt
                         responseMonitorTimeText.Text = remote.data.responseTime
 
                         codeActionText.Text = remote.data.currentAction.codeAction
@@ -687,7 +687,7 @@ Public Class Main
 
                 If (remote.sendData() = "") Then
                     If (remote.remoteResponse.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete) Then
-                        MessageBox.Show("Verify data operation start", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        MessageBox.Show("Build network operation start", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                         refreshMonitor()
                     ElseIf (remote.remoteResponse.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.commandNotAllowed) Then

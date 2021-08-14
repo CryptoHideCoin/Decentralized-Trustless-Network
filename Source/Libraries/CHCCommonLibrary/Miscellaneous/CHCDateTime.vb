@@ -14,30 +14,29 @@ Namespace AreaEngine.Miscellaneous
         Private _ErrorFormatDate As Boolean
 
 
-
-
-
-        Public Function atMomentGMT() As String
+        Function formatDateTimeGMT(ByVal value As DateTime) As String
             Try
                 If _ErrorFormatDate Then
-                    Return Now.ToUniversalTime().ToString("yyyy-MM-dd") & "T" & Now.ToUniversalTime().ToLongTimeString
+                    Return value.ToUniversalTime().ToString("yyyy-MM-dd") & "T" & value.ToUniversalTime().ToLongTimeString & "Z"
                 End If
 
-                Return Now.ToUniversalTime().GetDateTimeFormats()(78).ToString()
+                Return value.ToUniversalTime().GetDateTimeFormats()(78).ToString() & "Z"
             Catch ex As Exception
                 _ErrorFormatDate = True
 
-                Return Now.ToUniversalTime().ToString("yyyy-MM-dd") & "T" & Now.ToUniversalTime().ToLongTimeString
+                Return value.ToUniversalTime().ToString("yyyy-MM-dd") & "T" & value.ToUniversalTime().ToLongTimeString & "Z"
             End Try
         End Function
 
+        Function atMomentGMT() As String
+            Return formatDateTimeGMT(Now)
+        End Function
 
         Function dateTimeFromTimestamp(value As Double) As DateTime
             Return New DateTime(1970, 1, 1, 0, 0, 0, 0).AddMilliseconds(value)
         End Function
 
-
-        Public Function timestampFromDateTime(Optional ByVal value As DateTime = Nothing) As Double
+        Function timestampFromDateTime(Optional ByVal value As DateTime = Nothing) As Double
             If (value = DateTime.MinValue) Then
                 Return (Now - New DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds
             Else

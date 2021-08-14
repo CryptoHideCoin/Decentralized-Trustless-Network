@@ -46,14 +46,19 @@ Namespace AreaProtocol
 
         Public Class RecoveryState
 
-            Public Shared Function fromRequest(ByRef value As RequestModel) As Boolean
-                AreaCommon.state.runtimeState.getDataChain(value.chainName).description = value.chainDescription
+            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger) As Boolean
+
+                With AreaCommon.state.runtimeState.getDataChain(value.chainName).description
+                    .recordCoordinate = transactionChainRecord.recordCoordinate
+                    .recordHash = transactionChainRecord.recordHash
+                    .value = value.chainDescription
+                End With
 
                 Return True
             End Function
 
             Public Shared Function fromTransactionLedger(ByVal chainName As String, ByRef value As TransactionChainLibrary.AreaLedger.LedgerEngine.SingleRecordLedger) As Boolean
-                AreaCommon.state.runtimeState.getDataChain(chainName).description = value.detailInformation
+                AreaCommon.state.runtimeState.getDataChain(chainName).description.value = value.detailInformation
 
                 Return True
             End Function
@@ -68,7 +73,7 @@ Namespace AreaProtocol
             Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
-            Private Function writeDataIntoLedger() As Boolean
+            Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
                 Try
                     With AreaCommon.state.currentBlockLedger.currentRecord
                         .actionCode = "a1x1"
@@ -81,21 +86,20 @@ Namespace AreaProtocol
                     If AreaCommon.state.currentBlockLedger.BlockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
                     End If
-
-                    Return False
                 Catch ex As Exception
                     serviceState.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A1x1Manager.init", "Error:" & ex.Message, "error")
-
-                    Return False
                 End Try
+
+                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
             End Function
 
 
             Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal chainDescriptionParameter As String, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
                 Try
                     Dim requestFileEngine As New FileEngine
+                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
 
                     log.track("A1x1Manager.init", "Begin")
 
@@ -116,7 +120,9 @@ Namespace AreaProtocol
                     If requestFileEngine.save() Then
                         log.track("A1x1Manager.init", "request - Saved")
 
-                        If Not writeDataIntoLedger() Then
+                        ledgerCoordinate = writeDataIntoLedger()
+
+                        If (ledgerCoordinate.recordCoordinate.Length = 0) Then
                             serviceState.currentAction.setError("-1", "Error during update ledger")
                             serviceState.currentAction.reset()
 
@@ -127,7 +133,7 @@ Namespace AreaProtocol
 
                         log.track("A1x1Manager.init", "Ledger updated")
 
-                        If Not RecoveryState.fromRequest(data) Then
+                        If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
                             serviceState.currentAction.setError("-1", "Error create state")
                             serviceState.currentAction.reset()
 

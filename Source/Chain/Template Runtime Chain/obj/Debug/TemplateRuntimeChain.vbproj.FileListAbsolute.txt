@@ -23,14 +23,9 @@ E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCBasicCrypt
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\BouncyCastle.Crypto.dll
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCCommonLibrary.dll
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\TransactionChainLibrary.dll
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\TransactionChainLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\TransactionChainLibrary.xml
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCSupportUIControls.dll
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\zxing.dll
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCSupportUIControls.pdb
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCSupportUIControls.xml
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Debug\CHCPrimaryRuntimeService.KeyPairDetail.resources
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Debug\CHCPrimaryRuntimeService.KeyStoreManager.resources
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCServerSupportLibrary.dll
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCProtocolLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCProtocolLibrary.xml

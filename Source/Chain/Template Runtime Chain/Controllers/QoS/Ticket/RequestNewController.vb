@@ -25,7 +25,7 @@ Namespace Controllers
             Dim result As New AreaCommon.Models.QoSModel.RequestNewTicketResponseModel
 
             Try
-                result.requestTime = Now
+                result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If (AreaCommon.state.network.position = AppState.enumConnectionState.onLine) Then
                     newTicket = AreaCommon.state.queues.getNewTicket()
@@ -43,7 +43,7 @@ Namespace Controllers
                 result.errorDescription = "503 - Generic Error"
             End Try
 
-            result.responseTime = Now
+            result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Return result
         End Function

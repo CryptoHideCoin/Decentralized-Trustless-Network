@@ -43,7 +43,6 @@ E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportU
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.WalletKeyPrivate.resources
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.SelectPort.resources
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.LogControl.resources
-E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\CHCServerSupportLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.RequestPassword.resources
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.KeyStoreManager.resources
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.KeyPairDetail.resources

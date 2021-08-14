@@ -10,6 +10,7 @@ Namespace AreaCommon.Models.General
     End Class
 
 
+    ' TO DELETE
     Public Class StatusWorkModel
 
         Public Enum EnumStatusWork
@@ -19,6 +20,17 @@ Namespace AreaCommon.Models.General
         End Enum
 
         Public value As EnumStatusWork = EnumStatusWork.unAuthorized
+
+    End Class
+
+    Public Class IdentifyRecordLedger
+
+        Public Property recordCoordinate As String = ""
+        Public Property recordHash As String = ""
+
+        Public Sub composeCoordinate(ByVal volumeId As String, ByVal blockId As String, ByVal recordId As String)
+            recordCoordinate = volumeId & "-" & blockId & "-" & recordId
+        End Sub
 
     End Class
 
@@ -32,10 +44,14 @@ Namespace AreaCommon.Models.General
             inError
         End Enum
 
+        Public IntegrityTransactionChain As New IdentifyRecordLedger
         Public responseStatus As EnumResponseStatus = EnumResponseStatus.responseComplete
         Public errorDescription As String = ""
-        Public requestTime As New DateTime
-        Public responseTime As New DateTime
+        Public requestTime As String = ""
+        Public responseTime As String = ""
+
+        Public masterNodePublicAddress As String = ""
+        Public signature As String = ""
 
     End Class
 

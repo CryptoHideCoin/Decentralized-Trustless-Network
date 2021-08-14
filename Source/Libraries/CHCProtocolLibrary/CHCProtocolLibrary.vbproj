@@ -48,7 +48,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.9.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
@@ -79,9 +79,10 @@
     <Compile Include="General\Package.vb" />
     <Compile Include="General\VirtualPath.vb" />
     <Compile Include="Models\AdministrationModel.vb" />
-    <Compile Include="Models\BuildNetworkModel.vb" />
+    <Compile Include="Models\PrimaryChain\BuildNetworkModel.vb" />
     <Compile Include="Models\DocumentModel.vb" />
     <Compile Include="Models\GeneralSettingsModel.vb" />
+    <Compile Include="Models\PrimaryChain\InfoNetworkBaseModel.vb" />
     <Compile Include="Models\SecurityModel.vb" />
     <Compile Include="Models\ServiceModel.vb" />
     <Compile Include="Models\SetIdentityKeyPairModel.vb" />

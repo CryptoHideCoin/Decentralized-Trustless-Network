@@ -41,10 +41,13 @@ Namespace AreaProtocol
 
         Public Class RecoveryState
 
-            Public Shared Function fromRequest(ByRef value As RequestModel) As Boolean
+            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger) As Boolean
                 With AreaCommon.state.runtimeState.activeNetwork
-                    .networkName = value.netName
-                    .creationDateNetwork = value.requestDateTimeStamp
+                    .networkName.value = value.netName
+                    .networkName.recordCoordinate = transactionChainRecord.recordCoordinate
+                    .networkName.recordHash = transactionChainRecord.recordHash
+                    .networkCreationDate = value.requestDateTimeStamp
+                    .genesisPublicAddress = value.publicWalletAddressRequester
                 End With
 
                 Return True
@@ -52,8 +55,9 @@ Namespace AreaProtocol
 
             Public Shared Function fromTransactionLedger(ByRef value As TransactionChainLibrary.AreaLedger.LedgerEngine.SingleRecordLedger) As Boolean
                 With AreaCommon.state.runtimeState.activeNetwork
-                    .networkName = value.detailInformation
-                    .creationDateNetwork = value.approvedDate
+                    .networkName.value = value.detailInformation
+                    .networkCreationDate = value.approvedDate
+                    .genesisPublicAddress = value.requester
                 End With
 
                 Return True
@@ -69,11 +73,11 @@ Namespace AreaProtocol
             Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
-            Private Function writeDataIntoLedger() As Boolean
+            Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
                 Try
                     With AreaCommon.state.currentBlockLedger.currentRecord
                         .actionCode = "a0x0"
-                        .approvedDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime
+                        .approvedDate = AreaCommon.state.runtimeState.activeNetwork.networkCreationDate
                         .detailInformation = data.netName
                         .requester = data.publicWalletAddressRequester
                         .requestHash = data.requestHash
@@ -82,21 +86,20 @@ Namespace AreaProtocol
                     If AreaCommon.state.currentBlockLedger.BlockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
                     End If
-
-                    Return False
                 Catch ex As Exception
                     serviceState.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A0x0Manager.init", "Error:" & ex.Message, "error")
-
-                    Return False
                 End Try
+
+                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
             End Function
 
 
-            Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal networkNameParameter As String, ByVal networkNameNode As String, ByVal dataCreationNetwork As Double, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
+            Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal networkNameParameter As String, ByVal networkNameNode As String, ByVal networkCreationDate As Double, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
                 Try
                     Dim requestFileEngine As New FileEngine
+                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
 
                     log.track("A0x0Manager.init", "Begin")
 
@@ -115,7 +118,7 @@ Namespace AreaProtocol
 
                     data.netName = networkNameParameter
                     data.publicWalletAddressRequester = publicWalletIdAddress
-                    data.requestDateTimeStamp = dataCreationNetwork
+                    data.requestDateTimeStamp = networkCreationDate
                     data.requestHash = data.getHash
                     data.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, data.requestHash)
 
@@ -126,7 +129,9 @@ Namespace AreaProtocol
                     If requestFileEngine.save() Then
                         log.track("A0x0Manager.init", "request - Saved")
 
-                        If Not writeDataIntoLedger() Then
+                        ledgerCoordinate = writeDataIntoLedger()
+
+                        If (ledgerCoordinate.recordCoordinate.Length = 0) Then
                             serviceState.currentAction.setError("-1", "Error during update ledger")
                             serviceState.currentAction.reset()
 
@@ -137,7 +142,7 @@ Namespace AreaProtocol
 
                         log.track("A0x0Manager.init", "Ledger updated")
 
-                        If Not RecoveryState.fromRequest(data) Then
+                        If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
                             serviceState.currentAction.setError("-1", "Network not compatible")
                             serviceState.currentAction.reset()
 

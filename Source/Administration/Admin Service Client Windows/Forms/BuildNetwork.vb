@@ -43,6 +43,8 @@ Public Class BuildNetwork
                 If fromSave Then
                     .publicAddressGenesis = adminWalletAddress.value
                 Else
+                    keyPairRAW.decoreDataAddress(keyPairRAW.publicKey)
+
                     .publicAddressGenesis = keyPairRAW.publicKey
                 End If
 

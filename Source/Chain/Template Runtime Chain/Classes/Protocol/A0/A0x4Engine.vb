@@ -50,15 +50,20 @@ Namespace AreaProtocol
 
         Public Class RecoveryState
 
-            Public Shared Function fromRequest(ByRef value As RequestModel) As Boolean
+            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger) As Boolean
                 With AreaCommon.state.runtimeState.activeNetwork.transactionChainSettings
-                    .blockSizeFrequency = value.transactionChainSettings.blockSizeFrequency
-                    .consensusMethod = value.transactionChainSettings.consensusMethod
-                    .initialCoinReleasePerBlock = value.transactionChainSettings.initialCoinReleasePerBlock
-                    .initialMaxComputeTransaction = value.transactionChainSettings.initialMaxComputeTransaction
-                    .numberBlockInVolume = value.transactionChainSettings.numberBlockInVolume
-                    .reviewReleaseAlgorithm = value.transactionChainSettings.reviewReleaseAlgorithm
-                    .ruleFutureRelease = value.transactionChainSettings.ruleFutureRelease
+                    .recordCoordinate = transactionChainRecord.recordCoordinate
+                    .recordHash = transactionChainRecord.recordHash
+
+                    With .value
+                        .blockSizeFrequency = value.transactionChainSettings.blockSizeFrequency
+                        .consensusMethod = value.transactionChainSettings.consensusMethod
+                        .initialCoinReleasePerBlock = value.transactionChainSettings.initialCoinReleasePerBlock
+                        .initialMaxComputeTransaction = value.transactionChainSettings.initialMaxComputeTransaction
+                        .numberBlockInVolume = value.transactionChainSettings.numberBlockInVolume
+                        .reviewReleaseAlgorithm = value.transactionChainSettings.reviewReleaseAlgorithm
+                        .ruleFutureRelease = value.transactionChainSettings.ruleFutureRelease
+                    End With
                 End With
 
                 Return True
@@ -71,7 +76,7 @@ Namespace AreaProtocol
                     engine.fileName = IO.Path.Combine(statePath, "Contents", data.detailInformation & ".content")
 
                     If engine.read() Then
-                        AreaCommon.state.runtimeState.activeNetwork.transactionChainSettings = engine.data
+                        AreaCommon.state.runtimeState.activeNetwork.transactionChainSettings.value = engine.data
                     End If
 
                     engine.data = Nothing
@@ -113,7 +118,7 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As Boolean
+            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
                 Try
                     With AreaCommon.state.currentBlockLedger.currentRecord
                         .actionCode = "a0x4"
@@ -128,21 +133,20 @@ Namespace AreaProtocol
                     If AreaCommon.state.currentBlockLedger.BlockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
                     End If
-
-                    Return False
                 Catch ex As Exception
                     serviceState.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A0x4Manager.init", "Error:" & ex.Message, "error")
-
-                    Return False
                 End Try
+
+                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
             End Function
 
 
             Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal transactionChainSettings As CHCProtocolLibrary.AreaCommon.Models.Network.TransactionChainModel, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
                 Try
                     Dim requestFileEngine As New FileEngine
+                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
 
                     log.track("A0x4Manager.init", "Begin")
 
@@ -163,7 +167,9 @@ Namespace AreaProtocol
                     If requestFileEngine.save() Then
                         log.track("A0x4Manager.init", "request - Saved")
 
-                        If Not writeDataIntoLedger(paths.workData.state.contents) Then
+                        ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents)
+
+                        If (ledgerCoordinate.recordCoordinate.Length = 0) Then
                             serviceState.currentAction.setError("-1", "Error during update ledger")
                             serviceState.currentAction.reset()
 
@@ -174,7 +180,7 @@ Namespace AreaProtocol
 
                         log.track("A0x4Manager.init", "Ledger updated")
 
-                        If Not RecoveryState.fromRequest(data) Then
+                        If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
                             serviceState.currentAction.setError("-1", "Error during update State")
                             serviceState.currentAction.reset()
 

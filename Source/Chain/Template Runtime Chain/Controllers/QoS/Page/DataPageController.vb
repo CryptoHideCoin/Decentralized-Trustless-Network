@@ -22,7 +22,7 @@ Namespace Controllers
             Dim result As New AreaCommon.Models.QoSModel.DataPageResponseModel
 
             Try
-                result.requestTime = Now
+                result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If (AreaCommon.state.network.position = AppState.enumConnectionState.onLine) Then
                     result.content = AreaCommon.state.queues.getDataFile(pageNumber)
@@ -35,7 +35,7 @@ Namespace Controllers
                 result.errorDescription = "503 - Generic Error"
             End Try
 
-            result.responseTime = Now
+            result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Return result
 

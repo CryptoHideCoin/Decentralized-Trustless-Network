@@ -11,17 +11,18 @@ Imports CHCProtocolLibrary.AreaCommon
 
 Public Class AppState
 
-    Public Enum enumConnectionState
+    Public Enum EnumConnectionState
 
         notDefined
         offLine
+        genesisOperation
         startingConnection
         connectionOffLine
         onLine
 
     End Enum
 
-    Public Enum enumMasternodeRole
+    Public Enum EnumMasternodeRole
 
         notDefined
         guarantee

@@ -24,8 +24,8 @@ Namespace Controllers
             Dim result As New RemoteResponse
 
             Try
-                result.requestTime = Now
-                result.responseTime = Now
+                result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
+                result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"

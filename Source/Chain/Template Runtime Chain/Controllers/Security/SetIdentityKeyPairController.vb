@@ -23,7 +23,7 @@ Namespace Controllers
         Public Function PutValue(ByVal signature As String, <FromBody()> ByVal value As Models.Security.SetIdentityKeyPairModel) As General.RemoteResponse
             Dim result As New General.RemoteResponse
 
-            result.requestTime = Now
+            result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Try
                 If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
@@ -47,7 +47,7 @@ Namespace Controllers
                 result.errorDescription = "503 - Generic Error"
             End Try
 
-            result.responseTime = Now
+            result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Return result
         End Function

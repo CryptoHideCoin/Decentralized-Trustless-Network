@@ -2,8 +2,6 @@
 Option Explicit On
 
 Imports CHCCommonLibrary.AreaEngine.Miscellaneous
-Imports CHCServerSupportLibrary.Support
-Imports CHCServerSupportLibrary.Support.LogEngine
 Imports CHCProtocolLibrary.AreaWallet.Support
 
 
@@ -271,14 +269,10 @@ Namespace AreaCommon
                 If webServiceThread(True) Then
                     log.trackIntoConsole("Service is in run")
 
-                    'analyzeInternalState()
                     runApplication()
                 Else
                     log.trackIntoConsole("Problem during start service")
                 End If
-
-                'AreaBootstrap.startTransactionChain()
-
             Catch ex As Exception
                 log.track("startUp.run", "Error:" & ex.Message, "fatal")
 

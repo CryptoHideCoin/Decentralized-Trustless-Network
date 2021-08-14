@@ -25,7 +25,7 @@ Namespace Controllers
             Dim result As New Models.Administration.ServiceStateResponse
 
             Try
-                result.requestTime = Now
+                result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
                     If Not AreaSecurity.checkSignature(signature) Then
@@ -46,7 +46,7 @@ Namespace Controllers
                 result.errorDescription = "503 - Generic Error"
             End Try
 
-            result.responseTime = Now
+            result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Return result
         End Function

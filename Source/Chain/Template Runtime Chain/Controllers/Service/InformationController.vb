@@ -24,7 +24,7 @@ Namespace Controllers
         Public Function GetValue(ByVal signature As String) As Models.Service.InformationResponseModel
             Dim result As New Models.Service.InformationResponseModel
             Try
-                result.requestTime = Now
+                result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
                     If AreaSecurity.checkSignature(signature) Then
@@ -49,7 +49,7 @@ Namespace Controllers
                 result.errorDescription = "503 - Generic Error"
             End Try
 
-            result.responseTime = Now
+            result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Return result
         End Function

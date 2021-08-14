@@ -9,6 +9,7 @@ Public Class UrlProtocol
 
     Public Event LockScreen()
     Public Event UnLockScreen()
+    Public Event RunCommand()
 
     Public Shadows Event TextChanged()
 
@@ -18,6 +19,7 @@ Public Class UrlProtocol
 
 
     Public Property serviceId As String = ""
+    Public Property executeCommand As Boolean = False
 
     Public Property useSecure() As Boolean
         Get
@@ -100,36 +102,40 @@ Public Class UrlProtocol
 
     Private Sub testButton_Click(sender As Object, e As EventArgs) Handles testButton.Click
         If (serviceAdminUrlText.Text.ToString.Trim.Length > 0) Then
-            Try
-                Dim handShakeEngine As New ProxyWS(Of CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse)
+            If executeCommand Then
+                RaiseEvent RunCommand()
+            Else
+                Try
+                    Dim handShakeEngine As New ProxyWS(Of CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse)
 
-                If (protocolCombo.SelectedIndex = 0) Then
-                    handShakeEngine.url = "http://"
-                Else
-                    handShakeEngine.url = "https://"
-                End If
-
-                RaiseEvent LockScreen()
-
-                handShakeEngine.url += serviceAdminUrlText.Text & "/api/" & serviceId & "/service/test"
-
-                If (handShakeEngine.getData() = "") Then
-
-                    If (handShakeEngine.data.responseStatus = General.RemoteResponse.EnumResponseStatus.systemOffline) Then
-                        MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    If (protocolCombo.SelectedIndex = 0) Then
+                        handShakeEngine.url = "http://"
                     Else
-                        MessageBox.Show("Test connection succesful", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        handShakeEngine.url = "https://"
                     End If
 
-                Else
+                    RaiseEvent LockScreen()
+
+                    handShakeEngine.url += serviceAdminUrlText.Text & "/api/" & serviceId & "/service/test"
+
+                    If (handShakeEngine.getData() = "") Then
+
+                        If (handShakeEngine.data.responseStatus = General.RemoteResponse.EnumResponseStatus.systemOffline) Then
+                            MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Else
+                            MessageBox.Show("Test connection succesful", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        End If
+
+                    Else
+                        MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+
+                Catch ex As Exception
                     MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End If
+                End Try
 
-            Catch ex As Exception
-                MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End Try
-
-            RaiseEvent UnLockScreen()
+                RaiseEvent UnLockScreen()
+            End If
         End If
     End Sub
 

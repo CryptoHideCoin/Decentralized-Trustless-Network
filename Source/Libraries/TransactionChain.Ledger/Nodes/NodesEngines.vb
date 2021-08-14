@@ -226,12 +226,12 @@ Namespace AreaEngine.Ledger
 
                     If nodeChainEngine.fileCorrupted Or nodeChainEngine.mismatchedSignature Then
 
-                        generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
+                        generalState = AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
                     Else
                         If nodeChainEngine.fileExist() Then
-                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
+                            generalState = AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
                         Else
-                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.missing
+                            generalState = AreaCommon.Models.Administration.EnumDataPosition.missing
                         End If
                     End If
 
@@ -241,7 +241,7 @@ Namespace AreaEngine.Ledger
                 Catch ex As Exception
                     serviceState.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("NodesEngine.analyzeInternalState", "Error:" & ex.Message, "fatal")
+                    log.track("NodesEngine.init", "Error:" & ex.Message, "fatal")
 
                     Return False
                 End Try

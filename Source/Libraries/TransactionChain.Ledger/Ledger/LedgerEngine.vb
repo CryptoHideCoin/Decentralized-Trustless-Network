@@ -142,10 +142,15 @@ Namespace AreaLedger
             currentRecord.progressiveHash = HashSHA.generateSHA256(currentRecord.currentHash & _CurrentTotalHash)
         End Sub
 
-        Public Function saveAndClean() As Boolean
+        Public Function saveAndClean() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            Dim result As New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+
             Try
                 currentRecord.id = _NewIdTransaction
                 currentRecord.currentHash = currentRecord.getHash()
+
+                result.composeCoordinate(_CurrentIdVolume, _CurrentIdBlock, _NewIdTransaction)
+                result.recordHash = currentRecord.currentHash
 
                 Using fileData As IO.StreamWriter = IO.File.AppendText(_CompleteFileName)
                     fileData.WriteLine(currentRecord.toStringToFile())
@@ -155,11 +160,10 @@ Namespace AreaLedger
                 _CurrentTotalHash = currentRecord.progressiveHash
 
                 currentRecord = New SingleRecordLedger
-
-                Return True
             Catch ex As Exception
-                Return False
             End Try
+
+            Return result
         End Function
 
         Public Function init(ByVal path As String, ByVal creationLedgerDate As Double) As Boolean
