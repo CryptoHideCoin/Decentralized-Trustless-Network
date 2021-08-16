@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPackageRelease xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PackageRelease>
+    <relativePath>(exclude)</relativePath>
+    <serviceName />
+    <fileName>package</fileName>
+    <release>1.0.0.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName />
+    <fileName>bouncycastle.crypto.dll</fileName>
+    <release>1.8.19031.1</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName>Adminclient</serviceName>
+    <fileName>chcadminclient.exe</fileName>
+    <release>0.2.0.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName>Admin</serviceName>
+    <fileName>chcadminservice.exe</fileName>
+    <release>0.7.0.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName>Basiccryptography</serviceName>
+    <fileName>chcbasiccryptographylibrary.dll</fileName>
+    <release>1.1.0.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName>Common</serviceName>
+    <fileName>chccommonlibrary.dll</fileName>
+    <release>1.4.1.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName>Loader</serviceName>
+    <fileName>chcloaderservice.exe</fileName>
+    <release>0.2.0.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName>Primaryruntime</serviceName>
+    <fileName>chcprimaryruntimeservice.exe</fileName>
+    <release>0.2.0.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName>Protocol</serviceName>
+    <fileName>chcprotocollibrary.dll</fileName>
+    <release>1.0.1.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName>Serversupport</serviceName>
+    <fileName>chcserversupportlibrary.dll</fileName>
+    <release>1.2.0.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName>Updatemanager</serviceName>
+    <fileName>chcupdatemanager.exe</fileName>
+    <release>0.1.0.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName>Walletaddress</serviceName>
+    <fileName>chcwalletaddress.exe</fileName>
+    <release>1.0.0.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName />
+    <fileName>newtonsoft.json.dll</fileName>
+    <release>6.0.4.17603</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName />
+    <fileName>system.net.http.formatting.dll</fileName>
+    <release>5.2.61128.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName />
+    <fileName>system.web.http.dll</fileName>
+    <release>5.2.61128.0</release>
+  </PackageRelease>
+  <PackageRelease>
+    <relativePath>Bin</relativePath>
+    <serviceName />
+    <fileName>system.web.http.selfhost.dll</fileName>
+    <release>5.2.61128.0</release>
+  </PackageRelease>
+</ArrayOfPackageRelease>
