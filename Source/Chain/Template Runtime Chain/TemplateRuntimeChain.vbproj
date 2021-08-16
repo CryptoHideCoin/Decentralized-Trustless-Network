@@ -89,7 +89,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="TransactionChainLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TransactionChainLibrary, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCTransactionChainLibrary\TransactionChainLibrary.dll</HintPath>
     </Reference>
@@ -130,6 +130,7 @@
     <Compile Include="Classes\Protocol\A2\A2x0Engine.vb" />
     <Compile Include="Classes\State\ChainStateEngine.vb" />
     <Compile Include="Controllers\Administration\DoAction\BuildNetworkController.vb" />
+    <Compile Include="Controllers\Administration\DoAction\CleanLocalDataController.vb" />
     <Compile Include="Controllers\Administration\DoAction\VerifyDataController.vb" />
     <Compile Include="Controllers\Administration\ServiceStateController.vb" />
     <Compile Include="Controllers\Network\NetworkBaseAssetController.vb" />
@@ -173,6 +174,7 @@
     <Compile Include="Models\NetworkModel.vb" />
     <Compile Include="Models\QosModel.vb" />
     <Compile Include="Modules\Service\BuildNetworkData.vb" />
+    <Compile Include="Modules\Service\CleanLocalData.vb" />
     <Compile Include="Modules\Service\Network.vb" />
     <Compile Include="Modules\Service\Security.vb" />
     <Compile Include="Modules\Service\VerifyData.vb" />
@@ -229,6 +231,5 @@
   <ItemGroup>
     <Content Include="64.ico" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

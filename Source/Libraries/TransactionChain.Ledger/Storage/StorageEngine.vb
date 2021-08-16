@@ -338,6 +338,31 @@ Namespace AreaEngine.Ledger
                 End Try
             End Function
 
+
+            Public Function cleanData(ByRef paths As AreaSystem.VirtualPathEngine) As Boolean
+                Try
+                    log.track("StorageEngine.cleanData", "Begin")
+
+                    serviceState.currentAction.setAction("0x0009", "VerifyData - Storage - Volumes")
+
+                    IO.Directory.Delete(paths.storage, True)
+
+                    log.track("StorageEngine.cleanData", "Delete paths storage complete")
+
+                    IO.Directory.Delete(paths.workData.path, True)
+
+                    log.track("StorageEngine.cleanData", "Delete paths work complete")
+
+                    Return True
+                Catch ex As Exception
+                    serviceState.currentAction.setError(Err.Number, ex.Message)
+
+                    log.track("StorageEngine.cleanData", "Error:" & ex.Message, "fatal")
+
+                    Return False
+                End Try
+            End Function
+
         End Class
 
     End Namespace

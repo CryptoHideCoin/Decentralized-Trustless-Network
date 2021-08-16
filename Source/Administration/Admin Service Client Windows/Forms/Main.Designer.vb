@@ -345,6 +345,7 @@ Partial Class Main
         Me.serviceUrlProtocol.address = ""
         Me.serviceUrlProtocol.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.serviceUrlProtocol.executeCommand = False
         Me.serviceUrlProtocol.Location = New System.Drawing.Point(26, 20)
         Me.serviceUrlProtocol.MinimumSize = New System.Drawing.Size(0, 29)
         Me.serviceUrlProtocol.Name = "serviceUrlProtocol"
@@ -847,7 +848,7 @@ Partial Class Main
         Me.responseMonitorTimeText.Location = New System.Drawing.Point(126, 148)
         Me.responseMonitorTimeText.Name = "responseMonitorTimeText"
         Me.responseMonitorTimeText.ReadOnly = True
-        Me.responseMonitorTimeText.Size = New System.Drawing.Size(197, 21)
+        Me.responseMonitorTimeText.Size = New System.Drawing.Size(198, 21)
         Me.responseMonitorTimeText.TabIndex = 26
         '
         'responseMonitorTimeLabel
@@ -868,7 +869,7 @@ Partial Class Main
         Me.requestMonitorTimeText.Location = New System.Drawing.Point(126, 121)
         Me.requestMonitorTimeText.Name = "requestMonitorTimeText"
         Me.requestMonitorTimeText.ReadOnly = True
-        Me.requestMonitorTimeText.Size = New System.Drawing.Size(197, 21)
+        Me.requestMonitorTimeText.Size = New System.Drawing.Size(198, 21)
         Me.requestMonitorTimeText.TabIndex = 25
         '
         'requestMonitorTimeLabel
@@ -924,7 +925,7 @@ Partial Class Main
         Me.codeErrorText.Location = New System.Drawing.Point(127, 69)
         Me.codeErrorText.Name = "codeErrorText"
         Me.codeErrorText.ReadOnly = True
-        Me.codeErrorText.Size = New System.Drawing.Size(246, 21)
+        Me.codeErrorText.Size = New System.Drawing.Size(247, 21)
         Me.codeErrorText.TabIndex = 31
         '
         'codeErrorLabel
@@ -945,7 +946,7 @@ Partial Class Main
         Me.descriptionErrorText.Location = New System.Drawing.Point(127, 96)
         Me.descriptionErrorText.Name = "descriptionErrorText"
         Me.descriptionErrorText.ReadOnly = True
-        Me.descriptionErrorText.Size = New System.Drawing.Size(246, 21)
+        Me.descriptionErrorText.Size = New System.Drawing.Size(247, 21)
         Me.descriptionErrorText.TabIndex = 28
         '
         'descriptionErrorLabel
@@ -966,7 +967,7 @@ Partial Class Main
         Me.codeActionText.Location = New System.Drawing.Point(127, 15)
         Me.codeActionText.Name = "codeActionText"
         Me.codeActionText.ReadOnly = True
-        Me.codeActionText.Size = New System.Drawing.Size(246, 21)
+        Me.codeActionText.Size = New System.Drawing.Size(247, 21)
         Me.codeActionText.TabIndex = 27
         '
         'codeActionLabel
@@ -986,7 +987,7 @@ Partial Class Main
         Me.descriptionActionText.Location = New System.Drawing.Point(127, 42)
         Me.descriptionActionText.Name = "descriptionActionText"
         Me.descriptionActionText.ReadOnly = True
-        Me.descriptionActionText.Size = New System.Drawing.Size(246, 21)
+        Me.descriptionActionText.Size = New System.Drawing.Size(247, 21)
         Me.descriptionActionText.TabIndex = 25
         '
         'descriptionActionLabel
@@ -1025,7 +1026,7 @@ Partial Class Main
         Me.nodeListText.Location = New System.Drawing.Point(127, 125)
         Me.nodeListText.Name = "nodeListText"
         Me.nodeListText.ReadOnly = True
-        Me.nodeListText.Size = New System.Drawing.Size(246, 21)
+        Me.nodeListText.Size = New System.Drawing.Size(247, 21)
         Me.nodeListText.TabIndex = 34
         '
         'nodeListLabel
@@ -1046,7 +1047,7 @@ Partial Class Main
         Me.currentWorkText.Location = New System.Drawing.Point(127, 71)
         Me.currentWorkText.Name = "currentWorkText"
         Me.currentWorkText.ReadOnly = True
-        Me.currentWorkText.Size = New System.Drawing.Size(246, 21)
+        Me.currentWorkText.Size = New System.Drawing.Size(247, 21)
         Me.currentWorkText.TabIndex = 31
         '
         'currentWorkLabel
@@ -1067,7 +1068,7 @@ Partial Class Main
         Me.stateText.Location = New System.Drawing.Point(127, 98)
         Me.stateText.Name = "stateText"
         Me.stateText.ReadOnly = True
-        Me.stateText.Size = New System.Drawing.Size(246, 21)
+        Me.stateText.Size = New System.Drawing.Size(247, 21)
         Me.stateText.TabIndex = 28
         '
         'stateLabel
@@ -1088,7 +1089,7 @@ Partial Class Main
         Me.storageText.Location = New System.Drawing.Point(127, 15)
         Me.storageText.Name = "storageText"
         Me.storageText.ReadOnly = True
-        Me.storageText.Size = New System.Drawing.Size(246, 21)
+        Me.storageText.Size = New System.Drawing.Size(247, 21)
         Me.storageText.TabIndex = 27
         '
         'storageLabel
@@ -1108,7 +1109,7 @@ Partial Class Main
         Me.previousVolumeText.Location = New System.Drawing.Point(127, 42)
         Me.previousVolumeText.Name = "previousVolumeText"
         Me.previousVolumeText.ReadOnly = True
-        Me.previousVolumeText.Size = New System.Drawing.Size(246, 21)
+        Me.previousVolumeText.Size = New System.Drawing.Size(247, 21)
         Me.previousVolumeText.TabIndex = 25
         '
         'previousVolumeLabel

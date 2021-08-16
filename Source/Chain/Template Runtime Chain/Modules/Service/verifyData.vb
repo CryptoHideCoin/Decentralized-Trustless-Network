@@ -111,6 +111,7 @@ Namespace AreaData
                                (.position = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.missing) Then
                                 AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.downloadHistory)
                                 AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.buildNetwork)
+                                AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cleanLocalData)
                             End If
                         End With
                     Else

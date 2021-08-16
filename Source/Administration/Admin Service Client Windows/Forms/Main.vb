@@ -769,4 +769,48 @@ Public Class Main
         form = Nothing
     End Sub
 
+    Private Sub cleanLocalDataButton_Click(sender As Object, e As EventArgs) Handles cleanLocalDataButton.Click
+        If (serviceUrlProtocol.baseUrlComplete.Trim.Length > 0) And
+           (serviceCertificate.value.Trim.Length > 0) And
+           (adminWalletAddress.value.Trim.Length > 0) Then
+            Try
+                Dim remote As New ProxyWS(Of Models.Service.InformationResponseModel)
+                Dim privateKeyValue As String = adminWalletAddress.privateKey
+                Dim signature As String = ""
+
+                If (privateKeyValue.Length = 0) Then
+                    Return
+                End If
+
+                signature = WalletAddressEngine.createSignature(privateKeyValue, serviceCertificate.value)
+
+                remote.url = serviceUrlProtocol.baseUrlComplete & "/api/" & serviceIDText.Text & "/administration/doAction/cleanLocalData/?signature=" & signature
+
+                Dim rt As DateTime = Now
+
+                If (remote.getData() = "") Then
+                    If (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete) Then
+                        MessageBox.Show("Clean Local Data operation start", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        refreshMonitor()
+                    ElseIf (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.commandNotAllowed) Then
+                        MessageBox.Show("Command not allowed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    ElseIf (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.systemOffline) Then
+                        MessageBox.Show("Peer is offline", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    ElseIf (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.missingAuthorization) Then
+                        MessageBox.Show("Unauthorize access", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Else
+                        MessageBox.Show("Remote Error", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+                Else
+                    MessageBox.Show("Connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            Catch ex As Exception
+                MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        Else
+            MessageBox.Show("Select URL of service / Certificate / Admin Wallet Address", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
+
 End Class
