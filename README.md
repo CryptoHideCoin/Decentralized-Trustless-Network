@@ -7,3 +7,4 @@ This directory contain all executable file to run a masternode of Crypto Hide Co
 
 Packages:
 0.2 - Basic runtime primary chain / Explorer client / Administration Client
+      Add Clean Local Data
