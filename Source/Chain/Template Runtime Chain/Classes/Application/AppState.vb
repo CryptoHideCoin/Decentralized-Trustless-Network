@@ -11,31 +11,14 @@ Imports CHCProtocolLibrary.AreaCommon
 
 Public Class AppState
 
-    Public Enum EnumConnectionState
 
-        notDefined
-        offLine
-        genesisOperation
-        startingConnection
-        connectionOffLine
-        onLine
 
-    End Enum
-
-    Public Enum EnumMasternodeRole
-
-        notDefined
-        guarantee
-        fullRole
-        chainService
-        clientService
-        light
-
-    End Enum
-
+    ''' <summary>
+    ''' This class provides to expone the public information of this chain
+    ''' </summary>
     Public Class ServiceInformation
 
-        Public Property adminPublicWalletID As String = ""
+        Public Property adminPublicAddressID As String = ""
         Public Property intranetMode As Boolean = False
         Public Property addressIP As String = ""
         Public Property networkName As String = ""
@@ -45,24 +28,13 @@ Public Class AppState
 
     End Class
 
-    Public Class ConnectionNetwork
-
-        Public Property position As enumConnectionState = enumConnectionState.notDefined
-        Public Property role As enumMasternodeRole = enumMasternodeRole.notDefined
-        Public Property coinWarranty As Decimal = 0.000000001
-        Public Property connectedMoment As Date = Date.MinValue
-        Public Property walletWarrantyID As String = ""
-        Public Property currentAction As New Models.Administration.ActionElement
-
-    End Class
-
     Public Class ComponentElement
 
         Public Property storage As New Storage.StorageEngine
         Public Property previousVolume As New PreviousVolume.PreviousVolumeEngine
         Public Property currentVolume As New CurrentVolume.CurrentVolumeEngine
         Public Property stateDB As New State.StateEngine
-        Public Property nodeList As New NodeList.NodeListTrustedEngine
+        Public Property trustedStartupNodeList As New NodeList.NodeListTrustedEngine
 
     End Class
 
@@ -74,7 +46,7 @@ Public Class AppState
     Public queues As New TransactionChainLibrary.AreaEngine.Requests.QueueEngine
 
     Public serviceState As New Models.Administration.ServiceStateResponse
-    Public network As New ConnectionNetwork
+    Public network As New CHCRuntimeChainLibrary.AreaRuntime.AppState.ConnectionNetwork
     Public component As New ComponentElement
     Public runtimeState As New AreaState.ChainStateEngine
     Public currentBlockLedger As New TransactionChainLibrary.AreaLedger.LedgerEngine

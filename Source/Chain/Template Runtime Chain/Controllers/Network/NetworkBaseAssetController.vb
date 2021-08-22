@@ -25,8 +25,8 @@ Namespace Controllers
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
-                    If (AreaCommon.state.network.position = AppState.EnumConnectionState.genesisOperation) Or
-                       (AreaCommon.state.network.position = AppState.EnumConnectionState.onLine) Then
+                    If (AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation) Or
+                       (AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.onLine) Then
 
                         privateKeyRAW = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
 

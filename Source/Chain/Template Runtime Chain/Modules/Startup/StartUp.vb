@@ -35,7 +35,7 @@ Namespace AreaCommon
 
             Try
                 state.information.chainName = Customize.chainName
-                state.information.adminPublicWalletID = settings.data.walletAddress
+                state.information.adminPublicAddressID = settings.data.walletAddress
 
                 If settings.data.intranetMode Then
                     state.information.addressIP = state.localIpAddress
@@ -51,7 +51,6 @@ Namespace AreaCommon
                 log.trackIntoConsole("Error during Load data information:" & ex.Message)
             End Try
         End Sub
-
 
         Private Function readWalletAddress(ByVal uuid As String, ByVal keyStoreSecurityKey As String) As String
             Try
@@ -75,7 +74,6 @@ Namespace AreaCommon
                 Return ""
             End Try
         End Function
-
 
         Private Sub readAdminKeyStore(ByVal keyStoreSecurityKey As String)
             Try
@@ -111,7 +109,6 @@ Namespace AreaCommon
             End Try
         End Sub
 
-
         ''' <summary>
         ''' This method provide to prepare a startup of application
         ''' </summary>
@@ -145,7 +142,6 @@ Namespace AreaCommon
                     readAdminKeyStore(command.keyStoreSecurityKey)
 
                     log.trackIntoConsole("Root paths set " & paths.directoryData)
-
                     log.trackIntoConsole("Service GUID = " & settings.data.serviceId)
                 End If
 

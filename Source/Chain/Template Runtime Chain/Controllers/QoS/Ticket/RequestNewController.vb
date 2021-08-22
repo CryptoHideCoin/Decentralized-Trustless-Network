@@ -27,7 +27,7 @@ Namespace Controllers
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
-                If (AreaCommon.state.network.position = AppState.enumConnectionState.onLine) Then
+                If (AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.onLine) Then
                     newTicket = AreaCommon.state.queues.getNewTicket()
 
                     result.ofPriorityNumber = newTicket.queueOfPriorNumber

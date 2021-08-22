@@ -357,7 +357,8 @@ Namespace AreaEngine.Ledger
                 Catch ex As Exception
                     serviceState.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("StorageEngine.cleanData", "Error:" & ex.Message, "fatal")
+                    log.track("StorageEngine.cleanData", "Error:" & ex.Message)
+                    log.trackIntoConsole("StorageEngine.cleanData - Error" & ex.Message)
 
                     Return False
                 End Try

@@ -51,10 +51,10 @@ Namespace Controllers
 
                     For Each item In AreaCommon.state.serviceState.listAvailableCommand
                         If (item = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.buildNetwork) Then
-                            AreaCommon.state.serviceState.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.buildNetwork
+                            AreaCommon.state.serviceState.currentRunCommand = Models.Administration.EnumActionAdministration.buildNetwork
 
                             AreaCommon.state.serviceState.listAvailableCommand.Clear()
-                            AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cancelCurrentAction)
+                            AreaCommon.state.serviceState.listAvailableCommand.Add(Models.Administration.EnumActionAdministration.cancelCurrentAction)
 
                             AreaData.dataNetwork = value
 

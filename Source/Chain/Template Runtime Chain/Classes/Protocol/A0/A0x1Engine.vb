@@ -13,6 +13,7 @@ Namespace AreaProtocol
     Public Class A0x1
 
         Public Class RequestModel
+            Public Property requestCode As String = "A0x1"
 
             Public Property requestDateTimeStamp As Double = 0
             Public Property publicWalletAddressRequester As String = ""
@@ -34,7 +35,6 @@ Namespace AreaProtocol
             Public Function getHash() As String
                 Return HashSHA.generateSHA256(Me.toString())
             End Function
-
         End Class
 
         Public Class FileEngine
@@ -45,14 +45,14 @@ Namespace AreaProtocol
 
         Public Class RecoveryState
 
-            Public Shared Function fromRequest(ByRef value As RequestModel, ByVal transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger) As Boolean
-                With AreaCommon.state.runtimeState.activeNetwork.whitePaper
-                    .value = value.whitePaper
-                    .recordCoordinate = transactionChainRecord.recordCoordinate
-                    .recordHash = transactionChainRecord.recordHash
-                End With
+            Public Shared Function fromRequest(ByRef value As RequestModel, ByVal transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger, ByVal hashContent As String) As Boolean
+                Dim proceed As Boolean = True
 
-                Return True
+                If proceed Then
+                    proceed = AreaCommon.state.runtimeState.addProperty(AreaState.ChainStateEngine.PropertyID.whitePaper, value.whitePaper, transactionChainRecord.recordCoordinate, transactionChainRecord.recordHash, hashContent, False)
+                End If
+
+                Return proceed
             End Function
 
             Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.LedgerEngine.SingleRecordLedger) As Boolean
@@ -78,7 +78,7 @@ Namespace AreaProtocol
 
 
 
-            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            Private Function writeDataIntoLedger(ByVal contentStatePath As String, ByRef hashContent As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
                 Try
                     With AreaCommon.state.currentBlockLedger.currentRecord
                         .actionCode = "a0x1"
@@ -88,7 +88,9 @@ Namespace AreaProtocol
                         .requestHash = data.requestHash
                     End With
 
-                    TransactionChainLibrary.AreaEngine.Ledger.State.StateEngine.writeDataContent(contentStatePath, data.whitePaper, AreaCommon.state.currentBlockLedger.currentRecord.detailInformation)
+                    hashContent = AreaCommon.state.currentBlockLedger.currentRecord.detailInformation
+
+                    TransactionChainLibrary.AreaEngine.Ledger.State.StateEngine.writeDataContent(contentStatePath, data.whitePaper, hashContent)
 
                     If AreaCommon.state.currentBlockLedger.BlockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
@@ -107,6 +109,7 @@ Namespace AreaProtocol
                 Try
                     Dim requestFileEngine As New FileEngine
                     Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+                    Dim hashContent As String
 
                     log.track("A0x1Manager.init", "Begin")
 
@@ -127,7 +130,7 @@ Namespace AreaProtocol
                     If requestFileEngine.save() Then
                         log.track("A0x1Manager.init", "request - Saved")
 
-                        ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents)
+                        ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents, hashContent)
 
                         If (ledgerCoordinate.recordCoordinate.Length = 0) Then
                             serviceState.currentAction.setError("-1", "Error during update ledger")
@@ -140,7 +143,7 @@ Namespace AreaProtocol
 
                         log.track("A0x1Manager.init", "Ledger updated")
 
-                        If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
+                        If Not RecoveryState.fromRequest(data, ledgerCoordinate, hashContent) Then
                             serviceState.currentAction.setError("-1", "Error during update State")
                             serviceState.currentAction.reset()
 

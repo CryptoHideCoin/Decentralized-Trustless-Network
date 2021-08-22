@@ -24,7 +24,7 @@ Namespace Controllers
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
-                If (AreaCommon.state.network.position = AppState.enumConnectionState.onLine) Then
+                If (AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.onLine) Then
                     result.blockSize = AreaCommon.state.queues.getMaxBlockInternalLedgerSize
                     result.pages = AreaCommon.state.queues.getDataPages()
                 Else

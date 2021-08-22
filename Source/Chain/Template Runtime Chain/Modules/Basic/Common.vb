@@ -19,11 +19,9 @@ Namespace AreaCommon
         Public logRotate As New LogRotateEngine
         Public counter As New CounterEngine
         Public registry As New RegistryEngine
-        Public settings As New AppSettings
+        Public settings As New CHCRuntimeChainLibrary.AreaRuntime.AppSettings
 
         ' State of Service
-        'Public serviceState as 
-        'public fileOwnership as 
         Public state As New AppState
 
 

@@ -55,10 +55,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.9.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCProtocolLibrary, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
@@ -72,6 +68,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\packages\System.Data.SQLite.Core.1.0.114.3\Extract\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -89,10 +88,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="TransactionChainLibrary, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCTransactionChainLibrary\TransactionChainLibrary.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -108,7 +103,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Application\AppSettings.vb" />
     <Compile Include="Classes\Application\AppState.vb" />
     <Compile Include="Classes\Application\Customize.vb" />
     <Compile Include="Classes\Application\ManageCommandLine.vb" />
@@ -151,8 +145,6 @@
     <Compile Include="Controllers\Service\InformationController.vb" />
     <Compile Include="Controllers\Service\SupportedProtocols.vb" />
     <Compile Include="Controllers\Service\TestController.vb" />
-    <Compile Include="Controllers\v1.0\Chain\MasternodeInfoController.vb" />
-    <Compile Include="Controllers\v1.0\Chain\StatusController.vb" />
     <Compile Include="Forms\KeyPairDetail.Designer.vb">
       <DependentUpon>KeyPairDetail.vb</DependentUpon>
     </Compile>
@@ -230,6 +222,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\CHCCommonLibrary\CHCCommonLibrary.vbproj">
+      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
+      <Name>CHCCommonLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\CHCRuntimeChainLibrary\CHCRuntimeChainLibrary.vbproj">
+      <Project>{b9a639ab-83f1-4ccc-8c7c-fca16fbe74c4}</Project>
+      <Name>CHCRuntimeChainLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\TransactionChain.Ledger\TransactionChainLibrary.vbproj">
+      <Project>{f363e384-0372-480a-92a6-0031fd8456f7}</Project>
+      <Name>TransactionChainLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -29,3 +29,12 @@ E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCSupportUIC
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCSupportUIControls.xml
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Debug\CHCPrimaryRuntimeService.KeyPairDetail.resources
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Debug\CHCPrimaryRuntimeService.KeyStoreManager.resources
+E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\System.Data.SQLite.dll
+E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\System.Data.SQLite.xml
+E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\TransactionChainLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\TransactionChainLibrary.xml
+E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCCommonLibrary.xml
+E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCRuntimeChainLibrary.dll
+E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCRuntimeChainLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCRuntimeChainLibrary.xml

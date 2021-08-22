@@ -13,7 +13,7 @@ Namespace AreaCommon
         Private _commandLine As New Miscellaneous.CommandLineParameters
         Private _completePathSettingFile As String = ""
 
-        Public parameters As New AppSettings
+        Public parameters As New CHCRuntimeChainLibrary.AreaRuntime.AppSettings
         Public haveParameters As Boolean = False
         Public forceReadSettings As Boolean = False
 
@@ -157,7 +157,7 @@ Namespace AreaCommon
                 decodeCommandLine()
 
                 If (_completePathSettingFile.Trim().Length > 0) Then
-                    Dim settings As New AppSettings
+                    Dim settings As New CHCRuntimeChainLibrary.AreaRuntime.AppSettings
 
                     settings.fileName = _completePathSettingFile
 
@@ -168,7 +168,7 @@ Namespace AreaCommon
                     End If
                 End If
             Catch ex As Exception
-                parameters = New AppSettings
+                parameters = New CHCRuntimeChainLibrary.AreaRuntime.AppSettings
 
                 log.track("TemplateRuntimeChain.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "error")
             End Try

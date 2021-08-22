@@ -41,9 +41,20 @@ Namespace AreaData
         End Sub
 
         Private Sub createLedger()
-            AreaCommon.state.runtimeState.activeNetwork.networkCreationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+            If _Proceed Then
+                AreaCommon.state.runtimeState.activeNetwork.networkCreationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
 
-            AreaCommon.state.currentBlockLedger.init(AreaCommon.paths.workData.currentVolume.ledger, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate)
+                AreaCommon.state.currentBlockLedger.log = AreaCommon.log
+                AreaCommon.state.currentBlockLedger.identifyBlockChain = "B0"
+
+                _Proceed = AreaCommon.state.currentBlockLedger.init(AreaCommon.paths.workData.currentVolume.ledger, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate)
+            End If
+        End Sub
+
+        Private Sub createState()
+            If _Proceed Then
+                _Proceed = AreaCommon.state.runtimeState.init(AreaCommon.paths.workData.state.db)
+            End If
         End Sub
 
         Private Sub manageA0x0()
@@ -265,10 +276,11 @@ Namespace AreaData
 
                 AreaCommon.log.track("BuildNetwork.run", "Begin")
 
-                AreaCommon.state.network.position = AppState.EnumConnectionState.genesisOperation
+                AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation
 
                 createLedger()
                 rebuildCommandList()
+                createState()
 
                 manageA0x0()
                 manageA0x1()
@@ -279,13 +291,13 @@ Namespace AreaData
                 manageA0x6()
                 manageA0x7()
 
-                manageA1x0()
-                manageA1x1()
-                manageA1x2()
-                manageA1x3()
-                manageA1x4()
-                manageA1x5()
-                manageA1x6()
+                'manageA1x0()
+                'manageA1x1()
+                'manageA1x2()
+                'manageA1x3()
+                'manageA1x4()
+                'manageA1x5()
+                'manageA1x6()
 
                 rebuildFinalCommandList()
 

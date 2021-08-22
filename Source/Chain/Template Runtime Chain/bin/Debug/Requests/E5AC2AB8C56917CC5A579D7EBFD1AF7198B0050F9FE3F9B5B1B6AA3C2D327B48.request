@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RequestModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <requestDateTimeStamp>1629486562466.3857</requestDateTimeStamp>
+  <publicWalletAddressRequester>CWA:RNCgcdApx5aieQBF4KbTiggvZnNGysL5DmowMra2fBPK6fzGGbEfHa2iw1FhQgV3kEsQkTSmYa5BqDi4NwxKdL1J1E04//</publicWalletAddressRequester>
+  <requestHash>E5AC2AB8C56917CC5A579D7EBFD1AF7198B0050F9FE3F9B5B1B6AA3C2D327B48</requestHash>
+  <signature>AN1rKvt2EhHxLvvesz4hoUyzPn9yzHYRJvSYf5aByBFSicvxSFdwdquWXGGeWQ6ZtQJHavBrAfegs8JzyC7b689CZsyBnZR6E</signature>
+  <transactionChainSettings>
+    <blockSizeFrequency>24 hour</blockSizeFrequency>
+    <numberBlockInVolume>365</numberBlockInVolume>
+    <initialMaxComputeTransaction>60 sec.</initialMaxComputeTransaction>
+    <initialCoinReleasePerBlock>100000.0</initialCoinReleasePerBlock>
+    <ruleFutureRelease>rule</ruleFutureRelease>
+    <reviewReleaseAlgorithm>On transaction</reviewReleaseAlgorithm>
+    <consensusMethod>Proof Of Stake</consensusMethod>
+  </transactionChainSettings>
+</RequestModel>

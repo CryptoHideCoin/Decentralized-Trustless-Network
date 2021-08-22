@@ -22,6 +22,11 @@ CHCPrimaryRuntimeService
   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
 </summary>
 </member>
+<member name="T:CHCPrimaryRuntimeService.AppState.ServiceInformation">
+ <summary>
+ This class provides to expone the public information of this chain
+ </summary>
+</member>
 <member name="M:CHCPrimaryRuntimeService.AreaCommon.moduleMain.closeApplication(System.Boolean)">
  <summary>
  This application provides to close application

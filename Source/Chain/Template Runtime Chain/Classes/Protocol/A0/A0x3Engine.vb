@@ -19,6 +19,7 @@ Namespace AreaProtocol
         End Class
 
         Public Class RequestModel
+            Public Property requestCode As String = "A0x3"
 
             Public Property requestDateTimeStamp As Double = 0
             Public Property publicWalletAddressRequester As String = ""
@@ -50,12 +51,15 @@ Namespace AreaProtocol
 
         Public Class RecoveryState
 
-            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger) As Boolean
-                With AreaCommon.state.runtimeState.activeNetwork.primaryAssetData
-                    .recordCoordinate = transactionChainRecord.recordCoordinate
-                    .recordHash = transactionChainRecord.recordHash
+            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger, ByVal hashContent As String) As Boolean
+                Dim proceed As Boolean = True
 
-                    With .value
+                If proceed Then
+                    proceed = AreaCommon.state.runtimeState.addProperty(AreaState.ChainStateEngine.PropertyID.assetData, "", transactionChainRecord.recordCoordinate, transactionChainRecord.recordHash, hashContent, False)
+                End If
+
+                If proceed Then
+                    With AreaCommon.state.runtimeState.activeNetwork.primaryAssetData.value
                         .burnable = value.primaryAsset.burnable
                         .digit = value.primaryAsset.digit
                         .stakeable = value.primaryAsset.stakeable
@@ -68,9 +72,9 @@ Namespace AreaProtocol
                         .stakeable = value.primaryAsset.stakeable
                         .symbol = value.primaryAsset.symbol
                     End With
-                End With
+                End If
 
-                Return True
+                Return proceed
             End Function
 
             Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.LedgerEngine.SingleRecordLedger) As Boolean
@@ -109,7 +113,7 @@ Namespace AreaProtocol
 
                     engine.data = primaryAsset
 
-                    engine.fileName = IO.Path.Combine(contentStatePath, "Contents", primaryAssetHash & ".content")
+                    engine.fileName = IO.Path.Combine(contentStatePath, primaryAssetHash & ".content")
 
                     Return engine.save()
                 Catch ex As Exception
@@ -121,7 +125,7 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            Private Function writeDataIntoLedger(ByVal contentStatePath As String, ByRef hashContent As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
                 Try
                     With AreaCommon.state.currentBlockLedger.currentRecord
                         .actionCode = "a0x3"
@@ -131,7 +135,9 @@ Namespace AreaProtocol
                         .requestHash = data.requestHash
                     End With
 
-                    writeDataContent(contentStatePath, data.primaryAsset, AreaCommon.state.currentBlockLedger.currentRecord.detailInformation)
+                    hashContent = AreaCommon.state.currentBlockLedger.currentRecord.detailInformation
+
+                    writeDataContent(contentStatePath, data.primaryAsset, hashContent)
 
                     If AreaCommon.state.currentBlockLedger.BlockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
@@ -150,6 +156,7 @@ Namespace AreaProtocol
                 Try
                     Dim requestFileEngine As New FileEngine
                     Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+                    Dim hashContent As String
 
                     log.track("A0x3Manager.init", "Begin")
 
@@ -165,12 +172,12 @@ Namespace AreaProtocol
 
                     requestFileEngine.data = data
 
-                    requestFileEngine.fileName = IO.Path.Combine(paths.workData.messages, data.requestHash & ".request")
+                    requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, data.requestHash & ".request")
 
                     If requestFileEngine.save() Then
                         log.track("A0x3Manager.init", "request - Saved")
 
-                        ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents)
+                        ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents, hashContent)
 
                         If (ledgerCoordinate.recordCoordinate.Length = 0) Then
                             serviceState.currentAction.setError("-1", "Error during update ledger")
@@ -183,7 +190,7 @@ Namespace AreaProtocol
 
                         log.track("A0x3Manager.init", "Ledger updated")
 
-                        If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
+                        If Not RecoveryState.fromRequest(data, ledgerCoordinate, hashContent) Then
                             serviceState.currentAction.setError("-1", "Error during update State")
                             serviceState.currentAction.reset()
 

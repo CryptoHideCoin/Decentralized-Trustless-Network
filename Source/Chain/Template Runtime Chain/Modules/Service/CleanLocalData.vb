@@ -50,13 +50,17 @@ Namespace AreaData
 
                 _Proceed = AreaCommon.state.component.storage.cleanData(AreaCommon.paths)
 
+                If _Proceed Then
+                    _Proceed = AreaCommon.paths.init(CHCProtocolLibrary.AreaSystem.VirtualPathEngine.EnumSystemType.runTime)
+                End If
+
                 rebuildCommandList()
 
                 AreaCommon.log.track("service.CleanLocalData", "Complete")
 
                 AreaCommon.log.trackIntoConsole("Clean Local Data complete")
 
-                Return True
+                Return _Proceed
             Catch ex As Exception
                 AreaCommon.log.track("service.CleanLocalData", "Error:" & ex.Message, "error")
 

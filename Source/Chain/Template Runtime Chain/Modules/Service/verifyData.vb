@@ -59,12 +59,12 @@ Namespace AreaData
 
         Private Sub checkNodeList()
             If _Proceed Then
-                AreaCommon.state.component.nodeList.log = AreaCommon.log
-                AreaCommon.state.component.nodeList.serviceState = AreaCommon.state.serviceState
+                AreaCommon.state.component.trustedStartupNodeList.log = AreaCommon.log
+                AreaCommon.state.component.trustedStartupNodeList.serviceState = AreaCommon.state.serviceState
 
-                _Proceed = AreaCommon.state.component.nodeList.init(_DataCommon, AreaCommon.paths, AreaCommon.settings.data.walletAddress)
+                _Proceed = AreaCommon.state.component.trustedStartupNodeList.init(_DataCommon, AreaCommon.paths, AreaCommon.settings.data.walletAddress)
 
-                AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList).position = AreaCommon.state.component.nodeList.generalState
+                AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList).position = AreaCommon.state.component.trustedStartupNodeList.generalState
             End If
         End Sub
 

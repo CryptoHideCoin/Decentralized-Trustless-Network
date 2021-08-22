@@ -36,7 +36,6 @@ Namespace Controllers
                         proceed = False
                     End If
                 End If
-
                 If proceed Then
                     If Not AreaSecurity.checkSignature(signature) Then
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.missingAuthorization
@@ -44,7 +43,6 @@ Namespace Controllers
                         proceed = False
                     End If
                 End If
-
                 If proceed Then
                     For Each item In AreaCommon.state.serviceState.listAvailableCommand
                         If (item = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cleanLocalData) Then

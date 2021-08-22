@@ -47,10 +47,6 @@
     <Reference Include="CHCBasicCryptographyLibrary">
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.9.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCProtocolLibrary, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
@@ -60,6 +56,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\packages\System.Data.SQLite.Core.1.0.114.3\Extract\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -99,6 +98,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="PeerToPeer\ProposeExtendedLedger.vb" />
+    <Compile Include="PeerToPeer\VerifyRequest.vb" />
+    <Compile Include="PeerToPeer\PropagateRequest.vb" />
     <Compile Include="Nodes\NodesEngines.vb" />
     <Compile Include="Storage\CurrentVolumeEngine.vb" />
     <Compile Include="Storage\PreviousVolumeEngine.vb" />
@@ -127,6 +129,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Requests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CHCCommonLibrary\CHCCommonLibrary.vbproj">
+      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
+      <Name>CHCCommonLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -22,7 +22,15 @@ Namespace AreaEngine.Ledger
 
             Public Class NodeListTrustedInformation
 
-                Public Class singleNodeInformation
+                Public Class DeliveryNodeInformation
+
+                    Public Property walletID As String = ""
+                    Public Property addressIP As String = ""
+                    Public Property errorConnection As String = ""
+
+                End Class
+
+                Public Class SingleNodeInformation
 
                     Public Property walletID As String = ""
                     Public Property addressIP As String = ""
@@ -63,6 +71,23 @@ Namespace AreaEngine.Ledger
                 Public Property chainLedgerCloseBlock As String = ""
 
                 Public Property nodeList As New List(Of singleNodeInformation)
+
+                Public Function extractDeliveryList() As List(Of DeliveryNodeInformation)
+                    Dim result As New List(Of DeliveryNodeInformation)
+                    Dim itemLight As DeliveryNodeInformation
+
+                    For Each item In nodeList
+                        itemLight = New DeliveryNodeInformation
+
+                        itemLight.addressIP = item.addressIP
+                        itemLight.errorConnection = item.errorConnection
+                        itemLight.walletID = item.walletID
+
+                        result.Add(itemLight)
+                    Next
+
+                    Return result
+                End Function
 
                 Public Overrides Function toString() As String
                     Dim tmp As String = ""

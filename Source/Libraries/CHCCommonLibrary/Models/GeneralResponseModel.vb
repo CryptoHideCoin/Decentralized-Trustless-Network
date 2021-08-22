@@ -28,9 +28,13 @@ Namespace AreaCommon.Models.General
         Public Property recordCoordinate As String = ""
         Public Property recordHash As String = ""
 
-        Public Sub composeCoordinate(ByVal volumeId As String, ByVal blockId As String, ByVal recordId As String)
-            recordCoordinate = volumeId & "-" & blockId & "-" & recordId
-        End Sub
+        Public Shared Function composeCoordinate(ByVal blockChainId As String, ByVal volumeId As String, ByVal blockId As String, Optional ByVal recordId As String = "") As String
+            If (recordId.Length > 0) Then
+                Return blockChainId & "-" & volumeId & "-" & blockId & "-" & recordId
+            Else
+                Return blockChainId & "-" & volumeId & "-" & blockId
+            End If
+        End Function
 
     End Class
 

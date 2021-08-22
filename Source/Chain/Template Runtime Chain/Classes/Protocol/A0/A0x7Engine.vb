@@ -19,6 +19,7 @@ Namespace AreaProtocol
         End Class
 
         Public Class RequestModel
+            Public Property requestCode As String = "A0x7"
 
             Public Property requestDateTimeStamp As Double = 0
             Public Property publicWalletAddressRequester As String = ""
@@ -50,26 +51,30 @@ Namespace AreaProtocol
 
         Public Class RecoveryState
 
-            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger) As Boolean
+            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger, ByVal hashContent As String) As Boolean
+                Dim proceed As Boolean = True
                 Dim newItem As CHCProtocolLibrary.AreaCommon.Models.Network.RefundItem
 
-                With AreaCommon.state.runtimeState.activeNetwork.refundPlan
-                    .recordCoordinate = transactionChainRecord.recordCoordinate
-                    .recordHash = transactionChainRecord.recordHash
+                If proceed Then
+                    proceed = AreaCommon.state.runtimeState.addProperty(AreaState.ChainStateEngine.PropertyID.refundPlan, "", transactionChainRecord.recordCoordinate, transactionChainRecord.recordHash, hashContent, False)
+                End If
 
-                    For Each item In value.refundPlan.items
-                        newItem = New CHCProtocolLibrary.AreaCommon.Models.Network.RefundItem
+                If proceed Then
+                    With AreaCommon.state.runtimeState.activeNetwork.refundPlan
+                        For Each item In value.refundPlan.items
+                            newItem = New CHCProtocolLibrary.AreaCommon.Models.Network.RefundItem
 
-                        newItem.description = item.description
-                        newItem.fixValue = item.fixValue
-                        newItem.percentageValue = item.percentageValue
-                        newItem.recipient = item.recipient
+                            newItem.description = item.description
+                            newItem.fixValue = item.fixValue
+                            newItem.percentageValue = item.percentageValue
+                            newItem.recipient = item.recipient
 
-                        .value.items.Add(newItem)
-                    Next
-                End With
+                            .value.items.Add(newItem)
+                        Next
+                    End With
+                End If
 
-                Return True
+                Return proceed
             End Function
 
             Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.LedgerEngine.SingleRecordLedger) As Boolean
@@ -121,17 +126,19 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            Private Function writeDataIntoLedger(ByVal contentStatePath As String, ByRef hashContent As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
                 Try
                     With AreaCommon.state.currentBlockLedger.currentRecord
                         .actionCode = "a0x7"
                         .approvedDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
-                        .detailInformation = HashSHA.generateSHA256(data.refundPlan.toString())
+                        .detailInformation = HashSHA.generateSHA256(data.refundPlan.ToString())
                         .requester = data.publicWalletAddressRequester
                         .requestHash = data.requestHash
                     End With
 
-                    writeDataContent(contentStatePath, data.refundPlan, AreaCommon.state.currentBlockLedger.currentRecord.detailInformation)
+                    hashContent = AreaCommon.state.currentBlockLedger.currentRecord.detailInformation
+
+                    writeDataContent(contentStatePath, data.refundPlan, hashContent)
 
                     If AreaCommon.state.currentBlockLedger.BlockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
@@ -150,6 +157,7 @@ Namespace AreaProtocol
                 Try
                     Dim requestFileEngine As New FileEngine
                     Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+                    Dim hashContent As String
 
                     log.track("A0x7Manager.init", "Begin")
 
@@ -170,7 +178,7 @@ Namespace AreaProtocol
                     If requestFileEngine.save() Then
                         log.track("A0x7Manager.init", "request - Saved")
 
-                        ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents)
+                        ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents, hashContent)
 
                         If (ledgerCoordinate.recordCoordinate.Length = 0) Then
                             serviceState.currentAction.setError("-1", "Error during update ledger")
@@ -183,7 +191,7 @@ Namespace AreaProtocol
 
                         log.track("A0x7Manager.init", "Ledger updated")
 
-                        If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
+                        If Not RecoveryState.fromRequest(data, ledgerCoordinate, hashContent) Then
                             serviceState.currentAction.setError("-1", "Error during update State")
                             serviceState.currentAction.reset()
 
