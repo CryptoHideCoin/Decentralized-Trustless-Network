@@ -71,7 +71,7 @@ Namespace AreaState
 
         End Class
 
-        Public Class DataPeer
+        Public Class DataMasternode
 
             Public Enum roleMasterNode
 
@@ -83,23 +83,23 @@ Namespace AreaState
 
             End Enum
 
-            Public Property identityAddressWalletId As String = ""
-            Public Property warrantyAddressWalletId As String = ""
-            Public Property refundAddressWalletId As String = ""
+            Public Property identityPublicAddress As String = ""
+            Public Property warrantyPublicAddress As String = ""
+            Public Property refundPublicAddress As String = ""
             Public Property ipAddress As String = ""
             Public Property warrantyCoin As Decimal = 0
             Public Property chainName As String = ""
             Public Property role As roleMasterNode = roleMasterNode.arbitration
-            Public Property startConnectionDate As DateTime
+            Public Property startConnectionTimeStamp As Double = 0
             Public Property dayConnection As Short = 0
-            Public Property lastConnectionDate As DateTime
+            Public Property lastConnectionDate As Double = 0
 
         End Class
 
-        Public Class PeerKey
+        Public Class DataMasternodeKey
 
             Public Property chainName As String = ""
-            Public Property identityAddressWalletId As String = ""
+            Public Property identityPublicAddress As String = ""
 
         End Class
 
@@ -133,7 +133,7 @@ Namespace AreaState
 
         Public Property activeNetwork As New DataNetwork
         Public Property activeChains As New Dictionary(Of String, DataChain)
-        Public Property activePeers As New Dictionary(Of PeerKey, DataPeer)
+        Public Property activeMasterNode As New Dictionary(Of DataMasternodeKey, DataMasternode)
 
 
         Private Function createMainDBTable() As Boolean
@@ -389,30 +389,30 @@ Namespace AreaState
             End If
         End Function
 
-        Public Function addNewPeer(ByVal chainName As String, ByVal publicAddress As String) As DataPeer
-            Dim newValue As New DataPeer
-            Dim newKey As New PeerKey
+        Public Function addNewPeer(ByVal chainName As String, ByVal publicAddress As String) As DataMasternode
+            Dim newValue As New DataMasternode
+            Dim newKey As New DataMasternodeKey
 
             newKey.chainName = chainName
-            newKey.identityAddressWalletId = publicAddress
+            newKey.identityPublicAddress = publicAddress
 
-            newValue.identityAddressWalletId = publicAddress
+            newValue.identityPublicAddress = publicAddress
 
-            activePeers.Add(newKey, newValue)
+            activeMasterNode.Add(newKey, newValue)
 
             Return newValue
         End Function
 
-        Public Function getDataPeer(ByVal chainName As String, ByVal publicAddress As String) As DataPeer
-            Dim newKey As New PeerKey
+        Public Function getDataPeer(ByVal chainName As String, ByVal publicAddress As String) As DataMasternode
+            Dim newKey As New DataMasternodeKey
 
             newKey.chainName = chainName
-            newKey.identityAddressWalletId = publicAddress
+            newKey.identityPublicAddress = publicAddress
 
-            If activePeers.ContainsKey(newKey) Then
-                Return activePeers.Item(newKey)
+            If activeMasterNode.ContainsKey(newKey) Then
+                Return activeMasterNode.Item(newKey)
             Else
-                Return New DataPeer
+                Return New DataMasternode
             End If
         End Function
 

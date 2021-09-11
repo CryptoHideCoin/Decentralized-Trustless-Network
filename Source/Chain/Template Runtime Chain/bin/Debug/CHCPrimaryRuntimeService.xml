@@ -85,6 +85,36 @@ CHCPrimaryRuntimeService
  This method provide to stop the application
  </summary>
 </member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.Manager.createGenesis(System.String,System.String,System.Double,System.String,System.String)">
+ <summary>
+ This method provide to create a initial procedure A0x0
+ </summary>
+ <param name="networkNameParameter"></param>
+ <param name="networkNameNode"></param>
+ <param name="networkCreationDate"></param>
+ <param name="publicWalletIdAddress"></param>
+ <param name="privateKeyRAW"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.requestController.PutValue(CHCProtocolLibrary.AreaCommon.Models.Network.NotifyModel)">
+ <summary>
+ This API (put method) provide to notify a request by another masternode
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.a0x0Controller.GetValue(System.String)">
+ <summary>
+ This API (get method) provide to return a request model A0x0 of a hashValue request
+ </summary>
+ <param name="hashValue"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.a0x0Controller.PutValue(CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestModel@,System.String)">
+ <summary>
+ This API (put method) provide to set a model A0x0 of a hashValue request
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:CHCPrimaryRuntimeService.AreaNetwork.Address.acquirePublicIP(System.Boolean)">
  <summary>
  This method provides to return a Public IP

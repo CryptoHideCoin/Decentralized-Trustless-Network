@@ -12,16 +12,14 @@ Namespace AreaCommon
 
     Module moduleMain
 
-
-        ' Internal tools
         Public paths As New VirtualPathEngine
         Public log As New LogEngine
         Public logRotate As New LogRotateEngine
         Public counter As New CounterEngine
         Public registry As New RegistryEngine
         Public settings As New CHCRuntimeChainLibrary.AreaRuntime.AppSettings
-
-        ' State of Service
+        Public flow As New AreaFlow.FlowEngine
+        Public consensus As New AreaConsensus.ConsensusEngine
         Public state As New AppState
 
 

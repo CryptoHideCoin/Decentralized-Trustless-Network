@@ -50,7 +50,6 @@ Namespace AreaWallet.Support
                 End Try
             End Sub
 
-
             Public Shared Function startAllowed(ByVal value As String) As Boolean
                 Try
                     Return value.StartsWith(basePvt)
@@ -92,7 +91,7 @@ Namespace AreaWallet.Support
                     Return True
                 End If
 
-                Return (value.StartsWith(baseAddr) And value.EndsWith(closeAddr))
+                Return (value.StartsWith(baseAddr) And value.EndsWith(closeAddr)) And (value.Length = (92 + baseAddr.Length + closeAddr.Length))
             End Function
 
             Public Shared Function extractPrivateKeyRAW(ByVal value As String) As String

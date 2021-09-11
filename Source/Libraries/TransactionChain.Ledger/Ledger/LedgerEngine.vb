@@ -117,10 +117,10 @@ Namespace AreaLedger
         Public Property currentRecord As New SingleRecordLedger
         Public Property log As LogEngine
         Public Property identifyBlockChain As String = ""
+        Public Property CurrentIdBlock As Integer = 0
+        Public Property CurrentIdVolume As Byte = 0
 
         Private Property _NewIdTransaction As Integer = 1
-        Private Property _CurrentIdBlock As Integer = 0
-        Private Property _CurrentIdVolume As Byte = 0
         Private Property _BasePath As String = ""
         Private Property _CompleteFileName As String = ""
         Private Property _CurrentTotalHash As String = ""

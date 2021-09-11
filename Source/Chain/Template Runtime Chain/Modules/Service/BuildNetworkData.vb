@@ -15,15 +15,15 @@ Namespace AreaData
 
 
 
-        Private Sub rebuildCommandList()
-            If _Proceed Then
-                With AreaCommon.state.serviceState
-                    .listAvailableCommand.Clear()
+        Private Function rebuildCommandList() As Boolean
+            With AreaCommon.state.serviceState
+                .listAvailableCommand.Clear()
 
-                    .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cancelCurrentAction)
-                End With
-            End If
-        End Sub
+                .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cancelCurrentAction)
+            End With
+
+            Return True
+        End Function
 
         Private Sub rebuildFinalCommandList()
             With AreaCommon.state.serviceState
@@ -40,37 +40,30 @@ Namespace AreaData
             End With
         End Sub
 
-        Private Sub createLedger()
-            If _Proceed Then
-                AreaCommon.state.runtimeState.activeNetwork.networkCreationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+        Private Function createLedger() As Boolean
+            With AreaCommon.state
+                .runtimeState.activeNetwork.networkCreationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+                .currentBlockLedger.log = AreaCommon.log
+                .currentBlockLedger.identifyBlockChain = "B0"
 
-                AreaCommon.state.currentBlockLedger.log = AreaCommon.log
-                AreaCommon.state.currentBlockLedger.identifyBlockChain = "B0"
+                Return .currentBlockLedger.init(AreaCommon.paths.workData.currentVolume.ledger, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate)
+            End With
+        End Function
 
-                _Proceed = AreaCommon.state.currentBlockLedger.init(AreaCommon.paths.workData.currentVolume.ledger, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate)
-            End If
-        End Sub
+        Private Function createState() As Boolean
+            Return AreaCommon.state.runtimeState.init(AreaCommon.paths.workData.state.db)
+        End Function
 
-        Private Sub createState()
-            If _Proceed Then
-                _Proceed = AreaCommon.state.runtimeState.init(AreaCommon.paths.workData.state.db)
-            End If
-        End Sub
+        Private Function manageA0x0() As Boolean
+            Dim commandA0x0 As New AreaProtocol.A0x0.Manager
 
-        Private Sub manageA0x0()
-            If _Proceed Then
-                Dim commandA0x0 As New AreaProtocol.A0x0.Manager
+            commandA0x0.log = AreaCommon.log
+            commandA0x0.serviceState = AreaCommon.state.serviceState
 
-                commandA0x0.log = AreaCommon.log
-                commandA0x0.serviceState = AreaCommon.state.serviceState
-
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA0x0.init(AreaCommon.paths, dataNetwork.name, AreaCommon.state.information.networkName, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate, .publicAddress, .privateKey)
-                End With
-
-                commandA0x0 = Nothing
-            End If
-        End Sub
+            With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
+                Return commandA0x0.createGenesis(dataNetwork.name, AreaCommon.state.information.networkName, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate, .publicAddress, .privateKey)
+            End With
+        End Function
 
         Private Sub manageA0x1()
             If _Proceed Then
@@ -272,24 +265,27 @@ Namespace AreaData
 
         Public Function buildNetwork() As Boolean
             Try
+                Dim proceed As Boolean = True
+
                 AreaCommon.log.trackIntoConsole("Build Network start")
 
                 AreaCommon.log.track("BuildNetwork.run", "Begin")
 
                 AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation
 
-                createLedger()
-                rebuildCommandList()
-                createState()
+                If proceed Then proceed = AreaCommon.flow.init()
+                If proceed Then proceed = createLedger()
+                If proceed Then proceed = rebuildCommandList()
+                If proceed Then proceed = createState()
+                If proceed Then proceed = manageA0x0()
 
-                manageA0x0()
-                manageA0x1()
-                manageA0x2()
-                manageA0x3()
-                manageA0x4()
-                manageA0x5()
-                manageA0x6()
-                manageA0x7()
+                'manageA0x1()
+                'manageA0x2()
+                'manageA0x3()
+                'manageA0x4()
+                'manageA0x5()
+                'manageA0x6()
+                'manageA0x7()
 
                 'manageA1x0()
                 'manageA1x1()

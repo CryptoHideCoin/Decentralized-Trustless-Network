@@ -44,6 +44,16 @@ Namespace AreaSecurity
             End Try
         End Function
 
+        Public Function checkSignature(ByVal resultant As String, ByVal value As String, ByVal publicAddress As String) As Boolean
+            Try
+                publicAddress = WalletAddressEngine.SingleKeyPair.cleanAddress(publicAddress)
+
+                Return Encryption.Base58Signature.verifySignature(resultant, publicAddress, value)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
         Public Function changeCertificate(ByVal value As CHCProtocolLibrary.AreaCommon.Models.Security.changeCertificate) As Boolean
             Try
                 AreaCommon.settings.data.clientCertificate = value.newCertificate

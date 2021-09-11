@@ -43,6 +43,8 @@ Namespace AreaCommon
                     httpConfig.Routes.MapHttpRoute(name:="QoSTicketApi", routeTemplate:="api/" & settings.data.serviceId & "/qos/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="SystemApi", routeTemplate:="api/v1.0/System/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="NetworkApi", routeTemplate:="api/" & settings.data.serviceId & "/network/{controller}")
+                    httpConfig.Routes.MapHttpRoute(name:="RequestApi", routeTemplate:="api/" & settings.data.serviceId & "/request/{controller}")
+                    httpConfig.Routes.MapHttpRoute(name:="NotifyRequestApi", routeTemplate:="api/" & settings.data.serviceId & "/notify/{controller}")
                 End If
 
                 log.track("Controllers.StartWebService", "Map route")

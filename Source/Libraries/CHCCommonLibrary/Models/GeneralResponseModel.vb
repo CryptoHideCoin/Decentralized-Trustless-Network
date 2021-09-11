@@ -1,6 +1,8 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports System.Xml.Serialization
+
 
 
 Namespace AreaCommon.Models.General
@@ -48,14 +50,35 @@ Namespace AreaCommon.Models.General
             inError
         End Enum
 
-        Public IntegrityTransactionChain As New IdentifyRecordLedger
-        Public responseStatus As EnumResponseStatus = EnumResponseStatus.responseComplete
-        Public errorDescription As String = ""
-        Public requestTime As String = ""
-        Public responseTime As String = ""
+        <XmlIgnore()> Public Property integrityTransactionChain As New IdentifyRecordLedger
+        <XmlIgnore()> Public Property responseStatus As EnumResponseStatus = EnumResponseStatus.responseComplete
+        <XmlIgnore()> Public Property errorDescription As String = ""
+        <XmlIgnore()> Public Property requestTime As String = ""
+        <XmlIgnore()> Public Property responseTime As String = ""
 
-        Public masterNodePublicAddress As String = ""
-        Public signature As String = ""
+        <XmlIgnore()> Public Property masterNodePublicAddress As String = ""
+        Public Property signature As String = ""
+
+        Public Shared Function determinateStringObject(ByRef value As RemoteResponse) As String
+            Dim result As String = ""
+
+            result += value.IntegrityTransactionChain.recordCoordinate
+            result += value.IntegrityTransactionChain.recordHash
+            result += value.masterNodePublicAddress
+            result += value.requestTime
+
+            Select Case value.responseStatus
+                Case EnumResponseStatus.responseComplete : result += "1"
+                Case EnumResponseStatus.commandNotAllowed : result += "2"
+                Case EnumResponseStatus.missingAuthorization : result += "3"
+                Case EnumResponseStatus.systemOffline : result += "4"
+                Case EnumResponseStatus.inError : result += "5"
+            End Select
+
+            result += value.responseTime
+
+            Return result
+        End Function
 
     End Class
 

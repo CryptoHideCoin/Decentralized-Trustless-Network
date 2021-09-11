@@ -47,12 +47,17 @@
     <Reference Include="CHCBasicCryptographyLibrary">
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCCommonLibrary, Version=1.9.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="CHCProtocolLibrary, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\CHCTransactionChainLibrary\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -82,6 +87,7 @@
     <Compile Include="Internal\Queues.vb" />
     <Compile Include="Keys\KeysEngine.vb" />
     <Compile Include="Ledger\LedgerEngine.vb" />
+    <Compile Include="Ledger\LedgerSupportEngine.vb" />
     <Compile Include="Models\NodesModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -131,10 +137,7 @@
     <Folder Include="Requests\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CHCCommonLibrary\CHCCommonLibrary.vbproj">
-      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
-      <Name>CHCCommonLibrary</Name>
-    </ProjectReference>
+    <Content Include="Other\ReleaseNote.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
