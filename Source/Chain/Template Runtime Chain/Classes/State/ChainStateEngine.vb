@@ -403,10 +403,14 @@ Namespace AreaState
             Return newValue
         End Function
 
-        Public Function getDataPeer(ByVal chainName As String, ByVal publicAddress As String) As DataMasternode
+        Public Function getDataPeer(ByVal publicAddress As String, Optional ByVal chainName As String = "") As DataMasternode
             Dim newKey As New DataMasternodeKey
 
-            newKey.chainName = chainName
+            If (chainName.Length = 0) Then
+                newKey.chainName = AreaCommon.state.information.chainName
+            Else
+                newKey.chainName = chainName
+            End If
             newKey.identityPublicAddress = publicAddress
 
             If activeMasterNode.ContainsKey(newKey) Then

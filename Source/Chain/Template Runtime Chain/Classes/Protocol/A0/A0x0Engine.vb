@@ -74,7 +74,7 @@ Namespace AreaProtocol
 
         Public Class FormalCheck
 
-            Shared Function verify(ByVal requestHash As String) As Boolean
+            Shared Function verify(ByVal requestHash As String) As Nullable(Of Boolean)
                 Try
                     Dim file As New FileEngine
                     Dim proceed As Boolean = True
@@ -100,11 +100,11 @@ Namespace AreaProtocol
 
                     Return proceed
                 Catch ex As Exception
-                    Return False
+                    Return Nothing
                 End Try
             End Function
 
-            Shared Function evaluate(ByRef value As AreaFlow.RequestExtended) As Boolean
+            Shared Function evaluate(ByRef value As AreaFlow.RequestExtended) As Nullable(Of Boolean)
                 Try
                     Dim file As New FileEngine
                     Dim proceed As Boolean = True
@@ -127,11 +127,14 @@ Namespace AreaProtocol
                         value.generalStatus = AreaFlow.RequestExtended.EnumOperationPosition.completeWithPositiveResult
                     Else
                         proceed = False
+
+                        value.rejectedNote = "Masternode problem"
+                        value.generalStatus = AreaFlow.RequestExtended.EnumOperationPosition.completeWithPositiveResult
                     End If
 
                     Return proceed
                 Catch ex As Exception
-                    Return False
+                    Return Nothing
                 End Try
             End Function
 
@@ -213,7 +216,7 @@ Namespace AreaProtocol
                     If requestFileEngine.save() Then
                         log.track("A0x0Manager.init", "request - Saved")
 
-                        Return AreaCommon.flow.addNewRequest(data.requestHash, data.requestCode, data.requestDateTimeStamp, True)
+                        Return AreaCommon.flow.addNewRequestDirect(data.requestHash, data.requestCode, data.requestDateTimeStamp, "")
                     End If
                 Catch ex As Exception
                     serviceState.currentAction.setError(Err.Number, ex.Message)

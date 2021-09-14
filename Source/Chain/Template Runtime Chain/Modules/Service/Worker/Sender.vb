@@ -75,7 +75,7 @@ Namespace AreaWorker
         Public Function work() As Boolean
             Try
                 Dim newDeliveryList As New AreaCommon.Masternode.MasternodeSenders
-                Dim item As AreaFlow.FlowEngine.RequestToSend
+                Dim item As AreaFlow.RequestToSend
                 Dim proceed As Boolean = True
 
                 AreaCommon.log.track("Sender.work", "Begin")
@@ -88,7 +88,7 @@ Namespace AreaWorker
                     If (item.requestCode.Length > 0) Then
                         newDeliveryList = sendInBroadCast(item.requestCode, item.dataRequest.requestHash, item.deliveryList)
 
-                        AreaCommon.flow.removeItem(item)
+                        AreaCommon.flow.removeRequestToSend(item)
 
                         If newDeliveryList.count > 0 Then
                             AreaCommon.flow.addNewRequestToSend(item.requestCode, item.requestHash, newDeliveryList, item.dataRequest)

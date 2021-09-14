@@ -55,17 +55,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.9.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCProtocolLibrary, Version=1.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCSupportUIControls, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCSupportUIControls\CHCSupportUIControls.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -166,6 +162,12 @@
   <ItemGroup>
     <Content Include="64.ico" />
     <Content Include="Other\ReleaseNote.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\CHCSupportUIControls\CHCSupportUIControls.vbproj">
+      <Project>{2b477a78-3139-4570-bb5e-3fc09475c316}</Project>
+      <Name>CHCSupportUIControls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

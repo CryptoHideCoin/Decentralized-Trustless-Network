@@ -216,7 +216,7 @@ Namespace AreaConsensus
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.addNewRequest", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.unlockUpdateBullettin", "Error:" & ex.Message, "error")
 
                 Return False
             End Try
@@ -235,7 +235,7 @@ Namespace AreaConsensus
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.addNewRequest", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.checkAndCreateNewBullettin", "Error:" & ex.Message, "error")
 
                 Return False
             End Try
@@ -246,11 +246,12 @@ Namespace AreaConsensus
             Try
                 Dim proceed As Boolean = True
 
-                dataRequest.requestPosition = AreaFlow.RequestExtended.EnumOperationFase.consensus
-
                 If unlockUpdateBullettin("main-" & dataRequest.requestHash) Then
                     If proceed Then
                         proceed = checkAndCreateNewBullettin()
+                    End If
+                    If proceed Then
+
                     End If
                 End If
 

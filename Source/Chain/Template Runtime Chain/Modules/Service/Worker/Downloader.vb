@@ -4,121 +4,138 @@ Option Compare Text
 Imports CHCCommonLibrary.AreaEngine.Communication
 
 
+Namespace AreaWorker
 
-Public Class Downloader
+    Module Downloader
 
-    Public Property workerOn As Boolean = False
+        Private Class ResponseGet
+
+            Public Property connectionFailed As Boolean = False
+            Public Property proceed As Boolean = False
+
+        End Class
+
+        Public Property workerOn As Boolean = False
 
 
+        Private Function getRequestA0x0(ByVal addressValue As String, ByRef value As String) As ResponseGet
+            Dim response As New ResponseGet
 
-    Private Function getRequestA0x0(ByVal addressValue As String, ByRef value As String) As Boolean
-        Try
-            Dim remote As New ProxyWS(Of AreaProtocol.A0x0.RequestModel)
-            Dim requestFileEngine As New AreaProtocol.A0x0.FileEngine
+            Try
+                Dim remote As New ProxyWS(Of AreaProtocol.A0x0.RequestModel)
+                Dim requestFileEngine As New AreaProtocol.A0x0.FileEngine
 
-            remote.url = addressValue & "/requests/a0x0/?hashValue=" & value
+                remote.url = addressValue & "/requests/a0x0/?hashValue=" & value
 
-            Dim rt As String = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT
+                Dim rt As String = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT
 
-            If (remote.getData() = "") Then
-                If (remote.data.netName.Length > 0) Then
+                If (remote.getData() = "") Then
+                    If (remote.data.netName.Length > 0) Then
 
-                    requestFileEngine.data = remote.data
+                        requestFileEngine.data = remote.data
 
-                    requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, value & ".request")
+                        requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, value & ".request")
 
-                    If requestFileEngine.save() Then
-                        AreaCommon.log.track("Requester.getRequestA0x0", "request - Saved")
+                        If requestFileEngine.save() Then
+                            AreaCommon.log.track("Requester.getRequestA0x0", "request - Saved")
 
-                        Return True
+                            response.proceed = True
+                        Else
+                            AreaCommon.log.track("Requester.getRequestA0x0", "Request not saved", "error")
+                            response.proceed = False
+                        End If
                     Else
-                        AreaCommon.log.track("Requester.getRequestA0x0", "Request not saved", "error")
+                        AreaCommon.log.track("Requester.getRequestA0x0", "Request not found", "error")
+                        response.proceed = False
                     End If
                 Else
-                    AreaCommon.log.track("Requester.getRequestA0x0", "Request not found", "error")
+                    AreaCommon.log.track("Requester.getRequestA0x0", "Connection failed url = " & remote.url, "error")
+
+                    response.connectionFailed = True
                 End If
-            Else
-                AreaCommon.log.track("Requester.getRequestA0x0", "Connection failed url = " & remote.url, "error")
-            End If
 
-            remote = Nothing
+                remote = Nothing
+            Catch ex As Exception
+                AreaCommon.log.track("Requester.getRequestA0x0", "Error:" & ex.Message, "error")
 
-            Return False
-        Catch ex As Exception
-            AreaCommon.log.track("Requester.getRequestA0x0", "Error:" & ex.Message, "error")
+                response.proceed = False
+            End Try
 
-            Return False
-        End Try
-    End Function
+            Return response
+        End Function
 
-    Private Function getBaseAddress(ByVal value As String) As String
-        Try
-            ' Wait to create internal list
+        Private Function getBaseAddress(ByVal value As String) As String
+            Try
+                Return AreaCommon.state.runtimeState.getDataPeer(value).ipAddress
+            Catch ex As Exception
+                AreaCommon.log.track("Requester.getBaseAddress", "Error:" & ex.Message, "error")
 
-            Return value
-        Catch ex As Exception
-            AreaCommon.log.track("Requester.getBaseAddress", "Error:" & ex.Message, "error")
+                Return False
+            End Try
+        End Function
 
-            Return False
-        End Try
-    End Function
+        Private Function downloadRequest(ByRef value As AreaFlow.RequestExtended) As Boolean
+            Try
+                Dim response As New ResponseGet
 
-    Private Function downloadRequest(ByRef value As AreaFlow.RequestExtended) As Boolean
-        Try
-            value.requestPosition = AreaFlow.RequestExtended.EnumOperationFase.downloadRequestCheck
+                If Not value.directRequest Then
+                    Select Case value.requestCode
+                        Case "a0x0"
+                            response = getRequestA0x0(getBaseAddress(value.externalSource), value.requestHash)
+                    End Select
 
-            If Not value.directRequest Then
-                Select Case value.requestCode
-                    Case "a0x0"
-                        If getRequestA0x0(getBaseAddress(value.externalSource), value.requestHash) Then
-                            Return True
-                        End If
-                End Select
-            Else
+                    If response.connectionFailed Then
+                        AreaCommon.flow.repositionDownload(value.requestHash, value.externalSource)
+
+                        Return False
+                    End If
+                Else
+                    Return True
+                End If
+
+                Return False
+            Catch ex As Exception
+                AreaCommon.log.track("Requester.formalCheck", "Error:" & ex.Message, "error")
+
+                Return False
+            End Try
+        End Function
+
+
+        Public Function work() As Boolean
+            Try
+                Dim item As AreaFlow.RequestExtended
+                Dim proceed As Boolean = True
+
+                AreaCommon.log.track("Downloader.work", "Begin")
+
+                workerOn = True
+
+                Do While (AreaCommon.flow.workerOn And workerOn)
+                    item = AreaCommon.flow.getFirstRequestToDownload()
+
+                    If (item.requestHash.Length > 0) Then
+                        proceed = True
+
+                        If proceed Then proceed = downloadRequest(item)
+                        If proceed Then proceed = AreaCommon.flow.setRequestToSelect(item)
+                    End If
+
+                    Threading.Thread.Sleep(10)
+                Loop
+
+                workerOn = False
+
+                AreaCommon.log.track("Downloader.work", "Complete")
+
                 Return True
-            End If
+            Catch ex As Exception
+                AreaCommon.log.track("Downloader.work", "Error:" & ex.Message, "error")
 
-            Return False
-        Catch ex As Exception
-            AreaCommon.log.track("Requester.formalCheck", "Error:" & ex.Message, "error")
+                Return False
+            End Try
+        End Function
 
-            Return False
-        End Try
-    End Function
+    End Module
 
-
-    Public Function work() As Boolean
-        Try
-            Dim item As AreaFlow.FlowEngine.RequestToDownload
-            Dim proceed As Boolean = True
-
-            AreaCommon.log.track("Downloader.work", "Begin")
-
-            workerOn = True
-
-            Do While (AreaCommon.flow.workerOn And workerOn)
-                item = AreaCommon.flow.getFirstRequestToDownload()
-
-                If (item.requestHash.Length > 0) Then
-                    proceed = True
-
-
-
-                End If
-
-                Threading.Thread.Sleep(10)
-            Loop
-
-            workerOn = False
-
-            AreaCommon.log.track("Downloader.work", "Complete")
-
-            Return True
-        Catch ex As Exception
-            AreaCommon.log.track("Downloader.work", "Error:" & ex.Message, "error")
-
-            Return False
-        End Try
-    End Function
-
-End Class
+End Namespace
