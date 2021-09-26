@@ -65,7 +65,7 @@ Namespace Controllers
             Dim privateKey As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
 
             result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
-            result.IntegrityTransactionChain = AreaCommon.state.serviceState.IntegrityTransactionChain
+            result.IntegrityTransactionChain = AreaCommon.state.currentService.IntegrityTransactionChain
             result.masterNodePublicAddress = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).publicAddress
             result.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete
             result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()

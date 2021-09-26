@@ -26,7 +26,7 @@ Namespace AreaRuntime
 
             Public clientCertificate As String = ""
 
-            Public trackConfiguration As LogEngine.TrackRuntimeModeEnum = LogEngine.TrackRuntimeModeEnum.trackAllRuntime
+            Public trackConfiguration As LogEngine.TrackRuntimeModeEnum = LogEngine.TrackRuntimeModeEnum.trackAll
             Public useTrackRotate As Boolean = False
             Public trackRotateConfig As New LogRotateEngine.LogRotateConfig
 

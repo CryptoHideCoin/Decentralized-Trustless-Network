@@ -13,27 +13,35 @@ Namespace AreaWorker
 
         Public Function work() As Boolean
             Try
-                Dim item As AreaFlow.RequestExtended
+                Dim itemsToWork As Dictionary(Of String, AreaFlow.RequestExtended)
                 Dim proceed As Boolean = True
 
                 AreaCommon.log.track("Processor.work", "Begin")
 
                 workerOn = True
 
-                Do While AreaCommon.flow.workerOn
-                    item = AreaCommon.flow.getFirstRequestToProcess()
+                Do While (AreaCommon.flow.workerOn And workerOn)
 
-                    If (item.requestHash.Length > 0) Then
-                        proceed = True
+                    itemsToWork = AreaCommon.flow.getAllListToProcess()
 
-                        If proceed Then proceed = AreaCommon.consensus.manageRequest(item)
-                        If proceed Then
-                            item.generalStatus = AreaFlow.RequestExtended.EnumOperationPosition.completeWithPositiveResult
-                            'item.requestPosition = AreaFlow.RequestExtended.EnumOperationFase.toRemove
+                    For Each item As AreaFlow.RequestExtended In itemsToWork.Values
+
+                        If Not item.notifyAssessmentAtNetwork Then
+                            If AreaCommon.consensus.notifyAssessment(item) Then
+                                item.notifyAssessmentAtNetwork = True
+                            End If
+                        End If
+                        If Not item.notifySingleConsensusAtNetwork Then
+                            If AreaCommon.consensus.bulletin.proposalsForApprovalData.requestHash.CompareTo(item.requestHash) = 0 Then
+                                If AreaCommon.consensus.notifyAllNetworkExpressAssessment(item) Then
+                                    item.notifySingleConsensusAtNetwork = True
+                                End If
+                            End If
                         End If
 
-                        AreaCommon.flow.removeRequest(item)
-                    End If
+                    Next
+
+                    AreaCommon.flow.removeOldRequest()
 
                     Threading.Thread.Sleep(5)
                 Loop

@@ -34,7 +34,7 @@ Namespace AreaWorker
                 listSender = AreaCommon.Masternode.MasternodeSenders.createMasterNodeList()
 
                 If value.directRequest Then
-                    AreaCommon.flow.addNewRequestToSend(value.requestCode, value.requestHash, AreaCommon.Masternode.MasternodeSenders.createMasterNodeList(), value)
+                    AreaCommon.flow.addNewRequestToSend(value.requestCode, value.requestHash, AreaCommon.Masternode.MasternodeSenders.createMasterNodeList(), value, 0)
                 End If
 
                 Return True
@@ -120,7 +120,7 @@ Namespace AreaWorker
                             If item.requestPosition = AreaFlow.RequestExtended.EnumOperationPosition.completeWithPositiveResult Then
                                 AreaCommon.flow.setRequestToVerify(item)
                             Else
-                                AreaCommon.flow.setRequestRejected(item)
+                                AreaCommon.flow.setRequestProcessed(item)
                             End If
                         Else
                             item.requestPosition = AreaFlow.RequestExtended.EnumOperationPosition.inError
@@ -129,7 +129,8 @@ Namespace AreaWorker
 
                     item = Nothing
 
-                    AreaCommon.flow.refreshRejectedRequest()
+                    AreaCommon.flow.removeOldRequest()
+                    AreaCommon.flow.manageCloseBlock()
 
                     Threading.Thread.Sleep(5)
                 Loop

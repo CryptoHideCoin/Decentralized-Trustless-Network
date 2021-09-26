@@ -88,6 +88,7 @@ Namespace AreaState
             Public Property refundPublicAddress As String = ""
             Public Property ipAddress As String = ""
             Public Property warrantyCoin As Decimal = 0
+            Public Property votePoint As Decimal = 0
             Public Property chainName As String = ""
             Public Property role As roleMasterNode = roleMasterNode.arbitration
             Public Property startConnectionTimeStamp As Double = 0
@@ -407,7 +408,7 @@ Namespace AreaState
             Dim newKey As New DataMasternodeKey
 
             If (chainName.Length = 0) Then
-                newKey.chainName = AreaCommon.state.information.chainName
+                newKey.chainName = AreaCommon.state.internalInformation.chainName
             Else
                 newKey.chainName = chainName
             End If
@@ -418,6 +419,25 @@ Namespace AreaState
             Else
                 Return New DataMasternode
             End If
+        End Function
+
+        Public Function getNodeListAbleToConsensus() As List(Of DataMasternode)
+            Try
+                Dim result As New List(Of DataMasternode)
+
+                For Each item In activeMasterNode.Values
+                    If (item.role = DataMasternode.roleMasterNode.consensus) Or
+                       (item.role = DataMasternode.roleMasterNode.fullService) Then
+                        result.Add(item)
+                    End If
+                Next
+
+                Return result
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.createConsensusList", "Error:" & ex.Message, "error")
+
+                Return New List(Of DataMasternode)
+            End Try
         End Function
 
 

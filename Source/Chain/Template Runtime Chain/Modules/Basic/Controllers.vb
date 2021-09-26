@@ -2,12 +2,10 @@
 Option Explicit On
 
 Imports System.Web.Http
-Imports CHCServerSupportLibrary.Support
 
 
 
 Namespace AreaCommon
-
 
     Module Controllers
 
@@ -58,7 +56,7 @@ Namespace AreaCommon
                         log.track("Controllers.StartWebService", "WS Listen")
                         log.track("Controllers.StartWebService", "Webservice Run at " & _portNumber & " port")
                     Catch aggEx As AggregateException
-                        log.track("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion - Error:" & aggEx.Message, "fatal")
+                        log.track("Controllers.StartWebService", "FATAL: Enable start a webservice; check admin authorizathion!", "fatal")
 
                         closeApplication()
                     End Try
@@ -118,11 +116,8 @@ Namespace AreaCommon
 
                 Return False
             End Try
-
         End Function
 
-
     End Module
-
 
 End Namespace

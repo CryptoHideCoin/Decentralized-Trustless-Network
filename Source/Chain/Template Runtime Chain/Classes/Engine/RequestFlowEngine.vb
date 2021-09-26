@@ -18,140 +18,6 @@ Namespace AreaFlow
             completeWithNegativeResult
         End Enum
 
-        Public Enum EvaluationResponse
-            notDeterminate
-            approval
-            rejected
-        End Enum
-
-
-        Public Class SingleMasternodeInformation
-
-            Public Property publicAddress As String = ""
-            Public Property publicIPAddress As String = ""
-            Public Property stakingValue As Double = 0
-
-            Public Property assessment As EvaluationResponse = EvaluationResponse.notDeterminate
-            Public Property assessmentTimeStamp As Double = 0
-            Public Property proposalHash As String = ""
-
-            Public Property tryNumberOfDelivery As Byte = 0
-            Public Property tryFirstTimeStamp As Double = 0
-
-            Public Property responseTimeOutExpired As Boolean = False
-
-        End Class
-
-        Public Class MasterNodeListInformation
-
-            Private Property _Items As New Dictionary(Of String, SingleMasternodeInformation)
-
-            Public Property totalValues As Double = 0
-
-            Public Function addNew(ByVal publicAddress As String, ByVal publicIPAddress As String, ByVal stakingValue As Double) As Boolean
-                Try
-                    Dim item As New SingleMasternodeInformation
-
-                    item.publicAddress = publicAddress
-                    item.publicIPAddress = publicIPAddress
-                    item.stakingValue = stakingValue
-
-                    _Items.Add(publicAddress, item)
-
-                    totalValues += stakingValue
-
-                    Return True
-                Catch ex As Exception
-                    Return False
-                End Try
-            End Function
-
-            Public Function addNew(ByRef nodeData As SingleMasternodeInformation) As Boolean
-                If Not _Items.ContainsKey(nodeData.publicAddress) Then
-                    _Items.Add(nodeData.publicAddress, nodeData)
-                End If
-
-                Return True
-            End Function
-
-            Public Function remove(ByVal publicAddress As String) As Boolean
-                Try
-                    Dim item As SingleMasternodeInformation = _Items(publicAddress)
-
-                    totalValues -= item.stakingValue
-
-                    _Items.Remove(publicAddress)
-
-                    Return True
-                Catch ex As Exception
-                    Return False
-                End Try
-            End Function
-
-            Public ReadOnly Property count() As Integer
-                Get
-                    Return _Items.Count
-                End Get
-            End Property
-
-            Public Function getItem(ByVal publicAddress As String) As SingleMasternodeInformation
-                If _Items.ContainsKey(publicAddress) Then
-                    Return _Items.Item(publicAddress)
-                Else
-                    Return Nothing
-                End If
-            End Function
-
-        End Class
-
-        Public Class MasternodeConsensusDelivery
-
-            Public Property network As New MasterNodeListInformation
-            Public Property approved As New MasterNodeListInformation
-            Public Property rejected As New MasterNodeListInformation
-            Public Property delivery As New MasterNodeListInformation
-            Public Property missing As New MasterNodeListInformation
-            Public Property noReply As New MasterNodeListInformation
-
-
-            Private Function searchAndExtract(ByVal publicAddress As String, ByRef value As MasterNodeListInformation) As SingleMasternodeInformation
-
-                Dim masterNodeData As SingleMasternodeInformation = value.getItem(publicAddress)
-
-                If IsNothing(masterNodeData) Then
-                    Return Nothing
-                Else
-                    If value.remove(publicAddress) Then
-                        Return masterNodeData
-                    Else
-                        Return Nothing
-                    End If
-                End If
-            End Function
-
-            Public Function assessmentReceive(ByVal publicAddress As String, ByVal assessment As EvaluationResponse, ByVal emittedTimeStamp As Double, ByVal proposalHash As String) As Boolean
-
-                Dim masterNodeData As SingleMasternodeInformation = Nothing
-
-                If IsNothing(masterNodeData) Then masterNodeData = searchAndExtract(publicAddress, network)
-                If IsNothing(masterNodeData) Then masterNodeData = searchAndExtract(publicAddress, delivery)
-                If IsNothing(masterNodeData) Then masterNodeData = searchAndExtract(publicAddress, missing)
-                If IsNothing(masterNodeData) Then masterNodeData = searchAndExtract(publicAddress, noReply)
-
-                If Not IsNothing(masterNodeData) Then
-                    If (assessment = EvaluationResponse.approval) Then
-                        Return approved.addNew(masterNodeData)
-                    Else
-                        Return rejected.addNew(masterNodeData)
-                    End If
-                End If
-
-                Return True
-            End Function
-
-        End Class
-
-
         Public Property requestHash As String = ""
         Public Property dateNotify As Double = 0
         Public Property ticketNumber As String = ""
@@ -168,19 +34,31 @@ Namespace AreaFlow
         Public Property consensusPosition As EnumOperationPosition = EnumOperationPosition.toDo
         Public Property generalStatus As EnumOperationPosition = EnumOperationPosition.toDo
 
-        Public Property response As EvaluationResponse = EvaluationResponse.notDeterminate
+        Public Property response As AreaCommon.Masternode.EvaluationResponse = AreaCommon.Masternode.EvaluationResponse.notDeterminate
 
-        Public Property consensus As New MasternodeConsensusDelivery
+        Public Property evaluations As New AreaCommon.Masternode.MasternodeEvaluations
+        Public Property notifyRejected As New AreaCommon.Masternode.MasternodeNotifyRejectedList
+
+        Public Property notifyAssessmentAtNetwork As Boolean = False
+        Public Property notifySingleConsensusAtNetwork As Boolean = False
+        Public Property notifyConsensusAtNetwork As Boolean = False
+
+        Public Property masterNodeExpressions As New AreaConsensus.ConsensusNetwork
 
     End Class
 
     Public Class RequestToSend
 
-        Public Property requestTimeStamp As Double = 0
+        Public Property sendBulletin As Boolean = False
+
+        Public Property addTimeStamp As Double = 0
         Public Property requestCode As String = ""
         Public Property requestHash As String = ""
         Public Property deliveryList As AreaCommon.Masternode.MasternodeSenders
-        Public Property dataRequest As Object
+
+        Public Property dataObject As Object
+
+        Public Property tryNumber As Double
 
     End Class
 
@@ -200,11 +78,12 @@ Namespace AreaFlow
         Private _RequestToDownload As New Dictionary(Of RequestDownloadKey, RequestExtended)
         Private _RequestToVerify As New List(Of RequestExtended)
         Private _RequestToSend As New List(Of RequestToSend)
-        Private _RequestToProcess As New List(Of RequestExtended)
 
         Private _Requests As New Dictionary(Of String, RequestExtended)
+        Private _RequestToProcess As New Dictionary(Of String, RequestExtended)
+        Private _RequestProcessed As New Dictionary(Of String, RequestExtended)
 
-        Private _RequestRejected As New Dictionary(Of String, RequestExtended)
+        Private _RemoteBulletin As New List(Of AreaConsensus.RequestProcess)
 
         Public Property workerOn As Boolean = False
 
@@ -291,16 +170,36 @@ Namespace AreaFlow
             Return False
         End Function
 
-        Public Function addNewRequestToSend(ByVal requestCode As String, ByRef requestHash As String, ByRef sender As AreaCommon.Masternode.MasternodeSenders, ByRef dataRequest As Object) As Boolean
+        Public Function addNewRequestToSend(ByVal requestCode As String, ByRef requestHash As String, ByRef sender As AreaCommon.Masternode.MasternodeSenders, ByRef dataRequest As Object, Optional ByVal times As Byte = 0) As Boolean
             Dim item As New RequestToSend
 
             item.requestCode = requestCode
             item.requestHash = requestHash
-            item.requestTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+            item.addTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
             item.deliveryList = sender
-            item.dataRequest = dataRequest
+            item.dataObject = dataRequest
+            item.tryNumber = times
 
             _RequestToSend.Add(item)
+
+            Return True
+        End Function
+
+        Public Function addNewBulletinToSend(ByRef sender As AreaCommon.Masternode.MasternodeSenders, ByRef dataRequest As Object) As Boolean
+            Dim item As New RequestToSend
+
+            item.sendBulletin = True
+            item.deliveryList = sender
+            item.dataObject = dataRequest
+            item.addTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+
+            _RequestToSend.Add(item)
+
+            Return True
+        End Function
+
+        Public Function addNewRequestRemoteBulletin(ByVal value As AreaConsensus.RequestProcess) As Boolean
+            _RemoteBulletin.Add(value)
 
             Return True
         End Function
@@ -311,7 +210,7 @@ Namespace AreaFlow
                 AreaCommon.log.track("RequestFlowEngine.setRequestToProcess", "Begin")
 
                 _RequestToVerify.Remove(item)
-                _RequestToProcess.Add(item)
+                _RequestToProcess.Add(item.requestHash, item)
 
                 Return True
             Catch ex As Exception
@@ -351,14 +250,14 @@ Namespace AreaFlow
             End Try
         End Function
 
-        Public Function setRequestRejected(ByRef item As RequestExtended) As Boolean
+        Public Function setRequestProcessed(ByRef item As RequestExtended) As Boolean
             Try
                 AreaCommon.log.track("RequestFlowEngine.setRequestRejected", "Begin")
 
                 item.generalStatus = RequestExtended.EnumOperationPosition.completeWithNegativeResult
 
                 _RequestToSelected.Remove(item)
-                _RequestRejected.Add(item.requestHash, item)
+                _RequestProcessed.Add(item.requestHash, item)
 
                 Return True
             Catch ex As Exception
@@ -388,32 +287,6 @@ Namespace AreaFlow
                 Return result
             Catch ex As Exception
                 AreaCommon.log.track("RequestFlowEngine.getFirstRequestToSelect", "Error:" & ex.Message, "error")
-
-                Return New RequestExtended
-            End Try
-        End Function
-
-        Public Function getFirstRequestToProcess() As RequestExtended
-            Try
-                Dim result As New RequestExtended
-
-                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToProcess", "Begin")
-
-                For Each item In _RequestToProcess
-                    If (result.requestHash.Length = 0) Or (result.dateSelected <= item.dateSelected) Then
-                        result = item
-                    End If
-                Next
-
-                If (result.requestHash.Length > 0) Then
-                    _RequestToProcess.Remove(result)
-                End If
-
-                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToProcess", "Complete")
-
-                Return result
-            Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToProcess", "Error:" & ex.Message, "error")
 
                 Return New RequestExtended
             End Try
@@ -474,7 +347,7 @@ Namespace AreaFlow
                 For Each item In _RequestToSend
                     If (result.requestCode.Length = 0) Then
                         result = item
-                    ElseIf (result.requestTimeStamp <= item.requestTimeStamp) Then
+                    ElseIf (result.addTimeStamp <= item.addTimeStamp) Then
                         result = item
                     End If
                 Next
@@ -493,10 +366,65 @@ Namespace AreaFlow
             End Try
         End Function
 
+        Public Function getFirstRemoteBulletin() As AreaConsensus.RequestProcess
+            Try
+                If (_RemoteBulletin.Count > 0) Then
+                    Return _RemoteBulletin(0)
+                Else
+                    Return New AreaConsensus.RequestProcess
+                End If
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.getFirstRemoteBulletin", "Error:" & ex.Message, "error")
+
+                Return New AreaConsensus.RequestProcess
+            End Try
+        End Function
+
+        Public Function getRequestToProcess(ByVal requestHash As String) As RequestExtended
+            If _RequestToProcess.ContainsKey(requestHash) Then
+                Return _RequestToProcess(requestHash)
+            End If
+        End Function
+
+        Public Function getRequest(ByVal requestHash As String) As RequestExtended
+            Try
+                If _Requests.ContainsKey(requestHash) Then
+                    Return _Requests(requestHash)
+                Else
+                    Return New RequestExtended
+                End If
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.getRequest", "Error:" & ex.Message, "error")
+
+                Return New RequestExtended
+            End Try
+        End Function
+
+        Public Function getAllListToProcess() As Dictionary(Of String, RequestExtended)
+            Return _RequestToProcess
+        End Function
+
+
+        Public Function createConsensusList() As AreaCommon.Masternode.ContactDataMasternodeList
+            Try
+                Dim result As New AreaCommon.Masternode.ContactDataMasternodeList
+
+                For Each item In AreaCommon.state.runtimeState.getNodeListAbleToConsensus()
+                    result.addNew(item.identityPublicAddress, item.ipAddress, item.votePoint)
+                Next
+
+                Return result
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.createConsensusList", "Error:" & ex.Message, "error")
+
+                Return New AreaCommon.Masternode.ContactDataMasternodeList
+            End Try
+        End Function
+
 
         Public Function removeRequest(ByRef value As RequestExtended) As Boolean
             Try
-                _RequestToProcess.Remove(value)
+                _RequestToProcess.Remove(value.requestHash)
                 _Requests.Remove(value.requestHash)
 
                 Return True
@@ -532,6 +460,36 @@ Namespace AreaFlow
             Return True
         End Function
 
+        Public Function removeOldRequest() As Boolean
+            Try
+                Dim item As RequestExtended
+                Dim counter As Integer = 0
+
+                AreaCommon.log.track("RequestFlowEngine.refreshOldRequest", "Begin")
+
+                If (_RequestProcessed.Count > 0) Then
+                    item = _RequestProcessed(counter)
+
+                    Do While (counter <= _RequestProcessed.Count)
+                        If (item.dateRequest + (60000 * 60 * 24) > CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()) Then
+                            _RequestProcessed.Remove(item.requestHash)
+                        End If
+
+                        counter += 1
+                    Loop
+                End If
+
+                AreaCommon.log.track("RequestFlowEngine.refreshOldRequest", "Complete")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.refreshOldRequest", "Error:" & ex.Message, "error")
+
+                Return True
+            End Try
+        End Function
+
+
         Public Function repositionDownload(ByVal requestHash As String, ByVal publicAddress As String) As Boolean
             Dim key As New AreaFlow.RequestDownloadKey
             Dim request As AreaFlow.RequestExtended
@@ -549,35 +507,15 @@ Namespace AreaFlow
         End Function
 
 
-        Public Function refreshRejectedRequest() As Boolean
+        Public Function manageCloseBlock() As Boolean
             Try
-                Dim item As RequestExtended
-                Dim counter As Integer = 0
-
-                AreaCommon.log.track("RequestFlowEngine.refreshRejectedRequest", "Begin")
-
-                If (_RequestRejected.Count > 0) Then
-                    item = _RequestRejected(counter)
-
-                    Do While (counter <= _RequestRejected.Count)
-                        If (item.dateRequest + (60000 * 60 * 24) > CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()) Then
-                            _RequestRejected.Remove(item.requestHash)
-                        End If
-
-                        counter += 1
-                    Loop
-                End If
-
-                AreaCommon.log.track("RequestFlowEngine.refreshRejectedRequest", "Complete")
-
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.refreshRejectedRequest", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.checkCloseBlock", "Error:" & ex.Message, "error")
 
-                Return True
+                Return False
             End Try
         End Function
-
 
         <DebuggerHiddenAttribute()>
         Public Function init() As Boolean
@@ -591,12 +529,14 @@ Namespace AreaFlow
                 Dim work3 As New Threading.Thread(AddressOf AreaWorker.Processor.work)
                 Dim work4 As New Threading.Thread(AddressOf AreaWorker.Verifier.work)
                 Dim work5 As New Threading.Thread(AddressOf AreaWorker.Sender.work)
+                Dim work6 As New Threading.Thread(AddressOf AreaWorker.RemoteVerifier.work)
 
                 work1.Start()
                 work2.Start()
                 work3.Start()
                 work4.Start()
                 work5.Start()
+                work6.Start()
 
                 AreaCommon.log.track("RequestFlowEngine.init", "Complete")
 

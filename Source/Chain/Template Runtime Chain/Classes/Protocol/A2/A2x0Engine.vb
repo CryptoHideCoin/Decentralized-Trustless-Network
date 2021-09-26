@@ -71,7 +71,7 @@ Namespace AreaProtocol
             Private data As New RequestModel
 
             Public Property log As LogEngine
-            Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
+            Public Property currentService As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
 
@@ -89,7 +89,7 @@ Namespace AreaProtocol
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
                     End If
                 Catch ex As Exception
-                    serviceState.currentAction.setError(Err.Number, ex.Message)
+                    currentService.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A2x0Manager.init", "Error:" & ex.Message, "error")
                 End Try
@@ -105,9 +105,9 @@ Namespace AreaProtocol
 
                     log.track("A2x0Manager.init", "Begin")
 
-                    serviceState.currentAction.setAction("4x0001", "BuildManager - A2x0 - A2x0Manager")
+                    currentService.currentAction.setAction("4x0001", "BuildManager - A2x0 - A2x0Manager")
 
-                    If serviceState.requestCancelCurrentRunCommand Then Return False
+                    If currentService.requestCancelCurrentRunCommand Then Return False
 
                     data.chainName = chainName
                     data.publicWalletMasternode = publicWalletIdAddress
@@ -126,8 +126,8 @@ Namespace AreaProtocol
                         ledgerCoordinate = writeDataIntoLedger()
 
                         If (ledgerCoordinate.recordCoordinate.Length = 0) Then
-                            serviceState.currentAction.setError("-1", "Error during update ledger")
-                            serviceState.currentAction.reset()
+                            currentService.currentAction.setError("-1", "Error during update ledger")
+                            currentService.currentAction.reset()
 
                             log.track("A2x0Manager.init", "Error: Error during update ledger", "error")
 
@@ -137,8 +137,8 @@ Namespace AreaProtocol
                         log.track("A2x0Manager.init", "Ledger updated")
 
                         If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
-                            serviceState.currentAction.setError("-1", "Error create state")
-                            serviceState.currentAction.reset()
+                            currentService.currentAction.setError("-1", "Error create state")
+                            currentService.currentAction.reset()
 
                             log.track("A2x0Manager.init", "Error: Error during update State", "error")
 
@@ -150,7 +150,7 @@ Namespace AreaProtocol
                         Return True
                     End If
                 Catch ex As Exception
-                    serviceState.currentAction.setError(Err.Number, ex.Message)
+                    currentService.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A1x6Manager.init", "Error:" & ex.Message, "error")
                 End Try

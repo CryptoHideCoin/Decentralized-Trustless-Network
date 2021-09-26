@@ -20,7 +20,7 @@ Public Class AppSettings
         Public serviceId As String = ""
         Public serviceWalletAddressAdmin As String = ""
 
-        Public useTrack As LogEngine.TrackRuntimeModeEnum = LogEngine.TrackRuntimeModeEnum.trackAllRuntime
+        Public useTrack As LogEngine.TrackRuntimeModeEnum = LogEngine.TrackRuntimeModeEnum.trackAll
         Public trackRotate As New LogRotateEngine.LogRotateConfig
 
         Public useSecureProtocol As Boolean = False

@@ -15,7 +15,7 @@ Namespace AreaData
         Private Sub rebuildCommandList()
             If _Proceed Then
 
-                With AreaCommon.state.serviceState
+                With AreaCommon.state.currentService
                     .listAvailableCommand.Clear()
 
                     .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.verifyData)
@@ -23,10 +23,10 @@ Namespace AreaData
                     .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.buildNetwork)
                 End With
 
-                With AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList)
+                With AreaCommon.state.currentService.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList)
                     If (.element = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList) And
                        (.position = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed) Then
-                        AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.checkTrustedNodelist)
+                        AreaCommon.state.currentService.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.checkTrustedNodelist)
                     End If
                 End With
 
@@ -46,7 +46,7 @@ Namespace AreaData
                 AreaCommon.log.track("service.CleanLocalData", "Begin")
 
                 AreaCommon.state.component.storage.log = AreaCommon.log
-                AreaCommon.state.component.storage.serviceState = AreaCommon.state.serviceState
+                AreaCommon.state.component.storage.serviceState = AreaCommon.state.currentService
 
                 _Proceed = AreaCommon.state.component.storage.cleanData(AreaCommon.paths)
 
@@ -66,10 +66,10 @@ Namespace AreaData
 
                 Return False
             Finally
-                AreaCommon.state.serviceState.currentAction.reset()
+                AreaCommon.state.currentService.currentAction.reset()
 
-                AreaCommon.state.serviceState.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.notDefined
-                AreaCommon.state.serviceState.requestCancelCurrentRunCommand = False
+                AreaCommon.state.currentService.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.notDefined
+                AreaCommon.state.currentService.requestCancelCurrentRunCommand = False
             End Try
         End Function
 

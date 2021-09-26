@@ -12,7 +12,7 @@ Imports CHCProtocolLibrary.AreaCommon
 Namespace Controllers
 
 
-    ' GET: api/{GUID service}/administration/serviceState
+    ' GET: api/{GUID service}/administration/currentService
     <Route("AdministrationApi")>
     Public Class serviceStateController
 
@@ -31,12 +31,12 @@ Namespace Controllers
                     If Not AreaSecurity.checkSignature(signature) Then
                         result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
                     Else
-                        result.componentPosition = AreaCommon.state.serviceState.componentPosition
-                        result.currentAction = AreaCommon.state.serviceState.currentAction
-                        result.listAvailableCommand = AreaCommon.state.serviceState.listAvailableCommand
-                        result.servicePosition = AreaCommon.state.serviceState.servicePosition
-                        result.currentRunCommand = AreaCommon.state.serviceState.currentRunCommand
-                        result.requestCancelCurrentRunCommand = AreaCommon.state.serviceState.requestCancelCurrentRunCommand
+                        result.componentPosition = AreaCommon.state.currentService.componentPosition
+                        result.currentAction = AreaCommon.state.currentService.currentAction
+                        result.listAvailableCommand = AreaCommon.state.currentService.listAvailableCommand
+                        result.servicePosition = AreaCommon.state.currentService.servicePosition
+                        result.currentRunCommand = AreaCommon.state.currentService.currentRunCommand
+                        result.requestCancelCurrentRunCommand = AreaCommon.state.currentService.requestCancelCurrentRunCommand
                     End If
                 Else
                     result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline

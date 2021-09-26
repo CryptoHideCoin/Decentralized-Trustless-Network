@@ -9,7 +9,6 @@ Imports CHCCommonLibrary.Support
 
 Namespace AreaCommon
 
-
     Module moduleMain
 
         Public paths As New VirtualPathEngine
@@ -57,14 +56,13 @@ Namespace AreaCommon
             Try
                 Shell(applicationName & " " & parameterValue, AppWinStyle.NormalFocus)
             Catch ex As Exception
-                log.track("moduleMain.ExecuteExternalApplication", "Enable start a webservice; check admin authorizathion - Error:" & ex.Message, "fatal")
+                log.track("moduleMain.ExecuteExternalApplication", "Enable execute an external application; check admin authorizathion", "fatal")
             End Try
 
         End Sub
 
 
         Public Function refreshBatch(ByRef adapterLog As LogEngine) As Boolean
-
             Try
                 adapterLog.track("moduleMain.refreshBatch", "Begin")
 
@@ -76,11 +74,8 @@ Namespace AreaCommon
             Finally
                 adapterLog.track("moduleMain.refreshBatch", "Complete")
             End Try
-
         End Function
 
-
     End Module
-
 
 End Namespace

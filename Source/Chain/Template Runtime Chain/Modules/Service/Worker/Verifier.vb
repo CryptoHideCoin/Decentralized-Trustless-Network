@@ -52,6 +52,16 @@ Namespace AreaWorker
                         If item.verifyPosition = AreaFlow.RequestExtended.EnumOperationPosition.inError Then
                             AreaCommon.flow.removeRequest(item)
                         Else
+                            item.dateAssessment = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+                            item.evaluations.notExpressed = AreaCommon.flow.createConsensusList()
+                            item.evaluations.currentChainNodetotalVotes = item.evaluations.notExpressed.totalValuePoints
+
+                            If item.verifyPosition = AreaFlow.RequestExtended.EnumOperationPosition.completeWithPositiveResult Then
+                                item.evaluations.setApproved(AreaCommon.state.network.publicAddressIdentity)
+                            Else
+                                item.evaluations.setRejected(AreaCommon.state.network.publicAddressIdentity)
+                            End If
+
                             AreaCommon.flow.setRequestToProcess(item)
                         End If
                     End If

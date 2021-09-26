@@ -170,7 +170,7 @@ Namespace AreaCommon
             Catch ex As Exception
                 parameters = New CHCRuntimeChainLibrary.AreaRuntime.AppSettings
 
-                log.track("TemplateRuntimeChain.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "error")
+                log.track("TemplateRuntimeChain.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "fatal", True)
             End Try
         End Sub
 

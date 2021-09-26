@@ -70,7 +70,7 @@ Namespace AreaProtocol
             Private data As New RequestModel
 
             Public Property log As LogEngine
-            Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
+            Public Property currentService As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
             Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
@@ -87,7 +87,7 @@ Namespace AreaProtocol
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
                     End If
                 Catch ex As Exception
-                    serviceState.currentAction.setError(Err.Number, ex.Message)
+                    currentService.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A1x1Manager.init", "Error:" & ex.Message, "error")
                 End Try
@@ -103,9 +103,9 @@ Namespace AreaProtocol
 
                     log.track("A1x1Manager.init", "Begin")
 
-                    serviceState.currentAction.setAction("3x0002", "BuildManager - A1x1 - A1x1Manager")
+                    currentService.currentAction.setAction("3x0002", "BuildManager - A1x1 - A1x1Manager")
 
-                    If serviceState.requestCancelCurrentRunCommand Then Return False
+                    If currentService.requestCancelCurrentRunCommand Then Return False
 
                     data.chainDescription = chainDescriptionParameter
                     data.publicWalletAddressRequester = publicWalletIdAddress
@@ -123,8 +123,8 @@ Namespace AreaProtocol
                         ledgerCoordinate = writeDataIntoLedger()
 
                         If (ledgerCoordinate.recordCoordinate.Length = 0) Then
-                            serviceState.currentAction.setError("-1", "Error during update ledger")
-                            serviceState.currentAction.reset()
+                            currentService.currentAction.setError("-1", "Error during update ledger")
+                            currentService.currentAction.reset()
 
                             log.track("A1x1Manager.init", "Error: Error during update ledger", "error")
 
@@ -134,8 +134,8 @@ Namespace AreaProtocol
                         log.track("A1x1Manager.init", "Ledger updated")
 
                         If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
-                            serviceState.currentAction.setError("-1", "Error create state")
-                            serviceState.currentAction.reset()
+                            currentService.currentAction.setError("-1", "Error create state")
+                            currentService.currentAction.reset()
 
                             log.track("A1x1Manager.init", "Error: Error during update State", "error")
 
@@ -147,7 +147,7 @@ Namespace AreaProtocol
                         Return True
                     End If
                 Catch ex As Exception
-                    serviceState.currentAction.setError(Err.Number, ex.Message)
+                    currentService.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A1x1Manager.init", "Error:" & ex.Message, "error")
                 End Try

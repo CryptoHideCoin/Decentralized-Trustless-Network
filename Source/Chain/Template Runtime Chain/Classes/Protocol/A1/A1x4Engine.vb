@@ -97,7 +97,7 @@ Namespace AreaProtocol
             Private data As New RequestModel
 
             Public Property log As LogEngine
-            Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
+            Public Property currentService As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
             Private Function writeDataContent(ByVal statePath As String, ByRef priceList As CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel, ByVal priceListHash As String) As Boolean
@@ -110,7 +110,7 @@ Namespace AreaProtocol
 
                     Return engine.save()
                 Catch ex As Exception
-                    serviceState.currentAction.setError(Err.Number, ex.Message)
+                    currentService.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A1x4Manager.init", "Error:" & ex.Message, "error")
 
@@ -134,7 +134,7 @@ Namespace AreaProtocol
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
                     End If
                 Catch ex As Exception
-                    serviceState.currentAction.setError(Err.Number, ex.Message)
+                    currentService.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A1x4Manager.init", "Error:" & ex.Message, "error")
                 End Try
@@ -150,9 +150,9 @@ Namespace AreaProtocol
 
                     log.track("A1x4Manager.init", "Begin")
 
-                    serviceState.currentAction.setAction("3x0005", "BuildManager - A1x4 - A1x4Manager")
+                    currentService.currentAction.setAction("3x0005", "BuildManager - A1x4 - A1x4Manager")
 
-                    If serviceState.requestCancelCurrentRunCommand Then Return False
+                    If currentService.requestCancelCurrentRunCommand Then Return False
 
                     data.priceList = priceList
                     data.publicWalletAddressRequester = publicWalletIdAddress
@@ -170,8 +170,8 @@ Namespace AreaProtocol
                         ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents)
 
                         If (ledgerCoordinate.recordCoordinate.Length = 0) Then
-                            serviceState.currentAction.setError("-1", "Error during update ledger")
-                            serviceState.currentAction.reset()
+                            currentService.currentAction.setError("-1", "Error during update ledger")
+                            currentService.currentAction.reset()
 
                             log.track("A1x4Manager.init", "Error: Error during update ledger", "error")
 
@@ -181,8 +181,8 @@ Namespace AreaProtocol
                         log.track("A0x4Manager.init", "Ledger updated")
 
                         If Not RecoveryState.fromRequest(data) Then
-                            serviceState.currentAction.setError("-1", "Error during update State")
-                            serviceState.currentAction.reset()
+                            currentService.currentAction.setError("-1", "Error during update State")
+                            currentService.currentAction.reset()
 
                             log.track("A1x4Manager.init", "Error: Error during update State", "error")
 
@@ -194,7 +194,7 @@ Namespace AreaProtocol
                         Return True
                     End If
                 Catch ex As Exception
-                    serviceState.currentAction.setError(Err.Number, ex.Message)
+                    currentService.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A1x4Manager.init", "Error:" & ex.Message, "error")
                 End Try

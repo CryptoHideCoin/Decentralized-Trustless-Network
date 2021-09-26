@@ -10,7 +10,6 @@ Imports System.Xml.Serialization
 Namespace AreaEngine.DataFileManagement
 
 
-
     Public Class BaseFileDB(Of ClassType As {New})
 
         Public data As New ClassType
@@ -73,6 +72,11 @@ Namespace AreaEngine.DataFileManagement
 
     End Class
 
+    Public Class IOFast(Of ClassType As {New})
+
+        Inherits BaseFileDB(Of ClassType)
+
+    End Class
 
 
 End Namespace

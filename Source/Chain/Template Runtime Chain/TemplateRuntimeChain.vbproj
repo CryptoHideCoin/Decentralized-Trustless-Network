@@ -55,19 +55,19 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.9.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCRuntimeChainLibrary, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCRuntimeChainLibrary, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCRuntimeChainLibrary\CHCRuntimeChainLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCSupportUIControls, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCSupportUIControls, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCSupportUIControls\CHCSupportUIControls.dll</HintPath>
     </Reference>
@@ -150,6 +150,7 @@
     <Compile Include="Controllers\Network\NetworkBaseTransactionChainController.vb" />
     <Compile Include="Controllers\Network\NetworkBaseWhitePaperController.vb" />
     <Compile Include="Controllers\Network\NetworkBaseYellowPaperController.vb" />
+    <Compile Include="Controllers\Notify\NotifyConsensusController.vb" />
     <Compile Include="Controllers\Notify\NotifyRequestController.vb" />
     <Compile Include="Controllers\QoS\Page\DataPageController.vb" />
     <Compile Include="Controllers\QoS\Page\PageInformationController.vb" />
@@ -192,6 +193,7 @@
     <Compile Include="Modules\Basic\Controllers.vb" />
     <Compile Include="Modules\Service\Worker\Downloader.vb" />
     <Compile Include="Modules\Service\Worker\Processor.vb" />
+    <Compile Include="Modules\Service\Worker\RemoteVerifier.vb" />
     <Compile Include="Modules\Service\Worker\Requester.vb" />
     <Compile Include="Modules\Service\Worker\Sender.vb" />
     <Compile Include="Modules\Service\Worker\Verifier.vb" />

@@ -14,9 +14,9 @@ Namespace Support
     Public Class LogEngine
 
         Public Enum TrackRuntimeModeEnum
-            dontTrack
-            trackOnlyMain
-            trackAllRuntime
+            dontTrackEver
+            trackOnlyBootstrapAndError
+            trackAll
         End Enum
 
         Public Class TrackData
@@ -36,22 +36,24 @@ Namespace Support
         Private _CurrentPage As String = ""
 
 
+        Public Property saveMode As TrackRuntimeModeEnum = TrackRuntimeModeEnum.dontTrackEver
+        Public Property inBootStrapAction As Boolean = False
+        Public Property noPrintConsole As Boolean = False
+        Public Property useCache As Boolean = True
+        Public Property dimPageConsoleGUI As Integer = 0
+        Public Property completeFileName As String
+        Public Property objectConsoleGUI As Object = Nothing
+        Public Property objectActionGUI As Object = Nothing
 
-        Public noSave As Boolean = False
-        Public noPrintConsole As Boolean = False
-        Public useCache As Boolean = True
-        Public dimPageConsoleGUI As Integer = 0
-        Public completeFileName As String
-        Public objectConsoleGUI As Object = Nothing
-        Public objectActionGUI As Object = Nothing
-
+        ''' <summary>
+        ''' This property get if the log track is on in sublog file (detail)
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property called() As Boolean
             Get
                 Return _called
             End Get
         End Property
-
-
 
 
         ''' <summary>
@@ -77,13 +79,12 @@ Namespace Support
             End Try
         End Sub
 
-
         ''' <summary>
         ''' This method provide to flush a cache
         ''' </summary>
         Private Sub flushCache()
             Try
-                If Not noSave Then
+                If (saveMode <> TrackRuntimeModeEnum.dontTrackEver) Then
                     Using fileData As IO.StreamWriter = IO.File.AppendText(completeFileName)
                         For Each strTmp In _cache
                             fileData.WriteLine(strTmp)
@@ -127,7 +128,6 @@ Namespace Support
             End Try
         End Function
 
-
         ''' <summary>
         ''' This method to provide to track a specific message
         ''' </summary>
@@ -136,27 +136,39 @@ Namespace Support
         ''' <param name="messageType"></param>
         Public Sub track(ByVal position As String, ByVal content As String, Optional ByVal messageType As String = "info", Optional ByVal printIntoConsole As Boolean = False)
             Try
+                Dim fatalError As Boolean = (messageType.CompareTo("fatal") = 0)
+
                 _lastInfoTrack = timestampFromDateTime() & "|" & atMomentGMT() & "|" & messageType & "|" & position & "|" & content
 
                 If IsNothing(completeFileName) And useCache Then
                     _cache.Add(_lastInfoTrack)
 
+                    If printIntoConsole Or fatalError Then
+                        Console.WriteLine(content)
+                    End If
+
+                    Return
+                End If
+                If (saveMode = TrackRuntimeModeEnum.dontTrackEver) Then
                     Return
                 End If
 
-                If Not noSave Then
+                If (saveMode = TrackRuntimeModeEnum.trackAll) Or
+                   (Not IsNothing(completeFileName) And ((saveMode = TrackRuntimeModeEnum.trackOnlyBootstrapAndError) And inBootStrapAction) Or fatalError) Then
+
                     Using fileData As IO.StreamWriter = IO.File.AppendText(completeFileName)
                         fileData.WriteLine(_lastInfoTrack)
                     End Using
+
                 End If
 
-                If printIntoConsole Or (messageType = "fatal") Then
-                    Console.WriteLine(_lastInfoTrack)
+                If printIntoConsole Or fatalError Then
+                    Console.WriteLine(content)
                 End If
 
                 writeConsoleGUI(_lastInfoTrack)
 
-                If (messageType = "fatal") Then
+                If fatalError Then
                     If Not IsNothing(_registry) Then
                         _registry.addNew(RegistryEngine.RegistryData.TypeEvent.applicationError, content, completeFileName)
                     End If
@@ -165,6 +177,33 @@ Namespace Support
             End Try
         End Sub
 
+        ''' <summary>
+        ''' This method provide to track an information into a log (or not) depend the debugMode property
+        ''' </summary>
+        ''' <param name="position"></param>
+        ''' <param name="content"></param>
+        Public Sub trackEvidence(ByVal position As String, ByVal content As String, Optional ByVal printIntoConsole As Boolean = False)
+            Try
+                _lastInfoTrack = timestampFromDateTime() & "|" & atMomentGMT() & "|Important|" & position & "|" & content
+
+                If IsNothing(completeFileName) And useCache Then
+                    _cache.Add(_lastInfoTrack)
+
+                    Return
+                End If
+
+                Using fileData As IO.StreamWriter = IO.File.AppendText(completeFileName)
+                    fileData.WriteLine(_lastInfoTrack)
+                End Using
+
+                If printIntoConsole Then
+                    Console.WriteLine(_lastInfoTrack)
+
+                    writeConsoleGUI(_lastInfoTrack)
+                End If
+            Catch ex As Exception
+            End Try
+        End Sub
 
         ''' <summary>
         ''' This method provide to track into console
@@ -178,7 +217,6 @@ Namespace Support
             Catch ex As Exception
             End Try
         End Sub
-
 
         ''' <summary>
         ''' This method provide to return a Last Track of log
@@ -198,7 +236,6 @@ Namespace Support
 
             Return result
         End Function
-
 
         ''' <summary>
         ''' This method provide to create an access Log

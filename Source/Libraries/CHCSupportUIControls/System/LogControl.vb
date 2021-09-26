@@ -8,17 +8,17 @@ Public Class LogControl
     Public Property trackConfiguration() As CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum
         Get
             Select Case trackConfigurationCombo.SelectedIndex
-                Case 0 : Return CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrack
-                Case 1 : Return CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackAllRuntime
-                Case 2 : Return CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackOnlyMain
+                Case 0 : Return CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver
+                Case 1 : Return CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackAll
+                Case 2 : Return CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackOnlyBootstrapAndError
             End Select
-            Return CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrack
+            Return CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver
         End Get
         Set(value As CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum)
             Select Case value
-                Case CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrack : trackConfigurationCombo.SelectedIndex = 0
-                Case CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackAllRuntime : trackConfigurationCombo.SelectedIndex = 1
-                Case CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackOnlyMain : trackConfigurationCombo.SelectedIndex = 2
+                Case CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver : trackConfigurationCombo.SelectedIndex = 0
+                Case CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackAll : trackConfigurationCombo.SelectedIndex = 1
+                Case CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackOnlyBootstrapAndError : trackConfigurationCombo.SelectedIndex = 2
             End Select
         End Set
     End Property

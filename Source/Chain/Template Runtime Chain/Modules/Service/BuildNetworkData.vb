@@ -16,7 +16,7 @@ Namespace AreaData
 
 
         Private Function rebuildCommandList() As Boolean
-            With AreaCommon.state.serviceState
+            With AreaCommon.state.currentService
                 .listAvailableCommand.Clear()
 
                 .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cancelCurrentAction)
@@ -26,7 +26,7 @@ Namespace AreaData
         End Function
 
         Private Sub rebuildFinalCommandList()
-            With AreaCommon.state.serviceState
+            With AreaCommon.state.currentService
                 .listAvailableCommand.Clear()
 
                 If _CompleteProcess Then
@@ -58,10 +58,10 @@ Namespace AreaData
             Dim commandA0x0 As New AreaProtocol.A0x0.Manager
 
             commandA0x0.log = AreaCommon.log
-            commandA0x0.serviceState = AreaCommon.state.serviceState
+            commandA0x0.currentService = AreaCommon.state.currentService
 
             With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                Return commandA0x0.createGenesis(dataNetwork.name, AreaCommon.state.information.networkName, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate, .publicAddress, .privateKey)
+                Return commandA0x0.createGenesis(dataNetwork.name, AreaCommon.state.internalInformation.networkName, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate, .publicAddress, .privateKey)
             End With
         End Function
 
@@ -70,7 +70,7 @@ Namespace AreaData
                 Dim commandA0x1 As New AreaProtocol.A0x1.Manager
 
                 commandA0x1.log = AreaCommon.log
-                commandA0x1.serviceState = AreaCommon.state.serviceState
+                commandA0x1.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA0x1.init(AreaCommon.paths, dataNetwork.whitePaper.content, .publicAddress, .privateKey)
@@ -83,7 +83,7 @@ Namespace AreaData
                 Dim commandA0x2 As New AreaProtocol.A0x2.Manager
 
                 commandA0x2.log = AreaCommon.log
-                commandA0x2.serviceState = AreaCommon.state.serviceState
+                commandA0x2.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA0x2.init(AreaCommon.paths, dataNetwork.yellowPaper.content, .publicAddress, .privateKey)
@@ -96,7 +96,7 @@ Namespace AreaData
                 Dim commandA0x3 As New AreaProtocol.A0x3.Manager
 
                 commandA0x3.log = AreaCommon.log
-                commandA0x3.serviceState = AreaCommon.state.serviceState
+                commandA0x3.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA0x3.init(AreaCommon.paths, dataNetwork.primaryAsset, .publicAddress, .privateKey)
@@ -109,7 +109,7 @@ Namespace AreaData
                 Dim commandA0x4 As New AreaProtocol.A0x4.Manager
 
                 commandA0x4.log = AreaCommon.log
-                commandA0x4.serviceState = AreaCommon.state.serviceState
+                commandA0x4.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA0x4.init(AreaCommon.paths, dataNetwork.transactionChainParameter, .publicAddress, .privateKey)
@@ -122,7 +122,7 @@ Namespace AreaData
                 Dim commandA0x5 As New AreaProtocol.A0x5.Manager
 
                 commandA0x5.log = AreaCommon.log
-                commandA0x5.serviceState = AreaCommon.state.serviceState
+                commandA0x5.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA0x5.init(AreaCommon.paths, dataNetwork.privacyPolicy.content, .publicAddress, .privateKey)
@@ -135,7 +135,7 @@ Namespace AreaData
                 Dim commandA0x6 As New AreaProtocol.A0x6.Manager
 
                 commandA0x6.log = AreaCommon.log
-                commandA0x6.serviceState = AreaCommon.state.serviceState
+                commandA0x6.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA0x6.init(AreaCommon.paths, dataNetwork.generalCondition.content, .publicAddress, .privateKey)
@@ -148,7 +148,7 @@ Namespace AreaData
                 Dim commandA0x7 As New AreaProtocol.A0x7.Manager
 
                 commandA0x7.log = AreaCommon.log
-                commandA0x7.serviceState = AreaCommon.state.serviceState
+                commandA0x7.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA0x7.init(AreaCommon.paths, dataNetwork.refundPlan, .publicAddress, .privateKey)
@@ -161,10 +161,10 @@ Namespace AreaData
                 Dim commandA1x0 As New AreaProtocol.A1x0.Manager
 
                 commandA1x0.log = AreaCommon.log
-                commandA1x0.serviceState = AreaCommon.state.serviceState
+                commandA1x0.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA1x0.init(AreaCommon.paths, AreaCommon.state.information.chainName, .publicAddress, .privateKey)
+                    _Proceed = commandA1x0.init(AreaCommon.paths, AreaCommon.state.internalInformation.chainName, .publicAddress, .privateKey)
                 End With
 
                 commandA1x0 = Nothing
@@ -176,7 +176,7 @@ Namespace AreaData
                 Dim commandA1x1 As New AreaProtocol.A1x1.Manager
 
                 commandA1x1.log = AreaCommon.log
-                commandA1x1.serviceState = AreaCommon.state.serviceState
+                commandA1x1.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA1x1.init(AreaCommon.paths, AreaCommon.Customize.chainDescription, .publicAddress, .privateKey)
@@ -191,7 +191,7 @@ Namespace AreaData
                 Dim commandA1x2 As New AreaProtocol.A1x2.Manager
 
                 commandA1x2.log = AreaCommon.log
-                commandA1x2.serviceState = AreaCommon.state.serviceState
+                commandA1x2.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA1x2.init(AreaCommon.paths, AreaCommon.Customize.chainProtocolDocument, .publicAddress, .privateKey)
@@ -206,7 +206,7 @@ Namespace AreaData
                 Dim commandA1x3 As New AreaProtocol.A1x3.Manager
 
                 commandA1x3.log = AreaCommon.log
-                commandA1x3.serviceState = AreaCommon.state.serviceState
+                commandA1x3.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA1x3.init(AreaCommon.paths, "BaseCommonServiceChain", .publicAddress, .privateKey)
@@ -221,7 +221,7 @@ Namespace AreaData
                 Dim commandA1x4 As New AreaProtocol.A1x4.Manager
 
                 commandA1x4.log = AreaCommon.log
-                commandA1x4.serviceState = AreaCommon.state.serviceState
+                commandA1x4.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA1x4.init(AreaCommon.paths, New CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel, .publicAddress, .privateKey)
@@ -236,7 +236,7 @@ Namespace AreaData
                 Dim commandA1x5 As New AreaProtocol.A1x5.Manager
 
                 commandA1x5.log = AreaCommon.log
-                commandA1x5.serviceState = AreaCommon.state.serviceState
+                commandA1x5.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA1x5.init(AreaCommon.paths, "", .publicAddress, .privateKey)
@@ -251,7 +251,7 @@ Namespace AreaData
                 Dim commandA1x6 As New AreaProtocol.A1x6.Manager
 
                 commandA1x6.log = AreaCommon.log
-                commandA1x6.serviceState = AreaCommon.state.serviceState
+                commandA1x6.currentService = AreaCommon.state.currentService
 
                 With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                     _Proceed = commandA1x6.init(AreaCommon.paths, "", .publicAddress, .privateKey)
@@ -309,10 +309,10 @@ Namespace AreaData
 
                 Return False
             Finally
-                AreaCommon.state.serviceState.currentAction.reset()
+                AreaCommon.state.currentService.currentAction.reset()
 
-                AreaCommon.state.serviceState.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.notDefined
-                AreaCommon.state.serviceState.requestCancelCurrentRunCommand = False
+                AreaCommon.state.currentService.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.notDefined
+                AreaCommon.state.currentService.requestCancelCurrentRunCommand = False
             End Try
         End Function
 

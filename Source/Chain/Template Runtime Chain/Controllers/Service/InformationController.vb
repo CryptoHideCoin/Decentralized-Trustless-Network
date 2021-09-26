@@ -30,9 +30,9 @@ Namespace Controllers
                     If AreaSecurity.checkSignature(signature) Then
                         result.adminPublicAddress = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).publicAddress
                         result.currentStatus = AreaCommon.state.service
-                        result.chainName = AreaCommon.state.information.chainName
-                        result.platformHost = AreaCommon.state.information.platformHost
-                        result.softwareRelease = AreaCommon.state.information.softwareRelease
+                        result.chainName = AreaCommon.state.internalInformation.chainName
+                        result.platformHost = AreaCommon.state.internalInformation.platformHost
+                        result.softwareRelease = AreaCommon.state.internalInformation.softwareRelease
                         If AreaCommon.settings.data.intranetMode Then
                             result.addressIP = AreaCommon.state.localIpAddress
                         Else

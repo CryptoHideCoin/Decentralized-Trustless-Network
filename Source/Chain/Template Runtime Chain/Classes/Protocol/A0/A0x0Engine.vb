@@ -145,7 +145,7 @@ Namespace AreaProtocol
             Private data As New RequestModel
 
             Public Property log As LogEngine
-            Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
+            Public Property currentService As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
             Private Property dateDeterminateApproved As Double
             Private Property approvedHash As String
@@ -166,9 +166,9 @@ Namespace AreaProtocol
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
                     End If
                 Catch ex As Exception
-                    serviceState.currentAction.setError(Err.Number, ex.Message)
+                    currentService.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("A0x0Manager.init", "Error:" & ex.Message, "error")
+                    log.track("A0x0.Manager.init", "Error:" & ex.Message, "error")
                 End Try
 
                 Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
@@ -190,13 +190,13 @@ Namespace AreaProtocol
 
                     log.track("A0x0Manager.init", "Begin")
 
-                    serviceState.currentAction.setAction("1x0001", "BuildManager - A0x0 - A0x0Manager")
+                    currentService.currentAction.setAction("1x0001", "BuildManager - A0x0 - A0x0Manager")
 
-                    If serviceState.requestCancelCurrentRunCommand Then Return False
+                    If currentService.requestCancelCurrentRunCommand Then Return False
 
                     If (networkNameParameter.CompareTo(networkNameNode) <> 0) Then
-                        serviceState.currentAction.setError("-1", "Network not compatible")
-                        serviceState.currentAction.reset()
+                        currentService.currentAction.setError("-1", "Network not compatible")
+                        currentService.currentAction.reset()
 
                         log.track("A0x0Manager.init", "Error: Network not compatible", "error")
 
@@ -219,7 +219,7 @@ Namespace AreaProtocol
                         Return AreaCommon.flow.addNewRequestDirect(data.requestHash, data.requestCode, data.requestDateTimeStamp, "")
                     End If
                 Catch ex As Exception
-                    serviceState.currentAction.setError(Err.Number, ex.Message)
+                    currentService.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A0x0Manager.init", "Error:" & ex.Message, "error")
                 Finally
@@ -234,8 +234,8 @@ Namespace AreaProtocol
 
             ' Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
             '    If Not loadApprovedRequest(publicWalletIdAddress, privateKeyRAW) Then
-            '        serviceState.currentAction.setError("-1", "Error during approved request")
-            '        serviceState.currentAction.reset()
+            '        currentService.currentAction.setError("-1", "Error during approved request")
+            '        currentService.currentAction.reset()
 
             '        log.track("A0x0Manager.init", "Error: Error during approved request", "error")
 
@@ -249,8 +249,8 @@ Namespace AreaProtocol
             '    ledgerCoordinate = writeDataIntoLedger()
 
             '    If (ledgerCoordinate.recordCoordinate.Length = 0) Then
-            '        serviceState.currentAction.setError("-1", "Error during update ledger")
-            '        serviceState.currentAction.reset()
+            '        currentService.currentAction.setError("-1", "Error during update ledger")
+            '        currentService.currentAction.reset()
 
             '        log.track("A0x0Manager.init", "Error: Error during update ledger", "error")
 
@@ -260,8 +260,8 @@ Namespace AreaProtocol
             '    log.track("A0x0Manager.init", "Ledger updated")
 
             '    If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
-            '        serviceState.currentAction.setError("-1", "Network not compatible")
-            '        serviceState.currentAction.reset()
+            '        currentService.currentAction.setError("-1", "Network not compatible")
+            '        currentService.currentAction.reset()
 
             '        log.track("A0x0Manager.init", "Error: Error during update State", "error")
 
@@ -299,7 +299,7 @@ Namespace AreaProtocol
 
             '        Return file.save()
             '    Catch ex As Exception
-            '        serviceState.currentAction.setError(Err.Number, ex.Message)
+            '        currentService.currentAction.setError(Err.Number, ex.Message)
 
             '        log.track("A0x0Manager.loadApprovedRequest", "Error:" & ex.Message, "error")
 
@@ -324,7 +324,7 @@ Namespace AreaProtocol
             '        ' Send all information to all Peer
 
             '    Catch ex As Exception
-            '        serviceState.currentAction.setError(Err.Number, ex.Message)
+            '        currentService.currentAction.setError(Err.Number, ex.Message)
 
             '        log.track("A0x0Manager.consensusWideningLedger", "Error:" & ex.Message, "error")
 

@@ -43,8 +43,9 @@ Namespace AreaRuntime
             Public Property role As EnumMasternodeRole = EnumMasternodeRole.notDefined
             Public Property coinWarranty As Decimal = 0.000000001
             Public Property connectedMoment As Double = 0
-            Public Property PublicAddresstWarrantyID As String = ""
-            Public Property PublicAddressRefundID
+            Public Property publicAddressIdentity As String = ""
+            Public Property publicAddresstWarranty As String = ""
+            Public Property publicAddressRefund As String = ""
             Public Property currentAction As New Models.Administration.ActionElement
 
         End Class

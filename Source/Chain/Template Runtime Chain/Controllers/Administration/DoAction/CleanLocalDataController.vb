@@ -44,12 +44,12 @@ Namespace Controllers
                     End If
                 End If
                 If proceed Then
-                    For Each item In AreaCommon.state.serviceState.listAvailableCommand
+                    For Each item In AreaCommon.state.currentService.listAvailableCommand
                         If (item = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cleanLocalData) Then
-                            AreaCommon.state.serviceState.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cleanLocalData
+                            AreaCommon.state.currentService.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cleanLocalData
 
-                            AreaCommon.state.serviceState.listAvailableCommand.Clear()
-                            AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cancelCurrentAction)
+                            AreaCommon.state.currentService.listAvailableCommand.Clear()
+                            AreaCommon.state.currentService.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cancelCurrentAction)
 
                             Dim ais As New Threading.Thread(AddressOf AreaData.cleanLocalData)
 

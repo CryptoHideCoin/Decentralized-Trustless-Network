@@ -16,77 +16,77 @@ Namespace AreaData
         Private Sub checkStorage()
             If _Proceed Then
                 AreaCommon.state.component.storage.log = AreaCommon.log
-                AreaCommon.state.component.storage.serviceState = AreaCommon.state.serviceState
+                AreaCommon.state.component.storage.serviceState = AreaCommon.state.currentService
 
                 _Proceed = AreaCommon.state.component.storage.init(_DataCommon, AreaCommon.paths, AreaCommon.settings.data.walletAddress)
 
-                AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.storage).position = AreaCommon.state.component.storage.generalState
+                AreaCommon.state.currentService.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.storage).position = AreaCommon.state.component.storage.generalState
             End If
         End Sub
 
         Private Sub checkPrevious()
             If _Proceed Then
                 AreaCommon.state.component.previousVolume.log = AreaCommon.log
-                AreaCommon.state.component.previousVolume.serviceState = AreaCommon.state.serviceState
+                AreaCommon.state.component.previousVolume.serviceState = AreaCommon.state.currentService
 
                 _Proceed = AreaCommon.state.component.previousVolume.init(_DataCommon, AreaCommon.paths, AreaCommon.settings.data.walletAddress)
 
-                AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.previousWork).position = AreaCommon.state.component.previousVolume.generalState
+                AreaCommon.state.currentService.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.previousWork).position = AreaCommon.state.component.previousVolume.generalState
             End If
         End Sub
 
         Private Sub checkCurrent()
             If _Proceed Then
                 AreaCommon.state.component.currentVolume.log = AreaCommon.log
-                AreaCommon.state.component.currentVolume.serviceState = AreaCommon.state.serviceState
+                AreaCommon.state.component.currentVolume.serviceState = AreaCommon.state.currentService
 
                 _Proceed = AreaCommon.state.component.currentVolume.init(_DataCommon, AreaCommon.paths, AreaCommon.settings.data.walletAddress)
 
-                AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.currentWork).position = AreaCommon.state.component.currentVolume.generalState
+                AreaCommon.state.currentService.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.currentWork).position = AreaCommon.state.component.currentVolume.generalState
             End If
         End Sub
 
         Private Sub checkState()
             If _Proceed Then
                 AreaCommon.state.component.stateDB.log = AreaCommon.log
-                AreaCommon.state.component.stateDB.serviceState = AreaCommon.state.serviceState
+                AreaCommon.state.component.stateDB.serviceState = AreaCommon.state.currentService
 
                 _Proceed = AreaCommon.state.component.stateDB.init(_DataCommon, AreaCommon.paths, AreaCommon.settings.data.walletAddress)
 
-                AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.state).position = AreaCommon.state.component.stateDB.generalState
+                AreaCommon.state.currentService.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.state).position = AreaCommon.state.component.stateDB.generalState
             End If
         End Sub
 
         Private Sub checkNodeList()
             If _Proceed Then
                 AreaCommon.state.component.trustedStartupNodeList.log = AreaCommon.log
-                AreaCommon.state.component.trustedStartupNodeList.serviceState = AreaCommon.state.serviceState
+                AreaCommon.state.component.trustedStartupNodeList.serviceState = AreaCommon.state.currentService
 
                 _Proceed = AreaCommon.state.component.trustedStartupNodeList.init(_DataCommon, AreaCommon.paths, AreaCommon.settings.data.walletAddress)
 
-                AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList).position = AreaCommon.state.component.trustedStartupNodeList.generalState
+                AreaCommon.state.currentService.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList).position = AreaCommon.state.component.trustedStartupNodeList.generalState
             End If
         End Sub
 
         Private Function allVolumeState(ByVal value As CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition) As Boolean
             Dim missing As Boolean = True
 
-            With AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.state)
+            With AreaCommon.state.currentService.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.state)
                 If missing Then
                     missing = (.element = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.state) And (.position = value)
                 End If
             End With
-            With AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.currentWork)
+            With AreaCommon.state.currentService.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.currentWork)
                 If missing Then
                     missing = (.element = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.currentWork) And (.position = value)
                 End If
             End With
-            With AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.previousWork)
+            With AreaCommon.state.currentService.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.previousWork)
                 If missing Then
                     missing = (.element = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.previousWork) And (.position = value)
                 End If
             End With
-            With AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.storage)
+            With AreaCommon.state.currentService.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.storage)
                 If missing Then
                     missing = (.element = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.storage) And (.position = value)
                 End If
@@ -98,7 +98,7 @@ Namespace AreaData
         Private Sub rebuildCommandList()
             If _Proceed Then
 
-                With AreaCommon.state.serviceState
+                With AreaCommon.state.currentService
 
                     .listAvailableCommand.Clear()
 
@@ -106,28 +106,28 @@ Namespace AreaData
                     .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.setTrustedIPAddress)
 
                     If allVolumeState(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.missing) Then
-                        With AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList)
+                        With AreaCommon.state.currentService.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList)
                             If (.element = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList) And
                                (.position = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.missing) Then
-                                AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.downloadHistory)
-                                AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.buildNetwork)
-                                AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cleanLocalData)
+                                AreaCommon.state.currentService.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.downloadHistory)
+                                AreaCommon.state.currentService.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.buildNetwork)
+                                AreaCommon.state.currentService.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cleanLocalData)
                             End If
                         End With
                     Else
-                        AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cleanLocalData)
+                        AreaCommon.state.currentService.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cleanLocalData)
                     End If
 
                     If allVolumeState(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed) Then
-                        AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.resumeSystemFirstNode)
+                        AreaCommon.state.currentService.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.resumeSystemFirstNode)
                     End If
 
                 End With
 
-                With AreaCommon.state.serviceState.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList)
+                With AreaCommon.state.currentService.getComponentPosition(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList)
                     If (.element = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataElement.nodeList) And
                        (.position = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed) Then
-                        AreaCommon.state.serviceState.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.checkTrustedNodelist)
+                        AreaCommon.state.currentService.listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.checkTrustedNodelist)
                     End If
                 End With
 
@@ -148,8 +148,8 @@ Namespace AreaData
 
                 AreaCommon.log.track("Verify.analyzeInternalState", "Begin")
 
-                _DataCommon.chainName = AreaCommon.state.information.chainName
-                _DataCommon.networkName = AreaCommon.state.information.networkName
+                _DataCommon.chainName = AreaCommon.state.internalInformation.chainName
+                _DataCommon.networkName = AreaCommon.state.internalInformation.networkName
 
                 AreaCommon.log.track("Verify.analyzeInternalState", "Main data set")
 
@@ -168,10 +168,10 @@ Namespace AreaData
 
                 Return False
             Finally
-                AreaCommon.state.serviceState.currentAction.reset()
+                AreaCommon.state.currentService.currentAction.reset()
 
-                AreaCommon.state.serviceState.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.notDefined
-                AreaCommon.state.serviceState.requestCancelCurrentRunCommand = False
+                AreaCommon.state.currentService.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.notDefined
+                AreaCommon.state.currentService.requestCancelCurrentRunCommand = False
             End Try
         End Function
 

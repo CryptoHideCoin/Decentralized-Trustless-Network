@@ -104,7 +104,7 @@ Namespace AreaProtocol
             Private data As New RequestModel
 
             Public Property log As LogEngine
-            Public Property serviceState As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
+            Public Property currentService As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
             Private Function writeDataContent(ByVal contentStatePath As String, ByRef primaryAsset As CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel, ByVal primaryAssetHash As String) As Boolean
@@ -117,7 +117,7 @@ Namespace AreaProtocol
 
                     Return engine.save()
                 Catch ex As Exception
-                    serviceState.currentAction.setError(Err.Number, ex.Message)
+                    currentService.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A0x3Manager.init", "Error:" & ex.Message, "error")
 
@@ -143,7 +143,7 @@ Namespace AreaProtocol
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
                     End If
                 Catch ex As Exception
-                    serviceState.currentAction.setError(Err.Number, ex.Message)
+                    currentService.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A0x3Manager.init", "Error:" & ex.Message, "error")
                 End Try
@@ -160,9 +160,9 @@ Namespace AreaProtocol
 
                     log.track("A0x3Manager.init", "Begin")
 
-                    serviceState.currentAction.setAction("1x0004", "BuildManager - A0x3 - A0x3Manager")
+                    currentService.currentAction.setAction("1x0004", "BuildManager - A0x3 - A0x3Manager")
 
-                    If serviceState.requestCancelCurrentRunCommand Then Return False
+                    If currentService.requestCancelCurrentRunCommand Then Return False
 
                     data.primaryAsset = primaryAsset
                     data.publicWalletAddressRequester = publicWalletIdAddress
@@ -180,8 +180,8 @@ Namespace AreaProtocol
                         ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents, hashContent)
 
                         If (ledgerCoordinate.recordCoordinate.Length = 0) Then
-                            serviceState.currentAction.setError("-1", "Error during update ledger")
-                            serviceState.currentAction.reset()
+                            currentService.currentAction.setError("-1", "Error during update ledger")
+                            currentService.currentAction.reset()
 
                             log.track("A0x3Manager.init", "Error: Error during update ledger", "error")
 
@@ -191,8 +191,8 @@ Namespace AreaProtocol
                         log.track("A0x3Manager.init", "Ledger updated")
 
                         If Not RecoveryState.fromRequest(data, ledgerCoordinate, hashContent) Then
-                            serviceState.currentAction.setError("-1", "Error during update State")
-                            serviceState.currentAction.reset()
+                            currentService.currentAction.setError("-1", "Error during update State")
+                            currentService.currentAction.reset()
 
                             log.track("A0x3Manager.init", "Error: Error during update State", "error")
 
@@ -204,7 +204,7 @@ Namespace AreaProtocol
                         Return True
                     End If
                 Catch ex As Exception
-                    serviceState.currentAction.setError(Err.Number, ex.Message)
+                    currentService.currentAction.setError(Err.Number, ex.Message)
 
                     log.track("A0x3Manager.init", "Error:" & ex.Message, "error")
                 End Try

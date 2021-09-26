@@ -103,6 +103,12 @@ CHCCommonLibrary
  <param name="description"></param>
  <returns></returns>
 </member>
+<member name="P:CHCCommonLibrary.Support.LogEngine.called">
+ <summary>
+ This property get if the log track is on in sublog file (detail)
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:CHCCommonLibrary.Support.LogEngine.writeConsoleGUI(System.String)">
  <summary>
  This method provide to write into a console GUI
@@ -130,6 +136,13 @@ CHCCommonLibrary
  <param name="position"></param>
  <param name="content"></param>
  <param name="messageType"></param>
+</member>
+<member name="M:CHCCommonLibrary.Support.LogEngine.trackEvidence(System.String,System.String,System.Boolean)">
+ <summary>
+ This method provide to track an information into a log (or not) depend the debugMode property
+ </summary>
+ <param name="position"></param>
+ <param name="content"></param>
 </member>
 <member name="M:CHCCommonLibrary.Support.LogEngine.trackIntoConsole(System.String)">
  <summary>

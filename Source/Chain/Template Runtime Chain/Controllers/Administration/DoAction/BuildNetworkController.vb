@@ -49,12 +49,12 @@ Namespace Controllers
                 If proceed Then
                     value.primaryAsset.deCodeSymbol()
 
-                    For Each item In AreaCommon.state.serviceState.listAvailableCommand
+                    For Each item In AreaCommon.state.currentService.listAvailableCommand
                         If (item = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.buildNetwork) Then
-                            AreaCommon.state.serviceState.currentRunCommand = Models.Administration.EnumActionAdministration.buildNetwork
+                            AreaCommon.state.currentService.currentRunCommand = Models.Administration.EnumActionAdministration.buildNetwork
 
-                            AreaCommon.state.serviceState.listAvailableCommand.Clear()
-                            AreaCommon.state.serviceState.listAvailableCommand.Add(Models.Administration.EnumActionAdministration.cancelCurrentAction)
+                            AreaCommon.state.currentService.listAvailableCommand.Clear()
+                            AreaCommon.state.currentService.listAvailableCommand.Add(Models.Administration.EnumActionAdministration.cancelCurrentAction)
 
                             AreaData.dataNetwork = value
 

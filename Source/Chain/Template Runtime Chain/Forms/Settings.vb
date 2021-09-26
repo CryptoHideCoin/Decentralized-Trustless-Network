@@ -13,12 +13,12 @@ Public Class Settings
         Try
             With AreaCommon.settings.data
                 If (.networkName.Trim().Length = 0) Then
-                    networkName.Text = AreaCommon.state.information.networkName
+                    networkName.Text = AreaCommon.state.internalInformation.networkName
                 Else
                     networkName.Text = .networkName
                 End If
 
-                chainName.Text = AreaCommon.state.information.chainName
+                chainName.Text = AreaCommon.state.internalInformation.chainName
 
                 intranetMode.Checked = .intranetMode
                 noUpdateSystemDate.Checked = .noUpdateSystemDate

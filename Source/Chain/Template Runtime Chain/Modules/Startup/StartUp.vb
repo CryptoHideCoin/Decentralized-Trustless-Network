@@ -9,23 +9,21 @@ Imports CHCProtocolLibrary.AreaWallet.Support
 
 Namespace AreaCommon
 
-
     Module StartUp
-
 
         ''' <summary>
         ''' This method provide to print a welcome message into console
         ''' </summary>
         Private Sub printWelcome()
             log.trackIntoConsole("=== Welcome into ====")
-            log.trackIntoConsole("Crypto Hide Coin Decentralized Trustless Template Chain Engine Service")
+            log.trackIntoConsole("Crypto Hide Coin Decentralized Trustless Network")
+            log.trackIntoConsole("Template Chain Engine Service")
             log.trackIntoConsole("Rel." & My.Application.Info.Version.ToString())
             log.trackIntoConsole("System bootstrap " & atMomentGMT() & " (gmt)")
             log.trackIntoConsole()
 
             state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.starting
         End Sub
-
 
         ''' <summary>
         ''' This method provide to load in memory an information data
@@ -34,29 +32,45 @@ Namespace AreaCommon
             log.trackIntoConsole("Load data information")
 
             Try
-                state.information.chainName = Customize.chainName
-                state.information.adminPublicAddressID = settings.data.walletAddress
+                log.track("startUp.loadDataInformation", "Begin")
 
-                If settings.data.intranetMode Then
-                    state.information.addressIP = state.localIpAddress
-                Else
-                    state.information.addressIP = state.publicIpAddress
-                End If
+                With state.internalInformation
+                    .chainName = Customize.chainName
+                    .adminPublicAddress = settings.data.walletAddress
 
-                state.information.intranetMode = settings.data.intranetMode
-                state.information.networkName = settings.data.networkName
-                state.information.platformHost = "Microsoft Windows Standalone service"
-                state.information.softwareRelease = "0.1"
+                    If settings.data.intranetMode Then
+                        .addressIP = state.localIpAddress
+                    Else
+                        .addressIP = state.publicIpAddress
+                    End If
+
+                    .intranetMode = settings.data.intranetMode
+                    .networkName = settings.data.networkName
+                    .platformHost = "Microsoft Windows Standalone service"
+                    .softwareRelease = "0.2"
+                End With
             Catch ex As Exception
-                log.trackIntoConsole("Error during Load data information:" & ex.Message)
+                log.track("StartUp.loadDataInformation", "Error during Load data information:" & ex.Message, "fatal", True)
+
+                closeApplication()
+            Finally
+                log.track("startUp.setDateTime", "Completed")
             End Try
         End Sub
 
+        ''' <summary>
+        ''' This method provide a read a wallet address from file
+        ''' </summary>
+        ''' <param name="uuid"></param>
+        ''' <param name="keyStoreSecurityKey"></param>
+        ''' <returns></returns>
         Private Function readWalletAddress(ByVal uuid As String, ByVal keyStoreSecurityKey As String) As String
             Try
                 Dim engine As New WalletAddressDataEngine
                 Dim dataLoaded As Boolean = False
                 Dim securityValue As String = ""
+
+                log.track("StartUp.readWalletAddress", "Begin")
 
                 engine.fileName = IO.Path.Combine(paths.keyStore, uuid, "walletAddress.private")
 
@@ -65,19 +79,32 @@ Namespace AreaCommon
                 End If
 
                 If Not engine.load() Then
-                    Return ""
+                    log.track("StartUp.readWalletAddress", "Error during load wallet", "fatal", True)
+
+                    End
                 Else
                     Return WalletAddressEngine.createNew(engine.data.privateRAWKey, True).official.publicKey
                 End If
 
+                log.track("StartUp.readWalletAddress", "Completed")
             Catch ex As Exception
+                log.track("StartUp.readWalletAddress", "Error during read wallet address:" & ex.Message, "fatal", True)
+
+                closeApplication()
+
                 Return ""
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to read a KeyStore
+        ''' </summary>
+        ''' <param name="keyStoreSecurityKey"></param>
         Private Sub readAdminKeyStore(ByVal keyStoreSecurityKey As String)
             Try
                 Dim uuidWallet As String = ""
+
+                log.track("StartUp.readAdminKeyStore", "Begin")
 
                 If (settings.data.walletAddress.Length >= 11) Then
                     If settings.data.walletAddress.StartsWith("keystoreid:") Then
@@ -98,14 +125,20 @@ Namespace AreaCommon
                                 Next
                             End If
                         Catch ex As Exception
-                            log.trackIntoConsole("Error during Load data keyStore :" & ex.Message)
+                            log.track("StartUp.readAdminKeyStore", "Error during Load data keyStore :" & ex.Message, "fatal", True)
+
+                            End
                         End Try
                     End If
                 End If
 
                 state.keys.addNew(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration, settings.data.walletAddress, "")
+
+                log.track("StartUp.readAdminKeyStore", "Completed")
             Catch ex As Exception
-                log.trackIntoConsole("Error during Load data keyStore :" & ex.Message)
+                log.track("StartUp.readAdminKeyStore", "Error during Load data keyStore :" & ex.Message, "fatal", True)
+
+                closeApplication()
             End Try
         End Sub
 
@@ -113,7 +146,7 @@ Namespace AreaCommon
         ''' This method provide to prepare a startup of application
         ''' </summary>
         ''' <returns></returns>
-        Private Function firstProcedureStartup() As Boolean
+        Private Function bootStrap() As Boolean
             Try
                 Dim command As New ManageCommandLine
                 Dim definePath As String = paths.searchDefinePath()
@@ -134,15 +167,21 @@ Namespace AreaCommon
                         settings.fileName = IO.Path.Combine(paths.settings, paths.settingFileName)
                         settings.cryptoKEY = command.fileSecurityKey
 
-                        settings.read()
+                        If settings.read() Then
+                            log.track("StartUp.bootStrap", "Settings data read", , True)
+                        Else
+                            log.track("StartUp.bootStrap", "Problem during read data", "fatal", True)
 
-                        log.trackIntoConsole("Settings data read ")
+                            Return False
+                        End If
+
+                        readAdminKeyStore(command.keyStoreSecurityKey)
+
+                        log.track("StartUp.bootStrap", "KeyStore procedure complete", , True)
                     End If
 
-                    readAdminKeyStore(command.keyStoreSecurityKey)
-
-                    log.trackIntoConsole("Root paths set " & paths.directoryData)
-                    log.trackIntoConsole("Service GUID = " & settings.data.serviceId)
+                    log.track("StartUp.bootStrap", "Root paths set " & paths.directoryData, , True)
+                    log.track("StartUp.bootStrap", "Service GUID = " & settings.data.serviceId, , True)
                 End If
 
                 command.parameters = Nothing
@@ -158,17 +197,16 @@ Namespace AreaCommon
             End Try
         End Function
 
-
         ''' <summary>
         ''' This method provide to execute the application
         ''' </summary>
-        Sub runApplication()
+        Private Sub runApplication()
             log.track("startUp.runApplication", "Begin")
 
             Try
                 state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.started
 
-                state.serviceState.init()
+                state.currentService.init()
 
                 Do
                     Application.DoEvents()
@@ -182,7 +220,9 @@ Namespace AreaCommon
             End Try
         End Sub
 
-
+        ''' <summary>
+        ''' This method provide to synchronize a system date time
+        ''' </summary>
         Private Sub setDateTime()
             Try
                 log.track("startUp.setDateTime", "Begin")
@@ -193,13 +233,15 @@ Namespace AreaCommon
                     Process.Start("CMD", "/C net start w32time & w32tm /resync /force")
                 End If
             Catch ex As Exception
-                log.track("startUp.setDateTime", "Failed to update datetime = " & ex.Message, "error", True)
+                log.track("startUp.setDateTime", "Failed to update datetime = " & ex.Message, "fatal", True)
             Finally
                 log.track("startUp.setDateTime", "Completed")
             End Try
         End Sub
 
-
+        ''' <summary>
+        ''' This method provide to acquire an IP Address
+        ''' </summary>
         Private Sub acquireIPAddress()
             Try
                 log.track("startUp.acquireIPAddress", "Begin")
@@ -215,26 +257,27 @@ Namespace AreaCommon
             End Try
         End Sub
 
-
         ''' <summary>
         ''' This method provide to run the service
         ''' </summary>
-        Sub run()
+        Private Sub runService()
             Try
                 log.trackIntoConsole("Start Service")
 
-                log.track("startUp.run", "Begin")
-                log.track("startUp.run", "Commandline process execute is " & Environment.CommandLine)
-                log.track("startUp.run", "DataPath is " & paths.directoryData)
+                log.inBootStrapAction = True
+
+                log.track("startUp.runService", "Begin")
+                log.track("startUp.runService", "Commandline process execute is " & Environment.CommandLine)
+                log.track("startUp.runService", "DataPath is " & paths.directoryData)
 
                 registry.noSave = Not settings.data.useEventRegistry
 
                 registry.init(paths.system.events)
                 registry.addNew(CHCCommonLibrary.Support.RegistryEngine.RegistryData.TypeEvent.applicationStartUp)
 
-                log.track("startUp.run", "System Registry is running")
+                log.track("startUp.runService", "System Registry is running")
 
-                log.noSave = (settings.data.trackConfiguration = CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrack)
+                log.saveMode = settings.data.trackConfiguration
 
                 log.init(paths.system.logs, "main", registry)
 
@@ -248,61 +291,55 @@ Namespace AreaCommon
 
                 logRotate.run(log)
 
-                log.track("startUp.run", "Trackrotate in execute")
+                log.track("startUp.runService", "Trackrotate in execute")
 
                 counter.init(paths.system.counters)
 
-                log.track("startUp.run", "Counter is running")
-
-                log.noSave = (settings.data.trackConfiguration = CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrack)
-
-                log.track("startUp.run", "Log.noSave = " & log.noSave)
+                log.track("startUp.runService", "Counter is running")
 
                 setDateTime()
                 acquireIPAddress()
                 loadDataInformation()
 
                 If webServiceThread(True) Then
-                    log.trackIntoConsole("Service is in run")
+                    log.inBootStrapAction = False
+
+                    log.trackIntoConsole("Admin port (" & settings.data.servicePort & ") chain is listen")
 
                     runApplication()
                 Else
                     log.trackIntoConsole("Problem during start service")
                 End If
             Catch ex As Exception
-                log.track("startUp.run", "Error:" & ex.Message, "fatal")
+                log.track("startUp.runService", "Error:" & ex.Message, "fatal")
 
                 closeApplication()
             Finally
-                log.track("startUp.run", "Completed")
+                log.track("startUp.runService", "Completed")
             End Try
         End Sub
-
 
         ''' <summary>
         ''' This method provide to prepare to start the application
         ''' </summary>
-        Sub Main()
+        Public Sub main()
             Try
                 Application.EnableVisualStyles()
                 Application.SetCompatibleTextRenderingDefault(False)
 
-                If firstProcedureStartup() Then
-                    run()
+                If bootStrap() Then
+                    runService()
                 End If
             Catch ex As Exception
                 MessageBox.Show("An error occurrent during moduleMain.startup " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End Sub
 
-
         ''' <summary>
         ''' This method provide to stop the application
         ''' </summary>
-        Sub [stop]()
-
+        Public Sub [stop]()
             Try
-
                 log.trackIntoConsole("Start the system shutdown operations")
 
                 log.track("startUp.[Stop]", "Begin")
@@ -312,14 +349,10 @@ Namespace AreaCommon
                 log.track("startUp.[Stop]", "Complete")
 
                 log.trackIntoConsole("System is shutdown")
-
             Catch ex As Exception
             End Try
-
         End Sub
 
-
     End Module
-
 
 End Namespace

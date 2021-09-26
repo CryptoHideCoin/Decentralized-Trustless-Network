@@ -22,9 +22,44 @@ CHCPrimaryRuntimeService
   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
 </summary>
 </member>
-<member name="T:CHCPrimaryRuntimeService.AppState.ServiceInformation">
+<member name="T:CHCPrimaryRuntimeService.AppState.InternalServiceInformation">
  <summary>
  This class provides to expone the public information of this chain
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AppState.ComponentElement">
+ <summary>
+ This class contain an internal component element
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaCommon.Masternode.EvaluationResponse">
+ <summary>
+ This enumerate contain the evaluation response
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeSenders">
+ <summary>
+ This class is used to track a senders (broadcast) of a request
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaCommon.Masternode.MinimalDataMasternodeList">
+ <summary>
+ This class is used to collect e manage an information relative an assessment vote of a masternode
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaCommon.Masternode.ContactDataMasternodeList">
+ <summary>
+ This class is used to collect e manage an information of a list of a node without a response
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeEvaluations">
+ <summary>
+ This class contains the expression to vote
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeNotifyRejectedList">
+ <summary>
+ This class manage a delivery of a message rejected
  </summary>
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaCommon.moduleMain.closeApplication(System.Boolean)">
@@ -59,7 +94,21 @@ CHCPrimaryRuntimeService
  This method provide to load in memory an information data
  </summary>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.firstProcedureStartup">
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.readWalletAddress(System.String,System.String)">
+ <summary>
+ This method provide a read a wallet address from file
+ </summary>
+ <param name="uuid"></param>
+ <param name="keyStoreSecurityKey"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.readAdminKeyStore(System.String)">
+ <summary>
+ This method provide to read a KeyStore
+ </summary>
+ <param name="keyStoreSecurityKey"></param>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.bootStrap">
  <summary>
  This method provide to prepare a startup of application
  </summary>
@@ -70,12 +119,22 @@ CHCPrimaryRuntimeService
  This method provide to execute the application
  </summary>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.run">
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.setDateTime">
+ <summary>
+ This method provide to synchronize a system date time
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.acquireIPAddress">
+ <summary>
+ This method provide to acquire an IP Address
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.runService">
  <summary>
  This method provide to run the service
  </summary>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.Main">
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.StartUp.main">
  <summary>
  This method provide to prepare to start the application
  </summary>
@@ -84,6 +143,18 @@ CHCPrimaryRuntimeService
  <summary>
  This method provide to stop the application
  </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.sendInBroadCast">
+ <summary>
+ This method provide to clone a current bulletin and send a all node of the network
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.testNetwork(CHCPrimaryRuntimeService.AreaConsensus.RequestProcess.NetSynchronization@)">
+ <summary>
+ This method provide to check if the network and the chain is correct
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.Manager.createGenesis(System.String,System.String,System.Double,System.String,System.String)">
  <summary>
@@ -96,7 +167,13 @@ CHCPrimaryRuntimeService
  <param name="privateKeyRAW"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.Controllers.requestController.PutValue(CHCProtocolLibrary.AreaCommon.Models.Network.NotifyModel)">
+<member name="M:CHCPrimaryRuntimeService.Controllers.BulletinController.PutValue(CHCPrimaryRuntimeService.AreaConsensus.RequestProcess)">
+ <summary>
+ This API (put method) provide to notify a request by another masternode
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.RequestController.PutValue(CHCProtocolLibrary.AreaCommon.Models.Network.NotifyModel)">
  <summary>
  This API (put method) provide to notify a request by another masternode
  </summary>
