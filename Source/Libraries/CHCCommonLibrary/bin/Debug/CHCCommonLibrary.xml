@@ -137,13 +137,6 @@ CHCCommonLibrary
  <param name="content"></param>
  <param name="messageType"></param>
 </member>
-<member name="M:CHCCommonLibrary.Support.LogEngine.trackEvidence(System.String,System.String,System.Boolean)">
- <summary>
- This method provide to track an information into a log (or not) depend the debugMode property
- </summary>
- <param name="position"></param>
- <param name="content"></param>
-</member>
 <member name="M:CHCCommonLibrary.Support.LogEngine.trackIntoConsole(System.String)">
  <summary>
  This method provide to track into console

@@ -164,7 +164,7 @@ Namespace AreaData
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("Verify.analyzeInternalState", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Verify.analyzeInternalState", ex.Message, "fatal")
 
                 Return False
             Finally

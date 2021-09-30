@@ -7,7 +7,7 @@ Option Explicit On
 Namespace AreaData
 
 
-    Module Network
+    Partial Module Network
 
         Public dataNetwork As New CHCProtocolLibrary.AreaCommon.Models.Network.BuildNetworkModel
         Private _Proceed As Boolean = True
@@ -25,21 +25,6 @@ Namespace AreaData
             Return True
         End Function
 
-        Private Sub rebuildFinalCommandList()
-            With AreaCommon.state.currentService
-                .listAvailableCommand.Clear()
-
-                If _CompleteProcess Then
-                    .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.requestNetworkDisconnect)
-                ElseIf _Proceed Then
-                    .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.cleanLocalData)
-                Else
-                    .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.verifyData)
-                End If
-
-            End With
-        End Sub
-
         Private Function createLedger() As Boolean
             With AreaCommon.state
                 .runtimeState.activeNetwork.networkCreationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
@@ -52,17 +37,6 @@ Namespace AreaData
 
         Private Function createState() As Boolean
             Return AreaCommon.state.runtimeState.init(AreaCommon.paths.workData.state.db)
-        End Function
-
-        Private Function manageA0x0() As Boolean
-            Dim commandA0x0 As New AreaProtocol.A0x0.Manager
-
-            commandA0x0.log = AreaCommon.log
-            commandA0x0.currentService = AreaCommon.state.currentService
-
-            With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                Return commandA0x0.createGenesis(dataNetwork.name, AreaCommon.state.internalInformation.networkName, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate, .publicAddress, .privateKey)
-            End With
         End Function
 
         Private Sub manageA0x1()
@@ -268,7 +242,6 @@ Namespace AreaData
                 Dim proceed As Boolean = True
 
                 AreaCommon.log.trackIntoConsole("Build Network start")
-
                 AreaCommon.log.track("BuildNetwork.run", "Begin")
 
                 AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation
@@ -277,7 +250,7 @@ Namespace AreaData
                 If proceed Then proceed = createLedger()
                 If proceed Then proceed = rebuildCommandList()
                 If proceed Then proceed = createState()
-                If proceed Then proceed = manageA0x0()
+                If proceed Then proceed = AreaProtocol.A0x0.Manager.createRequest(dataNetwork.name)
 
                 'manageA0x1()
                 'manageA0x2()
@@ -295,17 +268,9 @@ Namespace AreaData
                 'manageA1x5()
                 'manageA1x6()
 
-                rebuildFinalCommandList()
-
-                If AreaCommon.webServiceThread() Then
-                    AreaCommon.log.trackIntoConsole("Service is in run")
-                End If
-
-                AreaCommon.log.trackIntoConsole("Build Network complete")
-
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("Verify.analyzeInternalState", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Verify.buildNetwork", ex.Message, "fatal")
 
                 Return False
             Finally

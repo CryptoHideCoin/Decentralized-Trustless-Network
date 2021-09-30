@@ -134,6 +134,7 @@ Namespace Support
         ''' <param name="position"></param>
         ''' <param name="content"></param>
         ''' <param name="messageType"></param>
+        <DebuggerHiddenAttribute()>
         Public Sub track(ByVal position As String, ByVal content As String, Optional ByVal messageType As String = "info", Optional ByVal printIntoConsole As Boolean = False)
             Try
                 Dim fatalError As Boolean = (messageType.CompareTo("fatal") = 0)
@@ -143,8 +144,11 @@ Namespace Support
                 If IsNothing(completeFileName) And useCache Then
                     _cache.Add(_lastInfoTrack)
 
-                    If printIntoConsole Or fatalError Then
+                    If printIntoConsole Then
                         Console.WriteLine(content)
+                    End If
+                    If fatalError Then
+                        Console.WriteLine("Error:" & content & " (" & position & ")")
                     End If
 
                     Return
@@ -162,8 +166,11 @@ Namespace Support
 
                 End If
 
-                If printIntoConsole Or fatalError Then
+                If printIntoConsole Then
                     Console.WriteLine(content)
+                End If
+                If fatalError Then
+                    Console.WriteLine("Error:" & content & " (" & position & ")")
                 End If
 
                 writeConsoleGUI(_lastInfoTrack)
@@ -178,37 +185,10 @@ Namespace Support
         End Sub
 
         ''' <summary>
-        ''' This method provide to track an information into a log (or not) depend the debugMode property
-        ''' </summary>
-        ''' <param name="position"></param>
-        ''' <param name="content"></param>
-        Public Sub trackEvidence(ByVal position As String, ByVal content As String, Optional ByVal printIntoConsole As Boolean = False)
-            Try
-                _lastInfoTrack = timestampFromDateTime() & "|" & atMomentGMT() & "|Important|" & position & "|" & content
-
-                If IsNothing(completeFileName) And useCache Then
-                    _cache.Add(_lastInfoTrack)
-
-                    Return
-                End If
-
-                Using fileData As IO.StreamWriter = IO.File.AppendText(completeFileName)
-                    fileData.WriteLine(_lastInfoTrack)
-                End Using
-
-                If printIntoConsole Then
-                    Console.WriteLine(_lastInfoTrack)
-
-                    writeConsoleGUI(_lastInfoTrack)
-                End If
-            Catch ex As Exception
-            End Try
-        End Sub
-
-        ''' <summary>
         ''' This method provide to track into console
         ''' </summary>
         ''' <param name="message"></param>
+        <DebuggerHiddenAttribute()>
         Public Sub trackIntoConsole(Optional ByVal message As String = "")
             Try
                 If Not noPrintConsole Then

@@ -143,7 +143,7 @@ Namespace AreaCommon
                     End
                 End If
             Catch ex As Exception
-                log.track("TemplateRuntimeChain.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "fatal")
+                log.track("TemplateRuntimeChain.ManageCommandLine.decodeCommandLine", "fatal" & ex.Message, "fatal")
 
                 closeApplication()
             End Try
@@ -170,7 +170,7 @@ Namespace AreaCommon
             Catch ex As Exception
                 parameters = New CHCRuntimeChainLibrary.AreaRuntime.AppSettings
 
-                log.track("TemplateRuntimeChain.ManageCommandLine.decodeCommandLine", "Error" & ex.Message, "fatal", True)
+                log.track("TemplateRuntimeChain.ManageCommandLine.decodeCommandLine", "fatal" & ex.Message, "fatal", True)
             End Try
         End Sub
 

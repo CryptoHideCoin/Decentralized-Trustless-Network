@@ -3,7 +3,6 @@ Option Explicit On
 
 Imports System.Web.Http
 
-Imports CHCBasicCryptographyLibrary.AreaEngine.Encryption.Base58Signature
 Imports CHCCommonLibrary.AreaCommon.Models.General
 Imports CHCProtocolLibrary.AreaCommon
 
@@ -12,19 +11,25 @@ Imports CHCProtocolLibrary.AreaCommon
 Namespace Controllers
 
 
-    ' GET: api/{GUID service}/administration/currentService
+    ' GET: API/{GUID service}/Administration/ServiceState
     <Route("AdministrationApi")>
-    Public Class serviceStateController
+    Public Class ServiceStateController
 
         Inherits ApiController
 
 
 
-
-        Public Function GetValue(ByVal signature As String) As Models.Administration.ServiceStateResponse
+        ''' <summary>
+        ''' This method provide to get a service state position
+        ''' </summary>
+        ''' <param name="signature"></param>
+        ''' <returns></returns>
+        Public Function getValue(ByVal signature As String) As Models.Administration.ServiceStateResponse
             Dim result As New Models.Administration.ServiceStateResponse
 
             Try
+                AreaCommon.log.track("ServiceStateController.getValue", "Begin")
+
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
@@ -41,16 +46,19 @@ Namespace Controllers
                 Else
                     result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                 End If
+
+                AreaCommon.log.track("ServiceStateController.getValue", "Complete")
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
+
+                AreaCommon.log.track("ServiceStateController.get", "An error occurrent during execute: " & ex.Message, "fatal")
             End Try
 
             result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Return result
         End Function
-
 
     End Class
 

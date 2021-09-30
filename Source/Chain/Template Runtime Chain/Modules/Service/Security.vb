@@ -3,6 +3,8 @@ Option Explicit On
 
 Imports CHCBasicCryptographyLibrary.AreaEngine
 Imports CHCProtocolLibrary.AreaWallet.Support
+Imports CHCCommonLibrary.AreaCommon.Models.General
+Imports CHCCommonLibrary.AreaEngine.Encryption
 
 
 
@@ -52,6 +54,47 @@ Namespace AreaSecurity
             Catch ex As Exception
                 Return False
             End Try
+        End Function
+
+        Public Function checkNetwork(ByVal netWorkHash As String, ByVal chainHash As String) As Boolean
+            Try
+                If (netWorkHash.CompareTo(AreaCommon.state.runtimeState.activeNetwork.networkName.recordHash) = 0) Then
+                    If (chainHash.CompareTo(AreaCommon.state.runtimeState.activeChain.name.recordHash) = 0) Then
+                        Return True
+                    End If
+                End If
+
+                Return False
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to complete a response
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Function completeResponse(ByRef value As Object, ByVal requestSignature As String) As Object
+            Try
+                Dim toString As String
+                Dim toHash As String
+                Dim key As TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
+                Dim privateKey As String = key.privateKey
+
+                value.masterNodePublicAddress = key.publicAddress
+                value.integrityTransactionChain = AreaCommon.state.currentService.integrityTransactionChain
+                value.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete
+                value.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
+
+                toString = RemoteResponse.determinateStringObject(value) & requestSignature
+                toHash = HashSHA.generateSHA256(toString)
+
+                value.signature = WalletAddressEngine.createSignature(privateKey, toHash)
+            Catch ex As Exception
+            End Try
+
+            Return value
         End Function
 
         Public Function changeCertificate(ByVal value As CHCProtocolLibrary.AreaCommon.Models.Security.changeCertificate) As Boolean

@@ -53,7 +53,7 @@ Namespace AreaCommon.Masternode
 
                 Return result
             Catch ex As Exception
-                log.track("MasternodeSenders.createMasterNodeList", "Error:" & ex.Message, "error")
+                log.track("MasternodeSenders.createMasterNodeList", ex.Message, "fatal")
 
                 Return New MasternodeSenders
             End Try
@@ -310,7 +310,7 @@ Namespace AreaCommon.Masternode
 
                 Return result
             Catch ex As Exception
-                AreaCommon.log.track("MasternodeEvaluations.getFirstAssessment", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("MasternodeEvaluations.getFirstAssessment", ex.Message, "fatal")
 
                 Return New FirstAssessment
             End Try

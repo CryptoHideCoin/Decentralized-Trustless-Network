@@ -22,5 +22,10 @@ CHCProtocolLibrary
   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
 </summary>
 </member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Network.NotifyModel">
+ <summary>
+ This class contain all information reguard the notify of a request
+ </summary>
+</member>
 </members>
 </doc>

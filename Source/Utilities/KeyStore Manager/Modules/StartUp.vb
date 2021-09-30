@@ -1,8 +1,8 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCServerSupportLibrary.Support.LogEngine
-Imports CHCServerSupportLibrary.Support.LogRotateEngine
+Imports CHCCommonLibrary.Support.LogEngine
+Imports CHCCommonLibrary.Support.LogRotateEngine
 
 
 
@@ -28,7 +28,7 @@ Namespace AreaCommon
 
                 log.track("startUp.startApplication", "settings read")
 
-                log.noSave = (settings.data.useTrack = TrackRuntimeModeEnum.dontTrack)
+                log.saveMode = (settings.data.useTrack <> TrackRuntimeModeEnum.dontTrackEver)
 
                 log.init(paths.pathLogs, "main")
 

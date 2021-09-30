@@ -112,7 +112,7 @@ Namespace AreaProtocol
                 Catch ex As Exception
                     currentService.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("A1x4Manager.init", "Error:" & ex.Message, "error")
+                    log.track("A1x4Manager.init", ex.Message, "fatal")
 
                     Return False
                 End Try
@@ -136,7 +136,7 @@ Namespace AreaProtocol
                 Catch ex As Exception
                     currentService.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("A1x4Manager.init", "Error:" & ex.Message, "error")
+                    log.track("A1x4Manager.init", ex.Message, "fatal")
                 End Try
 
                 Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
@@ -173,7 +173,7 @@ Namespace AreaProtocol
                             currentService.currentAction.setError("-1", "Error during update ledger")
                             currentService.currentAction.reset()
 
-                            log.track("A1x4Manager.init", "Error: Error during update ledger", "error")
+                            log.track("A1x4Manager.init", "Error: Error during update ledger", "fatal")
 
                             Return False
                         End If
@@ -184,7 +184,7 @@ Namespace AreaProtocol
                             currentService.currentAction.setError("-1", "Error during update State")
                             currentService.currentAction.reset()
 
-                            log.track("A1x4Manager.init", "Error: Error during update State", "error")
+                            log.track("A1x4Manager.init", "Error: Error during update State", "fatal")
 
                             Return False
                         End If
@@ -196,7 +196,7 @@ Namespace AreaProtocol
                 Catch ex As Exception
                     currentService.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("A1x4Manager.init", "Error:" & ex.Message, "error")
+                    log.track("A1x4Manager.init", ex.Message, "fatal")
                 End Try
 
                 Return False

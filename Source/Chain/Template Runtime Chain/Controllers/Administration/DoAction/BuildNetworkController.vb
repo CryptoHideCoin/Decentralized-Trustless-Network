@@ -20,13 +20,19 @@ Namespace Controllers
 
 
 
-
-
-        Public Function PutValue(ByVal signature As String, <FromBody()> ByVal value As Models.Network.BuildNetworkModel) As General.RemoteResponse
+        ''' <summary>
+        ''' This method provide to build a network procedure
+        ''' </summary>
+        ''' <param name="signature"></param>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Function putValue(ByVal signature As String, <FromBody()> ByVal value As Models.Network.BuildNetworkModel) As General.RemoteResponse
             Dim result As New General.RemoteResponse
             Dim proceed As Boolean = True
 
             Try
+                AreaCommon.log.track("BuildNetworkController.putValue", "Begin")
+
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If proceed Then
@@ -36,7 +42,6 @@ Namespace Controllers
                         proceed = False
                     End If
                 End If
-
                 If proceed Then
                     If Not AreaSecurity.checkSignature(signature) Or
                        Not AreaSecurity.checkSignature(value.getHash, value.signature, TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity) Then
@@ -45,7 +50,6 @@ Namespace Controllers
                         proceed = False
                     End If
                 End If
-
                 If proceed Then
                     value.primaryAsset.deCodeSymbol()
 
@@ -72,16 +76,19 @@ Namespace Controllers
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.commandNotAllowed
                     End If
                 End If
+
+                AreaCommon.log.track("BuildNetworkController.putValue", "Complete")
             Catch ex As Exception
                 result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
+
+                AreaCommon.log.track("BuildNetworkController.putValue", "An error occurrent during execute: " & ex.Message, "fatal")
             End Try
 
             result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Return result
         End Function
-
 
     End Class
 

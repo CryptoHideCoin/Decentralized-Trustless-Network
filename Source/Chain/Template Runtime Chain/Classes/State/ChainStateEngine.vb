@@ -133,6 +133,7 @@ Namespace AreaState
         Private _DBStateConnectionString As String = "Data source = {0};Version=3;"
 
         Public Property activeNetwork As New DataNetwork
+        Public Property activeChain As New DataChain
         Public Property activeChains As New Dictionary(Of String, DataChain)
         Public Property activeMasterNode As New Dictionary(Of DataMasternodeKey, DataMasternode)
 
@@ -173,7 +174,7 @@ Namespace AreaState
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.createDBTable", "Failed = " & ex.Message, "error", True)
+                AreaCommon.log.track("ChainStateEngine.createDBTable", "Failed = " & ex.Message, "fatal", True)
 
                 Return False
             End Try
@@ -227,7 +228,7 @@ Namespace AreaState
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.addSQLProperty", "Failed = " & ex.Message, "error", True)
+                AreaCommon.log.track("ChainStateEngine.addSQLProperty", "Failed = " & ex.Message, "fatal", True)
 
                 Return False
             End Try
@@ -266,7 +267,7 @@ Namespace AreaState
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.createIdentityDBTable", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ChainStateEngine.createIdentityDBTable", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -307,7 +308,7 @@ Namespace AreaState
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.insertSQLPropertyIdentityDB", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ChainStateEngine.insertSQLPropertyIdentityDB", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -365,7 +366,7 @@ Namespace AreaState
                 End If
 
             Catch ex As Exception
-                AreaCommon.log.track("A0x0Manager.init", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("A0x0Manager.init", ex.Message, "fatal")
             End Try
 
             Return False
@@ -404,6 +405,12 @@ Namespace AreaState
             Return newValue
         End Function
 
+        ''' <summary>
+        ''' This method provide to get an information relative a peer
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="chainName"></param>
+        ''' <returns></returns>
         Public Function getDataPeer(ByVal publicAddress As String, Optional ByVal chainName As String = "") As DataMasternode
             Dim newKey As New DataMasternodeKey
 
@@ -434,7 +441,7 @@ Namespace AreaState
 
                 Return result
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.createConsensusList", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.createConsensusList", ex.Message, "fatal")
 
                 Return New List(Of DataMasternode)
             End Try
@@ -469,7 +476,7 @@ Namespace AreaState
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.init", "Failed = " & ex.Message, "error", True)
+                AreaCommon.log.track("ChainStateEngine.init", "Failed = " & ex.Message, "fatal", True)
 
                 Return False
             End Try

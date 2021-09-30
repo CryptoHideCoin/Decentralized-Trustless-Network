@@ -23,14 +23,14 @@ Namespace AreaWorker
                 If (remote.sendData() = "") Then
                     Return (remote.remoteResponse.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete)
                 Else
-                    AreaCommon.log.track("Sender.sendToMasterNode", "Connection failed url = " & remote.url, "error")
+                    AreaCommon.log.track("Sender.sendToMasterNode", "Connection failed url = " & remote.url, "fatal")
                 End If
 
                 remote = Nothing
 
                 Return False
             Catch ex As Exception
-                AreaCommon.log.track("Sender.sendToMasterNode", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Sender.sendToMasterNode", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -47,14 +47,14 @@ Namespace AreaWorker
                 If (remote.sendData() = "") Then
                     Return (remote.remoteResponse.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete)
                 Else
-                    AreaCommon.log.track("Sender.sendToMasterNodeBulletin", "Connection failed url = " & remote.url, "error")
+                    AreaCommon.log.track("Sender.sendToMasterNodeBulletin", "Connection failed url = " & remote.url, "fatal")
                 End If
 
                 remote = Nothing
 
                 Return False
             Catch ex As Exception
-                AreaCommon.log.track("Sender.sendToMasterNodeBulletin", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Sender.sendToMasterNodeBulletin", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -90,7 +90,7 @@ Namespace AreaWorker
                     masterNode = deliveryList.getFirst()
                 Loop
             Catch ex As Exception
-                AreaCommon.log.track("Sender.sendInBroadCast", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Sender.sendInBroadCast", ex.Message, "fatal")
             End Try
 
             Return newDeliveryList
@@ -114,7 +114,7 @@ Namespace AreaWorker
                     masterNode = deliveryList.getFirst()
                 Loop
             Catch ex As Exception
-                AreaCommon.log.track("Sender.sendBulletinInBroadCast", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Sender.sendBulletinInBroadCast", ex.Message, "fatal")
             End Try
 
             Return newDeliveryList
@@ -159,7 +159,7 @@ Namespace AreaWorker
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("Sender.work", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Sender.work", ex.Message, "fatal")
 
                 Return False
             End Try

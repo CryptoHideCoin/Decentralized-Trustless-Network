@@ -110,9 +110,11 @@ Namespace AreaCommon
                     Application.DoEvents()
                 Loop
 
+                log.track("Controllers.WebserviceThread", "Complete")
+
                 Return True
             Catch ex As Exception
-                log.track("Controllers.WebserviceThread", "Error:" & ex.Message, "fatal")
+                log.track("Controllers.WebserviceThread", ex.Message, "fatal")
 
                 Return False
             End Try

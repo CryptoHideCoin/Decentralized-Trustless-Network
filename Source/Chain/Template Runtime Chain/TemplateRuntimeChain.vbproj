@@ -137,6 +137,7 @@
     <Compile Include="Classes\Protocol\A1\A1x5Engine.vb" />
     <Compile Include="Classes\Protocol\A1\A1x6Engine.vb" />
     <Compile Include="Classes\Protocol\A2\A2x0Engine.vb" />
+    <Compile Include="Classes\Protocol\A2\A2x1Engine.vb" />
     <Compile Include="Classes\State\ChainStateEngine.vb" />
     <Compile Include="Controllers\Administration\DoAction\BuildNetworkController.vb" />
     <Compile Include="Controllers\Administration\DoAction\CleanLocalDataController.vb" />

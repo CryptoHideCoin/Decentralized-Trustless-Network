@@ -11,7 +11,7 @@ Imports CHCCommonLibrary.AreaCommon.Models
 Namespace Controllers
 
 
-    ' GET: api/{GUID service}/administration/doAction/verifyData
+    ' GET: API/{GUID service}/Administration/DoAction/VerifyData
     <Route("AdministrationDoActionApi")>
     Public Class VerifyDataController
 
@@ -20,11 +20,17 @@ Namespace Controllers
 
 
 
-
-        Public Function GetValue(ByVal signature As String) As General.RemoteResponse
+        ''' <summary>
+        ''' This method provides to get a verify data procedure 
+        ''' </summary>
+        ''' <param name="signature"></param>
+        ''' <returns></returns>
+        Public Function getValue(ByVal signature As String) As General.RemoteResponse
             Dim result As New General.RemoteResponse
 
             Try
+                AreaCommon.log.track("VerifyDataController.getValue", "Begin")
+
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If (AreaCommon.state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
@@ -55,17 +61,19 @@ Namespace Controllers
                 Else
                     result.responseStatus = General.RemoteResponse.EnumResponseStatus.systemOffline
                 End If
+
+                AreaCommon.log.track("VerifyDataController.getValue", "Complete")
             Catch ex As Exception
                 result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
+
+                AreaCommon.log.track("VerifyDataController.getValue", "An error occurrent during execute: " & ex.Message, "fatal")
             End Try
 
             result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Return result
-
         End Function
-
 
     End Class
 

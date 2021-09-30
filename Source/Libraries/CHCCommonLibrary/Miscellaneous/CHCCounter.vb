@@ -62,7 +62,7 @@ Namespace Support
 
                 Return True
             Catch ex As Exception
-                trackLog("CounterEngine.rebuildIndex", "Error:" & ex.Message, "Fatal", adapterLog)
+                trackLog("CounterEngine.rebuildIndex", ex.Message, "Fatal", adapterLog)
 
                 Return False
             End Try
@@ -90,7 +90,7 @@ Namespace Support
 
                 Return read()
             Catch ex As Exception
-                trackLog("CounterEngine.init", "Error:" & ex.Message, "Fatal", adapterLog)
+                trackLog("CounterEngine.init", ex.Message, "Fatal", adapterLog)
             Finally
                 trackLog("CounterEngine.init", "Completed",, adapterLog)
             End Try
@@ -144,7 +144,7 @@ Namespace Support
 
                 Return True
             Catch ex As Exception
-                trackLog("CounterEngine.increase", "Error:" & ex.Message, "Fatal", adapterLog)
+                trackLog("CounterEngine.increase", ex.Message, "Fatal", adapterLog)
             Finally
                 trackLog("CounterEngine.increase", "Completed",, adapterLog)
             End Try
@@ -176,7 +176,7 @@ Namespace Support
                     rebuildIndex(adapterLog)
                 End If
             Catch ex As Exception
-                trackLog("Advertisements.read", "Error:" & ex.Message, "Fatal", adapterLog)
+                trackLog("Advertisements.read", ex.Message, "Fatal", adapterLog)
             Finally
                 trackLog("CounterEngine.read", "Completed",, adapterLog)
             End Try
@@ -198,7 +198,7 @@ Namespace Support
 
                 Return MyBase.save()
             Catch ex As Exception
-                trackLog("Advertisements.save", "Error:" & ex.Message, "Fatal", adapterLog)
+                trackLog("Advertisements.save", ex.Message, "Fatal", adapterLog)
             Finally
                 trackLog("CounterEngine.save", "Completed",, adapterLog)
             End Try

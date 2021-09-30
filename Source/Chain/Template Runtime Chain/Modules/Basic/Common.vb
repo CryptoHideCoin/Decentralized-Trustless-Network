@@ -68,7 +68,7 @@ Namespace AreaCommon
 
                 Return logRotate.run(adapterLog)
             Catch ex As Exception
-                adapterLog.track("moduleMain.refreshBatch", "Error:" & ex.Message, "Fatal")
+                adapterLog.track("moduleMain.refreshBatch", ex.Message, "Fatal")
 
                 Return False
             Finally

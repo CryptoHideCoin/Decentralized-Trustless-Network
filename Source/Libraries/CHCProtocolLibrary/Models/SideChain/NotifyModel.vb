@@ -6,8 +6,13 @@ Imports CHCCommonLibrary.AreaEngine.Encryption
 
 Namespace AreaCommon.Models.Network
 
+    ''' <summary>
+    ''' This class contain all information reguard the notify of a request
+    ''' </summary>
     Public Class NotifyModel
 
+        Public Property netWorkHash As String = ""
+        Public Property chainHash As String = ""
         Public Property requestCode As String = ""
         Public Property requestHash As String = ""
         Public Property publicAddress As String = ""
@@ -17,6 +22,8 @@ Namespace AreaCommon.Models.Network
         Public Overrides Function toString() As String
             Dim tmp As String = ""
 
+            tmp += networkHash
+            tmp += chainHash
             tmp += requestCode
             tmp += requestHash
             tmp += publicAddress

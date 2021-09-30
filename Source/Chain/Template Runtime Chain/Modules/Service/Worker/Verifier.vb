@@ -22,7 +22,7 @@ Namespace AreaWorker
 
                 Return False
             Catch ex As Exception
-                AreaCommon.log.track("Verifier.evaluateTheRequest", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Verifier.evaluateTheRequest", ex.Message, "fatal")
 
                 Return Nothing
             End Try
@@ -75,7 +75,7 @@ Namespace AreaWorker
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("Verifier.work", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Verifier.work", ex.Message, "fatal")
 
                 Return False
             End Try

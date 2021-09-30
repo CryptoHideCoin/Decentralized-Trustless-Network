@@ -1,5 +1,6 @@
 Release Note
 ============
 
+1.11.0  - 30.09.2021 - Revision Log Class
 1.10.0	- 27.09.2021 - Add IOFast class, Review log system
 1.9.5   - 11.09.2021 - Review GeneralResponseMode

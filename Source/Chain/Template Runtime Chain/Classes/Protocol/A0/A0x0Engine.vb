@@ -14,18 +14,22 @@ Namespace AreaProtocol
 
         Public Class RequestModel
 
-            Inherits CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse
-
+            Public Property netWorkReferement As String = ""
+            Public Property chainReferement As String = ""
             Public Property requestCode As String = "A0x0"
 
-            Public Property requestDateTimeStamp As Double = 0
             Public Property publicAddressRequester As String = ""
-            Public Property requestHash As String = ""
+            Public Property requestDateTimeStamp As Double = 0
             Public Property netName As String = ""
+            Public Property requestHash As String = ""
+            Public Property requestSignature As String = ""
 
             Public Overrides Function toString() As String
                 Dim tmp As String = ""
 
+                tmp += netWorkReferement
+                tmp += chainReferement
+                tmp += requestCode
                 tmp += requestDateTimeStamp.ToString()
                 tmp += publicAddressRequester
                 tmp += netName
@@ -36,10 +40,40 @@ Namespace AreaProtocol
             Public Function getHash() As String
                 Return HashSHA.generateSHA256(Me.toString())
             End Function
+
         End Class
 
-        Public Class FileEngine
-            Inherits BaseFileDB(Of RequestModel)
+        Public Class RequestResponseModel
+
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse
+
+            Public Property netWorkReferement As String = ""
+            Public Property chainReferement As String = ""
+            Public Property requestCode As String = "A0x0"
+
+            Public Property requestDateTimeStamp As Double = 0
+            Public Property publicAddressRequester As String = ""
+            Public Property netName As String = ""
+            Public Property requestHash As String = ""
+            Public Property requestSignature As String = ""
+
+            Public Overrides Function toString() As String
+                Dim tmp As String = ""
+
+                tmp += netWorkReferement
+                tmp += chainReferement
+                tmp += requestCode
+                tmp += requestDateTimeStamp.ToString()
+                tmp += publicAddressRequester
+                tmp += netName
+
+                Return tmp
+            End Function
+
+            Public Function getHash() As String
+                Return HashSHA.generateSHA256(Me.toString())
+            End Function
+
         End Class
 
         Public Class RecoveryState
@@ -76,7 +110,7 @@ Namespace AreaProtocol
 
             Shared Function verify(ByVal requestHash As String) As Nullable(Of Boolean)
                 Try
-                    Dim file As New FileEngine
+                    Dim file As New IOFast(Of RequestModel)
                     Dim proceed As Boolean = True
 
                     file.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, requestHash & ".request")
@@ -92,7 +126,7 @@ Namespace AreaProtocol
                             proceed = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.SingleKeyPair.checkFormatPublicAddress(file.data.publicAddressRequester)
                         End If
                         If proceed Then
-                            proceed = AreaSecurity.checkSignature(file.data.requestHash, file.data.signature, file.data.publicAddressRequester)
+                            proceed = AreaSecurity.checkSignature(file.data.requestHash, file.data.requestSignature, file.data.publicAddressRequester)
                         End If
                     Else
                         proceed = False
@@ -106,7 +140,7 @@ Namespace AreaProtocol
 
             Shared Function evaluate(ByRef value As AreaFlow.RequestExtended) As Nullable(Of Boolean)
                 Try
-                    Dim file As New FileEngine
+                    Dim file As New IOFast(Of RequestModel)
                     Dim proceed As Boolean = True
 
                     file.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, value.requestHash & ".request")
@@ -142,88 +176,123 @@ Namespace AreaProtocol
 
         Public Class Manager
 
-            Private data As New RequestModel
-
-            Public Property log As LogEngine
-            Public Property currentService As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
-
-            Private Property dateDeterminateApproved As Double
-            Private Property approvedHash As String
 
 
-            Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+
+            'Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            '    Try
+            '        With AreaCommon.state.currentBlockLedger.currentRecord
+            '            .actionCode = "a0x0"
+            '            .approvedDate = dateDeterminateApproved
+            '            .detailInformation = data.netName
+            '            .requester = data.publicAddressRequester
+            '            .requestHash = data.requestHash
+            '            .approvedHash = approvedHash
+            '        End With
+
+            '        If AreaCommon.state.currentBlockLedger.blockComplete() Then
+            '            Return AreaCommon.state.currentBlockLedger.saveAndClean()
+            '        End If
+            '    Catch ex As Exception
+            '        AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
+
+            '        AreaCommon.log.track("A0x0.Manager.init", ex.Message, "fatal")
+            '    End Try
+
+            '    Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            'End Function
+
+            ''' <summary>
+            ''' This method provide to return an RequestModel from RequestResponseModel
+            ''' </summary>
+            ''' <param name="value"></param>
+            ''' <returns></returns>
+            Public Shared Function extractToRequest(ByRef value As RequestResponseModel) As RequestModel
+                Dim result As New RequestModel
                 Try
-                    With AreaCommon.state.currentBlockLedger.currentRecord
-                        .actionCode = "a0x0"
-                        .approvedDate = dateDeterminateApproved
-                        .detailInformation = data.netName
-                        .requester = data.publicAddressRequester
-                        .requestHash = data.requestHash
-                        .approvedHash = approvedHash
-                    End With
-
-                    If AreaCommon.state.currentBlockLedger.BlockComplete() Then
-                        Return AreaCommon.state.currentBlockLedger.saveAndClean()
-                    End If
+                    result.netWorkReferement = value.netWorkReferement
+                    result.chainReferement = value.chainReferement
+                    result.netName = value.netName
+                    result.publicAddressRequester = value.publicAddressRequester
+                    result.requestDateTimeStamp = value.requestDateTimeStamp
+                    result.requestHash = value.requestHash
+                    result.requestSignature = value.requestSignature
                 Catch ex As Exception
-                    currentService.currentAction.setError(Err.Number, ex.Message)
-
-                    log.track("A0x0.Manager.init", "Error:" & ex.Message, "error")
                 End Try
 
-                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+                Return result
             End Function
 
+            ''' <summary>
+            ''' This method provide to save a request into temporally position
+            ''' </summary>
+            ''' <param name="value"></param>
+            ''' <returns></returns>
+            Public Shared Function saveTemporallyRequest(ByRef value As RequestModel) As Boolean
+                Try
+                    Dim requestFileEngine As New IOFast(Of RequestModel)
+
+                    requestFileEngine.data = value
+                    requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, value.requestHash & ".request")
+
+                    Return requestFileEngine.save()
+                Catch ex As Exception
+                    Return False
+                End Try
+            End Function
+
+            ''' <summary>
+            ''' This method provide to save a request into temporally position from RequestResponseModel
+            ''' </summary>
+            ''' <param name="value"></param>
+            ''' <returns></returns>
+            Public Shared Function saveTemporallyRequest(ByRef value As RequestResponseModel) As Boolean
+                Return saveTemporallyRequest(extractToRequest(value))
+            End Function
 
             ''' <summary>
             ''' This method provide to create a initial procedure A0x0
             ''' </summary>
             ''' <param name="networkNameParameter"></param>
-            ''' <param name="networkNameNode"></param>
-            ''' <param name="networkCreationDate"></param>
-            ''' <param name="publicWalletIdAddress"></param>
-            ''' <param name="privateKeyRAW"></param>
             ''' <returns></returns>
-            Public Function createGenesis(ByVal networkNameParameter As String, ByVal networkNameNode As String, ByVal networkCreationDate As Double, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
+            Public Shared Function createRequest(ByVal networkNameParameter As String) As Boolean
                 Try
-                    Dim requestFileEngine As New FileEngine
+                    Dim data As New RequestModel
 
-                    log.track("A0x0Manager.init", "Begin")
+                    AreaCommon.log.track("A0x0Manager.init", "Begin")
 
-                    currentService.currentAction.setAction("1x0001", "BuildManager - A0x0 - A0x0Manager")
+                    AreaCommon.state.currentService.currentAction.setAction("1x0001", "BuildManager - A0x0 - A0x0Manager")
 
-                    If currentService.requestCancelCurrentRunCommand Then Return False
+                    If AreaCommon.state.currentService.requestCancelCurrentRunCommand Then Return False
 
-                    If (networkNameParameter.CompareTo(networkNameNode) <> 0) Then
-                        currentService.currentAction.setError("-1", "Network not compatible")
-                        currentService.currentAction.reset()
+                    If (networkNameParameter.CompareTo(AreaCommon.state.internalInformation.networkName) <> 0) Then
+                        AreaCommon.state.currentService.currentAction.setError("-1", "Network not compatible")
+                        AreaCommon.state.currentService.currentAction.reset()
 
-                        log.track("A0x0Manager.init", "Error: Network not compatible", "error")
+                        AreaCommon.log.track("A0x0Manager.init", "Error: Network not compatible", "fatal")
 
                         Return False
                     End If
 
-                    data.netName = networkNameParameter
-                    data.publicAddressRequester = publicWalletIdAddress
-                    data.requestDateTimeStamp = networkCreationDate
-                    data.requestHash = data.getHash
-                    data.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, data.requestHash)
+                    With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
+                        data.netName = networkNameParameter
+                        data.publicAddressRequester = .publicAddress
+                        data.requestDateTimeStamp = AreaCommon.state.runtimeState.activeNetwork.networkCreationDate
+                        data.requestHash = data.getHash
+                        data.requestSignature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(.privateKey, data.requestHash)
+                    End With
 
-                    requestFileEngine.data = data
-
-                    requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, data.requestHash & ".request")
-
-                    If requestFileEngine.save() Then
-                        log.track("A0x0Manager.init", "request - Saved")
+                    If saveTemporallyRequest(data) Then
+                        AreaCommon.log.track("A0x0Manager.init", "request - Saved")
 
                         Return AreaCommon.flow.addNewRequestDirect(data.requestHash, data.requestCode, data.requestDateTimeStamp, "")
                     End If
                 Catch ex As Exception
-                    currentService.currentAction.setError(Err.Number, ex.Message)
+                    AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("A0x0Manager.init", "Error:" & ex.Message, "error")
+                    AreaCommon.log.track("A0x0Manager.init", ex.Message, "fatal")
                 Finally
-                    log.track("A0x0Manager.init", "Completed")
+                    AreaCommon.log.track("A0x0Manager.init", "Completed")
                 End Try
 
                 Return False
@@ -237,7 +306,7 @@ Namespace AreaProtocol
             '        currentService.currentAction.setError("-1", "Error during approved request")
             '        currentService.currentAction.reset()
 
-            '        log.track("A0x0Manager.init", "Error: Error during approved request", "error")
+            '        log.track("A0x0Manager.init", "Error: Error during approved request", "fatal")
 
             '        Return False
             '    End If
@@ -252,7 +321,7 @@ Namespace AreaProtocol
             '        currentService.currentAction.setError("-1", "Error during update ledger")
             '        currentService.currentAction.reset()
 
-            '        log.track("A0x0Manager.init", "Error: Error during update ledger", "error")
+            '        log.track("A0x0Manager.init", "Error: Error during update ledger", "fatal")
 
             '        Return False
             '    End If
@@ -263,7 +332,7 @@ Namespace AreaProtocol
             '        currentService.currentAction.setError("-1", "Network not compatible")
             '        currentService.currentAction.reset()
 
-            '        log.track("A0x0Manager.init", "Error: Error during update State", "error")
+            '        log.track("A0x0Manager.init", "Error: Error during update State", "fatal")
 
             '        Return False
             '    End If
@@ -301,7 +370,7 @@ Namespace AreaProtocol
             '    Catch ex As Exception
             '        currentService.currentAction.setError(Err.Number, ex.Message)
 
-            '        log.track("A0x0Manager.loadApprovedRequest", "Error:" & ex.Message, "error")
+            '        log.track("A0x0Manager.loadApprovedRequest", ex.Message, "fatal")
 
             '        Return False
             '    End Try
@@ -326,7 +395,7 @@ Namespace AreaProtocol
             '    Catch ex As Exception
             '        currentService.currentAction.setError(Err.Number, ex.Message)
 
-            '        log.track("A0x0Manager.consensusWideningLedger", "Error:" & ex.Message, "error")
+            '        log.track("A0x0Manager.consensusWideningLedger", ex.Message, "fatal")
 
             '        Return False
             '    End Try

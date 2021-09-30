@@ -65,7 +65,7 @@ Namespace AreaConsensus
                 tmp += bulletinTimeStamp.ToString()
                 tmp += masterNodePublicAddress
                 tmp += requestHash
-                tmp += voteValue
+                tmp += voteValue.ToString()
 
                 Return tmp
             End Function
@@ -201,7 +201,14 @@ Namespace AreaConsensus
             tmp += proposalsForApprovalData.toString()
 
             For Each requestApproved In requestApprovedList
-                tmp += requestApproved.ToString()
+                With requestApproved.Value
+                    tmp += .bulletinTimeStamp
+                    tmp += .masterNodePublicAddress
+                    tmp += .requestHash
+                    tmp += .voteValue.ToString()
+                    tmp += .hash
+                    tmp += .signature
+                End With
             Next
 
             For Each absence In masternodeAbsent
@@ -286,7 +293,7 @@ Namespace AreaConsensus
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.reoderApproval", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusNetwork.reoderApproval", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -323,7 +330,7 @@ Namespace AreaConsensus
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.reoderReject", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusNetwork.reoderReject", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -360,7 +367,7 @@ Namespace AreaConsensus
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.reoderAbstained", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusNetwork.reoderAbstained", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -397,7 +404,7 @@ Namespace AreaConsensus
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.reoderAbsent", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusNetwork.reoderAbsent", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -440,7 +447,7 @@ Namespace AreaConsensus
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.unlockUpdateBulletin", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.unlockUpdateBulletin", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -452,7 +459,7 @@ Namespace AreaConsensus
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.unlockUpdateBulletin", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.unlockUpdateBulletin", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -471,7 +478,7 @@ Namespace AreaConsensus
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.checkAndCreateNewBulletin", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.checkAndCreateNewBulletin", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -491,7 +498,7 @@ Namespace AreaConsensus
 
                 Return result
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.createRequestApproved", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.createRequestApproved", ex.Message, "fatal")
 
                 Return New RequestProcess.ReceiptOfApproval
             End Try
@@ -539,7 +546,7 @@ Namespace AreaConsensus
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.updateAssessment", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.updateAssessment", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -564,7 +571,7 @@ Namespace AreaConsensus
                 Return True
 
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.updateReject", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.updateReject", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -635,7 +642,7 @@ Namespace AreaConsensus
 
                 Return result
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.cloneBulletin", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.cloneBulletin", ex.Message, "fatal")
 
                 Return New RequestProcess
             End Try
@@ -654,7 +661,7 @@ Namespace AreaConsensus
 
                 Return AreaCommon.flow.addNewBulletinToSend(listSender, currentBulletin)
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.sendInBroadCast", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.sendInBroadCast", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -685,7 +692,7 @@ Namespace AreaConsensus
                     Return True
                 End If
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.sendInBroadCast", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.sendInBroadCast", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -703,7 +710,7 @@ Namespace AreaConsensus
 
                 Return proceed
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.sendInBroadCast", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.sendInBroadCast", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -721,7 +728,7 @@ Namespace AreaConsensus
 
                 Return proceed
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.sendInBroadCast", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.sendInBroadCast", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -737,7 +744,7 @@ Namespace AreaConsensus
                     Case "a0x0"
                 End Select
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.updateLedger", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.updateLedger", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -759,7 +766,7 @@ Namespace AreaConsensus
 
                 Return file.save()
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.createConsensusFile", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.createConsensusFile", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -791,7 +798,7 @@ Namespace AreaConsensus
 
                 Return proceed
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.notifyAssessmentIntoBulletin", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.notifyAssessmentIntoBulletin", ex.Message, "fatal")
 
                 Return False
             Finally
@@ -839,7 +846,7 @@ Namespace AreaConsensus
 
                 Return False
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.notifyAssessmentIntoBulletin", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.notifyAssessmentIntoBulletin", ex.Message, "fatal")
 
                 Return False
             Finally
@@ -866,7 +873,7 @@ Namespace AreaConsensus
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.notifyAssessmentIntoBulletin", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("ConsensusEngine.notifyAssessmentIntoBulletin", ex.Message, "fatal")
 
                 Return False
             End Try

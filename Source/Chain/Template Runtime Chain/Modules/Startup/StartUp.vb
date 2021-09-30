@@ -212,7 +212,7 @@ Namespace AreaCommon
                     Application.DoEvents()
                 Loop While (state.service <> CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown)
             Catch ex As Exception
-                log.track("startUp.runApplication", "Error:" & ex.Message, "fatal")
+                log.track("startUp.runApplication", ex.Message, "fatal")
 
                 closeApplication()
             Finally
@@ -249,7 +249,7 @@ Namespace AreaCommon
                 state.localIpAddress = AreaNetwork.acquireLocalIP()
                 state.publicIpAddress = AreaNetwork.acquirePublicIP()
             Catch ex As Exception
-                log.track("startUp.acquireIPAddress", "Error:" & ex.Message, "fatal")
+                log.track("startUp.acquireIPAddress", ex.Message, "fatal")
 
                 closeApplication()
             Finally
@@ -311,7 +311,7 @@ Namespace AreaCommon
                     log.trackIntoConsole("Problem during start service")
                 End If
             Catch ex As Exception
-                log.track("startUp.runService", "Error:" & ex.Message, "fatal")
+                log.track("startUp.runService", ex.Message, "fatal")
 
                 closeApplication()
             Finally

@@ -156,15 +156,146 @@ CHCPrimaryRuntimeService
  <param name="value"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.Manager.createGenesis(System.String,System.String,System.Double,System.String,System.String)">
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.addNewRequestNotify(System.String,System.String,System.Double,System.String)">
+ <summary>
+ This method provide to add a new request into notify
+ </summary>
+ <param name="requestHash"></param>
+ <param name="requestCode"></param>
+ <param name="dateRequest"></param>
+ <param name="externalSource"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.addNewRequestToDownload(System.String,System.String)">
+ <summary>
+ This method provide to add a new request to download
+ </summary>
+ <param name="requestHash"></param>
+ <param name="publicAddress"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getFirstRequestToDownload">
+ <summary>
+ This method provide to get a first request notified to download
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.rebuildFinalCommandList">
+ <summary>
+ This method provide to rebuild the final command list
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.actionAfterAssessment">
+ <summary>
+ This method provide to execute the action after assessment 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.repositionDownload(System.String,System.String)">
+ <summary>
+ This method provide to manage a reposition of download
+ </summary>
+ <param name="requestHash"></param>
+ <param name="publicAddress"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.init">
+ <summary>
+ This method provide to initialize the component
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.Manager.extractToRequest(CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestResponseModel@)">
+ <summary>
+ This method provide to return an RequestModel from RequestResponseModel
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestModel@)">
+ <summary>
+ This method provide to save a request into temporally position
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestResponseModel@)">
+ <summary>
+ This method provide to save a request into temporally position from RequestResponseModel
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.Manager.createRequest(System.String)">
  <summary>
  This method provide to create a initial procedure A0x0
  </summary>
  <param name="networkNameParameter"></param>
- <param name="networkNameNode"></param>
- <param name="networkCreationDate"></param>
- <param name="publicWalletIdAddress"></param>
- <param name="privateKeyRAW"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.Manager.extractToRequest(CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestResponseModel@)">
+ <summary>
+ This method provide to return an RequestModel from RequestResponseModel
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestModel@)">
+ <summary>
+ This method provide to save a request into temporally position
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestResponseModel@)">
+ <summary>
+ This method provide to save a request into temporally position from RequestResponseModel
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.Manager.createRequest(System.String)">
+ <summary>
+ This method provide to create a initial procedure A0x0
+ </summary>
+ <param name="publicAddressAbsent"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.getDataPeer(System.String,System.String)">
+ <summary>
+ This method provide to get an information relative a peer
+ </summary>
+ <param name="publicAddress"></param>
+ <param name="chainName"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.BuildNetworkController.putValue(System.String,CHCProtocolLibrary.AreaCommon.Models.Network.BuildNetworkModel)">
+ <summary>
+ This method provide to build a network procedure
+ </summary>
+ <param name="signature"></param>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.CleanLocalDataController.getValue(System.String)">
+ <summary>
+ This method start a Clean Local Data procedure
+ </summary>
+ <param name="signature"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.VerifyDataController.getValue(System.String)">
+ <summary>
+ This method provides to get a verify data procedure 
+ </summary>
+ <param name="signature"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ServiceStateController.getValue(System.String)">
+ <summary>
+ This method provide to get a service state position
+ </summary>
+ <param name="signature"></param>
  <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.Controllers.BulletinController.PutValue(CHCPrimaryRuntimeService.AreaConsensus.RequestProcess)">
@@ -173,20 +304,20 @@ CHCPrimaryRuntimeService
  </summary>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.Controllers.RequestController.PutValue(CHCProtocolLibrary.AreaCommon.Models.Network.NotifyModel)">
+<member name="M:CHCPrimaryRuntimeService.Controllers.RequestController.putValue(CHCProtocolLibrary.AreaCommon.Models.Network.NotifyModel)">
  <summary>
  This API (put method) provide to notify a request by another masternode
  </summary>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.Controllers.a0x0Controller.GetValue(System.String)">
+<member name="M:CHCPrimaryRuntimeService.Controllers.A0x0Controller.getValue(System.String)">
  <summary>
  This API (get method) provide to return a request model A0x0 of a hashValue request
  </summary>
  <param name="hashValue"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.Controllers.a0x0Controller.PutValue(CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestModel@,System.String)">
+<member name="M:CHCPrimaryRuntimeService.Controllers.A0x0Controller.putValue(CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestModel@,System.String)">
  <summary>
  This API (put method) provide to set a model A0x0 of a hashValue request
  </summary>
@@ -201,6 +332,47 @@ CHCPrimaryRuntimeService
 <member name="M:CHCPrimaryRuntimeService.AreaNetwork.Address.acquireLocalIP">
  <summary>
  This method provides to return a Local IP
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaSecurity.authorization.completeResponse(System.Object@,System.String)">
+ <summary>
+ This method provide to complete a response
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Downloader.testMasterNode(System.String)">
+ <summary>
+ This method provide to test a Masternode
+ </summary>
+ <param name="addressValue"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Downloader.getRequestA0x0(System.String,System.String@,System.Boolean)">
+ <summary>
+ This method provide to get a request with code A0X0
+ </summary>
+ <param name="addressValue"></param>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Downloader.downloadRequest(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to download a specific request
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Downloader.work">
+ <summary>
+ This method provide to execute a job of downloader action
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Processor.work">
+ <summary>
+ This method provide to execute a job of processor code action
  </summary>
  <returns></returns>
 </member>

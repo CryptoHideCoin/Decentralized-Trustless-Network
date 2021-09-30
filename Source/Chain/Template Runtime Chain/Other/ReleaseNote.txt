@@ -1,6 +1,7 @@
 Release Note
 ============
 
+0.8.0   - 30.09.2021 - General Revision
 0.7.0   - 22.09.2021 - Processor Response Module Engine
 0.6.0   - 14.09.2021 - Revision Response Module Engine
 0.5.0   - 11.09.2021 - Complete Response Module Engine

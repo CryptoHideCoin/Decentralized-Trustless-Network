@@ -24,10 +24,12 @@ Namespace AreaFlow
         Public Property requestCode As String = ""
         Public Property dateRequest As Double = 0
         Public Property directRequest As Boolean = False
-        Public Property externalSource As String = ""
+        Public Property notifiedPublicAddress As String = ""
         Public Property dateSelected As Double = 0
         Public Property dateAssessment As Double = 0
         Public Property rejectedNote As String = ""
+
+        Public Property firstErrorDuringDownload As Double = 0
 
         Public Property requestPosition As EnumOperationPosition = EnumOperationPosition.toDo
         Public Property verifyPosition As EnumOperationPosition = EnumOperationPosition.toDo
@@ -101,7 +103,7 @@ Namespace AreaFlow
 
                     value.directRequest = True
                     value.ticketNumber = ticketNumber
-                    value.externalSource = ""
+                    value.notifiedPublicAddress = ""
 
                     If (value.ticketNumber.Length > 0) Then
                         _TicketNumberValue = value.ticketNumber
@@ -119,12 +121,20 @@ Namespace AreaFlow
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.addNewRequestDirect", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.addNewRequestDirect", ex.Message, "fatal")
 
                 Return False
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to add a new request into notify
+        ''' </summary>
+        ''' <param name="requestHash"></param>
+        ''' <param name="requestCode"></param>
+        ''' <param name="dateRequest"></param>
+        ''' <param name="externalSource"></param>
+        ''' <returns></returns>
         Public Function addNewRequestNotify(ByVal requestHash As String, ByVal requestCode As String, ByVal dateRequest As Double, ByVal externalSource As String) As Boolean
             Try
                 Dim value As New RequestExtended
@@ -138,16 +148,18 @@ Namespace AreaFlow
                     value.requestCode = requestCode
                     value.dateRequest = dateRequest
                     value.directRequest = False
-                    value.externalSource = externalSource
+                    value.notifiedPublicAddress = externalSource
                     value.ticketNumber = _TicketNumberValue
                     value.dateNotify = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+                Else
+                    Return False
                 End If
 
                 _Requests.Add(value.requestHash, value)
 
-                Return addNewRequestToDownload(value.requestHash, value.externalSource)
+                Return addNewRequestToDownload(value.requestHash, value.notifiedPublicAddress)
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.addNewRequestNotify", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.addNewRequestNotify", ex.Message, "fatal")
 
                 Return False
             Finally
@@ -155,6 +167,12 @@ Namespace AreaFlow
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to add a new request to download
+        ''' </summary>
+        ''' <param name="requestHash"></param>
+        ''' <param name="publicAddress"></param>
+        ''' <returns></returns>
         Public Function addNewRequestToDownload(ByVal requestHash As String, ByVal publicAddress As String) As Boolean
             If _Requests.ContainsKey(requestHash) Then
                 Dim key As New AreaFlow.RequestDownloadKey
@@ -214,7 +232,7 @@ Namespace AreaFlow
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.setRequestToProcess", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.setRequestToProcess", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -224,12 +242,12 @@ Namespace AreaFlow
             Try
                 AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", "Begin")
 
-                AreaCommon.flow.removeFirstRequestToDownload(item.requestHash, item.externalSource)
+                AreaCommon.flow.removeFirstRequestToDownload(item.requestHash, item.notifiedPublicAddress)
                 _RequestToSelected.Add(item)
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -244,7 +262,7 @@ Namespace AreaFlow
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -261,7 +279,7 @@ Namespace AreaFlow
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.setRequestRejected", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.setRequestRejected", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -286,17 +304,21 @@ Namespace AreaFlow
 
                 Return result
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToSelect", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToSelect", ex.Message, "fatal")
 
                 Return New RequestExtended
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to get a first request notified to download
+        ''' </summary>
+        ''' <returns></returns>
         Public Function getFirstRequestToDownload() As RequestExtended
             Try
                 Dim result As New RequestExtended
 
-                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToProcess", "Begin")
+                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToDownload", "Begin")
 
                 For Each item In _RequestToDownload.Values
                     If (result.requestHash.Length = 0) Then
@@ -310,7 +332,7 @@ Namespace AreaFlow
 
                 Return result
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToDownload", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToDownload", ex.Message, "fatal")
 
                 Return New RequestExtended
             End Try
@@ -332,7 +354,7 @@ Namespace AreaFlow
 
                 Return result
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToVerify", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToVerify", ex.Message, "fatal")
 
                 Return New RequestExtended
             End Try
@@ -360,7 +382,7 @@ Namespace AreaFlow
 
                 Return result
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToSend", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToSend", ex.Message, "fatal")
 
                 Return New RequestToSend
             End Try
@@ -374,7 +396,7 @@ Namespace AreaFlow
                     Return New AreaConsensus.RequestProcess
                 End If
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.getFirstRemoteBulletin", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.getFirstRemoteBulletin", ex.Message, "fatal")
 
                 Return New AreaConsensus.RequestProcess
             End Try
@@ -394,7 +416,7 @@ Namespace AreaFlow
                     Return New RequestExtended
                 End If
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.getRequest", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.getRequest", ex.Message, "fatal")
 
                 Return New RequestExtended
             End Try
@@ -415,7 +437,7 @@ Namespace AreaFlow
 
                 Return result
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.createConsensusList", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.createConsensusList", ex.Message, "fatal")
 
                 Return New AreaCommon.Masternode.ContactDataMasternodeList
             End Try
@@ -429,7 +451,7 @@ Namespace AreaFlow
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.removeRequest", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.removeRequest", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -441,7 +463,7 @@ Namespace AreaFlow
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.removeItem", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.removeItem", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -483,27 +505,87 @@ Namespace AreaFlow
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.refreshOldRequest", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.refreshOldRequest", ex.Message, "fatal")
 
-                Return True
+                Return False
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to rebuild the final command list
+        ''' </summary>
+        Private Sub rebuildFinalCommandList()
+            With AreaCommon.state.currentService
+                .listAvailableCommand.Clear()
 
+                .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.requestNetworkDisconnect)
+            End With
+        End Sub
+
+        ''' <summary>
+        ''' This method provide to execute the action after assessment 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function actionAfterAssessment() As Boolean
+            Try
+                If (AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation) Then
+                    If (AreaCommon.state.runtimeState.activeNetwork.networkName.value.Length > 0) Then
+                        AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.onLine
+
+                        rebuildFinalCommandList()
+
+                        If AreaCommon.webServiceThread() Then
+                            AreaCommon.log.trackIntoConsole("Public port (" & AreaCommon.settings.data.publicPort & ") chain is listen")
+                        Else
+                            AreaCommon.log.trackIntoConsole("Problem during start public service")
+                        End If
+                    End If
+                End If
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.actionAfterAssessment", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to manage a reposition of download
+        ''' </summary>
+        ''' <param name="requestHash"></param>
+        ''' <param name="publicAddress"></param>
+        ''' <returns></returns>
         Public Function repositionDownload(ByVal requestHash As String, ByVal publicAddress As String) As Boolean
-            Dim key As New AreaFlow.RequestDownloadKey
-            Dim request As AreaFlow.RequestExtended
+            Try
+                Dim key As New AreaFlow.RequestDownloadKey
+                Dim request As AreaFlow.RequestExtended
 
-            key.requestHash = requestHash
-            key.publicAddress = publicAddress
+                key.requestHash = requestHash
+                key.publicAddress = publicAddress
 
-            If _RequestToDownload.ContainsKey(key) Then
-                request = _RequestToDownload(key)
+                If _RequestToDownload.ContainsKey(key) Then
 
-                request.dateNotify = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
-            End If
+                    request = _RequestToDownload(key)
 
-            Return True
+                    If request.firstErrorDuringDownload = 0 Then
+                        request.firstErrorDuringDownload = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime
+                    End If
+
+                    If ((CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime - request.firstErrorDuringDownload) > 300) Then
+                        Return AreaProtocol.A2x1.Manager.createRequest(publicAddress)
+                    Else
+                        request.dateNotify = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+                    End If
+                End If
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.repositionDownload", ex.Message, "fatal")
+
+                Return False
+            End Try
+
         End Function
 
 
@@ -511,18 +593,26 @@ Namespace AreaFlow
             Try
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.checkCloseBlock", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.checkCloseBlock", ex.Message, "fatal")
 
                 Return False
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to initialize the component
+        ''' </summary>
+        ''' <returns></returns>
         <DebuggerHiddenAttribute()>
         Public Function init() As Boolean
             Try
                 AreaCommon.log.track("RequestFlowEngine.init", "Begin")
 
-                workerOn = True
+                If workerOn Then
+                    Return True
+                Else
+                    workerOn = True
+                End If
 
                 Dim work1 As New Threading.Thread(AddressOf AreaWorker.Downloader.work)
                 Dim work2 As New Threading.Thread(AddressOf AreaWorker.Requester.work)
@@ -542,7 +632,7 @@ Namespace AreaFlow
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.init", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RequestFlowEngine.init", ex.Message, "fatal")
 
                 Return False
             End Try

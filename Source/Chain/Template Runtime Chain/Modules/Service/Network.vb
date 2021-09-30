@@ -67,7 +67,7 @@ Namespace AreaNetwork
                 End If
 
             Catch ex As Exception
-                AreaCommon.log.track("Address.acquirePublicIP", "Error:" & ex.Message, "fatal")
+                AreaCommon.log.track("Address.acquirePublicIP", ex.Message, "fatal")
 
                 AreaCommon.closeApplication()
             Finally

@@ -21,7 +21,7 @@ Namespace AreaWorker
 
                 Return False
             Catch ex As Exception
-                AreaCommon.log.track("Requester.formalCheck", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Requester.formalCheck", ex.Message, "fatal")
 
                 Return Nothing
             End Try
@@ -33,13 +33,13 @@ Namespace AreaWorker
 
                 listSender = AreaCommon.Masternode.MasternodeSenders.createMasterNodeList()
 
-                If value.directRequest Then
+                If value.directRequest And (listSender.count > 0) Then
                     AreaCommon.flow.addNewRequestToSend(value.requestCode, value.requestHash, AreaCommon.Masternode.MasternodeSenders.createMasterNodeList(), value, 0)
                 End If
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("Requester.sendBroadCastNotice", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Requester.sendBroadCastNotice", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -49,7 +49,7 @@ Namespace AreaWorker
             Try
                 Return Not _LedgerSupportEngine.foundRequestInLedger(value.requestHash)
             Catch ex As Exception
-                AreaCommon.log.track("Requester.notOldRequest", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Requester.notOldRequest", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -141,7 +141,7 @@ Namespace AreaWorker
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("Requester.work", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Requester.work", ex.Message, "fatal")
 
                 Return False
             End Try

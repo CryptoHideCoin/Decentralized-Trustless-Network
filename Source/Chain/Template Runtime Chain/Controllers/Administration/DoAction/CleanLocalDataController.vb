@@ -12,7 +12,7 @@ Imports CHCProtocolLibrary.AreaCommon
 Namespace Controllers
 
 
-    ' GET: api/{GUID service}/administration/doAction/cleanLocalData
+    ' GET: API/{GUID service}/Administration/DoAction/CleanLocalData
     <Route("AdministrationDoActionApi")>
     Public Class CleanLocalDataController
 
@@ -20,13 +20,18 @@ Namespace Controllers
 
 
 
-
-
-        Public Function GetValue(ByVal signature As String) As General.RemoteResponse
+        ''' <summary>
+        ''' This method start a Clean Local Data procedure
+        ''' </summary>
+        ''' <param name="signature"></param>
+        ''' <returns></returns>
+        Public Function getValue(ByVal signature As String) As General.RemoteResponse
             Dim result As New General.RemoteResponse
             Dim proceed As Boolean = True
 
             Try
+                AreaCommon.log.track("CleanLocalDataController.getValue", "Begin")
+
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If proceed Then
@@ -65,16 +70,19 @@ Namespace Controllers
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.commandNotAllowed
                     End If
                 End If
+
+                AreaCommon.log.track("CleanLocalDataController.getValue", "Complete")
             Catch ex As Exception
                 result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
+
+                AreaCommon.log.track("CleanLocalDataController.getValue", "An error occurrent during execute: " & ex.Message, "fatal")
             End Try
 
             result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Return result
         End Function
-
 
     End Class
 

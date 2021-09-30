@@ -23,7 +23,7 @@ Namespace AreaWorker
                 Do While (AreaCommon.flow.workerOn And workerOn)
                     item = AreaCommon.flow.getFirstRemoteBulletin()
 
-                    If (item.hash > 0) Then
+                    If (item.hash.Length > 0) Then
                         AreaCommon.consensus.processRemoteNotify(item)
                     End If
 
@@ -36,7 +36,7 @@ Namespace AreaWorker
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RemoteVerifier.work", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("RemoteVerifier.work", ex.Message, "fatal")
 
                 Return False
             End Try

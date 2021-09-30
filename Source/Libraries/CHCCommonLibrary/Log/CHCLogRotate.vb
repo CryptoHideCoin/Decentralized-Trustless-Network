@@ -82,7 +82,7 @@ Namespace Support
 
             Catch ex As Exception
 
-                _log.track("LogRotate.runWork", "Error:" & ex.Message, "Fatal")
+                _log.track("LogRotate.runWork", ex.Message, "Fatal")
 
                 Return False
 
@@ -118,7 +118,7 @@ Namespace Support
 
             Catch ex As Exception
 
-                _log.track("LogRotate.run", "Error:" & ex.Message, "Fatal")
+                _log.track("LogRotate.run", ex.Message, "Fatal")
 
                 Return False
 
@@ -181,7 +181,7 @@ Namespace Support
 
             Catch ex As Exception
 
-                _log.track("LogRotate.runExecuteWork", "Error:" & ex.Message, "Fatal")
+                _log.track("LogRotate.runExecuteWork", ex.Message, "Fatal")
 
                 Return False
 

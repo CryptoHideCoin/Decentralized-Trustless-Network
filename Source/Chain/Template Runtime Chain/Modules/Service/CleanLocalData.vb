@@ -62,7 +62,7 @@ Namespace AreaData
 
                 Return _Proceed
             Catch ex As Exception
-                AreaCommon.log.track("service.CleanLocalData", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("service.CleanLocalData", ex.Message, "fatal")
 
                 Return False
             Finally

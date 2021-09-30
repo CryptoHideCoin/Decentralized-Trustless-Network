@@ -91,7 +91,7 @@ Namespace AreaProtocol
                 Catch ex As Exception
                     currentService.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("A2x0Manager.init", "Error:" & ex.Message, "error")
+                    log.track("A2x0Manager.init", ex.Message, "fatal")
                 End Try
 
                 Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
@@ -129,7 +129,7 @@ Namespace AreaProtocol
                             currentService.currentAction.setError("-1", "Error during update ledger")
                             currentService.currentAction.reset()
 
-                            log.track("A2x0Manager.init", "Error: Error during update ledger", "error")
+                            log.track("A2x0Manager.init", "Error: Error during update ledger", "fatal")
 
                             Return False
                         End If
@@ -140,7 +140,7 @@ Namespace AreaProtocol
                             currentService.currentAction.setError("-1", "Error create state")
                             currentService.currentAction.reset()
 
-                            log.track("A2x0Manager.init", "Error: Error during update State", "error")
+                            log.track("A2x0Manager.init", "Error: Error during update State", "fatal")
 
                             Return False
                         End If
@@ -152,7 +152,7 @@ Namespace AreaProtocol
                 Catch ex As Exception
                     currentService.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("A1x6Manager.init", "Error:" & ex.Message, "error")
+                    log.track("A1x6Manager.init", ex.Message, "fatal")
                 End Try
 
                 Return False

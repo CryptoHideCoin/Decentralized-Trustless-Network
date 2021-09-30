@@ -12,11 +12,13 @@ Imports CHCCommonLibrary.AreaEngine.Encryption
 
 Namespace Controllers
 
-    ' GET: api/{GUID service}/requests/a0x0Controller
+    ' GET: API/{GUID service}/Requests/A0x0Controller
     <Route("RequestApi")>
-    Public Class a0x0Controller
+    Public Class A0x0Controller
 
         Inherits ApiController
+
+
 
 
         ''' <summary>
@@ -24,10 +26,12 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="hashValue"></param>
         ''' <returns></returns>
-        Public Function GetValue(ByVal hashValue As String) As AreaProtocol.A0x0.RequestModel
-            Dim engine As New AreaProtocol.A0x0.FileEngine
-            Dim result As New AreaProtocol.A0x0.RequestModel
+        Public Function getValue(ByVal hashValue As String) As AreaProtocol.A0x0.RequestResponseModel
+            Dim engine As New CHCCommonLibrary.AreaEngine.DataFileManagement.IOFast(Of AreaProtocol.A0x0.RequestModel)
+            Dim result As New AreaProtocol.A0x0.RequestResponseModel
             Try
+                AreaCommon.log.track("A0x0Controller.getValue", "Begin")
+
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
@@ -36,7 +40,12 @@ Namespace Controllers
                         engine.fileName = IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, hashValue & ".request")
 
                         If engine.read() Then
-                            result = engine.data
+                            result.netName = engine.data.netName
+                            result.publicAddressRequester = engine.data.publicAddressRequester
+                            result.requestCode = engine.data.requestCode
+                            result.requestDateTimeStamp = engine.data.requestDateTimeStamp
+                            result.requestHash = engine.data.requestHash
+                            result.requestSignature = engine.data.requestSignature
                         End If
                     Else
                         result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
@@ -44,38 +53,53 @@ Namespace Controllers
                 Else
                     result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                 End If
+
+                AreaCommon.log.track("A0x0Controller.getValue", "Complete")
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
+
+                AreaCommon.log.track("A0x0Controller.getValue", "An error occurrent during execute: " & ex.Message, "fatal")
             End Try
 
-            result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
-
-            Return result
+            Return AreaSecurity.completeResponse(result, result.requestSignature)
         End Function
 
         ''' <summary>
         ''' This API (put method) provide to set a model A0x0 of a hashValue request
         ''' </summary>
         ''' <returns></returns>
-        Public Function PutValue(ByRef value As AreaProtocol.A0x0.RequestModel, ByVal ticketNumber As String) As CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse
-            Dim result As New CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse
-            Dim toString As String
-            Dim toHash As String
-            Dim privateKey As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
+        Public Function putValue(ByRef value As AreaProtocol.A0x0.RequestModel, ByVal ticketNumber As String) As RemoteResponse
+            Dim result As New RemoteResponse
+            Try
+                AreaCommon.log.track("A0x0Controller.putValue", "Begin")
 
-            result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
-            result.IntegrityTransactionChain = AreaCommon.state.currentService.IntegrityTransactionChain
-            result.masterNodePublicAddress = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).publicAddress
-            result.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete
-            result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
+                If AreaSecurity.checkSignature(value.requestHash, value.requestSignature, value.publicAddressRequester) Then
+                    If AreaProtocol.A0x0.Manager.saveTemporallyRequest(value) Then
+                        AreaCommon.log.track("A0x0Manager.putValue", "request - Saved")
 
-            toString = RemoteResponse.determinateStringObject(result)
-            toHash = HashSHA.generateSHA256(toString)
+                        If Not AreaCommon.flow.addNewRequestDirect(value.requestHash, value.requestCode, value.requestDateTimeStamp, ticketNumber) Then
+                            AreaCommon.log.track("A0x0Manager.putValue", "Error during addNewRequestDirect")
+                        End If
+                    End If
 
-            result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKey, toHash)
+                    If Not AreaCommon.flow.addNewRequestDirect(value.requestHash, value.requestCode, value.requestDateTimeStamp, ticketNumber) Then
+                        result.responseStatus = RemoteResponse.EnumResponseStatus.inError
+                        result.errorDescription = "503 - Generic Error"
+                    End If
+                Else
+                    result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
+                End If
 
-            Return result
+                AreaCommon.log.track("A0x0Controller.putValue", "Complete")
+            Catch ex As Exception
+                result.responseStatus = RemoteResponse.EnumResponseStatus.inError
+                result.errorDescription = "503 - Generic Error"
+
+                AreaCommon.log.track("A0x0Controller.putValue", "An error occurrent during execute: " & ex.Message, "fatal")
+            End Try
+
+            Return AreaSecurity.completeResponse(result, value.requestSignature)
         End Function
 
     End Class

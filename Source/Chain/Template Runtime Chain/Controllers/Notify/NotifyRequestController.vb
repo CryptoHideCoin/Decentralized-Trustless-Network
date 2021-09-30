@@ -12,7 +12,7 @@ Imports CHCCommonLibrary.AreaEngine.Encryption
 
 Namespace Controllers
 
-    ' GET: api/{GUID service}/notify/requestController
+    ' GET: API/{GUID service}/Notify/RequestController
     <Route("NotifyRequestApi")>
     Public Class RequestController
 
@@ -23,7 +23,7 @@ Namespace Controllers
         ''' This API (put method) provide to notify a request by another masternode
         ''' </summary>
         ''' <returns></returns>
-        Public Function PutValue(<FromBody()> ByVal value As Models.Network.NotifyModel) As General.RemoteResponse
+        Public Function putValue(<FromBody()> ByVal value As Models.Network.NotifyModel) As General.RemoteResponse
             Dim result As New General.RemoteResponse
             Dim proceed As Boolean = True
             Dim toString As String
@@ -31,6 +31,8 @@ Namespace Controllers
             Dim privateKey As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
 
             Try
+                AreaCommon.log.track("RequestController.putValue", "Begin")
+
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If proceed Then
@@ -40,7 +42,6 @@ Namespace Controllers
                         proceed = False
                     End If
                 End If
-
                 If proceed Then
                     If Not AreaSecurity.checkSignature(value.getHash, value.signature, value.publicAddress) Then
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.missingAuthorization
@@ -48,7 +49,20 @@ Namespace Controllers
                         proceed = False
                     End If
                 End If
+                If proceed Then
+                    If Not AreaSecurity.checkNetwork(value.networkHash, value.chainHash) Then
+                        result.responseStatus = General.RemoteResponse.EnumResponseStatus.wrongNetwork
 
+                        proceed = False
+                    End If
+                End If
+                If proceed Then
+                    If AreaCommon.state.runtimeState.getDataPeer(value.publicAddress).ipAddress Then
+                        result.responseStatus = General.RemoteResponse.EnumResponseStatus.missingAuthorization
+
+                        proceed = False
+                    End If
+                End If
                 If proceed Then
                     If AreaCommon.flow.addNewRequestNotify(value.requestHash, value.requestCode, CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT, value.publicAddress) Then
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.responseComplete
@@ -63,9 +77,12 @@ Namespace Controllers
                     result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
                 End If
 
+                AreaCommon.log.track("RequestController.putValue", "Complete")
             Catch ex As Exception
                 result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
+
+                AreaCommon.log.track("RequestController.putValue", "An error occurrent during execute: " & ex.Message, "fatal")
             End Try
 
             toString = General.RemoteResponse.determinateStringObject(result)

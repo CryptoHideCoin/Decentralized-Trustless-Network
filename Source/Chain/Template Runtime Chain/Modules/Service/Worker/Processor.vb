@@ -4,6 +4,7 @@ Option Compare Text
 
 
 
+
 Namespace AreaWorker
 
     Module Processor
@@ -11,6 +12,11 @@ Namespace AreaWorker
         Public Property workerOn As Boolean = False
 
 
+        ''' <summary>
+        ''' This method provide to execute a job of processor code action
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()>
         Public Function work() As Boolean
             Try
                 Dim itemsToWork As Dictionary(Of String, AreaFlow.RequestExtended)
@@ -42,6 +48,7 @@ Namespace AreaWorker
                     Next
 
                     AreaCommon.flow.removeOldRequest()
+                    AreaCommon.flow.actionAfterAssessment()
 
                     Threading.Thread.Sleep(5)
                 Loop
@@ -52,7 +59,7 @@ Namespace AreaWorker
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("Processor.work", "Error:" & ex.Message, "error")
+                AreaCommon.log.track("Processor.work", ex.Message, "fatal")
 
                 Return False
             End Try
