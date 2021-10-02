@@ -26,8 +26,6 @@ Namespace Controllers
         Public Function PutValue(<FromBody()> ByVal value As AreaConsensus.RequestProcess) As General.RemoteResponse
             Dim result As New General.RemoteResponse
             Dim proceed As Boolean = True
-            Dim toString As String
-            Dim toHash As String
             Dim privateKey As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
 
             Try
@@ -58,10 +56,7 @@ Namespace Controllers
                 result.errorDescription = "503 - Generic Error"
             End Try
 
-            toString = General.RemoteResponse.determinateStringObject(result)
-            toHash = HashSHA.generateSHA256(toString)
-
-            result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKey, toHash)
+            result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKey, value.getHash())
 
             Return result
         End Function

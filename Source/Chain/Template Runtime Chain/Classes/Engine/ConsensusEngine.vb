@@ -426,7 +426,7 @@ Namespace AreaConsensus
 
     Public Class ConsensusNetworkFile
 
-        Inherits CHCCommonLibrary.AreaEngine.DataFileManagement.BaseFileDB(Of ConsensusNetwork)
+        Inherits CHCCommonLibrary.AreaEngine.DataFileManagement.XML.BaseFile(Of ConsensusNetwork)
 
     End Class
 
@@ -781,7 +781,7 @@ Namespace AreaConsensus
                         proceed = checkAndCreateNewBulletin()
                     End If
                     If proceed Then
-                        If (dataRequest.verifyPosition = AreaFlow.RequestExtended.EnumOperationPosition.completeWithPositiveResult) Then
+                        If (dataRequest.verifyPosition = AreaFlow.EnumOperationPosition.completeWithPositiveResult) Then
                             If Not bulletin.requestApprovedList.ContainsKey(dataRequest.requestHash) Then
                                 bulletin.requestApprovedList.Add(dataRequest.requestHash, createRequestApproved(dataRequest))
                             End If

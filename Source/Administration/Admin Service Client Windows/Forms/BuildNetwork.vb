@@ -1,14 +1,14 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 
 
 
 Public Class BuildNetwork
 
     Private Class FileEngine
-        Inherits BaseFileDB(Of CHCProtocolLibrary.AreaCommon.Models.Network.BuildNetworkModel)
+        Inherits BaseFile(Of CHCProtocolLibrary.AreaCommon.Models.Network.BuildNetworkModel)
     End Class
 
     Private _Engine As New FileEngine

@@ -1,43 +1,29 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.Support
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 Imports CHCCommonLibrary.AreaEngine.Encryption
-
-
-
+Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
 
 Namespace AreaProtocol
 
     Public Class A0x0
 
-        Public Class RequestModel
+        Public Class RequestModel : Implements IRequestModel
 
-            Public Property netWorkReferement As String = ""
-            Public Property chainReferement As String = ""
-            Public Property requestCode As String = "A0x0"
-
-            Public Property publicAddressRequester As String = ""
-            Public Property requestDateTimeStamp As Double = 0
+            Public Property common As New CommonRequest Implements IRequestModel.common
             Public Property netName As String = ""
-            Public Property requestHash As String = ""
-            Public Property requestSignature As String = ""
+            Public Property signature As String Implements IRequestModel.signature
 
-            Public Overrides Function toString() As String
-                Dim tmp As String = ""
+            Public Overrides Function toString() As String Implements IRequestModel.toString
+                Dim tmp As String = common.toString()
 
-                tmp += netWorkReferement
-                tmp += chainReferement
-                tmp += requestCode
-                tmp += requestDateTimeStamp.ToString()
-                tmp += publicAddressRequester
                 tmp += netName
 
                 Return tmp
             End Function
 
-            Public Function getHash() As String
+            Public Function getHash() As String Implements IRequestModel.getHash
                 Return HashSHA.generateSHA256(Me.toString())
             End Function
 
@@ -45,33 +31,48 @@ Namespace AreaProtocol
 
         Public Class RequestResponseModel
 
-            Inherits CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse : Implements IRequestModel
 
-            Public Property netWorkReferement As String = ""
-            Public Property chainReferement As String = ""
-            Public Property requestCode As String = "A0x0"
+            Private _Base As New RequestModel
 
-            Public Property requestDateTimeStamp As Double = 0
-            Public Property publicAddressRequester As String = ""
-            Public Property netName As String = ""
-            Public Property requestHash As String = ""
-            Public Property requestSignature As String = ""
+            Public Property common As CommonRequest Implements IRequestModel.common
+                Get
+                    Return _Base.common
+                End Get
+                Set(value As CommonRequest)
+                    _Base.common = value
+                End Set
+            End Property
+            Public Property netName As String
+                Get
+                    Return _Base.netName
+                End Get
+                Set(value As String)
+                    _Base.netName = value
+                End Set
+            End Property
+            Public Property requestSignature As String Implements IRequestModel.signature
+                Get
+                    Return _Base.signature
+                End Get
+                Set(value As String)
+                    _Base.signature = value
+                End Set
+            End Property
+            Public Overrides Property signature As String
+                Get
+                    Return MyBase.signature
+                End Get
+                Set(value As String)
+                    MyBase.signature = value
+                End Set
+            End Property
 
-            Public Overrides Function toString() As String
-                Dim tmp As String = ""
-
-                tmp += netWorkReferement
-                tmp += chainReferement
-                tmp += requestCode
-                tmp += requestDateTimeStamp.ToString()
-                tmp += publicAddressRequester
-                tmp += netName
-
-                Return tmp
+            Public Overrides Function toString() As String Implements IRequestModel.toString
+                Return MyBase.toString() & _Base.toString()
             End Function
-
-            Public Function getHash() As String
-                Return HashSHA.generateSHA256(Me.toString())
+            Public Function getHash() As String Implements IRequestModel.getHash
+                Return _Base.getHash()
             End Function
 
         End Class
@@ -82,10 +83,10 @@ Namespace AreaProtocol
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    proceed = AreaCommon.state.runtimeState.addProperty(AreaState.ChainStateEngine.PropertyID.networkCreationDate, value.requestDateTimeStamp, transactionChainRecord.recordCoordinate, transactionChainRecord.recordHash)
+                    proceed = AreaCommon.state.runtimeState.addProperty(AreaState.ChainStateEngine.PropertyID.networkCreationDate, value.common.requestDateTimeStamp, transactionChainRecord.recordCoordinate, transactionChainRecord.recordHash)
                 End If
                 If proceed Then
-                    proceed = AreaCommon.state.runtimeState.addProperty(AreaState.ChainStateEngine.PropertyID.genesisPublicAddress, value.publicAddressRequester, transactionChainRecord.recordCoordinate, transactionChainRecord.recordHash)
+                    proceed = AreaCommon.state.runtimeState.addProperty(AreaState.ChainStateEngine.PropertyID.genesisPublicAddress, value.common.publicAddressRequester, transactionChainRecord.recordCoordinate, transactionChainRecord.recordHash)
                 End If
                 If proceed Then
                     AreaCommon.state.runtimeState.addProperty(AreaState.ChainStateEngine.PropertyID.networkName, value.netName, transactionChainRecord.recordCoordinate, transactionChainRecord.recordHash)
@@ -97,8 +98,8 @@ Namespace AreaProtocol
             Public Shared Function fromTransactionLedger(ByRef value As TransactionChainLibrary.AreaLedger.LedgerEngine.SingleRecordLedger) As Boolean
                 With AreaCommon.state.runtimeState.activeNetwork
                     .networkName.value = value.detailInformation
-                    .networkCreationDate = value.approvedDate
-                    .genesisPublicAddress = value.requester
+                    .networkCreationDate = value.registrationDate
+                    .genesisPublicAddress = value.requesterPublicAddress
                 End With
 
                 Return True
@@ -110,27 +111,25 @@ Namespace AreaProtocol
 
             Shared Function verify(ByVal requestHash As String) As Nullable(Of Boolean)
                 Try
-                    Dim file As New IOFast(Of RequestModel)
                     Dim proceed As Boolean = True
 
-                    file.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, requestHash & ".request")
-
-                    If file.read() Then
+                    With IOFast(Of RequestModel).read(IO.Path.Combine(AreaCommon.paths.workData.temporally, requestHash & ".request"))
                         If proceed Then
-                            proceed = (file.data.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime())
+                            proceed = (.common.netWorkReferement.Length > 0)
                         End If
                         If proceed Then
-                            proceed = (file.data.netName.Trim.Length > 0)
+                            proceed = (.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
                         End If
                         If proceed Then
-                            proceed = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.SingleKeyPair.checkFormatPublicAddress(file.data.publicAddressRequester)
+                            proceed = (.netName.Trim.Length > 0)
                         End If
                         If proceed Then
-                            proceed = AreaSecurity.checkSignature(file.data.requestHash, file.data.requestSignature, file.data.publicAddressRequester)
+                            proceed = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.SingleKeyPair.checkFormatPublicAddress(.common.publicAddressRequester)
                         End If
-                    Else
-                        proceed = False
-                    End If
+                        If proceed Then
+                            proceed = AreaSecurity.checkSignature(.getHash, .signature, .common.publicAddressRequester)
+                        End If
+                    End With
 
                     Return proceed
                 Catch ex As Exception
@@ -140,31 +139,33 @@ Namespace AreaProtocol
 
             Shared Function evaluate(ByRef value As AreaFlow.RequestExtended) As Nullable(Of Boolean)
                 Try
-                    Dim file As New IOFast(Of RequestModel)
                     Dim proceed As Boolean = True
 
-                    file.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, value.requestHash & ".request")
-
-                    If file.read() Then
-                        If (file.data.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime(Now.AddDays(-1))) Then
-                            value.rejectedNote = "Request expired"
-                            value.generalStatus = AreaFlow.RequestExtended.EnumOperationPosition.completeWithNegativeResult
-
-                            Return True
+                    With IOFast(Of RequestModel).read(IO.Path.Combine(AreaCommon.paths.workData.temporally, value.requestHash & ".request"))
+                        If proceed Then
+                            proceed = (.common.netWorkReferement.Length > 0)
                         End If
-                        If (AreaCommon.state.network.position <> CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation) Then
-                            value.rejectedNote = "Not permitted"
-                            value.generalStatus = AreaFlow.RequestExtended.EnumOperationPosition.completeWithNegativeResult
+                        If proceed Then
+                            If (.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(Now.AddDays(-1))) Then
+                                value.rejectedNote = "Request expired"
+                                value.generalStatus = AreaFlow.EnumOperationPosition.completeWithNegativeResult
 
-                            Return True
+                                Return True
+                            End If
+                            If (AreaCommon.state.network.position <> CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation) Then
+                                value.rejectedNote = "Not permitted"
+                                value.generalStatus = AreaFlow.EnumOperationPosition.completeWithNegativeResult
+
+                                Return True
+                            End If
+                            value.generalStatus = AreaFlow.EnumOperationPosition.completeWithPositiveResult
+                        Else
+                            proceed = False
+
+                            value.rejectedNote = "Masternode problem"
+                            value.generalStatus = AreaFlow.EnumOperationPosition.completeWithPositiveResult
                         End If
-                        value.generalStatus = AreaFlow.RequestExtended.EnumOperationPosition.completeWithPositiveResult
-                    Else
-                        proceed = False
-
-                        value.rejectedNote = "Masternode problem"
-                        value.generalStatus = AreaFlow.RequestExtended.EnumOperationPosition.completeWithPositiveResult
-                    End If
+                    End With
 
                     Return proceed
                 Catch ex As Exception
@@ -207,21 +208,21 @@ Namespace AreaProtocol
             ''' </summary>
             ''' <param name="value"></param>
             ''' <returns></returns>
-            Public Shared Function extractToRequest(ByRef value As RequestResponseModel) As RequestModel
-                Dim result As New RequestModel
-                Try
-                    result.netWorkReferement = value.netWorkReferement
-                    result.chainReferement = value.chainReferement
-                    result.netName = value.netName
-                    result.publicAddressRequester = value.publicAddressRequester
-                    result.requestDateTimeStamp = value.requestDateTimeStamp
-                    result.requestHash = value.requestHash
-                    result.requestSignature = value.requestSignature
-                Catch ex As Exception
-                End Try
+            'Public Shared Function extractToRequest(ByRef value As RequestResponseModel) As RequestModel
+            '    Dim result As New RequestModel
+            '    Try
+            '        result.netWorkReferement = value.netWorkReferement
+            '        result.chainReferement = value.chainReferement
+            '        result.netName = value.netName
+            '        result.publicAddressRequester = value.publicAddressRequester
+            '        result.requestDateTimeStamp = value.requestDateTimeStamp
+            '        result.requestHash = value.requestHash
+            '        result.requestSignature = value.requestSignature
+            '    Catch ex As Exception
+            '    End Try
 
-                Return result
-            End Function
+            '    Return result
+            'End Function
 
             ''' <summary>
             ''' This method provide to save a request into temporally position
@@ -230,12 +231,7 @@ Namespace AreaProtocol
             ''' <returns></returns>
             Public Shared Function saveTemporallyRequest(ByRef value As RequestModel) As Boolean
                 Try
-                    Dim requestFileEngine As New IOFast(Of RequestModel)
-
-                    requestFileEngine.data = value
-                    requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, value.requestHash & ".request")
-
-                    Return requestFileEngine.save()
+                    Return IOFast(Of RequestModel).save(IO.Path.Combine(AreaCommon.paths.workData.temporally, value.getHash & ".request"), value)
                 Catch ex As Exception
                     Return False
                 End Try
@@ -247,7 +243,7 @@ Namespace AreaProtocol
             ''' <param name="value"></param>
             ''' <returns></returns>
             Public Shared Function saveTemporallyRequest(ByRef value As RequestResponseModel) As Boolean
-                Return saveTemporallyRequest(extractToRequest(value))
+                Return saveTemporallyRequest(value)
             End Function
 
             ''' <summary>
@@ -259,7 +255,7 @@ Namespace AreaProtocol
                 Try
                     Dim data As New RequestModel
 
-                    AreaCommon.log.track("A0x0Manager.init", "Begin")
+                    AreaCommon.log.track("A0x0Manager.createRequest", "Begin")
 
                     AreaCommon.state.currentService.currentAction.setAction("1x0001", "BuildManager - A0x0 - A0x0Manager")
 
@@ -269,30 +265,33 @@ Namespace AreaProtocol
                         AreaCommon.state.currentService.currentAction.setError("-1", "Network not compatible")
                         AreaCommon.state.currentService.currentAction.reset()
 
-                        AreaCommon.log.track("A0x0Manager.init", "Error: Network not compatible", "fatal")
+                        AreaCommon.log.track("A0x0Manager.createRequest", "Error: Network not compatible", "fatal")
 
                         Return False
                     End If
 
+                    data.common.chainReferement = AreaCommon.state.internalInformation.chainName
+                    data.common.requestCode = "A0x0"
+
                     With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                         data.netName = networkNameParameter
-                        data.publicAddressRequester = .publicAddress
-                        data.requestDateTimeStamp = AreaCommon.state.runtimeState.activeNetwork.networkCreationDate
-                        data.requestHash = data.getHash
-                        data.requestSignature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(.privateKey, data.requestHash)
+                        data.common.netWorkReferement = networkNameParameter
+                        data.common.publicAddressRequester = .publicAddress
+                        data.common.requestDateTimeStamp = AreaCommon.state.runtimeState.activeNetwork.networkCreationDate
+                        data.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(.privateKey, data.getHash())
                     End With
 
                     If saveTemporallyRequest(data) Then
-                        AreaCommon.log.track("A0x0Manager.init", "request - Saved")
+                        AreaCommon.log.track("A0x0Manager.createRequest", "request - Saved")
 
-                        Return AreaCommon.flow.addNewRequestDirect(data.requestHash, data.requestCode, data.requestDateTimeStamp, "")
+                        Return AreaCommon.flow.addNewRequestDirect(data.getHash(), data.common.requestCode, data.common.requestDateTimeStamp, "")
                     End If
                 Catch ex As Exception
                     AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
 
-                    AreaCommon.log.track("A0x0Manager.init", ex.Message, "fatal")
+                    AreaCommon.log.track("A0x0Manager.createRequest", ex.Message, "fatal")
                 Finally
-                    AreaCommon.log.track("A0x0Manager.init", "Completed")
+                    AreaCommon.log.track("A0x0Manager.createRequest", "Completed")
                 End Try
 
                 Return False

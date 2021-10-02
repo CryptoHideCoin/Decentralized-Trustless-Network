@@ -2,7 +2,7 @@
 Option Compare Text
 
 Imports CHCCommonLibrary.Support
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 Imports CHCBasicCryptographyLibrary.AreaEngine.Encryption.Base58Signature
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCProtocolLibrary
@@ -92,7 +92,7 @@ Namespace AreaEngine.Ledger
 
             Public Class CurrentVolumesIndexEngine
 
-                Inherits BaseFileDB(Of CurrentVolume.CurrentIndexInformation)
+                Inherits BaseFile(Of CurrentVolume.CurrentIndexInformation)
 
                 Private _fileCorrupted As Boolean = False
                 Private _mismatchedSignature As Boolean = False
@@ -172,7 +172,7 @@ Namespace AreaEngine.Ledger
 
             Private Class CurrentVolumeFileEngine
 
-                Inherits BaseFileDB(Of RequestAtom)
+                Inherits BaseFile(Of RequestAtom)
 
 
 
@@ -407,7 +407,7 @@ Namespace AreaEngine.Ledger
                 Catch ex As Exception
                     serviceState.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("CurrentVolumeEngine.init", "Error:" & ex.Message, "fatal")
+                    log.track("CurrentVolumeEngine.init", ex.Message, "fatal")
 
                     Return False
                 End Try

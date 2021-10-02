@@ -5,7 +5,7 @@ Imports System.Web.Http
 
 Imports CHCCommonLibrary.AreaCommon.Models.General
 Imports CHCProtocolLibrary.AreaCommon
-Imports CHCCommonLibrary.AreaEngine.Encryption
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 
 
 
@@ -27,7 +27,6 @@ Namespace Controllers
         ''' <param name="hashValue"></param>
         ''' <returns></returns>
         Public Function getValue(ByVal hashValue As String) As AreaProtocol.A0x0.RequestResponseModel
-            Dim engine As New CHCCommonLibrary.AreaEngine.DataFileManagement.IOFast(Of AreaProtocol.A0x0.RequestModel)
             Dim result As New AreaProtocol.A0x0.RequestResponseModel
             Try
                 AreaCommon.log.track("A0x0Controller.getValue", "Begin")
@@ -36,17 +35,11 @@ Namespace Controllers
 
                 If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
                     If (AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.onLine) Then
-
-                        engine.fileName = IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, hashValue & ".request")
-
-                        If engine.read() Then
-                            result.netName = engine.data.netName
-                            result.publicAddressRequester = engine.data.publicAddressRequester
-                            result.requestCode = engine.data.requestCode
-                            result.requestDateTimeStamp = engine.data.requestDateTimeStamp
-                            result.requestHash = engine.data.requestHash
-                            result.requestSignature = engine.data.requestSignature
-                        End If
+                        With IOFast(Of AreaProtocol.A0x0.RequestModel).read(IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, hashValue & ".request"))
+                            result.common = .common
+                            result.netName = .netName
+                            result.signature = .signature
+                        End With
                     Else
                         result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                     End If
@@ -74,16 +67,16 @@ Namespace Controllers
             Try
                 AreaCommon.log.track("A0x0Controller.putValue", "Begin")
 
-                If AreaSecurity.checkSignature(value.requestHash, value.requestSignature, value.publicAddressRequester) Then
+                If AreaSecurity.checkSignature(value.getHash(), value.signature, value.common.publicAddressRequester) Then
                     If AreaProtocol.A0x0.Manager.saveTemporallyRequest(value) Then
                         AreaCommon.log.track("A0x0Manager.putValue", "request - Saved")
 
-                        If Not AreaCommon.flow.addNewRequestDirect(value.requestHash, value.requestCode, value.requestDateTimeStamp, ticketNumber) Then
+                        If Not AreaCommon.flow.addNewRequestDirect(value.getHash(), value.common.requestCode, value.common.requestDateTimeStamp, ticketNumber) Then
                             AreaCommon.log.track("A0x0Manager.putValue", "Error during addNewRequestDirect")
                         End If
                     End If
 
-                    If Not AreaCommon.flow.addNewRequestDirect(value.requestHash, value.requestCode, value.requestDateTimeStamp, ticketNumber) Then
+                    If Not AreaCommon.flow.addNewRequestDirect(value.getHash(), value.common.requestCode, value.common.requestDateTimeStamp, ticketNumber) Then
                         result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                         result.errorDescription = "503 - Generic Error"
                     End If
@@ -99,7 +92,7 @@ Namespace Controllers
                 AreaCommon.log.track("A0x0Controller.putValue", "An error occurrent during execute: " & ex.Message, "fatal")
             End Try
 
-            Return AreaSecurity.completeResponse(result, value.requestSignature)
+            Return AreaSecurity.completeResponse(result, value.signature)
         End Function
 
     End Class

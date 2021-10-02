@@ -62,7 +62,7 @@ Namespace AreaLedger
 
                 Return result
             Catch ex As Exception
-                log.track("LedgerSupportEngine.foundRequestInLedger", "Error:" & ex.Message, "error")
+                log.track("LedgerSupportEngine.foundRequestInLedger", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -102,7 +102,7 @@ Namespace AreaLedger
 
                 log.track("LedgerSupportEngine.init", "Complete")
             Catch ex As Exception
-                log.track("LedgerSupportEngine.init", "Error:" & ex.Message, "error")
+                log.track("LedgerSupportEngine.init", ex.Message, "fatal")
             End Try
 
             Return False

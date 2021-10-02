@@ -1,7 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 
 
 
@@ -12,7 +12,7 @@ Namespace AreaWallet.Support
 
     Public Class KeyStoreEngine
 
-        Inherits BaseFileDB(Of List(Of KeyStoreItem))
+        Inherits BaseFile(Of List(Of KeyStoreItem))
 
         Public Class KeyStoreItem
             Public Property name As String = ""

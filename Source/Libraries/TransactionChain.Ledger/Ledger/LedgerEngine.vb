@@ -16,16 +16,15 @@ Namespace AreaLedger
         Public Class SingleRecordLedger
 
             Public Property id As Integer = 0
-            Public Property approvedDate As Double = 0
+            Public Property registrationDate As Double = 0
             Public Property actionCode As String = ""
-            Public Property requester As String = ""
-            Public Property detailInformation As String = ""
+            Public Property requesterPublicAddress As String = ""
+            Public Property approverPublicAddress As String = ""
             Public Property requestHash As String = ""
-            Public Property approvedHash As String = ""
             Public Property consensusHash As String = ""
+            Public Property detailInformation As String = ""
             Public Property currentHash As String = ""
             Public Property progressiveHash As String = ""
-
 
             Private Function fillEmptyText(ByVal value As String) As String
                 If (value.Trim.Length > 0) Then
@@ -50,7 +49,7 @@ Namespace AreaLedger
                         End If
 
                         If IsNumeric(elements(1)) Then
-                            If Not Double.TryParse(elements(1), approvedDate) Then
+                            If Not Double.TryParse(elements(1), registrationDate) Then
                                 Return False
                             End If
                         Else
@@ -58,11 +57,11 @@ Namespace AreaLedger
                         End If
 
                         actionCode = elements(2)
-                        requester = elements(3)
-                        detailInformation = elements(4)
+                        requesterPublicAddress = elements(3)
+                        approverPublicAddress = elements(4)
                         requestHash = elements(5)
-                        approvedHash = elements(6)
                         consensusHash = elements(7)
+                        detailInformation = elements(4)
                         currentHash = elements(8)
                         progressiveHash = elements(9)
 
@@ -79,13 +78,13 @@ Namespace AreaLedger
                 Dim tmp As String = ""
 
                 tmp += id.ToString() & separator
-                tmp += approvedDate.ToString() & separator
+                tmp += registrationDate.ToString() & separator
                 tmp += actionCode & separator
-                tmp += requester & separator
-                tmp += detailInformation & separator
+                tmp += requesterPublicAddress & separator
+                tmp += approverPublicAddress & separator
                 tmp += requestHash & separator
-                tmp += fillEmptyText(approvedHash) & separator
                 tmp += fillEmptyText(consensusHash) & separator
+                tmp += detailInformation & separator
 
                 If Not limited Then
                     tmp += currentHash & separator
@@ -175,11 +174,11 @@ Namespace AreaLedger
 
                 connectionDB.Close()
 
-                log.track("LedgerEngine.createDBBlockLedgerIdentity", "Connection close")
+                log.track("LedgerEngine.createDBBlockLedgerIdentity", "Complete")
 
                 Return True
             Catch ex As Exception
-                log.track("LedgerEngine.createDBBlockLedgerIdentity", "Error:" & ex.Message, "error")
+                log.track("LedgerEngine.createDBBlockLedgerIdentity", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -195,13 +194,13 @@ Namespace AreaLedger
 
                 sql += "CREATE TABLE blockData "
                 sql += " (record_id INTEGER PRIMARY KEY, "
-                sql += "  approvedDate DOUBLE NOT NULL, "
+                sql += "  registrationDate DOUBLE NOT NULL, "
                 sql += "  actionCode NVARCHAR(10) NOT NULL, "
-                sql += "  requester NVARCHAR(4096) NOT NULL, "
-                sql += "  detailInformation NVARCHAR(4096) NOT NULL, "
+                sql += "  requesterPublicAddress NVARCHAR(4096) NOT NULL, "
+                sql += "  approverPublicAddress NVARCHAR(65536) NOT NULL, "
                 sql += "  requestHash NVARCHAR(128) NOT NULL, "
-                sql += "  approvedHash NVARCHAR(128) NOT NULL, "
                 sql += "  consensusHash NVARCHAR(128) NOT NULL, "
+                sql += "  detailInformation NVARCHAR(65536) NOT NULL, "
                 sql += "  currentHash NVARCHAR(128) NOT NULL, "
                 sql += "  progressiveHash NVARCHAR(128) NOT NULL "
                 sql += ");"
@@ -226,7 +225,7 @@ Namespace AreaLedger
 
                 Return True
             Catch ex As Exception
-                log.track("LedgerEngine.createDBBlockLedger", "Error:" & ex.Message, "error")
+                log.track("LedgerEngine.createDBBlockLedger", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -267,7 +266,7 @@ Namespace AreaLedger
 
                 Return True
             Catch ex As Exception
-                log.track("LedgerEngine.insertSQLPropertyIdentityDB", "Error:" & ex.Message, "error")
+                log.track("LedgerEngine.insertSQLPropertyIdentityDB", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -312,7 +311,7 @@ Namespace AreaLedger
                     Return True
                 End If
             Catch ex As Exception
-                log.track("LedgerEngine.initDBLedger", "Error:" & ex.Message, "error")
+                log.track("LedgerEngine.initDBLedger", ex.Message, "fatal")
             Finally
                 log.track("LedgerEngine.initDBLedger", "Complete")
             End Try
@@ -329,16 +328,16 @@ Namespace AreaLedger
                 log.track("LedgerEngine.saveDataToDB", "Begin")
 
                 sql += "INSERT INTO blockData "
-                sql += " (record_id, approvedDate, actionCode, requester, detailInformation, requestHash, approvedHash, consensusHash, currentHash, progressiveHash) "
+                sql += " (record_id, registrationDate, actionCode, requesterPublicAddress, approverPublicAddress, requestHash, consensusHash, detailInformation, currentHash, progressiveHash) "
                 sql += "VALUES "
                 sql += " (" & currentRecord.id & ", "
-                sql += "'" & currentRecord.approvedDate & "', "
+                sql += "'" & currentRecord.registrationDate & "', "
                 sql += "'" & currentRecord.actionCode & "', "
-                sql += "'" & currentRecord.requester & "', "
-                sql += "'" & currentRecord.detailInformation & "', "
+                sql += "'" & currentRecord.requesterPublicAddress & "', "
+                sql += "'" & currentRecord.approverPublicAddress & "', "
                 sql += "'" & currentRecord.requestHash & "', "
-                sql += "'" & currentRecord.approvedHash & "', "
                 sql += "'" & currentRecord.consensusHash & "', "
+                sql += "'" & currentRecord.detailInformation & "', "
                 sql += "'" & currentRecord.currentHash & "', "
                 sql += "'" & currentRecord.progressiveHash & "' "
                 sql += ")"
@@ -363,7 +362,7 @@ Namespace AreaLedger
 
                 Return True
             Catch ex As Exception
-                log.track("LedgerEngine.saveDataToDB", "Error:" & ex.Message, "error")
+                log.track("LedgerEngine.saveDataToDB", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -434,12 +433,19 @@ Namespace AreaLedger
 
                 Return result
             Catch ex As Exception
-                log.track("LedgerEngine.saveAndClean", "Error:" & ex.Message, "error")
+                log.track("LedgerEngine.saveAndClean", ex.Message, "fatal")
 
                 Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
             End Try
         End Function
 
+
+        ''' <summary>
+        ''' This method provide to init a db engine
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="creationLedgerDate"></param>
+        ''' <returns></returns>
         Public Function init(ByVal path As String, ByVal creationLedgerDate As Double) As Boolean
             Try
                 log.track("LedgerEngine.init", "Begin")
@@ -461,7 +467,7 @@ Namespace AreaLedger
                     Return True
                 End If
             Catch ex As Exception
-                log.track("LedgerEngine.init", "Error:" & ex.Message, "error")
+                log.track("LedgerEngine.init", ex.Message, "fatal")
             End Try
 
             Return False

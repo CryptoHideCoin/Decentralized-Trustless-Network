@@ -1,15 +1,23 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' Engine: AES Encryption
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 02/10/2021
+' ****************************************
+
 
 
 
 
 Namespace AreaEngine.Encryption
 
-
+    ''' <summary>
+    ''' This static class manage encryption/decryption string 
+    ''' </summary>
     Public Class AES
-
 
         ''' <summary>
         ''' This method provide to encrypt a string with a simmetric encryption (AES)
@@ -17,7 +25,7 @@ Namespace AreaEngine.Encryption
         ''' <param name="content"></param>
         ''' <param name="key"></param>
         ''' <returns></returns>
-        Public Shared Function encrypt(ByVal content As String, ByVal key As String) As String
+        <DebuggerHiddenAttribute()> Public Shared Function encrypt(ByVal content As String, ByVal key As String) As String
             Dim aes As New Security.Cryptography.RijndaelManaged
             Dim hash_AES As New Security.Cryptography.MD5CryptoServiceProvider
             Dim encrypted As String = ""
@@ -36,13 +44,11 @@ Namespace AreaEngine.Encryption
                 Dim Buffer As Byte() = Text.Encoding.ASCII.GetBytes(content)
 
                 encrypted = Convert.ToBase64String(DESEncrypter.TransformFinalBlock(Buffer, 0, Buffer.Length))
-
             Catch ex As Exception
             End Try
 
             Return encrypted
         End Function
-
 
         ''' <summary>
         ''' This method provide to crypt a string with a simmetric crypt (AES)
@@ -50,7 +56,7 @@ Namespace AreaEngine.Encryption
         ''' <param name="content"></param>
         ''' <param name="key"></param>
         ''' <returns></returns>
-        Public Shared Function decrypt(ByVal content As String, ByVal key As String) As String
+        <DebuggerHiddenAttribute()> Public Shared Function decrypt(ByVal content As String, ByVal key As String) As String
             Dim AES As New Security.Cryptography.RijndaelManaged
             Dim Hash_AES As New Security.Cryptography.MD5CryptoServiceProvider
             Dim decrypted As String = ""
@@ -74,7 +80,6 @@ Namespace AreaEngine.Encryption
 
             Return decrypted
         End Function
-
 
     End Class
 

@@ -85,10 +85,10 @@ Namespace Controllers
                 AreaCommon.log.track("RequestController.putValue", "An error occurrent during execute: " & ex.Message, "fatal")
             End Try
 
-            toString = General.RemoteResponse.determinateStringObject(result)
-            toHash = HashSHA.generateSHA256(toString)
-
-            result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKey, toHash)
+            Try
+                result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKey, value.getHash())
+            Catch ex As Exception
+            End Try
 
             Return result
         End Function

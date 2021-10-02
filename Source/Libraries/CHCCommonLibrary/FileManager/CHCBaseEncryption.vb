@@ -1,6 +1,13 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' Engine: Base Encryption
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 02/10/2021
+' ****************************************
+
 
 Imports System.IO
 Imports System.Xml.Serialization
@@ -10,21 +17,29 @@ Imports CHCCommonLibrary.AreaEngine.Encryption
 
 
 
-Namespace AreaEngine.DataFileManagement
+Namespace AreaEngine.DataFileManagement.Encrypted
 
-
+    ''' <summary>
+    ''' This module contain a secureBaseKey general
+    ''' </summary>
     Public Module ModuleMain
+
         Public secureBaseKey As String
+
     End Module
 
-    Public Class BaseEncryption(Of ClassType As {New})
+    ''' <summary>
+    ''' This class manage (crypt encrypt) a file with a generic object
+    ''' </summary>
+    ''' <typeparam name="ClassType"></typeparam>
+    Public Class BaseFile(Of ClassType As {New})
+
         Private _originalCryptoKEY As String
         Private _combineCryptoKEY As String
 
-        Public data As New ClassType
+        Public Property data As New ClassType
         Public Property fileName As String = ""
         Public Property noCrypt As Boolean = False
-
         Public Property cryptoKEY() As String
             Get
                 Return _originalCryptoKEY
@@ -35,13 +50,18 @@ Namespace AreaEngine.DataFileManagement
             End Set
         End Property
 
-
-        Public Sub New()
+        ''' <summary>
+        ''' This method provide to initialize the object
+        ''' </summary>
+        <DebuggerHiddenAttribute()> Public Sub New()
             _combineCryptoKEY = secureBaseKey & "-"
         End Sub
 
-
-        Public Function read() As Boolean
+        ''' <summary>
+        ''' This method provide to read a file and decode the content
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function read() As Boolean
             Dim serializer As New XmlSerializer(data.GetType)
             Dim stream As StreamReader
             Dim memory As MemoryStream
@@ -73,8 +93,11 @@ Namespace AreaEngine.DataFileManagement
             End Try
         End Function
 
-
-        Public Function save() As Boolean
+        ''' <summary>
+        ''' This method provide to save a file and encode the content
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function save() As Boolean
             Dim temp As String
             Dim streamWriter As StreamWriter
             Dim engine As New XmlSerializer(data.GetType)
@@ -115,6 +138,5 @@ Namespace AreaEngine.DataFileManagement
         End Function
 
     End Class
-
 
 End Namespace

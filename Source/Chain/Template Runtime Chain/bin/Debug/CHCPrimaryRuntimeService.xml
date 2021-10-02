@@ -205,12 +205,15 @@ CHCPrimaryRuntimeService
  </summary>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.Manager.extractToRequest(CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestResponseModel@)">
+<member name="T:CHCPrimaryRuntimeService.AreaFlow.EnumOperationPosition">
  <summary>
- This method provide to return an RequestModel from RequestResponseModel
+ This enumeration contain the value of a single phase of a request
  </summary>
- <param name="value"></param>
- <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaFlow.RequestExtended">
+ <summary>
+ This class contain all information of all intermediate phase of process a request
+ </summary>
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestModel@)">
  <summary>
@@ -374,6 +377,91 @@ CHCPrimaryRuntimeService
  <summary>
  This method provide to execute a job of processor code action
  </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.RemoteVerifier.work">
+ <summary>
+ This method provide to execute a job of listen and process of a remote bulletin
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Requester.formalCheck(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to check of a formal content of a request
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Requester.sendBroadCastNotice(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to send a broadcast notice to the network
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Requester.notOldRequest(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to check the a request is not in the archive
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Requester.ledgerInit">
+ <summary>
+ This method provide to initialize a ledger db
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Requester.work">
+ <summary>
+ This method provide to start a requester work
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.sendToMasterNode(CHCProtocolLibrary.AreaCommon.Models.Network.NotifyModel@,System.String)">
+ <summary>
+ This method provide to send to masternode an element
+ </summary>
+ <param name="dataPack"></param>
+ <param name="publicAddressIP"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.sendToMasterNodeBulletin(CHCPrimaryRuntimeService.AreaConsensus.RequestProcess@,System.String)">
+ <summary>
+ This method provide to send a bullettin to masternode
+ </summary>
+ <param name="dataObject"></param>
+ <param name="publicAddressIP"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.sendInBroadCast(System.String@,System.String,CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeSenders@)">
+ <summary>
+ This method provide to send a broadcast a request
+ </summary>
+ <param name="requestCode"></param>
+ <param name="requestHash"></param>
+ <param name="deliveryList"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.sendBulletinInBroadCast(CHCPrimaryRuntimeService.AreaConsensus.RequestProcess@,CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeSenders@)">
+ <summary>
+ This method provide to send bullettin in broadcast
+ </summary>
+ <param name="dataObject"></param>
+ <param name="deliveryList"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.work">
+ <summary>
+ This method provide to work a sender process
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Verifier.evaluateTheRequest(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to evaluate the request
+ </summary>
+ <param name="value"></param>
  <returns></returns>
 </member>
 </members>

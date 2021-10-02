@@ -1,7 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 Imports CHCCommonLibrary.Support
 
 
@@ -9,7 +9,7 @@ Imports CHCCommonLibrary.Support
 
 Public Class AppSettings
 
-    Inherits BaseEncryption(Of SettingsData)
+    Inherits BaseFile(Of SettingsData)
 
 
 

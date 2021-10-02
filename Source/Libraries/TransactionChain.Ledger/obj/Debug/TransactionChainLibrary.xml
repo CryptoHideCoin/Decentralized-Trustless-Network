@@ -22,5 +22,13 @@ TransactionChainLibrary
   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
 </summary>
 </member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.init(System.String,System.Double)">
+ <summary>
+ This method provide to init a db engine
+ </summary>
+ <param name="path"></param>
+ <param name="creationLedgerDate"></param>
+ <returns></returns>
+</member>
 </members>
 </doc>

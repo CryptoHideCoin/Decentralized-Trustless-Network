@@ -95,23 +95,23 @@ Namespace AreaProtocol
 
             Shared Function verify(ByVal requestHash As String) As Nullable(Of Boolean)
                 Try
-                    Dim file As New IOFast(Of RequestModel)
-                    Dim proceed As Boolean = True
+                    'Dim file As New IOFast(Of RequestModel)
+                    'Dim proceed As Boolean = True
 
-                    file.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, requestHash & ".request")
+                    'file.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, requestHash & ".request")
 
-                    If file.read() Then
-                        If proceed Then
-                            proceed = (file.data.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime())
-                        End If
-                        If proceed Then
-                            'proceed = file.data.
-                        End If
-                    Else
-                        proceed = False
-                    End If
+                    'If file.read() Then
+                    '    If proceed Then
+                    '        proceed = (file.data.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime())
+                    '    End If
+                    '    If proceed Then
+                    '        'proceed = file.data.
+                    '    End If
+                    'Else
+                    '    proceed = False
+                    'End If
 
-                    Return proceed
+                    'Return proceed
                 Catch ex As Exception
                     Return Nothing
                 End Try
@@ -119,22 +119,22 @@ Namespace AreaProtocol
 
             Shared Function evaluate(ByRef value As AreaFlow.RequestExtended) As Nullable(Of Boolean)
                 Try
-                    Dim file As New IOFast(Of RequestModel)
-                    Dim proceed As Boolean = True
+                    'Dim file As New IOFast(Of RequestModel)
+                    'Dim proceed As Boolean = True
 
-                    file.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, value.requestHash & ".request")
+                    'file.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, value.requestHash & ".request")
 
-                    If file.read() Then
+                    'If file.read() Then
 
-                        value.generalStatus = AreaFlow.RequestExtended.EnumOperationPosition.completeWithPositiveResult
-                    Else
-                        proceed = False
+                    '    value.generalStatus = AreaFlow.EnumOperationPosition.completeWithPositiveResult
+                    'Else
+                    '    proceed = False
 
-                        value.rejectedNote = "Masternode problem"
-                        value.generalStatus = AreaFlow.RequestExtended.EnumOperationPosition.completeWithPositiveResult
-                    End If
+                    '    value.rejectedNote = "Masternode problem"
+                    '    value.generalStatus = AreaFlow.EnumOperationPosition.completeWithPositiveResult
+                    'End If
 
-                    Return proceed
+                    'Return proceed
                 Catch ex As Exception
                     Return Nothing
                 End Try
@@ -189,13 +189,13 @@ Namespace AreaProtocol
             ''' <returns></returns>
             Public Shared Function saveTemporallyRequest(ByRef value As RequestModel) As Boolean
                 Try
-                    Dim requestFileEngine As New IOFast(Of RequestModel)
+                    'Dim requestFileEngine As New IOFast(Of RequestModel)
 
-                    requestFileEngine.data = value
+                    'requestFileEngine.data = value
 
-                    requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, value.requestHash & ".request")
+                    'requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.temporally, value.requestHash & ".request")
 
-                    Return requestFileEngine.save()
+                    'Return requestFileEngine.save()
                 Catch ex As Exception
                     Return False
                 End Try

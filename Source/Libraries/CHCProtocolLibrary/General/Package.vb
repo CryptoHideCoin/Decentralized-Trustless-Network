@@ -1,7 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 
 
 
@@ -33,13 +33,13 @@ Namespace AreaUpdate
 
     Public Class ModuleListEngine
 
-        Inherits BaseFileDB(Of List(Of PackageRelease))
+        Inherits BaseFile(Of List(Of PackageRelease))
 
     End Class
 
     Public Class PackageReleaseEngine
 
-        Inherits BaseFileDB(Of List(Of PackageRelease))
+        Inherits BaseFile(Of List(Of PackageRelease))
 
     End Class
 

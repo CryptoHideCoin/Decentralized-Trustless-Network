@@ -12,8 +12,16 @@ Namespace AreaWorker
         Public Property workerOn As Boolean = False
 
 
+        ''' <summary>
+        ''' This method provide to send to masternode an element
+        ''' </summary>
+        ''' <param name="dataPack"></param>
+        ''' <param name="publicAddressIP"></param>
+        ''' <returns></returns>
         Private Function sendToMasterNode(ByRef dataPack As Models.Network.NotifyModel, ByVal publicAddressIP As String) As Boolean
             Try
+                AreaCommon.log.track("Sender.sendToMasterNode", "Begin")
+
                 Dim remote As New ProxyWS(Of Models.Network.NotifyModel)
 
                 remote.url = publicAddressIP & "/notify/request/"
@@ -28,6 +36,8 @@ Namespace AreaWorker
 
                 remote = Nothing
 
+                AreaCommon.log.track("Sender.sendToMasterNode", "Complete")
+
                 Return False
             Catch ex As Exception
                 AreaCommon.log.track("Sender.sendToMasterNode", ex.Message, "fatal")
@@ -36,8 +46,16 @@ Namespace AreaWorker
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to send a bullettin to masternode
+        ''' </summary>
+        ''' <param name="dataObject"></param>
+        ''' <param name="publicAddressIP"></param>
+        ''' <returns></returns>
         Private Function sendToMasterNodeBulletin(ByRef dataObject As AreaConsensus.RequestProcess, ByVal publicAddressIP As String) As Boolean
             Try
+                AreaCommon.log.track("Sender.sendToMasterNodeBulletin", "Begin")
+
                 Dim remote As New ProxyWS(Of AreaConsensus.RequestProcess)
 
                 remote.url = publicAddressIP & "/notify/bulletin/"
@@ -52,6 +70,8 @@ Namespace AreaWorker
 
                 remote = Nothing
 
+                AreaCommon.log.track("Sender.sendToMasterNodeBulletin", "Complete")
+
                 Return False
             Catch ex As Exception
                 AreaCommon.log.track("Sender.sendToMasterNodeBulletin", ex.Message, "fatal")
@@ -60,10 +80,19 @@ Namespace AreaWorker
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to send a broadcast a request
+        ''' </summary>
+        ''' <param name="requestCode"></param>
+        ''' <param name="requestHash"></param>
+        ''' <param name="deliveryList"></param>
+        ''' <returns></returns>
         Private Function sendInBroadCast(ByRef requestCode As String, ByVal requestHash As String, ByRef deliveryList As AreaCommon.Masternode.MasternodeSenders) As AreaCommon.Masternode.MasternodeSenders
             Dim newDeliveryList As New AreaCommon.Masternode.MasternodeSenders
 
             Try
+                AreaCommon.log.track("Sender.sendInBroadCast", "Begin")
+
                 Dim masterNode As AreaCommon.Masternode.MasternodeSenders.MasternodeSender
                 Dim dataPack As New Models.Network.NotifyModel
                 Dim privateKeyRAW As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
@@ -89,6 +118,8 @@ Namespace AreaWorker
 
                     masterNode = deliveryList.getFirst()
                 Loop
+
+                AreaCommon.log.track("Sender.sendInBroadCast", "Complete")
             Catch ex As Exception
                 AreaCommon.log.track("Sender.sendInBroadCast", ex.Message, "fatal")
             End Try
@@ -96,10 +127,18 @@ Namespace AreaWorker
             Return newDeliveryList
         End Function
 
+        ''' <summary>
+        ''' This method provide to send bullettin in broadcast
+        ''' </summary>
+        ''' <param name="dataObject"></param>
+        ''' <param name="deliveryList"></param>
+        ''' <returns></returns>
         Private Function sendBulletinInBroadCast(ByRef dataObject As AreaConsensus.RequestProcess, ByRef deliveryList As AreaCommon.Masternode.MasternodeSenders) As AreaCommon.Masternode.MasternodeSenders
             Dim newDeliveryList As New AreaCommon.Masternode.MasternodeSenders
 
             Try
+                AreaCommon.log.track("Sender.sendBulletinInBroadCast", "Begin")
+
                 Dim masterNode As AreaCommon.Masternode.MasternodeSenders.MasternodeSender
 
                 masterNode = deliveryList.getFirst()
@@ -113,6 +152,8 @@ Namespace AreaWorker
 
                     masterNode = deliveryList.getFirst()
                 Loop
+
+                AreaCommon.log.track("Sender.sendBulletinInBroadCast", "Complete")
             Catch ex As Exception
                 AreaCommon.log.track("Sender.sendBulletinInBroadCast", ex.Message, "fatal")
             End Try
@@ -120,6 +161,11 @@ Namespace AreaWorker
             Return newDeliveryList
         End Function
 
+        ''' <summary>
+        ''' This method provide to work a sender process
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()>
         Public Function work() As Boolean
             Try
                 Dim newDeliveryList As New AreaCommon.Masternode.MasternodeSenders
@@ -140,17 +186,16 @@ Namespace AreaWorker
                             newDeliveryList = sendInBroadCast(item.requestCode, item.dataObject.requestHash, item.deliveryList)
                         End If
 
-
                         AreaCommon.flow.removeRequestToSend(item)
 
-                        If newDeliveryList.count > 0 Then
+                        If (newDeliveryList.count > 0) Then
                             If item.tryNumber < 3 Then
                                 AreaCommon.flow.addNewRequestToSend(item.requestCode, item.requestHash, newDeliveryList, item.dataObject, item.tryNumber + 1)
                             End If
                         End If
                     End If
 
-                    Threading.Thread.Sleep(10)
+                    Threading.Thread.Sleep(1)
                 Loop
 
                 workerOn = False

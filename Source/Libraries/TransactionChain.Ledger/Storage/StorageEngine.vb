@@ -2,7 +2,7 @@
 Option Compare Text
 
 Imports CHCCommonLibrary.Support
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 Imports CHCBasicCryptographyLibrary.AreaEngine.Encryption.Base58Signature
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCProtocolLibrary
@@ -102,7 +102,7 @@ Namespace AreaEngine.Ledger
 
             Public Class volumesIndexEngine
 
-                Inherits BaseFileDB(Of Storage.VolumesIndexInformation)
+                Inherits BaseFile(Of Storage.VolumesIndexInformation)
 
                 Private _fileCorrupted As Boolean = False
                 Private _mismatchedSignature As Boolean = False
@@ -332,7 +332,7 @@ Namespace AreaEngine.Ledger
                 Catch ex As Exception
                     serviceState.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("StorageEngine.init", "Error:" & ex.Message, "fatal")
+                    log.track("StorageEngine.init", ex.Message, "fatal")
 
                     Return False
                 End Try
@@ -357,8 +357,7 @@ Namespace AreaEngine.Ledger
                 Catch ex As Exception
                     serviceState.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("StorageEngine.cleanData", "Error:" & ex.Message)
-                    log.trackIntoConsole("StorageEngine.cleanData - Error" & ex.Message)
+                    log.track("StorageEngine.cleanData", ex.Message, "fatal")
 
                     Return False
                 End Try

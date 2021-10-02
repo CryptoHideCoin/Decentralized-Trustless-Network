@@ -1,8 +1,15 @@
 ﻿Option Explicit On
 Option Compare Text
 
-Imports CHCCommonLibrary.AreaEngine.Miscellaneous
+' ****************************************
+' Engine: Log Engine
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 02/10/2021
+' ****************************************
 
+
+Imports CHCCommonLibrary.AreaEngine.Miscellaneous
 
 
 
@@ -10,15 +17,27 @@ Imports CHCCommonLibrary.AreaEngine.Miscellaneous
 
 Namespace Support
 
-
+    ''' <summary>
+    ''' This class manage a Log Engine
+    ''' </summary>
     Public Class LogEngine
 
+        ''' <summary>
+        ''' This enumeration contain the following value:
+        ''' 
+        ''' dontTrackEver - Don't save a log never
+        ''' trackOnlyBootstrapAndError - Track only bootstrap and error
+        ''' trackAll - Track all event
+        ''' </summary>
         Public Enum TrackRuntimeModeEnum
             dontTrackEver
             trackOnlyBootstrapAndError
             trackAll
         End Enum
 
+        ''' <summary>
+        ''' This class contain the data of a log file
+        ''' </summary>
         Public Class TrackData
             Public istant As String
             Public dateTime As String
@@ -27,14 +46,12 @@ Namespace Support
             Public content As String
         End Class
 
-
         Private _cache As New List(Of String)
         Private _path As String
         Private _lastInfoTrack As String
         Private _called As Boolean = False
         Private _registry As RegistryEngine
         Private _CurrentPage As String = ""
-
 
         Public Property saveMode As TrackRuntimeModeEnum = TrackRuntimeModeEnum.dontTrackEver
         Public Property inBootStrapAction As Boolean = False
@@ -134,12 +151,11 @@ Namespace Support
         ''' <param name="position"></param>
         ''' <param name="content"></param>
         ''' <param name="messageType"></param>
-        <DebuggerHiddenAttribute()>
-        Public Sub track(ByVal position As String, ByVal content As String, Optional ByVal messageType As String = "info", Optional ByVal printIntoConsole As Boolean = False)
+        <DebuggerHiddenAttribute()> Public Sub track(ByVal position As String, ByVal content As String, Optional ByVal messageType As String = "info", Optional ByVal printIntoConsole As Boolean = False)
             Try
                 Dim fatalError As Boolean = (messageType.CompareTo("fatal") = 0)
 
-                _lastInfoTrack = timestampFromDateTime() & "|" & atMomentGMT() & "|" & messageType & "|" & position & "|" & content
+                _lastInfoTrack = timeStampFromDateTime() & "|" & atMomentGMT() & "|" & messageType & "|" & position & "|" & content
 
                 If IsNothing(completeFileName) And useCache Then
                     _cache.Add(_lastInfoTrack)
@@ -188,8 +204,7 @@ Namespace Support
         ''' This method provide to track into console
         ''' </summary>
         ''' <param name="message"></param>
-        <DebuggerHiddenAttribute()>
-        Public Sub trackIntoConsole(Optional ByVal message As String = "")
+        <DebuggerHiddenAttribute()> Public Sub trackIntoConsole(Optional ByVal message As String = "")
             Try
                 If Not noPrintConsole Then
                     Console.WriteLine(message)
@@ -202,7 +217,7 @@ Namespace Support
         ''' This method provide to return a Last Track of log
         ''' </summary>
         ''' <returns></returns>
-        Public Function getLastTrack() As TrackData
+        <DebuggerHiddenAttribute()> Public Function getLastTrack() As TrackData
             Dim tmp = _lastInfoTrack.Split("|")
             Dim result As New TrackData
 
@@ -221,7 +236,7 @@ Namespace Support
         ''' This method provide to create an access Log
         ''' </summary>
         ''' <returns></returns>
-        Public Function createAccess() As LogEngine
+        <DebuggerHiddenAttribute()> Public Function createAccess() As LogEngine
             Dim tmp As New LogEngine
 
             tmp.init(_path, "Access-" & Now.ToUniversalTime().ToString("yyyyMMdd") & "-" & Guid.NewGuid().ToString() & ".track")

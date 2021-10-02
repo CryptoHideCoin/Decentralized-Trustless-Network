@@ -11,7 +11,11 @@ Namespace AreaWorker
         Public Property workerOn As Boolean = False
 
 
-
+        ''' <summary>
+        ''' This method provide to evaluate the request
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
         Private Function evaluateTheRequest(ByRef value As AreaFlow.RequestExtended) As Nullable(Of Boolean)
             Try
                 AreaCommon.log.track("Verifier.evaluateTheRequest", "Begin")
@@ -19,6 +23,8 @@ Namespace AreaWorker
                 Select Case value.requestCode
                     Case "a0x0" : Return AreaProtocol.A0x0.FormalCheck.evaluate(value)
                 End Select
+
+                AreaCommon.log.track("Verifier.evaluateTheRequest", "Complete")
 
                 Return False
             Catch ex As Exception
@@ -28,7 +34,11 @@ Namespace AreaWorker
             End Try
         End Function
 
-
+        ''' <summary>
+        ''' This method provide to work verifier job
+        ''' </summary>
+        ''' <returns></returns>
+        '<DebuggerHiddenAttribute()>
         Public Function work() As Boolean
             Try
                 Dim item As AreaFlow.RequestExtended
@@ -41,22 +51,22 @@ Namespace AreaWorker
                     item = AreaCommon.flow.getFirstRequestToVerify()
 
                     If (item.requestHash.Length > 0) Then
-                        item.verifyPosition = AreaFlow.RequestExtended.EnumOperationPosition.inWork
+                        item.verifyPosition = AreaFlow.EnumOperationPosition.inWork
 
                         Select Case evaluateTheRequest(item)
-                            Case True : item.verifyPosition = AreaFlow.RequestExtended.EnumOperationPosition.completeWithPositiveResult
-                            Case False : item.verifyPosition = AreaFlow.RequestExtended.EnumOperationPosition.completeWithNegativeResult
-                            Case Else : item.verifyPosition = AreaFlow.RequestExtended.EnumOperationPosition.inError
+                            Case True : item.verifyPosition = AreaFlow.EnumOperationPosition.completeWithPositiveResult
+                            Case False : item.verifyPosition = AreaFlow.EnumOperationPosition.completeWithNegativeResult
+                            Case Else : item.verifyPosition = AreaFlow.EnumOperationPosition.inError
                         End Select
 
-                        If item.verifyPosition = AreaFlow.RequestExtended.EnumOperationPosition.inError Then
+                        If (item.verifyPosition = AreaFlow.EnumOperationPosition.inError) Then
                             AreaCommon.flow.removeRequest(item)
                         Else
                             item.dateAssessment = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
                             item.evaluations.notExpressed = AreaCommon.flow.createConsensusList()
                             item.evaluations.currentChainNodetotalVotes = item.evaluations.notExpressed.totalValuePoints
 
-                            If item.verifyPosition = AreaFlow.RequestExtended.EnumOperationPosition.completeWithPositiveResult Then
+                            If item.verifyPosition = AreaFlow.EnumOperationPosition.completeWithPositiveResult Then
                                 item.evaluations.setApproved(AreaCommon.state.network.publicAddressIdentity)
                             Else
                                 item.evaluations.setRejected(AreaCommon.state.network.publicAddressIdentity)

@@ -28,6 +28,8 @@ Namespace AreaWorker
         ''' <returns></returns>
         Private Function testMasterNode(ByVal addressValue As String) As Boolean
             Try
+                AreaCommon.log.track("Downloader.testMasterNode", "Begin")
+
                 Dim remote As New ProxyWS(Of RemoteResponse)
 
                 remote.url = addressValue & "/service/test"
@@ -39,6 +41,8 @@ Namespace AreaWorker
 
                     Return False
                 End If
+
+                AreaCommon.log.track("Downloader.testMasterNode", "Complete")
 
                 remote = Nothing
             Catch ex As Exception
@@ -56,6 +60,8 @@ Namespace AreaWorker
         ''' <returns></returns>
         Private Function getRequestA0x0(ByVal addressValue As String, ByRef value As String, Optional ByVal dontRetry As Boolean = False) As EnumResponseGet
             Try
+                AreaCommon.log.track("Downloader.getRequestA0x0", "Begin")
+
                 Dim remote As New ProxyWS(Of AreaProtocol.A0x0.RequestResponseModel)
                 Dim proceed As Boolean = True
 
@@ -97,6 +103,8 @@ Namespace AreaWorker
 
                     Return EnumResponseGet.inError
                 End If
+
+                AreaCommon.log.track("Downloader.getRequestA0x0", "Complete")
 
                 remote = Nothing
             Catch ex As Exception
@@ -171,7 +179,7 @@ Namespace AreaWorker
                         If proceed Then proceed = AreaCommon.flow.setRequestToSelect(item)
                     End If
 
-                    Threading.Thread.Sleep(10)
+                    Threading.Thread.Sleep(1)
                 Loop
 
                 workerOn = False

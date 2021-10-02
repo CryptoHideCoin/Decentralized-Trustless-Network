@@ -56,7 +56,7 @@ Namespace AreaCommon
                         log.track("Controllers.StartWebService", "WS Listen")
                         log.track("Controllers.StartWebService", "Webservice Run at " & _portNumber & " port")
                     Catch aggEx As AggregateException
-                        log.track("Controllers.StartWebService", "FATAL: Enable start a webservice; check admin authorizathion!", "fatal")
+                        log.track("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion!", "fatal")
 
                         closeApplication()
                     End Try

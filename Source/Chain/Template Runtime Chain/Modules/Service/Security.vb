@@ -77,8 +77,6 @@ Namespace AreaSecurity
         ''' <returns></returns>
         Public Function completeResponse(ByRef value As Object, ByVal requestSignature As String) As Object
             Try
-                Dim toString As String
-                Dim toHash As String
                 Dim key As TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                 Dim privateKey As String = key.privateKey
 
@@ -87,10 +85,7 @@ Namespace AreaSecurity
                 value.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete
                 value.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
-                toString = RemoteResponse.determinateStringObject(value) & requestSignature
-                toHash = HashSHA.generateSHA256(toString)
-
-                value.signature = WalletAddressEngine.createSignature(privateKey, toHash)
+                value.signature = WalletAddressEngine.createSignature(privateKey, HashSHA.generateSHA256(value.ToString()))
             Catch ex As Exception
             End Try
 

@@ -11,6 +11,11 @@ Namespace AreaWorker
         Public Property workerOn As Boolean = False
 
 
+        ''' <summary>
+        ''' This method provide to execute a job of listen and process of a remote bulletin
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()>
         Public Function work() As Boolean
             Try
                 Dim item As AreaConsensus.RequestProcess
@@ -27,7 +32,7 @@ Namespace AreaWorker
                         AreaCommon.consensus.processRemoteNotify(item)
                     End If
 
-                    Threading.Thread.Sleep(5)
+                    Threading.Thread.Sleep(1)
                 Loop
 
                 workerOn = False

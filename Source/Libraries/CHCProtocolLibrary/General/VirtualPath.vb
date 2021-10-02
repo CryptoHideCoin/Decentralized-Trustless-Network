@@ -1,7 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 
 
 
@@ -19,7 +19,7 @@ Namespace AreaSystem
 
         Public Class OtherPathEngine
 
-            Inherits BaseFileDB(Of List(Of OtherPath))
+            Inherits BaseFile(Of List(Of OtherPath))
 
 
             Public Class OtherPath

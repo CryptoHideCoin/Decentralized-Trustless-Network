@@ -2,14 +2,14 @@
 Option Explicit On
 
 Imports CHCCommonLibrary.Support
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
 
 
 Namespace AreaRuntime
 
     Public Class AppSettings
 
-        Inherits BaseEncryption(Of SettingsData)
+        Inherits BaseFile(Of SettingsData)
 
 
 

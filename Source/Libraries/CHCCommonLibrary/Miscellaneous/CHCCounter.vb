@@ -1,8 +1,15 @@
 ﻿Option Explicit On
 Option Compare Text
 
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+' ****************************************
+' Engine: Counter manager
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 02/10/2021
+' ****************************************
 
+
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 
 
 
@@ -10,15 +17,21 @@ Imports CHCCommonLibrary.AreaEngine.DataFileManagement
 
 Namespace Support
 
-
+    ''' <summary>
+    ''' This class manage a counter of the access
+    ''' </summary>
     Public Class CounterEngine
 
-        Inherits BaseFileDB(Of List(Of CounterData))
+        Inherits BaseFile(Of List(Of CounterData))
 
-
+        ''' <summary>
+        ''' This class contain a property of a single counter
+        ''' </summary>
         Public Class CounterData
+
             Public counterName As String = ""
             Public value As Integer = 1
+
         End Class
 
 
@@ -33,7 +46,13 @@ Namespace Support
 
 
 
-
+        ''' <summary>
+        ''' This method provide to manage log with optional adapter
+        ''' </summary>
+        ''' <param name="position"></param>
+        ''' <param name="content"></param>
+        ''' <param name="messageType"></param>
+        ''' <param name="adapterLog"></param>
         Private Sub trackLog(ByVal position As String, ByVal content As String, Optional ByVal messageType As String = "info", Optional ByVal adapterLog As Support.LogEngine = Nothing)
             If Not IsNothing(adapterLog) Then
                 adapterLog.track(position, content, messageType)
@@ -42,8 +61,6 @@ Namespace Support
             End If
         End Sub
 
-
-
         ''' <summary>
         ''' This method provide to rebuild a complete list
         ''' </summary>
@@ -51,7 +68,9 @@ Namespace Support
         Private Function rebuildIndex(Optional adapterLog As Support.LogEngine = Nothing) As Boolean
             Try
                 trackLog("Advertisements.rebuildIndex", "Begin", , adapterLog)
+
                 _keyAdverts = New Dictionary(Of String, CounterData)
+
                 trackLog("CounterEngine.rebuildIndex", "new Dictionary", , adapterLog)
 
                 For Each item In data
@@ -69,7 +88,13 @@ Namespace Support
         End Function
 
 
-
+        ''' <summary>
+        ''' This method provide to initialize the engine
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="useLogEngineAccess"></param>
+        ''' <param name="adapterLog"></param>
+        ''' <returns></returns>
         Public Function init(ByVal path As String, Optional ByVal useLogEngineAccess As Boolean = False, Optional adapterLog As Support.LogEngine = Nothing) As Boolean
             If useLogEngineAccess Then
                 adapterLog = _logEngine.createAccess()
@@ -98,8 +123,13 @@ Namespace Support
             Return True
         End Function
 
-
-
+        ''' <summary>
+        ''' This method provide to increase a specific counter
+        ''' </summary>
+        ''' <param name="counterName"></param>
+        ''' <param name="useLogEngineAccess"></param>
+        ''' <param name="adapterLog"></param>
+        ''' <returns></returns>
         Public Function increase(ByVal counterName As String, Optional ByVal useLogEngineAccess As Boolean = False, Optional adapterLog As Support.LogEngine = Nothing) As Boolean
             If useLogEngineAccess Then
                 adapterLog = _logEngine.createAccess()
@@ -152,8 +182,13 @@ Namespace Support
             Return False
         End Function
 
-
-
+        ''' <summary>
+        ''' This method provide to read the counter incomplete
+        ''' </summary>
+        ''' <param name="forceDate"></param>
+        ''' <param name="useLogEngineAccess"></param>
+        ''' <param name="adapterLog"></param>
+        ''' <returns></returns>
         Public Overloads Function read(Optional forceDate As String = "", Optional ByVal useLogEngineAccess As Boolean = False, Optional adapterLog As Support.LogEngine = Nothing) As Boolean
             If useLogEngineAccess Then
                 adapterLog = _logEngine.createAccess()
@@ -184,8 +219,12 @@ Namespace Support
             Return False
         End Function
 
-
-
+        ''' <summary>
+        ''' This method provide to save a counter incomplete into file
+        ''' </summary>
+        ''' <param name="useLogEngineAccess"></param>
+        ''' <param name="adapterLog"></param>
+        ''' <returns></returns>
         Public Overloads Function Save(Optional ByVal useLogEngineAccess As Boolean = False, Optional adapterLog As Support.LogEngine = Nothing) As Boolean
             If useLogEngineAccess Then
                 adapterLog = _logEngine.createAccess()
@@ -207,7 +246,5 @@ Namespace Support
         End Function
 
     End Class
-
-
 
 End Namespace

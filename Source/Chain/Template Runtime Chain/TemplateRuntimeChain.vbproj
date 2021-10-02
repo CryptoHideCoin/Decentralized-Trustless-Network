@@ -55,15 +55,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.12.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.5.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCRuntimeChainLibrary, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCRuntimeChainLibrary, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCRuntimeChainLibrary\CHCRuntimeChainLibrary.dll</HintPath>
     </Reference>
@@ -96,7 +96,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="TransactionChainLibrary, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TransactionChainLibrary, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCTransactionChainLibrary\TransactionChainLibrary.dll</HintPath>
     </Reference>
@@ -121,6 +121,7 @@
     <Compile Include="Classes\Common\Masternode.vb" />
     <Compile Include="Classes\Engine\ConsensusEngine.vb" />
     <Compile Include="Classes\Engine\RequestFlowEngine.vb" />
+    <Compile Include="Classes\Engine\RequestStructures.vb" />
     <Compile Include="Classes\Protocol\A0\A0x0Engine.vb" />
     <Compile Include="Classes\Protocol\A0\A0x1Engine.vb" />
     <Compile Include="Classes\Protocol\A0\A0x2Engine.vb" />

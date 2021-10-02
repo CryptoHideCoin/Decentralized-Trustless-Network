@@ -1,6 +1,13 @@
 ﻿Option Explicit On
 Option Compare Text
 
+' ****************************************
+' Engine: ProxyWS
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 02/10/2021
+' ****************************************
+
 
 Imports System.Net
 Imports Newtonsoft.Json
@@ -12,26 +19,24 @@ Imports System.Text
 
 
 
-
 Namespace AreaEngine.Communication
 
-
+    ''' <summary>
+    ''' This class manage a communication GET AND PUT with generic object into Webservice
+    ''' </summary>
+    ''' <typeparam name="ClassType"></typeparam>
     Public Class ProxyWS(Of ClassType As {New})
 
         Public data As New ClassType
         Public remoteResponse As AreaCommon.Models.General.RemoteResponse
-
-
-
         Public url As String
-
 
 
         ''' <summary>
         ''' This method provides to get a remote data
         ''' </summary>
         ''' <returns></returns>
-        Public Function getData() As String
+        <DebuggerHiddenAttribute()> Public Function getData() As String
             Try
                 Dim request As WebRequest = WebRequest.Create(url)
                 Dim response As WebResponse = request.GetResponse()
@@ -50,12 +55,11 @@ Namespace AreaEngine.Communication
             End Try
         End Function
 
-
         ''' <summary>
         ''' This method provide to standardize a data to prepare to communicate
         ''' </summary>
         ''' <returns></returns>
-        Public Function standardize() As Boolean
+        <DebuggerHiddenAttribute()> Public Function standardize() As Boolean
             Try
                 data = JsonConvert.DeserializeObject(Of ClassType)(JsonConvert.SerializeObject(data, Formatting.Indented))
 
@@ -65,12 +69,11 @@ Namespace AreaEngine.Communication
             End Try
         End Function
 
-
         ''' <summary>
         ''' This method provides to send a remote data
         ''' </summary>
         ''' <returns></returns>
-        Public Function sendData(Optional ByVal methodType As String = "PUT") As String
+        <DebuggerHiddenAttribute()> Public Function sendData(Optional ByVal methodType As String = "PUT") As String
             Dim webClient As New WebClient()
             Dim reqString() As Byte
 
@@ -104,23 +107,21 @@ Namespace AreaEngine.Communication
 
     End Class
 
-
-
+    ''' <summary>
+    ''' This class manage a communication GET AND PUT with simple type into Webservice
+    ''' </summary>
+    ''' <typeparam name="ClassType"></typeparam>
     Public Class ProxySimplyWS(Of ClassType)
 
         Public data As ClassType
-
         Public url As String
-
-
-
 
 
         ''' <summary>
         ''' This method's provides to get a remote data
         ''' </summary>
         ''' <returns></returns>
-        Public Function getData() As String
+        <DebuggerHiddenAttribute()> Public Function getData() As String
             Try
                 Dim request As WebRequest = WebRequest.Create(url)
                 Dim response As WebResponse = request.GetResponse()
@@ -139,12 +140,11 @@ Namespace AreaEngine.Communication
             End Try
         End Function
 
-
         ''' <summary>
         ''' This method's provides to send a remote data
         ''' </summary>
         ''' <returns></returns>
-        Public Function sendData(Optional ByVal methodType As String = "PUT") As String
+        <DebuggerHiddenAttribute()> Public Function sendData(Optional ByVal methodType As String = "PUT") As String
             Dim webClient As New WebClient()
             Dim reqString() As Byte
 
@@ -175,6 +175,5 @@ Namespace AreaEngine.Communication
         End Function
 
     End Class
-
 
 End Namespace

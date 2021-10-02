@@ -2,7 +2,7 @@
 Option Explicit On
 
 Imports CHCCommonLibrary.AreaEngine.Encryption
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 
 
 Namespace AreaP2P
@@ -38,7 +38,7 @@ Namespace AreaP2P
     End Class
 
     Public Class FileRequestModel
-        Inherits BaseFileDB(Of RequestModel)
+        Inherits BaseFile(Of RequestModel)
     End Class
 
 End Namespace

@@ -4,7 +4,7 @@ Option Compare Text
 Imports CHCCommonLibrary.Support
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCBasicCryptographyLibrary.AreaEngine.Encryption.Base58Signature
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 Imports CHCProtocolLibrary
 
 
@@ -141,7 +141,7 @@ Namespace AreaEngine.Ledger
 
             Public Class NodeChainTrustedEngine
 
-                Inherits BaseFileDB(Of NodeChainTrustedInformation)
+                Inherits BaseFile(Of NodeChainTrustedInformation)
 
                 Private _fileCorrupted As Boolean = False
                 Private _mismatchedSignature As Boolean = False
@@ -266,7 +266,7 @@ Namespace AreaEngine.Ledger
                 Catch ex As Exception
                     serviceState.currentAction.setError(Err.Number, ex.Message)
 
-                    log.track("NodesEngine.init", "Error:" & ex.Message, "fatal")
+                    log.track("NodesEngine.init", ex.Message, "fatal")
 
                     Return False
                 End Try

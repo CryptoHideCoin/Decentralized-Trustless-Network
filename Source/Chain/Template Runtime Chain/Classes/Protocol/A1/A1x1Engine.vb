@@ -2,7 +2,7 @@
 Option Explicit On
 
 Imports CHCCommonLibrary.Support
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 Imports CHCCommonLibrary.AreaEngine.Encryption
 
 
@@ -40,7 +40,7 @@ Namespace AreaProtocol
 
         Public Class FileEngine
 
-            Inherits BaseFileDB(Of RequestModel)
+            Inherits BaseFile(Of RequestModel)
 
         End Class
 
@@ -77,9 +77,9 @@ Namespace AreaProtocol
                 Try
                     With AreaCommon.state.currentBlockLedger.currentRecord
                         .actionCode = "a1x1"
-                        .approvedDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime
+                        .registrationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime
                         .detailInformation = data.chainDescription
-                        .requester = data.publicWalletAddressRequester
+                        .requesterPublicAddress = data.publicWalletAddressRequester
                         .requestHash = data.requestHash
                     End With
 
