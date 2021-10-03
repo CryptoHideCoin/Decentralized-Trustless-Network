@@ -37,9 +37,9 @@ Public Class Main
             With WalletAddressEngine.createNew()
 
                 privateKey.Text = .official.privateKey
-                publicAddress.Text = .official.publicAddress
+                publicAddress.Text = .official.publicKey
                 privateKeyInternal.Text = .raw.privateKey
-                publicAddressInternal.Text = .raw.publicAddress
+                publicAddressInternal.Text = .raw.publicKey
 
             End With
 
@@ -140,7 +140,7 @@ Public Class Main
 
     Private Function validatePrivateKeyFormat() As Boolean
 
-        If Not WalletAddressEngine.SingleWallet.startAllowed(privateKey.Text) Then
+        If Not WalletAddressEngine.SingleKeyPair.startAllowed(privateKey.Text) Then
 
             publicAddress.Text = "ERROR START PRIVATE KEY MUST BEGIN WITH " & WalletAddressEngine.basePvt
             publicAddress.ForeColor = Color.Red
@@ -149,7 +149,7 @@ Public Class Main
 
         End If
 
-        If Not WalletAddressEngine.SingleWallet.endAllowed(privateKey.Text) Then
+        If Not WalletAddressEngine.SingleKeyPair.endAllowed(privateKey.Text) Then
 
             publicAddress.Text = "ERROR END PRIVATE KEY MUST COMPLETE WITH " & WalletAddressEngine.closeBasePvt
             publicAddress.ForeColor = Color.Red
@@ -195,8 +195,8 @@ Public Class Main
             With WalletAddressEngine.createNew(privateKey.Text)
 
                 privateKeyInternal.Text = .raw.privateKey
-                publicAddressInternal.Text = .raw.publicAddress
-                publicAddress.Text = .official.publicAddress
+                publicAddressInternal.Text = .raw.publicKey
+                publicAddress.Text = .official.publicKey
 
             End With
 
@@ -290,9 +290,9 @@ Public Class Main
 
                     With WalletAddressEngine.createNew(privateRaw, True)
 
-                        publicAddressInternal.Text = .raw.publicAddress
+                        publicAddressInternal.Text = .raw.publicKey
                         privateKey.Text = .official.privateKey
-                        publicAddress.Text = .official.publicAddress
+                        publicAddress.Text = .official.publicKey
 
                     End With
 
@@ -363,9 +363,9 @@ Public Class Main
             With WalletAddressEngine.createNew(seedValue.Text, False)
 
                 privateKey.Text = .official.privateKey
-                publicAddress.Text = .official.publicAddress
+                publicAddress.Text = .official.publicKey
                 privateKeyInternal.Text = .raw.privateKey
-                publicAddressInternal.Text = .raw.publicAddress
+                publicAddressInternal.Text = .raw.publicKey
 
             End With
 

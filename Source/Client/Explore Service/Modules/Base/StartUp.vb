@@ -28,7 +28,7 @@ Namespace AreaCommon
 
                 log.track("startUp.firstProcedureStart", "settings read")
 
-                log.noSave = (settings.data.useTrack = TrackRuntimeModeEnum.dontTrack)
+                log.saveMode = settings.data.useTrack
 
                 log.init(paths.pathLogs, "main")
 

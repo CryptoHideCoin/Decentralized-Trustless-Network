@@ -1,0 +1,5 @@
+1633293459856,22|2021-10-03T18:37:39Z|info|startUp.main|Begin
+1633293459980,9|2021-10-03T18:37:39Z|info|startUp.main|The path is E:\CryptoHideCoinDTN\Source\Utilities\KeyStore Manager\bin\Debug
+1633293459980,9|2021-10-03T18:37:39Z|info|startUp.main|DataPath is E:\CryptoHideCoinDTN\Source\Utilities\KeyStore Manager\bin\Debug
+1633293459980,9|2021-10-03T18:37:39Z|info|startUp.startApplication|paths.init execute
+1633293460043,4|2021-10-03T18:37:40Z|info|startUp.startApplication|settings read

@@ -1,15 +1,28 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' File: Administration Model
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 03/10/2021
+' ****************************************
+
+
 Imports CHCCommonLibrary.AreaCommon.Models
 
 
 
 Namespace AreaCommon.Models
 
-
+    ''' <summary>
+    ''' This class contain all element of macro request 
+    ''' </summary>
     Public Class Administration
 
+        ''' <summary>
+        ''' This enumeration contain the list of the command
+        ''' </summary>
         Public Enum EnumActionAdministration
             notDefined
             verifyData
@@ -26,6 +39,9 @@ Namespace AreaCommon.Models
             cancelCurrentAction
         End Enum
 
+        ''' <summary>
+        ''' This enumeration contain the list of macro element of the service
+        ''' </summary>
         Public Enum EnumDataElement
             storage
             previousWork
@@ -34,6 +50,9 @@ Namespace AreaCommon.Models
             nodeList
         End Enum
 
+        ''' <summary>
+        ''' This enumeration contain the response of a check
+        ''' </summary>
         Public Enum EnumDataPosition
             notChecked
             missing
@@ -41,6 +60,9 @@ Namespace AreaCommon.Models
             checkControlNotPassed
         End Enum
 
+        ''' <summary>
+        ''' This enumeration contain the position of a request
+        ''' </summary>
         Public Enum EnumServicePosition
             offline
             requestToConnection
@@ -48,12 +70,21 @@ Namespace AreaCommon.Models
             requestToDisconnection
         End Enum
 
+        ''' <summary>
+        ''' This class contain the single position of an element
+        ''' </summary>
         Public Class ComponentElementPosition
+
             Public Property element As EnumDataElement
             Public Property position As EnumDataPosition
+
         End Class
 
+        ''' <summary>
+        ''' This class contain all element of a current action
+        ''' </summary>
         Public Class ActionElement
+
             Public Property codeAction As String = ""
             Public Property descriptionAction As String = ""
             Public Property codeError As String = ""
@@ -73,8 +104,12 @@ Namespace AreaCommon.Models
                 codeError = code
                 descriptionError = description
             End Sub
+
         End Class
 
+        ''' <summary>
+        ''' This class contain a service state response
+        ''' </summary>
         Public Class ServiceStateResponse
 
             Inherits General.RemoteResponse
@@ -86,6 +121,10 @@ Namespace AreaCommon.Models
             Public Property currentRunCommand As EnumActionAdministration = EnumActionAdministration.notDefined
             Public Property requestCancelCurrentRunCommand As Boolean = False
 
+            ''' <summary>
+            ''' This method provide to add a new component position
+            ''' </summary>
+            ''' <param name="enumData"></param>
             Private Sub addNewComponentPosition(ByVal enumData As EnumDataElement)
                 Dim data As New ComponentElementPosition
 
@@ -94,7 +133,12 @@ Namespace AreaCommon.Models
                 componentPosition.Add(data)
             End Sub
 
-            Public Function getComponentPosition(ByVal key As EnumDataElement) As ComponentElementPosition
+            ''' <summary>
+            ''' This method provide to specific component position  
+            ''' </summary>
+            ''' <param name="key"></param>
+            ''' <returns></returns>
+            <DebuggerHiddenAttribute()> Public Function getComponentPosition(ByVal key As EnumDataElement) As ComponentElementPosition
                 For Each item In componentPosition
                     If (item.element = key) Then
                         Return item
@@ -104,7 +148,10 @@ Namespace AreaCommon.Models
                 Return New ComponentElementPosition
             End Function
 
-            Public Sub init()
+            ''' <summary>
+            ''' This method provide to initialize component
+            ''' </summary>
+            <DebuggerHiddenAttribute()> Public Sub init()
                 addNewComponentPosition(EnumDataElement.storage)
                 addNewComponentPosition(EnumDataElement.previousWork)
                 addNewComponentPosition(EnumDataElement.currentWork)
@@ -113,9 +160,9 @@ Namespace AreaCommon.Models
 
                 listAvailableCommand.Add(EnumActionAdministration.verifyData)
             End Sub
+
         End Class
 
     End Class
-
 
 End Namespace

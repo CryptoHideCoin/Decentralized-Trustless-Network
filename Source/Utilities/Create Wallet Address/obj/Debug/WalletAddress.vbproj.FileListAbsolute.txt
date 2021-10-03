@@ -36,3 +36,4 @@ E:\CryptoHideCoinDTN\Source\Utilities\Create Wallet Address\bin\Debug\CHCCommonL
 E:\CryptoHideCoinDTN\Source\Utilities\Create Wallet Address\bin\Debug\BouncyCastle.Crypto.dll
 E:\CryptoHideCoinDTN\Source\Utilities\Create Wallet Address\bin\Debug\Newtonsoft.Json.dll
 E:\CryptoHideCoinDTN\Source\Utilities\Create Wallet Address\obj\Debug\WalletAddress.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Utilities\Create Wallet Address\bin\Debug\CHCProtocolLibrary.dll

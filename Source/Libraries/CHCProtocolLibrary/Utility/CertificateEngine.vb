@@ -1,6 +1,13 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' File: Certificate Engine
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 03/10/2021
+' ****************************************
+
 
 
 
@@ -9,20 +16,22 @@ Option Explicit On
 
 Namespace AreaBase
 
-
+    ''' <summary>
+    ''' This class contain the engine relative of a certificate
+    ''' </summary>
     Public Class Certificate
 
         Private Const charList As String = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
 
-
-
-        Public Shared Function createNew() As String
-
+        ''' <summary>
+        ''' This method provide to create a new certificate
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Shared Function createNew() As String
             Dim result As String = ""
 
             Try
-
                 Dim rndChar As New Random(CInt(Date.Now.Ticks And &HFFFF))
                 Dim index As Integer = 0
 
@@ -32,19 +41,14 @@ Namespace AreaBase
                     result += charList.Substring(index, 1)
 
                 Next
-
             Catch ex As Exception
                 Throw New Exception("CertificateEngine.createNew():" & ex.Message, ex)
             End Try
 
             Return result
-
         End Function
 
-
     End Class
-
-
 
 End Namespace
 

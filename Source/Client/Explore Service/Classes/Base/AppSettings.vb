@@ -1,7 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
 Imports CHCCommonLibrary.Support
 
 
@@ -9,7 +9,7 @@ Imports CHCCommonLibrary.Support
 
 Public Class AppSettings
 
-    Inherits BaseEncryption(Of SettingsData)
+    Inherits BaseFile(Of SettingsData)
 
 
 
@@ -19,7 +19,7 @@ Public Class AppSettings
         Public currentConfiguration As String = ""
         Public serviceId As String = ""
 
-        Public useTrack As LogEngine.TrackRuntimeModeEnum = LogEngine.TrackRuntimeModeEnum.trackAllRuntime
+        Public useTrack As LogEngine.TrackRuntimeModeEnum = LogEngine.TrackRuntimeModeEnum.dontTrackEver
         Public trackRotate As New LogRotateEngine.LogRotateConfig
 
         Public requesterWalletAddress As String = ""

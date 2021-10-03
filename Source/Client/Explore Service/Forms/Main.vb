@@ -31,7 +31,7 @@ Public Class Main
     End Class
 
     Public Class ConfigurationManager
-        Inherits CHCCommonLibrary.AreaEngine.DataFileManagement.BaseFileDB(Of List(Of SingleConfigurationDB))
+        Inherits CHCCommonLibrary.AreaEngine.DataFileManagement.XML.BaseFile(Of List(Of SingleConfigurationDB))
     End Class
 
 

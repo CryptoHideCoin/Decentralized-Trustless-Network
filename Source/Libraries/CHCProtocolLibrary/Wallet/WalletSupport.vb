@@ -1,6 +1,14 @@
 Option Compare Text
 Option Explicit On
 
+' ****************************************
+' File: Wallet Support
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 03/10/2021
+' ****************************************
+
+
 Imports CHCBasicCryptographyLibrary.AreaEngine
 Imports CHCCommonLibrary.AreaEngine.Miscellaneous
 
@@ -12,7 +20,9 @@ Imports CHCCommonLibrary.AreaEngine.Miscellaneous
 
 Namespace AreaWallet.Support
 
-
+    ''' <summary>
+    ''' This class is engine of Wallet Address
+    ''' </summary>
     Public Class WalletAddressEngine
 
         Private Const charList As String = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/*-+!£$%/()=-_#[],.;:\"
@@ -26,118 +36,11 @@ Namespace AreaWallet.Support
         Public Shared Property numCharFixPublicAddress As Integer = 98
 
 
-        Public Class SingleKeyPair
-
-            Public Property publicKey As String = ""
-            Public Property privateKey As String = ""
-
-
-
-            Public Sub generatePublicKey()
-                Try
-                    publicKey = Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(privateKey)
-                Catch ex As Exception
-                    Throw New Exception("SingleWallet.generatePublicAddress():" & ex.Message, ex)
-                End Try
-            End Sub
-
-            Public Sub decoreDataAddress(ByVal publicValue As String)
-                Try
-                    publicKey = baseAddr & publicValue & CheckSum.create(publicValue) & closeAddr
-                    privateKey = basePvt & privateKey & CheckSum.create(privateKey) & closeBasePvt
-                Catch ex As Exception
-                    Throw New Exception("SingleWallet.decoreDataWallet():" & ex.Message, ex)
-                End Try
-            End Sub
-
-            Public Shared Function startAllowed(ByVal value As String) As Boolean
-                Try
-                    Return value.StartsWith(basePvt)
-                Catch ex As Exception
-                    Throw New Exception("SingleWallet.startAllowed():" & ex.Message, ex)
-                End Try
-            End Function
-
-            Public Shared Function endAllowed(ByVal value As String) As Boolean
-                Try
-                    Return value.EndsWith(closeBasePvt)
-                Catch ex As Exception
-                    Throw New Exception("SingleWallet.endAllowed():" & ex.Message, ex)
-                End Try
-            End Function
-
-            Public Shared ReadOnly Property cleanAddress(ByVal addressValue As String) As String
-                Get
-                    If (addressValue.Length <= (baseAddr & closeAddr).Length) Then
-                        Return ""
-                    End If
-                    If (addressValue.StartsWith(baseAddr)) Then
-                        Dim completeAddress As String = addressValue.Substring(baseAddr.Length, addressValue.Length - baseAddr.Length - closeAddr.Length)
-                        Dim verifyAddressValue As CheckSum.CompleteStructure = CheckSum.verify(addressValue)
-
-                        If verifyAddressValue.checkPositive Then
-                            Return verifyAddressValue.originalText
-                        Else
-                            Return ""
-                        End If
-                    Else
-                        Return addressValue
-                    End If
-                End Get
-            End Property
-
-            Public Shared Function checkFormatPublicAddress(ByVal value As String) As Boolean
-                If (value.Length <= (baseAddr & closeAddr).Length) Then
-                    Return True
-                End If
-
-                Return (value.StartsWith(baseAddr) And value.EndsWith(closeAddr)) And (value.Length = (92 + baseAddr.Length + closeAddr.Length))
-            End Function
-
-            Public Shared Function extractPrivateKeyRAW(ByVal value As String) As String
-                If (value.Trim.Length > 0) Then
-                    If value.StartsWith(basePvt) And value.EndsWith(closeBasePvt) Then
-                        Return value.Substring(basePvt.Length, value.Length - basePvt.Length - closeBasePvt.Length - 4)
-                    Else
-                        Return value
-                    End If
-                Else
-                    Return ""
-                End If
-            End Function
-
-        End Class
-
-
-        Public Class KeyPairComplete
-
-            Public Property official As New SingleKeyPair
-            Public Property raw As New SingleKeyPair
-
-        End Class
-
-
-        Private Shared ReadOnly Property getFixCharLenght() As Byte
-            Get
-                Try
-                    Return (numCharMaxFormatPrivateKey - basePvt.Length - closeBasePvt.Length - 4)
-                Catch ex As Exception
-                    Throw New Exception("WalletComplete.getFixCharLenght():" & ex.Message, ex)
-                End Try
-            End Get
-        End Property
-
-        Public Shared ReadOnly Property charAllowed(ByVal charValue As Char) As Boolean
-            Get
-                Try
-                    Return (charList.IndexOf(charValue) > -1)
-                Catch ex As Exception
-                    Throw New Exception("WalletComplete.charAllowed():" & ex.Message, ex)
-                End Try
-            End Get
-        End Property
-
-
+        ''' <summary>
+        ''' This method provide to generate a Official Private Key from a Private Key RAW
+        ''' </summary>
+        ''' <param name="privateKeyValue"></param>
+        ''' <returns></returns>
         Private Shared Function generatePrivateKey(ByVal privateKeyValue As String) As String
             Try
                 Dim index As Integer = 0
@@ -162,33 +65,152 @@ Namespace AreaWallet.Support
         End Function
 
 
-        Public Shared Function createNew() As KeyPairComplete
-            Dim result As New KeyPairComplete
+        ''' <summary>
+        ''' This class manage a single key pair
+        ''' </summary>
+        Public Class SingleKeyPair
 
-            Try
+            Public Property publicKey As String = ""
+            Public Property privateKey As String = ""
 
-                Dim rndChar As New Random(CInt(Date.Now.Ticks And &HFFFF))
-                Dim index As Integer = 0
 
-                For intC As Integer = 0 To getFixCharLenght() - 1
+            ''' <summary>
+            ''' This method provide to generate a Public Key from Private Key
+            ''' </summary>
+            <DebuggerHiddenAttribute()> Public Sub generatePublicKey()
+                Try
+                    publicKey = Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(privateKey)
+                Catch ex As Exception
+                    Throw New Exception("SingleWallet.generatePublicAddress():" & ex.Message, ex)
+                End Try
+            End Sub
 
-                    index = rndChar.Next(0, 62)
+            ''' <summary>
+            ''' This method provide to decore a public key with suffix, checksum and prefix
+            ''' </summary>
+            ''' <param name="publicValue"></param>
+            <DebuggerHiddenAttribute()> Public Sub decoreDataAddress(ByVal publicValue As String)
+                Try
+                    publicKey = baseAddr & publicValue & CheckSum.create(publicValue) & closeAddr
+                    privateKey = basePvt & privateKey & CheckSum.create(privateKey) & closeBasePvt
+                Catch ex As Exception
+                    Throw New Exception("SingleWallet.decoreDataWallet():" & ex.Message, ex)
+                End Try
+            End Sub
 
-                    result.raw.privateKey += Right("0" & index.ToString.Trim(), 2)
-                    result.official.privateKey += charList.Substring(index, 1)
+            ''' <summary>
+            ''' This method provide to check if the string start with a specific prefix 
+            ''' </summary>
+            ''' <param name="value"></param>
+            ''' <returns></returns>
+            <DebuggerHiddenAttribute()> Public Shared Function startAllowed(ByVal value As String) As Boolean
+                Try
+                    Return value.StartsWith(basePvt)
+                Catch ex As Exception
+                    Throw New Exception("SingleWallet.startAllowed():" & ex.Message, ex)
+                End Try
+            End Function
 
-                Next
+            ''' <summary>
+            ''' This method provide to check if the string end with a specific suffix value
+            ''' </summary>
+            ''' <param name="value"></param>
+            ''' <returns></returns>
+            <DebuggerHiddenAttribute()> Public Shared Function endAllowed(ByVal value As String) As Boolean
+                Try
+                    Return value.EndsWith(closeBasePvt)
+                Catch ex As Exception
+                    Throw New Exception("SingleWallet.endAllowed():" & ex.Message, ex)
+                End Try
+            End Function
 
-                result.raw.generatePublicKey()
-                result.official.decoreDataAddress(result.raw.publicKey)
+            ''' <summary>
+            ''' This readonly property clean address from a decoration
+            ''' </summary>
+            ''' <param name="addressValue"></param>
+            ''' <returns></returns>
+            Public Shared ReadOnly Property cleanAddress(ByVal addressValue As String) As String
+                Get
+                    If (addressValue.Length <= (baseAddr & closeAddr).Length) Then
+                        Return ""
+                    End If
+                    If (addressValue.StartsWith(baseAddr)) Then
+                        Dim completeAddress As String = addressValue.Substring(baseAddr.Length, addressValue.Length - baseAddr.Length - closeAddr.Length)
+                        Dim verifyAddressValue As CheckSum.CompleteStructure = CheckSum.verify(addressValue)
 
-            Catch ex As Exception
-                Throw New Exception("WalletComplete.createNew():" & ex.Message, ex)
-            End Try
+                        If verifyAddressValue.checkPositive Then
+                            Return verifyAddressValue.originalText
+                        Else
+                            Return ""
+                        End If
+                    Else
+                        Return addressValue
+                    End If
+                End Get
+            End Property
 
-            Return result
-        End Function
+            ''' <summary>
+            ''' This method provide to check a format (decore) of a Public Address
+            ''' </summary>
+            ''' <param name="value"></param>
+            ''' <returns></returns>
+            <DebuggerHiddenAttribute()> Public Shared Function checkFormatPublicAddress(ByVal value As String) As Boolean
+                If (value.Length <= (baseAddr & closeAddr).Length) Then
+                    Return True
+                End If
 
+                Return (value.StartsWith(baseAddr) And value.EndsWith(closeAddr)) And (value.Length = (92 + baseAddr.Length + closeAddr.Length))
+            End Function
+
+            ''' <summary>
+            ''' This method provide to extract a Privacy Key format clean from a decore private key
+            ''' </summary>
+            ''' <param name="value"></param>
+            ''' <returns></returns>
+            <DebuggerHiddenAttribute()> Public Shared Function extractPrivateKeyRAW(ByVal value As String) As String
+                If (value.Trim.Length > 0) Then
+                    If value.StartsWith(basePvt) And value.EndsWith(closeBasePvt) Then
+                        Return value.Substring(basePvt.Length, value.Length - basePvt.Length - closeBasePvt.Length - 4)
+                    Else
+                        Return value
+                    End If
+                Else
+                    Return ""
+                End If
+            End Function
+
+        End Class
+
+        ''' <summary>
+        ''' This class contain a couple of a KeyPair (Official e RAW)
+        ''' </summary>
+        Public Class KeyPairComplete
+
+            Public Property official As New SingleKeyPair
+            Public Property raw As New SingleKeyPair
+
+        End Class
+
+
+        ''' <summary>
+        ''' This method provide to get a exact char number lenght
+        ''' </summary>
+        ''' <returns></returns>
+        Private Shared ReadOnly Property getFixCharLenght() As Byte
+            Get
+                Try
+                    Return (numCharMaxFormatPrivateKey - basePvt.Length - closeBasePvt.Length - 4)
+                Catch ex As Exception
+                    Throw New Exception("WalletComplete.getFixCharLenght():" & ex.Message, ex)
+                End Try
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' This method provide to create a new KeyPair complete (Official, Raw) from a Private Key Official
+        ''' </summary>
+        ''' <param name="privateKeyValue"></param>
+        ''' <returns></returns>
         Private Shared Function createNew(ByVal privateKeyValue As String) As KeyPairComplete
             Dim result As New KeyPairComplete
             Try
@@ -222,7 +244,60 @@ Namespace AreaWallet.Support
             Return result
         End Function
 
-        Private Shared Function createNew(ByVal privateKeyValue As String, Optional ByVal fromRaw As Boolean = False) As KeyPairComplete
+
+        ''' <summary>
+        ''' This method provide to check if a char is ammitted in the rule
+        ''' </summary>
+        ''' <param name="charValue"></param>
+        ''' <returns></returns>
+        Public Shared ReadOnly Property charAllowed(ByVal charValue As Char) As Boolean
+            Get
+                Try
+                    Return (charList.IndexOf(charValue) > -1)
+                Catch ex As Exception
+                    Throw New Exception("WalletComplete.charAllowed():" & ex.Message, ex)
+                End Try
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' This method provide to create a new KeyPair complete (Official, Raw)
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Shared Function createNew() As KeyPairComplete
+            Dim result As New KeyPairComplete
+
+            Try
+
+                Dim rndChar As New Random(CInt(Date.Now.Ticks And &HFFFF))
+                Dim index As Integer = 0
+
+                For intC As Integer = 0 To getFixCharLenght() - 1
+
+                    index = rndChar.Next(0, 62)
+
+                    result.raw.privateKey += Right("0" & index.ToString.Trim(), 2)
+                    result.official.privateKey += charList.Substring(index, 1)
+
+                Next
+
+                result.raw.generatePublicKey()
+                result.official.decoreDataAddress(result.raw.publicKey)
+
+            Catch ex As Exception
+                Throw New Exception("WalletComplete.createNew():" & ex.Message, ex)
+            End Try
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' This method provide to create a new KeyPair complete (Official, Raw) from Private Key (Official or Raw)
+        ''' </summary>
+        ''' <param name="privateKeyValue"></param>
+        ''' <param name="fromRaw"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Private Shared Function createNew(ByVal privateKeyValue As String, Optional ByVal fromRaw As Boolean = False) As KeyPairComplete
             Dim result As New KeyPairComplete
             Try
                 If fromRaw Then
@@ -242,7 +317,14 @@ Namespace AreaWallet.Support
             Return result
         End Function
 
-        Public Shared Function createNew(ByVal privateKeyValue As String, Optional ByVal fromRaw As Boolean = False, Optional ByVal forcePublicAddress As String = "") As KeyPairComplete
+        ''' <summary>
+        ''' This method provide to create a new KeyPair complete (Official, Raw) from Privacy Key (Official or Raw) and force Public Address
+        ''' </summary>
+        ''' <param name="privateKeyValue"></param>
+        ''' <param name="fromRaw"></param>
+        ''' <param name="forcePublicAddress"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Shared Function createNew(ByVal privateKeyValue As String, Optional ByVal fromRaw As Boolean = False, Optional ByVal forcePublicAddress As String = "") As KeyPairComplete
             Dim result As New KeyPairComplete
             Try
                 If fromRaw Then
@@ -266,7 +348,12 @@ Namespace AreaWallet.Support
             Return result
         End Function
 
-        Public Shared Function checkPrivateKeyFormat(ByVal value As String) As Boolean
+        ''' <summary>
+        ''' This method provide to check a Private Key format official
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Shared Function checkPrivateKeyFormat(ByVal value As String) As Boolean
             Try
                 Dim privateRaw As String = ""
 
@@ -280,7 +367,12 @@ Namespace AreaWallet.Support
             End Try
         End Function
 
-        Public Shared Function extractPrivateKeyRAW(ByVal value As String) As String
+        ''' <summary>
+        ''' This method provide to extract a Private Key Raw from a Official (decore) Private Key
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Shared Function extractPrivateKeyRAW(ByVal value As String) As String
             Try
                 Dim privateRaw As String = ""
 
@@ -301,7 +393,13 @@ Namespace AreaWallet.Support
             End Try
         End Function
 
-        Public Shared Function createSignature(ByVal privateKey As String, ByVal message As String) As String
+        ''' <summary>
+        ''' This method provide to create a signature from a Private Key and a message
+        ''' </summary>
+        ''' <param name="privateKey"></param>
+        ''' <param name="message"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Shared Function createSignature(ByVal privateKey As String, ByVal message As String) As String
             Try
                 Dim privateRaw As String = extractPrivateKeyRAW(privateKey)
 
@@ -311,7 +409,14 @@ Namespace AreaWallet.Support
             End Try
         End Function
 
-        Public Shared Function verifySignature(ByVal publicAddress As String, ByVal message As String, ByVal signature As String) As Boolean
+        ''' <summary>
+        ''' This method provide to check a signature of a message with an official Public Address 
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="message"></param>
+        ''' <param name="signature"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Shared Function verifySignature(ByVal publicAddress As String, ByVal message As String, ByVal signature As String) As Boolean
             Try
                 Dim address As String = SingleKeyPair.cleanAddress(publicAddress)
 
@@ -322,7 +427,5 @@ Namespace AreaWallet.Support
         End Function
 
     End Class
-
-
 
 End Namespace

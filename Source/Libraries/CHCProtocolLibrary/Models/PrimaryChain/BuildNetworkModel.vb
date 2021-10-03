@@ -1,13 +1,28 @@
 ﻿Option Explicit On
 Option Compare Text
 
+' ****************************************
+' File: Network Builder Model
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 03/10/2021
+' ****************************************
+
+
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCCommonLibrary.AreaEngine.Base.CHCStringExtensions
 
 
 
+
+
+
+
 Namespace AreaCommon.Models.Network
 
+    ''' <summary>
+    ''' This class contain all member relative an element of Asset type
+    ''' </summary>
     Public Class AssetModel
 
         Public Property name As String = ""
@@ -21,15 +36,25 @@ Namespace AreaCommon.Models.Network
         Public Property nameUnit As String = ""
         Public Property qtaInitialStake As Decimal = 0
 
-        Public Sub codeSymbol()
+        ''' <summary>
+        ''' This method provide to code symbol to trasmit with a webservice
+        ''' </summary>
+        <DebuggerHiddenAttribute()> Public Sub codeSymbol()
             symbol.codeSymbol()
         End Sub
 
-        Public Sub deCodeSymbol()
+        ''' <summary>
+        ''' This method provide to decoce symbol when receive a data with a webservice
+        ''' </summary>
+        <DebuggerHiddenAttribute()> Public Sub deCodeSymbol()
             symbol.decodeSymbol()
         End Sub
 
-        Public Overrides Function toString() As String
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
             Dim tmp As String = ""
 
             tmp += name
@@ -46,22 +71,39 @@ Namespace AreaCommon.Models.Network
             Return tmp
         End Function
 
-        Public Function getHash() As String
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function getHash() As String
             Return HashSHA.generateSHA256(Me.toString())
         End Function
 
     End Class
 
+    ''' <summary>
+    ''' This class contain the item of refund
+    ''' </summary>
     Public Class RefundItem
 
+        Public Property identity As String = ""
+        Public Property levelStructure As Byte = 0
+        Public Property parentIdentity As String = ""
         Public Property recipient As String = ""
         Public Property description As String = ""
         Public Property percentageValue As Single = 0
         Public Property fixValue As Decimal = 0
 
-        Public Overrides Function toString() As String
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
             Dim tmp As String = ""
 
+            tmp += identity
+            tmp += levelStructure.ToString
+            tmp += parentIdentity
             tmp += recipient
             tmp += description
             tmp += percentageValue.ToString()
@@ -70,18 +112,30 @@ Namespace AreaCommon.Models.Network
             Return tmp
         End Function
 
-        Public Function getHash() As String
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function getHash() As String
             Return HashSHA.generateSHA256(Me.toString())
         End Function
 
     End Class
 
+    ''' <summary>
+    ''' This refund Item list contain all element of a refund plan
+    ''' </summary>
     Public Class RefundItemList
 
+        Public Property code As String = ""
         Public Property items As New List(Of RefundItem)
 
-        Public Overrides Function toString() As String
-            Dim tmp As String = ""
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
+            Dim tmp As String = code
 
             For Each item In items
                 tmp += item.toString()
@@ -89,19 +143,35 @@ Namespace AreaCommon.Models.Network
 
             Return tmp
         End Function
+
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
+
     End Class
 
+    ''' <summary>
+    ''' This class contain the element of a transaction chain configuration
+    ''' </summary>
     Public Class TransactionChainModel
 
         Public Property blockSizeFrequency As String = "24h"
-        Public Property numberBlockInVolume As Short = "365"
-        Public Property initialMaxComputeTransaction As String = "60sec"
+        Public Property numberBlockInVolume As Short = 365
+        Public Property initialMaxComputeTransaction As String = "300sec"
         Public Property initialCoinReleasePerBlock As Decimal = "100000"
         Public Property ruleFutureRelease As String = ""
         Public Property reviewReleaseAlgorithm As String = "OnTransaction"
         Public Property consensusMethod As String = "Proof Of Stake"
 
-        Public Overrides Function toString() As String
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
             Dim tmp As String = ""
 
             tmp += blockSizeFrequency
@@ -114,19 +184,30 @@ Namespace AreaCommon.Models.Network
             Return tmp
         End Function
 
-        Public Function getHash() As String
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function getHash() As String
             Return HashSHA.generateSHA256(Me.toString())
         End Function
 
     End Class
 
+    ''' <summary>
+    ''' This class contain the information relative the item of a price
+    ''' </summary>
     Public Class ItemPriceTableModel
 
         Public code As String = ""
         Public description As String = ""
         Public contribute As Decimal = 0
 
-        Public Overrides Function toString() As String
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
             Dim tmp As String = ""
 
             tmp += code
@@ -136,18 +217,30 @@ Namespace AreaCommon.Models.Network
             Return tmp
         End Function
 
-        Public Function getHash() As String
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function getHash() As String
             Return HashSHA.generateSHA256(Me.toString())
         End Function
 
     End Class
 
+    ''' <summary>
+    ''' This class contain the collection of Item Price of a table
+    ''' </summary>
     Public Class ItemPriceTableListModel
 
+        Public Property code As String = ""
         Public Property items As New List(Of ItemPriceTableModel)
 
-        Public Overrides Function toString() As String
-            Dim tmp As String = ""
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
+            Dim tmp As String = code
 
             For Each item In items
                 tmp += item.toString()
@@ -156,12 +249,19 @@ Namespace AreaCommon.Models.Network
             Return tmp
         End Function
 
-        Public Function getHash() As String
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function getHash() As String
             Return HashSHA.generateSHA256(Me.toString())
         End Function
 
     End Class
 
+    ''' <summary>
+    ''' This class contain all information relative a builder of a network
+    ''' </summary>
     Public Class BuildNetworkModel
 
         Public Property name As String = ""
@@ -175,9 +275,11 @@ Namespace AreaCommon.Models.Network
         Public Property generalCondition As New Document.DocumentModel
         Public Property signature As String = ""
 
-
-
-        Public Overrides Function toString() As String
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
             Dim tmp As String = ""
 
             tmp += name
@@ -192,7 +294,11 @@ Namespace AreaCommon.Models.Network
             Return tmp
         End Function
 
-        Public Function getHash() As String
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function getHash() As String
             Return HashSHA.generateSHA256(Me.toString())
         End Function
 

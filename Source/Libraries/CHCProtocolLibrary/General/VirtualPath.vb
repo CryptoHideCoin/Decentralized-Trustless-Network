@@ -1,15 +1,30 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' Engine: Virtual Path Structure
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 03/10/2021
+' ****************************************
+
+
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
+
+
 
 
 
 Namespace AreaSystem
 
-
+    ''' <summary>
+    ''' This class manage a Virtual Path of a Crypto Hide Coin project
+    ''' </summary>
     Public Class VirtualPathEngine
 
+        ''' <summary>
+        ''' This enumeration specify module of a system
+        ''' </summary>
         Public Enum EnumSystemType
             admin
             loader
@@ -17,26 +32,43 @@ Namespace AreaSystem
             runTime
         End Enum
 
+        ''' <summary>
+        ''' This class contain the information relative of a other path not code into engine
+        ''' </summary>
         Public Class OtherPathEngine
 
             Inherits BaseFile(Of List(Of OtherPath))
 
 
+            ''' <summary>
+            ''' This class contain the property of a single property of Other Path
+            ''' </summary>
             Public Class OtherPath
+
                 Public Property context As String = ""
                 Public Property alternativePath As String = ""
+
             End Class
 
         End Class
 
+        ''' <summary>
+        ''' This class contain the specific path of all element of the system path
+        ''' </summary>
         Public Class SystemPath
+
             Public Property path As String = ""
             Public Property counters As String = ""
             Public Property events As String = ""
             Public Property logs As String = ""
+
         End Class
 
+        ''' <summary>
+        ''' This class contain the contain all information reguard the define of the transaction chain
+        ''' </summary>
         Public Class DefinePath
+
             Public Property path As String = ""
 
             Public Property assets As String = ""
@@ -49,28 +81,42 @@ Namespace AreaSystem
 
             Public Property termsAndConditionsPapers As String = ""
 
-            Public Property visionPapers As String = ""
             Public Property whitePapers As String = ""
             Public Property yellowPapers As String = ""
+
         End Class
 
-        Public Class WorkVolumePath
-            Public Property path As String = ""
-
-            Public Property requests As String = ""
-            Public Property ledger As String = ""
-            Public Property evaluate As String = ""
-            Public Property consensus As String = ""
-        End Class
-
+        ''' <summary>
+        ''' This class contain the elements relative of a State data
+        ''' </summary>
         Public Class StateWorkPath
+
             Public Property path As String = ""
 
             Public Property db As String = ""
             Public Property contents As String = ""
+
         End Class
 
+        ''' <summary>
+        ''' This class contain the element of a work volume
+        ''' </summary>
+        Public Class WorkVolumePath
+
+            Public Property path As String = ""
+
+            Public Property requests As String = ""
+            Public Property ledger As String = ""
+            Public Property bulletines As String = ""
+            Public Property consensus As String = ""
+
+        End Class
+
+        ''' <summary>
+        ''' This class contain the element of a work path
+        ''' </summary>
         Public Class WorkPath
+
             Public Property path As String = ""
 
             Public Property currentVolume As New WorkVolumePath
@@ -79,6 +125,7 @@ Namespace AreaSystem
             Public Property temporally As String = ""
             Public Property state As StateWorkPath = New StateWorkPath
             Public Property internal As String = ""
+
         End Class
 
 
@@ -103,7 +150,7 @@ Namespace AreaSystem
         Private Const dbName As String = "Db"
         Private Const contentsName As String = "Contents"
         Private Const internalName As String = "Internal"
-        Private Const evaluateName As String = "Evaluate"
+        Private Const bulletinName As String = "Bulletin"
         Private Const consensusName As String = "Consensus"
         Private Const defineName As String = "Define"
         Private Const assetsName As String = "Assets"
@@ -113,7 +160,6 @@ Namespace AreaSystem
         Private Const refundPlansName As String = "RefundPlans"
         Private Const sideChainContractsName As String = "SidechainContracts"
         Private Const termAndConditionPapersName As String = "TermAndConditionPapers"
-        Private Const visionPapersName As String = "VisionPapers"
         Private Const whitePapersName As String = "WhitePapers"
         Private Const yellowPapersName As String = "YellowPapers"
 
@@ -135,7 +181,13 @@ Namespace AreaSystem
         Public Property storage As String = ""
 
 
-
+        ''' <summary>
+        ''' This method provide to manage a single path
+        ''' </summary>
+        ''' <param name="pathParent"></param>
+        ''' <param name="pathDirectory"></param>
+        ''' <param name="pathOptional"></param>
+        ''' <returns></returns>
         Private Function manageSinglePath(ByVal pathParent As String, ByVal pathDirectory As String, Optional ByVal pathOptional As String = "") As String
             Try
                 If (pathOptional.Length = 0) Then
@@ -154,7 +206,12 @@ Namespace AreaSystem
             End Try
         End Function
 
-
+        ''' <summary>
+        ''' This method provide to initialize the engine
+        ''' </summary>
+        ''' <param name="[type]"></param>
+        ''' <param name="chainName"></param>
+        ''' <returns></returns>
         Public Function init(ByVal [type] As EnumSystemType, Optional ByVal chainName As String = "Primary") As Boolean
             Try
                 If (directoryData.Trim.Length > 0) Then
@@ -207,7 +264,7 @@ Namespace AreaSystem
 
                             .ledger = manageSinglePath(.path, ledgerName)
                             .requests = manageSinglePath(.path, requestsName)
-                            .evaluate = manageSinglePath(.path, evaluateName)
+                            .bulletines = manageSinglePath(.path, bulletinName)
                             .consensus = manageSinglePath(.path, consensusName)
                         End With
 
@@ -216,7 +273,7 @@ Namespace AreaSystem
 
                             .ledger = manageSinglePath(.path, ledgerName)
                             .requests = manageSinglePath(.path, requestsName)
-                            .evaluate = manageSinglePath(.path, evaluateName)
+                            .bulletines = manageSinglePath(.path, bulletinName)
                             .consensus = manageSinglePath(.path, consensusName)
                         End With
 
@@ -243,7 +300,6 @@ Namespace AreaSystem
                         .refundPlans = manageSinglePath(.path, refundPlansName)
                         .sideChainContracts = manageSinglePath(.path, sideChainContractsName)
                         .termsAndConditionsPapers = manageSinglePath(.path, termAndConditionPapersName)
-                        .visionPapers = manageSinglePath(.path, visionPapersName)
                         .whitePapers = manageSinglePath(.path, whitePapersName)
                         .yellowPapers = manageSinglePath(.path, yellowPapersName)
                     End With
@@ -272,8 +328,12 @@ Namespace AreaSystem
             Return True
         End Function
 
-
-        Private Function trySettingsPath(ByVal path As String) As Boolean
+        ''' <summary>
+        ''' This method provide to test to read a settings path
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Private Function trySettingsPath(ByVal path As String) As Boolean
             Try
                 path = IO.Path.Combine(path, "define.path")
                 Return IO.File.Exists(path)
@@ -283,7 +343,12 @@ Namespace AreaSystem
             Return False
         End Function
 
-        Private Function tryWritePath(ByVal path As String) As Boolean
+        ''' <summary>
+        ''' This method provide to test write a path
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Private Function tryWritePath(ByVal path As String) As Boolean
             path = IO.Path.Combine(path, "define.path")
 
             Try
@@ -299,7 +364,15 @@ Namespace AreaSystem
             Return False
         End Function
 
-        Private Function testPath(ByVal found As Boolean, ByRef path As String, ByVal newPath As String, Optional ByVal trySettings As Boolean = False) As Boolean
+        ''' <summary>
+        ''' This method test a single path
+        ''' </summary>
+        ''' <param name="found"></param>
+        ''' <param name="path"></param>
+        ''' <param name="newPath"></param>
+        ''' <param name="trySettings"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Private Function testPath(ByVal found As Boolean, ByRef path As String, ByVal newPath As String, Optional ByVal trySettings As Boolean = False) As Boolean
             If Not found Then
 
                 path = newPath
@@ -315,8 +388,11 @@ Namespace AreaSystem
             Return found
         End Function
 
-
-        Public Function searchDefinePath() As String
+        ''' <summary>
+        ''' This method search define path
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function searchDefinePath() As String
             Dim found As Boolean = False
             Dim path As String = ""
 
@@ -334,7 +410,11 @@ Namespace AreaSystem
             Return ""
         End Function
 
-        Public Function readDefinePath() As String
+        ''' <summary>
+        ''' This method search and read a define path
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function readDefinePath() As String
             Try
                 Dim path As String = searchDefinePath()
 
@@ -347,7 +427,11 @@ Namespace AreaSystem
             Return ""
         End Function
 
-        Public Sub updateRootPath(ByVal dataPath As String)
+        ''' <summary>
+        ''' This method provide to update root path
+        ''' </summary>
+        ''' <param name="dataPath"></param>
+        <DebuggerHiddenAttribute()> Public Sub updateRootPath(ByVal dataPath As String)
             Dim found As Boolean = False
             Dim path As String = ""
 

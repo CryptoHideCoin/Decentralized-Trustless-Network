@@ -1,5 +1,6 @@
 Release Note
 ============
 
+1.5.5   - 03.10.2021 - Refactor Component
 1.5.4   - 30.09.2021 - Revision NotifyModel
 1.5.3   - 11.09.2021 - Add NotifyModel, review WalletSupport
