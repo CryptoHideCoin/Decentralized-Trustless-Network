@@ -1,15 +1,24 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' File: Change Certificate
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 03/10/2021
+' ****************************************
+
+
 
 Public Class ChangeCertificate
 
     Public Event Confirm()
     Public Event Cancel()
 
-
-
-
+    ''' <summary>
+    ''' This property get/let the certificate
+    ''' </summary>
+    ''' <returns></returns>
     Public Property certificate As String
         Get
             Return newCertificate.value

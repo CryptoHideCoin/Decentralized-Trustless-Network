@@ -3,6 +3,18 @@ Option Explicit On
 
 Imports CHCProtocolLibrary.AreaWallet.Support
 
+' ****************************************
+' File: Wallet Address Control
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 06/10/2021
+' ****************************************
+
+
+
+
+
+
 
 
 Public Class WalletAddressList
@@ -16,7 +28,10 @@ Public Class WalletAddressList
     Public Event RequestUpdate(ByVal UUID As String)
 
 
-
+    ''' <summary>
+    ''' This method provide to refresh list of a grid (list of keystore)
+    ''' </summary>
+    ''' <param name="items"></param>
     Private Sub refreshList(ByRef items As List(Of KeyStoreEngine.KeyStoreItem))
         Try
             Dim rowItem As ArrayList
@@ -39,7 +54,9 @@ Public Class WalletAddressList
             MessageBox.Show("Error during reloadData " & Err.Description, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-
+    ''' <summary>
+    ''' This method provide to load a list data
+    ''' </summary>
     Private Sub loadListData()
         Try
             Dim fileName As String = IO.Path.Combine(_dataPath, "keyAddress.list")
@@ -61,7 +78,11 @@ Public Class WalletAddressList
             MessageBox.Show("Error during loadListData - " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-
+    ''' <summary>
+    ''' This method provide to get a Read User KeyStore Path
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
     Private Function readUserKeyStorePath(ByVal value As String) As String
         Dim path As String = IO.Path.Combine(value, "define.path")
 
@@ -71,7 +92,12 @@ Public Class WalletAddressList
             Return value
         End If
     End Function
-
+    ''' <summary>
+    ''' This method provide to create Button Grid
+    ''' </summary>
+    ''' <param name="textValue"></param>
+    ''' <param name="nameValue"></param>
+    ''' <returns></returns>
     Private Function createButtonInGrid(ByVal textValue As String, ByVal nameValue As String) As DataGridViewButtonColumn
 
         Dim buttonColumn As DataGridViewButtonColumn
@@ -87,56 +113,9 @@ Public Class WalletAddressList
         Return buttonColumn
 
     End Function
-
-
-    Public Property dataPath() As String
-        Get
-            Return _dataPath
-        End Get
-        Set(value As String)
-            _BaseDataPath = value
-            _DataPath = readUserKeyStorePath(value)
-
-            If (_DataPath.Trim.Length > 0) Then
-                loadListData()
-            End If
-        End Set
-    End Property
-    Public Property autonomous() As Boolean = False
-
-
-    Private Sub WalletAddressList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        walletAddressDataGrid.Columns(0).Visible = False
-        walletAddressDataGrid.Columns(2).HeaderCell.Style.Alignment = DataGridViewContentAlignment.TopCenter
-        walletAddressDataGrid.Columns(1).HeaderCell.Style.Alignment = DataGridViewContentAlignment.TopCenter
-
-        walletAddressDataGrid.Columns.Add(createButtonInGrid("Edit", "edit"))
-        walletAddressDataGrid.Columns.Add(createButtonInGrid("Delete", "delete"))
-    End Sub
-
-    Private Sub addNewButton_Click(sender As Object, e As EventArgs) Handles addNewButton.Click
-        Try
-            If autonomous Then
-                Dim form As New KeyPairDetail
-
-                form.pathData = dataPath
-
-                form.ShowDialog(Me)
-
-                form.Close()
-                form.Dispose()
-
-                form = Nothing
-            Else
-                RaiseEvent RequestAddNew()
-            End If
-
-            loadListData()
-        Catch ex As Exception
-            MessageBox.Show("Error during addNewButton_Click - " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
+    ''' <summary>
+    ''' This method provide to resize a controls
+    ''' </summary>
     Private Sub resizeControl()
         Try
             configureButton.Left = 16
@@ -153,7 +132,10 @@ Public Class WalletAddressList
         Catch ex As Exception
         End Try
     End Sub
-
+    ''' <summary>
+    ''' This method provide to Update Row Grid
+    ''' </summary>
+    ''' <param name="rowGridNumber"></param>
     Private Sub updateRowGrid(ByVal rowGridNumber As Integer)
         Try
             Dim id As String = walletAddressDataGrid.Item(2, rowGridNumber).Value.ToString()
@@ -182,10 +164,78 @@ Public Class WalletAddressList
         End Try
     End Sub
 
+    ''' <summary>
+    ''' This property get/let the data Path
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property dataPath() As String
+        Get
+            Return _dataPath
+        End Get
+        Set(value As String)
+            _BaseDataPath = value
+            _DataPath = readUserKeyStorePath(value)
+
+            If (_DataPath.Trim.Length > 0) Then
+                loadListData()
+            End If
+        End Set
+    End Property
+    Public Property autonomous() As Boolean = False
+
+    ''' <summary>
+    ''' This event's method manage the Wallet Address List load control
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub WalletAddressList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        walletAddressDataGrid.Columns(0).Visible = False
+        walletAddressDataGrid.Columns(2).HeaderCell.Style.Alignment = DataGridViewContentAlignment.TopCenter
+        walletAddressDataGrid.Columns(1).HeaderCell.Style.Alignment = DataGridViewContentAlignment.TopCenter
+
+        walletAddressDataGrid.Columns.Add(createButtonInGrid("Edit", "edit"))
+        walletAddressDataGrid.Columns.Add(createButtonInGrid("Delete", "delete"))
+    End Sub
+    ''' <summary>
+    ''' This event's method provide to manage a AddNew click
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub addNewButton_Click(sender As Object, e As EventArgs) Handles addNewButton.Click
+        Try
+            If autonomous Then
+                Dim form As New KeyPairDetail
+
+                form.pathData = dataPath
+
+                form.ShowDialog(Me)
+
+                form.Close()
+                form.Dispose()
+
+                form = Nothing
+            Else
+                RaiseEvent RequestAddNew()
+            End If
+
+            loadListData()
+        Catch ex As Exception
+            MessageBox.Show("Error during addNewButton_Click - " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+    ''' <summary>
+    ''' This event's method manage the resize of a Wallet Address List
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub WalletAddressList_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         resizeControl()
     End Sub
-
+    ''' <summary>
+    ''' This event's method manage a Cell Content Click 
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub walletAddressDataGrid_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles walletAddressDataGrid.CellContentClick
         Try
             Dim id As String
@@ -219,15 +269,27 @@ Public Class WalletAddressList
             MessageBox.Show("Error during walletAddressDataGrid_CellContentClick " & Err.Description, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-
+    ''' <summary>
+    ''' This event's method manage a Size Changed of a Wallet Address List
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub WalletAddressList_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
         resizeControl()
     End Sub
-
+    ''' <summary>
+    ''' This event's method manage a Paint a Wallet Address List
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub WalletAddressList_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         resizeControl()
     End Sub
-
+    ''' <summary>
+    ''' This event's method provide to manage a Cell Content Double Click
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub walletAddressDataGrid_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles walletAddressDataGrid.CellContentDoubleClick
         Try
             Dim id As String = walletAddressDataGrid.Item(2, e.RowIndex).Value.ToString()
@@ -237,7 +299,11 @@ Public Class WalletAddressList
             MessageBox.Show("Error during walletAddressDataGrid_CellContentClick " & Err.Description, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-
+    ''' <summary>
+    ''' This event's method provide to manage a click of a Configure Button
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub configureButton_Click(sender As Object, e As EventArgs) Handles configureButton.Click
         Try
             Dim form As New ConfigurePath

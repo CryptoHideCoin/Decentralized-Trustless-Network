@@ -1,7 +1,20 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' File: Numberic Text
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 03/10/2021
+' ****************************************
+
+
 Imports CHCProtocolLibrary.AreaWallet.Support
+
+
+
+
+
 
 
 
@@ -12,37 +25,6 @@ Public Class WalletAddress
     Private _NoChange As Boolean = False
     Private _DataPath As String = ""
 
-
-    Public Property dataPath() As String
-        Get
-            Return _DataPath
-        End Get
-        Set(value As String)
-            _DataPath = value
-
-            keyStoreManagerButton.Enabled = (_DataPath.Length > 0)
-        End Set
-    End Property
-
-    Public Property caption As String
-        Get
-            Return addressLabel.Text
-        End Get
-        Set(value As String)
-            addressLabel.Text = value
-        End Set
-    End Property
-
-    Public Property value As String
-        Get
-            Return addressText.Text
-        End Get
-        Set(value As String)
-            _NoChange = True
-            addressText.Text = value
-            _NoChange = False
-        End Set
-    End Property
 
     Private Function getPrivateKey() As String
         Try
@@ -70,6 +52,50 @@ Public Class WalletAddress
         Return ""
     End Function
 
+    ''' <summary>
+    ''' This property get/let the Data Path
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property dataPath() As String
+        Get
+            Return _DataPath
+        End Get
+        Set(value As String)
+            _DataPath = value
+
+            keyStoreManagerButton.Enabled = (_DataPath.Length > 0)
+        End Set
+    End Property
+    ''' <summary>
+    ''' This property get/let the caption
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property caption As String
+        Get
+            Return addressLabel.Text
+        End Get
+        Set(value As String)
+            addressLabel.Text = value
+        End Set
+    End Property
+    ''' <summary>
+    ''' This property get/let the value
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property value As String
+        Get
+            Return addressText.Text
+        End Get
+        Set(value As String)
+            _NoChange = True
+            addressText.Text = value
+            _NoChange = False
+        End Set
+    End Property
+    ''' <summary>
+    ''' This property get a private key
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property privateKey() As String
         Get
             If (value.Trim.Length > 0) Then
@@ -88,7 +114,10 @@ Public Class WalletAddress
             End If
         End Get
     End Property
-
+    ''' <summary>
+    ''' This property get a keyPair structure RAW
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property keyPairRAW() As WalletAddressEngine.SingleKeyPair
         Get
             Dim result As New WalletAddressEngine.SingleKeyPair
@@ -110,7 +139,11 @@ Public Class WalletAddress
         End Get
     End Property
 
-
+    ''' <summary>
+    ''' This method provide to request to the user the Access Security Key
+    ''' </summary>
+    ''' <param name="securityValue"></param>
+    ''' <returns></returns>
     Private Function requestAccessSecurityKey(ByRef securityValue As String) As Boolean
         Dim response As Boolean = False
 
@@ -131,7 +164,11 @@ Public Class WalletAddress
 
         Return response
     End Function
-
+    ''' <summary>
+    ''' This method provide to request Authorization Key
+    ''' </summary>
+    ''' <param name="securityValue"></param>
+    ''' <returns></returns>
     Private Function requestAuthorizationKey(ByRef securityValue As String) As Boolean
         Dim response As Boolean = False
 
@@ -155,8 +192,11 @@ Public Class WalletAddress
 
         Return response
     End Function
-
-
+    ''' <summary>
+    ''' This method provide to read a User Keystore Path
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
     Private Function readUserKeyStorePath(ByVal value As String) As String
         Dim path As String = IO.Path.Combine(value, "define.path")
 
@@ -166,8 +206,10 @@ Public Class WalletAddress
             Return value
         End If
     End Function
-
-
+    ''' <summary>
+    ''' This method provide to get a Private Key from Keystore
+    ''' </summary>
+    ''' <returns></returns>
     Private Function getPrivateKeyFromStore() As String
         Try
             Dim engine As New WalletAddressDataEngine
@@ -207,7 +249,10 @@ Public Class WalletAddress
             Return False
         End Try
     End Function
-
+    ''' <summary>
+    ''' This method provide to get a Private Key RAW from Keystore
+    ''' </summary>
+    ''' <returns></returns>
     Private Function getPrivateKeyRAWFromStore() As String
         Try
             Dim engine As New WalletAddressDataEngine
@@ -247,7 +292,10 @@ Public Class WalletAddress
             Return False
         End Try
     End Function
-
+    ''' <summary>
+    ''' This method provide to get Public Address RAW from Keystore
+    ''' </summary>
+    ''' <returns></returns>
     Private Function getPublicAddressRAWFromStore() As String
         Try
             Dim engine As New WalletAddressDataEngine
@@ -287,7 +335,10 @@ Public Class WalletAddress
             Return False
         End Try
     End Function
-
+    ''' <summary>
+    ''' This method provide to get Key pair RAW from Keystore
+    ''' </summary>
+    ''' <returns></returns>
     Private Function getKeyPairRAWFromStore() As WalletAddressEngine.SingleKeyPair
         Try
             Dim engine As New WalletAddressDataEngine
@@ -334,7 +385,10 @@ Public Class WalletAddress
             Return New WalletAddressEngine.SingleKeyPair
         End Try
     End Function
-
+    ''' <summary>
+    ''' This method provide to get data from a Keystore
+    ''' </summary>
+    ''' <returns></returns>
     Private Function getDataFromKeyStore() As String
         Try
             Dim keyStoreManager = New KeyStoreEngine
@@ -351,7 +405,9 @@ Public Class WalletAddress
 
         Return ""
     End Function
-
+    ''' <summary>
+    ''' This method provide to resize all control
+    ''' </summary>
     Private Sub resizeControls()
         Try
             addressLabel.Left = 4
@@ -366,18 +422,35 @@ Public Class WalletAddress
         End Try
     End Sub
 
+    ''' <summary>
+    ''' This event provide to notify the resize of a form
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub WalletAddress_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         resizeControls()
     End Sub
-
+    ''' <summary>
+    ''' This event notify when the size changed of a form
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub WalletAddress_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
         resizeControls()
     End Sub
-
+    ''' <summary>
+    ''' This event notify when the control repain
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub WalletAddress_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         resizeControls()
     End Sub
-
+    ''' <summary>
+    ''' This event's method manage the click in the keyStore manager button
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub keyStoreManagerButton_Click(sender As Object, e As EventArgs) Handles keyStoreManagerButton.Click
         Try
             Dim frm As New KeyStoreManager
@@ -396,14 +469,15 @@ Public Class WalletAddress
             MessageBox.Show("Error during a keyStoreManagerButton_Click - " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-
+    ''' <summary>
+    ''' This event's method provide to manage a text changed from address text
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub addressText_TextChanged(sender As Object, e As EventArgs) Handles addressText.TextChanged
         If Not _NoChange Then
             RaiseEvent TextChanged()
         End If
     End Sub
 
-    Private Sub WalletAddress_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
 End Class

@@ -1,8 +1,19 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' File: Numberic Text
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 03/10/2021
+' ****************************************
+
+
 Imports System.Threading
 Imports System.Globalization
+
+
+
 
 
 
@@ -10,17 +21,13 @@ Public Class NumericText
 
     Inherits TextBox
 
+
     Private _CurrentFormat As String = ""
     Private _DecimalChar As String = ""
     Private _LocationCode As String
     Private _DecimalPeriod As Boolean = False
     Private _NumberFormat As NumberFormatInfo
     Private _Buffer As String = ""
-
-    Public Sub New()
-        LocationCode = Thread.CurrentThread.CurrentCulture.Name
-        _NumberFormat = New CultureInfo(_LocationCode, False).NumberFormat
-    End Sub
 
     Private Property decimalChar() As String
         Get
@@ -35,8 +42,24 @@ Public Class NumericText
         End Set
     End Property
 
-    Public Property useDecimal() As Boolean = False
 
+    ''' <summary>
+    ''' This method provide to initialize the component
+    ''' </summary>
+    <DebuggerHiddenAttribute()> Public Sub New()
+        locationCode = Thread.CurrentThread.CurrentCulture.Name
+        _NumberFormat = New CultureInfo(_LocationCode, False).NumberFormat
+    End Sub
+
+    ''' <summary>
+    ''' This property get/let if in the control wish a decimal value
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property useDecimal() As Boolean = False
+    ''' <summary>
+    ''' This property get/let the location code (to configure format)
+    ''' </summary>
+    ''' <returns></returns>
     Public Property locationCode() As String
         Get
             Return _LocationCode
@@ -51,7 +74,10 @@ Public Class NumericText
             End Try
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get/let the current format of a field
+    ''' </summary>
+    ''' <returns></returns>
     Public Property currentFormat() As String
         Get
             Return _CurrentFormat
@@ -60,7 +86,10 @@ Public Class NumericText
             _CurrentFormat = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get/let the text value
+    ''' </summary>
+    ''' <returns></returns>
     Public Overrides Property text As String
         Get
             Return MyBase.Text
@@ -73,7 +102,10 @@ Public Class NumericText
             End Try
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get the value in the decimal type
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Value As Decimal
         Get
             If MyBase.Text.Length = 0 Then
@@ -82,6 +114,7 @@ Public Class NumericText
             Return Decimal.Parse(MyBase.Text, Globalization.NumberStyles.Currency, _NumberFormat)
         End Get
     End Property
+
 
     Private Sub DecimalTextBox_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.GotFocus
         If MyBase.Text.Length = 0 Then

@@ -3,6 +3,15 @@ Option Compare Text
 
 Imports CHCCommonLibrary.AreaEngine.Communication
 
+' ****************************************
+' File: Dialog Change Certificate
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 06/10/2021
+' ****************************************
+
+
+
 
 
 
@@ -11,7 +20,10 @@ Public Class DialogChangeCertificate
 
     Private Property _Certificate As String
 
-
+    ''' <summary>
+    ''' This property get/let certificate value
+    ''' </summary>
+    ''' <returns></returns>
     Public Property certificate As String
         Get
             Return _Certificate
@@ -27,11 +39,15 @@ Public Class DialogChangeCertificate
     Public Property serviceId As String = ""
     Public Property privateKey As String = ""
 
-
+    ''' <summary>
+    ''' This event's method provide to manage a cancel of a CertificateChange
+    ''' </summary>
     Private Sub certificateChange_Cancel() Handles certificateChange.Cancel
         DialogResult = DialogResult.Cancel
     End Sub
-
+    ''' <summary>
+    ''' This event's method provide to manage a confirm a certificateChange
+    ''' </summary>
     Private Sub certificateChange_Confirm() Handles certificateChange.Confirm
         Try
             Dim url As String = ""
@@ -83,7 +99,4 @@ Public Class DialogChangeCertificate
         End Try
     End Sub
 
-    Private Sub certificateChange_Load(sender As Object, e As EventArgs) Handles certificateChange.Load
-
-    End Sub
 End Class

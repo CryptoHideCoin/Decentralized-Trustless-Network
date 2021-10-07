@@ -1,10 +1,27 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' File: Log Control
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 06/10/2021
+' ****************************************
+
+
+
+
+
+
+
 
 
 Public Class LogControl
 
+    ''' <summary>
+    ''' This property get/let the Track Configuration value
+    ''' </summary>
+    ''' <returns></returns>
     Public Property trackConfiguration() As CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum
         Get
             Select Case trackConfigurationCombo.SelectedIndex
@@ -22,7 +39,10 @@ Public Class LogControl
             End Select
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get/let the Use Track Rotate
+    ''' </summary>
+    ''' <returns></returns>
     Public Property useTrackRotate() As Boolean
         Get
             Return autoCleanOptionCheck.Checked
@@ -31,7 +51,10 @@ Public Class LogControl
             autoCleanOptionCheck.Checked = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get/let the Track Rotate Frequency value
+    ''' </summary>
+    ''' <returns></returns>
     Public Property trackRotateFrequency() As CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum
         Get
             Select Case startCleanEveryValueCombo.SelectedIndex
@@ -47,7 +70,10 @@ Public Class LogControl
             End Select
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get/let the Track Rotate Keep Last value
+    ''' </summary>
+    ''' <returns></returns>
     Public Property trackRotateKeepLast() As CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum
         Get
             Select Case keepOnlyRecentFileValueCombo.SelectedIndex
@@ -68,7 +94,10 @@ Public Class LogControl
             End Select
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get/let the Track Rotate Keep File value
+    ''' </summary>
+    ''' <returns></returns>
     Public Property trackRotateKeepFile() As CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum
         Get
             Select Case keepFileTypeValueCombo.SelectedIndex
@@ -85,7 +114,11 @@ Public Class LogControl
             End Select
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get/let the CheckChanged on AutoCleanOptionCheck
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub autoCleanOptionCheck_CheckedChanged(sender As Object, e As EventArgs) Handles autoCleanOptionCheck.CheckedChanged
         startCleanEveryLabel.Enabled = autoCleanOptionCheck.Checked
         startCleanEveryValueCombo.Enabled = autoCleanOptionCheck.Checked

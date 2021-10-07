@@ -22,5 +22,960 @@ CHCSupportUIControls
   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
 </summary>
 </member>
+<member name="M:CHCSupportUIControls.NumericText.#ctor">
+ <summary>
+ This method provide to initialize the component
+ </summary>
+</member>
+<member name="P:CHCSupportUIControls.NumericText.useDecimal">
+ <summary>
+ This property get/let if in the control wish a decimal value
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.NumericText.locationCode">
+ <summary>
+ This property get/let the location code (to configure format)
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.NumericText.currentFormat">
+ <summary>
+ This property get/let the current format of a field
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.NumericText.Text">
+ <summary>
+ This property get/let the text value
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.NumericText.Value">
+ <summary>
+ This property get the value in the decimal type
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.PrintWalletCreatedEngine.Page1.#ctor(CHCSupportUIControls.PrintWalletCreatedEngine@,System.Drawing.Printing.PrintPageEventArgs@)">
+ <summary>
+ This method provide to initialize class
+ </summary>
+ <param name="parent"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.PrintWalletCreatedEngine.WritePage(System.Byte,System.Drawing.Printing.PrintPageEventArgs@)">
+ <summary>
+ This method provuide to manage a Write Page
+ </summary>
+ <param name="Number"></param>
+ <param name="e"></param>
+</member>
+<member name="P:CHCSupportUIControls.ConfigurePath.dataPath">
+ <summary>
+ This property get/let the data path
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.KeyStoreManager.addressValue">
+ <summary>
+ This property get/let the address value
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.KeyStoreManager.dataPath">
+ <summary>
+ This property get/let the Data Path
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.KeyPairDetail.closeMe">
+ <summary>
+ This property get/let if the form need to close
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.KeyPairDetail.pathData">
+ <summary>
+ This property get/let the Path Data
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.KeyPairDetail.uuid">
+ <summary>
+ This property get/let UUID of the wallet
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.PrivateKey.dataPath">
+ <summary>
+ This property get/let the data path
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.PrivateKey.value">
+ <summary>
+ This property get the value of a Private Key
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.SelectPort.value">
+ <summary>
+ This property get/let the value of the control
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.SelectPort.label">
+ <summary>
+ This property get/let the label of a control
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.SelectPort.checkValue">
+ <summary>
+ This methdo provide to check a insert value
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.SelectPort.SelectPort_Resize(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a resize of a select port
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="P:CHCSupportUIControls.Certificate.urlService">
+ <summary>
+ This property get/let the URL Service
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.Certificate.serviceId">
+ <summary>
+ This property get/let the service id
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.Certificate.dataPath">
+ <summary>
+ This property get/let the Data Path
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.Certificate.value">
+ <summary>
+ This property get/let the value
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.Certificate.noChange">
+ <summary>
+ This property get/let No Change state
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.ChangeCertificate.certificate">
+ <summary>
+ This property get/let the certificate
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.UrlProtocol.serviceId">
+ <summary>
+ This property get/let the service Id
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.UrlProtocol.executeCommand">
+ <summary>
+ This property get/let the execute command switch
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.UrlProtocol.useSecure">
+ <summary>
+ This property get/let Use Secure
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.UrlProtocol.address">
+ <summary>
+ This property get/let the url address
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.UrlProtocol.baseUrlComplete">
+ <summary>
+ This property get the base URL complete
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.UrlProtocol.testServiceResponse">
+ <summary>
+ This method provide to test service response
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.WalletAddress.dataPath">
+ <summary>
+ This property get/let the Data Path
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.WalletAddress.caption">
+ <summary>
+ This property get/let the caption
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.WalletAddress.value">
+ <summary>
+ This property get/let the value
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.WalletAddress.privateKey">
+ <summary>
+ This property get a private key
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.WalletAddress.keyPairRAW">
+ <summary>
+ This property get a keyPair structure RAW
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.requestAccessSecurityKey(System.String@)">
+ <summary>
+ This method provide to request to the user the Access Security Key
+ </summary>
+ <param name="securityValue"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.requestAuthorizationKey(System.String@)">
+ <summary>
+ This method provide to request Authorization Key
+ </summary>
+ <param name="securityValue"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.readUserKeyStorePath(System.String)">
+ <summary>
+ This method provide to read a User Keystore Path
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.getPrivateKeyFromStore">
+ <summary>
+ This method provide to get a Private Key from Keystore
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.getPrivateKeyRAWFromStore">
+ <summary>
+ This method provide to get a Private Key RAW from Keystore
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.getPublicAddressRAWFromStore">
+ <summary>
+ This method provide to get Public Address RAW from Keystore
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.getKeyPairRAWFromStore">
+ <summary>
+ This method provide to get Key pair RAW from Keystore
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.getDataFromKeyStore">
+ <summary>
+ This method provide to get data from a Keystore
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.resizeControls">
+ <summary>
+ This method provide to resize all control
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.WalletAddress_Resize(System.Object,System.EventArgs)">
+ <summary>
+ This event provide to notify the resize of a form
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.WalletAddress_SizeChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event notify when the size changed of a form
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.WalletAddress_Paint(System.Object,System.Windows.Forms.PaintEventArgs)">
+ <summary>
+ This event notify when the control repain
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.keyStoreManagerButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method manage the click in the keyStore manager button
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddress.addressText_TextChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a text changed from address text
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="P:CHCSupportUIControls.WalletKeyPrivate.value">
+ <summary>
+ This property get/let the Value
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.WalletKeyPrivate.keyStoreEnabled">
+ <summary>
+ This property get/let if the Keystore is enabled
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletKeyPrivate.resizeControl">
+ <summary>
+ This method provide to resize a control
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.WalletKeyPrivate.keyStoreManagerButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method manage a click from KeyStore manager button
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletKeyPrivate.WalletKeyPrivate_Resize(System.Object,System.EventArgs)">
+ <summary>
+ This event's method manage a resize Wallet Key Private
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletKeyPrivate.WalletKeyPrivate_SizeChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method manage a size changed from a Wallet Key Private
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletKeyPrivate.WalletKeyPrivate_Paint(System.Object,System.Windows.Forms.PaintEventArgs)">
+ <summary>
+ This event's method manage a paint from a Wallet Key Private
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletKeyPrivate.privateKeyValue_TextChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method manage a Text Changed from a PrivateKeyValue
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="P:CHCSupportUIControls.DialogChangeCertificate.certificate">
+ <summary>
+ This property get/let certificate value
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.DialogChangeCertificate.certificateChange_Cancel">
+ <summary>
+ This event's method provide to manage a cancel of a CertificateChange
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.DialogChangeCertificate.certificateChange_Confirm">
+ <summary>
+ This event's method provide to manage a confirm a certificateChange
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.RequestPassword.RefreshOKButton">
+ <summary>
+ This method provide to refresh OK button
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.RequestPassword.showCharacterButton_MouseUp(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ This event's method provide to manage MouseUp on Show Character Button
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.RequestPassword.showCharacterButton_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ This event's method provide to manage MouseDown a showCharacterButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.RequestPassword.passwordTextBox_TextChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a TextChanged a Password Text Box
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.RequestPassword.confirmButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a click on confirmButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.RequestPassword.cancelButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a click on cancelButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="P:CHCSupportUIControls.LogControl.trackConfiguration">
+ <summary>
+ This property get/let the Track Configuration value
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.LogControl.useTrackRotate">
+ <summary>
+ This property get/let the Use Track Rotate
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.LogControl.trackRotateFrequency">
+ <summary>
+ This property get/let the Track Rotate Frequency value
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.LogControl.trackRotateKeepLast">
+ <summary>
+ This property get/let the Track Rotate Keep Last value
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.LogControl.trackRotateKeepFile">
+ <summary>
+ This property get/let the Track Rotate Keep File value
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.LogControl.autoCleanOptionCheck_CheckedChanged(System.Object,System.EventArgs)">
+ <summary>
+ This property get/let the CheckChanged on AutoCleanOptionCheck
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.verifyData">
+ <summary>
+ This method provide to verify a data of a control
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.saveData">
+ <summary>
+ This method provide to save a data
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.updateKeyStoreList">
+ <summary>
+ This method provide to update keystore list
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.manageAdvanceButton">
+ <summary>
+ This method provide to manage advance button
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.printButton(System.Object,System.EventArgs)">
+ <summary>
+ This method provide to manage Print Button
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="P:CHCSupportUIControls.CustomizeWalletAddress.uuid">
+ <summary>
+ This property get/let the uuid value
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.useProtectionKEYCheckbox_CheckedChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a CheckChangend on useProtectionKeyCheckbox
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.useAuthorizationKEYCheckBox_CheckedChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to CheckedChanged on useAuthorizationKeyCheckbox
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.showCharacterAccessKEYButton_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ This event's method provide to MouseDown on showCharacterAccessKEYButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.showCharacterAccessKEYButton_MouseUp(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ This event's method provide to MouseUp on showCharacterAccessKEYButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.showCharacterRepeatAccessKEYButton_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ This event's method provide to MouseDown on showCharacterRepeatAccessKEYButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.showCharacterRepeatAccessKEYButton_MouseUp(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ This event's method provide to MouseUp on showCharacterRepeatAccessKEYButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.showCharacterAuthorizationKEYButton_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ This event's method provide to manage a MouseDown on showCharacterAuthorizationKEYButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.showCharacterAuthorizationKEYButton_MouseUp(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ This event's method provide to manage a MouseUp on showCharacterAuthorizationKeyButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.showCharacterRepeatAuthorizationKEYButton_MouseUp(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ This event's method provide to manage a MouseUp on showCharacterRepeatAuthorizationKeyButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.showCharacterRepeatAuthorizationKEYButton_MouseDown(System.Object,System.Windows.Forms.MouseEventArgs)">
+ <summary>
+ This event's method provide to manage a MouseUp on showCharacterRepeatAuthorizationKEYButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.accessKEYTextBox_TextChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a TextChanged on accessKEYTextBox
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.repeatAccessKEYTextBox_TextChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a TextChanged on repeatAccessKEYTextBox
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.authorizationKEYTextBox_TextChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a TextChanged on authorizationKEYTextBox
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.repeatAuthorizationKeyTextArea_TextChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a TextChanged on repeatAuthorizationKeyTextArea
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.seedValue_TextChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a TextChanged on seedValue
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.seedPage_Resize(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Resize on seedValue
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.CustomizeWalletButton_Load(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Load on CustomizeWalletButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.userPage_Resize(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Resize on userPage
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.rawPage_Resize(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Resize on rawPage
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.createNewButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Click on createNewButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.createWalletFromSeedButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Click on createWalletFromSeedButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.seedValueTextArea_TextChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a TextChanged on seedValueTextArea
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.userKeyPair_SynchroButtonEdit(System.Boolean)">
+ <summary>
+ This event's method provide to manage a SynchroButtonEdit on userKeyPair
+ </summary>
+ <param name="value"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.userKeyPair_SynchroClearField">
+ <summary>
+ This event's method provide to manage a SynchroClearField on userKeyPair
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.userKeyPair_SynchroOther">
+ <summary>
+ This event's method provide to manage a SynchroOther on userKeyPair
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.userKeyPair_SynchroOtherKeyPair(System.String,System.String)">
+ <summary>
+ This event's method provide to manage a SynchroOtherKeyPair on userKeyPair
+ </summary>
+ <param name="publicKey"></param>
+ <param name="privateKey"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.saveAddressButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Click on saveAddressButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.paperWalletButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Click on paperWalletButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.ppdMain_Shown(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Shown on ppdMain
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.pdMain_PrintPage(System.Object,System.Drawing.Printing.PrintPageEventArgs)">
+ <summary>
+ This event's method provide to manage a PrintPage on ppMain
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.paperAddress_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Click on paperAddress control
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.testSignature_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Click on testSignature button
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.CustomizeWalletAddress.loadData">
+ <summary>
+ This method provide to load a data
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.enableButtonEdit(System.Boolean)">
+ <summary>
+ This method provide to enable button edit
+ </summary>
+ <param name="value"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.clearField">
+ <summary>
+ This method provide to clear field
+ </summary>
+</member>
+<member name="P:CHCSupportUIControls.KeyPair.userMode">
+ <summary>
+ This property get/let the User Mode
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.KeyPair.privateKey">
+ <summary>
+ This property get/let Private Key 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCSupportUIControls.KeyPair.publicAddress">
+ <summary>
+ This property get/let the Public Address
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.calculateCharRemain(System.String,System.Int32)">
+ <summary>
+ This method provide to calculate char remain
+ </summary>
+ <param name="textValue"></param>
+ <param name="numCharMax"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.resizeCharCounter(System.Windows.Forms.Label@,System.Windows.Forms.TextBox@)">
+ <summary>
+ This method provide to resize a char counter
+ </summary>
+ <param name="objetCounter"></param>
+ <param name="objectText"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.customResize">
+ <summary>
+ This method provide a Custom Resize
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.validatePrivateKeyFormat">
+ <summary>
+ This method provide to manage a Validate Private Key Format
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.showQRPanel(System.String)">
+ <summary>
+ This method provide to show a QR Panel
+ </summary>
+ <param name="code"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.KeyPair_Load(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a load method of this control
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.KeyPair_Resize(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to resize a control
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.KeyPair_Paint(System.Object,System.Windows.Forms.PaintEventArgs)">
+ <summary>
+ This event's method provide to manage a Paint of a control
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.privateKeyText_TextChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Text Changed of a control
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.KeyPair_SizeChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a Size Changed of a control
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.copyPublicAddressButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a click of a Copy Public Address Button
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.copyPrivateAddressButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a click of a copy private address button
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.privateKeyText_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+ <summary>
+ This event's method provide to manage a Text Down of a PrivateKeyText control
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.qrPublicAddressButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a click on QrPublicAddressButton
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.closeUserButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a click on Close User Button 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.KeyPair.qrPrivateAddressButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a click on a qr Private Address Button
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.refreshList(System.Collections.Generic.List{CHCProtocolLibrary.AreaWallet.Support.KeyStoreEngine.KeyStoreItem}@)">
+ <summary>
+ This method provide to refresh list of a grid (list of keystore)
+ </summary>
+ <param name="items"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.loadListData">
+ <summary>
+ This method provide to load a list data
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.readUserKeyStorePath(System.String)">
+ <summary>
+ This method provide to get a Read User KeyStore Path
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.createButtonInGrid(System.String,System.String)">
+ <summary>
+ This method provide to create Button Grid
+ </summary>
+ <param name="textValue"></param>
+ <param name="nameValue"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.resizeControl">
+ <summary>
+ This method provide to resize a controls
+ </summary>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.updateRowGrid(System.Int32)">
+ <summary>
+ This method provide to Update Row Grid
+ </summary>
+ <param name="rowGridNumber"></param>
+</member>
+<member name="P:CHCSupportUIControls.WalletAddressList.dataPath">
+ <summary>
+ This property get/let the data Path
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.WalletAddressList_Load(System.Object,System.EventArgs)">
+ <summary>
+ This event's method manage the Wallet Address List load control
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.addNewButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a AddNew click
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.WalletAddressList_Resize(System.Object,System.EventArgs)">
+ <summary>
+ This event's method manage the resize of a Wallet Address List
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.walletAddressDataGrid_CellContentClick(System.Object,System.Windows.Forms.DataGridViewCellEventArgs)">
+ <summary>
+ This event's method manage a Cell Content Click 
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.WalletAddressList_SizeChanged(System.Object,System.EventArgs)">
+ <summary>
+ This event's method manage a Size Changed of a Wallet Address List
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.WalletAddressList_Paint(System.Object,System.Windows.Forms.PaintEventArgs)">
+ <summary>
+ This event's method manage a Paint a Wallet Address List
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.walletAddressDataGrid_CellContentDoubleClick(System.Object,System.Windows.Forms.DataGridViewCellEventArgs)">
+ <summary>
+ This event's method provide to manage a Cell Content Double Click
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:CHCSupportUIControls.WalletAddressList.configureButton_Click(System.Object,System.EventArgs)">
+ <summary>
+ This event's method provide to manage a click of a Configure Button
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
 </members>
 </doc>

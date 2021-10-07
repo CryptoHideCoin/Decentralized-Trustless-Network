@@ -1,31 +1,54 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' File: Key Paint Control
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 06/10/2021
+' ****************************************
+
+
+
+
+
+
+
+
+
 
 
 Public Class KeyPair
+
     Public Event SynchroButtonEdit(ByVal value As Boolean)
     Public Event SynchroClearField()
     Public Event SynchroOther()
     Public Event SynchroOtherKeyPair(ByVal publicKey As String, ByVal privateKey As String)
 
-
     Public Property noCheck As Boolean
     Public Property inError As Boolean
 
-
-    Public Sub enableButtonEdit(ByVal value As Boolean)
+    ''' <summary>
+    ''' This method provide to enable button edit
+    ''' </summary>
+    ''' <param name="value"></param>
+    <DebuggerHiddenAttribute()> Public Sub enableButtonEdit(ByVal value As Boolean)
         qrPublicAddressButton.Enabled = value
         copyPublicAddressButton.Enabled = value
         qrPrivateAddressButton.Enabled = value
         copyPrivateAddressButton.Enabled = value
     End Sub
-
-    Public Sub clearField()
+    ''' <summary>
+    ''' This method provide to clear field
+    ''' </summary>
+    <DebuggerHiddenAttribute()> Public Sub clearField()
         publicKeyText.Text = ""
         privateKeyText.Text = ""
     End Sub
-
+    ''' <summary>
+    ''' This property get/let the User Mode
+    ''' </summary>
+    ''' <returns></returns>
     Public Property userMode As Boolean
         Get
             Return Not privateKeyText.ReadOnly
@@ -35,7 +58,10 @@ Public Class KeyPair
             charCounterPrivateAddress.Visible = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get/let Private Key 
+    ''' </summary>
+    ''' <returns></returns>
     Public Property privateKey() As String
         Get
             Return privateKeyText.Text
@@ -44,7 +70,10 @@ Public Class KeyPair
             privateKeyText.Text = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get/let the Public Address
+    ''' </summary>
+    ''' <returns></returns>
     Public Property publicAddress As String
         Get
             Return publicKeyText.Text
@@ -54,26 +83,26 @@ Public Class KeyPair
         End Set
     End Property
 
+    ''' <summary>
+    ''' This method provide to calculate char remain
+    ''' </summary>
+    ''' <param name="textValue"></param>
+    ''' <param name="numCharMax"></param>
+    ''' <returns></returns>
     Private Function calculateCharRemain(ByVal textValue As String, ByVal numCharMax As Integer) As String
         Return "(" & textValue.Length.ToString.Trim() & " / " & numCharMax.ToString.Trim() & ")"
     End Function
-
+    ''' <summary>
+    ''' This method provide to resize a char counter
+    ''' </summary>
+    ''' <param name="objetCounter"></param>
+    ''' <param name="objectText"></param>
     Private Sub resizeCharCounter(ByRef objetCounter As Label, ByRef objectText As TextBox)
         objetCounter.Left = (objectText.Left + objectText.Width) - objetCounter.Width
     End Sub
-
-    Private Sub KeyPair_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If privateKeyText.ReadOnly Then
-            charCounterPrivateAddress.Text = calculateCharRemain(privateKeyText.Text, CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.numCharMaxFormatPrivateKey)
-
-            resizeCharCounter(charCounterPrivateAddress, privateKeyText)
-
-            privateKeyText.MaxLength = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.numCharMaxFormatPrivateKey
-
-            RaiseEvent SynchroOther()
-        End If
-    End Sub
-
+    ''' <summary>
+    ''' This method provide a Custom Resize
+    ''' </summary>
     Private Sub customResize()
         Try
             qrCodePanel.Left = 5
@@ -126,15 +155,10 @@ Public Class KeyPair
             copyPrivateAddressButton.Visible = False
         End Try
     End Sub
-
-    Private Sub KeyPair_Resize(sender As Object, e As EventArgs) Handles Me.Resize
-        customResize()
-    End Sub
-
-    Private Sub KeyPair_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
-        customResize()
-    End Sub
-
+    ''' <summary>
+    ''' This method provide to manage a Validate Private Key Format
+    ''' </summary>
+    ''' <returns></returns>
     Private Function validatePrivateKeyFormat() As Boolean
         If Not CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.SingleKeyPair.startAllowed(privateKeyText.Text) Then
 
@@ -157,7 +181,61 @@ Public Class KeyPair
 
         Return True
     End Function
+    ''' <summary>
+    ''' This method provide to show a QR Panel
+    ''' </summary>
+    ''' <param name="code"></param>
+    Private Sub showQRPanel(ByVal code As String)
+        qrCodePanel.Visible = True
 
+        Dim generateBarcode As ZXing.IBarcodeWriter = New ZXing.BarcodeWriter() With {.Format = ZXing.BarcodeFormat.QR_CODE}
+
+        qrCodePanel.BringToFront()
+
+        qrCodePanel.Visible = True
+        qrCodeImage.Visible = True
+        closeUserButton.Visible = True
+
+        qrCodeImage.Image = generateBarcode.Write(code)
+    End Sub
+
+    ''' <summary>
+    ''' This event's method provide to manage a load method of this control
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub KeyPair_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If privateKeyText.ReadOnly Then
+            charCounterPrivateAddress.Text = calculateCharRemain(privateKeyText.Text, CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.numCharMaxFormatPrivateKey)
+
+            resizeCharCounter(charCounterPrivateAddress, privateKeyText)
+
+            privateKeyText.MaxLength = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.numCharMaxFormatPrivateKey
+
+            RaiseEvent SynchroOther()
+        End If
+    End Sub
+    ''' <summary>
+    ''' This event's method provide to resize a control
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub KeyPair_Resize(sender As Object, e As EventArgs) Handles Me.Resize
+        customResize()
+    End Sub
+    ''' <summary>
+    ''' This event's method provide to manage a Paint of a control
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub KeyPair_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
+        customResize()
+    End Sub
+    ''' <summary>
+    ''' This event's method provide to manage a Text Changed of a control
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub privateKeyText_TextChanged(sender As Object, e As EventArgs) Handles privateKeyText.TextChanged
         If Not privateKeyText.ReadOnly Then
             qrPublicAddressButton.Enabled = (privateKeyText.Text.Trim.Length > 0)
@@ -200,21 +278,37 @@ Public Class KeyPair
             RaiseEvent SynchroOther()
         End If
     End Sub
-
+    ''' <summary>
+    ''' This event's method provide to manage a Size Changed of a control
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub KeyPair_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
         If Not privateKeyText.ReadOnly Then
             resizeCharCounter(charCounterPrivateAddress, privateKeyText)
         End If
     End Sub
-
+    ''' <summary>
+    ''' This event's method provide to manage a click of a Copy Public Address Button
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub copyPublicAddressButton_Click(sender As Object, e As EventArgs) Handles copyPublicAddressButton.Click
         Clipboard.SetText(publicKeyText.Text)
     End Sub
-
+    ''' <summary>
+    ''' This event's method provide to manage a click of a copy private address button
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub copyPrivateAddressButton_Click(sender As Object, e As EventArgs) Handles copyPrivateAddressButton.Click
         Clipboard.SetText(privateKeyText.Text)
     End Sub
-
+    ''' <summary>
+    ''' This event's method provide to manage a Text Down of a PrivateKeyText control
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub privateKeyText_KeyDown(sender As Object, e As KeyEventArgs) Handles privateKeyText.KeyDown
         If noCheck Then Return
 
@@ -247,29 +341,27 @@ Public Class KeyPair
             e.SuppressKeyPress = True
         End If
     End Sub
-
-    Private Sub showQRPanel(ByVal code As String)
-        qrCodePanel.Visible = True
-
-        Dim generateBarcode As ZXing.IBarcodeWriter = New ZXing.BarcodeWriter() With {.Format = ZXing.BarcodeFormat.QR_CODE}
-
-        qrCodePanel.BringToFront()
-
-        qrCodePanel.Visible = True
-        qrCodeImage.Visible = True
-        closeUserButton.Visible = True
-
-        qrCodeImage.Image = generateBarcode.Write(code)
-    End Sub
-
+    ''' <summary>
+    ''' This event's method provide to manage a click on QrPublicAddressButton
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub qrPublicAddressButton_Click(sender As Object, e As EventArgs) Handles qrPublicAddressButton.Click
         showQRPanel(publicKeyText.Text)
     End Sub
-
+    ''' <summary>
+    ''' This event's method provide to manage a click on Close User Button 
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub closeUserButton_Click(sender As Object, e As EventArgs) Handles closeUserButton.Click
         qrCodePanel.Visible = False
     End Sub
-
+    ''' <summary>
+    ''' This event's method provide to manage a click on a qr Private Address Button
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub qrPrivateAddressButton_Click(sender As Object, e As EventArgs) Handles qrPrivateAddressButton.Click
         showQRPanel(privateKeyText.Text)
     End Sub

@@ -1,11 +1,33 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' File: Private Key
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 03/10/2021
+' ****************************************
+
+
+
+
+
+
+
+
+
 
 Public Class PrivateKey
 
+    ''' <summary>
+    ''' This property get/let the data path
+    ''' </summary>
+    ''' <returns></returns>
     Public Property dataPath As String = ""
-
+    ''' <summary>
+    ''' This property get the value of a Private Key
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property value() As String
         Get
             Return userWalletKeyPrivate.value
@@ -52,4 +74,5 @@ Public Class PrivateKey
             MessageBox.Show("Error during a userWalletKeyPrivate_GetWalletID - " & Err.Description, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
 End Class

@@ -1,12 +1,27 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' File: Select Port Control
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 05/10/2021
+' ****************************************
+
+
+
+
+
 
 
 
 
 Public Class SelectPort
 
+    ''' <summary>
+    ''' This property get/let the value of the control
+    ''' </summary>
+    ''' <returns></returns>
     Public Property value() As Integer
         Get
             Return CInt(portNumber.Text.ToString)
@@ -15,7 +30,10 @@ Public Class SelectPort
             portNumber.Text = value
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get/let the label of a control
+    ''' </summary>
+    ''' <returns></returns>
     Public Property label() As String
         Get
             Return portNumberLabel.Text
@@ -25,8 +43,11 @@ Public Class SelectPort
         End Set
     End Property
 
-
-    Public Function checkValue() As Boolean
+    ''' <summary>
+    ''' This methdo provide to check a insert value
+    ''' </summary>
+    ''' <returns></returns>
+    <DebuggerHiddenAttribute()> Public Function checkValue() As Boolean
         If (portNumber.Text.Trim.Length() = 0) Then
             MessageBox.Show("The port is missing.", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
@@ -48,11 +69,11 @@ Public Class SelectPort
         End If
     End Function
 
-
-    Private Sub SelectPort_Layout(sender As Object, e As LayoutEventArgs) Handles Me.Layout
-
-    End Sub
-
+    ''' <summary>
+    ''' This event's method provide to manage a resize of a select port
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub SelectPort_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         Try
             portNumber.Left = Width - 63

@@ -30,5 +30,5 @@ Imports System.Runtime.InteropServices
 ' È possibile specificare tutti i valori oppure impostare valori predefiniti per i numeri relativi alla revisione e alla build
 ' usando l'asterisco '*' come illustrato di seguito:
 
-<Assembly: AssemblyVersion("1.1.2.0")>
-<Assembly: AssemblyFileVersion("1.1.2.0")>
+<Assembly: AssemblyVersion("1.2.0.0")>
+<Assembly: AssemblyFileVersion("1.2.0.0")>

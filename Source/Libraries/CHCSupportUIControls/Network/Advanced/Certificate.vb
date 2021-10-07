@@ -1,8 +1,20 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.AreaEngine.Communication
-Imports CHCProtocolLibrary.AreaCommon.Models
+' ****************************************
+' File: Certificate Control
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 03/10/2021
+' ****************************************
+
+
+
+
+
+
+
+
 
 
 
@@ -19,6 +31,10 @@ Public Class Certificate
     Public Event GetPrivateKey(ByRef keyValue As String, ByRef cancel As Boolean)
     Public Event UpdateCertificateSetting(ByVal newValue As String)
 
+    ''' <summary>
+    ''' This property get/let the URL Service
+    ''' </summary>
+    ''' <returns></returns>
     Public Property urlService As String
         Get
             Return _UrlService
@@ -29,6 +45,10 @@ Public Class Certificate
             refreshButton()
         End Set
     End Property
+    ''' <summary>
+    ''' This property get/let the service id
+    ''' </summary>
+    ''' <returns></returns>
     Public Property serviceId() As String
         Get
             Return _ServiceId
@@ -39,6 +59,10 @@ Public Class Certificate
             refreshButton()
         End Set
     End Property
+    ''' <summary>
+    ''' This property get/let the Data Path
+    ''' </summary>
+    ''' <returns></returns>
     Public Property dataPath As String
         Get
             Return _DataPath
@@ -49,6 +73,10 @@ Public Class Certificate
             refreshButton()
         End Set
     End Property
+    ''' <summary>
+    ''' This property get/let the value
+    ''' </summary>
+    ''' <returns></returns>
     Public Property value() As String
         Get
             Return valueText.Text
@@ -57,6 +85,10 @@ Public Class Certificate
             valueText.Text = value
         End Set
     End Property
+    ''' <summary>
+    ''' This property get/let No Change state
+    ''' </summary>
+    ''' <returns></returns>
     Public Property noChange() As Boolean
         Get
             Return _NoChange
@@ -72,7 +104,6 @@ Public Class Certificate
     Private Sub refreshButton()
         changeButton.Enabled = (_UrlService.Trim.Length > 0) And (_DataPath.Trim.Length > 0) And (value.Trim.Length > 0) And (_ServiceId.Trim.Length > 0)
     End Sub
-
 
     Private Sub resizeControls()
         Try
@@ -99,6 +130,7 @@ Public Class Certificate
         Catch ex As Exception
         End Try
     End Sub
+
 
     Private Sub Certificate_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
         resizeControls()

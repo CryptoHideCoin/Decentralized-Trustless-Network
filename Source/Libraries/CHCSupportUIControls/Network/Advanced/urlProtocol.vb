@@ -1,8 +1,20 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' File: Numberic Text
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 03/10/2021
+' ****************************************
+
+
 Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCCommonLibrary.AreaCommon.Models
+
+
+
+
 
 
 Public Class UrlProtocol
@@ -13,14 +25,22 @@ Public Class UrlProtocol
 
     Public Shadows Event TextChanged()
 
-
-
     Private _noChange As Boolean = False
 
-
+    ''' <summary>
+    ''' This property get/let the service Id
+    ''' </summary>
+    ''' <returns></returns>
     Public Property serviceId As String = ""
+    ''' <summary>
+    ''' This property get/let the execute command switch
+    ''' </summary>
+    ''' <returns></returns>
     Public Property executeCommand As Boolean = False
-
+    ''' <summary>
+    ''' This property get/let Use Secure
+    ''' </summary>
+    ''' <returns></returns>
     Public Property useSecure() As Boolean
         Get
             Return (protocolCombo.SelectedIndex = 1)
@@ -35,7 +55,10 @@ Public Class UrlProtocol
             _noChange = False
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get/let the url address
+    ''' </summary>
+    ''' <returns></returns>
     Public Property address As String
         Get
             Return serviceAdminUrlText.Text
@@ -46,7 +69,10 @@ Public Class UrlProtocol
             _noChange = False
         End Set
     End Property
-
+    ''' <summary>
+    ''' This property get the base URL complete
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property baseUrlComplete() As String
         Get
             Dim result As String
@@ -63,7 +89,11 @@ Public Class UrlProtocol
         End Get
     End Property
 
-    Public Function testServiceResponse() As Boolean
+    ''' <summary>
+    ''' This method provide to test service response
+    ''' </summary>
+    ''' <returns></returns>
+    <DebuggerHiddenAttribute()> Public Function testServiceResponse() As Boolean
         If (serviceAdminUrlText.Text.ToString.Trim.Length > 0) Then
             Try
                 Dim handShakeEngine As New ProxyWS(Of General.RemoteResponse)
@@ -99,6 +129,7 @@ Public Class UrlProtocol
             Return False
         End If
     End Function
+
 
     Private Sub testButton_Click(sender As Object, e As EventArgs) Handles testButton.Click
         If (serviceAdminUrlText.Text.ToString.Trim.Length > 0) Then

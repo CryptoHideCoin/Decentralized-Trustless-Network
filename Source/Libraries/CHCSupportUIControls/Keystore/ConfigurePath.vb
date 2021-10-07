@@ -1,9 +1,28 @@
 ﻿Option Compare Text
 Option Explicit On
 
+' ****************************************
+' File: Configure path 
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 03/10/2021
+' ****************************************
+
+
+
+
+
+
+
+
+
 
 Public Class ConfigurePath
 
+    ''' <summary>
+    ''' This property get/let the data path
+    ''' </summary>
+    ''' <returns></returns>
     Public Property dataPath As String
         Get
             Return localPathDataText.Text
@@ -13,10 +32,6 @@ Public Class ConfigurePath
         End Set
     End Property
 
-
-    Private Sub ConfigurePath_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
 
     Private Sub browseLocalPathButton_Click(sender As Object, e As EventArgs) Handles browseLocalPathButton.Click
         Try
