@@ -30,9 +30,9 @@ Namespace Controllers
 
                         privateKeyRAW = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
 
-                        result.masterNodePublicAddress = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).publicAddress
-                        result.integrityTransactionChain.recordCoordinate = AreaCommon.state.runtimeState.activeNetwork.yellowPaper.recordCoordinate
-                        result.integrityTransactionChain.recordHash = AreaCommon.state.runtimeState.activeNetwork.yellowPaper.recordHash
+                        result.masterNodePublicAddress = AreaCommon.state.network.publicAddressIdentity
+                        result.integrityTransactionChain.coordinate = AreaCommon.state.runtimeState.activeNetwork.yellowPaper.coordinate
+                        result.integrityTransactionChain.hash = AreaCommon.state.runtimeState.activeNetwork.yellowPaper.hash
                         result.value = AreaCommon.state.runtimeState.activeNetwork.yellowPaper.value
 
                         result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, result.getHash())

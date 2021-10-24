@@ -26,8 +26,6 @@ Namespace Controllers
         Public Function putValue(<FromBody()> ByVal value As Models.Network.NotifyModel) As General.RemoteResponse
             Dim result As New General.RemoteResponse
             Dim proceed As Boolean = True
-            Dim toString As String
-            Dim toHash As String
             Dim privateKey As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
 
             Try
@@ -50,14 +48,14 @@ Namespace Controllers
                     End If
                 End If
                 If proceed Then
-                    If Not AreaSecurity.checkNetwork(value.networkHash, value.chainHash) Then
+                    If Not AreaSecurity.checkNetwork(value) Then
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.wrongNetwork
 
                         proceed = False
                     End If
                 End If
                 If proceed Then
-                    If AreaCommon.state.runtimeState.getDataPeer(value.publicAddress).ipAddress Then
+                    If AreaCommon.state.runtimeState.getDataNode(value.publicAddress).ipAddress Then
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.missingAuthorization
 
                         proceed = False

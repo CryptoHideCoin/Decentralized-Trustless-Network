@@ -86,12 +86,12 @@ Namespace AreaLedger
 
                 log.track("LedgerSupportEngine.init", "Begin")
 
-                fileName = CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger.composeCoordinate(identifyBlockChain, currentIdVolume, currentIdBlock)
+                fileName = CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, currentIdVolume, currentIdBlock)
                 fileName = IO.Path.Combine(currentLedgerPath, fileName & ".db")
 
                 _DBCurrentLedgerConnectionString = String.Format(_DBCurrentLedgerConnectionString, fileName)
 
-                fileName = CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger.composeCoordinate(identifyBlockChain, previousIdVolume, previousIdBlock)
+                fileName = CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, previousIdVolume, previousIdBlock)
                 fileName = IO.Path.Combine(previousLedgerPath, fileName & ".db")
 
                 _DBPreviousLedgerConnectionString = String.Format(_DBPreviousLedgerConnectionString, fileName)

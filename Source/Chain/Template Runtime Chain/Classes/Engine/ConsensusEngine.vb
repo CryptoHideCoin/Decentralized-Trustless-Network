@@ -1,450 +1,49 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports System.Xml.Serialization
-Imports CHCCommonLibrary.AreaEngine.Encryption
+
 
 
 
 Namespace AreaConsensus
 
-
-    Public Class RequestProcess
-
-        Public Class NetSynchronization
-
-            Public Property hashNetwork As String = ""
-            Public Property hashChain As String = ""
-            Public Property identifierTransactionLedger As String = ""
-            Public Property progressiveHash As String = ""
-
-        End Class
-
-        Public Class RejectedRequest
-
-            Public Property rejectTimeStamp As Double = 0
-            Public Property masterNodePublicAddress As String = ""
-            Public Property requestHash As String = ""
-            Public Property rejectedMessage As String = ""
-
-            Public Property hash As String = ""
-            Public Property signature As String = ""
-
-            Public Overrides Function toString() As String
-                Dim tmp As String = ""
-
-                tmp += rejectTimeStamp.ToString()
-                tmp += masterNodePublicAddress
-                tmp += requestHash
-                tmp += rejectedMessage
-
-                Return tmp
-            End Function
-
-            Public Function getHash() As String
-                hash = HashSHA.generateSHA256(Me.toString())
-
-                Return hash
-            End Function
-
-        End Class
-
-        Public Class ReceiptOfApproval
-
-            Public Property bulletinTimeStamp As String = ""
-            Public Property masterNodePublicAddress As String = ""
-            Public Property requestHash As String = ""
-            Public Property voteValue As Double = 0
-
-            Public Property hash As String = ""
-            Public Property signature As String = ""
-
-            Public Overrides Function toString() As String
-                Dim tmp As String = ""
-
-                tmp += bulletinTimeStamp.ToString()
-                tmp += masterNodePublicAddress
-                tmp += requestHash
-                tmp += voteValue.ToString()
-
-                Return tmp
-            End Function
-
-            Public Function getHash() As String
-                hash = HashSHA.generateSHA256(Me.toString())
-
-                Return hash
-            End Function
-
-        End Class
-
-        Public Class RequestAbstention
-
-            Public Property bulletinTimeStamp As String = ""
-            Public Property masterNodePublicAddress As String = ""
-            Public Property requestHash As String = ""
-
-            Public Property hash As String = ""
-            Public Property signature As String = ""
-
-            Public Overrides Function toString() As String
-                Dim tmp As String = ""
-
-                tmp += bulletinTimeStamp.ToString()
-                tmp += masterNodePublicAddress
-                tmp += requestHash
-
-                Return tmp
-            End Function
-
-            Public Function getHash() As String
-                hash = HashSHA.generateSHA256(Me.toString())
-
-                Return hash
-            End Function
-
-        End Class
-
-        Public Class ProposalForApproval
-
-            Public Property proposalIdentifierTransactionLedger As String = ""
-
-            Public Property requestHash As String = ""
-            Public Property dateFirstBulletinAssessmentTimeStamp As Double = 0
-            Public Property firstMasternodeAssessment As String = ""
-            Public Property deliveryToAllNetwork As Boolean = False
-            Public Property totalVotes As Double = 0
-            Public Property NetworkTotalVotes As Double = 0
-
-            Public Overrides Function toString() As String
-                Dim tmp As String = ""
-
-                tmp += proposalIdentifierTransactionLedger
-                tmp += requestHash
-                tmp += dateFirstBulletinAssessmentTimeStamp.ToString
-                tmp += firstMasternodeAssessment
-                tmp += totalVotes.ToString()
-                tmp += NetworkTotalVotes.ToString()
-
-                Return tmp
-            End Function
-
-            Public Function getHash() As String
-                Return HashSHA.generateSHA256(Me.toString())
-            End Function
-
-            Public Property hash As String = ""
-            Public Property signature As String = ""
-
-        End Class
-
-        Public Class MasterNodeCommunication
-
-            Public Property bulletinTimeStamp As String = ""
-            Public Property publicAddress As String = ""
-            Public Property requestHash As String = ""
-            Public Property tryNumber As Byte
-            Public Property startNotResponse As Double = 0
-            Public Property lastNotResponse As Double = 0
-
-            Public Property hash As String = ""
-            Public Property signature As String = ""
-
-            Public Overrides Function toString() As String
-                Dim tmp As String = ""
-
-                tmp += bulletinTimeStamp.ToString()
-                tmp += publicAddress
-                tmp += requestHash
-                tmp += tryNumber
-                tmp += startNotResponse.ToString()
-                tmp += lastNotResponse.ToString()
-
-                Return tmp
-            End Function
-
-            Public Function getHash() As String
-                hash = HashSHA.generateSHA256(Me.toString())
-
-                Return hash
-            End Function
-
-        End Class
-
-        Public Property bulletinTimeStamp As Double = 0
-        Public Property masterNodePublicAddress As String = ""
-
-        Public Property netSynchronizationData As New NetSynchronization
-
-        Public Property rejectedRequestData As New List(Of RejectedRequest)
-
-        Public Property proposalsForApprovalData As New ProposalForApproval
-
-        Public Property requestApprovedList As New Dictionary(Of String, ReceiptOfApproval)
-
-        Public Property masternodeAbsent As New List(Of MasterNodeCommunication)
-
-        Public Overrides Function toString() As String
-            Dim tmp As String = ""
-
-            tmp += bulletinTimeStamp.ToString()
-            tmp += masterNodePublicAddress
-            tmp += netSynchronizationData.hashNetwork
-            tmp += netSynchronizationData.hashChain
-            tmp += netSynchronizationData.identifierTransactionLedger
-            tmp += netSynchronizationData.progressiveHash
-
-            For Each rejected In rejectedRequestData
-                tmp += rejected.toString()
-            Next
-
-            tmp += proposalsForApprovalData.toString()
-
-            For Each requestApproved In requestApprovedList
-                With requestApproved.Value
-                    tmp += .bulletinTimeStamp
-                    tmp += .masterNodePublicAddress
-                    tmp += .requestHash
-                    tmp += .voteValue.ToString()
-                    tmp += .hash
-                    tmp += .signature
-                End With
-            Next
-
-            For Each absence In masternodeAbsent
-                tmp += absence.toString()
-            Next
-
-            Return tmp
-        End Function
-
-        Public Function getHash() As String
-            Return HashSHA.generateSHA256(Me.toString())
-        End Function
-
-        Public Property hash As String = ""
-        Public Property signature As String = ""
-
-    End Class
-
-    Public Class ConsensusNetwork
-
-        Public Property requestHash As String = ""
-
-        Public Property nodeApproval As New Dictionary(Of String, RequestProcess.ReceiptOfApproval)
-        Public Property nodeReject As New Dictionary(Of String, RequestProcess.RejectedRequest)
-        Public Property nodeAdstained As New Dictionary(Of String, RequestProcess.RequestAbstention)
-        Public Property nodeAbsent As New Dictionary(Of String, RequestProcess.MasterNodeCommunication)
-
-        Public Property hash As String = ""
-        Public Property signature As String = ""
-
-        Public Overrides Function toString() As String
-            Dim tmp As String = ""
-
-            tmp += requestHash
-
-            For Each item In nodeApproval
-                tmp += item.Value.toString()
-            Next
-            For Each item In nodeReject
-                tmp += item.Value.toString()
-            Next
-            For Each item In nodeAdstained
-                tmp += item.Value.toString()
-            Next
-            For Each item In nodeAbsent
-                tmp += item.Value.toString()
-            Next
-
-            Return tmp
-        End Function
-
-        Public Function getHash() As String
-            Return HashSHA.generateSHA256(Me.toString())
-        End Function
-
-        Private Function reoderApproval() As Boolean
-            Try
-                Dim newList As New Dictionary(Of String, RequestProcess.ReceiptOfApproval)
-                Dim minimal As RequestProcess.ReceiptOfApproval
-                Dim current As RequestProcess.ReceiptOfApproval
-                Dim indexMinimal As Integer
-
-                Do While (nodeApproval.Count > 0)
-                    indexMinimal = 0
-                    minimal = nodeApproval.ElementAt(0).Value
-
-                    For i As Integer = 1 To nodeApproval.Values.Count - 1
-                        current = nodeApproval.ElementAt(i).Value
-
-                        If (minimal.bulletinTimeStamp > current.bulletinTimeStamp) Then
-                            minimal = current
-
-                            indexMinimal = i
-                        End If
-                    Next
-
-                    newList.Add(minimal.requestHash, minimal)
-                    nodeApproval.Remove(minimal.requestHash)
-                Loop
-
-                nodeApproval = newList
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.reoderApproval", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
-        Private Function reoderReject() As Boolean
-            Try
-                Dim newList As New Dictionary(Of String, RequestProcess.RejectedRequest)
-                Dim minimal As RequestProcess.RejectedRequest
-                Dim current As RequestProcess.RejectedRequest
-                Dim indexMinimal As Integer
-
-                Do While (nodeApproval.Count > 0)
-
-                    indexMinimal = 0
-                    minimal = nodeReject.ElementAt(0).Value
-
-                    For i As Integer = 1 To nodeReject.Values.Count - 1
-                        current = nodeReject.ElementAt(i).Value
-
-                        If (minimal.rejectTimeStamp > current.rejectTimeStamp) Then
-                            minimal = current
-
-                            indexMinimal = i
-                        End If
-                    Next
-
-                    newList.Add(minimal.requestHash, minimal)
-                    nodeApproval.Remove(minimal.requestHash)
-
-                Loop
-
-                nodeReject = newList
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.reoderReject", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
-        Private Function reoderAbstained() As Boolean
-            Try
-                Dim newList As New Dictionary(Of String, RequestProcess.RequestAbstention)
-                Dim minimal As RequestProcess.RequestAbstention
-                Dim current As RequestProcess.RequestAbstention
-                Dim indexMinimal As Integer
-
-                Do While (nodeApproval.Count > 0)
-
-                    indexMinimal = 0
-                    minimal = nodeAdstained.ElementAt(0).Value
-
-                    For i As Integer = 1 To nodeAdstained.Values.Count - 1
-                        current = nodeAdstained.ElementAt(i).Value
-
-                        If (minimal.bulletinTimeStamp > current.bulletinTimeStamp) Then
-                            minimal = current
-
-                            indexMinimal = i
-                        End If
-                    Next
-
-                    newList.Add(minimal.requestHash, minimal)
-                    nodeAdstained.Remove(minimal.requestHash)
-
-                Loop
-
-                nodeAdstained = newList
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.reoderAbstained", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
-        Private Function reoderAbsent() As Boolean
-            Try
-                Dim newList As New Dictionary(Of String, RequestProcess.MasterNodeCommunication)
-                Dim minimal As RequestProcess.MasterNodeCommunication
-                Dim current As RequestProcess.MasterNodeCommunication
-                Dim indexMinimal As Integer
-
-                Do While (nodeAbsent.Count > 0)
-
-                    indexMinimal = 0
-                    minimal = nodeAbsent.ElementAt(0).Value
-
-                    For i As Integer = 1 To nodeAbsent.Values.Count - 1
-                        current = nodeAbsent.ElementAt(i).Value
-
-                        If (minimal.bulletinTimeStamp > current.bulletinTimeStamp) Then
-                            minimal = current
-
-                            indexMinimal = i
-                        End If
-                    Next
-
-                    newList.Add(minimal.requestHash, minimal)
-                    nodeAdstained.Remove(minimal.requestHash)
-
-                Loop
-
-                nodeAbsent = newList
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.reoderAbsent", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
-
-        Public Function reorderElement() As Boolean
-            Dim proceed As Boolean = True
-
-            If proceed Then proceed = reoderApproval()
-            If proceed Then proceed = reoderReject()
-            If proceed Then proceed = reoderAbstained()
-            If proceed Then proceed = reoderAbsent()
-
-            Return proceed
-        End Function
-
-    End Class
-
-    Public Class ConsensusNetworkFile
-
-        Inherits CHCCommonLibrary.AreaEngine.DataFileManagement.XML.BaseFile(Of ConsensusNetwork)
-
-    End Class
-
+    ''' <summary>
+    ''' This class contain all element to manage a consensus of all request
+    ''' </summary>
     Public Class ConsensusEngine
+
+        ''' <summary>
+        ''' This class contain a support properties update bulletin
+        ''' </summary>
+        Private Class SupportUpdateBulletin
+
+            Public Property proceed As Boolean = True
+            Public Property notifyNetworkForUpdate As Boolean = False
+
+        End Class
 
         Private _QueueProcessUpdateBulletin As New List(Of String)
 
-        Public Property bulletin As New RequestProcess
+        Public Property bulletin As New BulletinInformation
 
 
+        ''' <summary>
+        ''' This method provide to lock an element from queue
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
         Private Function unlockUpdateBulletin(ByVal key As String) As Boolean
             Try
+                AreaCommon.log.track("ConsensusEngine.unlockUpdateBulletin", "Begin")
+
                 _QueueProcessUpdateBulletin.Add(key)
 
                 Do While (_QueueProcessUpdateBulletin(0).CompareTo(key) <> 0)
-                    Threading.Thread.Sleep(10)
+                    Threading.Thread.Sleep(1)
                 Loop
 
+                AreaCommon.log.track("ConsensusEngine.unlockUpdateBulletin", "Complete")
+
                 Return True
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.unlockUpdateBulletin", ex.Message, "fatal")
@@ -453,28 +52,55 @@ Namespace AreaConsensus
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to remove lock into bulletin
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
         Private Function removeFromQueue(ByVal key As String) As Boolean
             Try
+                AreaCommon.log.track("ConsensusEngine.removeFromQueue", "Begin")
+
                 _QueueProcessUpdateBulletin.Remove(key)
+
+                AreaCommon.log.track("ConsensusEngine.removeFromQueue", "Complete")
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.unlockUpdateBulletin", ex.Message, "fatal")
+                AreaCommon.log.track("ConsensusEngine.removeFromQueue", ex.Message, "fatal")
 
                 Return False
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to check and create new bulletin
+        ''' </summary>
+        ''' <returns></returns>
         Private Function checkAndCreateNewBulletin() As Boolean
             Try
-                If (bulletin.bulletinTimeStamp = 0) Then
-                    bulletin.bulletinTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
-                    bulletin.masterNodePublicAddress = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).publicAddress
+                AreaCommon.log.track("ConsensusEngine.checkAndCreateNewBulletin", "Begin")
 
-                    bulletin.netSynchronizationData.hashNetwork = AreaCommon.state.runtimeState.activeNetwork.networkName.recordHash
-                    bulletin.netSynchronizationData.identifierTransactionLedger = AreaCommon.state.currentBlockLedger.currentRecord.id
-                    bulletin.netSynchronizationData.progressiveHash = AreaCommon.state.currentBlockLedger.currentRecord.progressiveHash
+                If (bulletin.header.bulletinTimeStamp = 0) Then
+                    With bulletin.header
+                        .bulletinTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                        .publicAddress = AreaCommon.state.network.publicAddressIdentity
+
+                        With .netSynchronizationData
+                            .hashNetwork = AreaCommon.state.runtimeState.activeNetwork.networkName.hash
+                            .hashChain = AreaCommon.state.runtimeState.activeChain.name.hash
+
+                            With .lastApprovedTransaction
+                                .coordinate = AreaCommon.state.currentBlockLedger.composeCoordinateTransaction()
+                                .registrationTimeStamp = AreaCommon.state.currentBlockLedger.currentApprovedTransaction.registrationTimeStamp
+                                .hash = AreaCommon.state.currentBlockLedger.currentApprovedTransaction.currentHash
+                                .progressiveHash = AreaCommon.state.currentBlockLedger.currentApprovedTransaction.progressiveHash
+                            End With
+                        End With
+                    End With
                 End If
+
+                AreaCommon.log.track("ConsensusEngine.checkAndCreateNewBulletin", "Complete")
 
                 Return True
             Catch ex As Exception
@@ -484,169 +110,610 @@ Namespace AreaConsensus
             End Try
         End Function
 
-        Private Function createRequestApproved(ByRef dataRequest As AreaFlow.RequestExtended) As RequestProcess.ReceiptOfApproval
+        ''' <summary>
+        ''' This method provide to create request approved
+        ''' </summary>
+        ''' <param name="dataRequest"></param>
+        ''' <returns></returns>
+        Private Function createRequest(ByRef dataRequest As AreaFlow.RequestExtended, Optional ByVal model As EnumModel = EnumModel.approved) As ReceiptOfConsensusAssessment
             Try
-                Dim result As New RequestProcess.ReceiptOfApproval
-                Dim privateKeyRAW As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
+                AreaCommon.log.track("ConsensusEngine.createRequest", "Begin")
 
-                result.bulletinTimeStamp = bulletin.bulletinTimeStamp
-                result.masterNodePublicAddress = bulletin.masterNodePublicAddress
-                result.requestHash = dataRequest.requestHash
+                Dim result As New ReceiptOfConsensusAssessment
 
-                result.hash = result.getHash()
-                result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, result.hash)
+                result.requestHash = dataRequest.dataCommon.hash
+                result.model = model
+                result.approvedTimeStamp = bulletin.header.bulletinTimeStamp
+
+                result = AreaSecurity.createSignature(result)
+
+                AreaCommon.log.track("ConsensusEngine.createRequest", "Complete")
 
                 Return result
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.createRequestApproved", ex.Message, "fatal")
+                AreaCommon.log.track("ConsensusEngine.createRequest", ex.Message, "fatal")
 
-                Return New RequestProcess.ReceiptOfApproval
+                Return New ReceiptOfConsensusAssessment
             End Try
         End Function
 
-        Private Function updateAssessment(ByRef dataRequest As AreaFlow.RequestExtended) As Boolean
+        ''' <summary>
+        ''' This method provide to create a request reject
+        ''' </summary>
+        ''' <param name="dataRequest"></param>
+        ''' <returns></returns>
+        Private Function createRequestReject(ByRef dataRequest As AreaFlow.RequestExtended) As RejectedRequest
             Try
-                Dim firstAssessmentData As AreaCommon.Masternode.MasternodeEvaluations.FirstAssessment
-                Dim privateKeyRAW As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
+                Dim result As New RejectedRequest
+
+                AreaCommon.log.track("ConsensusEngine.createReject", "Begin")
+
+                result.model = EnumModel.reject
+                result.rejectedMessage = dataRequest.evaluations.rejectedNote
+                result.approvedTimeStamp = bulletin.header.bulletinTimeStamp
+
+                result.requestHash = dataRequest.dataCommon.hash
+
+                result = AreaSecurity.createSignature(result)
+
+                AreaCommon.log.track("ConsensusEngine.createReject", "Complete")
+
+                Return result
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.createReject", ex.Message, "fatal")
+
+                Return New RejectedRequest
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to route the assessment 
+        ''' </summary>
+        ''' <param name="dataRequest"></param>
+        ''' <returns></returns>
+        Private Function routeAssessment(ByRef dataRequest As AreaFlow.RequestExtended) As SupportUpdateBulletin
+            Dim result As New SupportUpdateBulletin
+            Try
+                AreaCommon.log.track("ConsensusEngine.routeAssessment", "Begin")
+
+                If (dataRequest.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult) Then
+                    If bulletin.addNewAcceptOrAbstainRequestList(createRequest(dataRequest)) Then
+                        result.notifyNetworkForUpdate = True
+                    End If
+                ElseIf (dataRequest.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult) Then
+                    If bulletin.addNewRejectRequestList(createRequestReject(dataRequest)) Then
+                        result.notifyNetworkForUpdate = True
+                    End If
+                Else
+                    If bulletin.addNewAcceptOrAbstainRequestList(createRequest(dataRequest, EnumModel.absteined)) Then
+                        result.notifyNetworkForUpdate = True
+                    End If
+                End If
+
+                AreaCommon.log.track("ConsensusEngine.routeAssessment", "Complete")
+
+                result.proceed = True
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.routeAssessment", ex.Message, "fatal")
+
+                result.proceed = False
+            End Try
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' This method provide to assign the timeStamp to evaluate
+        ''' </summary>
+        ''' <param name="dataRequest"></param>
+        ''' <returns></returns>
+        Private Function assignDateAssessment(ByRef dataRequest As AreaFlow.RequestExtended, ByRef result As SupportUpdateBulletin) As SupportUpdateBulletin
+            Try
+                AreaCommon.log.track("ConsensusEngine.assignDateAssessment", "Begin")
+
+                If result.proceed Then
+                    result.proceed = dataRequest.evaluations.approved.assignAssessment(bulletin.header.bulletinTimeStamp)
+                End If
+                If result.proceed Then
+                    result.proceed = dataRequest.evaluations.abstained.assignAssessment(bulletin.header.bulletinTimeStamp)
+                End If
+                If result.proceed Then
+                    result.proceed = dataRequest.evaluations.absents.assignAssessment(bulletin.header.bulletinTimeStamp)
+                End If
+                If result.proceed Then
+                    result.proceed = dataRequest.evaluations.rejected.assignAssessment(bulletin.header.bulletinTimeStamp)
+                End If
+
+                AreaCommon.log.track("ConsensusEngine.assignDateAssessment", "Complete")
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.assignDateAssessment", ex.Message, "fatal")
+
+                result.proceed = False
+            End Try
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' This method provide to manage a bulletin evaluation
+        ''' </summary>
+        ''' <param name="dataRequest"></param>
+        ''' <param name="result"></param>
+        ''' <returns></returns>
+        Private Function manageBulletinCheckNotExpressed(ByRef dataRequest As AreaFlow.RequestExtended, ByRef result As SupportUpdateBulletin) As SupportUpdateBulletin
+            Try
+                Dim responseNotExpressed As AreaCommon.Masternode.ContactDataMasternodeList.ContactDataMasternode
+                Dim newNotExpressed As New AreaCommon.Masternode.ContactDataMasternodeList
+
+                AreaCommon.log.track("ConsensusEngine.manageBulletinEvaluation", "Begin")
+
+                If result.proceed Then
+                    Do While (dataRequest.evaluations.notExpressed.count > 0)
+                        responseNotExpressed = dataRequest.evaluations.notExpressed.getItem(0)
+
+                        If (responseNotExpressed.tryFirstTimeStamp > 300) Then
+                            dataRequest.evaluations.setAbsent(responseNotExpressed.publicAddress, bulletin.header.bulletinTimeStamp)
+                        ElseIf (responseNotExpressed.tryNumberOfRequest < 3) Then
+                            If AreaCommon.flow.checkRemoteBulletinFromNode(responseNotExpressed.publicAddress) Then
+                                newNotExpressed.addNew(responseNotExpressed)
+                            Else
+                                If AreaCommon.flow.addNewRequestToExpression(AreaCommon.Masternode.MasternodeSenders.createSingleMasterNodeList(responseNotExpressed.publicAddress, responseNotExpressed.publicIPAddress), dataRequest.dataCommon.hash) Then
+                                    newNotExpressed.addNew(responseNotExpressed)
+                                End If
+                            End If
+                        Else
+                            newNotExpressed.addNew(responseNotExpressed)
+                        End If
+                    Loop
+
+                    If (newNotExpressed.count > 0) Then
+                        dataRequest.evaluations.notExpressed = newNotExpressed
+                    End If
+                End If
+
+                AreaCommon.log.track("ConsensusEngine.manageBulletinEvaluation", "Complete")
+
+                result.proceed = True
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.manageBulletinEvaluation", ex.Message, "fatal")
+
+                result.proceed = False
+            End Try
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' This method provide to manage a proposal and approve date
+        ''' </summary>
+        ''' <param name="registration"></param>
+        ''' <returns></returns>
+        Private Function useNewProposalForApproval(ByRef registration As ReceiptOfConsensusAssessment, ByRef result As SupportUpdateBulletin) As SupportUpdateBulletin
+            Try
+                Dim request As AreaFlow.RequestExtended
+
+                AreaCommon.log.track("ConsensusEngine.useNewProposalForApproval", "Begin")
+
+                request = AreaCommon.flow.getRequest(registration.requestHash)
 
                 With bulletin.proposalsForApprovalData
+                    '.consensusHash = ?"?
+                    '.deliveryToAllNetwork =?!?
 
-                    firstAssessmentData = dataRequest.evaluations.getFirstAssessment(True)
+                    '.proposalIdentifierTransactionLedger = ?!?
+                    .registerBulletinAssessmentTimeStamp = registration.approvedTimeStamp
 
-                    If (.requestHash.Length = 0) Or (.dateFirstBulletinAssessmentTimeStamp < dataRequest.dateAssessment) Then
+                    If request.source.directRequest Then
+                        .registerMasternodeAddress = AreaCommon.state.network.publicAddressIdentity
+                    Else
+                        .registerMasternodeAddress = request.source.notifiedPublicAddress
+                    End If
 
-                        If (firstAssessmentData.dateFirstAssessment = 0) Then
-                            firstAssessmentData.dateFirstAssessment = dataRequest.dateAssessment
-                            firstAssessmentData.publicAddressMasternode = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).publicAddress
+                    .requestHash = registration.requestHash
+
+                    With .totalVotes
+                        .abstained = 0
+                        .approved = 0
+                        .netWorkTotalVote = 0
+                        .notExpressed = 0
+                        .rejected = 0
+                    End With
+                End With
+
+                bulletin.proposalsForApprovalData = AreaSecurity.createSignature(bulletin.proposalsForApprovalData, True)
+
+                AreaCommon.log.track("ConsensusEngine.useNewProposalForApproval", "Complete")
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.useNewProposalForApproval", ex.Message, "fatal")
+            End Try
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' This method provide to retrieve the registration 
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function manageBulletinForAssessment(ByRef result As SupportUpdateBulletin) As SupportUpdateBulletin
+            Dim registrationTimeStamp As Double = 0
+            Dim minimalRegistration As New ReceiptOfConsensusAssessment
+            Try
+                AreaCommon.log.track("ConsensusEngine.manageBulletinForAssessment", "Begin")
+
+                For Each request In bulletin.acceptOrAbstainRequestList
+                    If request.model = EnumModel.approved Then
+                        registrationTimeStamp = AreaCommon.flow.getApprovedTimeStamp(request.requestHash, bulletin.header.netSynchronizationData.lastApprovedTransaction.registrationTimeStamp)
+
+                        If (registrationTimeStamp < minimalRegistration.approvedTimeStamp) Or
+                           (minimalRegistration.approvedTimeStamp = 0) Then
+                            minimalRegistration = request
                         End If
+                    End If
+                Next
 
-                        .requestHash = dataRequest.requestHash
-                        .dateFirstBulletinAssessmentTimeStamp = firstAssessmentData.dateFirstAssessment
-                        .firstMasternodeAssessment = firstAssessmentData.publicAddressMasternode
-                        .NetworkTotalVotes = dataRequest.evaluations.currentChainNodeTotalVotes
+                If (minimalRegistration.approvedTimeStamp < bulletin.proposalsForApprovalData.registerBulletinAssessmentTimeStamp) Or
+                   (bulletin.proposalsForApprovalData.registerBulletinAssessmentTimeStamp = 0) Then
+                    result = useNewProposalForApproval(minimalRegistration, result)
+                End If
 
-                        .proposalIdentifierTransactionLedger = 1
+                AreaCommon.log.track("ConsensusEngine.manageBulletinForAssessment", "Complete")
 
-                        .requestHash = dataRequest.requestHash
-                        .totalVotes = dataRequest.evaluations.approved.totalValuePoints
+                result.proceed = True
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.manageBulletinForAssessment", ex.Message, "fatal")
+            End Try
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' This method provide to update a bulletin and in any case send in broadcast to the network
+        ''' </summary>
+        ''' <param name="dataRequest"></param>
+        ''' <returns></returns>
+        Public Function updateBulletin(ByRef dataRequest As AreaFlow.RequestExtended) As Boolean
+            Try
+                Dim support As New SupportUpdateBulletin
+
+                AreaCommon.log.track("ConsensusEngine.updateBulletin", "Begin")
+
+                If support.proceed Then
+                    support.proceed = unlockUpdateBulletin("MainAssessment-" & dataRequest.dataCommon.hash)
+                End If
+                If support.proceed Then
+                    support.proceed = checkAndCreateNewBulletin()
+                End If
+                If support.proceed Then
+                    support = routeAssessment(dataRequest)
+                End If
+                If support.proceed Then
+                    support = assignDateAssessment(dataRequest, support)
+                End If
+                If support.proceed Then
+                    support = manageBulletinCheckNotExpressed(dataRequest, support)
+                End If
+                If support.proceed Then
+                    support = manageBulletinForAssessment(support)
+                End If
+
+                If support.proceed Then
+                    ' a questo punto cerco di capire se ci sono novità rispetto l'inizio ed eventualmente 
+                    ' effettuo la notifica alla rete.
+
+                    ' Importante però ... devo clonare l'oggetto e spedire la copia
+                End If
+
+                If support.proceed Then
+
+                End If
+                If support.proceed Then
+                    'proceed = sendInBroadCast()
+                End If
+
+                AreaCommon.log.track("ConsensusEngine.updateBulletin", "Complete")
+
+                Return support.proceed
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.updateBulletin", ex.Message, "fatal")
+
+                Return False
+            Finally
+                removeFromQueue("MainAssessment-" & dataRequest.dataCommon.hash)
+            End Try
+
+
+            Try
+
+                ' Cominciamo con il bloccare il bulletin
+
+                ' Intanto ragioniamo...
+
+                ' Quando cadono le condizioni affinché 
+
+                ' Che faccio ?!?
+
+                ' Mi segno gli attuali estremi della proposta di hash per l'aggiornamento del ledger
+
+                ' Mi segno gli attuali estremi della proposta per l'aggiornamento 
+
+                ' Se, al termine di questo proceesso di aggiornamento del bulletin saranno cambiati o proposta di hash o proposta per aggiornamento 
+
+                ' A questo punto sarà maturata la necessità di notifica al network
+
+                ' Oppure se sarà aggiunto un elemento alle liste di approvazione/disapprovazione 
+
+                ' anche in questo caso sarà notificato al network
+
+
+            Catch ex As Exception
+
+            End Try
+            ' Cosa faccio ?!?
+
+            ' Cerco di capire questa richiesta che strada ha percorso
+
+            ' Approvata
+
+            ' Non approvata
+
+            ' Mancata partecipazione alla votazione
+
+            ' Se parliamo di approvazione... intanto cerco di aggiungerla nella lista 
+            'bulletin.AcceptOrAbstainRequestList
+            'bulletin.rejectedRequestData
+
+            ' Bene, un pensiero in meno
+
+        End Function
+
+        Private Function refreshAssessmentTimeStamp(ByVal requestHash As String) As Double
+
+            ' Cosa faccio ?!?
+
+            ' Le regole sono queste
+
+            ' Vedo l'ora dell'ultima scrittura del ledger avvenuta in forma collegiale 
+
+            ' A questo punto rovisto all'interno di tutte le approvazioni ricevute 
+            Try
+                AreaCommon.log.track("ConsensusEngine.refreshAssessmentTimeStamp", "Begin")
+
+                Dim recordTimeStamp As Double = bulletin.header.netSynchronizationData.lastApprovedTransaction.registrationTimeStamp
+                Dim request As AreaFlow.RequestExtended = AreaCommon.flow.getRequest(requestHash)
+                Dim approvedGreaterThan As AreaCommon.Masternode.ContactDataMasternodeList
+
+                'request.evaluations.approved.extractGreaterThan(recordTimeStamp)
+                'request.evaluations.approved.getItem()
+
+                'request.consensus.addNewAbstained()
+
+                AreaCommon.log.track("ConsensusEngine.refreshAssessmentTimeStamp", "Complete")
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.refreshAssessmentTimeStamp", ex.Message, "fatal")
+            End Try
+
+        End Function
+
+        '''' <summary>
+        '''' This method provide to manage bulletin position
+        '''' </summary>
+        '''' <param name="notifyNetworkForUpdate"></param>
+        '''' <returns></returns>
+        'Private Function checkCompleteAssessmentInBulletinForAssessment(ByVal notifyNetworkForUpdate As Boolean) As SupportUpdateBulletin
+        '    Dim result As New SupportUpdateBulletin
+        '    Try
+        '        AreaCommon.log.track("ConsensusEngine.manageBulletinForAssessment", "Begin")
+
+        '        result.notifyNetworkForUpdate = notifyNetworkForUpdate
+        '        result.proceed = True
+
+        '        For Each item In bulletin.AcceptOrAbstainRequestList
+
+        '            item.Value.assessmentTimeStamp = refreshAssessmentTimeStamp(item.Value.requestHash)
+
+        '        Next
+
+        '        AreaCommon.log.track("ConsensusEngine.manageBulletinForAssessment", "Complete")
+        '    Catch ex As Exception
+        '        AreaCommon.log.track("ConsensusEngine.manageBulletinForAssessment", ex.Message, "fatal")
+
+        '        result.proceed = False
+        '    End Try
+
+        '    Return result
+        'End Function
+
+        ''' <summary>
+        ''' This method provide to update assessment to the network
+        ''' </summary>
+        ''' <param name="dataRequest"></param>
+        ''' <returns></returns>
+        Private Function updateAssessment(ByRef dataRequest As AreaFlow.RequestExtended) As SupportUpdateBulletin
+            Dim result As New SupportUpdateBulletin
+            Try
+                ' Cosa devo fare adesso ?!?
+
+                'Dim registerAssessmentData As AreaCommon.Masternode.MasternodeEvaluations.FirstAssessment
+                Dim privateKeyRAW As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
+
+                AreaCommon.log.track("ConsensusEngine.updateAssessment", "Begin")
+
+                ' Questo metodo serve a capire se questa richiesta 
+                ' è quella eletta, la più giovane in assoluto in termini di priorità di approvazione
+                ' e quindi se merita subito l'attenzione della rete oppure no
+
+                ' per fare ciò bisogna capire se... l'attuale data di register ... chiamiamola così...
+                ' NO, in questo modo è sbagliato l'approccio...
+
+                ' intanto finisce nell'AcceptOrAbastainRequestList...
+
+                ' Quindi i passaggi da fare sono:
+
+                ' La aggiungo alla lista AcceptOrAb...
+
+                ' Poi controllo se, all'interno della lista ci sono elementi che hanno chiuso il loro ciclo di 
+                ' Consultazioni all'interno della rete
+
+                ' Se qualcuna ha completato quest'iter ... cerco di estrapolare la proposta di approvazione
+
+                ' E la notifico alla rete
+
+                ' Extract in AcceptOrAbstainRequestList all request that have not "notExpressed" in the internal list
+
+                ' Locate the first
+
+                ' Check if Locate is in Proposal for approval data
+
+                ' in everywhere i check and manage Proposal for approval data
+
+                ' eventualmente assemblo ... se ho già gli estremi anche la lista per l'aggiornamento hash
+
+                ' Notifico tutto a tutti
+
+                With bulletin.proposalsForApprovalData
+                    'registerAssessmentData = dataRequest.evaluations.getFirstAssessment(True)
+
+                    'If (.requestHash.Length = 0) Or (.registerBulletinAssessmentTimeStamp < dataRequest.evaluations.dateAssessment) Then
+
+                    'If (registerAssessmentData.dateFirstAssessment = 0) Then
+                    '    registerAssessmentData.dateFirstAssessment = dataRequest.evaluations.dateAssessment
+                    '    registerAssessmentData.publicAddressMasternode = AreaCommon.state.network.publicAddressIdentity
+                    'End If
+
+                    .requestHash = dataRequest.dataCommon.hash
+                        '.registerBulletinAssessmentTimeStamp = registerAssessmentData.dateFirstAssessment
+                        '.registerMasternodeAddress = registerAssessmentData.publicAddressMasternode
+                        '.totalVotes.netWorkTotalVote = dataRequest.evaluations.currentChainNodeTotalVotes
+
+                        .proposalIdentifierTransactionLedger = AreaCommon.state.currentBlockLedger.composeCoordinateTransaction(True)
+
+                        '.totalVotes.approved = dataRequest.evaluations.approved.totalValuePoints
+                        '.totalVotes.abstained = dataRequest.evaluations.abstained.totalValuePoints
+                        '.totalVotes.notExpressed = dataRequest.evaluations.notExpressed.totalValuePoints
+                        '.totalVotes.rejected = dataRequest.evaluations.rejected.totalValuePoints
+
                         .hash = .getHash()
 
                         .signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, .hash)
-
-                    Else
-                        If Not bulletin.requestApprovedList.ContainsKey(dataRequest.requestHash) Then
-                            bulletin.requestApprovedList.Add(dataRequest.requestHash, createRequestApproved(dataRequest))
-                        End If
-                    End If
-
+                    'Else
+                    'If Not bulletin.AcceptOrAbstainRequestList.ContainsKey(dataRequest.dataCommon.hash) Then
+                    'bulletin.AcceptOrAbstainRequestList.Add(dataRequest.requestHash, createRequestApproved(dataRequest))
+                    'End If
+                    'End If
                 End With
 
                 bulletin.hash = bulletin.getHash()
                 bulletin.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, bulletin.hash)
 
-                Return True
+                AreaCommon.log.track("ConsensusEngine.updateAssessment", "Complete")
+
+                'Return True
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.updateAssessment", ex.Message, "fatal")
 
+                'Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to process assessment
+        ''' </summary>
+        ''' <param name="dataRequest"></param>
+        ''' <param name="notifyNetworkForUpdate"></param>
+        ''' <returns></returns>
+        Private Function processAssessment(ByRef dataRequest As AreaFlow.RequestExtended, ByVal notifyNetworkForUpdate As Boolean) As SupportUpdateBulletin
+            Dim result As New SupportUpdateBulletin
+            Try
+                AreaCommon.log.track("ConsensusEngine.processAssessment", "Begin")
+
+                result.notifyNetworkForUpdate = notifyNetworkForUpdate
+
+                If (dataRequest.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult) Then
+                    'result.proceed = updateAssessment(dataRequest)
+                ElseIf (dataRequest.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult) Then
+                    result.proceed = updateReject(dataRequest)
+                Else
+                    'result.proceed = updateAbstained(dataRequest)
+                End If
+
+                AreaCommon.log.track("ConsensusEngine.processAssessment", "processAssessment")
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.processAssessment", ex.Message, "fatal")
+            End Try
+
+            Return result
+        End Function
+
+
+
+        ''' <summary>
+        ''' This method provide to notify assessment to the network
+        ''' </summary>
+        ''' <param name="dataRequest"></param>
+        ''' <returns></returns>
+        Public Function notifyNewAssessment(ByVal dataRequest As AreaFlow.RequestExtended) As Boolean
+            Try
+                Dim proceed As Boolean = True
+
+                AreaCommon.log.track("ConsensusEngine.notifyAssessment", "Begin")
+
+                If unlockUpdateBulletin("MainAssessment-" & dataRequest.dataCommon.hash) Then
+                    If proceed Then
+                        proceed = checkAndCreateNewBulletin()
+                    End If
+                    If proceed Then
+                        If (dataRequest.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult) Then
+                            'If Not bulletin.AcceptOrAbstainRequestList.ContainsKey(dataRequest.dataCommon.hash) Then
+                            'bulletin.AcceptOrAbstainRequestList.Add(dataRequest.requestHash, createRequestApproved(dataRequest))
+                            'End If
+
+                            'proceed = updateAssessment(dataRequest)
+                        Else
+                            proceed = updateReject(dataRequest)
+                        End If
+                    End If
+                    If proceed Then
+                        proceed = sendInBroadCast()
+                    End If
+                End If
+
+                AreaCommon.log.track("ConsensusEngine.notifyAssessment", "Complete")
+
+                Return proceed
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.notifyAssessment", ex.Message, "fatal")
+
                 Return False
+            Finally
+                removeFromQueue("MainAssessment-" & dataRequest.dataCommon.hash)
             End Try
         End Function
 
         Private Function updateReject(ByRef dataRequest As AreaFlow.RequestExtended) As Boolean
-            Try
-                Dim newItem As New RequestProcess.RejectedRequest
+            'Try
+            '    Dim newItem As New RejectedRequest
 
-                For Each newItem In bulletin.rejectedRequestData
-                    If newItem.requestHash.CompareTo(dataRequest.dateRequest) = 0 Then
-                        Return True
-                    End If
-                Next
+            '    For Each newItem In bulletin.rejectedRequestData
+            '        If newItem.requestHash.CompareTo(dataRequest.dateRequest) = 0 Then
+            '            Return True
+            '        End If
+            '    Next
 
-                newItem.rejectedMessage = dataRequest.rejectedNote
-                newItem.rejectTimeStamp = dataRequest.dateAssessment
-                newItem.requestHash = dataRequest.requestHash
+            '    newItem.rejectedMessage = dataRequest.rejectedNote
+            '    newItem.assessmentTimeStamp = dataRequest.dateAssessment
+            '    newItem.requestHash = dataRequest.dataCommon.hash
 
-                bulletin.rejectedRequestData.Add(newItem)
+            '    bulletin.rejectedRequestData.Add(newItem)
 
-                Return True
+            '    Return True
 
-            Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.updateReject", ex.Message, "fatal")
+            'Catch ex As Exception
+            '    AreaCommon.log.track("ConsensusEngine.updateReject", ex.Message, "fatal")
 
-                Return False
-            End Try
+            '    Return False
+            'End Try
         End Function
 
-        Private Function cloneBulletin() As RequestProcess
-            Try
-                Dim result As New RequestProcess
-                Dim cloneReject As RequestProcess.RejectedRequest
-                Dim masternode As RequestProcess.MasterNodeCommunication
-                Dim singleRequest As RequestProcess.ReceiptOfApproval
-
-                result.bulletinTimeStamp = bulletin.bulletinTimeStamp
-                result.masterNodePublicAddress = bulletin.masterNodePublicAddress
-
-                result.netSynchronizationData.hashNetwork = bulletin.netSynchronizationData.hashNetwork
-                result.netSynchronizationData.identifierTransactionLedger = bulletin.netSynchronizationData.identifierTransactionLedger
-                result.netSynchronizationData.progressiveHash = bulletin.netSynchronizationData.progressiveHash
-
-                result.proposalsForApprovalData.dateFirstBulletinAssessmentTimeStamp = bulletin.proposalsForApprovalData.dateFirstBulletinAssessmentTimeStamp
-                result.proposalsForApprovalData.deliveryToAllNetwork = bulletin.proposalsForApprovalData.deliveryToAllNetwork
-                result.proposalsForApprovalData.firstMasternodeAssessment = bulletin.proposalsForApprovalData.firstMasternodeAssessment
-                result.proposalsForApprovalData.signature = bulletin.proposalsForApprovalData.signature
-                result.proposalsForApprovalData.NetworkTotalVotes = bulletin.proposalsForApprovalData.NetworkTotalVotes
-                result.proposalsForApprovalData.hash = bulletin.proposalsForApprovalData.hash
-                result.proposalsForApprovalData.proposalIdentifierTransactionLedger = bulletin.proposalsForApprovalData.proposalIdentifierTransactionLedger
-                result.proposalsForApprovalData.requestHash = bulletin.proposalsForApprovalData.requestHash
-                result.proposalsForApprovalData.totalVotes = bulletin.proposalsForApprovalData.totalVotes
-
-                For Each rejected In bulletin.rejectedRequestData
-
-                    cloneReject = New RequestProcess.RejectedRequest
-
-                    cloneReject.rejectedMessage = rejected.rejectedMessage
-                    cloneReject.rejectTimeStamp = rejected.rejectTimeStamp
-                    cloneReject.requestHash = rejected.requestHash
-                    cloneReject.signature = rejected.signature
-
-                    result.rejectedRequestData.Add(cloneReject)
-
-                Next
-
-                For Each approved In bulletin.requestApprovedList
-
-                    singleRequest = New RequestProcess.ReceiptOfApproval
-
-                    singleRequest.bulletinTimeStamp = approved.Value.bulletinTimeStamp
-                    singleRequest.hash = approved.Value.hash
-                    singleRequest.masterNodePublicAddress = approved.Value.masterNodePublicAddress
-                    singleRequest.requestHash = approved.Value.requestHash
-                    singleRequest.signature = approved.Value.signature
-
-                    result.requestApprovedList.Add(singleRequest.requestHash, singleRequest)
-                Next
-
-                For Each absence In bulletin.masternodeAbsent
-
-                    masternode = New RequestProcess.MasterNodeCommunication
-
-                    masternode.lastNotResponse = absence.lastNotResponse
-                    masternode.publicAddress = absence.publicAddress
-                    masternode.startNotResponse = absence.startNotResponse
-                    masternode.tryNumber = absence.tryNumber
-
-                    result.masternodeAbsent.Add(masternode)
-
-                Next
-
-                Return result
-            Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.cloneBulletin", ex.Message, "fatal")
-
-                Return New RequestProcess
-            End Try
-        End Function
 
         ''' <summary>
         ''' This method provide to clone a current bulletin and send a all node of the network
@@ -654,9 +721,9 @@ Namespace AreaConsensus
         Private Function sendInBroadCast() As Boolean
             Try
                 Dim listSender As AreaCommon.Masternode.MasternodeSenders
-                Dim currentBulletin As RequestProcess
+                Dim currentBulletin As BulletinInformation
 
-                currentBulletin = cloneBulletin()
+                currentBulletin = bulletin.clone()
                 listSender = AreaCommon.Masternode.MasternodeSenders.createMasterNodeList()
 
                 Return AreaCommon.flow.addNewBulletinToSend(listSender, currentBulletin)
@@ -672,39 +739,39 @@ Namespace AreaConsensus
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Private Function testNetwork(ByRef value As RequestProcess.NetSynchronization) As Boolean
+        Private Function testNetwork(ByRef value As NetSynchronization) As Boolean
             Return True
         End Function
 
-        Private Function updateProposalRequest(ByVal bulletinTimeStamp As Double, ByVal masterNodePublicAddress As String, ByVal requestHash As String, ByVal approved As Boolean) As Boolean
-            Try
-                Dim request As AreaFlow.RequestExtended
+        'Private Function updateProposalRequest(ByVal bulletinTimeStamp As Double, ByVal masterNodePublicAddress As String, ByVal requestHash As String, ByVal approved As Boolean) As Boolean
+        '    Try
+        '        Dim request As AreaFlow.RequestExtended
 
-                request = AreaCommon.flow.getRequestToProcess(requestHash)
+        '        request = AreaCommon.flow.getRequestToProcess(requestHash)
 
-                If (request.evaluations.notExpressed.getItem(masterNodePublicAddress).publicAddress.Length > 0) Then
-                    If approved Then
-                        Return request.evaluations.setApproved(masterNodePublicAddress, bulletinTimeStamp)
-                    Else
-                        Return request.evaluations.setRejected(masterNodePublicAddress, bulletinTimeStamp)
-                    End If
-                Else
-                    Return True
-                End If
-            Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.sendInBroadCast", ex.Message, "fatal")
+        '        If (request.evaluations.notExpressed.getItem(masterNodePublicAddress).publicAddress.Length > 0) Then
+        '            If approved Then
+        '                Return request.evaluations.setApproved(masterNodePublicAddress, bulletinTimeStamp)
+        '            Else
+        '                Return request.evaluations.setRejected(masterNodePublicAddress, bulletinTimeStamp)
+        '            End If
+        '        Else
+        '            Return True
+        '        End If
+        '    Catch ex As Exception
+        '        AreaCommon.log.track("ConsensusEngine.sendInBroadCast", ex.Message, "fatal")
 
-                Return False
-            End Try
-        End Function
+        '        Return False
+        '    End Try
+        'End Function
 
-        Private Function updateRejectRequest(ByVal bulletinTimeStamp As Double, ByVal masterNodePublicAddress As String, ByRef value As List(Of RequestProcess.RejectedRequest)) As Boolean
+        Private Function updateRejectRequest(ByVal bulletinTimeStamp As Double, ByVal masterNodePublicAddress As String, ByRef value As List(Of RejectedRequest)) As Boolean
             Try
                 Dim proceed As Boolean = True
 
                 For Each item In value
                     If proceed Then
-                        proceed = updateProposalRequest(bulletinTimeStamp, masterNodePublicAddress, item.requestHash, False)
+                        'proceed = updateProposalRequest(bulletinTimeStamp, masterNodePublicAddress, item.requestHash, False)
                     End If
                 Next
 
@@ -716,13 +783,13 @@ Namespace AreaConsensus
             End Try
         End Function
 
-        Private Function updateApprovalListData(ByVal bulletinTimeStamp As Double, ByVal masterNodePublicAddress As String, ByRef value As Dictionary(Of String, RequestProcess.ReceiptOfApproval)) As Boolean
+        Private Function updateApprovalListData(ByVal bulletinTimeStamp As Double, ByVal masterNodePublicAddress As String, ByRef value As Dictionary(Of String, ReceiptOfAssessment)) As Boolean
             Try
                 Dim proceed As Boolean = True
 
                 For Each item In value
                     If proceed Then
-                        proceed = updateProposalRequest(bulletinTimeStamp, masterNodePublicAddress, item.Value.requestHash, True)
+                        'proceed = updateProposalRequest(bulletinTimeStamp, masterNodePublicAddress, item.Value.requestHash, True)
                     End If
                 Next
 
@@ -740,7 +807,7 @@ Namespace AreaConsensus
 
                 request = AreaCommon.flow.getRequest(requestHash)
 
-                Select Case request.requestCode
+                Select Case request.dataCommon.requestCode
                     Case "a0x0"
                 End Select
             Catch ex As Exception
@@ -752,19 +819,14 @@ Namespace AreaConsensus
 
         Private Function createConsensusFile(ByVal dataRequest As AreaFlow.RequestExtended) As Boolean
             Try
-                Dim file As New ConsensusNetworkFile
                 Dim privateKeyRAW As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
 
-                dataRequest.masterNodeExpressions.reorderElement()
+                dataRequest.consensus.reorderElement()
 
-                dataRequest.masterNodeExpressions.hash = dataRequest.masterNodeExpressions.getHash
-                dataRequest.masterNodeExpressions.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, dataRequest.masterNodeExpressions.hash)
+                dataRequest.consensus.hash = dataRequest.consensus.getHash
+                dataRequest.consensus.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, dataRequest.consensus.hash)
 
-                file.data = dataRequest.masterNodeExpressions
-
-                file.fileName = ""
-
-                Return file.save()
+                Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of ConsensusNetwork).save("", dataRequest.consensus)
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.createConsensusFile", ex.Message, "fatal")
 
@@ -772,43 +834,73 @@ Namespace AreaConsensus
             End Try
         End Function
 
-        Public Function notifyAssessment(ByVal dataRequest As AreaFlow.RequestExtended) As Boolean
+        ''' <summary>
+        ''' This method provide to test all late comers
+        ''' </summary>
+        ''' <param name="dataRequest"></param>
+        ''' <returns></returns>
+        Private Function manageLateComers(ByVal dataRequest As AreaFlow.RequestExtended) As Boolean
             Try
-                Dim proceed As Boolean = True
+                Dim publicAddress As String = ""
 
-                If unlockUpdateBulletin("MainAssessment-" & dataRequest.requestHash) Then
-                    If proceed Then
-                        proceed = checkAndCreateNewBulletin()
-                    End If
-                    If proceed Then
-                        If (dataRequest.verifyPosition = AreaFlow.EnumOperationPosition.completeWithPositiveResult) Then
-                            If Not bulletin.requestApprovedList.ContainsKey(dataRequest.requestHash) Then
-                                bulletin.requestApprovedList.Add(dataRequest.requestHash, createRequestApproved(dataRequest))
-                            End If
+                AreaCommon.log.track("ConsensusEngine.manageLateComers", "Begin")
 
-                            proceed = updateAssessment(dataRequest)
-                        Else
-                            proceed = updateReject(dataRequest)
-                        End If
-                    End If
-                    If proceed Then
-                        proceed = sendInBroadCast()
-                    End If
-                End If
+                For i As Integer = 0 To dataRequest.evaluations.notExpressed.count - 1
+                    publicAddress = dataRequest.evaluations.notExpressed.getItem(0).publicAddress
 
-                Return proceed
+                    ' controllo di non avere già in pancia un bulletin di questo wallet
+
+                    ' se non è presente un bulletin ... allora provo ad interrogare direttamente il nodo
+
+                    ' vediamo come finisce
+
+                Next
+
+                AreaCommon.log.track("ConsensusEngine.manageLateComers", "Complete")
+
+                Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.notifyAssessmentIntoBulletin", ex.Message, "fatal")
+                AreaCommon.log.track("ConsensusEngine.manageProposalData", ex.Message, "fatal")
 
                 Return False
-            Finally
-                removeFromQueue("MainAssessment-" & dataRequest.requestHash)
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to manage a proposal data
+        ''' </summary>
+        ''' <param name="dataRequest"></param>
+        ''' <returns></returns>
+        Public Function manageProposalData(ByVal dataRequest As AreaFlow.RequestExtended) As Boolean
+            Try
+                AreaCommon.log.track("ConsensusEngine.manageProposalData", "Begin")
+
+                If (bulletin.proposalsForApprovalData.totalVotes.notExpressed = 0) Then
+                    Dim percApproved As Decimal = bulletin.proposalsForApprovalData.totalVotes.approved / bulletin.proposalsForApprovalData.totalVotes.netWorkTotalVote * 100
+                    Dim percReject As Decimal = bulletin.proposalsForApprovalData.totalVotes.rejected / bulletin.proposalsForApprovalData.totalVotes.netWorkTotalVote * 100
+
+                    If (percApproved >= percReject) Then
+                        dataRequest.position.process = AreaFlow.EnumOperationPosition.completeWithPositiveResult
+                    Else
+                        dataRequest.position.process = AreaFlow.EnumOperationPosition.completeWithNegativeResult
+                    End If
+                Else
+                    Return manageLateComers(dataRequest)
+                End If
+
+                AreaCommon.log.track("ConsensusEngine.manageProposalData", "Complete")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.manageProposalData", ex.Message, "fatal")
+
+                Return False
             End Try
         End Function
 
         Public Function notifyAllNetworkExpressAssessment(ByVal dataRequest As AreaFlow.RequestExtended) As Boolean
             Try
-                If unlockUpdateBulletin("MainAssessment-" & dataRequest.requestHash) Then
+                If unlockUpdateBulletin("MainAssessment-" & dataRequest.dataCommon.hash) Then
                     If (dataRequest.evaluations.notExpressed.count = 0) Then
 
                         Dim proceed As Boolean = True
@@ -823,7 +915,7 @@ Namespace AreaConsensus
                             proceed = sendInBroadCast()
                         End If
                         If proceed Then
-                            proceed = updateLedger(dataRequest.requestHash)
+                            proceed = updateLedger(dataRequest.dataCommon.hash)
                         End If
 
                         ' Rimuovo la richiesta dalla lista
@@ -846,40 +938,39 @@ Namespace AreaConsensus
 
                 Return False
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.notifyAssessmentIntoBulletin", ex.Message, "fatal")
+                AreaCommon.log.track("ConsensusEngine.notifyAssessmentAllNetworkExpressAssessment", ex.Message, "fatal")
 
                 Return False
             Finally
-                removeFromQueue("MainAssessment-" & dataRequest.requestHash)
+                removeFromQueue("MainAssessment-" & dataRequest.dataCommon.hash)
             End Try
         End Function
 
-        Public Function processRemoteNotify(ByVal dataBulletin As AreaConsensus.RequestProcess) As Boolean
+        Public Function processRemoteNotify(ByVal dataBulletin As AreaConsensus.BulletinInformation) As Boolean
             Try
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    proceed = testNetwork(dataBulletin.netSynchronizationData)
+                    proceed = testNetwork(dataBulletin.header.netSynchronizationData)
                 End If
                 If proceed Then
-                    proceed = updateProposalRequest(dataBulletin.bulletinTimeStamp, dataBulletin.masterNodePublicAddress, dataBulletin.proposalsForApprovalData.requestHash, True)
+                    'proceed = updateProposalRequest(dataBulletin.header.bulletinTimeStamp, dataBulletin.header.publicAddress, dataBulletin.proposalsForApprovalData.requestHash, True)
                 End If
                 If proceed Then
-                    proceed = updateRejectRequest(dataBulletin.bulletinTimeStamp, dataBulletin.masterNodePublicAddress, dataBulletin.rejectedRequestData)
+                    proceed = updateRejectRequest(dataBulletin.header.bulletinTimeStamp, dataBulletin.header.publicAddress, dataBulletin.rejectedRequestData)
                 End If
                 If proceed Then
-                    proceed = updateApprovalListData(dataBulletin.bulletinTimeStamp, dataBulletin.masterNodePublicAddress, dataBulletin.requestApprovedList)
+                    'proceed = updateApprovalListData(dataBulletin.header.bulletinTimeStamp, dataBulletin.header.publicAddress, dataBulletin.AcceptOrAbstainRequestList)
                 End If
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusEngine.notifyAssessmentIntoBulletin", ex.Message, "fatal")
+                AreaCommon.log.track("ConsensusEngine.processRemoteNotify", ex.Message, "fatal")
 
                 Return False
             End Try
         End Function
 
     End Class
-
 
 End Namespace

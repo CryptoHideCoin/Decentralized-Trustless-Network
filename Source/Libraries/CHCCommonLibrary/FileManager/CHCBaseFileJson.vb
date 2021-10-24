@@ -54,14 +54,15 @@ Namespace AreaEngine.DataFileManagement.Json
         ''' This method provide to save a content data property into a file
         ''' </summary>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function save() As Boolean
+        <DebuggerHiddenAttribute()>
+        Public Function save() As Boolean
             Try
                 If (fileName.Length > 0) Then
                     If File.Exists(fileName) Then
                         File.Delete(fileName)
                     End If
 
-                    File.WriteAllText(fileName, Newtonsoft.Json.JsonConvert.SerializeObject(data))
+                    File.WriteAllText(fileName, SerializeObject(data, Newtonsoft.Json.Formatting.Indented))
 
                     Return True
                 End If

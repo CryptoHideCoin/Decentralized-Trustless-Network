@@ -42,20 +42,146 @@ CHCPrimaryRuntimeService
  This class is used to track a senders (broadcast) of a request
  </summary>
 </member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeSenders.createMasterNodeList(System.Boolean)">
+ <summary>
+ This method provide to return a list of a active masternode
+ </summary>
+ <param name="includeMe">Specify if this masternode will include</param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeSenders.createSingleMasterNodeList(System.String,System.String)">
+ <summary>
+ This method provide to create a single master node list
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:CHCPrimaryRuntimeService.AreaCommon.Masternode.MinimalDataMasternodeList">
  <summary>
  This class is used to collect e manage an information relative an assessment vote of a masternode
  </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.MinimalDataMasternodeList.addNew(CHCPrimaryRuntimeService.AreaCommon.Masternode.ContactDataMasternodeList.ContactDataMasternode,System.Double)">
+ <summary>
+ This method provide to add a new element into internal collection
+ </summary>
+ <param name="node"></param>
+ <param name="assessmentTimeStamp"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.MinimalDataMasternodeList.getItem(System.Int32)">
+ <summary>
+ This method provide to get an item
+ </summary>
+ <param name="index"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.MinimalDataMasternodeList.assignAssessment(System.Double)">
+ <summary>
+ This method provide to assign a timestamp of a bulletin into record without assessmentTime
+ </summary>
+ <param name="assessmentTimeStamp"></param>
+ <returns></returns>
 </member>
 <member name="T:CHCPrimaryRuntimeService.AreaCommon.Masternode.ContactDataMasternodeList">
  <summary>
  This class is used to collect e manage an information of a list of a node without a response
  </summary>
 </member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.ContactDataMasternodeList.addNew(System.String,System.String,System.Double)">
+ <summary>
+ This method provide to add a new element in dictionary
+ </summary>
+ <param name="publicAddress"></param>
+ <param name="publicIPAddress"></param>
+ <param name="votePoint"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.ContactDataMasternodeList.addNew(CHCPrimaryRuntimeService.AreaCommon.Masternode.ContactDataMasternodeList.ContactDataMasternode@)">
+ <summary>
+ This method provide to add a new element in the list
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="P:CHCPrimaryRuntimeService.AreaCommon.Masternode.ContactDataMasternodeList.count">
+ <summary>
+ This property return the number of the element of the collection
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.ContactDataMasternodeList.getItem(System.Int32)">
+ <summary>
+ This property provide to get an item by index from a collection
+ </summary>
+ <param name="index"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.ContactDataMasternodeList.getItem(System.String)">
+ <summary>
+ This method provide to get an item in a collection
+ </summary>
+ <param name="publicAddress"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.ContactDataMasternodeList.containKey(System.String)">
+ <summary>
+ This method provide to check if the public address conteined into collection
+ </summary>
+ <param name="publicAddress"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.ContactDataMasternodeList.remove(System.String)">
+ <summary>
+ This method provide to remove an element into collection
+ </summary>
+ <param name="publicAddress"></param>
+ <returns></returns>
+</member>
 <member name="T:CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeEvaluations">
  <summary>
  This class contains the expression to vote
  </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeEvaluations.setResult(System.String,CHCPrimaryRuntimeService.AreaCommon.Masternode.EvaluationResponse,System.Double)">
+ <summary>
+ This method provide to set a result of evaluation
+ </summary>
+ <param name="publicAddress"></param>
+ <param name="approvedTime"></param>
+ <param name="operation"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeEvaluations.setApproved(System.String,System.Double)">
+ <summary>
+ This method provide to set a request as approved
+ </summary>
+ <param name="publicAddress"></param>
+ <param name="approvedTime"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeEvaluations.setRejected(System.String,System.Double)">
+ <summary>
+ This method provide to set a rejected the request
+ </summary>
+ <param name="publicAddress"></param>
+ <param name="rejectedTimeStamp"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeEvaluations.setAbstained(System.String,System.Double)">
+ <summary>
+ This method provide to set an abstained the request
+ </summary>
+ <param name="publicAddress"></param>
+ <param name="abstainedTimeStamp"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeEvaluations.setAbsent(System.String,System.Double)">
+ <summary>
+ This method provide to set an absent the request
+ </summary>
+ <param name="publicAddress"></param>
+ <param name="absentTimeStamp"></param>
+ <returns></returns>
 </member>
 <member name="T:CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeNotifyRejectedList">
  <summary>
@@ -144,16 +270,489 @@ CHCPrimaryRuntimeService
  This method provide to stop the application
  </summary>
 </member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine">
+ <summary>
+ This class contain all element to manage a consensus of all request
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.SupportUpdateBulletin">
+ <summary>
+ This class contain a support properties update bulletin
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.unlockUpdateBulletin(System.String)">
+ <summary>
+ This method provide to lock an element from queue
+ </summary>
+ <param name="key"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.removeFromQueue(System.String)">
+ <summary>
+ This method provide to remove lock into bulletin
+ </summary>
+ <param name="key"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.checkAndCreateNewBulletin">
+ <summary>
+ This method provide to check and create new bulletin
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.createRequest(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@,CHCPrimaryRuntimeService.AreaConsensus.EnumModel)">
+ <summary>
+ This method provide to create request approved
+ </summary>
+ <param name="dataRequest"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.createRequestReject(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to create a request reject
+ </summary>
+ <param name="dataRequest"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.routeAssessment(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to route the assessment 
+ </summary>
+ <param name="dataRequest"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.assignDateAssessment(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@,CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.SupportUpdateBulletin@)">
+ <summary>
+ This method provide to assign the timeStamp to evaluate
+ </summary>
+ <param name="dataRequest"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.manageBulletinCheckNotExpressed(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@,CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.SupportUpdateBulletin@)">
+ <summary>
+ This method provide to manage a bulletin evaluation
+ </summary>
+ <param name="dataRequest"></param>
+ <param name="result"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.useNewProposalForApproval(CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfConsensusAssessment@,CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.SupportUpdateBulletin@)">
+ <summary>
+ This method provide to manage a proposal and approve date
+ </summary>
+ <param name="registration"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.manageBulletinForAssessment(CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.SupportUpdateBulletin@)">
+ <summary>
+ This method provide to retrieve the registration 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.updateBulletin(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to update a bulletin and in any case send in broadcast to the network
+ </summary>
+ <param name="dataRequest"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.updateAssessment(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to update assessment to the network
+ </summary>
+ <param name="dataRequest"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.processAssessment(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@,System.Boolean)">
+ <summary>
+ This method provide to process assessment
+ </summary>
+ <param name="dataRequest"></param>
+ <param name="notifyNetworkForUpdate"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.notifyNewAssessment(CHCPrimaryRuntimeService.AreaFlow.RequestExtended)">
+ <summary>
+ This method provide to notify assessment to the network
+ </summary>
+ <param name="dataRequest"></param>
+ <returns></returns>
+</member>
 <member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.sendInBroadCast">
  <summary>
  This method provide to clone a current bulletin and send a all node of the network
  </summary>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.testNetwork(CHCPrimaryRuntimeService.AreaConsensus.RequestProcess.NetSynchronization@)">
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.testNetwork(CHCPrimaryRuntimeService.AreaConsensus.NetSynchronization@)">
  <summary>
  This method provide to check if the network and the chain is correct
  </summary>
  <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.manageLateComers(CHCPrimaryRuntimeService.AreaFlow.RequestExtended)">
+ <summary>
+ This method provide to test all late comers
+ </summary>
+ <param name="dataRequest"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusEngine.manageProposalData(CHCPrimaryRuntimeService.AreaFlow.RequestExtended)">
+ <summary>
+ This method provide to manage a proposal data
+ </summary>
+ <param name="dataRequest"></param>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.EnumModel">
+ <summary>
+ This enumeration contain all type of model
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfAssessmentBase">
+ <summary>
+ This class contain a simply release of ReceiptOfAssessment structure
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfAssessmentBase.toString">
+ <summary>
+ This method provide to create a string of all element of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfAssessmentBase.getHash">
+ <summary>
+ This method provide to get a hash of a data contained
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfConsensusAssessment">
+ <summary>
+ This class contain all element of Accept or Abstein of a consensus 
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfConsensusAssessment.toString">
+ <summary>
+ This method provide to create a string of all element of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfConsensusAssessment.getHash">
+ <summary>
+ This method provide to get a hash of a data contained
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfConsensusAssessment.clone">
+ <summary>
+ This method provide to clone this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.RejectedRequestBase">
+ <summary>
+ This class contain the rejected request base
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfAssessment">
+ <summary>
+ This class contain all information necessary to receipt of approval
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfAssessment.toString">
+ <summary>
+ This method provide to create a string the element of this class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfAssessment.getHash">
+ <summary>
+ This method provide to get a hash of a data contained
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfAssessment.clone">
+ <summary>
+ This method provide to clone this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.RejectedRequest">
+ <summary>
+ This class contain all information to reject a request
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.RejectedRequest.toString">
+ <summary>
+ This method provide to create a string the element of this class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.RejectedRequest.getHash">
+ <summary>
+ This method provide to get a hash of a data contained
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.RejectedRequest.clone">
+ <summary>
+ This method provide to clone a Rejected Request
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.MasterNodeAbsent">
+ <summary>
+ This class contain the minimal information of absent of masternode
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.MasterNodeCommunication">
+ <summary>
+ This class contain all information of a communication of masternode
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.MasterNodeCommunication.ToString">
+ <summary>
+ This method provide to create a string resultant a contain of a object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.MasterNodeCommunication.getHash">
+ <summary>
+ This method provide to create an hash of a string resultant
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.MasterNodeCommunication.clone">
+ <summary>
+ This method provide to create a clone object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.NetSynchronization">
+ <summary>
+ This class contain the element reguard the minimal information to identificate the network
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.NetSynchronization.ToString">
+ <summary>
+ This method provide to return a cumulative information of a important member of this class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.HeaderBulletin">
+ <summary>
+ This class contain the header of a bulletin
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.HeaderBulletin.ToString">
+ <summary>
+ This method provide to return a string relative all data of a object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.HeaderBulletin.clone">
+ <summary>
+ This method provide to clone a value of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.UpdateNewTransactionHashInformation">
+ <summary>
+ This class contain the convergence of a new 
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.UpdateNewTransactionHashInformation.clone">
+ <summary>
+ This method provide to clone this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.ProposalForApproval">
+ <summary>
+ This class contain all information reguard the propose for approval
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.ProposalForApproval.VoteTotalizations">
+ <summary>
+ This class provide to collect all single total of expression of vote
+ </summary>
+</member>
+<member name="P:CHCPrimaryRuntimeService.AreaConsensus.ProposalForApproval.VoteTotalizations.total">
+ <summary>
+ This property return a total of votes
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ProposalForApproval.VoteTotalizations.ToString">
+ <summary>
+ This method provide to create a string resultant a votes into data class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ProposalForApproval.VoteTotalizations.clone">
+ <summary>
+ This method provide to clone an object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ProposalForApproval.ToString">
+ <summary>
+ This method provide to create a string resultant of a Proposal for Approval
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ProposalForApproval.getHash">
+ <summary>
+ This method provide to return an hash of data
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ProposalForApproval.clone">
+ <summary>
+ This method provide to clone all element of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.BulletinInformation">
+ <summary>
+ This class contain all information reguard a bulletin communition
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.BulletinInformation.ToString">
+ <summary>
+ This method provide to return a string relative all data of a object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.BulletinInformation.getHash">
+ <summary>
+ This method provide to generate hash of a string representative the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.BulletinInformation.clone">
+ <summary>
+ This method provide to clone this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.BulletinInformation.addNewAcceptOrAbstainRequestList(CHCPrimaryRuntimeService.AreaConsensus.ReceiptOfConsensusAssessment@)">
+ <summary>
+ This method provide to add a new accept or abstain request list
+ </summary>
+ <param name="request"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.BulletinInformation.addNewRejectRequestList(CHCPrimaryRuntimeService.AreaConsensus.RejectedRequest@)">
+ <summary>
+ This method provide to add a new reject request list
+ </summary>
+ <param name="request"></param>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaConsensus.ConsensusNetwork">
+ <summary>
+ This class contain all data of a consensus network
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusNetwork.getHashInternalData">
+ <summary>
+ This method provide to create a string hash resultant
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusNetwork.reoderAbstainedOrApproval">
+ <summary>
+ This method provide to reorder Abstained or Approval
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusNetwork.reoderReject">
+ <summary>
+ This method provide to reorder a reject masternode
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusNetwork.reoderAbsent">
+ <summary>
+ This method provide to reorder an absent masternode
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusNetwork.addNewAbstainedOrApproval(CHCPrimaryRuntimeService.AreaConsensus.EnumModel,System.Double,System.Double,System.String,System.String,System.String)">
+ <summary>
+ This method provide to add a new Abstained or Approval
+ </summary>
+ <param name="model"></param>
+ <param name="requestHash"></param>
+ <param name="assessmentTimeStamp"></param>
+ <param name="voteValue"></param>
+ <param name="publicAddress"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusNetwork.reorderElement">
+ <summary>
+ This method provide to reoder all element
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusNetwork.addNewApproval(System.Double,System.String,System.String,System.Double,System.String)">
+ <summary>
+ This method provide to add a new approval
+ </summary>
+ <param name="requestHash"></param>
+ <param name="assessmentTimeStamp"></param>
+ <param name="voteValue"></param>
+ <param name="publicAddress"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusNetwork.addNewAbstained(System.Double,System.String,System.String,System.Double,System.String)">
+ <summary>
+ This method provide to add a new abstained
+ </summary>
+ <param name="requestHash"></param>
+ <param name="assessmentTimeStamp"></param>
+ <param name="voteValue"></param>
+ <param name="publicAddress"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusNetwork.addNewRejected(System.Double,System.String,System.String,System.Double,System.String)">
+ <summary>
+ This method provide to add a new rejected
+ </summary>
+ <param name="assessmentTimeStamp"></param>
+ <param name="hash"></param>
+ <param name="signature"></param>
+ <param name="voteValue"></param>
+ <param name="publicAddress"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaConsensus.ConsensusNetwork.getHash">
+ <summary>
+ This method provide to create an hash resultant
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getFirstRequest(CHCPrimaryRuntimeService.AreaFlow.FlowEngine.EnumPhases)">
+ <summary>
+ This method provide to get a first request of a list
+ </summary>
+ <param name="phase"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.rebuildFinalCommandList">
+ <summary>
+ This method provide to rebuild the final command list
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.addNewRequestDirect(System.Object@,System.String)">
+ <summary>
+ This method provide to add a new direct request
+ </summary>
+ <param name="requestHash"></param>
+ <param name="requestCode"></param>
+ <param name="dateRequest"></param>
+ <param name="ticketNumber"></param>
  <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.addNewRequestNotify(System.String,System.String,System.Double,System.String)">
@@ -174,16 +773,137 @@ CHCPrimaryRuntimeService
  <param name="publicAddress"></param>
  <returns></returns>
 </member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.addNewRequestToSend(System.String,System.String@,CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeSenders@,System.Object@,System.Byte)">
+ <summary>
+ This method provide to add a new request to send
+ </summary>
+ <param name="requestCode"></param>
+ <param name="requestHash"></param>
+ <param name="sender"></param>
+ <param name="dataRequest"></param>
+ <param name="times"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.addNewBulletinToSend(CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeSenders@,System.Object@)">
+ <summary>
+ This method provide to add new bulletin to send
+ </summary>
+ <param name="sender"></param>
+ <param name="dataRequest"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.addNewRequestToExpression(CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeSenders@,System.String@)">
+ <summary>
+ This method provide to add a new request to declare an expression
+ </summary>
+ <param name="sender"></param>
+ <param name="requestHash"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.addNewRequestRemoteBulletin(CHCPrimaryRuntimeService.AreaConsensus.BulletinInformation)">
+ <summary>
+ This method provide to add new request remote bullettin
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.setRequestToProcess(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to set request to process
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.setRequestToSelect(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to set a request to select
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.setRequestToVerify(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to set a request to verify
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.setRequestProcessed(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to set a request to process
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getFirstRequestToSelect">
+ <summary>
+ This method provide to first request to select
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getFirstRequestToVerify">
+ <summary>
+ This method provide to get a first request to verify
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.createEvaluationList">
+ <summary>
+ This method provide to create a consensus list
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getFirstRequestToDownload">
  <summary>
  This method provide to get a first request notified to download
  </summary>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.rebuildFinalCommandList">
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getFirstRequestToSend">
  <summary>
- This method provide to rebuild the final command list
+ This method provide to get a first request to send
  </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getRequest(System.String)">
+ <summary>
+ This method provide to get a request
+ </summary>
+ <param name="requestHash"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getAllListToProcess">
+ <summary>
+ This method provide to get all list to process
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getApprovedTimeStamp(System.String,System.Double)">
+ <summary>
+ This method provide to approve time stamp
+ </summary>
+ <param name="requesthash"></param>
+ <param name="bulletinRegistrationTimeStamp"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getFirstRemoteBulletin">
+ <summary>
+ This method provide to get a first a remote bulletin
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.checkRemoteBulletinFromNode(System.String)">
+ <summary>
+ This method provide to check a remote a bulletin from a node
+ </summary>
+ <param name="publicAddress"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.removeOldRequest">
+ <summary>
+ This method provide to remove old request
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.actionAfterAssessment">
  <summary>
@@ -210,10 +930,90 @@ CHCPrimaryRuntimeService
  This enumeration contain the value of a single phase of a request
  </summary>
 </member>
+<member name="T:CHCPrimaryRuntimeService.AreaFlow.EnumEntityToSend">
+ <summary>
+ This enumeration contain the element to send
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaFlow.SourceRequestExtended">
+ <summary>
+ This class contain the source information of a request
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaFlow.MonitorPositionRequestExtended">
+ <summary>
+ This class contain all information reguard the position of all part of the process
+ </summary>
+</member>
 <member name="T:CHCPrimaryRuntimeService.AreaFlow.RequestExtended">
  <summary>
  This class contain all information of all intermediate phase of process a request
  </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.RequestExtended.addDataObject(System.Object@)">
+ <summary>
+ This method provide to add a data object 
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaFlow.RequestToSend">
+ <summary>
+ This class contain all information to send
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaFlow.RequestDownloadKey">
+ <summary>
+ This class contain all information to download
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestModel">
+ <summary>
+ This method contain a request model
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestModel.ToString">
+ <summary>
+ This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestModel.getHash">
+ <summary>
+ This methdo provide to get an hash of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestResponseModel">
+ <summary>
+ This method contain all element of a request response
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestResponseModel.ToString">
+ <summary>
+ This method provide to create a string of an element of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestResponseModel.getHash">
+ <summary>
+ This method provide to get the hash of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.FormalCheck.verify(System.String)">
+ <summary>
+ This method provide to verify a formal request
+ </summary>
+ <param name="requestHash"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.FormalCheck.evaluate(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to evaluate a request
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x0.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestModel@)">
  <summary>
@@ -264,12 +1064,53 @@ CHCPrimaryRuntimeService
  <param name="publicAddressAbsent"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.getDataPeer(System.String,System.String)">
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.addNetworkProperty(CHCPrimaryRuntimeService.AreaState.ChainStateEngine.PropertyID,System.String,System.String,System.String,System.String,System.Boolean)">
+ <summary>
+ This method provide to add a newtork property
+ </summary>
+ <param name="id"></param>
+ <param name="value"></param>
+ <param name="recordCoordinate"></param>
+ <param name="recordHash"></param>
+ <param name="hashContent"></param>
+ <param name="writeValueOnDB"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.addNewNode(System.String,System.String)">
+ <summary>
+ This method provide to add new node
+ </summary>
+ <param name="chainName"></param>
+ <param name="publicAddress"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.getDataNode(System.String,System.String)">
  <summary>
  This method provide to get an information relative a peer
  </summary>
  <param name="publicAddress"></param>
  <param name="chainName"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.existDataNode(System.String,System.String)">
+ <summary>
+ This method provide to check if exist a node into a chain
+ </summary>
+ <param name="publicAddress"></param>
+ <param name="chainName"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.getNodeListAbleToConsensus">
+ <summary>
+ This method provide to return a node list able to vote a consensus
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.init(System.String)">
+ <summary>
+ This method provide to initialize a class
+ </summary>
+ <param name="workPath"></param>
  <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.Controllers.BuildNetworkController.putValue(System.String,CHCProtocolLibrary.AreaCommon.Models.Network.BuildNetworkModel)">
@@ -301,7 +1142,7 @@ CHCPrimaryRuntimeService
  <param name="signature"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.Controllers.BulletinController.PutValue(CHCPrimaryRuntimeService.AreaConsensus.RequestProcess)">
+<member name="M:CHCPrimaryRuntimeService.Controllers.BulletinController.PutValue(CHCPrimaryRuntimeService.AreaConsensus.BulletinInformation)">
  <summary>
  This API (put method) provide to notify a request by another masternode
  </summary>
@@ -326,6 +1167,49 @@ CHCPrimaryRuntimeService
  </summary>
  <returns></returns>
 </member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ExpressionController.getValue(CHCPrimaryRuntimeService.AreaCommon.Models.Network.RequestExpressionModel)">
+ <summary>
+ This API (get method) provide to request an expression controller
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ExpressionController.putValue(CHCPrimaryRuntimeService.AreaProtocol.A0x0.RequestModel@,System.String)">
+ <summary>
+ This API (put method) provide to set a model A0x0 of a hashValue request
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaData.Network.rebuildCommandList">
+ <summary>
+ This method provide to rebuild command list after start a genesis state
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaData.Network.setGenesisNetworkState">
+ <summary>
+ This method provide to initialize a property of the network
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaData.Network.createLedger">
+ <summary>
+ This method provide to create a new Ledger 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaData.Network.createState">
+ <summary>
+ This method provide to create a new state
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaData.Network.createVirtualNodeList">
+ <summary>
+ This method provide to create a virtual node list
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:CHCPrimaryRuntimeService.AreaNetwork.Address.acquirePublicIP(System.Boolean)">
  <summary>
  This method provides to return a Public IP
@@ -338,9 +1222,84 @@ CHCPrimaryRuntimeService
  </summary>
  <returns></returns>
 </member>
+<member name="M:CHCPrimaryRuntimeService.AreaSecurity.authorization.checkClientCertification(System.String)">
+ <summary>
+ This method provide to check a client certification
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaSecurity.authorization.checkSignature(System.String)">
+ <summary>
+ This method provide to check a signature
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaSecurity.authorization.createSignature(System.Object@)">
+ <summary>
+ This method provide to create a signature
+ </summary>
+ <param name="request"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaSecurity.authorization.createSignature(System.Object@,System.Boolean)">
+ <summary>
+ This method provide to create a signature
+ </summary>
+ <param name="request"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaSecurity.authorization.checkSignature(System.String,System.String,TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType)">
+ <summary>
+ This method provide to check a signature
+ </summary>
+ <param name="resultant"></param>
+ <param name="value"></param>
+ <param name="walletType"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaSecurity.authorization.checkSignature(System.String,System.String,System.String)">
+ <summary>
+ This method provide to check a signature
+ </summary>
+ <param name="resultant"></param>
+ <param name="value"></param>
+ <param name="publicAddress"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaSecurity.authorization.checkNetwork(System.String,System.String)">
+ <summary>
+ This method provide to check a network data
+ </summary>
+ <param name="netWorkHash"></param>
+ <param name="chainHash"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaSecurity.authorization.checkNetwork(System.Object@)">
+ <summary>
+ This method provide to check a network data
+ </summary>
+ <param name="request"></param>
+ <returns></returns>
+</member>
 <member name="M:CHCPrimaryRuntimeService.AreaSecurity.authorization.completeResponse(System.Object@,System.String)">
  <summary>
  This method provide to complete a response
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaSecurity.authorization.changeCertificate(CHCProtocolLibrary.AreaCommon.Models.Security.changeCertificate)">
+ <summary>
+ This method provide to change a certificate
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaSecurity.authorization.setIdentityKeyPair(CHCProtocolLibrary.AreaCommon.Models.Security.SetIdentityKeyPairModel)">
+ <summary>
+ This method provide to set identity key pair
  </summary>
  <param name="value"></param>
  <returns></returns>
@@ -370,12 +1329,6 @@ CHCPrimaryRuntimeService
 <member name="M:CHCPrimaryRuntimeService.AreaWorker.Downloader.work">
  <summary>
  This method provide to execute a job of downloader action
- </summary>
- <returns></returns>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaWorker.Processor.work">
- <summary>
- This method provide to execute a job of processor code action
  </summary>
  <returns></returns>
 </member>
@@ -412,12 +1365,6 @@ CHCPrimaryRuntimeService
  </summary>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaWorker.Requester.work">
- <summary>
- This method provide to start a requester work
- </summary>
- <returns></returns>
-</member>
 <member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.sendToMasterNode(CHCProtocolLibrary.AreaCommon.Models.Network.NotifyModel@,System.String)">
  <summary>
  This method provide to send to masternode an element
@@ -426,7 +1373,15 @@ CHCPrimaryRuntimeService
  <param name="publicAddressIP"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.sendToMasterNodeBulletin(CHCPrimaryRuntimeService.AreaConsensus.RequestProcess@,System.String)">
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.sendToMasterNodeRequestToEvaluate(System.String,System.String)">
+ <summary>
+ This method provide to send a masternode
+ </summary>
+ <param name="requestHash"></param>
+ <param name="publicAddressIP"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.sendToMasterNodeBulletin(CHCPrimaryRuntimeService.AreaConsensus.BulletinInformation@,System.String)">
  <summary>
  This method provide to send a bullettin to masternode
  </summary>
@@ -443,11 +1398,19 @@ CHCPrimaryRuntimeService
  <param name="deliveryList"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.sendBulletinInBroadCast(CHCPrimaryRuntimeService.AreaConsensus.RequestProcess@,CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeSenders@)">
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.sendBulletinInBroadCast(CHCPrimaryRuntimeService.AreaConsensus.BulletinInformation@,CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeSenders@)">
  <summary>
  This method provide to send bullettin in broadcast
  </summary>
  <param name="dataObject"></param>
+ <param name="deliveryList"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.sendRequestEvaluation(System.String,CHCPrimaryRuntimeService.AreaCommon.Masternode.MasternodeSenders@)">
+ <summary>
+ This method provide to send a request evaluation
+ </summary>
+ <param name="requestHash"></param>
  <param name="deliveryList"></param>
  <returns></returns>
 </member>

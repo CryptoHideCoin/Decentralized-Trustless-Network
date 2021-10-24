@@ -18,7 +18,7 @@ Namespace AreaWorker
         <DebuggerHiddenAttribute()>
         Public Function work() As Boolean
             Try
-                Dim item As AreaConsensus.RequestProcess
+                Dim item As AreaConsensus.BulletinInformation
                 Dim proceed As Boolean = True
 
                 AreaCommon.log.track("RemoteVerifier.work", "Begin")

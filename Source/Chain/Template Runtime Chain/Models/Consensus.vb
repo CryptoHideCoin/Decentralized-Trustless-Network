@@ -14,7 +14,6 @@ Namespace AreaCommon.Models.Network
             Property netWorkReferement As String = ""
             Property chainReferement As String = ""
             Property requestCode As String = ""
-
             Property publicAddressRequester As String = ""
             Property requestDateTimeStamp As Double = 0
 
@@ -34,12 +33,14 @@ Namespace AreaCommon.Models.Network
                 Return HashSHA.generateSHA256(Me.toString())
             End Function
 
+            Public hash As String = ""
+            Public signature As String = ""
+
         End Class
 
         Public Interface IRequestModel
 
             Property common As CommonRequest
-            Property signature As String
 
             Function toString() As String
             Function getHash() As String

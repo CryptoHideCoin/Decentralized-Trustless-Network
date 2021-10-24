@@ -44,13 +44,13 @@ Namespace AreaProtocol
 
         Public Class RecoveryState
 
-            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger) As Boolean
-                AreaCommon.state.runtimeState.addNewChain(value.chainName, transactionChainRecord.recordCoordinate, transactionChainRecord.recordHash).creationDateLedger = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+                AreaCommon.state.runtimeState.addNewChain(value.chainName, transactionChainRecord.coordinate, transactionChainRecord.hash).creationDateLedger = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
                 Return True
             End Function
 
-            Public Shared Function fromTransactionLedger(ByRef value As TransactionChainLibrary.AreaLedger.LedgerEngine.SingleRecordLedger) As Boolean
+            Public Shared Function fromTransactionLedger(ByRef value As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
                 'AreaCommon.state.runtimeState.addNewChain(value.detailInformation).creationDateLedger = value.approvedDate
 
                 Return True
@@ -66,11 +66,11 @@ Namespace AreaProtocol
             Public Property currentService As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
-            Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
-                    With AreaCommon.state.currentBlockLedger.currentRecord
+                    With AreaCommon.state.currentBlockLedger.currentApprovedTransaction
                         .actionCode = "a1x0"
-                        .registrationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime
+                        .registrationTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
                         .detailInformation = data.chainName
                         .requesterPublicAddress = data.publicWalletAddressRequester
                         .requestHash = data.requestHash
@@ -85,14 +85,14 @@ Namespace AreaProtocol
                     log.track("A1x0Manager.init", ex.Message, "fatal")
                 End Try
 
-                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
             End Function
 
 
             Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal chainNameParameter As String, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
                 Try
                     Dim requestFileEngine As New FileEngine
-                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
                     log.track("A1x0Manager.init", "Begin")
 
@@ -115,7 +115,7 @@ Namespace AreaProtocol
 
                         ledgerCoordinate = writeDataIntoLedger()
 
-                        If (ledgerCoordinate.recordCoordinate.Length = 0) Then
+                        If (ledgerCoordinate.coordinate.Length = 0) Then
                             currentService.currentAction.setError("-1", "Error during update ledger")
                             currentService.currentAction.reset()
 

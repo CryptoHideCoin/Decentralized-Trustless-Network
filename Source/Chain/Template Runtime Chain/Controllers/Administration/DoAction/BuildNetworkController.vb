@@ -87,7 +87,7 @@ Namespace Controllers
 
             result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
-            Return result
+            Return AreaSecurity.completeResponse(result, signature)
         End Function
 
     End Class

@@ -10,32 +10,32 @@ Namespace AreaState
 
     Public Class ChainStateEngine
 
-        Public Class itemIdentityStructure
-            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+        Public Class ItemIdentityStructure
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
             Public Property value As String = ""
         End Class
 
         Public Class NetworkAssetStructure
-            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
             Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel
         End Class
 
         Public Class NetworkTransactionStructure
-            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
             Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.TransactionChainModel
         End Class
 
         Public Class NetworkRefundItemListStructure
-            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
             Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList
         End Class
 
         Public Class ChainPriceListStructure
-            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
             Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel
         End Class
@@ -93,7 +93,8 @@ Namespace AreaState
             Public Property role As roleMasterNode = roleMasterNode.arbitration
             Public Property startConnectionTimeStamp As Double = 0
             Public Property dayConnection As Short = 0
-            Public Property lastConnectionDate As Double = 0
+            Public Property lastConnectionTimeStamp As Double = 0
+            Public Property itsMe As Boolean = False
 
         End Class
 
@@ -322,51 +323,60 @@ Namespace AreaState
             Return True
         End Function
 
-
-        Public Function addProperty(ByVal id As PropertyID, ByVal value As String, ByVal recordCoordinate As String, ByVal recordHash As String, Optional ByVal hashContent As String = "", Optional ByVal writeValueOnDB As Boolean = True) As Boolean
+        ''' <summary>
+        ''' This method provide to add a newtork property
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <param name="value"></param>
+        ''' <param name="recordCoordinate"></param>
+        ''' <param name="recordHash"></param>
+        ''' <param name="hashContent"></param>
+        ''' <param name="writeValueOnDB"></param>
+        ''' <returns></returns>
+        Public Function addNetworkProperty(ByVal id As PropertyID, ByVal value As String, ByVal transactionCoordinate As String, ByVal transactionHash As String, Optional ByVal hashContent As String = "", Optional ByVal writeValueOnDB As Boolean = True) As Boolean
             Try
-                AreaCommon.log.track("ChainStateEngine.addProperty", "Begin")
+                AreaCommon.log.track("ChainStateEngine.addNetworkProperty", "Begin")
 
-                If insertSQLProperty(id, value, recordCoordinate, recordHash, hashContent, writeValueOnDB) Then
+                If insertSQLProperty(id, value, transactionCoordinate, transactionHash, hashContent, writeValueOnDB) Then
                     Select Case id
                         Case PropertyID.networkCreationDate : activeNetwork.networkCreationDate = value
                         Case PropertyID.genesisPublicAddress : activeNetwork.genesisPublicAddress = value
                         Case PropertyID.networkName
                             activeNetwork.networkName.value = value
-                            activeNetwork.networkName.recordCoordinate = recordCoordinate
-                            activeNetwork.networkName.recordHash = recordHash
+                            activeNetwork.networkName.coordinate = transactionCoordinate
+                            activeNetwork.networkName.hash = transactionHash
                         Case PropertyID.whitePaper
                             activeNetwork.whitePaper.value = value
-                            activeNetwork.whitePaper.recordCoordinate = recordCoordinate
-                            activeNetwork.whitePaper.recordHash = recordHash
+                            activeNetwork.whitePaper.coordinate = transactionCoordinate
+                            activeNetwork.whitePaper.hash = transactionHash
                         Case PropertyID.yellowPaper
                             activeNetwork.whitePaper.value = value
-                            activeNetwork.whitePaper.recordCoordinate = recordCoordinate
-                            activeNetwork.whitePaper.recordHash = recordHash
+                            activeNetwork.whitePaper.coordinate = transactionCoordinate
+                            activeNetwork.whitePaper.hash = transactionHash
                         Case PropertyID.assetData
-                            activeNetwork.primaryAssetData.recordCoordinate = recordCoordinate
-                            activeNetwork.primaryAssetData.recordHash = recordHash
+                            activeNetwork.primaryAssetData.coordinate = transactionCoordinate
+                            activeNetwork.primaryAssetData.hash = transactionHash
                         Case PropertyID.generalCondition
-                            activeNetwork.generalCondition.recordCoordinate = recordCoordinate
-                            activeNetwork.generalCondition.recordHash = recordHash
+                            activeNetwork.generalCondition.coordinate = transactionCoordinate
+                            activeNetwork.generalCondition.hash = transactionHash
                         Case PropertyID.privacyPolicy
-                            activeNetwork.privacyPolicy.recordCoordinate = recordCoordinate
-                            activeNetwork.privacyPolicy.recordHash = recordHash
+                            activeNetwork.privacyPolicy.coordinate = transactionCoordinate
+                            activeNetwork.privacyPolicy.hash = transactionHash
                         Case PropertyID.refundPlan
-                            activeNetwork.refundPlan.recordCoordinate = recordCoordinate
-                            activeNetwork.refundPlan.recordHash = recordHash
+                            activeNetwork.refundPlan.coordinate = transactionCoordinate
+                            activeNetwork.refundPlan.hash = transactionHash
                         Case PropertyID.transactionChainConfiguration
-                            activeNetwork.transactionChainSettings.recordCoordinate = recordCoordinate
-                            activeNetwork.transactionChainSettings.recordHash = recordHash
+                            activeNetwork.transactionChainSettings.coordinate = transactionCoordinate
+                            activeNetwork.transactionChainSettings.hash = transactionHash
                     End Select
 
-                    AreaCommon.log.track("ChainStateEngine.addProperty", "Complete")
+                    AreaCommon.log.track("ChainStateEngine.addNetworkProperty", "Complete")
 
                     Return True
                 End If
 
             Catch ex As Exception
-                AreaCommon.log.track("A0x0Manager.init", ex.Message, "fatal")
+                AreaCommon.log.track("ChainStateEngine.addNetworkProperty", ex.Message, "fatal")
             End Try
 
             Return False
@@ -391,16 +401,37 @@ Namespace AreaState
             End If
         End Function
 
-        Public Function addNewPeer(ByVal chainName As String, ByVal publicAddress As String) As DataMasternode
+        ''' <summary>
+        ''' This method provide to add new node
+        ''' </summary>
+        ''' <param name="chainName"></param>
+        ''' <param name="publicAddress"></param>
+        ''' <returns></returns>
+        Public Function addNewNode(ByVal chainName As String, Optional ByVal publicAddress As String = "") As DataMasternode
             Dim newValue As New DataMasternode
-            Dim newKey As New DataMasternodeKey
 
-            newKey.chainName = chainName
-            newKey.identityPublicAddress = publicAddress
+            Try
+                Dim newKey As New DataMasternodeKey
 
-            newValue.identityPublicAddress = publicAddress
+                AreaCommon.log.track("ChainStateEngine.addNewNode", "Begin")
 
-            activeMasterNode.Add(newKey, newValue)
+                newKey.chainName = chainName
+
+                If (publicAddress.Length = 0) Then
+                    publicAddress = AreaCommon.state.network.publicAddressIdentity
+
+                    newValue.itsMe = True
+                End If
+                newKey.identityPublicAddress = publicAddress
+
+                newValue.identityPublicAddress = publicAddress
+
+                activeMasterNode.Add(newKey, newValue)
+
+                AreaCommon.log.track("ChainStateEngine.addNewNode", "Complete")
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.addNewNode", ex.Message, "fatal")
+            End Try
 
             Return newValue
         End Function
@@ -411,26 +442,69 @@ Namespace AreaState
         ''' <param name="publicAddress"></param>
         ''' <param name="chainName"></param>
         ''' <returns></returns>
-        Public Function getDataPeer(ByVal publicAddress As String, Optional ByVal chainName As String = "") As DataMasternode
+        Public Function getDataNode(ByVal publicAddress As String, Optional ByVal chainName As String = "") As DataMasternode
             Dim newKey As New DataMasternodeKey
 
-            If (chainName.Length = 0) Then
-                newKey.chainName = AreaCommon.state.internalInformation.chainName
-            Else
-                newKey.chainName = chainName
-            End If
-            newKey.identityPublicAddress = publicAddress
+            Try
+                AreaCommon.log.track("ChainStateEngine.getDataPeer", "Begin")
 
-            If activeMasterNode.ContainsKey(newKey) Then
-                Return activeMasterNode.Item(newKey)
-            Else
-                Return New DataMasternode
-            End If
+                If (chainName.Length = 0) Then
+                    newKey.chainName = AreaCommon.state.internalInformation.chainName
+                Else
+                    newKey.chainName = chainName
+                End If
+                newKey.identityPublicAddress = publicAddress
+
+                If activeMasterNode.ContainsKey(newKey) Then
+                    Return activeMasterNode.Item(newKey)
+                End If
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.getDataPeer", ex.Message, "fatal")
+            Finally
+                AreaCommon.log.track("ChainStateEngine.getDataPeer", "Complete")
+            End Try
+
+            Return New DataMasternode
         End Function
 
+        ''' <summary>
+        ''' This method provide to check if exist a node into a chain
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="chainName"></param>
+        ''' <returns></returns>
+        Public Function existDataNode(ByVal publicAddress As String, Optional ByVal chainName As String = "") As Boolean
+            Dim newKey As New DataMasternodeKey
+
+            Try
+                AreaCommon.log.track("ChainStateEngine.getDataPeer", "Begin")
+
+                If (chainName.Length = 0) Then
+                    newKey.chainName = AreaCommon.state.internalInformation.chainName
+                Else
+                    newKey.chainName = chainName
+                End If
+                newKey.identityPublicAddress = publicAddress
+
+                Return activeMasterNode.ContainsKey(newKey)
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.getDataPeer", ex.Message, "fatal")
+
+                Return False
+            Finally
+                AreaCommon.log.track("ChainStateEngine.getDataPeer", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to return a node list able to vote a consensus
+        ''' </summary>
+        ''' <returns></returns>
         Public Function getNodeListAbleToConsensus() As List(Of DataMasternode)
             Try
                 Dim result As New List(Of DataMasternode)
+
+                AreaCommon.log.track("ChainStateEngine.getNodeListAbleToConsensus", "Begin")
 
                 For Each item In activeMasterNode.Values
                     If (item.role = DataMasternode.roleMasterNode.consensus) Or
@@ -439,15 +513,21 @@ Namespace AreaState
                     End If
                 Next
 
+                AreaCommon.log.track("ChainStateEngine.getNodeListAbleToConsensus", "Complete")
+
                 Return result
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.createConsensusList", ex.Message, "fatal")
+                AreaCommon.log.track("ChainStateEngine.getNodeListAbleToConsensus", ex.Message, "fatal")
 
                 Return New List(Of DataMasternode)
             End Try
         End Function
 
-
+        ''' <summary>
+        ''' This method provide to initialize a class
+        ''' </summary>
+        ''' <param name="workPath"></param>
+        ''' <returns></returns>
         Public Function init(ByVal workPath As String) As Boolean
             Try
                 Dim proceed As Boolean = True
@@ -473,6 +553,8 @@ Namespace AreaState
                 If proceed Then
                     proceed = createMainDBTable()
                 End If
+
+                AreaCommon.log.track("ChainStateEngine.init", "Complete")
 
                 Return True
             Catch ex As Exception

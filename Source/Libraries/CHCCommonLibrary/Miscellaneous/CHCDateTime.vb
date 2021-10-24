@@ -68,7 +68,7 @@ Namespace AreaEngine.Miscellaneous
         ''' <returns></returns>
         <DebuggerHiddenAttribute()> Function timeStampFromDateTime(Optional ByVal value As DateTime = Nothing) As Double
             If (value = DateTime.MinValue) Then
-                Return (Now - New DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds
+                Return (DateTime.UtcNow - New DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds
             Else
                 Return (value - New DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds
             End If

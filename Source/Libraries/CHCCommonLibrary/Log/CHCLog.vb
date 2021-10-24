@@ -150,10 +150,14 @@ Namespace Support
         ''' </summary>
         ''' <param name="position"></param>
         ''' <param name="content"></param>
-        ''' <param name="messageType"></param>
+        ''' <param name="messageType">Info = Write an information on log file if is in action and if saveMode = dontTrackEver
+        ''' Error = Write an information on log file ever if is in action
+        ''' Fatal = Write an information on log file and into console
+        ''' </param>
         <DebuggerHiddenAttribute()> Public Sub track(ByVal position As String, ByVal content As String, Optional ByVal messageType As String = "info", Optional ByVal printIntoConsole As Boolean = False)
             Try
                 Dim fatalError As Boolean = (messageType.CompareTo("fatal") = 0)
+                Dim normalError As Boolean = (messageType.CompareTo("error") = 0)
 
                 _lastInfoTrack = timeStampFromDateTime() & "|" & atMomentGMT() & "|" & messageType & "|" & position & "|" & content
 
@@ -174,7 +178,7 @@ Namespace Support
                 End If
 
                 If (saveMode = TrackRuntimeModeEnum.trackAll) Or
-                   (Not IsNothing(completeFileName) And ((saveMode = TrackRuntimeModeEnum.trackOnlyBootstrapAndError) And inBootStrapAction) Or fatalError) Then
+                   (Not IsNothing(completeFileName) And ((saveMode = TrackRuntimeModeEnum.trackOnlyBootstrapAndError) And inBootStrapAction) Or fatalError Or normalError) Then
 
                     Using fileData As IO.StreamWriter = IO.File.AppendText(completeFileName)
                         fileData.WriteLine(_lastInfoTrack)

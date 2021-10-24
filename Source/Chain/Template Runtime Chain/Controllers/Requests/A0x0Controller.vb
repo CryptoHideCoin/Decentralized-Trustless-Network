@@ -38,7 +38,7 @@ Namespace Controllers
                         With IOFast(Of AreaProtocol.A0x0.RequestModel).read(IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, hashValue & ".request"))
                             result.common = .common
                             result.netName = .netName
-                            result.signature = .signature
+                            result.signature = .common.signature
                         End With
                     Else
                         result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
@@ -55,7 +55,7 @@ Namespace Controllers
                 AreaCommon.log.track("A0x0Controller.getValue", "An error occurrent during execute: " & ex.Message, "fatal")
             End Try
 
-            Return AreaSecurity.completeResponse(result, result.requestSignature)
+            Return AreaSecurity.completeResponse(result, result.common.signature)
         End Function
 
         ''' <summary>
@@ -67,16 +67,15 @@ Namespace Controllers
             Try
                 AreaCommon.log.track("A0x0Controller.putValue", "Begin")
 
-                If AreaSecurity.checkSignature(value.getHash(), value.signature, value.common.publicAddressRequester) Then
+                If AreaSecurity.checkSignature(value.getHash(), value.common.signature, value.common.publicAddressRequester) Then
                     If AreaProtocol.A0x0.Manager.saveTemporallyRequest(value) Then
                         AreaCommon.log.track("A0x0Manager.putValue", "request - Saved")
-
-                        If Not AreaCommon.flow.addNewRequestDirect(value.getHash(), value.common.requestCode, value.common.requestDateTimeStamp, ticketNumber) Then
-                            AreaCommon.log.track("A0x0Manager.putValue", "Error during addNewRequestDirect")
-                        End If
+                    Else
+                        result.responseStatus = RemoteResponse.EnumResponseStatus.inError
+                        result.errorDescription = "503 - Generic Error"
                     End If
 
-                    If Not AreaCommon.flow.addNewRequestDirect(value.getHash(), value.common.requestCode, value.common.requestDateTimeStamp, ticketNumber) Then
+                    If Not AreaCommon.flow.addNewRequestDirect(value, ticketNumber) Then
                         result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                         result.errorDescription = "503 - Generic Error"
                     End If
@@ -92,7 +91,7 @@ Namespace Controllers
                 AreaCommon.log.track("A0x0Controller.putValue", "An error occurrent during execute: " & ex.Message, "fatal")
             End Try
 
-            Return AreaSecurity.completeResponse(result, value.signature)
+            Return AreaSecurity.completeResponse(result, value.common.signature)
         End Function
 
     End Class

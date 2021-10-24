@@ -27,12 +27,12 @@ Namespace AreaCommon.Models.General
     End Class
 
     ''' <summary>
-    ''' This class provide to identify record ledger
+    ''' This class provide to contain an essential data transaction
     ''' </summary>
-    Public Class IdentifyRecordLedger
+    Public Class EssentialDataTransaction
 
-        Public Property recordCoordinate As String = ""
-        Public Property recordHash As String = ""
+        Public Property coordinate As String = ""
+        Public Property hash As String = ""
 
         ''' <summary>
         ''' This static method provide to build a coordinate string
@@ -48,6 +48,33 @@ Namespace AreaCommon.Models.General
             Else
                 Return blockChainId & "-" & volumeId & "-" & blockId
             End If
+        End Function
+        ''' <summary>
+        ''' This method provide to create a string cumulative of the important class member
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function toString() As String
+            Return coordinate & hash
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain all element identify the last transaction save into the ledger
+    ''' </summary>
+    Public Class IdentifyLastTransaction
+
+        Inherits EssentialDataTransaction
+
+        Public Property registrationTimeStamp As Double = 0
+        Public Property progressiveHash As String = ""
+
+        ''' <summary>
+        ''' This method provide to create a string cumulative of the important class member
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function toString() As String
+            Return MyBase.toString & progressiveHash
         End Function
 
     End Class
@@ -66,7 +93,7 @@ Namespace AreaCommon.Models.General
             inError
         End Enum
 
-        Public Property integrityTransactionChain As New IdentifyRecordLedger
+        Public Property integrityTransactionChain As New IdentifyLastTransaction
         Public Property responseStatus As EnumResponseStatus = EnumResponseStatus.responseComplete
         Public Property errorDescription As String = ""
         Public Property requestTime As String = ""
@@ -82,8 +109,7 @@ Namespace AreaCommon.Models.General
         <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
             Dim result As String = ""
 
-            result += integrityTransactionChain.recordCoordinate
-            result += integrityTransactionChain.recordHash
+            result += integrityTransactionChain.toString()
             result += masterNodePublicAddress
             result += requestTime
 

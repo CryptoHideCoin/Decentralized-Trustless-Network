@@ -125,19 +125,19 @@ Namespace AreaWorker
 
                 Dim response As EnumResponseGet
 
-                If Not value.directRequest Then
-                    Dim baseAddress As String = AreaCommon.state.runtimeState.getDataPeer(value.notifiedPublicAddress).ipAddress
+                If Not value.source.directRequest Then
+                    Dim baseAddress As String = AreaCommon.state.runtimeState.getDataNode(value.source.notifiedPublicAddress).ipAddress
 
                     If (baseAddress.Length = 0) Then
                         Return False
                     End If
 
-                    Select Case value.requestCode
-                        Case "a0x0" : response = getRequestA0x0(baseAddress, value.requestHash)
+                    Select Case value.dataCommon.requestCode
+                        Case "a0x0" : response = getRequestA0x0(baseAddress, value.dataCommon.hash)
                     End Select
 
                     If (response = EnumResponseGet.connectionFailed) Then
-                        AreaCommon.flow.repositionDownload(value.requestHash, value.notifiedPublicAddress)
+                        AreaCommon.flow.repositionDownload(value.dataCommon.hash, value.source.notifiedPublicAddress)
 
                         Return False
                     Else
@@ -172,7 +172,7 @@ Namespace AreaWorker
                 Do While (AreaCommon.flow.workerOn And workerOn)
                     item = AreaCommon.flow.getFirstRequestToDownload()
 
-                    If (item.requestHash.Length > 0) Then
+                    If (item.dataCommon.hash.Length > 0) Then
                         proceed = True
 
                         If proceed Then proceed = downloadRequest(item)

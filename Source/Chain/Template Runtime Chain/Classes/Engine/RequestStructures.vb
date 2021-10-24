@@ -4,7 +4,6 @@ Option Explicit On
 
 Namespace AreaFlow
 
-
     ''' <summary>
     ''' This enumeration contain the value of a single phase of a request
     ''' </summary>
@@ -17,45 +16,89 @@ Namespace AreaFlow
     End Enum
 
     ''' <summary>
+    ''' This enumeration contain the element to send
+    ''' </summary>
+    Public Enum EnumEntityToSend
+        request
+        bulletin
+        requestResponse
+    End Enum
+
+    ''' <summary>
+    ''' This class contain the source information of a request
+    ''' </summary>
+    Public Class SourceRequestExtended
+
+        Public Property directRequest As Boolean = False
+        Public Property notifyTimeStamp As Double = 0
+        Public Property acquireTimeStamp As Double = 0
+        Public Property ticketNumber As String = ""
+        Public Property notifiedPublicAddress As String = ""
+        Public Property firstErrorDuringDownload As Double = 0
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain all information reguard the position of all part of the process
+    ''' </summary>
+    Public Class MonitorPositionRequestExtended
+
+        Public Property request As EnumOperationPosition = EnumOperationPosition.toDo
+        Public Property verify As EnumOperationPosition = EnumOperationPosition.toDo
+        Public Property process As EnumOperationPosition = EnumOperationPosition.toDo
+
+    End Class
+
+    ''' <summary>
     ''' This class contain all information of all intermediate phase of process a request
     ''' </summary>
     Public Class RequestExtended
 
-        Public Property requestHash As String = ""
-        Public Property dateNotify As Double = 0
-        Public Property ticketNumber As String = ""
-        Public Property requestCode As String = ""
-        Public Property dateRequest As Double = 0
-        Public Property directRequest As Boolean = False
-        Public Property notifiedPublicAddress As String = ""
-        Public Property dateSelected As Double = 0
-        Public Property dateAssessment As Double = 0
-        Public Property rejectedNote As String = ""
+        Private Property _Data As Object
 
-        Public Property firstErrorDuringDownload As Double = 0
-
-        Public Property requestPosition As EnumOperationPosition = EnumOperationPosition.toDo
-        Public Property verifyPosition As EnumOperationPosition = EnumOperationPosition.toDo
-        Public Property consensusPosition As EnumOperationPosition = EnumOperationPosition.toDo
-        Public Property generalStatus As EnumOperationPosition = EnumOperationPosition.toDo
-
-        Public Property response As AreaCommon.Masternode.EvaluationResponse = AreaCommon.Masternode.EvaluationResponse.notDeterminate
-
+        Public ReadOnly Property dataCommon As AreaCommon.Models.Network.Request.CommonRequest
+            Get
+                Try
+                    Return _Data.common
+                Catch ex As Exception
+                    Return New AreaCommon.Models.Network.Request.CommonRequest
+                End Try
+            End Get
+        End Property
+        Public ReadOnly Property data As Object
+            Get
+                Return _Data
+            End Get
+        End Property
+        Public Property source As New SourceRequestExtended
+        Public Property position As New MonitorPositionRequestExtended
         Public Property evaluations As New AreaCommon.Masternode.MasternodeEvaluations
-        Public Property notifyRejected As New AreaCommon.Masternode.MasternodeNotifyRejectedList
+        Public Property consensus As New AreaConsensus.ConsensusNetwork
+        Public Property bulletin As New AreaConsensus.BulletinInformation
 
-        Public Property notifyAssessmentAtNetwork As Boolean = False
-        Public Property notifySingleConsensusAtNetwork As Boolean = False
-        Public Property notifyConsensusAtNetwork As Boolean = False
+        ''' <summary>
+        ''' This method provide to add a data object 
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Function addDataObject(ByRef value As Object) As Boolean
+            Try
+                _Data = value
 
-        Public Property masterNodeExpressions As New AreaConsensus.ConsensusNetwork
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
 
     End Class
 
-
+    ''' <summary>
+    ''' This class contain all information to send
+    ''' </summary>
     Public Class RequestToSend
 
-        Public Property sendBulletin As Boolean = False
+        Public Property sendType As EnumEntityToSend = EnumEntityToSend.request
 
         Public Property addTimeStamp As Double = 0
         Public Property requestCode As String = ""
@@ -68,6 +111,9 @@ Namespace AreaFlow
 
     End Class
 
+    ''' <summary>
+    ''' This class contain all information to download
+    ''' </summary>
     Public Class RequestDownloadKey
 
         Public Property requestHash As String = ""

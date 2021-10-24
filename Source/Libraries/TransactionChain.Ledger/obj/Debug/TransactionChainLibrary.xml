@@ -22,6 +22,72 @@ TransactionChainLibrary
   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
 </summary>
 </member>
+<member name="T:TransactionChainLibrary.AreaLedger.EnumPositionField">
+ <summary>
+ This enum contain the index of a field into string array of a single transaction data
+ </summary>
+</member>
+<member name="T:TransactionChainLibrary.AreaLedger.SingleTransactionLedger">
+ <summary>
+ This class contain all element relative an a single transaction
+ </summary>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.SingleTransactionLedger.fillEmptyText(System.String)">
+ <summary>
+ This method provide to fill empty text with --- string
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.SingleTransactionLedger.loadFromAString(System.String)">
+ <summary>
+ This method provide to extract and load data from a string 
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.SingleTransactionLedger.toStringFormatToFile(System.String,System.Boolean)">
+ <summary>
+ This method provide to return a string from a data to class
+ </summary>
+ <param name="separator"></param>
+ <param name="limited"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.SingleTransactionLedger.ToString">
+ <summary>
+ This method provide to return a limited string file from a data in memory
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.SingleTransactionLedger.getHash">
+ <summary>
+ This method provide to create an hash from a limited element 
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:TransactionChainLibrary.AreaLedger.LedgerEngine">
+ <summary>
+ This class contain all member relative a Ledger
+ </summary>
+</member>
+<member name="T:TransactionChainLibrary.AreaLedger.LedgerEngine.EnumPropertyID">
+ <summary>
+ This enumeration contain the property ID
+ </summary>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.composeCoordinateTransaction(System.Boolean)">
+ <summary>
+ This method provide to compose a string with a coordinate last approved transaction
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.assignNewID">
+ <summary>
+ This method provide to assign a new id
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.init(System.String,System.Double)">
  <summary>
  This method provide to init a db engine

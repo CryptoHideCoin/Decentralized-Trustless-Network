@@ -78,13 +78,13 @@ Namespace AreaProtocol
 
         Public Class RecoveryState
 
-            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger) As Boolean
+            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
                 Dim proceed As Boolean = True
 
                 Return proceed
             End Function
 
-            Public Shared Function fromTransactionLedger(ByRef value As TransactionChainLibrary.AreaLedger.LedgerEngine.SingleRecordLedger) As Boolean
+            Public Shared Function fromTransactionLedger(ByRef value As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
 
                 Return True
             End Function
@@ -148,7 +148,7 @@ Namespace AreaProtocol
             Private Property approvedHash As String
 
 
-            Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
                     If AreaCommon.state.currentBlockLedger.blockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
@@ -159,7 +159,7 @@ Namespace AreaProtocol
                     AreaCommon.log.track("A0x0.Manager.init", ex.Message, "fatal")
                 End Try
 
-                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
             End Function
 
 
@@ -245,7 +245,7 @@ Namespace AreaProtocol
                     If saveTemporallyRequest(data) Then
                         AreaCommon.log.track("A0x0Manager.init", "request - Saved")
 
-                        Return AreaCommon.flow.addNewRequestDirect(data.requestHash, data.requestCode, data.requestDateTimeStamp, "")
+                        Return AreaCommon.flow.addNewRequestDirect(data)
                     End If
                 Catch ex As Exception
                     AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)

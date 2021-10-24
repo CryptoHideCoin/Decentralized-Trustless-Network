@@ -25,13 +25,12 @@ Namespace AreaWorker
                 Dim remote As New ProxyWS(Of Models.Network.NotifyModel)
 
                 remote.url = publicAddressIP & "/notify/request/"
-
                 remote.data = dataPack
 
                 If (remote.sendData() = "") Then
                     Return (remote.remoteResponse.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete)
                 Else
-                    AreaCommon.log.track("Sender.sendToMasterNode", "Connection failed url = " & remote.url, "fatal")
+                    AreaCommon.log.track("Sender.sendToMasterNode", "Connection failed url = " & remote.url, "error")
                 End If
 
                 remote = Nothing
@@ -47,25 +46,65 @@ Namespace AreaWorker
         End Function
 
         ''' <summary>
+        ''' This method provide to send a masternode
+        ''' </summary>
+        ''' <param name="requestHash"></param>
+        ''' <param name="publicAddressIP"></param>
+        ''' <returns></returns>
+        Private Function sendToMasterNodeRequestToEvaluate(ByVal requestHash As String, ByVal publicAddressIP As String) As Boolean
+            Try
+                AreaCommon.log.track("Sender.sendToMasterNodeRequestToEvaluate", "Begin")
+
+                Dim remote As New ProxyWS(Of AreaCommon.Models.Network.RequestExpressionModel)
+                Dim parameters As New AreaCommon.Models.Network.RequestExpressionModel
+
+                parameters.chainReferement = AreaCommon.state.runtimeState.activeChain.description.hash
+                parameters.netWorkReferement = AreaCommon.state.runtimeState.activeNetwork.networkName.hash
+                parameters.publicAddressRequester = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).publicAddress
+                parameters.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                parameters.requestHash = requestHash
+                parameters = AreaSecurity.createSignature(parameters)
+
+                remote.url = publicAddressIP & "/notify/request/"
+                remote.data = parameters
+
+                If (remote.sendData() = "") Then
+                    Return (remote.remoteResponse.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete)
+                Else
+                    AreaCommon.log.track("Sender.sendToMasterNodeRequestToEvaluate", "Connection failed url = " & remote.url, "error")
+                End If
+
+                remote = Nothing
+
+                AreaCommon.log.track("Sender.sendToMasterNodeRequestToEvaluate", "Complete")
+
+                Return False
+            Catch ex As Exception
+                AreaCommon.log.track("Sender.sendToMasterNodeRequestToEvaluate", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
         ''' This method provide to send a bullettin to masternode
         ''' </summary>
         ''' <param name="dataObject"></param>
         ''' <param name="publicAddressIP"></param>
         ''' <returns></returns>
-        Private Function sendToMasterNodeBulletin(ByRef dataObject As AreaConsensus.RequestProcess, ByVal publicAddressIP As String) As Boolean
+        Private Function sendToMasterNodeBulletin(ByRef dataObject As AreaConsensus.BulletinInformation, ByVal publicAddressIP As String) As Boolean
             Try
                 AreaCommon.log.track("Sender.sendToMasterNodeBulletin", "Begin")
 
-                Dim remote As New ProxyWS(Of AreaConsensus.RequestProcess)
+                Dim remote As New ProxyWS(Of AreaConsensus.BulletinInformation)
 
                 remote.url = publicAddressIP & "/notify/bulletin/"
-
                 remote.data = dataObject
 
                 If (remote.sendData() = "") Then
                     Return (remote.remoteResponse.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete)
                 Else
-                    AreaCommon.log.track("Sender.sendToMasterNodeBulletin", "Connection failed url = " & remote.url, "fatal")
+                    AreaCommon.log.track("Sender.sendToMasterNodeBulletin", "Connection failed url = " & remote.url, "error")
                 End If
 
                 remote = Nothing
@@ -133,7 +172,7 @@ Namespace AreaWorker
         ''' <param name="dataObject"></param>
         ''' <param name="deliveryList"></param>
         ''' <returns></returns>
-        Private Function sendBulletinInBroadCast(ByRef dataObject As AreaConsensus.RequestProcess, ByRef deliveryList As AreaCommon.Masternode.MasternodeSenders) As AreaCommon.Masternode.MasternodeSenders
+        Private Function sendBulletinInBroadCast(ByRef dataObject As AreaConsensus.BulletinInformation, ByRef deliveryList As AreaCommon.Masternode.MasternodeSenders) As AreaCommon.Masternode.MasternodeSenders
             Dim newDeliveryList As New AreaCommon.Masternode.MasternodeSenders
 
             Try
@@ -162,6 +201,34 @@ Namespace AreaWorker
         End Function
 
         ''' <summary>
+        ''' This method provide to send a request evaluation
+        ''' </summary>
+        ''' <param name="requestHash"></param>
+        ''' <param name="deliveryList"></param>
+        ''' <returns></returns>
+        Private Function sendRequestEvaluation(ByVal requestHash As String, ByRef deliveryList As AreaCommon.Masternode.MasternodeSenders) As AreaCommon.Masternode.MasternodeSenders
+            Dim newDeliveryList As New AreaCommon.Masternode.MasternodeSenders
+
+            Try
+                AreaCommon.log.track("Sender.sendRequestEvaluation", "Begin")
+
+                Dim masterNode As AreaCommon.Masternode.MasternodeSenders.MasternodeSender
+
+                masterNode = deliveryList.getFirst()
+
+                If Not sendToMasterNodeRequestToEvaluate(requestHash, masterNode.publicAddressIP) Then
+                    newDeliveryList.add(masterNode)
+                End If
+
+                AreaCommon.log.track("Sender.sendRequestEvaluation", "Complete")
+            Catch ex As Exception
+                AreaCommon.log.track("Sender.sendRequestEvaluation", ex.Message, "fatal")
+            End Try
+
+            Return newDeliveryList
+        End Function
+
+        ''' <summary>
         ''' This method provide to work a sender process
         ''' </summary>
         ''' <returns></returns>
@@ -180,16 +247,17 @@ Namespace AreaWorker
                     item = AreaCommon.flow.getFirstRequestToSend()
 
                     If (item.requestCode.Length > 0) Then
-                        If item.sendBulletin Then
-                            newDeliveryList = sendBulletinInBroadCast(item.dataObject, item.deliveryList)
-                        Else
-                            newDeliveryList = sendInBroadCast(item.requestCode, item.dataObject.requestHash, item.deliveryList)
-                        End If
+
+                        Select Case item.sendType
+                            Case AreaFlow.EnumEntityToSend.bulletin : newDeliveryList = sendBulletinInBroadCast(item.dataObject, item.deliveryList)
+                            Case AreaFlow.EnumEntityToSend.request : newDeliveryList = sendInBroadCast(item.requestCode, item.dataObject.requestHash, item.deliveryList)
+                            Case AreaFlow.EnumEntityToSend.requestResponse : newDeliveryList = sendRequestEvaluation(item.requestHash, item.deliveryList)
+                        End Select
 
                         AreaCommon.flow.removeRequestToSend(item)
 
                         If (newDeliveryList.count > 0) Then
-                            If item.tryNumber < 3 Then
+                            If (item.tryNumber < 3) Then
                                 AreaCommon.flow.addNewRequestToSend(item.requestCode, item.requestHash, newDeliveryList, item.dataObject, item.tryNumber + 1)
                             End If
                         End If
@@ -209,7 +277,6 @@ Namespace AreaWorker
                 Return False
             End Try
         End Function
-
 
     End Module
 

@@ -393,7 +393,10 @@ CHCCommonLibrary
  </summary>
  <param name="position"></param>
  <param name="content"></param>
- <param name="messageType"></param>
+ <param name="messageType">Info = Write an information on log file if is in action and if saveMode = dontTrackEver
+ Error = Write an information on log file ever if is in action
+ Fatal = Write an information on log file and into console
+ </param>
 </member>
 <member name="M:CHCCommonLibrary.Support.LogEngine.trackIntoConsole(System.String)">
  <summary>
@@ -570,12 +573,12 @@ CHCCommonLibrary
  This model class contain the boolean
  </summary>
 </member>
-<member name="T:CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger">
+<member name="T:CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction">
  <summary>
- This class provide to identify record ledger
+ This class provide to contain an essential data transaction
  </summary>
 </member>
-<member name="M:CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger.composeCoordinate(System.String,System.String,System.String,System.String)">
+<member name="M:CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.composeCoordinate(System.String,System.String,System.String,System.String)">
  <summary>
  This static method provide to build a coordinate string
  </summary>
@@ -583,6 +586,23 @@ CHCCommonLibrary
  <param name="volumeId"></param>
  <param name="blockId"></param>
  <param name="recordId"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.ToString">
+ <summary>
+ This method provide to create a string cumulative of the important class member
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction">
+ <summary>
+ This class contain all element identify the last transaction save into the ledger
+ </summary>
+</member>
+<member name="M:CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.ToString">
+ <summary>
+ This method provide to create a string cumulative of the important class member
+ </summary>
  <returns></returns>
 </member>
 <member name="T:CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse">

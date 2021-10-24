@@ -14,7 +14,10 @@ Namespace AreaData
         Private _CompleteProcess As Boolean = True
 
 
-
+        ''' <summary>
+        ''' This method provide to rebuild command list after start a genesis state
+        ''' </summary>
+        ''' <returns></returns>
         Private Function rebuildCommandList() As Boolean
             With AreaCommon.state.currentService
                 .listAvailableCommand.Clear()
@@ -25,18 +28,101 @@ Namespace AreaData
             Return True
         End Function
 
-        Private Function createLedger() As Boolean
-            With AreaCommon.state
-                .runtimeState.activeNetwork.networkCreationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
-                .currentBlockLedger.log = AreaCommon.log
-                .currentBlockLedger.identifyBlockChain = "B0"
+        ''' <summary>
+        ''' This method provide to initialize a property of the network
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function setGenesisNetworkState() As Boolean
+            Try
+                AreaCommon.log.track("BuildNetwork.setNetworkState", "Begin")
 
-                Return .currentBlockLedger.init(AreaCommon.paths.workData.currentVolume.ledger, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate)
-            End With
+                With AreaCommon.state.network
+                    .publicAddressIdentity = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).publicAddress
+                    .publicAddressRefund = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.refund).publicAddress
+                    .publicAddresstWarranty = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.warranty).publicAddress
+                    .coinWarranty = 1
+                    .connectedMoment = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    .role = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumMasternodeRole.fullRole
+                End With
+
+                AreaCommon.log.track("BuildNetwork.setNetworkState", "Complete")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("BuildNetwork.setNetworkState", ex.Message, "fatal")
+
+                Return False
+            End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to create a new Ledger 
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function createLedger() As Boolean
+            Try
+                AreaCommon.log.track("BuildNetwork.createLedger", "Begin")
+
+                With AreaCommon.state
+                    .runtimeState.activeNetwork.networkCreationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    .currentBlockLedger.log = AreaCommon.log
+                    .currentBlockLedger.identifyBlockChain = "B0"
+
+                    Return .currentBlockLedger.init(AreaCommon.paths.workData.currentVolume.ledger, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate)
+                End With
+
+                AreaCommon.log.track("BuildNetwork.createLedger", "Complete")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("BuildNetwork.createLedger", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to create a new state
+        ''' </summary>
+        ''' <returns></returns>
         Private Function createState() As Boolean
             Return AreaCommon.state.runtimeState.init(AreaCommon.paths.workData.state.db)
+        End Function
+
+        ''' <summary>
+        ''' This method provide to create a virtual node list
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function createVirtualNodeList() As Boolean
+            Try
+                AreaCommon.log.track("BuildNetwork.createVirtualNodeList", "Begin")
+
+                With AreaCommon.state.runtimeState.addNewNode("Primary")
+                    .dayConnection = 0
+
+                    If AreaCommon.settings.data.intranetMode Then
+                        .ipAddress = AreaCommon.state.localIpAddress
+                    Else
+                        .ipAddress = AreaCommon.state.publicIpAddress
+                    End If
+
+                    .lastConnectionTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    .role = AreaState.ChainStateEngine.DataMasternode.roleMasterNode.fullService
+                    .startConnectionTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    .votePoint = 1
+                    .warrantyCoin = 1
+                    .warrantyPublicAddress = .identityPublicAddress
+                    .refundPublicAddress = .identityPublicAddress
+                End With
+
+                AreaCommon.log.track("BuildNetwork.createVirtualNodeList", "Complete")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("BuildNetwork.createVirtualNodeList", ex.Message, "fatal")
+
+                Return False
+            End Try
         End Function
 
         Private Sub manageA0x1()
@@ -247,9 +333,11 @@ Namespace AreaData
                 AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation
 
                 If proceed Then proceed = AreaCommon.flow.init()
+                If proceed Then proceed = setGenesisNetworkState()
                 If proceed Then proceed = createLedger()
                 If proceed Then proceed = rebuildCommandList()
                 If proceed Then proceed = createState()
+                If proceed Then proceed = createVirtualNodeList()
                 If proceed Then proceed = AreaProtocol.A0x0.Manager.createRequest(dataNetwork.name)
 
                 'manageA0x1()
@@ -268,9 +356,11 @@ Namespace AreaData
                 'manageA1x5()
                 'manageA1x6()
 
+                AreaCommon.log.track("BuildNetwork.run", "Complete")
+
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("Verify.buildNetwork", ex.Message, "fatal")
+                AreaCommon.log.track("BuildNetwork.run", ex.Message, "fatal")
 
                 Return False
             Finally

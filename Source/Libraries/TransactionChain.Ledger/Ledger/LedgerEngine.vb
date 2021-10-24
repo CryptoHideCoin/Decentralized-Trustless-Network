@@ -11,100 +11,145 @@ Imports CHCCommonLibrary.Support
 
 Namespace AreaLedger
 
-    Public Class LedgerEngine
+    ''' <summary>
+    ''' This enum contain the index of a field into string array of a single transaction data
+    ''' </summary>
+    Public Enum EnumPositionField
+        id = 0
+        registrationTimeStamp = 1
+        actionCode = 2
+        requesterPublicAddress = 3
+        approverPublicAddress = 4
+        requestHash = 5
+        consensusHash = 6
+        detailInformation = 7
+        currentHash = 8
+        progressiveHash = 9
+    End Enum
 
-        Public Class SingleRecordLedger
+    ''' <summary>
+    ''' This class contain all element relative an a single transaction
+    ''' </summary>
+    Public Class SingleTransactionLedger
 
-            Public Property id As Integer = 0
-            Public Property registrationDate As Double = 0
-            Public Property actionCode As String = ""
-            Public Property requesterPublicAddress As String = ""
-            Public Property approverPublicAddress As String = ""
-            Public Property requestHash As String = ""
-            Public Property consensusHash As String = ""
-            Public Property detailInformation As String = ""
-            Public Property currentHash As String = ""
-            Public Property progressiveHash As String = ""
+        Public Property id As Integer = 0
+        Public Property registrationTimeStamp As Double = 0
+        Public Property actionCode As String = ""
+        Public Property requesterPublicAddress As String = ""
+        Public Property approverPublicAddress As String = ""
+        Public Property requestHash As String = ""
+        Public Property consensusHash As String = ""
+        Public Property detailInformation As String = ""
+        Public Property currentHash As String = ""
+        Public Property progressiveHash As String = ""
 
-            Private Function fillEmptyText(ByVal value As String) As String
-                If (value.Trim.Length > 0) Then
-                    Return value
-                Else
-                    Return "---"
-                End If
-            End Function
+        ''' <summary>
+        ''' This method provide to fill empty text with --- string
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Private Function fillEmptyText(ByVal value As String) As String
+            If (value.Trim.Length > 0) Then
+                Return value
+            Else
+                Return "---"
+            End If
+        End Function
+        ''' <summary>
+        ''' This method provide to extract and load data from a string 
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Function loadFromAString(ByVal value As String) As Boolean
+            Try
+                Dim elements = value.Split("|")
 
-            Public Function toMemoryFromFile(ByVal value As String) As Boolean
-                Try
-                    Dim elements = value.Split("|")
+                If (UBound(elements) = EnumPositionField.progressiveHash) Then
 
-                    If (UBound(elements) = 7) Then
-
-                        If IsNumeric(elements(0)) Then
-                            If Not Integer.TryParse(elements(0), id) Then
-                                Return False
-                            End If
-                        Else
+                    If IsNumeric(elements(EnumPositionField.id)) Then
+                        If Not Integer.TryParse(elements(EnumPositionField.id), id) Then
                             Return False
                         End If
-
-                        If IsNumeric(elements(1)) Then
-                            If Not Double.TryParse(elements(1), registrationDate) Then
-                                Return False
-                            End If
-                        Else
-                            Return False
-                        End If
-
-                        actionCode = elements(2)
-                        requesterPublicAddress = elements(3)
-                        approverPublicAddress = elements(4)
-                        requestHash = elements(5)
-                        consensusHash = elements(7)
-                        detailInformation = elements(4)
-                        currentHash = elements(8)
-                        progressiveHash = elements(9)
-
-                        Return True
                     Else
                         Return False
                     End If
-                Catch ex As Exception
+
+                    If IsNumeric(elements(EnumPositionField.registrationTimeStamp)) Then
+                        If Not Double.TryParse(elements(1), registrationTimeStamp) Then
+                            Return False
+                        End If
+                    Else
+                        Return False
+                    End If
+
+                    actionCode = elements(EnumPositionField.actionCode)
+                    requesterPublicAddress = elements(EnumPositionField.requesterPublicAddress)
+                    approverPublicAddress = elements(EnumPositionField.approverPublicAddress)
+                    requestHash = elements(EnumPositionField.requestHash)
+                    consensusHash = elements(EnumPositionField.consensusHash)
+                    detailInformation = elements(EnumPositionField.detailInformation)
+                    currentHash = elements(EnumPositionField.currentHash)
+                    progressiveHash = elements(EnumPositionField.progressiveHash)
+
+                    Return True
+                Else
                     Return False
-                End Try
-            End Function
-
-            Public Function toStringToFile(Optional ByVal separator As String = "|", Optional limited As Boolean = False) As String
-                Dim tmp As String = ""
-
-                tmp += id.ToString() & separator
-                tmp += registrationDate.ToString() & separator
-                tmp += actionCode & separator
-                tmp += requesterPublicAddress & separator
-                tmp += approverPublicAddress & separator
-                tmp += requestHash & separator
-                tmp += fillEmptyText(consensusHash) & separator
-                tmp += detailInformation & separator
-
-                If Not limited Then
-                    tmp += currentHash & separator
-                    tmp += progressiveHash
                 End If
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+        ''' <summary>
+        ''' This method provide to return a string from a data to class
+        ''' </summary>
+        ''' <param name="separator"></param>
+        ''' <param name="limited"></param>
+        ''' <returns></returns>
+        Public Function toStringFormatToFile(Optional ByVal separator As String = "|", Optional limited As Boolean = False) As String
+            Dim tmp As String = ""
 
-                Return tmp
-            End Function
+            tmp += id.ToString() & separator
+            tmp += registrationTimeStamp.ToString() & separator
+            tmp += actionCode & separator
+            tmp += requesterPublicAddress & separator
+            tmp += approverPublicAddress & separator
+            tmp += requestHash & separator
+            tmp += fillEmptyText(consensusHash) & separator
+            tmp += detailInformation & separator
 
-            Public Overrides Function toString() As String
-                Return toStringToFile("", True)
-            End Function
+            If Not limited Then
+                tmp += currentHash & separator
+                tmp += progressiveHash
+            End If
 
-            Public Function getHash() As String
-                Return HashSHA.generateSHA256(Me.toString())
-            End Function
+            Return tmp
+        End Function
+        ''' <summary>
+        ''' This method provide to return a limited string file from a data in memory
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function toString() As String
+            Return toStringFormatToFile("", True)
+        End Function
+        ''' <summary>
+        ''' This method provide to create an hash from a limited element 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
 
-        End Class
+    End Class
 
-        Public Enum PropertyID
+    ''' <summary>
+    ''' This class contain all member relative a Ledger
+    ''' </summary>
+    Public Class LedgerEngine
+
+        ''' <summary>
+        ''' This enumeration contain the property ID
+        ''' </summary>
+        Public Enum EnumPropertyID
 
             notDefined
             typeOfDB
@@ -113,11 +158,15 @@ Namespace AreaLedger
 
         End Enum
 
-        Public Property currentRecord As New SingleRecordLedger
-        Public Property log As LogEngine
+        Public Property currentApprovedTransaction As New SingleTransactionLedger
+        Public Property nextProposeNewTransaction As New SingleTransactionLedger
         Public Property identifyBlockChain As String = ""
-        Public Property CurrentIdBlock As Integer = 0
-        Public Property CurrentIdVolume As Byte = 0
+        Public Property currentIdBlock As Integer = 0
+        Public Property currentIdVolume As Byte = 0
+        Public Property nextIdBlock As Integer = 0
+        Public Property nextIdVolume As Byte = 0
+        Public Property requestChangeBlock As Boolean = False
+        Public Property log As LogEngine
 
         Private Property _NewIdTransaction As Integer = 1
         Private Property _BasePath As String = ""
@@ -130,10 +179,75 @@ Namespace AreaLedger
         Private Property _DBLedgerFileName As String = "Ledger.Db"
         Private Property _DBLedgerConnectionString As String = "Data source = {0};Version=3;"
 
+        ''' <summary>
+        ''' This method provide to compose a string with a coordinate last approved transaction
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function composeCoordinateTransaction(Optional ByVal nextTransaction As Boolean = False) As String
+            Dim idTransaction As Integer
+            Dim idBlock As Integer
+            Dim idVolume As Byte
+
+            If nextTransaction Then
+                idTransaction = nextProposeNewTransaction.id
+                idBlock = nextIdBlock
+                idVolume = nextIdVolume
+            Else
+                idTransaction = currentApprovedTransaction.id
+                idBlock = currentIdBlock
+                idVolume = currentIdVolume
+            End If
+
+            If (currentApprovedTransaction.actionCode.Length = 0) And Not nextTransaction Then
+                Return "----"
+            Else
+                Return CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.composeCoordinate(identifyBlockChain, idVolume, idBlock, idTransaction)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' This method provide to assign a new id
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function assignNewID() As Boolean
+            Try
+                log.track("LedgerEngine.assignNewID", "Begin")
+
+                nextIdBlock = currentIdBlock
+                nextIdVolume = currentIdVolume
+
+                If requestChangeBlock Then
+                    Dim numberDaysOnYear As Integer = 365
+
+                    If DateTime.IsLeapYear(Now.Year) Then
+                        numberDaysOnYear = 366
+                    End If
+                    If (currentIdBlock = numberDaysOnYear) Then
+                        nextIdVolume = currentIdVolume + 1
+                        nextIdBlock = 0
+                    Else
+                        nextIdBlock += 1
+                    End If
+                    nextProposeNewTransaction.id = 0
+                Else
+                    nextProposeNewTransaction.id = currentApprovedTransaction.id + 1
+                End If
+
+                log.track("LedgerEngine.assignNewID", "Complete")
+
+                Return True
+            Catch ex As Exception
+                log.track("LedgerEngine.assignNewID", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+
 
 
         Private Function createNextCloseAtTime() As DateTime
-            Dim dateCreation As Date = CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimestamp(_CreationLedgerDate)
+            Dim dateCreation As Date = CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(_CreationLedgerDate)
             Dim currentYear As Short = Now.ToUniversalTime.Year
             Dim currentMonth As Byte = Now.ToUniversalTime.Month
             Dim currentDay As Byte = Now.ToUniversalTime.Day
@@ -231,7 +345,7 @@ Namespace AreaLedger
             End Try
         End Function
 
-        Private Function insertSQLPropertyIdentityDB(ByVal id As PropertyID, ByVal value As String) As Boolean
+        Private Function insertSQLPropertyIdentityDB(ByVal id As EnumPropertyID, ByVal value As String) As Boolean
             Try
                 Dim sql As String = ""
                 Dim connectionDB As SQLiteConnection
@@ -273,9 +387,9 @@ Namespace AreaLedger
         End Function
 
         Private Function writeIdentityDB() As Boolean
-            insertSQLPropertyIdentityDB(PropertyID.dateCreation, CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT())
-            insertSQLPropertyIdentityDB(PropertyID.name, CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger.composeCoordinate(identifyBlockChain, _CurrentIdVolume, _CurrentIdBlock))
-            insertSQLPropertyIdentityDB(PropertyID.typeOfDB, "BlockLedger")
+            insertSQLPropertyIdentityDB(EnumPropertyID.dateCreation, CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT())
+            insertSQLPropertyIdentityDB(EnumPropertyID.name, CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, _currentIdVolume, _currentIdBlock))
+            insertSQLPropertyIdentityDB(EnumPropertyID.typeOfDB, "BlockLedger")
 
             Return True
         End Function
@@ -286,7 +400,7 @@ Namespace AreaLedger
 
                 log.track("LedgerEngine.initDBLedger", "Begin")
 
-                _DBLedgerFileName = CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger.composeCoordinate(identifyBlockChain, _CurrentIdVolume, _CurrentIdBlock)
+                _DBLedgerFileName = CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, _CurrentIdVolume, _CurrentIdBlock)
                 _DBLedgerFileName = IO.Path.Combine(_BasePath, _DBLedgerFileName & ".db")
 
                 log.track("LedgerEngine.initDBLedger", "Set db in" & _DBLedgerFileName)
@@ -330,16 +444,16 @@ Namespace AreaLedger
                 sql += "INSERT INTO blockData "
                 sql += " (record_id, registrationDate, actionCode, requesterPublicAddress, approverPublicAddress, requestHash, consensusHash, detailInformation, currentHash, progressiveHash) "
                 sql += "VALUES "
-                sql += " (" & currentRecord.id & ", "
-                sql += "'" & currentRecord.registrationDate & "', "
-                sql += "'" & currentRecord.actionCode & "', "
-                sql += "'" & currentRecord.requesterPublicAddress & "', "
-                sql += "'" & currentRecord.approverPublicAddress & "', "
-                sql += "'" & currentRecord.requestHash & "', "
-                sql += "'" & currentRecord.consensusHash & "', "
-                sql += "'" & currentRecord.detailInformation & "', "
-                sql += "'" & currentRecord.currentHash & "', "
-                sql += "'" & currentRecord.progressiveHash & "' "
+                sql += " (" & currentApprovedTransaction.id & ", "
+                sql += "'" & currentApprovedTransaction.registrationTimeStamp & "', "
+                sql += "'" & currentApprovedTransaction.actionCode & "', "
+                sql += "'" & currentApprovedTransaction.requesterPublicAddress & "', "
+                sql += "'" & currentApprovedTransaction.approverPublicAddress & "', "
+                sql += "'" & currentApprovedTransaction.requestHash & "', "
+                sql += "'" & currentApprovedTransaction.consensusHash & "', "
+                sql += "'" & currentApprovedTransaction.detailInformation & "', "
+                sql += "'" & currentApprovedTransaction.currentHash & "', "
+                sql += "'" & currentApprovedTransaction.progressiveHash & "' "
                 sql += ")"
 
                 connectionDB = New SQLiteConnection(String.Format(_DBLedgerConnectionString, _DBLedgerFileName))
@@ -387,9 +501,9 @@ Namespace AreaLedger
         End Property
 
         Public Sub completeRecord()
-            currentRecord.id = _NewIdTransaction
-            currentRecord.currentHash = currentRecord.getHash
-            currentRecord.progressiveHash = HashSHA.generateSHA256(currentRecord.currentHash & _CurrentTotalHash)
+            currentApprovedTransaction.id = _NewIdTransaction
+            currentApprovedTransaction.currentHash = currentApprovedTransaction.getHash
+            currentApprovedTransaction.progressiveHash = HashSHA.generateSHA256(currentApprovedTransaction.currentHash & _CurrentTotalHash)
         End Sub
 
         Public Function calculateProgressiveHash(ByVal recordHash As String) As String
@@ -400,42 +514,42 @@ Namespace AreaLedger
             End If
         End Function
 
-        Public Function saveAndClean() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
-            Dim result As New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+        Public Function saveAndClean() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+            Dim result As New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
             Try
                 log.track("LedgerEngine.saveAndClean", "Begin")
 
-                currentRecord.id = _NewIdTransaction
-                currentRecord.currentHash = currentRecord.getHash()
+                currentApprovedTransaction.id = _NewIdTransaction
+                currentApprovedTransaction.currentHash = currentApprovedTransaction.getHash()
 
-                result.recordCoordinate = CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger.composeCoordinate(identifyBlockChain, _CurrentIdVolume, _CurrentIdBlock, _NewIdTransaction)
-                result.recordHash = currentRecord.currentHash
+                result.coordinate = CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.composeCoordinate(identifyBlockChain, _CurrentIdVolume, _CurrentIdBlock, _NewIdTransaction)
+                result.hash = currentApprovedTransaction.currentHash
 
-                currentRecord.progressiveHash = calculateProgressiveHash(result.recordHash)
+                currentApprovedTransaction.progressiveHash = calculateProgressiveHash(result.hash)
 
                 log.track("LedgerEngine.saveAndClean", "Assign value")
 
                 Using fileData As IO.StreamWriter = IO.File.AppendText(_CompleteFileName)
-                    fileData.WriteLine(currentRecord.toStringToFile())
+                    fileData.WriteLine(currentApprovedTransaction.toStringFormatToFile())
                 End Using
 
                 log.track("LedgerEngine.saveAndClean", "Write file ledger")
 
                 If saveDataToDB() Then
                     _NewIdTransaction += 1
-                    _CurrentTotalHash = currentRecord.progressiveHash
+                    _CurrentTotalHash = currentApprovedTransaction.progressiveHash
 
                     log.track("LedgerEngine.saveAndClean", "Update counter")
 
-                    currentRecord = New SingleRecordLedger
+                    currentApprovedTransaction = New SingleTransactionLedger
                 End If
 
                 Return result
             Catch ex As Exception
                 log.track("LedgerEngine.saveAndClean", ex.Message, "fatal")
 
-                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
             End Try
         End Function
 

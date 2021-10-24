@@ -22,8 +22,8 @@ Namespace AreaWorker
             Try
                 AreaCommon.log.track("Requester.formalCheck", "Begin")
 
-                Select Case value.requestCode
-                    Case "a0x0" : Return AreaProtocol.A0x0.FormalCheck.verify(value.requestHash)
+                Select Case value.dataCommon.requestCode
+                    Case "a0x0" : Return AreaProtocol.A0x0.FormalCheck.verify(value.dataCommon.hash)
                 End Select
 
                 AreaCommon.log.track("Requester.formalCheck", "Complete")
@@ -49,8 +49,8 @@ Namespace AreaWorker
 
                 listSender = AreaCommon.Masternode.MasternodeSenders.createMasterNodeList()
 
-                If value.directRequest And (listSender.count > 0) Then
-                    AreaCommon.flow.addNewRequestToSend(value.requestCode, value.requestHash, AreaCommon.Masternode.MasternodeSenders.createMasterNodeList(), value, 0)
+                If value.source.directRequest And (listSender.count > 0) Then
+                    Return AreaCommon.flow.addNewRequestToSend(value.dataCommon.requestCode, value.dataCommon.hash, AreaCommon.Masternode.MasternodeSenders.createMasterNodeList(), value, 0)
                 End If
 
                 AreaCommon.log.track("Requester.sendBroadCastNotice", "Complete")
@@ -72,7 +72,7 @@ Namespace AreaWorker
             Try
                 AreaCommon.log.track("Requester.notOldRequest", "Begin")
 
-                Return Not _LedgerSupportEngine.foundRequestInLedger(value.requestHash)
+                Return Not _LedgerSupportEngine.foundRequestInLedger(value.dataCommon.hash)
             Catch ex As Exception
                 AreaCommon.log.track("Requester.notOldRequest", ex.Message, "fatal")
 
@@ -122,6 +122,7 @@ Namespace AreaWorker
         ''' This method provide to start a requester work
         ''' </summary>
         ''' <returns></returns>
+        '<DebuggerHiddenAttribute()>
         Public Function work() As Boolean
             Try
                 Dim item As AreaFlow.RequestExtended
@@ -140,9 +141,8 @@ Namespace AreaWorker
                     proceed = True
                     formalCorrect = Nothing
 
-                    If (item.requestCode.Length > 0) Then
-                        item.requestPosition = AreaFlow.EnumOperationPosition.inWork
-                        item.generalStatus = AreaFlow.EnumOperationPosition.inWork
+                    If (item.dataCommon.requestCode.Length > 0) Then
+                        item.position.request = AreaFlow.EnumOperationPosition.inWork
 
                         If proceed Then proceed = notOldRequest(item)
                         If proceed Then
@@ -154,20 +154,18 @@ Namespace AreaWorker
 
                         If proceed Then
                             If (formalCorrect = True) Then
-                                item.requestPosition = AreaFlow.EnumOperationPosition.completeWithPositiveResult
+                                item.position.request = AreaFlow.EnumOperationPosition.completeWithPositiveResult
                             Else
-                                item.requestPosition = AreaFlow.EnumOperationPosition.completeWithNegativeResult
+                                item.position.request = AreaFlow.EnumOperationPosition.completeWithNegativeResult
                             End If
 
-                            item.dateSelected = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
-
-                            If item.requestPosition = AreaFlow.EnumOperationPosition.completeWithPositiveResult Then
+                            If (item.position.request = AreaFlow.EnumOperationPosition.completeWithPositiveResult) Then
                                 AreaCommon.flow.setRequestToVerify(item)
                             Else
                                 AreaCommon.flow.setRequestProcessed(item)
                             End If
                         Else
-                            item.requestPosition = AreaFlow.EnumOperationPosition.inError
+                            item.position.request = AreaFlow.EnumOperationPosition.inError
                         End If
                     End If
 

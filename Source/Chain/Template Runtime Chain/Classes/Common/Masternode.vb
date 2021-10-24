@@ -36,20 +36,30 @@ Namespace AreaCommon.Masternode
 
         Public Property _Masternodes As New List(Of MasternodeSender)
 
-
-        Public Shared Function createMasterNodeList() As MasternodeSenders
+        ''' <summary>
+        ''' This method provide to return a list of a active masternode
+        ''' </summary>
+        ''' <param name="includeMe">Specify if this masternode will include</param>
+        ''' <returns></returns>
+        Public Shared Function createMasterNodeList(Optional ByVal includeMe As Boolean = False) As MasternodeSenders
             Try
+                log.track("MasternodeSenders.createMasterNodeList", "Begin")
+
                 Dim result As New MasternodeSenders
                 Dim singleItem As MasternodeSender
 
                 For Each item In state.runtimeState.activeMasterNode
-                    singleItem = New MasternodeSender
+                    If (item.Value.itsMe And includeMe) Or Not item.Value.itsMe Then
+                        singleItem = New MasternodeSender
 
-                    singleItem.publicAddress = item.Value.identityPublicAddress
-                    singleItem.publicAddressIP = item.Value.ipAddress
+                        singleItem.publicAddress = item.Value.identityPublicAddress
+                        singleItem.publicAddressIP = item.Value.ipAddress
 
-                    result.Add(singleItem)
+                        result.add(singleItem)
+                    End If
                 Next
+
+                log.track("MasternodeSenders.createMasterNodeList", "Complete")
 
                 Return result
             Catch ex As Exception
@@ -59,6 +69,33 @@ Namespace AreaCommon.Masternode
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to create a single master node list
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Function createSingleMasterNodeList(ByVal publicAddress As String, ByVal publicIPAddress As String) As MasternodeSenders
+            Try
+                log.track("MasternodeSenders.createMasterNodeList", "Begin")
+
+                Dim result As New MasternodeSenders
+                Dim singleItem As MasternodeSender
+
+                singleItem = New MasternodeSender
+
+                singleItem.publicAddress = publicAddress
+                singleItem.publicAddressIP = publicIPAddress
+
+                result.add(singleItem)
+
+                log.track("MasternodeSenders.createMasterNodeList", "Complete")
+
+                Return result
+            Catch ex As Exception
+                log.track("MasternodeSenders.createMasterNodeList", ex.Message, "fatal")
+
+                Return New MasternodeSenders
+            End Try
+        End Function
 
         Public Function add(ByRef value As MasternodeSender) As Boolean
             Try
@@ -119,7 +156,13 @@ Namespace AreaCommon.Masternode
 
         Public Property totalValuePoints As Double = 0
 
-        Public Function addNew(ByVal node As ContactDataMasternodeList.ContactDataMasternode, ByVal assessmentTimeStamp As Double) As Boolean
+        ''' <summary>
+        ''' This method provide to add a new element into internal collection
+        ''' </summary>
+        ''' <param name="node"></param>
+        ''' <param name="assessmentTimeStamp"></param>
+        ''' <returns></returns>
+        Public Function addNew(ByVal node As ContactDataMasternodeList.ContactDataMasternode, Optional ByVal assessmentTimeStamp As Double = 0) As Boolean
             Try
                 Dim item As New MinimalDataMasternode
 
@@ -156,12 +199,36 @@ Namespace AreaCommon.Masternode
             End If
         End Function
 
+        ''' <summary>
+        ''' This method provide to get an item
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
         Public Function getItem(ByVal index As Integer) As MinimalDataMasternode
             If (index <= _Items.Count) Then
-                Return _Items.ElementAt(index).Value
+                Return _Items.ElementAt(index - 1).Value
             Else
                 Return New MinimalDataMasternode
             End If
+        End Function
+
+        ''' <summary>
+        ''' This method provide to assign a timestamp of a bulletin into record without assessmentTime
+        ''' </summary>
+        ''' <param name="assessmentTimeStamp"></param>
+        ''' <returns></returns>
+        Public Function assignAssessment(ByVal assessmentTimeStamp As Double) As Boolean
+            Try
+                For Each item In _Items.Values
+                    If (item.assessmentTimeStamp = 0) Then
+                        item.assessmentTimeStamp = assessmentTimeStamp
+                    End If
+                Next
+
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
         End Function
 
     End Class
@@ -184,6 +251,13 @@ Namespace AreaCommon.Masternode
 
         Public Property totalValuePoints As Double = 0
 
+        ''' <summary>
+        ''' This method provide to add a new element in dictionary
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="publicIPAddress"></param>
+        ''' <param name="votePoint"></param>
+        ''' <returns></returns>
         Public Function addNew(ByVal publicAddress As String, ByVal publicIPAddress As String, ByVal votePoint As Double) As Boolean
             Try
                 Dim item As New ContactDataMasternode
@@ -205,12 +279,51 @@ Namespace AreaCommon.Masternode
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to add a new element in the list
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Function addNew(ByRef value As ContactDataMasternode) As Boolean
+            Try
+                _Items.Add(value.publicAddress, value)
+
+                totalValuePoints += value.votePoint
+
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This property return the number of the element of the collection
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property count() As Integer
             Get
                 Return _Items.Count
             End Get
         End Property
 
+        ''' <summary>
+        ''' This property provide to get an item by index from a collection
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        Public Function getItem(ByVal index As Integer) As ContactDataMasternode
+            If (index <= _Items.Count) Then
+                Return _Items.Values(index)
+            Else
+                Return New ContactDataMasternode
+            End If
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get an item in a collection
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <returns></returns>
         Public Function getItem(ByVal publicAddress As String) As ContactDataMasternode
             If _Items.ContainsKey(publicAddress) Then
                 Return _Items.Item(publicAddress)
@@ -219,8 +332,32 @@ Namespace AreaCommon.Masternode
             End If
         End Function
 
+        ''' <summary>
+        ''' This method provide to check if the public address conteined into collection
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <returns></returns>
         Public Function containKey(ByVal publicAddress As String) As Boolean
             Return _Items.ContainsKey(publicAddress)
+        End Function
+
+        ''' <summary>
+        ''' This method provide to remove an element into collection
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <returns></returns>
+        Public Function remove(ByVal publicAddress As String) As Boolean
+            If _Items.ContainsKey(publicAddress) Then
+                Dim votePoint As Double = _Items.Item(publicAddress).votePoint
+
+                _Items.Remove(publicAddress)
+
+                totalValuePoints -= votePoint
+
+                Return True
+            Else
+                Return False
+            End If
         End Function
 
     End Class
@@ -230,14 +367,9 @@ Namespace AreaCommon.Masternode
     ''' </summary>
     Public Class MasternodeEvaluations
 
-        Public Class FirstAssessment
-
-            Public Property requestHash As String = ""
-            Public Property publicAddressMasternode As String = ""
-            Public Property dateFirstAssessment As Double = 0
-
-        End Class
-
+        Public Property rejectedNote As String = ""
+        Public Property notifyRejected As New AreaCommon.Masternode.MasternodeNotifyRejectedList
+        Public Property haveNewerForConsensus As Boolean = False
         Public Property notExpressed As ContactDataMasternodeList
         Public Property approved As New MinimalDataMasternodeList
         Public Property rejected As New MinimalDataMasternodeList
@@ -246,74 +378,84 @@ Namespace AreaCommon.Masternode
 
         Public Property currentChainNodeTotalVotes As Double = 0
 
-        Public Property firstAssessmentTimeStamp As Double = 0
-
-        Private Function setResult(ByVal publicAddress As String, Optional ByVal approvedTime As Double = 0, Optional ByVal operation As EvaluationResponse = EvaluationResponse.notDeterminate) As Boolean
-            If approvedTime = 0 Then
-                approvedTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
-            End If
-
-            If (firstAssessmentTimeStamp = 0) Or (firstAssessmentTimeStamp > approvedTime) Then
-                firstAssessmentTimeStamp = approvedTime
-            End If
-            If Not notExpressed.containKey(publicAddress) Then
-                Return True
-            Else
-                Select Case operation
-                    Case EvaluationResponse.approval : Return approved.addNew(notExpressed.getItem(publicAddress), approvedTime)
-                    Case EvaluationResponse.rejected : Return rejected.addNew(notExpressed.getItem(publicAddress), approvedTime)
-                    Case EvaluationResponse.abstained : Return abstained.addNew(notExpressed.getItem(publicAddress), approvedTime)
-                    Case Else : Return absents.addNew(notExpressed.getItem(publicAddress), approvedTime)
-                End Select
-            End If
-        End Function
-
-        Public Function setApproved(ByVal publicAddress As String, Optional ByVal approvedTime As Double = 0) As Boolean
-            Return setResult(publicAddress, approvedTime, EvaluationResponse.approval)
-        End Function
-
-        Public Function setRejected(ByVal publicAddress As String, Optional ByVal approvedTime As Double = 0) As Boolean
-            Return setResult(publicAddress, approvedTime, EvaluationResponse.rejected)
-        End Function
-
-        Public Function setAbstained(ByVal publicAddress As String, Optional ByVal approvedTime As Double = 0) As Boolean
-            Return setResult(publicAddress, approvedTime, EvaluationResponse.abstained)
-        End Function
-
-        Public Function setAbsent(ByVal publicAddress As String, Optional ByVal approvedTime As Double = 0) As Boolean
-            Return setResult(publicAddress, approvedTime, EvaluationResponse.notDeterminate)
-        End Function
-
-        Public Function getFirstAssessment(ByVal onlyApproved As Boolean) As FirstAssessment
+        ''' <summary>
+        ''' This method provide to set a result of evaluation
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="approvedTime"></param>
+        ''' <param name="operation"></param>
+        ''' <returns></returns>
+        Private Function setResult(ByVal publicAddress As String, Optional ByVal operation As EvaluationResponse = EvaluationResponse.notDeterminate, Optional ByVal assessmentTimeStamp As Double = 0) As Boolean
             Try
-                Dim result As New FirstAssessment
+                Dim proceed As Boolean = False
 
-                For i As Integer = 1 To approved.count
-                    With approved.getItem(i)
-                        If (result.dateFirstAssessment = 0) Or (result.dateFirstAssessment < .assessmentTimeStamp) Then
-                            result.dateFirstAssessment = .assessmentTimeStamp
-                            result.publicAddressMasternode = .publicAddress
-                        End If
-                    End With
-                Next
+                log.track("MasternodeEvaluations.setResult", "Begin")
 
-                If Not onlyApproved Then
-                    For i As Integer = 1 To rejected.count
-                        With rejected.getItem(i)
-                            If (result.dateFirstAssessment = 0) Or (result.dateFirstAssessment < .assessmentTimeStamp) Then
-                                result.dateFirstAssessment = .assessmentTimeStamp
-                                result.publicAddressMasternode = .publicAddress
-                            End If
-                        End With
-                    Next
+                If Not notExpressed.containKey(publicAddress) Then
+                    Return True
+                Else
+                    Select Case operation
+                        Case EvaluationResponse.approval : proceed = approved.addNew(notExpressed.getItem(publicAddress), assessmentTimeStamp)
+                        Case EvaluationResponse.rejected : proceed = rejected.addNew(notExpressed.getItem(publicAddress), assessmentTimeStamp)
+                        Case EvaluationResponse.abstained : proceed = abstained.addNew(notExpressed.getItem(publicAddress), assessmentTimeStamp)
+                        Case Else : proceed = absents.addNew(notExpressed.getItem(publicAddress), assessmentTimeStamp)
+                    End Select
+
+                    If proceed Then
+                        log.track("MasternodeEvaluations.setResult", "Complete")
+
+                        Return notExpressed.remove(publicAddress)
+                    End If
                 End If
-
-                Return result
             Catch ex As Exception
-                AreaCommon.log.track("MasternodeEvaluations.getFirstAssessment", ex.Message, "fatal")
+                log.track("MasternodeEvaluations.setResult", ex.Message, "fatal")
 
-                Return New FirstAssessment
+                Return False
+            Finally
+                log.track("MasternodeEvaluations.setResult", "Complete")
             End Try
+
+            Return False
+        End Function
+
+        ''' <summary>
+        ''' This method provide to set a request as approved
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="approvedTime"></param>
+        ''' <returns></returns>
+        Public Function setApproved(ByVal publicAddress As String, Optional ByVal approvedTimeStamp As Double = 0) As Boolean
+            Return setResult(publicAddress, EvaluationResponse.approval, approvedTimeStamp)
+        End Function
+
+        ''' <summary>
+        ''' This method provide to set a rejected the request
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="rejectedTimeStamp"></param>
+        ''' <returns></returns>
+        Public Function setRejected(ByVal publicAddress As String, Optional ByVal rejectedTimeStamp As Double = 0) As Boolean
+            Return setResult(publicAddress, EvaluationResponse.rejected, rejectedTimeStamp)
+        End Function
+
+        ''' <summary>
+        ''' This method provide to set an abstained the request
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="abstainedTimeStamp"></param>
+        ''' <returns></returns>
+        Public Function setAbstained(ByVal publicAddress As String, Optional abstainedTimeStamp As Double = 0) As Boolean
+            Return setResult(publicAddress, EvaluationResponse.abstained, abstainedTimeStamp)
+        End Function
+
+        ''' <summary>
+        ''' This method provide to set an absent the request
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="absentTimeStamp"></param>
+        ''' <returns></returns>
+        Public Function setAbsent(ByVal publicAddress As String, Optional ByVal absentTimeStamp As Double = 0) As Boolean
+            Return setResult(publicAddress, EvaluationResponse.notDeterminate, absentTimeStamp)
         End Function
 
     End Class

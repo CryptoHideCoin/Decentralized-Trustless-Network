@@ -23,7 +23,7 @@ Namespace Controllers
         ''' This API (put method) provide to notify a request by another masternode
         ''' </summary>
         ''' <returns></returns>
-        Public Function PutValue(<FromBody()> ByVal value As AreaConsensus.RequestProcess) As General.RemoteResponse
+        Public Function PutValue(<FromBody()> ByVal value As AreaConsensus.BulletinInformation) As General.RemoteResponse
             Dim result As New General.RemoteResponse
             Dim proceed As Boolean = True
             Dim privateKey As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
@@ -40,7 +40,7 @@ Namespace Controllers
                 End If
 
                 If proceed Then
-                    If Not AreaSecurity.checkSignature(value.getHash, value.signature, value.masterNodePublicAddress) Then
+                    If Not AreaSecurity.checkSignature(value.getHash, value.signature, value.header.publicAddress) Then
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.missingAuthorization
 
                         proceed = False

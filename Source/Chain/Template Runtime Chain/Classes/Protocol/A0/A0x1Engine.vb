@@ -45,17 +45,17 @@ Namespace AreaProtocol
 
         Public Class RecoveryState
 
-            Public Shared Function fromRequest(ByRef value As RequestModel, ByVal transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger, ByVal hashContent As String) As Boolean
+            Public Shared Function fromRequest(ByRef value As RequestModel, ByVal transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction, ByVal hashContent As String) As Boolean
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    proceed = AreaCommon.state.runtimeState.addProperty(AreaState.ChainStateEngine.PropertyID.whitePaper, value.whitePaper, transactionChainRecord.recordCoordinate, transactionChainRecord.recordHash, hashContent, False)
+                    proceed = AreaCommon.state.runtimeState.addNetworkProperty(AreaState.ChainStateEngine.PropertyID.whitePaper, value.whitePaper, transactionChainRecord.coordinate, transactionChainRecord.hash, hashContent, False)
                 End If
 
                 Return proceed
             End Function
 
-            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.LedgerEngine.SingleRecordLedger) As Boolean
+            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
                 Try
                     With AreaCommon.state.runtimeState.activeNetwork.whitePaper
                         .value = TransactionChainLibrary.AreaEngine.Ledger.State.StateEngine.readContentFromFile(statePath, data.detailInformation)
@@ -78,21 +78,21 @@ Namespace AreaProtocol
 
 
 
-            Private Function writeDataIntoLedger(ByVal contentStatePath As String, ByRef hashContent As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            Private Function writeDataIntoLedger(ByVal contentStatePath As String, ByRef hashContent As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
-                    With AreaCommon.state.currentBlockLedger.currentRecord
+                    With AreaCommon.state.currentBlockLedger.currentApprovedTransaction
                         .actionCode = "a0x1"
-                        .registrationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+                        .registrationTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                         .detailInformation = HashSHA.generateSHA256(data.whitePaper)
                         .requesterPublicAddress = data.publicWalletAddressRequester
                         .requestHash = data.requestHash
                     End With
 
-                    hashContent = AreaCommon.state.currentBlockLedger.currentRecord.detailInformation
+                    hashContent = AreaCommon.state.currentBlockLedger.currentApprovedTransaction.detailInformation
 
                     TransactionChainLibrary.AreaEngine.Ledger.State.StateEngine.writeDataContent(contentStatePath, data.whitePaper, hashContent)
 
-                    If AreaCommon.state.currentBlockLedger.BlockComplete() Then
+                    If AreaCommon.state.currentBlockLedger.blockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
                     End If
                 Catch ex As Exception
@@ -101,14 +101,14 @@ Namespace AreaProtocol
                     log.track("A0x1Manager.init", ex.Message, "fatal")
                 End Try
 
-                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
             End Function
 
 
             Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal whitePaperParameter As String, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
                 Try
                     Dim requestFileEngine As New FileEngine
-                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                     Dim hashContent As String
 
                     log.track("A0x1Manager.init", "Begin")
@@ -132,7 +132,7 @@ Namespace AreaProtocol
 
                         ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents, hashContent)
 
-                        If (ledgerCoordinate.recordCoordinate.Length = 0) Then
+                        If (ledgerCoordinate.coordinate.Length = 0) Then
                             currentService.currentAction.setError("-1", "Error during update ledger")
                             currentService.currentAction.reset()
 

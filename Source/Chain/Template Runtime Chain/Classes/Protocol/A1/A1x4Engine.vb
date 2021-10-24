@@ -70,7 +70,7 @@ Namespace AreaProtocol
                 Return True
             End Function
 
-            Public Shared Function fromTransactionLedger(ByVal chainName As String, ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.LedgerEngine.SingleRecordLedger) As Boolean
+            Public Shared Function fromTransactionLedger(ByVal chainName As String, ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
                 Try
                     Dim engine As New PriceTableFile
 
@@ -118,17 +118,17 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
-                    With AreaCommon.state.currentBlockLedger.currentRecord
+                    With AreaCommon.state.currentBlockLedger.currentApprovedTransaction
                         .actionCode = "a1x4"
-                        .registrationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
+                        .registrationTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                         .detailInformation = HashSHA.generateSHA256(data.priceList.getHash())
                         .requesterPublicAddress = data.publicWalletAddressRequester
                         .requestHash = data.requestHash
                     End With
 
-                    writeDataContent(contentStatePath, data.priceList, AreaCommon.state.currentBlockLedger.currentRecord.detailInformation)
+                    writeDataContent(contentStatePath, data.priceList, AreaCommon.state.currentBlockLedger.currentApprovedTransaction.detailInformation)
 
                     If AreaCommon.state.currentBlockLedger.BlockComplete() Then
                         Return AreaCommon.state.currentBlockLedger.saveAndClean()
@@ -139,14 +139,14 @@ Namespace AreaProtocol
                     log.track("A1x4Manager.init", ex.Message, "fatal")
                 End Try
 
-                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
             End Function
 
 
             Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal priceList As CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
                 Try
                     Dim requestFileEngine As New FileEngine
-                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyRecordLedger
+                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
                     log.track("A1x4Manager.init", "Begin")
 
@@ -169,7 +169,7 @@ Namespace AreaProtocol
 
                         ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents)
 
-                        If (ledgerCoordinate.recordCoordinate.Length = 0) Then
+                        If (ledgerCoordinate.coordinate.Length = 0) Then
                             currentService.currentAction.setError("-1", "Error during update ledger")
                             currentService.currentAction.reset()
 

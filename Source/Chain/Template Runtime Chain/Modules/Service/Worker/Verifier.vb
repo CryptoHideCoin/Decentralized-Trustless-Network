@@ -16,11 +16,11 @@ Namespace AreaWorker
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Private Function evaluateTheRequest(ByRef value As AreaFlow.RequestExtended) As Nullable(Of Boolean)
+        Private Function evaluateTheRequest(ByRef value As AreaFlow.RequestExtended) As Boolean
             Try
                 AreaCommon.log.track("Verifier.evaluateTheRequest", "Begin")
 
-                Select Case value.requestCode
+                Select Case value.dataCommon.requestCode
                     Case "a0x0" : Return AreaProtocol.A0x0.FormalCheck.evaluate(value)
                 End Select
 
@@ -50,23 +50,17 @@ Namespace AreaWorker
                 Do While (AreaCommon.flow.workerOn And workerOn)
                     item = AreaCommon.flow.getFirstRequestToVerify()
 
-                    If (item.requestHash.Length > 0) Then
-                        item.verifyPosition = AreaFlow.EnumOperationPosition.inWork
+                    If (item.dataCommon.hash.Length > 0) Then
+                        item.position.verify = AreaFlow.EnumOperationPosition.inWork
 
-                        Select Case evaluateTheRequest(item)
-                            Case True : item.verifyPosition = AreaFlow.EnumOperationPosition.completeWithPositiveResult
-                            Case False : item.verifyPosition = AreaFlow.EnumOperationPosition.completeWithNegativeResult
-                            Case Else : item.verifyPosition = AreaFlow.EnumOperationPosition.inError
-                        End Select
+                        If evaluateTheRequest(item) Then
+                            item.evaluations.notExpressed = AreaCommon.flow.createEvaluationList()
+                            item.evaluations.currentChainNodeTotalVotes = item.evaluations.notExpressed.totalValuePoints
+                            item.evaluations.haveNewerForConsensus = True
 
-                        If (item.verifyPosition = AreaFlow.EnumOperationPosition.inError) Then
-                            AreaCommon.flow.removeRequest(item)
-                        Else
-                            item.dateAssessment = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
-                            item.evaluations.notExpressed = AreaCommon.flow.createConsensusList()
-                            item.evaluations.currentChainNodetotalVotes = item.evaluations.notExpressed.totalValuePoints
-
-                            If item.verifyPosition = AreaFlow.EnumOperationPosition.completeWithPositiveResult Then
+                            If (item.position.verify = AreaFlow.EnumOperationPosition.inError) Then
+                                item.evaluations.setAbstained(AreaCommon.state.network.publicAddressIdentity)
+                            ElseIf (item.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult) Then
                                 item.evaluations.setApproved(AreaCommon.state.network.publicAddressIdentity)
                             Else
                                 item.evaluations.setRejected(AreaCommon.state.network.publicAddressIdentity)
@@ -76,7 +70,7 @@ Namespace AreaWorker
                         End If
                     End If
 
-                    Threading.Thread.Sleep(5)
+                    Threading.Thread.Sleep(1)
                 Loop
 
                 workerOn = False

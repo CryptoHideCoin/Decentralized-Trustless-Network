@@ -16,7 +16,7 @@ Namespace AreaWorker
         ''' This method provide to execute a job of processor code action
         ''' </summary>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()>
+        '<DebuggerHiddenAttribute()>
         Public Function work() As Boolean
             Try
                 Dim itemsToWork As Dictionary(Of String, AreaFlow.RequestExtended)
@@ -31,26 +31,49 @@ Namespace AreaWorker
                     itemsToWork = AreaCommon.flow.getAllListToProcess()
 
                     For Each item As AreaFlow.RequestExtended In itemsToWork.Values
+                        If item.evaluations.haveNewerForConsensus Then
+                            If AreaCommon.consensus.updateBulletin(item) Then
+                                item.evaluations.haveNewerForConsensus = False
+                            Else
 
-                        If Not item.notifyAssessmentAtNetwork Then
-                            If AreaCommon.consensus.notifyAssessment(item) Then
-                                item.notifyAssessmentAtNetwork = True
+                                ' So cazzi!!!
+
                             End If
-                        End If
-                        If Not item.notifySingleConsensusAtNetwork Then
-                            If AreaCommon.consensus.bulletin.proposalsForApprovalData.requestHash.CompareTo(item.requestHash) = 0 Then
-                                If AreaCommon.consensus.notifyAllNetworkExpressAssessment(item) Then
-                                    item.notifySingleConsensusAtNetwork = True
-                                End If
-                            End If
+
+                            'If AreaCommon.consensus.notifyNewAssessment(item) Then
+                            '    item.haveNewerForConsensus = False
+                            'Else
+                            '    AreaCommon.flow.workerOn = False
+                            'End If
                         End If
 
+                        'If Not AreaCommon.consensus.manageProposalData(item) Then
+                        '    AreaCommon.flow.workerOn = False
+                        'End If
+
+                        'If AreaCommon.consensus.bulletin.proposalsForApprovalData.requestHash.CompareTo(item.requestHash) = 0 Then
+                        '    If (item.consensusPosition = AreaFlow.EnumOperationPosition.completeWithPositiveResult) Then
+                        '        If Not item.notifySingleConsensusAtNetwork Then
+                        '            'If AreaCommon.consensus.notifyAllNetworkExpressConsensus(item) Then
+                        '            '    item.notifySingleConsensusAtNetwork = True
+
+                        '            '    ' Passo al successivo!
+                        '            'Else
+                        '            '    AreaCommon.flow.workerOn = False
+                        '            'End If
+                        '        End If
+
+                        '    Else
+                        '        ' Semu pessi...
+                        '    End If
+
+                        'End If
                     Next
 
                     AreaCommon.flow.removeOldRequest()
                     AreaCommon.flow.actionAfterAssessment()
 
-                    Threading.Thread.Sleep(5)
+                    Threading.Thread.Sleep(1)
                 Loop
 
                 workerOn = False
