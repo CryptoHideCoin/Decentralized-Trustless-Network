@@ -90,9 +90,9 @@ Namespace AreaProtocol
                         .requestHash = data.requestHash
                     End With
 
-                    If AreaCommon.state.currentBlockLedger.BlockComplete() Then
-                        Return AreaCommon.state.currentBlockLedger.saveAndClean()
-                    End If
+                    'If AreaCommon.state.currentBlockLedger.BlockComplete() Then
+                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
+                    'End If
                 Catch ex As Exception
                     currentService.currentAction.setError(Err.Number, ex.Message)
 

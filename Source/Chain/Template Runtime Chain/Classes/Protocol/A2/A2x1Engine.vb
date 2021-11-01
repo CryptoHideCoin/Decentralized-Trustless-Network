@@ -150,9 +150,9 @@ Namespace AreaProtocol
 
             Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
-                    If AreaCommon.state.currentBlockLedger.blockComplete() Then
-                        Return AreaCommon.state.currentBlockLedger.saveAndClean()
-                    End If
+                    'If AreaCommon.state.currentBlockLedger.blockComplete() Then
+                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
+                    'End If
                 Catch ex As Exception
                     AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
 

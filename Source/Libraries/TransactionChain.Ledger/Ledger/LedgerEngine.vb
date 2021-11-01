@@ -55,6 +55,7 @@ Namespace AreaLedger
                 Return "---"
             End If
         End Function
+
         ''' <summary>
         ''' This method provide to extract and load data from a string 
         ''' </summary>
@@ -99,6 +100,7 @@ Namespace AreaLedger
                 Return False
             End Try
         End Function
+
         ''' <summary>
         ''' This method provide to return a string from a data to class
         ''' </summary>
@@ -114,8 +116,8 @@ Namespace AreaLedger
             tmp += requesterPublicAddress & separator
             tmp += approverPublicAddress & separator
             tmp += requestHash & separator
-            tmp += fillEmptyText(consensusHash) & separator
             tmp += detailInformation & separator
+            tmp += fillEmptyText(consensusHash) & separator
 
             If Not limited Then
                 tmp += currentHash & separator
@@ -124,6 +126,7 @@ Namespace AreaLedger
 
             Return tmp
         End Function
+
         ''' <summary>
         ''' This method provide to return a limited string file from a data in memory
         ''' </summary>
@@ -131,6 +134,7 @@ Namespace AreaLedger
         Public Overrides Function toString() As String
             Return toStringFormatToFile("", True)
         End Function
+
         ''' <summary>
         ''' This method provide to create an hash from a limited element 
         ''' </summary>
@@ -158,6 +162,15 @@ Namespace AreaLedger
 
         End Enum
 
+        Private Property _NewIdTransaction As Integer = 0
+        Private Property _BasePath As String = ""
+        Private Property _CompleteFileName As String = ""
+        Private Property _CurrentTotalHash As String = ""
+        Private Property _CreationLedgerDate As Double = 0
+        Private Property _NextBlockCloseAtTime As DateTime
+        Private Property _DBLedgerFileName As String = "Ledger.Db"
+        Private Property _DBLedgerConnectionString As String = "Data source = {0};Version=3;"
+
         Public Property currentApprovedTransaction As New SingleTransactionLedger
         Public Property nextProposeNewTransaction As New SingleTransactionLedger
         Public Property identifyBlockChain As String = ""
@@ -168,97 +181,38 @@ Namespace AreaLedger
         Public Property requestChangeBlock As Boolean = False
         Public Property log As LogEngine
 
-        Private Property _NewIdTransaction As Integer = 1
-        Private Property _BasePath As String = ""
-        Private Property _CompleteFileName As String = ""
-        Private Property _CurrentTotalHash As String = ""
-        Private Property _CreationLedgerDate As Double = 0
-
-        Private Property _NextBlockCloseAtTime As DateTime
-
-        Private Property _DBLedgerFileName As String = "Ledger.Db"
-        Private Property _DBLedgerConnectionString As String = "Data source = {0};Version=3;"
 
         ''' <summary>
-        ''' This method provide to compose a string with a coordinate last approved transaction
+        ''' This methdo provide to create a next close time of a block 
         ''' </summary>
         ''' <returns></returns>
-        Public Function composeCoordinateTransaction(Optional ByVal nextTransaction As Boolean = False) As String
-            Dim idTransaction As Integer
-            Dim idBlock As Integer
-            Dim idVolume As Byte
-
-            If nextTransaction Then
-                idTransaction = nextProposeNewTransaction.id
-                idBlock = nextIdBlock
-                idVolume = nextIdVolume
-            Else
-                idTransaction = currentApprovedTransaction.id
-                idBlock = currentIdBlock
-                idVolume = currentIdVolume
-            End If
-
-            If (currentApprovedTransaction.actionCode.Length = 0) And Not nextTransaction Then
-                Return "----"
-            Else
-                Return CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.composeCoordinate(identifyBlockChain, idVolume, idBlock, idTransaction)
-            End If
-        End Function
-
-        ''' <summary>
-        ''' This method provide to assign a new id
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function assignNewID() As Boolean
+        Private Function createNextCloseAtTime() As DateTime
             Try
-                log.track("LedgerEngine.assignNewID", "Begin")
+                log.track("LedgerEngine.createNextCloseAtTime", "Begin")
 
-                nextIdBlock = currentIdBlock
-                nextIdVolume = currentIdVolume
+                Dim dateCreation As Date = CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(_CreationLedgerDate)
+                Dim currentYear As Short = Now.ToUniversalTime.Year
+                Dim currentMonth As Byte = Now.ToUniversalTime.Month
+                Dim currentDay As Byte = Now.ToUniversalTime.Day
 
-                If requestChangeBlock Then
-                    Dim numberDaysOnYear As Integer = 365
+                Dim currentHour As Byte = dateCreation.Hour
+                Dim currentMinute As Byte = dateCreation.Minute
+                Dim currentSecond As Byte = dateCreation.Second
 
-                    If DateTime.IsLeapYear(Now.Year) Then
-                        numberDaysOnYear = 366
-                    End If
-                    If (currentIdBlock = numberDaysOnYear) Then
-                        nextIdVolume = currentIdVolume + 1
-                        nextIdBlock = 0
-                    Else
-                        nextIdBlock += 1
-                    End If
-                    nextProposeNewTransaction.id = 0
-                Else
-                    nextProposeNewTransaction.id = currentApprovedTransaction.id + 1
-                End If
-
-                log.track("LedgerEngine.assignNewID", "Complete")
-
-                Return True
+                Return New Date(currentYear, currentMonth, currentDay, currentHour, currentMinute, currentSecond)
             Catch ex As Exception
-                log.track("LedgerEngine.assignNewID", ex.Message, "fatal")
+                log.track("LedgerEngine.createNextCloseAtTime", ex.Message, "fatal")
 
-                Return False
+                Return New Date()
+            Finally
+                log.track("LedgerEngine.createNextCloseAtTime", "Complete")
             End Try
         End Function
 
-
-
-
-        Private Function createNextCloseAtTime() As DateTime
-            Dim dateCreation As Date = CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(_CreationLedgerDate)
-            Dim currentYear As Short = Now.ToUniversalTime.Year
-            Dim currentMonth As Byte = Now.ToUniversalTime.Month
-            Dim currentDay As Byte = Now.ToUniversalTime.Day
-
-            Dim currentHour As Byte = dateCreation.Hour
-            Dim currentMinute As Byte = dateCreation.Minute
-            Dim currentSecond As Byte = dateCreation.Second
-
-            Return New Date(currentYear, currentMonth, currentDay, currentHour, currentMinute, currentSecond)
-        End Function
-
+        ''' <summary>
+        ''' This method provide to create a db lock ledger identity
+        ''' </summary>
+        ''' <returns></returns>
         Private Function createDBBlockLedgerIdentity() As Boolean
             Try
                 Dim sql As String = ""
@@ -298,6 +252,10 @@ Namespace AreaLedger
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to create a DB Block Ledger
+        ''' </summary>
+        ''' <returns></returns>
         Private Function createDBBlockLedger() As Boolean
             Try
                 Dim sql As String = ""
@@ -313,8 +271,8 @@ Namespace AreaLedger
                 sql += "  requesterPublicAddress NVARCHAR(4096) NOT NULL, "
                 sql += "  approverPublicAddress NVARCHAR(65536) NOT NULL, "
                 sql += "  requestHash NVARCHAR(128) NOT NULL, "
-                sql += "  consensusHash NVARCHAR(128) NOT NULL, "
                 sql += "  detailInformation NVARCHAR(65536) NOT NULL, "
+                sql += "  consensusHash NVARCHAR(128) NOT NULL, "
                 sql += "  currentHash NVARCHAR(128) NOT NULL, "
                 sql += "  progressiveHash NVARCHAR(128) NOT NULL "
                 sql += ");"
@@ -342,9 +300,17 @@ Namespace AreaLedger
                 log.track("LedgerEngine.createDBBlockLedger", ex.Message, "fatal")
 
                 Return False
+            Finally
+                log.track("LedgerEngine.createDBBlockLedger", "Complete")
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to insert a sql property into Indentity table
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
         Private Function insertSQLPropertyIdentityDB(ByVal id As EnumPropertyID, ByVal value As String) As Boolean
             Try
                 Dim sql As String = ""
@@ -383,17 +349,37 @@ Namespace AreaLedger
                 log.track("LedgerEngine.insertSQLPropertyIdentityDB", ex.Message, "fatal")
 
                 Return False
+            Finally
+                log.track("LedgerEngine.insertSQLPropertyIdentityDB", "Complete")
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to write an Identity on a DB
+        ''' </summary>
+        ''' <returns></returns>
         Private Function writeIdentityDB() As Boolean
-            insertSQLPropertyIdentityDB(EnumPropertyID.dateCreation, CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT())
-            insertSQLPropertyIdentityDB(EnumPropertyID.name, CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, _currentIdVolume, _currentIdBlock))
-            insertSQLPropertyIdentityDB(EnumPropertyID.typeOfDB, "BlockLedger")
+            Try
+                log.track("LedgerEngine.writeIdentityDB", "Begin")
 
-            Return True
+                insertSQLPropertyIdentityDB(EnumPropertyID.dateCreation, CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT())
+                insertSQLPropertyIdentityDB(EnumPropertyID.name, CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, _currentIdVolume, _currentIdBlock))
+                insertSQLPropertyIdentityDB(EnumPropertyID.typeOfDB, "BlockLedger")
+
+                log.track("LedgerEngine.writeIdentityDB", "Complete")
+
+                Return True
+            Catch ex As Exception
+                log.track("LedgerEngine.writeIdentityDB", ex.Message, "fatal")
+
+                Return False
+            End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to initialize a db ledger
+        ''' </summary>
+        ''' <returns></returns>
         Private Function initDBLedger() As Boolean
             Try
                 Dim proceed As Boolean = True
@@ -422,7 +408,7 @@ Namespace AreaLedger
                         proceed = createDBBlockLedger()
                     End If
 
-                    Return True
+                    Return proceed
                 End If
             Catch ex As Exception
                 log.track("LedgerEngine.initDBLedger", ex.Message, "fatal")
@@ -433,6 +419,10 @@ Namespace AreaLedger
             Return False
         End Function
 
+        ''' <summary>
+        ''' This method provide to save into DB a single transaction
+        ''' </summary>
+        ''' <returns></returns>
         Private Function saveDataToDB() As Boolean
             Try
                 Dim sql As String = ""
@@ -444,16 +434,16 @@ Namespace AreaLedger
                 sql += "INSERT INTO blockData "
                 sql += " (record_id, registrationDate, actionCode, requesterPublicAddress, approverPublicAddress, requestHash, consensusHash, detailInformation, currentHash, progressiveHash) "
                 sql += "VALUES "
-                sql += " (" & currentApprovedTransaction.id & ", "
-                sql += "'" & currentApprovedTransaction.registrationTimeStamp & "', "
-                sql += "'" & currentApprovedTransaction.actionCode & "', "
-                sql += "'" & currentApprovedTransaction.requesterPublicAddress & "', "
-                sql += "'" & currentApprovedTransaction.approverPublicAddress & "', "
-                sql += "'" & currentApprovedTransaction.requestHash & "', "
-                sql += "'" & currentApprovedTransaction.consensusHash & "', "
-                sql += "'" & currentApprovedTransaction.detailInformation & "', "
-                sql += "'" & currentApprovedTransaction.currentHash & "', "
-                sql += "'" & currentApprovedTransaction.progressiveHash & "' "
+                sql += " (" & nextProposeNewTransaction.id & ", "
+                sql += "'" & nextProposeNewTransaction.registrationTimeStamp & "', "
+                sql += "'" & nextProposeNewTransaction.actionCode & "', "
+                sql += "'" & nextProposeNewTransaction.requesterPublicAddress & "', "
+                sql += "'" & nextProposeNewTransaction.approverPublicAddress & "', "
+                sql += "'" & nextProposeNewTransaction.requestHash & "', "
+                sql += "'" & nextProposeNewTransaction.consensusHash & "', "
+                sql += "'" & nextProposeNewTransaction.detailInformation & "', "
+                sql += "'" & nextProposeNewTransaction.currentHash & "', "
+                sql += "'" & nextProposeNewTransaction.progressiveHash & "' "
                 sql += ")"
 
                 connectionDB = New SQLiteConnection(String.Format(_DBLedgerConnectionString, _DBLedgerFileName))
@@ -479,20 +469,97 @@ Namespace AreaLedger
                 log.track("LedgerEngine.saveDataToDB", ex.Message, "fatal")
 
                 Return False
+            Finally
+                log.track("LedgerEngine.saveDataToDB", "Complete")
             End Try
         End Function
 
-        Public ReadOnly Property newIdTransaction() As Integer
-            Get
-                Return _NewIdTransaction
-            End Get
-        End Property
 
-        Public ReadOnly Property blockComplete() As Boolean
-            Get
-                Return (Now.Subtract(_NextBlockCloseAtTime).TotalSeconds > 0)
-            End Get
-        End Property
+        ''' <summary>
+        ''' This method provide to compose a string with a coordinate last approved transaction
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function composeCoordinateTransaction(Optional ByVal nextTransaction As Boolean = False) As String
+            Try
+                Dim idTransaction As Integer
+                Dim idBlock As Integer
+                Dim idVolume As Byte
+
+                log.track("LedgerEngine.composeCoordinateTransaction", "Begin")
+
+                If nextTransaction Then
+                    idTransaction = nextProposeNewTransaction.id
+                    idBlock = nextIdBlock
+                    idVolume = nextIdVolume
+                Else
+                    idTransaction = currentApprovedTransaction.id
+                    idBlock = currentIdBlock
+                    idVolume = currentIdVolume
+                End If
+
+                If (currentApprovedTransaction.actionCode.Length = 0) And Not nextTransaction Then
+                    Return "----"
+                Else
+                    Return CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.composeCoordinate(identifyBlockChain, idVolume, idBlock, idTransaction)
+                End If
+            Catch ex As Exception
+                log.track("LedgerEngine.composeCoordinateTransaction", ex.Message, "fatal")
+
+                Return "---"
+            Finally
+                log.track("LedgerEngine.composeCoordinateTransaction", "Complete")
+            End Try
+        End Function
+
+        '''' <summary>
+        '''' This method provide to assign a new id
+        '''' </summary>
+        '''' <returns></returns>
+        'Public Function assignNewID() As Boolean
+        '    Try
+        '        log.track("LedgerEngine.assignNewID", "Begin")
+
+        '        nextIdBlock = currentIdBlock
+        '        nextIdVolume = currentIdVolume
+
+        '        If requestChangeBlock Then
+        '            Dim numberDaysOnYear As Integer = 365
+
+        '            If DateTime.IsLeapYear(Now.Year) Then
+        '                numberDaysOnYear = 366
+        '            End If
+        '            If (currentIdBlock = numberDaysOnYear) Then
+        '                nextIdVolume = currentIdVolume + 1
+        '                nextIdBlock = 0
+        '            Else
+        '                nextIdBlock += 1
+        '            End If
+        '            nextProposeNewTransaction.id = 0
+        '        Else
+        '            nextProposeNewTransaction.id = currentApprovedTransaction.id + 1
+        '        End If
+
+        '        log.track("LedgerEngine.assignNewID", "Complete")
+
+        '        Return True
+        '    Catch ex As Exception
+        '        log.track("LedgerEngine.assignNewID", ex.Message, "fatal")
+
+        '        Return False
+        '    End Try
+        'End Function
+
+        'Public ReadOnly Property newIdTransaction() As Integer
+        '    Get
+        '        Return _NewIdTransaction
+        '    End Get
+        'End Property
+
+        'Public ReadOnly Property blockComplete() As Boolean
+        '    Get
+        '        Return (Now.Subtract(_NextBlockCloseAtTime).TotalSeconds > 0)
+        '    End Get
+        'End Property
 
         Public ReadOnly Property CurrentTotalHash() As String
             Get
@@ -501,9 +568,9 @@ Namespace AreaLedger
         End Property
 
         Public Sub completeRecord()
-            currentApprovedTransaction.id = _NewIdTransaction
-            currentApprovedTransaction.currentHash = currentApprovedTransaction.getHash
-            currentApprovedTransaction.progressiveHash = HashSHA.generateSHA256(currentApprovedTransaction.currentHash & _CurrentTotalHash)
+            nextProposeNewTransaction.id = _NewIdTransaction
+            nextProposeNewTransaction.currentHash = nextProposeNewTransaction.getHash
+            nextProposeNewTransaction.progressiveHash = HashSHA.generateSHA256(nextProposeNewTransaction.currentHash & _CurrentTotalHash)
         End Sub
 
         Public Function calculateProgressiveHash(ByVal recordHash As String) As String
@@ -514,35 +581,42 @@ Namespace AreaLedger
             End If
         End Function
 
+        ''' <summary>
+        ''' This method provide to save into db the transaction and update a block file with transaction and prepare the engine to create another one
+        ''' </summary>
+        ''' <returns></returns>
         Public Function saveAndClean() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
             Dim result As New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
             Try
                 log.track("LedgerEngine.saveAndClean", "Begin")
 
-                currentApprovedTransaction.id = _NewIdTransaction
-                currentApprovedTransaction.currentHash = currentApprovedTransaction.getHash()
+                nextProposeNewTransaction.id = _NewIdTransaction
+                nextProposeNewTransaction.currentHash = nextProposeNewTransaction.getHash()
 
                 result.coordinate = CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.composeCoordinate(identifyBlockChain, _CurrentIdVolume, _CurrentIdBlock, _NewIdTransaction)
-                result.hash = currentApprovedTransaction.currentHash
+                result.hash = nextProposeNewTransaction.currentHash
 
-                currentApprovedTransaction.progressiveHash = calculateProgressiveHash(result.hash)
+                nextProposeNewTransaction.progressiveHash = calculateProgressiveHash(result.hash)
 
                 log.track("LedgerEngine.saveAndClean", "Assign value")
 
+                _CompleteFileName = IO.Path.Combine(_BasePath, _currentIdBlock.ToString & ".ledger")
+
                 Using fileData As IO.StreamWriter = IO.File.AppendText(_CompleteFileName)
-                    fileData.WriteLine(currentApprovedTransaction.toStringFormatToFile())
+                    fileData.WriteLine(nextProposeNewTransaction.toStringFormatToFile())
                 End Using
 
                 log.track("LedgerEngine.saveAndClean", "Write file ledger")
 
                 If saveDataToDB() Then
                     _NewIdTransaction += 1
-                    _CurrentTotalHash = currentApprovedTransaction.progressiveHash
+                    _CurrentTotalHash = nextProposeNewTransaction.progressiveHash
 
                     log.track("LedgerEngine.saveAndClean", "Update counter")
 
-                    currentApprovedTransaction = New SingleTransactionLedger
+                    currentApprovedTransaction = nextProposeNewTransaction
+                    nextProposeNewTransaction = New SingleTransactionLedger
                 End If
 
                 Return result
@@ -550,9 +624,10 @@ Namespace AreaLedger
                 log.track("LedgerEngine.saveAndClean", ex.Message, "fatal")
 
                 Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+            Finally
+                log.track("LedgerEngine.saveAndClean", "Complete")
             End Try
         End Function
-
 
         ''' <summary>
         ''' This method provide to init a db engine

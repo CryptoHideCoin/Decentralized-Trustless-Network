@@ -77,6 +77,14 @@ Namespace AreaCommon.Models.General
             Return MyBase.toString & progressiveHash
         End Function
 
+        ''' <summary>
+        ''' This method provide to clone all element of this object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function clone() As IdentifyLastTransaction
+            Return Me.MemberwiseClone()
+        End Function
+
     End Class
 
     ''' <summary>

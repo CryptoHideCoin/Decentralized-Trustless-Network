@@ -125,31 +125,22 @@ Namespace AreaData
             End Try
         End Function
 
-        Private Sub manageA0x1()
-            If _Proceed Then
-                Dim commandA0x1 As New AreaProtocol.A0x1.Manager
+        ''' <summary>
+        ''' This method provide to create the request and wait the approvation
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function createAndWaitRequest(ByRef requestCode As String) As Boolean
+            Try
+                Do While (AreaCommon.flow.getRequest(requestCode).position.process <> AreaFlow.EnumOperationPosition.inWork)
+                    System.Threading.Thread.Sleep(10)
+                Loop
 
-                commandA0x1.log = AreaCommon.log
-                commandA0x1.currentService = AreaCommon.state.currentService
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
 
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA0x1.init(AreaCommon.paths, dataNetwork.whitePaper.content, .publicAddress, .privateKey)
-                End With
-            End If
-        End Sub
-
-        Private Sub manageA0x2()
-            If _Proceed Then
-                Dim commandA0x2 As New AreaProtocol.A0x2.Manager
-
-                commandA0x2.log = AreaCommon.log
-                commandA0x2.currentService = AreaCommon.state.currentService
-
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA0x2.init(AreaCommon.paths, dataNetwork.yellowPaper.content, .publicAddress, .privateKey)
-                End With
-            End If
-        End Sub
 
         Private Sub manageA0x3()
             If _Proceed Then
@@ -324,9 +315,8 @@ Namespace AreaData
         End Sub
 
         Public Function buildNetwork() As Boolean
+            Dim proceed As Boolean = True
             Try
-                Dim proceed As Boolean = True
-
                 AreaCommon.log.trackIntoConsole("Build Network start")
                 AreaCommon.log.track("BuildNetwork.run", "Begin")
 
@@ -338,10 +328,10 @@ Namespace AreaData
                 If proceed Then proceed = rebuildCommandList()
                 If proceed Then proceed = createState()
                 If proceed Then proceed = createVirtualNodeList()
-                If proceed Then proceed = AreaProtocol.A0x0.Manager.createRequest(dataNetwork.name)
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x0.Manager.createRequest(dataNetwork.name))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x1.Manager.createRequest(dataNetwork.whitePaper.content))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x2.Manager.createRequest(dataNetwork.yellowPaper.content))
 
-                'manageA0x1()
-                'manageA0x2()
                 'manageA0x3()
                 'manageA0x4()
                 'manageA0x5()
@@ -356,6 +346,11 @@ Namespace AreaData
                 'manageA1x5()
                 'manageA1x6()
 
+                If proceed Then
+                    AreaCommon.log.trackIntoConsole("Build Network complete")
+                Else
+                    AreaCommon.log.trackIntoConsole("Build Network failed")
+                End If
                 AreaCommon.log.track("BuildNetwork.run", "Complete")
 
                 Return True
@@ -364,13 +359,14 @@ Namespace AreaData
 
                 Return False
             Finally
-                AreaCommon.state.currentService.currentAction.reset()
+                If proceed Then
+                    AreaCommon.state.currentService.currentAction.reset()
+                End If
 
                 AreaCommon.state.currentService.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.notDefined
                 AreaCommon.state.currentService.requestCancelCurrentRunCommand = False
             End Try
         End Function
-
 
     End Module
 

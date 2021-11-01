@@ -5,6 +5,10 @@ Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
 
+
+
+
+
 Namespace AreaProtocol
 
     Public Class A0x0
@@ -90,22 +94,41 @@ Namespace AreaProtocol
 
         End Class
 
+        ''' <summary>
+        ''' This class contain all static member to recovery state 
+        ''' </summary>
         Public Class RecoveryState
 
+            ''' <summary>
+            ''' This method provide to update the state from a request
+            ''' </summary>
+            ''' <param name="value"></param>
+            ''' <param name="transactionChainRecord"></param>
+            ''' <returns></returns>
             Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
-                Dim proceed As Boolean = True
+                Try
+                    Dim proceed As Boolean = True
 
-                If proceed Then
-                    proceed = AreaCommon.state.runtimeState.addNetworkProperty(AreaState.ChainStateEngine.PropertyID.networkCreationDate, value.common.requestDateTimeStamp, transactionChainRecord.coordinate, transactionChainRecord.hash)
-                End If
-                If proceed Then
-                    proceed = AreaCommon.state.runtimeState.addNetworkProperty(AreaState.ChainStateEngine.PropertyID.genesisPublicAddress, value.common.publicAddressRequester, transactionChainRecord.coordinate, transactionChainRecord.hash)
-                End If
-                If proceed Then
-                    AreaCommon.state.runtimeState.addNetworkProperty(AreaState.ChainStateEngine.PropertyID.networkName, value.netName, transactionChainRecord.coordinate, transactionChainRecord.hash)
-                End If
+                    AreaCommon.log.track("RecoveryState.fromRequest", "Begin")
 
-                Return proceed
+                    If proceed Then
+                        proceed = AreaCommon.state.runtimeState.addNetworkProperty(AreaState.ChainStateEngine.PropertyID.networkCreationDate, value.common.requestDateTimeStamp, transactionChainRecord.coordinate, transactionChainRecord.hash)
+                    End If
+                    If proceed Then
+                        proceed = AreaCommon.state.runtimeState.addNetworkProperty(AreaState.ChainStateEngine.PropertyID.genesisPublicAddress, value.common.publicAddressRequester, transactionChainRecord.coordinate, transactionChainRecord.hash)
+                    End If
+                    If proceed Then
+                        AreaCommon.state.runtimeState.addNetworkProperty(AreaState.ChainStateEngine.PropertyID.networkName, value.netName, transactionChainRecord.coordinate, transactionChainRecord.hash)
+                    End If
+
+                    AreaCommon.log.track("RecoveryState.fromRequest", "Complete")
+
+                    Return proceed
+                Catch ex As Exception
+                    AreaCommon.log.track("RecoveryState.fromRequest", ex.Message, "fatal")
+
+                    Return False
+                End Try
             End Function
 
             Public Shared Function fromTransactionLedger(ByRef value As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
@@ -120,6 +143,9 @@ Namespace AreaProtocol
 
         End Class
 
+        ''' <summary>
+        ''' This class provides the static method to validate the request
+        ''' </summary>
         Public Class FormalCheck
 
             ''' <summary>
@@ -133,7 +159,7 @@ Namespace AreaProtocol
 
                     AreaCommon.log.track("FormalCheck.verify", "Begin")
 
-                    With IOFast(Of RequestModel).read(IO.Path.Combine(AreaCommon.paths.workData.temporally, requestHash & ".request"))
+                    With AreaCommon.flow.getRequest(requestHash).data
                         If proceed Then
                             proceed = (.common.netWorkReferement.Length > 0)
                         End If
@@ -168,34 +194,23 @@ Namespace AreaProtocol
             ''' <returns></returns>
             Shared Function evaluate(ByRef value As AreaFlow.RequestExtended) As Boolean
                 Try
-                    Dim proceed As Boolean = True
-                    Dim request As AreaProtocol.A0x0.RequestModel = value.data
+                    Dim request As A0x0.RequestModel = value.data
 
                     AreaCommon.log.track("FormalCheck.evaluate", "Begin")
 
-                    If proceed Then
-                        proceed = (request.common.netWorkReferement.Length > 0)
+                    If (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(Now.ToUniversalTime.AddDays(-1))) Then
+                        value.evaluations.rejectedNote = "Request expired"
+                        value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
+
+                        Return True
                     End If
-                    If proceed Then
-                        If (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(Now.AddDays(-1))) Then
-                            value.evaluations.rejectedNote = "Request expired"
-                            value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
+                    If (AreaCommon.state.network.position <> CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation) Then
+                        value.evaluations.rejectedNote = "Not permitted"
+                        value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
 
-                            Return True
-                        End If
-                        If (AreaCommon.state.network.position <> CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation) Then
-                            value.evaluations.rejectedNote = "Not permitted"
-                            value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
-
-                            Return True
-                        End If
-                        value.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult
-                    Else
-                        proceed = False
-
-                        value.evaluations.rejectedNote = "Masternode problem"
-                        value.position.verify = AreaFlow.EnumOperationPosition.inError
+                        Return True
                     End If
+                    value.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult
 
                     AreaCommon.log.track("FormalCheck.evaluate", "Complete")
 
@@ -209,56 +224,42 @@ Namespace AreaProtocol
 
         End Class
 
-
-
+        ''' <summary>
+        ''' This static class provides to static method to manage a request
+        ''' </summary>
         Public Class Manager
 
-
-
-
-            'Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
-            '    Try
-            '        With AreaCommon.state.currentBlockLedger.lastApprovedTransaction
-            '            .actionCode = "a0x0"
-            '            .approvedDate = dateDeterminateApproved
-            '            .detailInformation = data.netName
-            '            .requester = data.publicAddressRequester
-            '            .requestHash = data.requestHash
-            '            .approvedHash = approvedHash
-            '        End With
-
-            '        If AreaCommon.state.currentBlockLedger.blockComplete() Then
-            '            Return AreaCommon.state.currentBlockLedger.saveAndClean()
-            '        End If
-            '    Catch ex As Exception
-            '        AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
-
-            '        AreaCommon.log.track("A0x0.Manager.init", ex.Message, "fatal")
-            '    End Try
-
-            '    Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
-            'End Function
-
             ''' <summary>
-            ''' This method provide to return an RequestModel from RequestResponseModel
+            ''' This method provide to write request into ledger
             ''' </summary>
-            ''' <param name="value"></param>
             ''' <returns></returns>
-            'Public Shared Function extractToRequest(ByRef value As RequestResponseModel) As RequestModel
-            '    Dim result As New RequestModel
-            '    Try
-            '        result.netWorkReferement = value.netWorkReferement
-            '        result.chainReferement = value.chainReferement
-            '        result.netName = value.netName
-            '        result.publicAddressRequester = value.publicAddressRequester
-            '        result.requestDateTimeStamp = value.requestDateTimeStamp
-            '        result.requestHash = value.requestHash
-            '        result.requestSignature = value.requestSignature
-            '    Catch ex As Exception
-            '    End Try
+            Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal detailInformation As String, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+                Try
+                    AreaCommon.log.track("Manager.addIntoLedger", "Begin")
 
-            '    Return result
-            'End Function
+                    With AreaCommon.state.currentBlockLedger.nextProposeNewTransaction
+                        .actionCode = "a0x0"
+                        .approverPublicAddress = approverPublicAddress
+                        .consensusHash = consensusHash
+                        .detailInformation = detailInformation
+                        .registrationTimeStamp = registrationTimeStamp
+                        .requesterPublicAddress = requesterPublicAddress
+                        .requestHash = requestHash
+                        .currentHash = .getHash
+                    End With
+
+                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
+
+                Catch ex As Exception
+                    AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
+
+                    AreaCommon.log.track("A0x0.Manager.addIntoLedger", ex.Message, "fatal")
+
+                    Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+                Finally
+                    AreaCommon.log.track("Manager.addIntoLedger", "Complete")
+                End Try
+            End Function
 
             ''' <summary>
             ''' This method provide to save a request into temporally position
@@ -287,7 +288,7 @@ Namespace AreaProtocol
             ''' </summary>
             ''' <param name="networkNameParameter"></param>
             ''' <returns></returns>
-            Public Shared Function createRequest(ByVal networkNameParameter As String) As Boolean
+            Public Shared Function createRequest(ByVal networkNameParameter As String) As String
                 Try
                     Dim data As New RequestModel
 
@@ -310,7 +311,7 @@ Namespace AreaProtocol
                         data.netName = networkNameParameter
                         data.common.netWorkReferement = networkNameParameter
                         data.common.chainReferement = AreaCommon.state.internalInformation.chainName
-                        data.common.requestCode = "A0x0"
+                        data.common.requestCode = "a0x0"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = AreaCommon.state.runtimeState.activeNetwork.networkCreationDate
                         data.common.hash = data.getHash()
@@ -320,7 +321,11 @@ Namespace AreaProtocol
                     If saveTemporallyRequest(data) Then
                         AreaCommon.log.track("A0x0Manager.createRequest", "request - Saved")
 
-                        Return AreaCommon.flow.addNewRequestDirect(data)
+                        If AreaCommon.flow.addNewRequestDirect(data) Then
+                            Return data.common.hash
+                        Else
+                            Return ""
+                        End If
                     End If
                 Catch ex As Exception
                     AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
@@ -330,112 +335,8 @@ Namespace AreaProtocol
                     AreaCommon.log.track("A0x0Manager.createRequest", "Completed")
                 End Try
 
-                Return False
+                Return ""
             End Function
-
-
-            'Private Function toDo() As Boolean
-
-            ' Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
-            '    If Not loadApprovedRequest(publicWalletIdAddress, privateKeyRAW) Then
-            '        currentService.currentAction.setError("-1", "Error during approved request")
-            '        currentService.currentAction.reset()
-
-            '        log.track("A0x0Manager.init", "Error: Error during approved request", "fatal")
-
-            '        Return False
-            '    End If
-
-            '    'If Not consensusWideningLedger() Then
-
-            '    'End If
-
-            '    ledgerCoordinate = writeDataIntoLedger()
-
-            '    If (ledgerCoordinate.recordCoordinate.Length = 0) Then
-            '        currentService.currentAction.setError("-1", "Error during update ledger")
-            '        currentService.currentAction.reset()
-
-            '        log.track("A0x0Manager.init", "Error: Error during update ledger", "fatal")
-
-            '        Return False
-            '    End If
-
-            '    log.track("A0x0Manager.init", "Ledger updated")
-
-            '    If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
-            '        currentService.currentAction.setError("-1", "Network not compatible")
-            '        currentService.currentAction.reset()
-
-            '        log.track("A0x0Manager.init", "Error: Error during update State", "fatal")
-
-            '        Return False
-            '    End If
-
-            'End Function
-
-            'Private Function loadApprovedRequest(ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
-            '    Try
-            '        Dim approved As New TransactionChainLibrary.AreaP2P.RequestModel
-            '        Dim file As New TransactionChainLibrary.AreaP2P.FileRequestModel
-            '        Dim fileName As String
-
-            '        fileName = IO.Path.Combine(AreaCommon.paths.workData.currentVolume.evaluate, data.requestHash)
-
-            '        IO.Directory.CreateDirectory(fileName)
-
-            '        fileName = IO.Path.Combine(fileName, publicWalletIdAddress.Replace(":", "").Replace("/", "") & ".validate")
-
-            '        dateDeterminateApproved = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
-
-            '        approved.publicAddressValidator = publicWalletIdAddress
-            '        approved.dateDeterminateResult = dateDeterminateApproved
-            '        approved.requestHash = data.requestHash
-            '        approved.approved = True
-
-            '        approved.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, approved.getHash())
-
-            '        approvedHash = approved.getHash()
-
-            '        file.data = approved
-
-            '        file.fileName = fileName
-
-            '        Return file.save()
-            '    Catch ex As Exception
-            '        currentService.currentAction.setError(Err.Number, ex.Message)
-
-            '        log.track("A0x0Manager.loadApprovedRequest", ex.Message, "fatal")
-
-            '        Return False
-            '    End Try
-            'End Function
-
-            'Private Function consensusWideningLedger() As Boolean
-            '    Try
-            '        Dim propose As New TransactionChainLibrary.AreaP2P.ProposeExtendedLedger
-
-            '        propose.data.actionCode = "a0x0"
-            '        propose.data.approvedDate = dateDeterminateApproved
-            '        propose.data.approvedHash = approvedHash
-            '        propose.data.detailInformation = data.netName
-            '        propose.data.id = AreaCommon.state.currentBlockLedger.newIdTransaction
-            '        propose.data.requester = data.publicAddressRequester
-            '        propose.data.requestHash = data.requestHash
-            '        propose.data.currentTotalHash = AreaCommon.state.currentBlockLedger.CurrentTotalHash
-            '        propose.data.currentHash = propose.data.getHash()
-
-            '        ' Send all information to all Peer
-
-            '    Catch ex As Exception
-            '        currentService.currentAction.setError(Err.Number, ex.Message)
-
-            '        log.track("A0x0Manager.consensusWideningLedger", ex.Message, "fatal")
-
-            '        Return False
-            '    End Try
-            'End Function
-
 
         End Class
 

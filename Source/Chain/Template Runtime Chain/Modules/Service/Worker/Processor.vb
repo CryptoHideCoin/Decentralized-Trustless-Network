@@ -19,56 +19,19 @@ Namespace AreaWorker
         '<DebuggerHiddenAttribute()>
         Public Function work() As Boolean
             Try
-                Dim itemsToWork As Dictionary(Of String, AreaFlow.RequestExtended)
                 Dim proceed As Boolean = True
+                Dim item As New AreaFlow.RequestExtended
 
                 AreaCommon.log.track("Processor.work", "Begin")
 
                 workerOn = True
 
                 Do While (AreaCommon.flow.workerOn And workerOn)
+                    item = AreaCommon.flow.getFirstRequestToProcess()
 
-                    itemsToWork = AreaCommon.flow.getAllListToProcess()
-
-                    For Each item As AreaFlow.RequestExtended In itemsToWork.Values
-                        If item.evaluations.haveNewerForConsensus Then
-                            If AreaCommon.consensus.updateBulletin(item) Then
-                                item.evaluations.haveNewerForConsensus = False
-                            Else
-
-                                ' So cazzi!!!
-
-                            End If
-
-                            'If AreaCommon.consensus.notifyNewAssessment(item) Then
-                            '    item.haveNewerForConsensus = False
-                            'Else
-                            '    AreaCommon.flow.workerOn = False
-                            'End If
-                        End If
-
-                        'If Not AreaCommon.consensus.manageProposalData(item) Then
-                        '    AreaCommon.flow.workerOn = False
-                        'End If
-
-                        'If AreaCommon.consensus.bulletin.proposalsForApprovalData.requestHash.CompareTo(item.requestHash) = 0 Then
-                        '    If (item.consensusPosition = AreaFlow.EnumOperationPosition.completeWithPositiveResult) Then
-                        '        If Not item.notifySingleConsensusAtNetwork Then
-                        '            'If AreaCommon.consensus.notifyAllNetworkExpressConsensus(item) Then
-                        '            '    item.notifySingleConsensusAtNetwork = True
-
-                        '            '    ' Passo al successivo!
-                        '            'Else
-                        '            '    AreaCommon.flow.workerOn = False
-                        '            'End If
-                        '        End If
-
-                        '    Else
-                        '        ' Semu pessi...
-                        '    End If
-
-                        'End If
-                    Next
+                    If (item.dataCommon.hash.Length > 0) Then
+                        AreaCommon.consensus.updateBulletin(item)
+                    End If
 
                     AreaCommon.flow.removeOldRequest()
                     AreaCommon.flow.actionAfterAssessment()

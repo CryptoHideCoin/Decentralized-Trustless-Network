@@ -179,6 +179,8 @@ Namespace AreaWorker
                 AreaCommon.log.track("Sender.sendBulletinInBroadCast", "Begin")
 
                 Dim masterNode As AreaCommon.Masternode.MasternodeSenders.MasternodeSender
+                Dim requests As List(Of String) = AreaConsensus.ConsensusEngine.extractRequestFromBulletin(dataObject)
+                Dim requestData As AreaFlow.RequestExtended
 
                 masterNode = deliveryList.getFirst()
 
@@ -188,6 +190,14 @@ Namespace AreaWorker
                     End If
 
                     deliveryList.removeFirst()
+
+                    For Each singleRequest In requests
+                        requestData = AreaCommon.flow.getRequest(singleRequest)
+
+                        If requestData.position.deliveryBulletinNodeRemain.ContainsKey(masterNode.publicAddress) Then
+                            requestData.position.deliveryBulletinNodeRemain.Remove(masterNode.publicAddress)
+                        End If
+                    Next
 
                     masterNode = deliveryList.getFirst()
                 Loop

@@ -31,6 +31,26 @@ Namespace AreaFlow
         Public Property workerOn As Boolean = False
 
 
+
+        ''' <summary>
+        ''' This method provide to remove first request to download
+        ''' </summary>
+        ''' <param name="requestHash"></param>
+        ''' <param name="publicAddress"></param>
+        ''' <returns></returns>
+        Private Function removeFirstRequestToDownload(ByVal requestHash As String, ByRef publicAddress As String) As Boolean
+            Dim key As New AreaFlow.RequestDownloadKey
+
+            key.requestHash = requestHash
+            key.publicAddress = publicAddress
+
+            If _RequestToDownload.ContainsKey(key) Then
+                _RequestToDownload.Remove(key)
+            End If
+
+            Return True
+        End Function
+
         ''' <summary>
         ''' This method provide to get a first request of a list
         ''' </summary>
@@ -40,19 +60,28 @@ Namespace AreaFlow
             Try
                 Dim result As New RequestExtended
                 Dim listRequest As List(Of RequestExtended)
+                Dim repeat As Boolean = True
 
                 AreaCommon.log.track("RequestFlowEngine.getFirstRequest", "Begin")
 
-                Select Case phase
-                    Case EnumPhases.toSelect : listRequest = _RequestToSelected
-                    Case EnumPhases.toVerify : listRequest = _RequestToVerify
-                End Select
+                Do While repeat
+                    repeat = False
 
-                For Each item In listRequest
-                    If (result.dataCommon.hash.Length = 0) Or (result.source.ticketNumber <= item.source.ticketNumber) Then
-                        result = item
-                    End If
-                Next
+                    Select Case phase
+                        Case EnumPhases.toSelect : listRequest = _RequestToSelected
+                        Case EnumPhases.toVerify : listRequest = _RequestToVerify
+                    End Select
+
+                    Try
+                        For Each item In listRequest
+                            If (result.dataCommon.hash.Length = 0) Or (result.source.ticketNumber <= item.source.ticketNumber) Then
+                                result = item
+                            End If
+                        Next
+                    Catch ex As Exception
+                        repeat = True
+                    End Try
+                Loop
 
                 AreaCommon.log.track("RequestFlowEngine.getFirstRequest", "Complete")
 
@@ -131,7 +160,7 @@ Namespace AreaFlow
 
                 AreaCommon.log.track("RequestFlowEngine.addNewRequestNotify", "Begin")
 
-                If Not _Requests.ContainsKey(value.dataCommon.hash) Then
+                If Not _Requests.ContainsKey(requestHash) Then
                     _TicketNumberValue += 1
 
                     value.dataCommon.hash = requestHash
@@ -331,7 +360,7 @@ Namespace AreaFlow
             Try
                 AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", "Begin")
 
-                AreaCommon.flow.removeFirstRequestToDownload(item.dataCommon.hash, item.source.notifiedPublicAddress)
+                removeFirstRequestToDownload(item.dataCommon.hash, item.source.notifiedPublicAddress)
                 _RequestToSelected.Add(item)
 
                 AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", "Complete")
@@ -375,7 +404,12 @@ Namespace AreaFlow
             Try
                 AreaCommon.log.track("RequestFlowEngine.setRequestRejected", "Begin")
 
-                _RequestToSelected.Remove(item)
+                If _RequestToSelected.Contains(item) Then
+                    _RequestToSelected.Remove(item)
+                End If
+                If _RequestToProcess.ContainsKey(item.dataCommon.hash) Then
+                    _RequestToProcess.Remove(item.dataCommon.hash)
+                End If
                 _RequestProcessed.Add(item.dataCommon.hash, item)
 
                 AreaCommon.log.track("RequestFlowEngine.setRequestRejected", "Complete")
@@ -435,16 +469,25 @@ Namespace AreaFlow
         Public Function getFirstRequestToDownload() As RequestExtended
             Try
                 Dim result As New RequestExtended
+                Dim repeat As Boolean = True
 
                 AreaCommon.log.track("RequestFlowEngine.getFirstRequestToDownload", "Begin")
 
-                For Each item In _RequestToDownload.Values
-                    If (result.dataCommon.hash.Length = 0) Then
-                        result = item
-                    ElseIf (result.source.notifyTimeStamp <= item.source.notifyTimeStamp) Then
-                        result = item
-                    End If
-                Next
+                Do While repeat
+                    Try
+                        repeat = False
+
+                        For Each item In _RequestToDownload.Values
+                            If (result.dataCommon.hash.Length = 0) Then
+                                result = item
+                            ElseIf (result.source.notifyTimeStamp <= item.source.notifyTimeStamp) Then
+                                result = item
+                            End If
+                        Next
+                    Catch ex As Exception
+                        repeat = True
+                    End Try
+                Loop
 
                 AreaCommon.log.track("RequestFlowEngine.getFirstRequestToDownload", "Complete")
 
@@ -510,11 +553,38 @@ Namespace AreaFlow
         End Function
 
         ''' <summary>
-        ''' This method provide to get all list to process
+        ''' This method provide to get first request to process
         ''' </summary>
         ''' <returns></returns>
-        Public Function getAllListToProcess() As Dictionary(Of String, RequestExtended)
-            Return _RequestToProcess
+        Public Function getFirstRequestToProcess() As RequestExtended
+            Try
+                Dim result As New RequestExtended
+                Dim repeat As Boolean = True
+
+                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToProcess", "Begin")
+
+                Do While repeat
+                    repeat = False
+
+                    Try
+                        For Each item In _RequestToProcess.Values
+                            If (result.source.ticketNumber <= item.source.ticketNumber) Then
+                                result = item
+                            End If
+                        Next
+                    Catch ex As Exception
+                        repeat = True
+                    End Try
+                Loop
+
+                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToProcess", "Complete")
+
+                Return result
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToProcess", ex.Message, "fatal")
+
+                Return New RequestExtended
+            End Try
         End Function
 
         ''' <summary>
@@ -598,28 +668,11 @@ Namespace AreaFlow
             End Try
         End Function
 
-
-        Public Function getRequestToProcess(ByVal requestHash As String) As RequestExtended
-            If _RequestToProcess.ContainsKey(requestHash) Then
-                Return _RequestToProcess(requestHash)
-            End If
-
-            Return New RequestExtended
-        End Function
-
-        Public Function removeRequest(ByRef value As RequestExtended) As Boolean
-            Try
-                _RequestToProcess.Remove(value.dataCommon.hash)
-                _Requests.Remove(value.dataCommon.hash)
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.removeRequest", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
+        ''' <summary>
+        ''' This method provide to remote a request from a to Send list
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
         Public Function removeRequestToSend(ByRef value As RequestToSend) As Boolean
             Try
                 _RequestToSend.Remove(value)
@@ -632,19 +685,6 @@ Namespace AreaFlow
             End Try
         End Function
 
-        Public Function removeFirstRequestToDownload(ByVal requestHash As String, ByRef publicAddress As String) As Boolean
-            Dim key As New AreaFlow.RequestDownloadKey
-
-            key.requestHash = requestHash
-            key.publicAddress = publicAddress
-
-            If _RequestToDownload.ContainsKey(key) Then
-                _RequestToDownload.Remove(key)
-            End If
-
-            Return True
-        End Function
-
         ''' <summary>
         ''' This method provide to remove old request
         ''' </summary>
@@ -654,25 +694,28 @@ Namespace AreaFlow
                 Dim item As RequestExtended
                 Dim counter As Integer = 0
 
-                AreaCommon.log.track("RequestFlowEngine.refreshOldRequest", "Begin")
+                AreaCommon.log.track("RequestFlowEngine.removeOldRequest", "Begin")
 
                 If (_RequestProcessed.Count > 0) Then
-                    item = _RequestProcessed(counter)
 
-                    Do While (counter <= _RequestProcessed.Count)
-                        If (item.source.acquireTimeStamp + (60000 * 60 * 24) > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) Then
+                    Do While (counter < _RequestProcessed.Count)
+                        item = _RequestProcessed.Values.ElementAt(counter)
+
+                        If (item.source.acquireTimeStamp + (60000 * 60 * 24) < CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) Then
                             _RequestProcessed.Remove(item.dataCommon.hash)
+                            _Requests.Remove(item.dataCommon.hash)
                         End If
 
                         counter += 1
                     Loop
+
                 End If
 
-                AreaCommon.log.track("RequestFlowEngine.refreshOldRequest", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.removeOldRequest", "Complete")
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.refreshOldRequest", ex.Message, "fatal")
+                AreaCommon.log.track("RequestFlowEngine.removeOldRequest", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -687,13 +730,15 @@ Namespace AreaFlow
                 AreaCommon.log.track("RequestFlowEngine.actionAfterAssessment", "Begin")
 
                 If (AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation) Then
-                    If (AreaCommon.state.runtimeState.activeNetwork.networkName.value.Length > 0) Then
+                    If (AreaCommon.state.runtimeState.activeNetwork.networkName.value.Length > 0) And
+                       (AreaCommon.state.runtimeState.activeChain.name.value.Length > 0) And
+                       (AreaCommon.state.runtimeState.activeMasterNode.Count > 0) Then
                         AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.onLine
 
                         rebuildFinalCommandList()
 
                         If AreaCommon.webServiceThread() Then
-                            AreaCommon.log.trackIntoConsole("Public port (" & AreaCommon.settings.data.publicPort & ") chain is listen")
+                            AreaCommon.log.trackIntoConsole("Public port (" & AreaCommon.settings.data.publicPort & ") chain in listen")
                         Else
                             AreaCommon.log.trackIntoConsole("Problem during start public service")
                         End If
@@ -748,17 +793,6 @@ Namespace AreaFlow
 
         End Function
 
-
-        Public Function manageCloseBlock() As Boolean
-            Try
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.checkCloseBlock", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
         ''' <summary>
         ''' This method provide to initialize the component
         ''' </summary>
@@ -793,6 +827,18 @@ Namespace AreaFlow
                 Return True
             Catch ex As Exception
                 AreaCommon.log.track("RequestFlowEngine.init", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+
+        Public Function manageCloseBlock() As Boolean
+            Try
+                ''' TODO: manage close block
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.checkCloseBlock", ex.Message, "fatal")
 
                 Return False
             End Try

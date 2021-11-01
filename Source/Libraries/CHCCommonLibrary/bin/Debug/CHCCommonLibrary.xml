@@ -394,8 +394,8 @@ CHCCommonLibrary
  <param name="position"></param>
  <param name="content"></param>
  <param name="messageType">Info = Write an information on log file if is in action and if saveMode = dontTrackEver
- Error = Write an information on log file ever if is in action
- Fatal = Write an information on log file and into console
+ Type_Error = Write an information on log file ever if is in action
+ Type_Fatal = Write an information on log file and into console
  </param>
 </member>
 <member name="M:CHCCommonLibrary.Support.LogEngine.trackIntoConsole(System.String)">
@@ -602,6 +602,12 @@ CHCCommonLibrary
 <member name="M:CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.ToString">
  <summary>
  This method provide to create a string cumulative of the important class member
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.clone">
+ <summary>
+ This method provide to clone all element of this object
  </summary>
  <returns></returns>
 </member>

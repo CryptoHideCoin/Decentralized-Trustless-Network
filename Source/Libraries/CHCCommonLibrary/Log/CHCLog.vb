@@ -151,8 +151,8 @@ Namespace Support
         ''' <param name="position"></param>
         ''' <param name="content"></param>
         ''' <param name="messageType">Info = Write an information on log file if is in action and if saveMode = dontTrackEver
-        ''' Error = Write an information on log file ever if is in action
-        ''' Fatal = Write an information on log file and into console
+        ''' Type_Error = Write an information on log file ever if is in action
+        ''' Type_Fatal = Write an information on log file and into console
         ''' </param>
         <DebuggerHiddenAttribute()> Public Sub track(ByVal position As String, ByVal content As String, Optional ByVal messageType As String = "info", Optional ByVal printIntoConsole As Boolean = False)
             Try

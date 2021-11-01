@@ -10,7 +10,6 @@ Imports CHCCommonLibrary.AreaEngine.Encryption
 
 Namespace AreaSecurity
 
-
     Module authorization
 
         ''' <summary>
@@ -69,11 +68,30 @@ Namespace AreaSecurity
             Try
                 Dim privateKeyRAW As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
 
+                If determinateHash Then
+                    request.hash = request.getHash()
+                End If
+
                 request.signature = WalletAddressEngine.createSignature(privateKeyRAW, HashSHA.generateSHA256(request.ToString()))
             Catch ex As Exception
             End Try
 
             Return request
+        End Function
+
+        ''' <summary>
+        ''' This method provide to create a signature from a single hash from Identity keypair
+        ''' </summary>
+        ''' <param name="hash"></param>
+        ''' <returns></returns>
+        Public Function createSignature(ByRef hash As String) As String
+            Try
+                Dim privateKeyRAW As String = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
+
+                Return WalletAddressEngine.createSignature(privateKeyRAW, hash)
+            Catch ex As Exception
+                Return ""
+            End Try
         End Function
 
         ''' <summary>
@@ -200,6 +218,5 @@ Namespace AreaSecurity
         End Function
 
     End Module
-
 
 End Namespace

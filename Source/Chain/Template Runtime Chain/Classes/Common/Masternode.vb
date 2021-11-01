@@ -1,6 +1,8 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.AreaEngine.Encryption
+
 
 
 
@@ -34,7 +36,7 @@ Namespace AreaCommon.Masternode
 
         End Class
 
-        Public Property _Masternodes As New List(Of MasternodeSender)
+        Private Property _Masternodes As New List(Of MasternodeSender)
 
         ''' <summary>
         ''' This method provide to return a list of a active masternode
@@ -97,6 +99,11 @@ Namespace AreaCommon.Masternode
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to add a masternode sender
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
         Public Function add(ByRef value As MasternodeSender) As Boolean
             Try
                 _Masternodes.Add(value)
@@ -107,12 +114,20 @@ Namespace AreaCommon.Masternode
             End Try
         End Function
 
+        ''' <summary>
+        ''' This property return the count of masternode list
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property count() As Integer
             Get
                 Return _Masternodes.Count
             End Get
         End Property
 
+        ''' <summary>
+        ''' This property return get a first masternode of a list
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property getFirst() As MasternodeSender
             Get
                 If (_Masternodes.Count > 0) Then
@@ -123,6 +138,25 @@ Namespace AreaCommon.Masternode
             End Get
         End Property
 
+        ''' <summary>
+        ''' This property return getItem in masternode sender
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        Public ReadOnly Property getItem(ByVal index As Integer) As MasternodeSender
+            Get
+                Try
+                    Return _Masternodes(index)
+                Catch ex As Exception
+                    Return New MasternodeSender
+                End Try
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' This method provide to remove a first element
+        ''' </summary>
+        ''' <returns></returns>
         Public Function removeFirst() As Boolean
             Try
                 If (_Masternodes.Count > 0) Then
@@ -147,8 +181,42 @@ Namespace AreaCommon.Masternode
             Public Property publicAddress As String = ""
             Public Property publicIPAddress As String = ""
             Public Property votePoint As Double = 0
-
             Public Property assessmentTimeStamp As Double = 0
+            Public Property hash As String = ""
+            Public Property signature As String = ""
+
+            ''' <summary>
+            ''' This method provide to create a string resultant of a initial request
+            ''' </summary>
+            ''' <param name="requestHash"></param>
+            ''' <param name="model"></param>
+            ''' <returns></returns>
+            Public Function toString(ByVal requestHash As String, ByVal model As AreaConsensus.EnumModel) As String
+                Dim result As String = ""
+
+                result += requestHash
+
+                Select Case model
+                    Case AreaConsensus.EnumModel.approved : result += "1"
+                    Case AreaConsensus.EnumModel.abstained : result += "2"
+                    Case AreaConsensus.EnumModel.rejected : result += "3"
+                    Case AreaConsensus.EnumModel.absented : result += "4"
+                End Select
+
+                result += publicAddress
+                result += assessmentTimeStamp.ToString()
+                result += votePoint.ToString()
+
+                Return result
+            End Function
+
+            ''' <summary>
+            ''' This method provide to create an hash resultant
+            ''' </summary>
+            ''' <returns></returns>
+            Public Function getHash(ByVal requestHash As String, ByVal model As AreaConsensus.EnumModel) As String
+                Return HashSHA.generateSHA256(Me.toString(requestHash, model))
+            End Function
 
         End Class
 
@@ -369,7 +437,6 @@ Namespace AreaCommon.Masternode
 
         Public Property rejectedNote As String = ""
         Public Property notifyRejected As New AreaCommon.Masternode.MasternodeNotifyRejectedList
-        Public Property haveNewerForConsensus As Boolean = False
         Public Property notExpressed As ContactDataMasternodeList
         Public Property approved As New MinimalDataMasternodeList
         Public Property rejected As New MinimalDataMasternodeList

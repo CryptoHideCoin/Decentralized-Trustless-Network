@@ -2,6 +2,7 @@
 Option Explicit On
 
 Imports CHCCommonLibrary.AreaEngine.Encryption
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
 
 
 
@@ -16,9 +17,9 @@ Namespace AreaConsensus
     ''' </summary>
     Public Enum EnumModel
         approved
-        reject
-        absteined
-        absent
+        rejected
+        abstained
+        absented
     End Enum
 
     ''' <summary>
@@ -26,7 +27,7 @@ Namespace AreaConsensus
     ''' </summary>
     Public Class ReceiptOfAssessmentBase
 
-        Public Property model As EnumModel = EnumModel.absent
+        Public Property model As EnumModel = EnumModel.absented
         Public Property assessmentTimeStamp As Double = 0
         Public Property publicAddress As String = ""
 
@@ -62,9 +63,9 @@ Namespace AreaConsensus
     ''' </summary>
     Public Class ReceiptOfConsensusAssessment
 
-        Public Property model As EnumModel = EnumModel.absent
+        Public Property model As EnumModel = EnumModel.absented
         Public Property requestHash As String = ""
-        Public Property approvedTimeStamp As Double = 0
+        Public Property assessmentTimeStamp As Double = 0
 
         ''' <summary>
         ''' This method provide to create a string of all element of this object
@@ -76,7 +77,7 @@ Namespace AreaConsensus
             result += AreaCommon.state.network.publicAddressIdentity
             result += Byte.Parse(model).ToString()
             result += requestHash
-            result += approvedTimeStamp.ToString()
+            result += assessmentTimeStamp.ToString()
 
             Return result
         End Function
@@ -99,6 +100,43 @@ Namespace AreaConsensus
 
         Public Property hash As String = ""
         Public Property signature As String = ""
+
+    End Class
+
+    Public Class ReceiptOfConsensusAssessmentComplete
+
+        Inherits ReceiptOfAssessmentBase
+
+        Public Property voteValue As Double = 0
+
+        ''' <summary>
+        ''' This method provide to create a string of all element of this object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overridable Function toString() As String
+            Dim result As String = ""
+
+            result += MyBase.toString()
+            result += voteValue.ToString()
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get a hash of a data contained
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overridable Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
+
+        ''' <summary>
+        ''' This method provide to clone this object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function clone() As ReceiptOfConsensusAssessment
+            Return Me.MemberwiseClone()
+        End Function
 
     End Class
 
@@ -191,8 +229,7 @@ Namespace AreaConsensus
             Try
                 Dim result As New RejectedRequest
 
-                result = MyBase.clone()
-                result.rejectedMessage = rejectedMessage
+                result = Me.MemberwiseClone()
 
                 Return result
             Catch ex As Exception
@@ -260,18 +297,7 @@ Namespace AreaConsensus
         ''' </summary>
         ''' <returns></returns>
         Public Function clone() As MasterNodeCommunication
-            Dim result As New MasterNodeCommunication
-
-            result.bulletinTimeStamp = bulletinTimeStamp
-            result.publicAddress = publicAddress
-            result.requestHash = requestHash
-            result.tryNumber = tryNumber
-            result.startNotResponse = startNotResponse
-            result.lastNotResponse = lastNotResponse
-            result.hash = hash
-            result.signature = signature
-
-            Return result
+            Return Me.MemberwiseClone()
         End Function
 
     End Class
@@ -295,6 +321,30 @@ Namespace AreaConsensus
             result += hashNetwork
             result += hashChain
             result += lastApprovedTransaction.toString()
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' This method provide to clone all member of this object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function clone() As NetSynchronization
+            Dim result As New NetSynchronization
+
+            Try
+                AreaCommon.log.track("NetSynchronization.clone", "Begin")
+
+                result.hashNetwork = hashNetwork
+                result.hashChain = hashChain
+                result.lastApprovedTransaction = lastApprovedTransaction.clone()
+
+                AreaCommon.log.track("NetSynchronization.clone", "Complete")
+            Catch ex As Exception
+                AreaCommon.log.track("NetSynchronization.clone", ex.Message, "fatal")
+
+                Return New NetSynchronization
+            End Try
 
             Return result
         End Function
@@ -329,20 +379,11 @@ Namespace AreaConsensus
         ''' </summary>
         ''' <returns></returns>
         Public Function clone() As HeaderBulletin
-            Dim result As New HeaderBulletin
-
-            With result
-                .bulletinTimeStamp = bulletinTimeStamp
-                .publicAddress = publicAddress
-
-                With .netSynchronizationData
-                    .hashChain = netSynchronizationData.hashChain
-                    .hashNetwork = netSynchronizationData.hashNetwork
-                    .lastApprovedTransaction = netSynchronizationData.lastApprovedTransaction
-                End With
-            End With
-
-            Return result
+            Try
+                Return New HeaderBulletin With {.bulletinTimeStamp = bulletinTimeStamp, .publicAddress = publicAddress, .netSynchronizationData = netSynchronizationData.clone()}
+            Catch ex As Exception
+                Return New HeaderBulletin
+            End Try
         End Function
 
     End Class
@@ -353,25 +394,15 @@ Namespace AreaConsensus
     Public Class UpdateNewTransactionHashInformation
 
         Public Property requestHash As String = ""
-        Public Property transactionHash As String = ""
-
-        Public Property remainNodeList As New List(Of String)
+        Public Property proposalIdentifierTransactionLedger As String = ""
+        Public Property consensusHash As String = ""
 
         ''' <summary>
         ''' This method provide to clone this object
         ''' </summary>
         ''' <returns></returns>
         Public Function clone() As UpdateNewTransactionHashInformation
-            Dim result As New UpdateNewTransactionHashInformation
-
-            result.requestHash = requestHash
-            result.transactionHash = transactionHash
-
-            For Each item In remainNodeList
-                result.remainNodeList.Add(item)
-            Next
-
-            Return result
+            Return Me.MemberwiseClone()
         End Function
 
     End Class
@@ -385,8 +416,6 @@ Namespace AreaConsensus
         ''' This class provide to collect all single total of expression of vote
         ''' </summary>
         Public Class VoteTotalizations
-
-            Public Property netWorkTotalVote As Double = 0
 
             Public Property notExpressed As Double = 0
             Public Property approved As Double = 0
@@ -408,7 +437,7 @@ Namespace AreaConsensus
             ''' </summary>
             ''' <returns></returns>
             Public Overrides Function toString() As String
-                Return (netWorkTotalVote + total).ToString()
+                Return total.ToString()
             End Function
 
             ''' <summary>
@@ -416,26 +445,14 @@ Namespace AreaConsensus
             ''' </summary>
             ''' <returns></returns>
             Public Function clone() As VoteTotalizations
-                Dim result As New VoteTotalizations
-
-                result.netWorkTotalVote = netWorkTotalVote
-                result.notExpressed = notExpressed
-                result.approved = approved
-                result.rejected = rejected
-                result.abstained = abstained
-
-                Return result
+                Return Me.MemberwiseClone
             End Function
 
         End Class
 
-        Public Property proposalIdentifierTransactionLedger As String = ""
-
         Public Property requestHash As String = ""
         Public Property registerBulletinAssessmentTimeStamp As Double = 0
         Public Property registerMasternodeAddress As String = ""
-        Public Property consensusHash As String = ""
-        Public Property deliveryToAllNetwork As Boolean = False
         Public Property totalVotes As New VoteTotalizations
 
         ''' <summary>
@@ -445,7 +462,6 @@ Namespace AreaConsensus
         Public Overrides Function toString() As String
             Dim tmp As String = ""
 
-            tmp += proposalIdentifierTransactionLedger
             tmp += requestHash
             tmp += registerBulletinAssessmentTimeStamp.ToString
             tmp += registerMasternodeAddress
@@ -469,12 +485,9 @@ Namespace AreaConsensus
         Public Function clone() As ProposalForApproval
             Dim result As New ProposalForApproval
 
-            result.proposalIdentifierTransactionLedger = proposalIdentifierTransactionLedger
             result.requestHash = requestHash
             result.registerBulletinAssessmentTimeStamp = registerBulletinAssessmentTimeStamp
             result.registerMasternodeAddress = registerMasternodeAddress
-            result.consensusHash = consensusHash
-            result.deliveryToAllNetwork = deliveryToAllNetwork
 
             result.totalVotes = totalVotes.clone()
 
@@ -512,7 +525,7 @@ Namespace AreaConsensus
 
             Try
                 tmp += header.toString()
-                tmp += proposalUpdateNewTransactionHash.transactionHash
+                tmp += proposalUpdateNewTransactionHash.ToString()
                 tmp += proposalsForApprovalData.toString()
 
                 For Each rejected In rejectedRequestData
@@ -563,6 +576,9 @@ Namespace AreaConsensus
                     For Each absence In masternodeAbsent
                         result.masternodeAbsent.Add(absence.clone())
                     Next
+
+                    .hash = hash
+                    .signature = signature
                 End With
 
                 Return result
@@ -605,6 +621,88 @@ Namespace AreaConsensus
             End If
         End Function
 
+        ''' <summary>
+        ''' This method provide to remove accept or abstain request list
+        ''' </summary>
+        ''' <param name="requestHash"></param>
+        ''' <returns></returns>
+        Public Function removeAcceptOrAbstainRequestList(ByVal requestHash As String) As Boolean
+            Try
+                AreaCommon.log.track("ConsensusEngine.removeAcceptOrAbstainRequestList", "Begin")
+
+                For Each item In acceptOrAbstainRequestList
+                    If (item.requestHash.CompareTo(requestHash) = 0) Then
+                        acceptOrAbstainRequestList.Remove(item)
+                        _KeyAcceptOrAbstainRequestList.Remove(requestHash)
+
+                        Return True
+                    End If
+                Next
+
+                AreaCommon.log.track("ConsensusEngine.removeAcceptOrAbstainRequestList", "Complete")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.removeAcceptOrAbstainRequestList", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to Remove Reject Request Data
+        ''' </summary>
+        ''' <param name="request"></param>
+        ''' <returns></returns>
+        Public Function removeRejectRequestData(ByRef request As RejectedRequest) As Boolean
+            Try
+                AreaCommon.log.track("ConsensusEngine.removeRejectRequestData", "Begin")
+
+                For Each item In rejectedRequestData
+                    If (item.requestHash.CompareTo(request) = 0) Then
+                        rejectedRequestData.Remove(item)
+                        _KeyRejectedList.Remove(request.requestHash)
+
+                        Return True
+                    End If
+                Next
+
+                AreaCommon.log.track("ConsensusEngine.removeRejectRequestData", "Complete")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.removeRejectRequestData", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to clean a proposal for approval data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function cleanProposalData() As Boolean
+            Try
+                proposalsForApprovalData = New ProposalForApproval
+
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to save a consensus file
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function save() As Boolean
+            Try
+                Return IOFast(Of BulletinInformation).save(IO.Path.Combine(AreaCommon.paths.workData.currentVolume.bulletines, proposalsForApprovalData.requestHash & ".bulletin"), Me)
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
     End Class
 
     ''' <summary>
@@ -612,11 +710,19 @@ Namespace AreaConsensus
     ''' </summary>
     Public Class ConsensusNetwork
 
-        Public Property requestHash As String = ""
+        Public Property netWorkReferement As String = ""
+        Public Property chainReferement As String = ""
 
-        Public Property nodeAbstainedOrApproval As New Dictionary(Of String, ReceiptOfConsensusAssessment)
-        Public Property nodeReject As New Dictionary(Of String, RejectedRequestBase)
-        Public Property nodeAbsent As New Dictionary(Of String, MasterNodeAbsent)
+        Public Property requestHash As String = ""
+        Public Property masterNodePublicAddress As String = ""
+
+        Public Property nodeRegistrant As String = ""
+        Public Property nodeRegistrantTimeStamp As Double = 0
+
+        Public Property nodeElements As New List(Of ReceiptOfConsensusAssessmentComplete)
+
+        Public Property voteValueApproved As Double = 0
+        Public Property voteValueRejected As Double = 0
 
         Public Property hash As String = ""
         Public Property signature As String = ""
@@ -625,21 +731,23 @@ Namespace AreaConsensus
         ''' This method provide to create a string hash resultant
         ''' </summary>
         ''' <returns></returns>
-        Private Function getHashInternalData() As String
+        Private Function toString() As String
             Try
                 Dim tmp As String = ""
 
+                tmp += netWorkReferement
+                tmp += chainReferement
                 tmp += requestHash
+                tmp += masterNodePublicAddress
+                tmp += nodeRegistrant
+                tmp += nodeRegistrantTimeStamp.ToString()
 
-                For Each item In nodeAbstainedOrApproval
-                    tmp += item.Value.hash
+                For Each item In nodeElements
+                    tmp += item.hash
                 Next
-                For Each item In nodeReject
-                    tmp += item.Value.hash
-                Next
-                For Each item In nodeAbsent
-                    tmp += item.Value.hash
-                Next
+
+                tmp += voteValueApproved.ToString()
+                tmp += voteValueRejected.ToString()
 
                 Return tmp
             Catch ex As Exception
@@ -648,174 +756,20 @@ Namespace AreaConsensus
         End Function
 
         ''' <summary>
-        ''' This method provide to reorder Abstained or Approval
+        ''' This method provide to clear all element of this structure
         ''' </summary>
         ''' <returns></returns>
-        Private Function reoderAbstainedOrApproval() As Boolean
+        Public Function clear() As Boolean
             Try
-                Dim newList As New Dictionary(Of String, ReceiptOfAssessmentBase)
-                Dim minimal As ReceiptOfAssessmentBase
-                Dim current As ReceiptOfAssessmentBase
-                Dim indexMinimal As Integer
+                AreaCommon.log.track("ConsensusNetwork.clear", "Begin")
 
-                AreaCommon.log.track("ConsensusNetwork.reoderAbstainedOrApproval", "Begin")
+                nodeElements.Clear()
 
-                Do While (nodeAbstainedOrApproval.Count > 0)
-                    indexMinimal = 0
-
-                    'minimal = nodeAbstainedOrApproval.ElementAt(0).Value
-
-                    For i As Integer = 1 To nodeAbstainedOrApproval.Values.Count - 1
-                        'current = nodeAbstainedOrApproval.ElementAt(i).Value
-
-                        If (minimal.assessmentTimeStamp > current.assessmentTimeStamp) Then
-                            minimal = current
-
-                            indexMinimal = i
-                        End If
-                    Next
-
-                    newList.Add(minimal.publicAddress, minimal)
-                    nodeAbstainedOrApproval.Remove(minimal.publicAddress)
-                Loop
-
-                'nodeAbstainedOrApproval = newList
-
-                AreaCommon.log.track("ConsensusNetwork.reoderAbstainedOrApproval", "Complete")
+                AreaCommon.log.track("ConsensusNetwork.clear", "Complete")
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.reoderApproval", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to reorder a reject masternode
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function reoderReject() As Boolean
-            Try
-                Dim newList As New Dictionary(Of String, RejectedRequestBase)
-                Dim minimal As RejectedRequestBase
-                Dim current As RejectedRequestBase
-                Dim indexMinimal As Integer
-
-                AreaCommon.log.track("ConsensusNetwork.reoderReject", "Begin")
-
-                Do While (nodeAbstainedOrApproval.Count > 0)
-                    indexMinimal = 0
-                    minimal = nodeReject.ElementAt(0).Value
-
-                    For i As Integer = 1 To nodeReject.Values.Count - 1
-                        current = nodeReject.ElementAt(i).Value
-
-                        If (minimal.assessmentTimeStamp > current.assessmentTimeStamp) Then
-                            minimal = current
-
-                            indexMinimal = i
-                        End If
-                    Next
-
-                    newList.Add(minimal.publicAddress, minimal)
-                    nodeReject.Remove(minimal.publicAddress)
-                Loop
-
-                nodeReject = newList
-
-                AreaCommon.log.track("ConsensusNetwork.reoderReject", "Complete")
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.reoderReject", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to reorder an absent masternode
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function reoderAbsent() As Boolean
-            Try
-                Dim newList As New Dictionary(Of String, MasterNodeAbsent)
-                Dim minimal As MasterNodeAbsent
-                Dim current As MasterNodeAbsent
-                Dim indexMinimal As Integer
-
-                AreaCommon.log.track("ConsensusEngine.reoderAbsent", "Begin")
-
-                Do While (nodeAbsent.Count > 0)
-                    indexMinimal = 0
-                    minimal = nodeAbsent.ElementAt(0).Value
-
-                    For i As Integer = 1 To nodeAbsent.Values.Count - 1
-                        current = nodeAbsent.ElementAt(i).Value
-
-                        If (minimal.registerTimeStamp > current.registerTimeStamp) Then
-                            minimal = current
-
-                            indexMinimal = i
-                        End If
-                    Next
-
-                    newList.Add(minimal.publicAddress, minimal)
-                    nodeAbsent.Remove(minimal.publicAddress)
-                Loop
-
-                nodeAbsent = newList
-
-                AreaCommon.log.track("ConsensusEngine.reoderAbsent", "Complete")
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.reoderAbsent", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to add a new Abstained or Approval
-        ''' </summary>
-        ''' <param name="model"></param>
-        ''' <param name="requestHash"></param>
-        ''' <param name="assessmentTimeStamp"></param>
-        ''' <param name="voteValue"></param>
-        ''' <param name="publicAddress"></param>
-        ''' <returns></returns>
-        Private Function addNewAbstainedOrApproval(ByVal model As EnumModel, ByVal assessmentTimeStamp As Double, ByVal voteValue As Double, ByVal publicAddress As String, ByVal hash As String, ByVal signature As String) As Boolean
-            Try
-                Dim item As New ReceiptOfConsensusAssessment
-
-                AreaCommon.log.track("ConsensusNetwork.addNewAbstainedOrApproval", "Begin")
-
-                'item.assessmentTimeStamp = assessmentTimeStamp
-
-                If (publicAddress.Length = 0) Then
-                    publicAddress = AreaCommon.state.network.publicAddressIdentity
-                End If
-                If (voteValue = 0) Then
-                    voteValue = AreaCommon.state.network.coinWarranty
-                End If
-
-                'item.publicAddress = publicAddress
-                item.model = model
-                'item.voteValue = voteValue
-                item.hash = hash
-                item.signature = signature
-
-                If Not nodeAbstainedOrApproval.ContainsKey(requestHash) Then
-                    nodeAbstainedOrApproval.Add(requestHash, item)
-                End If
-
-                AreaCommon.log.track("ConsensusNetwork.addNewAbstainedOrApproval", "Complete")
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.addNewAbstainedOrApproval", ex.Message, "fatal")
+                AreaCommon.log.track("ConsensusNetwork.clear", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -825,52 +779,48 @@ Namespace AreaConsensus
         ''' This method provide to reoder all element
         ''' </summary>
         ''' <returns></returns>
-        Public Function reorderElement() As Boolean
+        Public Function reorderElements() As Boolean
             Try
-                Dim proceed As Boolean = True
+                Dim newList As New List(Of ReceiptOfConsensusAssessmentComplete)
+                Dim minimal As ReceiptOfConsensusAssessmentComplete
+                Dim current As ReceiptOfConsensusAssessmentComplete
+                Dim indexMinimal As Integer
 
                 AreaCommon.log.track("ConsensusNetwork.reorderElement", "Begin")
 
-                If proceed Then proceed = reoderAbstainedOrApproval()
-                If proceed Then proceed = reoderReject()
-                If proceed Then proceed = reoderAbsent()
+                Do While (nodeElements.Count > 0)
+                    indexMinimal = 0
+
+                    minimal = nodeElements.Item(0)
+
+                    For i As Integer = 1 To nodeElements.Count - 1
+                        current = nodeElements.Item(i)
+
+                        If (minimal.assessmentTimeStamp > current.assessmentTimeStamp) Then
+                            minimal = current
+
+                            indexMinimal = i
+                        End If
+                    Next
+
+                    newList.Add(minimal)
+                    nodeElements.Remove(minimal)
+                Loop
+
+                nodeElements = newList
 
                 AreaCommon.log.track("ConsensusNetwork.reorderElement", "Complete")
 
-                Return proceed
+                Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.reoderAbsent", ex.Message, "fatal")
+                AreaCommon.log.track("ConsensusNetwork.reorderElement", ex.Message, "fatal")
 
                 Return False
             End Try
         End Function
 
         ''' <summary>
-        ''' This method provide to add a new approval
-        ''' </summary>
-        ''' <param name="requestHash"></param>
-        ''' <param name="assessmentTimeStamp"></param>
-        ''' <param name="voteValue"></param>
-        ''' <param name="publicAddress"></param>
-        ''' <returns></returns>
-        Public Function addNewApproval(ByVal assessmentTimeStamp As Double, ByVal hash As String, ByVal signature As String, Optional ByVal voteValue As Double = 0, Optional ByVal publicAddress As String = "") As Boolean
-            Return addNewAbstainedOrApproval(EnumModel.approved, assessmentTimeStamp, voteValue, publicAddress, hash, signature)
-        End Function
-
-        ''' <summary>
-        ''' This method provide to add a new abstained
-        ''' </summary>
-        ''' <param name="requestHash"></param>
-        ''' <param name="assessmentTimeStamp"></param>
-        ''' <param name="voteValue"></param>
-        ''' <param name="publicAddress"></param>
-        ''' <returns></returns>
-        Public Function addNewAbstained(ByVal assessmentTimeStamp As Double, ByVal hash As String, ByVal signature As String, Optional ByVal voteValue As Double = 0, Optional ByVal publicAddress As String = "") As Boolean
-            Return addNewAbstainedOrApproval(EnumModel.absteined, assessmentTimeStamp, voteValue, publicAddress, hash, signature)
-        End Function
-
-        ''' <summary>
-        ''' This method provide to add a new rejected
+        ''' This method provide to add a new assessment node
         ''' </summary>
         ''' <param name="assessmentTimeStamp"></param>
         ''' <param name="hash"></param>
@@ -878,13 +828,13 @@ Namespace AreaConsensus
         ''' <param name="voteValue"></param>
         ''' <param name="publicAddress"></param>
         ''' <returns></returns>
-        Public Function addNewRejected(ByVal assessmentTimeStamp As Double, ByVal hash As String, ByVal signature As String, Optional ByVal voteValue As Double = 0, Optional ByVal publicAddress As String = "") As Boolean
+        Public Function addNewAssessment(ByVal model As EnumModel, ByVal assessmentTimeStamp As Double, ByVal hash As String, ByVal signature As String, Optional ByVal voteValue As Double = 0, Optional ByVal publicAddress As String = "") As Boolean
             Try
-                Dim item As New ReceiptOfConsensusAssessment
+                Dim item As New ReceiptOfConsensusAssessmentComplete
 
-                AreaCommon.log.track("ConsensusNetwork.addNewRejected", "Begin")
+                AreaCommon.log.track("ConsensusNetwork.addNewAssessment", "Begin")
 
-                'item.assessmentTimeStamp = assessmentTimeStamp
+                item.assessmentTimeStamp = assessmentTimeStamp
 
                 If (publicAddress.Length = 0) Then
                     publicAddress = AreaCommon.state.network.publicAddressIdentity
@@ -893,21 +843,19 @@ Namespace AreaConsensus
                     voteValue = AreaCommon.state.network.coinWarranty
                 End If
 
-                'item.publicAddress = publicAddress
-                item.model = EnumModel.reject
-                'item.voteValue = voteValue
+                item.publicAddress = publicAddress
+                item.model = model
+                item.voteValue = voteValue
                 item.hash = hash
                 item.signature = signature
 
-                If Not nodeAbstainedOrApproval.ContainsKey(publicAddress) Then
-                    nodeAbstainedOrApproval.Add(publicAddress, item)
-                End If
+                nodeElements.Add(item)
 
-                AreaCommon.log.track("ConsensusNetwork.addNewRejected", "Complete")
+                AreaCommon.log.track("ConsensusNetwork.addNewAbsent", "Complete")
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ConsensusNetwork.addNewRejected", ex.Message, "fatal")
+                AreaCommon.log.track("ConsensusNetwork.addNewAbsent", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -918,7 +866,19 @@ Namespace AreaConsensus
         ''' </summary>
         ''' <returns></returns>
         Public Function getHash() As String
-            Return HashSHA.generateSHA256(Me.getHashInternalData())
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
+
+        ''' <summary>
+        ''' This method provide to save a consensus file
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function save() As Boolean
+            Try
+                Return IOFast(Of ConsensusNetwork).save(IO.Path.Combine(AreaCommon.paths.workData.currentVolume.consensus, requestHash & ".consensus"), Me)
+            Catch ex As Exception
+                Return False
+            End Try
         End Function
 
     End Class

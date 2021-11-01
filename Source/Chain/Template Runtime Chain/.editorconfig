@@ -1,0 +1,4 @@
+﻿[*.vb]
+
+# BC42303: Il commento XML non può essere specificato all'interno di un metodo o di una proprietà
+dotnet_diagnostic.BC42303.severity = none

@@ -304,7 +304,7 @@ Namespace AreaCommon
                 If webServiceThread(True) Then
                     log.inBootStrapAction = False
 
-                    log.trackIntoConsole("Admin port (" & settings.data.servicePort & ") chain is listen")
+                    log.trackIntoConsole("Admin port (" & settings.data.servicePort & ") chain in listen")
 
                     runApplication()
                 Else

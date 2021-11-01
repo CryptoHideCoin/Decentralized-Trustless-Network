@@ -91,9 +91,9 @@ Namespace AreaProtocol
 
                     TransactionChainLibrary.AreaEngine.Ledger.State.StateEngine.writeDataContent(contentStatePath, data.generalCondition, hashContent)
 
-                    If AreaCommon.state.currentBlockLedger.BlockComplete() Then
-                        Return AreaCommon.state.currentBlockLedger.saveAndClean()
-                    End If
+                    'If AreaCommon.state.currentBlockLedger.BlockComplete() Then
+                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
+                    'End If
                 Catch ex As Exception
                     currentService.currentAction.setError(Err.Number, ex.Message)
 

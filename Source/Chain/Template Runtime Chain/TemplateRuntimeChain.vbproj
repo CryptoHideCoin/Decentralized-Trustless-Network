@@ -146,6 +146,8 @@
     <Compile Include="Controllers\QoS\Ticket\QueueTickets.vb" />
     <Compile Include="Controllers\QoS\Ticket\RequestNewController.vb" />
     <Compile Include="Controllers\Requests\A0x0Controller.vb" />
+    <Compile Include="Controllers\Requests\A0x1Controller.vb" />
+    <Compile Include="Controllers\Requests\A0x2Controller.vb" />
     <Compile Include="Controllers\Requests\ExpressionController.vb" />
     <Compile Include="Controllers\Security\ChangeCertificateController.vb" />
     <Compile Include="Controllers\Security\SetIdentityKeyPairController.vb" />
@@ -223,6 +225,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

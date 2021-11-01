@@ -22,6 +22,8 @@ Namespace AreaWorker
 
                 Select Case value.dataCommon.requestCode
                     Case "a0x0" : Return AreaProtocol.A0x0.FormalCheck.evaluate(value)
+                    Case "a0x1" : Return AreaProtocol.A0x1.FormalCheck.evaluate(value)
+                    Case "a0x2" : Return AreaProtocol.A0x2.FormalCheck.evaluate(value)
                 End Select
 
                 AreaCommon.log.track("Verifier.evaluateTheRequest", "Complete")
@@ -38,7 +40,7 @@ Namespace AreaWorker
         ''' This method provide to work verifier job
         ''' </summary>
         ''' <returns></returns>
-        '<DebuggerHiddenAttribute()>
+        <DebuggerHiddenAttribute()>
         Public Function work() As Boolean
             Try
                 Dim item As AreaFlow.RequestExtended
@@ -56,7 +58,6 @@ Namespace AreaWorker
                         If evaluateTheRequest(item) Then
                             item.evaluations.notExpressed = AreaCommon.flow.createEvaluationList()
                             item.evaluations.currentChainNodeTotalVotes = item.evaluations.notExpressed.totalValuePoints
-                            item.evaluations.haveNewerForConsensus = True
 
                             If (item.position.verify = AreaFlow.EnumOperationPosition.inError) Then
                                 item.evaluations.setAbstained(AreaCommon.state.network.publicAddressIdentity)

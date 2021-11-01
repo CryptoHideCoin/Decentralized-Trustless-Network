@@ -10,11 +10,15 @@ Namespace AreaState
 
     Public Class ChainStateEngine
 
+        ''' <summary>
+        ''' This class contain the last identify last transaction and a value
+        ''' </summary>
         Public Class ItemIdentityStructure
             Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
             Public Property value As String = ""
         End Class
+
 
         Public Class NetworkAssetStructure
             Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
@@ -96,6 +100,8 @@ Namespace AreaState
             Public Property lastConnectionTimeStamp As Double = 0
             Public Property itsMe As Boolean = False
 
+            Public Property abstainRequest As New Dictionary(Of String, String)
+
         End Class
 
         Public Class DataMasternodeKey
@@ -138,7 +144,10 @@ Namespace AreaState
         Public Property activeChains As New Dictionary(Of String, DataChain)
         Public Property activeMasterNode As New Dictionary(Of DataMasternodeKey, DataMasternode)
 
-
+        ''' <summary>
+        ''' This method provide to create a main db table
+        ''' </summary>
+        ''' <returns></returns>
         Private Function createMainDBTable() As Boolean
             Try
                 Dim sql As String = ""
@@ -178,9 +187,21 @@ Namespace AreaState
                 AreaCommon.log.track("ChainStateEngine.createDBTable", "Failed = " & ex.Message, "fatal", True)
 
                 Return False
+            Finally
+                AreaCommon.log.track("ChainStateEngine.createDBTable", "Complete")
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to insert a new record into mainProperties table
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <param name="value"></param>
+        ''' <param name="recordCoordinate"></param>
+        ''' <param name="recordHash"></param>
+        ''' <param name="hashContent"></param>
+        ''' <param name="writeValueOnDB"></param>
+        ''' <returns></returns>
         Private Function insertSQLProperty(ByVal id As PropertyID, ByVal value As String, ByVal recordCoordinate As String, ByVal recordHash As String, Optional ByVal hashContent As String = "", Optional ByVal writeValueOnDB As Boolean = False) As Boolean
             Try
                 Dim sql As String = ""
@@ -232,9 +253,15 @@ Namespace AreaState
                 AreaCommon.log.track("ChainStateEngine.addSQLProperty", "Failed = " & ex.Message, "fatal", True)
 
                 Return False
+            Finally
+                AreaCommon.log.track("ChainStateEngine.addSQLProperty", "Complete")
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to create an identity db table
+        ''' </summary>
+        ''' <returns></returns>
         Private Function createIdentityDBTable() As Boolean
             Try
                 Dim sql As String = ""
@@ -271,9 +298,17 @@ Namespace AreaState
                 AreaCommon.log.track("ChainStateEngine.createIdentityDBTable", ex.Message, "fatal")
 
                 Return False
+            Finally
+                AreaCommon.log.track("ChainStateEngine.createIdentityDBTable", "Complete")
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to insert a sql property identity on db
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
         Private Function insertSQLPropertyIdentityDB(ByVal id As PropertyID, ByVal value As String) As Boolean
             Try
                 Dim sql As String = ""
@@ -315,13 +350,24 @@ Namespace AreaState
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to write an identity on db
+        ''' </summary>
+        ''' <returns></returns>
         Private Function writeIdentityDB() As Boolean
-            insertSQLPropertyIdentityDB(DBPropertyID.dateCreation, CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT())
-            insertSQLPropertyIdentityDB(DBPropertyID.name, "State")
-            insertSQLPropertyIdentityDB(DBPropertyID.typeOfDB, "State")
+            Try
+                insertSQLPropertyIdentityDB(DBPropertyID.dateCreation, CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT())
+                insertSQLPropertyIdentityDB(DBPropertyID.name, "State")
+                insertSQLPropertyIdentityDB(DBPropertyID.typeOfDB, "State")
 
-            Return True
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.createIdentityDBTable", ex.Message, "fatal")
+
+                Return False
+            End Try
         End Function
+
 
         ''' <summary>
         ''' This method provide to add a newtork property
@@ -400,6 +446,7 @@ Namespace AreaState
                 Return New DataChain
             End If
         End Function
+
 
         ''' <summary>
         ''' This method provide to add new node
@@ -522,6 +569,136 @@ Namespace AreaState
                 Return New List(Of DataMasternode)
             End Try
         End Function
+
+        ''' <summary>
+        ''' This method provide to manage a node abstained
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="requestHash"></param>
+        ''' <returns></returns>
+        Public Function manageAbstained(ByVal publicAddress As String, ByVal requestHash As String, Optional ByVal chainName As String = "") As Boolean
+            Try
+                Dim newKey As New DataMasternodeKey
+
+                AreaCommon.log.track("ChainStateEngine.manageAbstained", "Begin")
+
+                newKey.identityPublicAddress = publicAddress
+
+                If (chainName.Length = 0) Then
+                    newKey.chainName = AreaCommon.state.internalInformation.chainName
+                Else
+                    newKey.chainName = chainName
+                End If
+
+                If activeMasterNode.ContainsKey(newKey) Then
+                    If Not activeMasterNode(newKey).abstainRequest.ContainsKey(requestHash) Then
+
+                        ''' UNDONE: when close a block reset this list
+
+                        activeMasterNode(newKey).abstainRequest.Add(requestHash, requestHash)
+                    End If
+
+                    If (activeMasterNode(newKey).abstainRequest.Values.Count > 3) Then
+
+                        ''' UNDONE: manage Abstained
+                        ''' 
+                        ''' create a request A2x1 and manage this
+
+                    End If
+                End If
+
+                AreaCommon.log.track("ChainStateEngine.manageAbstained", "Complete")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.manageAbstained", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to manage a reject node
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="requestHash"></param>
+        ''' <param name="chainName"></param>
+        ''' <returns></returns>
+        Public Function manageRejected(ByVal publicAddress As String, ByVal requestHash As String, Optional ByVal chainName As String = "") As Boolean
+            Try
+                Dim newKey As New DataMasternodeKey
+
+                AreaCommon.log.track("ChainStateEngine.manageRejected", "Begin")
+
+                newKey.identityPublicAddress = publicAddress
+
+                If (chainName.Length = 0) Then
+                    newKey.chainName = AreaCommon.state.internalInformation.chainName
+                Else
+                    newKey.chainName = chainName
+                End If
+
+                If activeMasterNode.ContainsKey(newKey) Then
+                    If Not activeMasterNode(newKey).abstainRequest.ContainsKey(requestHash) Then
+
+                        ''' UNDONE: manage Rejected node
+                        ''' 
+                        ''' Create a A2x1 to esplunse this node for error (and penalization)
+
+                    End If
+                End If
+
+                AreaCommon.log.track("ChainStateEngine.manageRejected", "Complete")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.manageRejected", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to response to absent node
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="requestHash"></param>
+        ''' <param name="chainName"></param>
+        ''' <returns></returns>
+        Public Function manageAbsent(ByVal publicAddress As String, ByVal requestHash As String, Optional ByVal chainName As String = "") As Boolean
+            Try
+                Dim newKey As New DataMasternodeKey
+
+                AreaCommon.log.track("ChainStateEngine.manageAbsent", "Begin")
+
+                newKey.identityPublicAddress = publicAddress
+
+                If (chainName.Length = 0) Then
+                    newKey.chainName = AreaCommon.state.internalInformation.chainName
+                Else
+                    newKey.chainName = chainName
+                End If
+
+                If activeMasterNode.ContainsKey(newKey) Then
+                    If Not activeMasterNode(newKey).abstainRequest.ContainsKey(requestHash) Then
+
+                        ''' UNDONE: manage Absent node
+                        ''' 
+                        ''' Create a A2x1 to esplunse this node for error (and penalization)
+
+                    End If
+                End If
+
+                AreaCommon.log.track("ChainStateEngine.manageAbsent", "Complete")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.manageAbsent", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
 
         ''' <summary>
         ''' This method provide to initialize a class

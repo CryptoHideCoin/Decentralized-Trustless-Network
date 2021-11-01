@@ -24,6 +24,8 @@ Namespace AreaWorker
 
                 Select Case value.dataCommon.requestCode
                     Case "a0x0" : Return AreaProtocol.A0x0.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a0x1" : Return AreaProtocol.A0x1.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a0x2" : Return AreaProtocol.A0x2.FormalCheck.verify(value.dataCommon.hash)
                 End Select
 
                 AreaCommon.log.track("Requester.formalCheck", "Complete")

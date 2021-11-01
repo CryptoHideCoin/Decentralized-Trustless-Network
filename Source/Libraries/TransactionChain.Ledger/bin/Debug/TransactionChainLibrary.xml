@@ -76,15 +76,59 @@ TransactionChainLibrary
  This enumeration contain the property ID
  </summary>
 </member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.createNextCloseAtTime">
+ <summary>
+ This methdo provide to create a next close time of a block 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.createDBBlockLedgerIdentity">
+ <summary>
+ This method provide to create a db lock ledger identity
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.createDBBlockLedger">
+ <summary>
+ This method provide to create a DB Block Ledger
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.insertSQLPropertyIdentityDB(TransactionChainLibrary.AreaLedger.LedgerEngine.EnumPropertyID,System.String)">
+ <summary>
+ This method provide to insert a sql property into Indentity table
+ </summary>
+ <param name="id"></param>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.writeIdentityDB">
+ <summary>
+ This method provide to write an Identity on a DB
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.initDBLedger">
+ <summary>
+ This method provide to initialize a db ledger
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.saveDataToDB">
+ <summary>
+ This method provide to save into DB a single transaction
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.composeCoordinateTransaction(System.Boolean)">
  <summary>
  This method provide to compose a string with a coordinate last approved transaction
  </summary>
  <returns></returns>
 </member>
-<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.assignNewID">
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.saveAndClean">
  <summary>
- This method provide to assign a new id
+ This method provide to save into db the transaction and update a block file with transaction and prepare the engine to create another one
  </summary>
  <returns></returns>
 </member>

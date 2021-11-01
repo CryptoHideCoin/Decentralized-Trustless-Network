@@ -131,13 +131,7 @@ Namespace AreaData
                     End If
                 End With
 
-                ' Il pulsante RebuildState si accende solo se i file sono scaricati e in sequenza
-
-                ' Il pulsante Synchronize Network si accende solo se tutto è in checked e la nodelist è scaricata
-
-                ' Il pulsante Request Network Connection si accende solo se tutto è in stato di checked
-
-                ' Il pulsante Request Network Disconnection si accende solo se sei collegato alla rete
+                ''' UNDONE: VerifyData - Complete with button RebuildState, Synchronize Network, Request Network Connection, Request Network Disconnetion
 
             End If
         End Sub
@@ -168,7 +162,9 @@ Namespace AreaData
 
                 Return False
             Finally
-                AreaCommon.state.currentService.currentAction.reset()
+                If _Proceed Then
+                    AreaCommon.state.currentService.currentAction.reset()
+                End If
 
                 AreaCommon.state.currentService.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.notDefined
                 AreaCommon.state.currentService.requestCancelCurrentRunCommand = False

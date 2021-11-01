@@ -345,13 +345,17 @@ Namespace AreaEngine.Ledger
 
                     serviceState.currentAction.setAction("0x0009", "VerifyData - Storage - Volumes")
 
-                    IO.Directory.Delete(paths.storage, True)
+                    If IO.Directory.Exists(paths.storage) Then
+                        IO.Directory.Delete(paths.storage, True)
 
-                    log.track("StorageEngine.cleanData", "Delete paths storage complete")
+                        log.track("StorageEngine.cleanData", "Delete paths storage complete")
+                    End If
 
-                    IO.Directory.Delete(paths.workData.path, True)
+                    If IO.Directory.Exists(paths.workData.path) Then
+                        IO.Directory.Delete(paths.workData.path, True)
 
-                    log.track("StorageEngine.cleanData", "Delete paths work complete")
+                        log.track("StorageEngine.cleanData", "Delete paths work complete")
+                    End If
 
                     Return True
                 Catch ex As Exception
