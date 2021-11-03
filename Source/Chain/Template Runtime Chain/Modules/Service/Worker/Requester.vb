@@ -26,6 +26,11 @@ Namespace AreaWorker
                     Case "a0x0" : Return AreaProtocol.A0x0.FormalCheck.verify(value.dataCommon.hash)
                     Case "a0x1" : Return AreaProtocol.A0x1.FormalCheck.verify(value.dataCommon.hash)
                     Case "a0x2" : Return AreaProtocol.A0x2.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a0x3" : Return AreaProtocol.A0x3.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a0x4" : Return AreaProtocol.A0x4.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a0x5" : Return AreaProtocol.A0x5.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a0x6" : Return AreaProtocol.A0x6.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a0x7" : Return AreaProtocol.A0x7.FormalCheck.verify(value.dataCommon.hash)
                 End Select
 
                 AreaCommon.log.track("Requester.formalCheck", "Complete")

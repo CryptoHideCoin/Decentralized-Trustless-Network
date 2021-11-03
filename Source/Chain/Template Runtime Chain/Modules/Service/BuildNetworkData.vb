@@ -142,70 +142,7 @@ Namespace AreaData
         End Function
 
 
-        Private Sub manageA0x3()
-            If _Proceed Then
-                Dim commandA0x3 As New AreaProtocol.A0x3.Manager
 
-                commandA0x3.log = AreaCommon.log
-                commandA0x3.currentService = AreaCommon.state.currentService
-
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA0x3.init(AreaCommon.paths, dataNetwork.primaryAsset, .publicAddress, .privateKey)
-                End With
-            End If
-        End Sub
-
-        Private Sub manageA0x4()
-            If _Proceed Then
-                Dim commandA0x4 As New AreaProtocol.A0x4.Manager
-
-                commandA0x4.log = AreaCommon.log
-                commandA0x4.currentService = AreaCommon.state.currentService
-
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA0x4.init(AreaCommon.paths, dataNetwork.transactionChainParameter, .publicAddress, .privateKey)
-                End With
-            End If
-        End Sub
-
-        Private Sub manageA0x5()
-            If _Proceed Then
-                Dim commandA0x5 As New AreaProtocol.A0x5.Manager
-
-                commandA0x5.log = AreaCommon.log
-                commandA0x5.currentService = AreaCommon.state.currentService
-
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA0x5.init(AreaCommon.paths, dataNetwork.privacyPolicy.content, .publicAddress, .privateKey)
-                End With
-            End If
-        End Sub
-
-        Private Sub manageA0x6()
-            If _Proceed Then
-                Dim commandA0x6 As New AreaProtocol.A0x6.Manager
-
-                commandA0x6.log = AreaCommon.log
-                commandA0x6.currentService = AreaCommon.state.currentService
-
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA0x6.init(AreaCommon.paths, dataNetwork.generalCondition.content, .publicAddress, .privateKey)
-                End With
-            End If
-        End Sub
-
-        Private Sub manageA0x7()
-            If _Proceed Then
-                Dim commandA0x7 As New AreaProtocol.A0x7.Manager
-
-                commandA0x7.log = AreaCommon.log
-                commandA0x7.currentService = AreaCommon.state.currentService
-
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA0x7.init(AreaCommon.paths, dataNetwork.refundPlan, .publicAddress, .privateKey)
-                End With
-            End If
-        End Sub
 
         Private Sub manageA1x0()
             If _Proceed Then
@@ -331,12 +268,11 @@ Namespace AreaData
                 If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x0.Manager.createRequest(dataNetwork.name))
                 If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x1.Manager.createRequest(dataNetwork.whitePaper.content))
                 If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x2.Manager.createRequest(dataNetwork.yellowPaper.content))
-
-                'manageA0x3()
-                'manageA0x4()
-                'manageA0x5()
-                'manageA0x6()
-                'manageA0x7()
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x3.Manager.createRequest(dataNetwork.primaryAsset))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x4.Manager.createRequest(dataNetwork.transactionChainParameter))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x5.Manager.createRequest(dataNetwork.privacyPolicy.content))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x6.Manager.createRequest(dataNetwork.generalCondition.content))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x7.Manager.createRequest(dataNetwork.refundPlan))
 
                 'manageA1x0()
                 'manageA1x1()

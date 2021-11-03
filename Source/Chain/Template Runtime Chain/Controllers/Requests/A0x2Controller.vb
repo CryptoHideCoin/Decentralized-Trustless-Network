@@ -5,7 +5,7 @@ Imports System.Web.Http
 
 Imports CHCCommonLibrary.AreaCommon.Models.General
 Imports CHCProtocolLibrary.AreaCommon
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
 
 
 

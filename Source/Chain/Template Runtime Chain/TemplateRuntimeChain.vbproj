@@ -55,9 +55,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.5.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.12.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCProtocolLibrary, Version=1.5.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCRuntimeChainLibrary, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\CHCRuntimeChainLibrary\CHCRuntimeChainLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCSupportUIControls, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -85,6 +93,10 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="TransactionChainLibrary, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\CHCTransactionChainLibrary\TransactionChainLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -148,6 +160,9 @@
     <Compile Include="Controllers\Requests\A0x0Controller.vb" />
     <Compile Include="Controllers\Requests\A0x1Controller.vb" />
     <Compile Include="Controllers\Requests\A0x2Controller.vb" />
+    <Compile Include="Controllers\Requests\A0x3Controller.vb" />
+    <Compile Include="Controllers\Requests\A0x4Controller.vb" />
+    <Compile Include="Controllers\Requests\A0x5Controller.vb" />
     <Compile Include="Controllers\Requests\ExpressionController.vb" />
     <Compile Include="Controllers\Security\ChangeCertificateController.vb" />
     <Compile Include="Controllers\Security\SetIdentityKeyPairController.vb" />
@@ -241,20 +256,6 @@
   <ItemGroup>
     <Content Include="64.ico" />
     <Content Include="Other\ReleaseNote.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\CHCCommonLibrary\CHCCommonLibrary.vbproj">
-      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
-      <Name>CHCCommonLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\CHCRuntimeChainLibrary\CHCRuntimeChainLibrary.vbproj">
-      <Project>{b9a639ab-83f1-4ccc-8c7c-fca16fbe74c4}</Project>
-      <Name>CHCRuntimeChainLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\TransactionChain.Ledger\TransactionChainLibrary.vbproj">
-      <Project>{f363e384-0372-480a-92a6-0031fd8456f7}</Project>
-      <Name>TransactionChainLibrary</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

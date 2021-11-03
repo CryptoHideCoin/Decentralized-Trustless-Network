@@ -202,7 +202,7 @@ Namespace AreaState
         ''' <param name="hashContent"></param>
         ''' <param name="writeValueOnDB"></param>
         ''' <returns></returns>
-        Private Function insertSQLProperty(ByVal id As PropertyID, ByVal value As String, ByVal recordCoordinate As String, ByVal recordHash As String, Optional ByVal hashContent As String = "", Optional ByVal writeValueOnDB As Boolean = False) As Boolean
+        Private Function insertSQLPropertyNetwork(ByVal id As PropertyID, ByVal value As String, ByVal recordCoordinate As String, ByVal recordHash As String, Optional ByVal hashContent As String = "", Optional ByVal writeValueOnDB As Boolean = False) As Boolean
             Try
                 Dim sql As String = ""
                 Dim connectionDB As SQLiteConnection
@@ -255,6 +255,60 @@ Namespace AreaState
                 Return False
             Finally
                 AreaCommon.log.track("ChainStateEngine.addSQLProperty", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to delete old data
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <returns></returns>
+        Private Function deleteOldDataNetwork(ByVal id As PropertyID) As Boolean
+            Try
+                Dim sql As String = ""
+                Dim connectionDB As SQLiteConnection
+                Dim sqlCommand As SQLiteCommand
+                Dim result As Object
+
+                AreaCommon.log.track("ChainStateEngine.deleteOldData", "Begin")
+
+                sql += "SELECT hashContent FROM mainProperties WHERE property_id = " & id
+
+                connectionDB = New SQLiteConnection(String.Format(_DBStateConnectionString, _DBStateFileName))
+
+                connectionDB.Open()
+
+                AreaCommon.log.track("ChainStateEngine.deleteOldData", "DB Open")
+
+                sqlCommand = New SQLiteCommand(connectionDB)
+
+                sqlCommand.CommandText = sql
+
+                result = sqlCommand.ExecuteScalar()
+
+                If Not IsNothing(result) Then
+                    IO.File.Delete(IO.Path.Combine(AreaCommon.paths.workData.state.contents, result) & ".content")
+                End If
+
+                AreaCommon.log.track("ChainStateEngine.deleteOldData", "Delete content")
+
+                sql = "DELETE FROM mainProperties WHERE property_id = " & id
+
+                sqlCommand.CommandText = sql
+
+                sqlCommand.ExecuteScalar()
+
+                AreaCommon.log.track("ChainStateEngine.deleteOldData", "Execute scalar")
+
+                connectionDB.Close()
+
+                AreaCommon.log.track("ChainStateEngine.deleteOldData", "DB Close")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.deleteOldData", "Failed = " & ex.Message, "fatal", True)
+
+                Return False
             End Try
         End Function
 
@@ -368,6 +422,28 @@ Namespace AreaState
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to insert a property into db
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <param name="value"></param>
+        ''' <param name="recordCoordinate"></param>
+        ''' <param name="recordHash"></param>
+        ''' <param name="hashContent"></param>
+        ''' <param name="writeValueOnDB"></param>
+        ''' <returns></returns>
+        Private Function insertPropertNetworky(ByVal id As PropertyID, ByVal value As String, ByVal recordCoordinate As String, ByVal recordHash As String, Optional ByVal hashContent As String = "", Optional ByVal writeValueOnDB As Boolean = False) As Boolean
+            If deleteOldDataNetwork(id) Then
+                If insertSQLPropertyNetwork(id, value, recordCoordinate, recordHash, hashContent, writeValueOnDB) Then
+                    Return True
+                Else
+                    Return False
+                End If
+            Else
+                Return False
+            End If
+        End Function
+
 
         ''' <summary>
         ''' This method provide to add a newtork property
@@ -383,7 +459,7 @@ Namespace AreaState
             Try
                 AreaCommon.log.track("ChainStateEngine.addNetworkProperty", "Begin")
 
-                If insertSQLProperty(id, value, transactionCoordinate, transactionHash, hashContent, writeValueOnDB) Then
+                If insertPropertNetworky(id, value, transactionCoordinate, transactionHash, hashContent, writeValueOnDB) Then
                     Select Case id
                         Case PropertyID.networkCreationDate : activeNetwork.networkCreationDate = value
                         Case PropertyID.genesisPublicAddress : activeNetwork.genesisPublicAddress = value

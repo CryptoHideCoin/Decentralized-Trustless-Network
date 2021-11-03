@@ -24,6 +24,11 @@ Namespace AreaWorker
                     Case "a0x0" : Return AreaProtocol.A0x0.FormalCheck.evaluate(value)
                     Case "a0x1" : Return AreaProtocol.A0x1.FormalCheck.evaluate(value)
                     Case "a0x2" : Return AreaProtocol.A0x2.FormalCheck.evaluate(value)
+                    Case "a0x3" : Return AreaProtocol.A0x3.FormalCheck.evaluate(value)
+                    Case "a0x4" : Return AreaProtocol.A0x4.FormalCheck.evaluate(value)
+                    Case "a0x5" : Return AreaProtocol.A0x5.FormalCheck.evaluate(value)
+                    Case "a0x6" : Return AreaProtocol.A0x6.FormalCheck.evaluate(value)
+                    Case "a0x7" : Return AreaProtocol.A0x7.FormalCheck.evaluate(value)
                 End Select
 
                 AreaCommon.log.track("Verifier.evaluateTheRequest", "Complete")
@@ -40,7 +45,7 @@ Namespace AreaWorker
         ''' This method provide to work verifier job
         ''' </summary>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()>
+        '<DebuggerHiddenAttribute()>
         Public Function work() As Boolean
             Try
                 Dim item As AreaFlow.RequestExtended

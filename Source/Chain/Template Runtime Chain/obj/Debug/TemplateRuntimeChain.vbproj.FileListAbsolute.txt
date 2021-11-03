@@ -30,12 +30,9 @@ E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Debug\CHCPrimaryRun
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\System.Data.SQLite.dll
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\System.Data.SQLite.xml
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCRuntimeChainLibrary.dll
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCCommonLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCCommonLibrary.xml
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCRuntimeChainLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCRuntimeChainLibrary.xml
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\TransactionChainLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\TransactionChainLibrary.xml
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\Newtonsoft.Json.dll
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Debug\CHCPrimaryRuntimeService.exe.config

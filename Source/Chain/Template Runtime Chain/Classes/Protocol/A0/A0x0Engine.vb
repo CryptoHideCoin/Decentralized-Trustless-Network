@@ -11,6 +11,9 @@ Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
 
 Namespace AreaProtocol
 
+    ''' <summary>
+    ''' This class contain all element to manage a A0x0 command
+    ''' </summary>
     Public Class A0x0
 
         ''' <summary>
@@ -132,13 +135,7 @@ Namespace AreaProtocol
             End Function
 
             Public Shared Function fromTransactionLedger(ByRef value As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
-                With AreaCommon.state.runtimeState.activeNetwork
-                    .networkName.value = value.detailInformation
-                    .networkCreationDate = value.registrationTimeStamp
-                    .genesisPublicAddress = value.requesterPublicAddress
-                End With
-
-                Return True
+                ''' TODO: A0x0 RecoveryState.fromTransactionLedger
             End Function
 
         End Class

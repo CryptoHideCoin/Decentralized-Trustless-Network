@@ -21,3 +21,4 @@ E:\CryptoHideCoinDTN\Source\Administration\Admin Service Client Windows\bin\Debu
 E:\CryptoHideCoinDTN\Source\Administration\Admin Service Client Windows\bin\Debug\CHCSupportUIControls.xml
 E:\CryptoHideCoinDTN\Source\Administration\Admin Service Client Windows\obj\Debug\CHCAdminClientService.BuildNetwork.resources
 E:\CryptoHideCoinDTN\Source\Administration\Admin Service Client Windows\obj\Debug\CHCAdminClientService.RefundPlanDetail.resources
+E:\CryptoHideCoinDTN\Source\Administration\Admin Service Client Windows\obj\Debug\CHCAdminClientService.exe.config

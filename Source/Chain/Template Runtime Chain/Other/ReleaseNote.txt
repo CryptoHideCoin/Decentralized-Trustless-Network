@@ -7,6 +7,7 @@ Release Note
 0.5.0   - 11.09.2021 - Complete Response Module Engine
 ---
 0.8.0   - 01.11.2021 - Complete Transaction Chain Runtime
+0.9.0   - 03.11.2021 - Add all eight (8) network command
 
 TO DO
 =====

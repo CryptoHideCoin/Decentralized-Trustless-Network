@@ -732,7 +732,12 @@ Namespace AreaConsensus
                 Select Case request.dataCommon.requestCode
                     Case "a0x0" : support.newIdentity = AreaProtocol.A0x0.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.netName, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x1" : support.newIdentity = AreaProtocol.A0x1.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.whitePaper, request.data.common.publicAddressRequester, requestHash)
-                    Case "a0x2" : support.newIdentity = AreaProtocol.A0x1.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.yellowPaper, request.data.common.publicAddressRequester, requestHash)
+                    Case "a0x2" : support.newIdentity = AreaProtocol.A0x2.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.yellowPaper, request.data.common.publicAddressRequester, requestHash)
+                    Case "a0x3" : support.newIdentity = AreaProtocol.A0x3.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.primaryAsset, request.data.common.publicAddressRequester, requestHash)
+                    Case "a0x4" : support.newIdentity = AreaProtocol.A0x4.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.transactionChainSettings, request.data.common.publicAddressRequester, requestHash)
+                    Case "a0x5" : support.newIdentity = AreaProtocol.A0x5.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.privacyPolicy, request.data.common.publicAddressRequester, requestHash)
+                    Case "a0x6" : support.newIdentity = AreaProtocol.A0x6.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.generalCondition, request.data.common.publicAddressRequester, requestHash)
+                    Case "a0x7" : support.newIdentity = AreaProtocol.A0x7.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.refundPlan, request.data.common.publicAddressRequester, requestHash)
                 End Select
 
                 support.proceed = Not IsNothing(support.newIdentity)
@@ -763,7 +768,13 @@ Namespace AreaConsensus
 
                 Select Case request.dataCommon.requestCode
                     Case "a0x0" : support.proceed = AreaProtocol.A0x0.RecoveryState.fromRequest(request.data, support.newIdentity)
-                    Case "a0x1" : support.proceed = AreaProtocol.A0x1.RecoveryState.fromRequest(request.data, support.newIdentity, "")
+                    Case "a0x1" : support.proceed = AreaProtocol.A0x1.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
+                    Case "a0x2" : support.proceed = AreaProtocol.A0x2.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
+                    Case "a0x3" : support.proceed = AreaProtocol.A0x3.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
+                    Case "a0x4" : support.proceed = AreaProtocol.A0x4.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
+                    Case "a0x5" : support.proceed = AreaProtocol.A0x5.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
+                    Case "a0x6" : support.proceed = AreaProtocol.A0x6.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
+                    Case "a0x7" : support.proceed = AreaProtocol.A0x7.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
                 End Select
 
                 AreaCommon.log.track("ConsensusEngine.updateState", "Complete")

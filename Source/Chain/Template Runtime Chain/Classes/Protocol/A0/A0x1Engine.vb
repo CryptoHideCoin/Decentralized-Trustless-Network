@@ -8,8 +8,12 @@ Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
 
 
 
+
 Namespace AreaProtocol
 
+    ''' <summary>
+    ''' This class contain all element to manage a A0x1 command
+    ''' </summary>
     Public Class A0x1
 
         ''' <summary>
@@ -110,11 +114,19 @@ Namespace AreaProtocol
             Public Shared Function fromRequest(ByRef value As RequestModel, ByVal transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction, ByVal hashContent As String) As Boolean
                 Try
                     Dim proceed As Boolean = True
+                    Dim contentPath As String = AreaCommon.paths.workData.state.contents
 
                     AreaCommon.log.track("RecoveryState.fromRequest", "Begin")
 
                     If proceed Then
                         proceed = AreaCommon.state.runtimeState.addNetworkProperty(AreaState.ChainStateEngine.PropertyID.whitePaper, value.whitePaper, transactionChainRecord.coordinate, transactionChainRecord.hash, hashContent, False)
+                    End If
+                    If proceed Then
+                        contentPath = IO.Path.Combine(contentPath, hashContent & ".content")
+
+                        My.Computer.FileSystem.WriteAllText(contentPath, value.whitePaper, False)
+
+                        proceed = True
                     End If
 
                     AreaCommon.log.track("RecoveryState.fromRequest", "Complete")
@@ -128,15 +140,7 @@ Namespace AreaProtocol
             End Function
 
             Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
-                Try
-                    With AreaCommon.state.runtimeState.activeNetwork.whitePaper
-                        .value = TransactionChainLibrary.AreaEngine.Ledger.State.StateEngine.readContentFromFile(statePath, data.detailInformation)
-                    End With
-
-                    Return True
-                Catch ex As Exception
-                    Return False
-                End Try
+                ''' TODO: A0x1 RecoveryState.fromTransactionLedger
             End Function
 
         End Class
