@@ -52,6 +52,7 @@ Public Class AppState
     Public Property component As New ComponentElement
     Public Property runtimeState As New AreaState.ChainStateEngine
     Public Property currentBlockLedger As New TransactionChainLibrary.AreaLedger.LedgerEngine
+    Public Property ledgerMap As New TransactionChainLibrary.AreaLedger.LedgerMapEngine
 
     Public Property noConsoleMessage As Boolean = False
 

@@ -12,7 +12,7 @@ Namespace AreaCommon.Models.Network
 
         Property netWorkReferement As String = ""
         Property chainReferement As String = ""
-        Property requestCode As String = ""
+        Property [type] As String = ""
         Property publicAddressRequester As String = ""
         Property requestDateTimeStamp As Double = 0
         Property requestHash As String = ""
@@ -22,7 +22,7 @@ Namespace AreaCommon.Models.Network
 
             tmp += netWorkReferement
             tmp += chainReferement
-            tmp += requestCode
+            tmp += [type]
             tmp += requestDateTimeStamp.ToString()
             tmp += publicAddressRequester
             tmp += requestHash

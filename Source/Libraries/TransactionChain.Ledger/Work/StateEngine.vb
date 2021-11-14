@@ -14,6 +14,9 @@ Namespace AreaEngine.Ledger
 
     Namespace State
 
+        ''' <summary>
+        ''' This class contains all element of a state information
+        ''' </summary>
         Public Class StateInformation
 
             Public Property networkName As String = ""
@@ -176,7 +179,7 @@ Namespace AreaEngine.Ledger
 
                     serviceState.currentAction.setAction("0x0004", "VerifyData - State")
 
-                    stateIndex.fileName = IO.Path.Combine(paths.workData.state.db, "State.Index")
+                    stateIndex.fileName = IO.Path.Combine(paths.workData.state.path, "State.Index")
 
                     If serviceState.requestCancelCurrentRunCommand Then Return False
 
@@ -186,18 +189,20 @@ Namespace AreaEngine.Ledger
 
                     If stateIndex.fileCorrupted Or stateIndex.mismatchedSignature Then
                         If stateIndex.fileExist Then
-                            generalState = AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
                         Else
-                            generalState = AreaCommon.Models.Administration.EnumDataPosition.missing
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.missing
                         End If
 
                     ElseIf stateIndex.fileExist Then
-                        generalState = AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
+                        generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
                     Else
-                        If (CHCCommonLibrary.AreaEngine.FileManagement.getMD5FromFile(IO.Path.Combine(paths.workData.state.db, "State.Index")) = stateIndex.data.fileStateMD5) Then
-                            generalState = AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
+                        ''' TODO: Correct Path
+                        'If (CHCCommonLibrary.AreaEngine.FileManagement.getMD5FromFile(IO.Path.Combine(paths.workData.state.db, "State.Index")) = stateIndex.data.fileStateMD5) Then
+                        If (CHCCommonLibrary.AreaEngine.FileManagement.getMD5FromFile(IO.Path.Combine("", "State.Index")) = stateIndex.data.fileStateMD5) Then
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
                         Else
-                            generalState = AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
                         End If
                     End If
 

@@ -22,6 +22,227 @@ TransactionChainLibrary
   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
 </summary>
 </member>
+<member name="T:TransactionChainLibrary.AreaEngine.Ledger.State.StateInformation">
+ <summary>
+ This class contains all element of a state information
+ </summary>
+</member>
+<member name="T:TransactionChainLibrary.AreaEngine.Requests.RequestManager">
+ <summary>
+ This class contain a request manager element
+ </summary>
+</member>
+<member name="T:TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData">
+ <summary>
+ This class contain request position
+ </summary>
+</member>
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.init(System.String)">
+ <summary>
+ This method provide to initialize the component
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.addNewRequest(System.String,System.String)">
+ <summary>
+ This method provide to add a new request
+ </summary>
+ <param name="hash"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.getRequest(System.String)">
+ <summary>
+ This method provide to return a data request into db
+ </summary>
+ <param name="hash"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.completedRequest(System.String,TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest,System.String)">
+ <summary>
+ This method provide to complete a request into db
+ </summary>
+ <param name="hash"></param>
+ <param name="currentState"></param>
+ <param name="block"></param>
+ <returns></returns>
+</member>
+<member name="T:TransactionChainLibrary.AreaCommon.DAO.DBGeneric">
+ <summary>
+ This class contain the generic method to manage a db
+ </summary>
+</member>
+<member name="T:TransactionChainLibrary.AreaCommon.DAO.DBGeneric.DBPropertyID">
+ <summary>
+ This is the enumeration relative of a type of db
+ </summary>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DBGeneric.insertSQLPropertyIdentityDB(TransactionChainLibrary.AreaCommon.DAO.DBGeneric.DBPropertyID,System.String,System.String)">
+ <summary>
+ This method provide to insert a SQL Property Identity DB
+ </summary>
+ <param name="id"></param>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DBGeneric.executeDataTable(System.String,System.String,System.Boolean,System.Data.SQLite.SQLiteConnection@)">
+ <summary>
+ This method provide to Create DB Table
+ </summary>
+ <param name="sql"></param>
+ <param name="connectionString"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DBGeneric.executeDataTable(System.String,System.String@)">
+ <summary>
+ This method provide to insert SQL
+ </summary>
+ <param name="sql"></param>
+ <param name="connectionString"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DBGeneric.insertDataTableWithResult(System.String,System.String@)">
+ <summary>
+ This method provide to insert data table with result ID
+ </summary>
+ <param name="sql"></param>
+ <param name="connectionString"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DBGeneric.selectResultDataTable(System.String,System.String,System.Boolean,System.Data.SQLite.SQLiteConnection@)">
+ <summary>
+ This method provide to select only result from a select SQL
+ </summary>
+ <param name="sql"></param>
+ <param name="connectionString"></param>
+ <param name="closeDB"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DBGeneric.createIdentityDBTable(System.String)">
+ <summary>
+ This method provide to create an identity db table
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DBGeneric.writeIdentityDB(System.String,System.String,System.String)">
+ <summary>
+ This method provide to write an Identity on a DB
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:TransactionChainLibrary.AreaCommon.DAO.DAOLedger">
+ <summary>
+ This class contain all method manage a DB Ledger
+ </summary>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.createTableBlockLedger">
+ <summary>
+ This method provide to create a table block ledger
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.createTableLedgerMap">
+ <summary>
+ This method provide to create a table ledger map
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.createTableBasePath">
+ <summary>
+ This method provide to create a table ledger map
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.getIdOriginByPath(System.String)">
+ <summary>
+ This method provide to get id origin by path
+ </summary>
+ <param name="basePath"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.getIdOriginByAddNew(System.String)">
+ <summary>
+ This method provide to get the origin by addNew
+ </summary>
+ <param name="basePath"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.addNewBlockPath(System.String)">
+ <summary>
+ This method provide to add a new block path
+ </summary>
+ <param name="blockName"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.retrievePathOrigin(System.String)">
+ <summary>
+ This method provide to retrieve a path origin
+ </summary>
+ <param name="basePath"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.getRequestPath(System.String)">
+ <summary>
+ This method provide to retrieve a get path
+ </summary>
+ <param name="blockInformation"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.saveData(TransactionChainLibrary.AreaLedger.SingleTransactionLedger@)">
+ <summary>
+ This method provide to save into DB a single transaction
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.createDBLedgerBlockData(System.String,System.String)">
+ <summary>
+ This method provide to create a db ledger
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.createDBLedgerMap(System.String)">
+ <summary>
+ This method provide to create a db ledger Map
+ </summary>
+ <param name="basePath"></param>
+ <returns></returns>
+</member>
+<member name="T:TransactionChainLibrary.AreaCommon.DAO.DAORequest">
+ <summary>
+ This class contain all method manage a DB Ledger
+ </summary>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAORequest.createDBRequests">
+ <summary>
+ This method provide to create a DB Requests
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAORequest.addNewRequest(TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData,System.String)">
+ <summary>
+ This method provide to save into DB a single transaction
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAORequest.getRequest(System.String)">
+ <summary>
+ This method provide to get a request from a request hash
+ </summary>
+ <param name="requestHash"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAORequest.updateState(System.String,System.Object,System.String)">
+ <summary>
+ This method provide to set a request state
+ </summary>
+ <param name="hash"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAORequest.init(System.String)">
+ <summary>
+ This method provide to initialize a db ledger
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:TransactionChainLibrary.AreaLedger.EnumPositionField">
  <summary>
  This enum contain the index of a field into string array of a single transaction data
@@ -82,48 +303,36 @@ TransactionChainLibrary
  </summary>
  <returns></returns>
 </member>
-<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.createDBBlockLedgerIdentity">
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.createDBBlock">
  <summary>
- This method provide to create a db lock ledger identity
+ This method provide to create a db block
  </summary>
  <returns></returns>
 </member>
-<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.createDBBlockLedger">
- <summary>
- This method provide to create a DB Block Ledger
- </summary>
- <returns></returns>
-</member>
-<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.insertSQLPropertyIdentityDB(TransactionChainLibrary.AreaLedger.LedgerEngine.EnumPropertyID,System.String)">
- <summary>
- This method provide to insert a sql property into Indentity table
- </summary>
- <param name="id"></param>
- <param name="value"></param>
- <returns></returns>
-</member>
-<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.writeIdentityDB">
- <summary>
- This method provide to write an Identity on a DB
- </summary>
- <returns></returns>
-</member>
-<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.initDBLedger">
- <summary>
- This method provide to initialize a db ledger
- </summary>
- <returns></returns>
-</member>
-<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.saveDataToDB">
- <summary>
- This method provide to save into DB a single transaction
- </summary>
- <returns></returns>
-</member>
-<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.composeCoordinateTransaction(System.Boolean)">
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.composeCoordinateTransaction(System.Boolean,System.Boolean)">
  <summary>
  This method provide to compose a string with a coordinate last approved transaction
  </summary>
+ <param name="nextTransaction"></param>
+ <param name="noTransaction"></param>
+ <returns></returns>
+</member>
+<member name="P:TransactionChainLibrary.AreaLedger.LedgerEngine.CurrentTotalHash">
+ <summary>
+ This property get a current total hash
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.completeRecord">
+ <summary>
+ This method provide to complete a record
+ </summary>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.calculateProgressiveHash(System.String)">
+ <summary>
+ This method provide to calculate progressive hash
+ </summary>
+ <param name="recordHash"></param>
  <returns></returns>
 </member>
 <member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.saveAndClean">
@@ -138,6 +347,18 @@ TransactionChainLibrary
  </summary>
  <param name="path"></param>
  <param name="creationLedgerDate"></param>
+ <returns></returns>
+</member>
+<member name="T:TransactionChainLibrary.AreaLedger.LedgerMapEngine">
+ <summary>
+ This class contain all element to map a block of a ledger
+ </summary>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerMapEngine.getRequestPath(System.String)">
+ <summary>
+ This method provide to get a request path
+ </summary>
+ <param name="blockPath"></param>
  <returns></returns>
 </member>
 </members>

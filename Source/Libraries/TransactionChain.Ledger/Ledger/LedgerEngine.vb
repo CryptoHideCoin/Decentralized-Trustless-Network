@@ -17,7 +17,7 @@ Namespace AreaLedger
     Public Enum EnumPositionField
         id = 0
         registrationTimeStamp = 1
-        actionCode = 2
+        [type] = 2
         requesterPublicAddress = 3
         approverPublicAddress = 4
         requestHash = 5
@@ -32,9 +32,11 @@ Namespace AreaLedger
     ''' </summary>
     Public Class SingleTransactionLedger
 
+        Public Property pathData As CHCProtocolLibrary.AreaSystem.VirtualPathEngine.LedgerBlockPath
+
         Public Property id As Integer = 0
         Public Property registrationTimeStamp As Double = 0
-        Public Property actionCode As String = ""
+        Public Property [type] As String = ""
         Public Property requesterPublicAddress As String = ""
         Public Property approverPublicAddress As String = ""
         Public Property requestHash As String = ""
@@ -83,7 +85,7 @@ Namespace AreaLedger
                         Return False
                     End If
 
-                    actionCode = elements(EnumPositionField.actionCode)
+                    [type] = elements(EnumPositionField.[type])
                     requesterPublicAddress = elements(EnumPositionField.requesterPublicAddress)
                     approverPublicAddress = elements(EnumPositionField.approverPublicAddress)
                     requestHash = elements(EnumPositionField.requestHash)
@@ -112,7 +114,7 @@ Namespace AreaLedger
 
             tmp += id.ToString() & separator
             tmp += registrationTimeStamp.ToString() & separator
-            tmp += actionCode & separator
+            tmp += [type] & separator
             tmp += requesterPublicAddress & separator
             tmp += approverPublicAddress & separator
             tmp += requestHash & separator
@@ -168,11 +170,10 @@ Namespace AreaLedger
         Private Property _CurrentTotalHash As String = ""
         Private Property _CreationLedgerDate As Double = 0
         Private Property _NextBlockCloseAtTime As DateTime
-        Private Property _DBLedgerFileName As String = "Ledger.Db"
-        Private Property _DBLedgerConnectionString As String = "Data source = {0};Version=3;"
+        Private Property _DAO As New AreaCommon.DAO.DAOLedger
 
-        Public Property currentApprovedTransaction As New SingleTransactionLedger
-        Public Property nextProposeNewTransaction As New SingleTransactionLedger
+        Public Property approvedTransaction As New SingleTransactionLedger
+        Public Property proposeNewTransaction As New SingleTransactionLedger
         Public Property identifyBlockChain As String = ""
         Public Property currentIdBlock As Integer = 0
         Public Property currentIdVolume As Byte = 0
@@ -210,276 +211,55 @@ Namespace AreaLedger
         End Function
 
         ''' <summary>
-        ''' This method provide to create a db lock ledger identity
+        ''' This method provide to create a db block
         ''' </summary>
         ''' <returns></returns>
-        Private Function createDBBlockLedgerIdentity() As Boolean
+        Private Function createDBBlock() As Boolean
             Try
-                Dim sql As String = ""
-                Dim connectionDB As SQLiteConnection
-                Dim sqlCommand As SQLiteCommand
-
-                log.track("LedgerEngine.createDBBlockLedgerIdentity", "Begin")
-
-                sql += "CREATE TABLE dbIdentity "
-                sql += " (property_id INTEGER PRIMARY KEY, "
-                sql += "  value NVARCHAR(1024) NOT NULL "
-                sql += ");"
-
-                connectionDB = New SQLiteConnection(String.Format(_DBLedgerConnectionString, _DBLedgerFileName))
-
-                connectionDB.Open()
-
-                log.track("LedgerEngine.createDBBlockLedgerIdentity", "Connection Open")
-
-                sqlCommand = New SQLiteCommand(connectionDB)
-
-                sqlCommand.CommandText = sql
-
-                sqlCommand.ExecuteScalar()
-
-                log.track("LedgerEngine.createDBBlockLedgerIdentity", "Command execute")
-
-                connectionDB.Close()
-
-                log.track("LedgerEngine.createDBBlockLedgerIdentity", "Complete")
-
-                Return True
-            Catch ex As Exception
-                log.track("LedgerEngine.createDBBlockLedgerIdentity", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to create a DB Block Ledger
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function createDBBlockLedger() As Boolean
-            Try
-                Dim sql As String = ""
-                Dim connectionDB As SQLiteConnection
-                Dim sqlCommand As SQLiteCommand
-
-                log.track("LedgerEngine.createDBBlockLedger", "Begin")
-
-                sql += "CREATE TABLE blockData "
-                sql += " (record_id INTEGER PRIMARY KEY, "
-                sql += "  registrationDate DOUBLE NOT NULL, "
-                sql += "  actionCode NVARCHAR(10) NOT NULL, "
-                sql += "  requesterPublicAddress NVARCHAR(4096) NOT NULL, "
-                sql += "  approverPublicAddress NVARCHAR(65536) NOT NULL, "
-                sql += "  requestHash NVARCHAR(128) NOT NULL, "
-                sql += "  detailInformation NVARCHAR(65536) NOT NULL, "
-                sql += "  consensusHash NVARCHAR(128) NOT NULL, "
-                sql += "  currentHash NVARCHAR(128) NOT NULL, "
-                sql += "  progressiveHash NVARCHAR(128) NOT NULL "
-                sql += ");"
-
-                connectionDB = New SQLiteConnection(String.Format(_DBLedgerConnectionString, _DBLedgerFileName))
-
-                connectionDB.Open()
-
-                log.track("LedgerEngine.createDBBlockLedger", "Db Open")
-
-                sqlCommand = New SQLiteCommand(connectionDB)
-
-                sqlCommand.CommandText = sql
-
-                sqlCommand.ExecuteScalar()
-
-                log.track("LedgerEngine.createDBBlockLedger", "Command execute")
-
-                connectionDB.Close()
-
-                log.track("LedgerEngine.createDBBlockLedger", "Connection close")
-
-                Return True
-            Catch ex As Exception
-                log.track("LedgerEngine.createDBBlockLedger", ex.Message, "fatal")
-
-                Return False
-            Finally
-                log.track("LedgerEngine.createDBBlockLedger", "Complete")
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to insert a sql property into Indentity table
-        ''' </summary>
-        ''' <param name="id"></param>
-        ''' <param name="value"></param>
-        ''' <returns></returns>
-        Private Function insertSQLPropertyIdentityDB(ByVal id As EnumPropertyID, ByVal value As String) As Boolean
-            Try
-                Dim sql As String = ""
-                Dim connectionDB As SQLiteConnection
-                Dim sqlCommand As SQLiteCommand
-
-                log.track("LedgerEngine.insertSQLPropertyIdentityDB", "Begin")
-
-                sql += "INSERT INTO dbIdentity "
-                sql += " (property_id, value) "
-                sql += "VALUES "
-                sql += " (" & id & ", '"
-                sql += value
-                sql += "')"
-
-                connectionDB = New SQLiteConnection(String.Format(_DBLedgerConnectionString, _DBLedgerFileName))
-
-                connectionDB.Open()
-
-                log.track("LedgerEngine.insertSQLPropertyIdentityDB", "Connection Open")
-
-                sqlCommand = New SQLiteCommand(connectionDB)
-
-                sqlCommand.CommandText = sql
-
-                sqlCommand.ExecuteScalar()
-
-                log.track("LedgerEngine.insertSQLPropertyIdentityDB", "Command executed")
-
-                connectionDB.Close()
-
-                log.track("LedgerEngine.insertSQLPropertyIdentityDB", "Connection Closed")
-
-                Return True
-            Catch ex As Exception
-                log.track("LedgerEngine.insertSQLPropertyIdentityDB", ex.Message, "fatal")
-
-                Return False
-            Finally
-                log.track("LedgerEngine.insertSQLPropertyIdentityDB", "Complete")
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to write an Identity on a DB
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function writeIdentityDB() As Boolean
-            Try
-                log.track("LedgerEngine.writeIdentityDB", "Begin")
-
-                insertSQLPropertyIdentityDB(EnumPropertyID.dateCreation, CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT())
-                insertSQLPropertyIdentityDB(EnumPropertyID.name, CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, _currentIdVolume, _currentIdBlock))
-                insertSQLPropertyIdentityDB(EnumPropertyID.typeOfDB, "BlockLedger")
-
-                log.track("LedgerEngine.writeIdentityDB", "Complete")
-
-                Return True
-            Catch ex As Exception
-                log.track("LedgerEngine.writeIdentityDB", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to initialize a db ledger
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function initDBLedger() As Boolean
-            Try
+                Dim blockName As String = ""
+                Dim intermediatePath As String
                 Dim proceed As Boolean = True
 
-                log.track("LedgerEngine.initDBLedger", "Begin")
+                log.track("LedgerEngine.createDBBlock", "Begin")
 
-                _DBLedgerFileName = CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, _CurrentIdVolume, _CurrentIdBlock)
-                _DBLedgerFileName = IO.Path.Combine(_BasePath, _DBLedgerFileName & ".db")
+                blockName = CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, currentIdVolume, currentIdBlock)
+                proposeNewTransaction.pathData = CHCProtocolLibrary.AreaSystem.VirtualPathEngine.createBlockPath(_BasePath, blockName)
 
-                log.track("LedgerEngine.initDBLedger", "Set db in" & _DBLedgerFileName)
+                If IsNothing(approvedTransaction.pathData) Then
+                    approvedTransaction.pathData = proposeNewTransaction.pathData
+                End If
 
-                If Not IO.File.Exists(_DBLedgerFileName) Then
-                    log.track("LedgerEngine.initDBLedger", "Db file not exist")
+                intermediatePath = proposeNewTransaction.pathData.path
+                _CompleteFileName = IO.Path.Combine(intermediatePath, "current.BlockData")
 
-                    SQLiteConnection.CreateFile(_DBLedgerFileName)
+                log.track("LedgerEngine.createDBBlock", "Set Complete file name = " & _CompleteFileName)
 
-                    log.track("LedgerEngine.initDBLedger", "Db created")
+                If proceed Then
+                    proceed = _DAO.addNewBlockPath(blockName)
+                End If
+                If proceed Then
+                    proceed = _DAO.createDBLedgerBlockData(intermediatePath, blockName)
+                End If
+                If proceed Then
+                    log.track("LedgerEngine.createDBBlock", "initDBLedger complete")
 
-                    If proceed Then
-                        proceed = createDBBlockLedgerIdentity()
-                    End If
-                    If proceed Then
-                        proceed = writeIdentityDB()
-                    End If
-                    If proceed Then
-                        proceed = createDBBlockLedger()
-                    End If
-
-                    Return proceed
+                    Return True
                 End If
             Catch ex As Exception
-                log.track("LedgerEngine.initDBLedger", ex.Message, "fatal")
-            Finally
-                log.track("LedgerEngine.initDBLedger", "Complete")
+                log.track("LedgerEngine.createDBBlock", ex.Message, "fatal")
             End Try
 
             Return False
-        End Function
-
-        ''' <summary>
-        ''' This method provide to save into DB a single transaction
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function saveDataToDB() As Boolean
-            Try
-                Dim sql As String = ""
-                Dim connectionDB As SQLiteConnection
-                Dim sqlCommand As SQLiteCommand
-
-                log.track("LedgerEngine.saveDataToDB", "Begin")
-
-                sql += "INSERT INTO blockData "
-                sql += " (record_id, registrationDate, actionCode, requesterPublicAddress, approverPublicAddress, requestHash, consensusHash, detailInformation, currentHash, progressiveHash) "
-                sql += "VALUES "
-                sql += " (" & nextProposeNewTransaction.id & ", "
-                sql += "'" & nextProposeNewTransaction.registrationTimeStamp & "', "
-                sql += "'" & nextProposeNewTransaction.actionCode & "', "
-                sql += "'" & nextProposeNewTransaction.requesterPublicAddress & "', "
-                sql += "'" & nextProposeNewTransaction.approverPublicAddress & "', "
-                sql += "'" & nextProposeNewTransaction.requestHash & "', "
-                sql += "'" & nextProposeNewTransaction.consensusHash & "', "
-                sql += "'" & nextProposeNewTransaction.detailInformation & "', "
-                sql += "'" & nextProposeNewTransaction.currentHash & "', "
-                sql += "'" & nextProposeNewTransaction.progressiveHash & "' "
-                sql += ")"
-
-                connectionDB = New SQLiteConnection(String.Format(_DBLedgerConnectionString, _DBLedgerFileName))
-
-                connectionDB.Open()
-
-                log.track("LedgerEngine.saveDataToDB", "Connection Open")
-
-                sqlCommand = New SQLiteCommand(connectionDB)
-
-                sqlCommand.CommandText = sql
-
-                sqlCommand.ExecuteScalar()
-
-                log.track("LedgerEngine.saveDataToDB", "Command executed")
-
-                connectionDB.Close()
-
-                log.track("LedgerEngine.saveDataToDB", "Connection Closed")
-
-                Return True
-            Catch ex As Exception
-                log.track("LedgerEngine.saveDataToDB", ex.Message, "fatal")
-
-                Return False
-            Finally
-                log.track("LedgerEngine.saveDataToDB", "Complete")
-            End Try
         End Function
 
 
         ''' <summary>
         ''' This method provide to compose a string with a coordinate last approved transaction
         ''' </summary>
+        ''' <param name="nextTransaction"></param>
+        ''' <param name="noTransaction"></param>
         ''' <returns></returns>
-        Public Function composeCoordinateTransaction(Optional ByVal nextTransaction As Boolean = False) As String
+        Public Function composeCoordinateTransaction(Optional ByVal nextTransaction As Boolean = False, Optional ByVal noTransaction As Boolean = False) As String
             Try
                 Dim idTransaction As Integer
                 Dim idBlock As Integer
@@ -488,19 +268,23 @@ Namespace AreaLedger
                 log.track("LedgerEngine.composeCoordinateTransaction", "Begin")
 
                 If nextTransaction Then
-                    idTransaction = nextProposeNewTransaction.id
+                    idTransaction = proposeNewTransaction.id
                     idBlock = nextIdBlock
                     idVolume = nextIdVolume
                 Else
-                    idTransaction = currentApprovedTransaction.id
+                    idTransaction = approvedTransaction.id
                     idBlock = currentIdBlock
                     idVolume = currentIdVolume
                 End If
 
-                If (currentApprovedTransaction.actionCode.Length = 0) And Not nextTransaction Then
+                If (approvedTransaction.type.Length = 0) And Not nextTransaction Then
                     Return "----"
                 Else
-                    Return CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.composeCoordinate(identifyBlockChain, idVolume, idBlock, idTransaction)
+                    If noTransaction Then
+                        Return CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.composeCoordinate(identifyBlockChain, idVolume, idBlock)
+                    Else
+                        Return CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.composeCoordinate(identifyBlockChain, idVolume, idBlock, idTransaction)
+                    End If
                 End If
             Catch ex As Exception
                 log.track("LedgerEngine.composeCoordinateTransaction", ex.Message, "fatal")
@@ -511,68 +295,30 @@ Namespace AreaLedger
             End Try
         End Function
 
-        '''' <summary>
-        '''' This method provide to assign a new id
-        '''' </summary>
-        '''' <returns></returns>
-        'Public Function assignNewID() As Boolean
-        '    Try
-        '        log.track("LedgerEngine.assignNewID", "Begin")
-
-        '        nextIdBlock = currentIdBlock
-        '        nextIdVolume = currentIdVolume
-
-        '        If requestChangeBlock Then
-        '            Dim numberDaysOnYear As Integer = 365
-
-        '            If DateTime.IsLeapYear(Now.Year) Then
-        '                numberDaysOnYear = 366
-        '            End If
-        '            If (currentIdBlock = numberDaysOnYear) Then
-        '                nextIdVolume = currentIdVolume + 1
-        '                nextIdBlock = 0
-        '            Else
-        '                nextIdBlock += 1
-        '            End If
-        '            nextProposeNewTransaction.id = 0
-        '        Else
-        '            nextProposeNewTransaction.id = currentApprovedTransaction.id + 1
-        '        End If
-
-        '        log.track("LedgerEngine.assignNewID", "Complete")
-
-        '        Return True
-        '    Catch ex As Exception
-        '        log.track("LedgerEngine.assignNewID", ex.Message, "fatal")
-
-        '        Return False
-        '    End Try
-        'End Function
-
-        'Public ReadOnly Property newIdTransaction() As Integer
-        '    Get
-        '        Return _NewIdTransaction
-        '    End Get
-        'End Property
-
-        'Public ReadOnly Property blockComplete() As Boolean
-        '    Get
-        '        Return (Now.Subtract(_NextBlockCloseAtTime).TotalSeconds > 0)
-        '    End Get
-        'End Property
-
+        ''' <summary>
+        ''' This property get a current total hash
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property CurrentTotalHash() As String
             Get
                 Return _CurrentTotalHash
             End Get
         End Property
 
+        ''' <summary>
+        ''' This method provide to complete a record
+        ''' </summary>
         Public Sub completeRecord()
-            nextProposeNewTransaction.id = _NewIdTransaction
-            nextProposeNewTransaction.currentHash = nextProposeNewTransaction.getHash
-            nextProposeNewTransaction.progressiveHash = HashSHA.generateSHA256(nextProposeNewTransaction.currentHash & _CurrentTotalHash)
+            proposeNewTransaction.id = _NewIdTransaction
+            proposeNewTransaction.currentHash = proposeNewTransaction.getHash
+            proposeNewTransaction.progressiveHash = HashSHA.generateSHA256(proposeNewTransaction.currentHash & _CurrentTotalHash)
         End Sub
 
+        ''' <summary>
+        ''' This method provide to calculate progressive hash
+        ''' </summary>
+        ''' <param name="recordHash"></param>
+        ''' <returns></returns>
         Public Function calculateProgressiveHash(ByVal recordHash As String) As String
             If (_CurrentTotalHash.Length = 0) Then
                 Return recordHash
@@ -591,32 +337,35 @@ Namespace AreaLedger
             Try
                 log.track("LedgerEngine.saveAndClean", "Begin")
 
-                nextProposeNewTransaction.id = _NewIdTransaction
-                nextProposeNewTransaction.currentHash = nextProposeNewTransaction.getHash()
+                proposeNewTransaction.id = _NewIdTransaction
+                proposeNewTransaction.currentHash = proposeNewTransaction.getHash()
 
-                result.coordinate = CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.composeCoordinate(identifyBlockChain, _CurrentIdVolume, _CurrentIdBlock, _NewIdTransaction)
-                result.hash = nextProposeNewTransaction.currentHash
-
-                nextProposeNewTransaction.progressiveHash = calculateProgressiveHash(result.hash)
+                result.coordinate = CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.composeCoordinate(identifyBlockChain, _currentIdVolume, _currentIdBlock, _NewIdTransaction)
+                result.hash = proposeNewTransaction.currentHash
+                proposeNewTransaction.progressiveHash = calculateProgressiveHash(result.hash)
+                result.progressiveHash = proposeNewTransaction.progressiveHash
+                result.registrationTimeStamp = proposeNewTransaction.registrationTimeStamp
 
                 log.track("LedgerEngine.saveAndClean", "Assign value")
 
-                _CompleteFileName = IO.Path.Combine(_BasePath, _currentIdBlock.ToString & ".ledger")
+                _CompleteFileName = IO.Path.Combine(proposeNewTransaction.pathData.path, CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, currentIdVolume, currentIdBlock) & ".ledger")
 
                 Using fileData As IO.StreamWriter = IO.File.AppendText(_CompleteFileName)
-                    fileData.WriteLine(nextProposeNewTransaction.toStringFormatToFile())
+                    fileData.WriteLine(proposeNewTransaction.toStringFormatToFile())
                 End Using
 
                 log.track("LedgerEngine.saveAndClean", "Write file ledger")
 
-                If saveDataToDB() Then
+                If _DAO.saveData(proposeNewTransaction) Then
                     _NewIdTransaction += 1
-                    _CurrentTotalHash = nextProposeNewTransaction.progressiveHash
+                    _CurrentTotalHash = proposeNewTransaction.progressiveHash
 
                     log.track("LedgerEngine.saveAndClean", "Update counter")
 
-                    currentApprovedTransaction = nextProposeNewTransaction
-                    nextProposeNewTransaction = New SingleTransactionLedger
+                    approvedTransaction = proposeNewTransaction
+                    proposeNewTransaction = New SingleTransactionLedger
+
+                    proposeNewTransaction.pathData = approvedTransaction.pathData
                 End If
 
                 Return result
@@ -644,22 +393,57 @@ Namespace AreaLedger
                 _CreationLedgerDate = creationLedgerDate
                 _NextBlockCloseAtTime = createNextCloseAtTime()
 
+                _DAO.log = log
+
                 log.track("LedgerEngine.init", "Local data set")
 
-                _CompleteFileName = IO.Path.Combine(path, _CurrentIdBlock.ToString & ".ledger")
-
-                log.track("LedgerEngine.init", "Set Complete file name = " & _CompleteFileName)
-
-                If initDBLedger() Then
-                    log.track("LedgerEngine.init", "initDBLedger complete")
-
-                    Return True
+                If _DAO.createDBLedgerMap(_BasePath) Then
+                    Return createDBBlock()
                 End If
             Catch ex As Exception
                 log.track("LedgerEngine.init", ex.Message, "fatal")
             End Try
 
             Return False
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain all element to map a block of a ledger
+    ''' </summary>
+    Public Class LedgerMapEngine
+
+        Private _DAO As New AreaCommon.DAO.DAOLedger
+
+
+        Public Property log As LogEngine
+
+
+        ''' <summary>
+        ''' This method provide to get a request path
+        ''' </summary>
+        ''' <param name="blockPath"></param>
+        ''' <returns></returns>
+        Public Function getRequestPath(ByVal blockPath As String) As String
+            Try
+                Dim requestPath As String
+                log.track("LedgerMapEngine.getRequestPath", "Begin")
+
+                requestPath = _DAO.getRequestPath(blockPath)
+
+                If (requestPath.Length > 0) Then
+                    Return IO.Path.Combine(requestPath, blockPath, "Request")
+                Else
+                    Return ""
+                End If
+            Catch ex As Exception
+                log.track("LedgerMapEngine.getRequestPath", ex.Message, "fatal")
+
+                Return ""
+            Finally
+                log.track("LedgerMapEngine.getRequestPath", "Complete")
+            End Try
         End Function
 
     End Class

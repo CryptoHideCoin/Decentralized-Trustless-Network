@@ -79,16 +79,6 @@ CHCProtocolLibrary
  This enumeration specify module of a system
  </summary>
 </member>
-<member name="T:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.OtherPathEngine">
- <summary>
- This class contain the information relative of a other path not code into engine
- </summary>
-</member>
-<member name="T:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.OtherPathEngine.OtherPath">
- <summary>
- This class contain the property of a single property of Other Path
- </summary>
-</member>
 <member name="T:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.SystemPath">
  <summary>
  This class contain the specific path of all element of the system path
@@ -104,12 +94,17 @@ CHCProtocolLibrary
  This class contain the elements relative of a State data
  </summary>
 </member>
-<member name="T:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.WorkVolumePath">
+<member name="T:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.LedgerBlockPath">
  <summary>
  This class contain the element of a work volume
  </summary>
 </member>
-<member name="T:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.WorkPath">
+<member name="T:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.RequestPath">
+ <summary>
+ This class contain the request path structure
+ </summary>
+</member>
+<member name="T:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.ChainWorkPath">
  <summary>
  This class contain the element of a work path
  </summary>
@@ -121,14 +116,6 @@ CHCProtocolLibrary
  <param name="pathParent"></param>
  <param name="pathDirectory"></param>
  <param name="pathOptional"></param>
- <returns></returns>
-</member>
-<member name="M:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.init(CHCProtocolLibrary.AreaSystem.VirtualPathEngine.EnumSystemType,System.String)">
- <summary>
- This method provide to initialize the engine
- </summary>
- <param name="[type]"></param>
- <param name="chainName"></param>
  <returns></returns>
 </member>
 <member name="M:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.trySettingsPath(System.String)">
@@ -172,6 +159,22 @@ CHCProtocolLibrary
  This method provide to update root path
  </summary>
  <param name="dataPath"></param>
+</member>
+<member name="M:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.init(CHCProtocolLibrary.AreaSystem.VirtualPathEngine.EnumSystemType,System.String)">
+ <summary>
+ This method provide to initialize the engine
+ </summary>
+ <param name="[type]"></param>
+ <param name="chainName"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.createBlockPath(System.String,System.String)">
+ <summary>
+ This method provide to create a block path 
+ </summary>
+ <param name="parentPath"></param>
+ <param name="blockName"></param>
+ <returns></returns>
 </member>
 <member name="T:CHCProtocolLibrary.AreaCommon.Models.Administration">
  <summary>
@@ -230,6 +233,23 @@ CHCProtocolLibrary
  <summary>
  This method provide to initialize component
  </summary>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Network.BaseNetworkModel">
+ <summary>
+ This method provide to contain the essential data of a network
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.BaseNetworkModel.ToString">
+ <summary>
+ This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.BaseNetworkModel.getHash">
+ <summary>
+ This methdo provide to get an hash of the object
+ </summary>
+ <returns></returns>
 </member>
 <member name="T:CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel">
  <summary>
@@ -326,6 +346,12 @@ CHCProtocolLibrary
  </summary>
  <returns></returns>
 </member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableModel.clone">
+ <summary>
+ This method provide to clone this object
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel">
  <summary>
  This class contain the collection of Item Price of a table
@@ -340,6 +366,12 @@ CHCProtocolLibrary
 <member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel.getHash">
  <summary>
  This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel.clone">
+ <summary>
+ This method provide to clone the object into another
  </summary>
  <returns></returns>
 </member>
@@ -484,6 +516,60 @@ CHCProtocolLibrary
  This enumeration contain the value of position of the service
  </summary>
 </member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData">
+ <summary>
+ This class contain the minimal element of definion of chain
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData.ToString">
+ <summary>
+ This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData.codeSymbol">
+ <summary>
+ This method provide to code symbol to trasmit with a webservice
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData.deCodeSymbol">
+ <summary>
+ This method provide to decoce symbol when receive a data with a webservice
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData">
+ <summary>
+ This class contain the minimal element to install or upgrade a protocol
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData.ToString">
+ <summary>
+ This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData.codeSymbol">
+ <summary>
+ This method provide to code symbol to trasmit with a webservice
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData.deCodeSymbol">
+ <summary>
+ This method provide to decoce symbol when receive a data with a webservice
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:CHCProtocolLibrary.AreaCommon.Models.Security.enumOfService">
  <summary>
  This enumeration contain the component of transaction chain or client
@@ -525,6 +611,12 @@ CHCProtocolLibrary
  <summary>
  This class contain the protocol supported of the service
  </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel.ToString">
+ <summary>
+ This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
 </member>
 <member name="T:CHCProtocolLibrary.AreaWallet.Support.KeyStoreEngine">
  <summary>

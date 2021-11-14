@@ -1,7 +1,10 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports System.Data.SQLite
+Imports CHCCommonLibrary.AreaEngine.Encryption
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
+
+
 
 
 
@@ -19,24 +22,59 @@ Namespace AreaState
             Public Property value As String = ""
         End Class
 
-
+        ''' <summary>
+        ''' This class contain all information reguard of complete asset information
+        ''' </summary>
         Public Class NetworkAssetStructure
             Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
             Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel
         End Class
 
+        ''' <summary>
+        ''' This class contain the complete information of a network transaction structure
+        ''' </summary>
         Public Class NetworkTransactionStructure
             Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
             Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.TransactionChainModel
         End Class
 
+        ''' <summary>
+        ''' This class contain the complete information of a refund plan
+        ''' </summary>
         Public Class NetworkRefundItemListStructure
             Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
             Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList
         End Class
+
+        ''' <summary>
+        ''' This class contain all element of a network
+        ''' </summary>
+        Public Class DataNetwork
+
+            Public Property networkName As New ItemIdentityStructure
+            Public Property whitePaper As New ItemIdentityStructure
+            Public Property yellowPaper As New ItemIdentityStructure
+            Public Property primaryAssetData As New NetworkAssetStructure
+            Public Property transactionChainSettings As New NetworkTransactionStructure
+            Public Property privacyPolicy As New ItemIdentityStructure
+            Public Property generalCondition As New ItemIdentityStructure
+
+            Public Property refundPlan As New NetworkRefundItemListStructure
+
+            Public Property networkCreationDate As Double = 0
+
+            Public Property genesisPublicAddress As String = ""
+
+            Public ReadOnly Property hash() As String
+                Get
+                    Return networkName.progressiveHash
+                End Get
+            End Property
+        End Class
+
 
         Public Class ChainPriceListStructure
             Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
@@ -44,36 +82,53 @@ Namespace AreaState
             Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel
         End Class
 
-        Public Class DataNetwork
+        ''' <summary>
+        ''' This enumeration contain all list of chain property
+        ''' </summary>
+        Public Enum PropertyChainID
 
-            Public Property networkName As New itemIdentityStructure
-            Public Property whitePaper As New itemIdentityStructure
-            Public Property yellowPaper As New itemIdentityStructure
-            Public Property primaryAssetData As New NetworkAssetStructure
-            Public Property transactionChainSettings As New NetworkTransactionStructure
-            Public Property privacyPolicy As New itemIdentityStructure
-            Public Property generalCondition As New itemIdentityStructure
+            notDefined
+            chainCreationDate
+            description
+            protocolDocument
+            priceList
+            privacyPolicy
+            generalCondition
 
-            Public Property refundPlan As New NetworkRefundItemListStructure
+        End Enum
 
-            Public Property networkCreationDate As Double = 0
+        ''' <summary>
+        ''' This class contain the element of a protocol set
+        ''' </summary>
+        Public Class ProtocolSetStructure
 
-            Public Property genesisPublicAddress As String = ""
+            Public Property data As New CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData
+            Public Property integrity As New ItemIdentityStructure
+
         End Class
 
+        ''' <summary>
+        ''' This enumeration contain all field (with additional information) of data chain
+        ''' </summary>
         Public Class DataChain
 
-            Public Property name As New itemIdentityStructure
-            Public Property description As New itemIdentityStructure
-            Public Property protocolDocument As New itemIdentityStructure
-            Public Property protocolSets As New List(Of itemIdentityStructure)
-            Public Property priceLists As New ChainPriceListStructure
+            Public ReadOnly Property hash As String
+                Get
+                    Return name.progressiveHash
+                End Get
+            End Property
+            Public Property name As New ItemIdentityStructure
+            Public Property isPrivate As New ItemIdentityStructure
+            Public Property description As New ItemIdentityStructure
+            Public Property protocolSets As New List(Of ProtocolSetStructure)
+            Public Property priceList As New ChainPriceListStructure
             Public Property privacyPolicy As New itemIdentityStructure
             Public Property generalCondition As New itemIdentityStructure
 
             Public Property creationDateLedger As Double = 0
 
         End Class
+
 
         Public Class DataMasternode
 
@@ -111,385 +166,84 @@ Namespace AreaState
 
         End Class
 
-        Public Enum PropertyID
 
-            notDefined
-            networkCreationDate
-            genesisPublicAddress
-            networkName
-            whitePaper
-            yellowPaper
-            assetData
-            transactionChainConfiguration
-            privacyPolicy
-            generalCondition
-            refundPlan
+        Private _DBNetwork As New AreaCommon.DAO.DBNetwork
+        Private _DBChain As New AreaCommon.DAO.DBChain
 
-        End Enum
-
-        Public Enum DBPropertyID
-
-            notDefined
-            typeOfDB
-            dateCreation
-            name
-
-        End Enum
-
-        Private _DBStateFileName As String = "State.Db"
-        Private _DBStateConnectionString As String = "Data source = {0};Version=3;"
 
         Public Property activeNetwork As New DataNetwork
         Public Property activeChain As New DataChain
-        Public Property activeChains As New Dictionary(Of String, DataChain)
+        Public Property chainByName As New Dictionary(Of String, DataChain)
+        Public Property chainByHash As New Dictionary(Of String, DataChain)
+
         Public Property activeMasterNode As New Dictionary(Of DataMasternodeKey, DataMasternode)
 
-        ''' <summary>
-        ''' This method provide to create a main db table
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function createMainDBTable() As Boolean
-            Try
-                Dim sql As String = ""
-                Dim connectionDB As SQLiteConnection
-                Dim sqlCommand As SQLiteCommand
-
-                AreaCommon.log.track("ChainStateEngine.createDBTable", "Begin")
-
-                sql += "CREATE TABLE mainProperties "
-                sql += " (property_id INTEGER PRIMARY KEY, "
-                sql += "  value NVARCHAR(1024) NOT NULL, "
-                sql += "  recordCoordinate NVARCHAR(128) NOT NULL, "
-                sql += "  recordHash NVARCHAR(65) NOT NULL, "
-                sql += "  hashContent NVARCHAR(65) NOT NULL "
-                sql += ");"
-
-                connectionDB = New SQLiteConnection(String.Format(_DBStateConnectionString, _DBStateFileName))
-
-                connectionDB.Open()
-
-                AreaCommon.log.track("ChainStateEngine.createDBTable", "DB Open")
-
-                sqlCommand = New SQLiteCommand(connectionDB)
-
-                sqlCommand.CommandText = sql
-
-                sqlCommand.ExecuteScalar()
-
-                AreaCommon.log.track("ChainStateEngine.createDBTable", "Execute scalar")
-
-                connectionDB.Close()
-
-                AreaCommon.log.track("ChainStateEngine.createDBTable", "DB Close")
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.createDBTable", "Failed = " & ex.Message, "fatal", True)
-
-                Return False
-            Finally
-                AreaCommon.log.track("ChainStateEngine.createDBTable", "Complete")
-            End Try
-        End Function
 
         ''' <summary>
-        ''' This method provide to insert a new record into mainProperties table
+        ''' This method provide to add a network property
         ''' </summary>
         ''' <param name="id"></param>
         ''' <param name="value"></param>
-        ''' <param name="recordCoordinate"></param>
-        ''' <param name="recordHash"></param>
+        ''' <param name="transactionChainRecord"></param>
         ''' <param name="hashContent"></param>
         ''' <param name="writeValueOnDB"></param>
         ''' <returns></returns>
-        Private Function insertSQLPropertyNetwork(ByVal id As PropertyID, ByVal value As String, ByVal recordCoordinate As String, ByVal recordHash As String, Optional ByVal hashContent As String = "", Optional ByVal writeValueOnDB As Boolean = False) As Boolean
+        Public Function addNetworkProperty(ByVal id As AreaCommon.DAO.DBNetwork.MainPropertyID, ByVal value As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction, Optional ByVal hashContent As String = "", Optional ByVal writeValueOnDB As Boolean = True) As Boolean
             Try
-                Dim sql As String = ""
-                Dim connectionDB As SQLiteConnection
-                Dim sqlCommand As SQLiteCommand
+                Dim oldHashContent As String
 
-                AreaCommon.log.track("ChainStateEngine.addSQLProperty", "Begin")
-
-                sql += "INSERT INTO mainProperties "
-                sql += " (property_id, value, recordCoordinate, recordHash, hashContent) "
-                sql += "VALUES "
-                sql += " (" & id & ", '"
-                If writeValueOnDB Then
-                    sql += value
-                Else
-                    sql += "(ext. content)"
-                End If
-
-                sql += "', '" & recordCoordinate & "', '" & recordHash & "'"
-
-                If (hashContent.Length = 0) Then
-                    sql += ", '---'"
-                Else
-                    sql += ", '" & hashContent & "'"
-                End If
-
-                sql += ")"
-
-                connectionDB = New SQLiteConnection(String.Format(_DBStateConnectionString, _DBStateFileName))
-
-                connectionDB.Open()
-
-                AreaCommon.log.track("ChainStateEngine.addSQLProperty", "DB Open")
-
-                sqlCommand = New SQLiteCommand(connectionDB)
-
-                sqlCommand.CommandText = sql
-
-                sqlCommand.ExecuteScalar()
-
-                AreaCommon.log.track("ChainStateEngine.addSQLProperty", "Execute scalar")
-
-                connectionDB.Close()
-
-                AreaCommon.log.track("ChainStateEngine.addSQLProperty", "DB Close")
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.addSQLProperty", "Failed = " & ex.Message, "fatal", True)
-
-                Return False
-            Finally
-                AreaCommon.log.track("ChainStateEngine.addSQLProperty", "Complete")
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to delete old data
-        ''' </summary>
-        ''' <param name="id"></param>
-        ''' <returns></returns>
-        Private Function deleteOldDataNetwork(ByVal id As PropertyID) As Boolean
-            Try
-                Dim sql As String = ""
-                Dim connectionDB As SQLiteConnection
-                Dim sqlCommand As SQLiteCommand
-                Dim result As Object
-
-                AreaCommon.log.track("ChainStateEngine.deleteOldData", "Begin")
-
-                sql += "SELECT hashContent FROM mainProperties WHERE property_id = " & id
-
-                connectionDB = New SQLiteConnection(String.Format(_DBStateConnectionString, _DBStateFileName))
-
-                connectionDB.Open()
-
-                AreaCommon.log.track("ChainStateEngine.deleteOldData", "DB Open")
-
-                sqlCommand = New SQLiteCommand(connectionDB)
-
-                sqlCommand.CommandText = sql
-
-                result = sqlCommand.ExecuteScalar()
-
-                If Not IsNothing(result) Then
-                    IO.File.Delete(IO.Path.Combine(AreaCommon.paths.workData.state.contents, result) & ".content")
-                End If
-
-                AreaCommon.log.track("ChainStateEngine.deleteOldData", "Delete content")
-
-                sql = "DELETE FROM mainProperties WHERE property_id = " & id
-
-                sqlCommand.CommandText = sql
-
-                sqlCommand.ExecuteScalar()
-
-                AreaCommon.log.track("ChainStateEngine.deleteOldData", "Execute scalar")
-
-                connectionDB.Close()
-
-                AreaCommon.log.track("ChainStateEngine.deleteOldData", "DB Close")
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.deleteOldData", "Failed = " & ex.Message, "fatal", True)
-
-                Return False
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to create an identity db table
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function createIdentityDBTable() As Boolean
-            Try
-                Dim sql As String = ""
-                Dim connectionDB As SQLiteConnection
-                Dim sqlCommand As SQLiteCommand
-
-                AreaCommon.log.track("ChainStateEngine.createIdentityDBTable", "Begin")
-
-                sql += "CREATE TABLE dbIdentity "
-                sql += " (property_id INTEGER PRIMARY KEY, "
-                sql += "  value NVARCHAR(1024) NOT NULL "
-                sql += ");"
-
-                connectionDB = New SQLiteConnection(String.Format(_DBStateConnectionString, _DBStateFileName))
-
-                connectionDB.Open()
-
-                AreaCommon.log.track("ChainStateEngine.createIdentityDBTable", "Connection Open")
-
-                sqlCommand = New SQLiteCommand(connectionDB)
-
-                sqlCommand.CommandText = sql
-
-                sqlCommand.ExecuteScalar()
-
-                AreaCommon.log.track("ChainStateEngine.createIdentityDBTable", "Command execute")
-
-                connectionDB.Close()
-
-                AreaCommon.log.track("ChainStateEngine.createIdentityDBTable", "Connection close")
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.createIdentityDBTable", ex.Message, "fatal")
-
-                Return False
-            Finally
-                AreaCommon.log.track("ChainStateEngine.createIdentityDBTable", "Complete")
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to insert a sql property identity on db
-        ''' </summary>
-        ''' <param name="id"></param>
-        ''' <param name="value"></param>
-        ''' <returns></returns>
-        Private Function insertSQLPropertyIdentityDB(ByVal id As PropertyID, ByVal value As String) As Boolean
-            Try
-                Dim sql As String = ""
-                Dim connectionDB As SQLiteConnection
-                Dim sqlCommand As SQLiteCommand
-
-                AreaCommon.log.track("ChainStateEngine.insertSQLPropertyIdentityDB", "Begin")
-
-                sql += "INSERT INTO dbIdentity "
-                sql += " (property_id, value) "
-                sql += "VALUES "
-                sql += " (" & id & ", '"
-                sql += value
-                sql += "')"
-
-                connectionDB = New SQLiteConnection(String.Format(_DBStateConnectionString, _DBStateFileName))
-
-                connectionDB.Open()
-
-                AreaCommon.log.track("ChainStateEngine.insertSQLPropertyIdentityDB", "Connection Open")
-
-                sqlCommand = New SQLiteCommand(connectionDB)
-
-                sqlCommand.CommandText = sql
-
-                sqlCommand.ExecuteScalar()
-
-                AreaCommon.log.track("ChainStateEngine.insertSQLPropertyIdentityDB", "Command executed")
-
-                connectionDB.Close()
-
-                AreaCommon.log.track("ChainStateEngine.insertSQLPropertyIdentityDB", "Connection Closed")
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.insertSQLPropertyIdentityDB", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to write an identity on db
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function writeIdentityDB() As Boolean
-            Try
-                insertSQLPropertyIdentityDB(DBPropertyID.dateCreation, CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT())
-                insertSQLPropertyIdentityDB(DBPropertyID.name, "State")
-                insertSQLPropertyIdentityDB(DBPropertyID.typeOfDB, "State")
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.createIdentityDBTable", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to insert a property into db
-        ''' </summary>
-        ''' <param name="id"></param>
-        ''' <param name="value"></param>
-        ''' <param name="recordCoordinate"></param>
-        ''' <param name="recordHash"></param>
-        ''' <param name="hashContent"></param>
-        ''' <param name="writeValueOnDB"></param>
-        ''' <returns></returns>
-        Private Function insertPropertNetworky(ByVal id As PropertyID, ByVal value As String, ByVal recordCoordinate As String, ByVal recordHash As String, Optional ByVal hashContent As String = "", Optional ByVal writeValueOnDB As Boolean = False) As Boolean
-            If deleteOldDataNetwork(id) Then
-                If insertSQLPropertyNetwork(id, value, recordCoordinate, recordHash, hashContent, writeValueOnDB) Then
-                    Return True
-                Else
-                    Return False
-                End If
-            Else
-                Return False
-            End If
-        End Function
-
-
-        ''' <summary>
-        ''' This method provide to add a newtork property
-        ''' </summary>
-        ''' <param name="id"></param>
-        ''' <param name="value"></param>
-        ''' <param name="recordCoordinate"></param>
-        ''' <param name="recordHash"></param>
-        ''' <param name="hashContent"></param>
-        ''' <param name="writeValueOnDB"></param>
-        ''' <returns></returns>
-        Public Function addNetworkProperty(ByVal id As PropertyID, ByVal value As String, ByVal transactionCoordinate As String, ByVal transactionHash As String, Optional ByVal hashContent As String = "", Optional ByVal writeValueOnDB As Boolean = True) As Boolean
-            Try
                 AreaCommon.log.track("ChainStateEngine.addNetworkProperty", "Begin")
 
-                If insertPropertNetworky(id, value, transactionCoordinate, transactionHash, hashContent, writeValueOnDB) Then
+                oldHashContent = _DBNetwork.getContentHash(id)
+
+                If (oldHashContent.Length > 0) Then
+                    Try
+                        IO.File.Delete(IO.Path.Combine(AreaCommon.paths.workData.state.contents, oldHashContent) & ".content")
+                    Catch ex As Exception
+                    End Try
+                End If
+
+                If _DBNetwork.updatePropertNetworky(id, value, transactionChainRecord, hashContent, writeValueOnDB) Then
                     Select Case id
-                        Case PropertyID.networkCreationDate : activeNetwork.networkCreationDate = value
-                        Case PropertyID.genesisPublicAddress : activeNetwork.genesisPublicAddress = value
-                        Case PropertyID.networkName
+                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.networkCreationDate : activeNetwork.networkCreationDate = value
+                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.genesisPublicAddress : activeNetwork.genesisPublicAddress = value
+                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.networkName
                             activeNetwork.networkName.value = value
-                            activeNetwork.networkName.coordinate = transactionCoordinate
-                            activeNetwork.networkName.hash = transactionHash
-                        Case PropertyID.whitePaper
+                            activeNetwork.networkName.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.networkName.progressiveHash = transactionChainRecord.progressiveHash
+                            activeNetwork.networkName.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.whitePaper
                             activeNetwork.whitePaper.value = value
-                            activeNetwork.whitePaper.coordinate = transactionCoordinate
-                            activeNetwork.whitePaper.hash = transactionHash
-                        Case PropertyID.yellowPaper
-                            activeNetwork.whitePaper.value = value
-                            activeNetwork.whitePaper.coordinate = transactionCoordinate
-                            activeNetwork.whitePaper.hash = transactionHash
-                        Case PropertyID.assetData
-                            activeNetwork.primaryAssetData.coordinate = transactionCoordinate
-                            activeNetwork.primaryAssetData.hash = transactionHash
-                        Case PropertyID.generalCondition
-                            activeNetwork.generalCondition.coordinate = transactionCoordinate
-                            activeNetwork.generalCondition.hash = transactionHash
-                        Case PropertyID.privacyPolicy
-                            activeNetwork.privacyPolicy.coordinate = transactionCoordinate
-                            activeNetwork.privacyPolicy.hash = transactionHash
-                        Case PropertyID.refundPlan
-                            activeNetwork.refundPlan.coordinate = transactionCoordinate
-                            activeNetwork.refundPlan.hash = transactionHash
-                        Case PropertyID.transactionChainConfiguration
-                            activeNetwork.transactionChainSettings.coordinate = transactionCoordinate
-                            activeNetwork.transactionChainSettings.hash = transactionHash
+                            activeNetwork.whitePaper.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.whitePaper.progressiveHash = transactionChainRecord.progressiveHash
+                            activeNetwork.whitePaper.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.yellowPaper
+                            activeNetwork.yellowPaper.value = value
+                            activeNetwork.yellowPaper.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.yellowPaper.progressiveHash = transactionChainRecord.progressiveHash
+                            activeNetwork.yellowPaper.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.assetData
+                            activeNetwork.primaryAssetData.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.primaryAssetData.progressiveHash = transactionChainRecord.progressiveHash
+                            activeNetwork.primaryAssetData.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.generalCondition
+                            activeNetwork.generalCondition.value = value
+                            activeNetwork.generalCondition.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.generalCondition.progressiveHash = transactionChainRecord.progressiveHash
+                            activeNetwork.generalCondition.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.privacyPolicy
+                            activeNetwork.privacyPolicy.value = value
+                            activeNetwork.privacyPolicy.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.privacyPolicy.progressiveHash = transactionChainRecord.progressiveHash
+                            activeNetwork.privacyPolicy.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.refundPlan
+                            activeNetwork.refundPlan.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.refundPlan.progressiveHash = transactionChainRecord.progressiveHash
+                            activeNetwork.refundPlan.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.transactionChainConfiguration
+                            activeNetwork.transactionChainSettings.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.transactionChainSettings.progressiveHash = transactionChainRecord.progressiveHash
+                            activeNetwork.transactionChainSettings.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                     End Select
 
                     AreaCommon.log.track("ChainStateEngine.addNetworkProperty", "Complete")
@@ -504,20 +258,144 @@ Namespace AreaState
             Return False
         End Function
 
+        ''' <summary>
+        ''' This method provide to add a new chain
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="privateChain"></param>
+        ''' <param name="description"></param>
+        ''' <param name="transactionChainRecord"></param>
+        ''' <returns></returns>
+        Public Function addNewChain(ByVal name As String, ByVal privateChain As Boolean, ByVal description As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+            Try
+                AreaCommon.log.track("ChainStateEngine.addNewChain", "Begin")
 
-        Public Function addNewChain(ByVal name As String, ByVal ledgerCoordinate As String, ByVal ledgerHash As String) As DataChain
-            Dim newValue As New DataChain
+                Dim newValue As New DataChain
+                Dim hash As String
 
-            newValue.name.value = name
+                hash = _DBChain.insertSQLNewChain(name, privateChain, description, transactionChainRecord)
 
-            activeChains.Add(name, newValue)
+                If (hash.Length > 0) Then
+                    newValue.name.value = name
+                    newValue.name.coordinate = transactionChainRecord.coordinate
+                    newValue.name.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                    newValue.name.progressiveHash = transactionChainRecord.progressiveHash
 
-            Return newValue
+                    newValue.isPrivate.value = privateChain
+                    newValue.isPrivate.coordinate = transactionChainRecord.coordinate
+                    newValue.isPrivate.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                    newValue.isPrivate.progressiveHash = transactionChainRecord.progressiveHash
+
+                    newValue.description.value = description
+                    newValue.description.coordinate = transactionChainRecord.coordinate
+                    newValue.description.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                    newValue.description.progressiveHash = transactionChainRecord.progressiveHash
+
+                    If (newValue.name.value.CompareTo(AreaCommon.state.internalInformation.chainName) = 0) Then
+                        AreaCommon.log.track("ChainStateEngine.addNewChain", "Set activeChain")
+
+                        activeChain = newValue
+                    End If
+
+                    chainByHash.Add(hash, newValue)
+                    chainByName.Add(name, newValue)
+                End If
+
+                AreaCommon.log.track("ChainStateEngine.addNewChain", "Complete")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.addNewChain", ex.Message, "fatal")
+
+                Return False
+            End Try
         End Function
 
-        Public Function getDataChain(ByVal name As String) As DataChain
-            If activeChains.ContainsKey(name) Then
-                Return activeChains.Item(name)
+        ''' <summary>
+        ''' This method provide to update a new protocol
+        ''' </summary>
+        ''' <param name="chainReferement"></param>
+        ''' <param name="hashContent"></param>
+        ''' <param name="transactionChainRecord"></param>
+        ''' <returns></returns>
+        Public Function updateNewProtocol(ByVal chainReferement As String, ByVal value As CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData, ByVal hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+            Try
+                AreaCommon.log.track("ChainStateEngine.updateNewProtocol", "Begin")
+
+                Dim chain As DataChain
+                Dim protocolData As New ProtocolSetStructure
+
+                If _DBChain.updateProtocol(chainReferement, value, transactionChainRecord) Then
+                    chain = chainByHash(chainReferement)
+
+                    For Each item In chain.protocolSets
+                        If (item.data.setCode.CompareTo(value.setCode) = 0) Then
+                            chain.protocolSets.Remove(item)
+
+                            Exit For
+                        End If
+                    Next
+
+                    protocolData.data.setCode = value.setCode
+                    protocolData.data.protocol = value.protocol
+                    protocolData.data.documentation = value.documentation
+
+                    protocolData.integrity.coordinate = transactionChainRecord.coordinate
+                    protocolData.integrity.progressiveHash = transactionChainRecord.progressiveHash
+                    protocolData.integrity.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+
+                    chain.protocolSets.Add(protocolData)
+
+                    Return True
+                End If
+
+                Return False
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.updateNewProtocol", ex.Message, "fatal")
+
+                Return False
+            Finally
+                AreaCommon.log.track("ChainStateEngine.updateNewProtocol", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to update price list
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function updatePriceList(ByVal chainReferement As String, ByVal value As CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel, ByVal hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+            Try
+                AreaCommon.log.track("ChainStateEngine.updatePriceList", "Begin")
+
+                Dim chain As DataChain
+                Dim protocolData As New ProtocolSetStructure
+
+                If _DBChain.updateDetail(chainReferement, AreaCommon.DAO.DBChain.DetailPropertyID.priceList, value, transactionChainRecord) Then
+                    chain = chainByHash(chainReferement)
+
+                    'chain.priceList = value
+
+                    Return True
+                End If
+
+                Return False
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.updatePriceList", ex.Message, "fatal")
+
+                Return False
+            Finally
+                AreaCommon.log.track("ChainStateEngine.updatePriceList", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method return a chain by name
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Public Function getDataChainByName(ByVal name As String) As DataChain
+            If chainByName.ContainsKey(name) Then
+                Return chainByName.Item(name)
             Else
                 Return New DataChain
             End If
@@ -787,24 +665,11 @@ Namespace AreaState
 
                 AreaCommon.log.track("ChainStateEngine.init", "Begin")
 
-                _DBStateFileName = IO.Path.Combine(workPath, _DBStateFileName)
-
-                AreaCommon.log.track("ChainStateEngine.init", "Set path = " & _DBStateFileName)
-
-                If Not IO.File.Exists(_DBStateFileName) Then
-                    AreaCommon.log.track("ChainStateEngine.init", "File DB not exist")
-
-                    SQLiteConnection.CreateFile(_DBStateFileName)
-                End If
-
                 If proceed Then
-                    proceed = createIdentityDBTable()
+                    proceed = _DBNetwork.init(workPath)
                 End If
                 If proceed Then
-                    proceed = writeIdentityDB()
-                End If
-                If proceed Then
-                    proceed = createMainDBTable()
+                    proceed = _DBChain.init(workPath)
                 End If
 
                 AreaCommon.log.track("ChainStateEngine.init", "Complete")

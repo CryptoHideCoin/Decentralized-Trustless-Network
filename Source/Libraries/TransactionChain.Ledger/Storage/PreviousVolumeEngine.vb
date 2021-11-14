@@ -343,7 +343,8 @@ Namespace AreaEngine.Ledger
 
                     serviceState.currentAction.setAction("0x0002", "VerifyData - Previous - Volumes")
 
-                    previousVolumesIndex.fileName = IO.Path.Combine(paths.workData.previousVolume.path, "PreviousVolumes.Index")
+                    'previousVolumesIndex.fileName = IO.Path.Combine(paths.workData.previousVolume.path, "PreviousVolumes.Index")
+                    previousVolumesIndex.fileName = IO.Path.Combine("", "PreviousVolumes.Index")
 
                     If serviceState.requestCancelCurrentRunCommand Then Return False
 
@@ -362,7 +363,8 @@ Namespace AreaEngine.Ledger
 
                         If serviceState.requestCancelCurrentRunCommand Then Return False
 
-                        If _previousVolumesEngine.init(paths.workData.previousVolume.path, previousVolumesIndex) Then
+                        'If _previousVolumesEngine.init(paths.workData.previousVolume.path, previousVolumesIndex) Then
+                        If _previousVolumesEngine.init("", previousVolumesIndex) Then
                             log.track("PreviousVolumeEngine.init", "_previousVolumesEngine.init completed")
                         Else
                             serviceState.currentAction.setError(-1, "Error _PreviousVolumeEngine")

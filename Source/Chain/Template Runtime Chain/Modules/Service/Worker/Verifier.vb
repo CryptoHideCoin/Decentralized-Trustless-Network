@@ -20,7 +20,7 @@ Namespace AreaWorker
             Try
                 AreaCommon.log.track("Verifier.evaluateTheRequest", "Begin")
 
-                Select Case value.dataCommon.requestCode
+                Select Case value.dataCommon.type
                     Case "a0x0" : Return AreaProtocol.A0x0.FormalCheck.evaluate(value)
                     Case "a0x1" : Return AreaProtocol.A0x1.FormalCheck.evaluate(value)
                     Case "a0x2" : Return AreaProtocol.A0x2.FormalCheck.evaluate(value)
@@ -29,6 +29,11 @@ Namespace AreaWorker
                     Case "a0x5" : Return AreaProtocol.A0x5.FormalCheck.evaluate(value)
                     Case "a0x6" : Return AreaProtocol.A0x6.FormalCheck.evaluate(value)
                     Case "a0x7" : Return AreaProtocol.A0x7.FormalCheck.evaluate(value)
+
+                    Case "a1x0" : Return AreaProtocol.A1x0.FormalCheck.evaluate(value)
+                    Case "a1x1" : Return AreaProtocol.A1x1.FormalCheck.evaluate(value)
+
+                        ''' BOOKMARK: Add in this point 4
                 End Select
 
                 AreaCommon.log.track("Verifier.evaluateTheRequest", "Complete")
@@ -90,7 +95,6 @@ Namespace AreaWorker
                 Return False
             End Try
         End Function
-
 
     End Module
 

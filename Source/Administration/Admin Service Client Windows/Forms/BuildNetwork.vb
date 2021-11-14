@@ -38,7 +38,8 @@ Public Class BuildNetwork
             _PrivateRAWKey = keyPairRAW.privateKey
 
             With _Engine.data
-                .name = networkNameText.Text
+                .informationBase.netName = networkNameText.Text
+                .informationBase.specialEnvironment = specialEnvironmentText.Text
 
                 If fromSave Then
                     .publicAddressGenesis = adminWalletAddress.value
@@ -100,7 +101,8 @@ Public Class BuildNetwork
     Private Sub loadDataIntoGUI()
         Try
             With _Engine.data
-                networkNameText.Text = .name
+                networkNameText.Text = .informationBase.netName
+                specialEnvironmentText.Text = .informationBase.specialEnvironment
                 adminWalletAddress.value = .publicAddressGenesis
                 whitePaperText.Text = .whitePaper.content
                 yellowPaperText.Text = .yellowPaper.content

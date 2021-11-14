@@ -62,7 +62,7 @@ Namespace Controllers
                     End If
                 End If
                 If proceed Then
-                    If AreaCommon.flow.addNewRequestNotify(value.requestHash, value.requestCode, CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT, value.publicAddress) Then
+                    If AreaCommon.flow.addNewRequestNotify(value.requestHash, value.type, CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT, value.publicAddress) Then
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.responseComplete
                     Else
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError

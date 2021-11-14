@@ -21,7 +21,7 @@ Namespace AreaCommon.Models.Network
 
         Public Property netWorkHash As String = ""
         Public Property chainHash As String = ""
-        Public Property requestCode As String = ""
+        Public Property [type] As String = ""
         Public Property requestHash As String = ""
         Public Property publicAddress As String = ""
         Public Property signature As String = ""
@@ -36,7 +36,7 @@ Namespace AreaCommon.Models.Network
 
             tmp += netWorkHash
             tmp += chainHash
-            tmp += requestCode
+            tmp += [type]
             tmp += requestHash
             tmp += publicAddress
 

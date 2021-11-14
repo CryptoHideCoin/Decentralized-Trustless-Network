@@ -296,7 +296,8 @@ Namespace AreaEngine.Ledger
 
                     serviceState.currentAction.setAction("0x0001", "VerifyData - Storage - Volumes")
 
-                    volumesIndex.fileName = IO.Path.Combine(paths.storage, "Volumes.Index")
+                    volumesIndex.fileName = IO.Path.Combine("", "Volumes.Index")
+                    'volumesIndex.fileName = IO.Path.Combine(paths.storage, "Volumes.Index")
 
                     If serviceState.requestCancelCurrentRunCommand Then Return False
 
@@ -317,7 +318,8 @@ Namespace AreaEngine.Ledger
 
                         If serviceState.requestCancelCurrentRunCommand Then Return False
 
-                        _volumesEngine.init(paths.storage, paths.workData.temporally, volumesIndex)
+                        '_volumesEngine.init(paths.storage, paths.workData.temporally, volumesIndex)
+                        _volumesEngine.init("", paths.workData.requestData.path, volumesIndex)
 
                         log.track("StorageEngine.init", "Execute volumesEngine.init")
 
@@ -345,8 +347,10 @@ Namespace AreaEngine.Ledger
 
                     serviceState.currentAction.setAction("0x0009", "VerifyData - Storage - Volumes")
 
-                    If IO.Directory.Exists(paths.storage) Then
-                        IO.Directory.Delete(paths.storage, True)
+                    'If IO.Directory.Exists(paths.storage) Then
+                    If IO.Directory.Exists("") Then
+                        'IO.Directory.Delete(paths.storage, True)
+                        IO.Directory.Delete("", True)
 
                         log.track("StorageEngine.cleanData", "Delete paths storage complete")
                     End If

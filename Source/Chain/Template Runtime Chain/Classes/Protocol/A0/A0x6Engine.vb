@@ -110,15 +110,16 @@ Namespace AreaProtocol
             ''' <param name="value"></param>
             ''' <param name="transactionChainRecord"></param>
             ''' <returns></returns>
-            Public Shared Function fromRequest(ByRef value As RequestModel, ByVal transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction, ByVal hashContent As String) As Boolean
+            Public Shared Function fromRequest(ByRef value As RequestModel, ByVal transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
                 Try
                     Dim proceed As Boolean = True
                     Dim contentPath As String = AreaCommon.paths.workData.state.contents
+                    Dim hashContent As String = HashSHA.generateSHA256(value.generalCondition)
 
                     AreaCommon.log.track("RecoveryState.fromRequest", "Begin")
 
                     If proceed Then
-                        proceed = AreaCommon.state.runtimeState.addNetworkProperty(AreaState.ChainStateEngine.PropertyID.generalCondition, value.generalCondition, transactionChainRecord.coordinate, transactionChainRecord.hash, hashContent, False)
+                        proceed = AreaCommon.state.runtimeState.addNetworkProperty(AreaCommon.DAO.DBNetwork.MainPropertyID.generalCondition, value.generalCondition, transactionChainRecord, hashContent, False)
                     End If
                     If proceed Then
                         contentPath = IO.Path.Combine(contentPath, hashContent & ".content")
@@ -157,7 +158,7 @@ Namespace AreaProtocol
             Shared Function verify(ByVal requestHash As String) As Nullable(Of Boolean)
                 Try
                     Dim proceed As Boolean = True
-                    Dim request As RequestModel = AreaCommon.flow.getRequest(requestHash).data
+                    Dim request As RequestModel = AreaCommon.flow.getActiveRequest(requestHash).data
 
                     AreaCommon.log.track("FormalCheck.verify", "Begin")
 
@@ -241,7 +242,7 @@ Namespace AreaProtocol
             ''' <returns></returns>
             Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal detailInformation As String, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
-                    Dim contentPath As String = AreaCommon.paths.workData.currentVolume.ledger
+                    Dim contentPath As String = AreaCommon.state.currentBlockLedger.proposeNewTransaction.pathData.contents
                     Dim hashContent As String = HashSHA.generateSHA256(detailInformation)
 
                     AreaCommon.log.track("A0x6.Manager.addIntoLedger", "Begin")
@@ -250,8 +251,8 @@ Namespace AreaProtocol
 
                     My.Computer.FileSystem.WriteAllText(contentPath, detailInformation, False)
 
-                    With AreaCommon.state.currentBlockLedger.nextProposeNewTransaction
-                        .actionCode = "a0x6"
+                    With AreaCommon.state.currentBlockLedger.proposeNewTransaction
+                        .type = "a0x6"
                         .approverPublicAddress = approverPublicAddress
                         .consensusHash = consensusHash
                         .detailInformation = hashContent
@@ -281,7 +282,7 @@ Namespace AreaProtocol
             ''' <returns></returns>
             Public Shared Function saveTemporallyRequest(ByRef value As RequestModel) As Boolean
                 Try
-                    Return IOFast(Of RequestModel).save(IO.Path.Combine(AreaCommon.paths.workData.temporally, value.getHash & ".request"), value)
+                    Return IOFast(Of RequestModel).save(IO.Path.Combine(AreaCommon.paths.workData.requestData.received, value.getHash & ".request"), value)
                 Catch ex As Exception
                     Return False
                 End Try
@@ -297,15 +298,28 @@ Namespace AreaProtocol
             End Function
 
             ''' <summary>
+            ''' This method provide to load a request from a repository
+            ''' </summary>
+            ''' <param name="hash"></param>
+            ''' <returns></returns>
+            Public Shared Function loadRequest(ByVal completePath As String, ByVal hash As String) As RequestModel
+                Try
+                    Return IOFast(Of RequestModel).read(IO.Path.Combine(completePath, hash & ".request"))
+                Catch ex As Exception
+                    Return New RequestModel
+                End Try
+            End Function
+
+            ''' <summary>
             ''' This method provide to create a initial procedure A0x1
             ''' </summary>
             ''' <param name="generalConditionParameter"></param>
             ''' <returns></returns>
-            Public Shared Function createRequest(ByVal generalConditionParameter As String) As String
+            Public Shared Function createInternalRequest(ByVal generalConditionParameter As String) As String
                 Try
                     Dim data As New RequestModel
 
-                    AreaCommon.log.track("A0x6Manager.createRequest", "Begin")
+                    AreaCommon.log.track("A0x6Manager.createInternalRequest", "Begin")
 
                     AreaCommon.state.currentService.currentAction.setAction("7x0001", "BuildManager - A0x6 - A0x6Manager")
 
@@ -315,7 +329,7 @@ Namespace AreaProtocol
                         data.generalCondition = generalConditionParameter
                         data.common.netWorkReferement = AreaCommon.state.internalInformation.networkName
                         data.common.chainReferement = AreaCommon.state.internalInformation.chainName
-                        data.common.requestCode = "A0x6"
+                        data.common.type = "A0x6"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                         data.common.hash = data.getHash()
@@ -323,7 +337,7 @@ Namespace AreaProtocol
                     End With
 
                     If saveTemporallyRequest(data) Then
-                        AreaCommon.log.track("A0x6Manager.createRequest", "request - Saved")
+                        AreaCommon.log.track("A0x6Manager.createInternalRequest", "request - Saved")
 
                         If AreaCommon.flow.addNewRequestDirect(data) Then
                             Return data.common.hash
@@ -334,9 +348,9 @@ Namespace AreaProtocol
                 Catch ex As Exception
                     AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
 
-                    AreaCommon.log.track("A0x6Manager.createRequest", ex.Message, "fatal")
+                    AreaCommon.log.track("A0x6Manager.createInternalRequest", ex.Message, "fatal")
                 Finally
-                    AreaCommon.log.track("A0x6Manager.createRequest", "Completed")
+                    AreaCommon.log.track("A0x6Manager.createInternalRequest", "Completed")
                 End Try
 
                 Return ""

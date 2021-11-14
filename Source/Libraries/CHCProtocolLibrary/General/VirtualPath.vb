@@ -32,25 +32,25 @@ Namespace AreaSystem
             runTime
         End Enum
 
-        ''' <summary>
-        ''' This class contain the information relative of a other path not code into engine
-        ''' </summary>
-        Public Class OtherPathEngine
+        '''' <summary>
+        '''' This class contain the information relative of a other path not code into engine
+        '''' </summary>
+        'Public Class OtherPathEngine
 
-            Inherits BaseFile(Of List(Of OtherPath))
+        '    Inherits BaseFile(Of List(Of OtherPath))
 
 
-            ''' <summary>
-            ''' This class contain the property of a single property of Other Path
-            ''' </summary>
-            Public Class OtherPath
+        '    ''' <summary>
+        '    ''' This class contain the property of a single property of Other Path
+        '    ''' </summary>
+        '    Public Class OtherPath
 
-                Public Property context As String = ""
-                Public Property alternativePath As String = ""
+        '        Public Property context As String = ""
+        '        Public Property alternativePath As String = ""
 
-            End Class
+        '    End Class
 
-        End Class
+        'End Class
 
         ''' <summary>
         ''' This class contain the specific path of all element of the system path
@@ -92,8 +92,6 @@ Namespace AreaSystem
         Public Class StateWorkPath
 
             Public Property path As String = ""
-
-            Public Property db As String = ""
             Public Property contents As String = ""
 
         End Class
@@ -101,30 +99,42 @@ Namespace AreaSystem
         ''' <summary>
         ''' This class contain the element of a work volume
         ''' </summary>
-        Public Class WorkVolumePath
+        Public Class LedgerBlockPath
 
             Public Property path As String = ""
 
             Public Property requests As String = ""
-            Public Property ledger As String = ""
+            Public Property contents As String = ""
             Public Property bulletines As String = ""
             Public Property consensus As String = ""
 
         End Class
 
         ''' <summary>
-        ''' This class contain the element of a work path
+        ''' This class contain the request path structure
         ''' </summary>
-        Public Class WorkPath
+        Public Class RequestPath
 
             Public Property path As String = ""
 
-            Public Property currentVolume As New WorkVolumePath
-            Public Property previousVolume As New WorkVolumePath
+            Public Property received As String = ""
+            Public Property rejected As String = ""
+            Public Property trashed As String = ""
+
+        End Class
+
+        ''' <summary>
+        ''' This class contain the element of a work path
+        ''' </summary>
+        Public Class ChainWorkPath
+
+            Public Property path As String = ""
+
             Public Property messages As String = ""
-            Public Property temporally As String = ""
             Public Property state As StateWorkPath = New StateWorkPath
             Public Property internal As String = ""
+            Public Property ledger As String = ""
+            Public Property requestData As New RequestPath
 
         End Class
 
@@ -133,7 +143,6 @@ Namespace AreaSystem
         Private Const settingsFolderName As String = "Settings"
         Private Const systemFolderName As String = "System"
         Private Const workFolderName As String = "Work"
-        Private Const storageFolderName As String = "Storage"
         Private Const adminFolderName As String = "Admin"
         Private Const runTimeFolderName As String = "RunTime"
         Private Const maintenanceFolderName As String = "Maintenance"
@@ -145,12 +154,10 @@ Namespace AreaSystem
         Private Const ledgerName As String = "Ledger"
         Private Const requestsName As String = "Requests"
         Private Const messagesName As String = "Messages"
-        Private Const temporallyName As String = "Temporally"
         Private Const stateName As String = "State"
-        Private Const dbName As String = "Db"
         Private Const contentsName As String = "Contents"
         Private Const internalName As String = "Internal"
-        Private Const bulletinName As String = "Bulletin"
+        Private Const bulletinName As String = "Bulletines"
         Private Const consensusName As String = "Consensus"
         Private Const defineName As String = "Define"
         Private Const assetsName As String = "Assets"
@@ -162,8 +169,9 @@ Namespace AreaSystem
         Private Const termAndConditionPapersName As String = "TermAndConditionPapers"
         Private Const whitePapersName As String = "WhitePapers"
         Private Const yellowPapersName As String = "YellowPapers"
-
-        Private Const otherPathFileName As String = "other.path"
+        Private Const receivedName As String = "Received"
+        Private Const rejectedName As String = "Rejected"
+        Private Const trashedName As String = "Trashed"
 
         Private Const defaultAdminServiceSettings As String = "AdminService.Settings"
         Private Const defaultRunTimeServiceSettings As String = "RunTimeService.Settings"
@@ -176,9 +184,8 @@ Namespace AreaSystem
         Public Property keyStore As String = ""
         Public Property system As New SystemPath
         Public Property settings As String = ""
-        Public Property workData As New WorkPath
+        Public Property workData As New ChainWorkPath
         Public Property workDefine As New DefinePath
-        Public Property storage As String = ""
 
 
         ''' <summary>
@@ -188,7 +195,7 @@ Namespace AreaSystem
         ''' <param name="pathDirectory"></param>
         ''' <param name="pathOptional"></param>
         ''' <returns></returns>
-        Private Function manageSinglePath(ByVal pathParent As String, ByVal pathDirectory As String, Optional ByVal pathOptional As String = "") As String
+        Private Shared Function manageSinglePath(ByVal pathParent As String, ByVal pathDirectory As String, Optional ByVal pathOptional As String = "") As String
             Try
                 If (pathOptional.Length = 0) Then
                     pathParent = IO.Path.Combine(pathParent, pathDirectory)
@@ -205,6 +212,129 @@ Namespace AreaSystem
                 Return ""
             End Try
         End Function
+
+        ''' <summary>
+        ''' This method provide to test to read a settings path
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Private Function trySettingsPath(ByVal path As String) As Boolean
+                Try
+                    path = IO.Path.Combine(path, "define.path")
+                    Return IO.File.Exists(path)
+                Catch ex As Exception
+                End Try
+
+                Return False
+            End Function
+
+        ''' <summary>
+        ''' This method provide to test write a path
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Private Function tryWritePath(ByVal path As String) As Boolean
+                path = IO.Path.Combine(path, "define.path")
+
+                Try
+                    IO.File.WriteAllText(path, "Test")
+
+                    If IO.File.Exists(path) Then
+                        IO.File.Delete(path)
+                        Return True
+                    End If
+                Catch ex As Exception
+                End Try
+
+                Return False
+            End Function
+
+        ''' <summary>
+        ''' This method test a single path
+        ''' </summary>
+        ''' <param name="found"></param>
+        ''' <param name="path"></param>
+        ''' <param name="newPath"></param>
+        ''' <param name="trySettings"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Private Function testPath(ByVal found As Boolean, ByRef path As String, ByVal newPath As String, Optional ByVal trySettings As Boolean = False) As Boolean
+                If Not found Then
+
+                    path = newPath
+
+                    If trySettings Then
+                        Return trySettingsPath(path)
+                    Else
+                        Return tryWritePath(path)
+                    End If
+
+                End If
+
+                Return found
+            End Function
+
+        ''' <summary>
+        ''' This method search define path
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function searchDefinePath() As String
+                Dim found As Boolean = False
+                Dim path As String = ""
+
+                Try
+                    found = testPath(found, path, Application.StartupPath, True)
+                    found = testPath(found, path, Application.LocalUserAppDataPath, True)
+                    found = testPath(found, path, Application.UserAppDataPath, True)
+
+                    If found Then
+                        Return path
+                    End If
+                Catch ex As Exception
+                End Try
+
+                Return ""
+            End Function
+
+        ''' <summary>
+        ''' This method search and read a define path
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function readDefinePath() As String
+                Try
+                    Dim path As String = searchDefinePath()
+
+                    If (path.Length > 0) Then
+                        Return IO.File.ReadAllText(IO.Path.Combine(searchDefinePath, "define.path"))
+                    End If
+                Catch ex As Exception
+                End Try
+
+                Return ""
+            End Function
+
+        ''' <summary>
+        ''' This method provide to update root path
+        ''' </summary>
+        ''' <param name="dataPath"></param>
+        <DebuggerHiddenAttribute()> Public Sub updateRootPath(ByVal dataPath As String)
+                Dim found As Boolean = False
+                Dim path As String = ""
+
+                Try
+                    found = testPath(found, path, Application.StartupPath, True)
+                    found = testPath(found, path, Application.LocalUserAppDataPath, True)
+                    found = testPath(found, path, Application.UserAppDataPath, True)
+                    found = testPath(found, path, Application.StartupPath)
+                    found = testPath(found, path, Application.LocalUserAppDataPath)
+                    found = testPath(found, path, Application.UserAppDataPath)
+
+                    If found Then
+                        IO.File.WriteAllText(IO.Path.Combine(path, "define.path"), dataPath)
+                    End If
+
+                Catch ex As Exception
+                End Try
+            End Sub
 
         ''' <summary>
         ''' This method provide to initialize the engine
@@ -259,35 +389,24 @@ Namespace AreaSystem
 
                         .path = folderName
 
-                        With .currentVolume
-                            .path = manageSinglePath(folderName, "Ledger-" & Now.ToUniversalTime.Year.ToString())
-
-                            .ledger = manageSinglePath(.path, ledgerName)
-                            .requests = manageSinglePath(.path, requestsName)
-                            .bulletines = manageSinglePath(.path, bulletinName)
-                            .consensus = manageSinglePath(.path, consensusName)
-                        End With
-
-                        With .previousVolume
-                            .path = manageSinglePath(folderName, "Ledger-" & (Now.ToUniversalTime.Year - 1).ToString())
-
-                            .ledger = manageSinglePath(.path, ledgerName)
-                            .requests = manageSinglePath(.path, requestsName)
-                            .bulletines = manageSinglePath(.path, bulletinName)
-                            .consensus = manageSinglePath(.path, consensusName)
-                        End With
-
                         .messages = manageSinglePath(.path, messagesName)
-                        .temporally = manageSinglePath(.path, temporallyName)
+
+                        With .requestData
+                            .path = manageSinglePath(folderName, requestsName)
+
+                            .received = manageSinglePath(.path, receivedName)
+                            .rejected = manageSinglePath(.path, rejectedName)
+                            .trashed = manageSinglePath(.path, trashedName)
+                        End With
 
                         With .state
                             .path = manageSinglePath(folderName, stateName)
 
-                            .db = manageSinglePath(.path, dbName)
                             .contents = manageSinglePath(.path, contentsName)
                         End With
 
                         .internal = manageSinglePath(.path, internalName)
+                        .ledger = manageSinglePath(.path, ledgerName)
                     End With
 
                     With workDefine
@@ -304,23 +423,6 @@ Namespace AreaSystem
                         .yellowPapers = manageSinglePath(.path, yellowPapersName)
                     End With
 
-                    Dim engine As New OtherPathEngine
-
-                    engine.fileName = IO.Path.Combine(directoryData, otherPathFileName)
-
-                    If engine.read() Then
-
-                        For Each except In engine.data
-                            If (except.context = storageFolderName) Then
-                                storage = except.alternativePath
-                            End If
-                        Next
-
-                    End If
-
-                    If (storage = "") Then
-                        storage = manageSinglePath(directoryData, storageFolderName, chainFolderName & chainName)
-                    End If
                 End If
             Catch ex As Exception
             End Try
@@ -329,128 +431,27 @@ Namespace AreaSystem
         End Function
 
         ''' <summary>
-        ''' This method provide to test to read a settings path
+        ''' This method provide to create a block path 
         ''' </summary>
-        ''' <param name="path"></param>
+        ''' <param name="parentPath"></param>
+        ''' <param name="blockName"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Private Function trySettingsPath(ByVal path As String) As Boolean
+        Public Shared Function createBlockPath(ByVal parentPath As String, ByVal blockName As String) As LedgerBlockPath
             Try
-                path = IO.Path.Combine(path, "define.path")
-                Return IO.File.Exists(path)
+                Dim result As New LedgerBlockPath
+
+                result.path = manageSinglePath(parentPath, blockName)
+
+                result.bulletines = manageSinglePath(result.path, bulletinName)
+                result.consensus = manageSinglePath(result.path, consensusName)
+                result.contents = manageSinglePath(result.path, contentsName)
+                result.requests = manageSinglePath(result.path, requestsName)
+
+                Return result
             Catch ex As Exception
+                Return New LedgerBlockPath
             End Try
-
-            Return False
         End Function
-
-        ''' <summary>
-        ''' This method provide to test write a path
-        ''' </summary>
-        ''' <param name="path"></param>
-        ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Private Function tryWritePath(ByVal path As String) As Boolean
-            path = IO.Path.Combine(path, "define.path")
-
-            Try
-                IO.File.WriteAllText(path, "Test")
-
-                If IO.File.Exists(path) Then
-                    IO.File.Delete(path)
-                    Return True
-                End If
-            Catch ex As Exception
-            End Try
-
-            Return False
-        End Function
-
-        ''' <summary>
-        ''' This method test a single path
-        ''' </summary>
-        ''' <param name="found"></param>
-        ''' <param name="path"></param>
-        ''' <param name="newPath"></param>
-        ''' <param name="trySettings"></param>
-        ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Private Function testPath(ByVal found As Boolean, ByRef path As String, ByVal newPath As String, Optional ByVal trySettings As Boolean = False) As Boolean
-            If Not found Then
-
-                path = newPath
-
-                If trySettings Then
-                    Return trySettingsPath(path)
-                Else
-                    Return tryWritePath(path)
-                End If
-
-            End If
-
-            Return found
-        End Function
-
-        ''' <summary>
-        ''' This method search define path
-        ''' </summary>
-        ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function searchDefinePath() As String
-            Dim found As Boolean = False
-            Dim path As String = ""
-
-            Try
-                found = testPath(found, path, Application.StartupPath, True)
-                found = testPath(found, path, Application.LocalUserAppDataPath, True)
-                found = testPath(found, path, Application.UserAppDataPath, True)
-
-                If found Then
-                    Return path
-                End If
-            Catch ex As Exception
-            End Try
-
-            Return ""
-        End Function
-
-        ''' <summary>
-        ''' This method search and read a define path
-        ''' </summary>
-        ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function readDefinePath() As String
-            Try
-                Dim path As String = searchDefinePath()
-
-                If (path.Length > 0) Then
-                    Return IO.File.ReadAllText(IO.Path.Combine(searchDefinePath, "define.path"))
-                End If
-            Catch ex As Exception
-            End Try
-
-            Return ""
-        End Function
-
-        ''' <summary>
-        ''' This method provide to update root path
-        ''' </summary>
-        ''' <param name="dataPath"></param>
-        <DebuggerHiddenAttribute()> Public Sub updateRootPath(ByVal dataPath As String)
-            Dim found As Boolean = False
-            Dim path As String = ""
-
-            Try
-                found = testPath(found, path, Application.StartupPath, True)
-                found = testPath(found, path, Application.LocalUserAppDataPath, True)
-                found = testPath(found, path, Application.UserAppDataPath, True)
-                found = testPath(found, path, Application.StartupPath)
-                found = testPath(found, path, Application.LocalUserAppDataPath)
-                found = testPath(found, path, Application.UserAppDataPath)
-
-                If found Then
-                    IO.File.WriteAllText(IO.Path.Combine(path, "define.path"), dataPath)
-                End If
-
-            Catch ex As Exception
-            End Try
-        End Sub
-
 
     End Class
 

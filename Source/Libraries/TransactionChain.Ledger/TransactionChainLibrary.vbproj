@@ -51,10 +51,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.5.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCTransactionChainLibrary\Newtonsoft.Json.dll</HintPath>
@@ -86,6 +82,8 @@
     <Compile Include="Internal\PrivateLedger.vb" />
     <Compile Include="Internal\Queues.vb" />
     <Compile Include="Keys\KeysEngine.vb" />
+    <Compile Include="Commons\DAOGeneric.vb" />
+    <Compile Include="Ledger\DAO\DAOLedger.vb" />
     <Compile Include="Ledger\LedgerEngine.vb" />
     <Compile Include="Ledger\LedgerSupportEngine.vb" />
     <Compile Include="Models\NodesModel.vb" />
@@ -108,6 +106,8 @@
     <Compile Include="PeerToPeer\VerifyRequest.vb" />
     <Compile Include="PeerToPeer\PropagateRequest.vb" />
     <Compile Include="Nodes\NodesEngines.vb" />
+    <Compile Include="Requests\DAORequests.vb" />
+    <Compile Include="Requests\FileRequestManager.vb" />
     <Compile Include="Storage\CurrentVolumeEngine.vb" />
     <Compile Include="Storage\PreviousVolumeEngine.vb" />
     <Compile Include="Storage\StorageEngine.vb" />
@@ -122,6 +122,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -133,9 +134,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Requests\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Other\ReleaseNote.txt" />
   </ItemGroup>

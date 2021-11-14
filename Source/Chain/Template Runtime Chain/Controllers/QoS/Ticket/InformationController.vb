@@ -26,7 +26,9 @@ Namespace Controllers
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If (AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.onLine) Then
-                    dataTicket = AreaCommon.state.queues.getDataTicket(ticketValue, AreaCommon.paths.workData.currentVolume.requests, AreaCommon.paths.workData.previousVolume.requests)
+                    ''' TODO: Review for tickets
+                    ''' 
+                    'dataTicket = AreaCommon.state.queues.getDataTicket(ticketValue, AreaCommon.paths.workData.currentVolume.requests, AreaCommon.paths.workData.previousVolume.requests)
                     result.queueNumber = dataTicket.queueNumber
                     result.position = dataTicket.position
                     result.ticketNumber = dataTicket.ticketId

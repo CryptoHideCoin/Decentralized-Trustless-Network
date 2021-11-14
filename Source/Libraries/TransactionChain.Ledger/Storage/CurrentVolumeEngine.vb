@@ -381,7 +381,8 @@ Namespace AreaEngine.Ledger
 
                     serviceState.currentAction.setAction("0x0003", "VerifyData - Current - Work")
 
-                    currentVolumesIndex.fileName = IO.Path.Combine(paths.workData.currentVolume.path, "CurrentVolumes.Index")
+                    'currentVolumesIndex.fileName = IO.Path.Combine(paths.workData.currentVolume.path, "CurrentVolumes.Index")
+                    currentVolumesIndex.fileName = IO.Path.Combine("", "CurrentVolumes.Index")
 
                     If serviceState.requestCancelCurrentRunCommand Then Return False
 
@@ -398,7 +399,8 @@ Namespace AreaEngine.Ledger
                     Else
                         log.track("CurrentVolumeEngine.init", "CurrentVolumeEngine exist")
 
-                        _currentVolumesEngine.init(paths.workData.previousVolume.path, currentVolumesIndex)
+                        '_currentVolumesEngine.init(paths.workData.previousVolume.path, currentVolumesIndex)
+                        _currentVolumesEngine.init("", currentVolumesIndex)
 
                         generalState = _currentVolumesEngine.generalState
                     End If

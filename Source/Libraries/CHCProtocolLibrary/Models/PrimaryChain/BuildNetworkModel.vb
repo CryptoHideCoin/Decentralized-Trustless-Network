@@ -3,9 +3,9 @@ Option Compare Text
 
 ' ****************************************
 ' File: Network Builder Model
-' Release Engine: 1.0 
+' Release Engine: 1.1
 ' 
-' Date last successfully test: 03/10/2021
+' Date last successfully test: 11/11/2021
 ' ****************************************
 
 
@@ -19,6 +19,38 @@ Imports CHCCommonLibrary.AreaEngine.Base.CHCStringExtensions
 
 
 Namespace AreaCommon.Models.Network
+
+    ''' <summary>
+    ''' This method provide to contain the essential data of a network
+    ''' </summary>
+    Public Class BaseNetworkModel
+
+        Public Property netName As String = ""
+        Public Property specialEnvironment As String = ""
+
+
+        ''' <summary>
+        ''' This method provide to convert into a string the element of the object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function toString() As String
+            Dim tmp As String = ""
+
+            tmp += netName
+            tmp += specialEnvironment
+
+            Return tmp
+        End Function
+
+        ''' <summary>
+        ''' This methdo provide to get an hash of the object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overridable Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
+
+    End Class
 
     ''' <summary>
     ''' This class contain all member relative an element of Asset type
@@ -225,6 +257,20 @@ Namespace AreaCommon.Models.Network
             Return HashSHA.generateSHA256(Me.toString())
         End Function
 
+        ''' <summary>
+        ''' This method provide to clone this object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function clone() As ItemPriceTableModel
+            Dim result As New ItemPriceTableModel
+
+            result.code = Me.code
+            result.description = Me.description
+            result.contribute = Me.contribute
+
+            Return result
+        End Function
+
     End Class
 
     ''' <summary>
@@ -253,8 +299,24 @@ Namespace AreaCommon.Models.Network
         ''' This method provide to get hash value from a string of a class
         ''' </summary>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function getHash() As String
+        <DebuggerHiddenAttribute()> Public Overridable Function getHash() As String
             Return HashSHA.generateSHA256(Me.toString())
+        End Function
+
+        ''' <summary>
+        ''' This method provide to clone the object into another
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function clone() As ItemPriceTableListModel
+            Dim result As New ItemPriceTableListModel
+
+            result.code = Me.code
+
+            For Each item In items
+                result.items.Add(item.clone())
+            Next
+
+            Return result
         End Function
 
     End Class
@@ -264,7 +326,7 @@ Namespace AreaCommon.Models.Network
     ''' </summary>
     Public Class BuildNetworkModel
 
-        Public Property name As String = ""
+        Public Property informationBase As New BaseNetworkModel
         Public Property publicAddressGenesis As String = ""
         Public Property whitePaper As New Document.DocumentModel
         Public Property yellowPaper As New Document.DocumentModel
@@ -282,7 +344,8 @@ Namespace AreaCommon.Models.Network
         <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
             Dim tmp As String = ""
 
-            tmp += name
+            tmp += informationBase.netName
+            tmp += informationBase.specialEnvironment
             tmp += publicAddressGenesis
             tmp += whitePaper.toString()
             tmp += yellowPaper.toString()

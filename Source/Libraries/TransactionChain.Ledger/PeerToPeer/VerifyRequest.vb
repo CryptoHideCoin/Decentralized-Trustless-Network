@@ -8,7 +8,7 @@ Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 Namespace AreaP2P
 
     Public Class RequestModel
-        Public Property requestCode As String = "Evaluate"
+        Public Property [type] As String = "Evaluate"
 
         Public Property requestHash As String = ""
         Public Property dateDeterminateResult As Double = 0

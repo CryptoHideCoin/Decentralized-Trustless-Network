@@ -14,7 +14,7 @@ Namespace AreaProtocol
 
         Public Class RequestModel
 
-            Public Property requestCode As String = "A2x1"
+            Public Property [type] As String = "A2x1"
 
             Public Property netWorkHash As String = ""
             Public Property chainHash As String = ""
@@ -28,7 +28,7 @@ Namespace AreaProtocol
             Public Overrides Function toString() As String
                 Dim tmp As String = ""
 
-                tmp += requestCode
+                tmp += [type]
                 tmp += netWorkHash
                 tmp += chainHash
                 tmp += publicAddressRequester
@@ -47,7 +47,7 @@ Namespace AreaProtocol
 
             Inherits CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse
 
-            Public Property requestCode As String = "A2x1"
+            Public Property [type] As String = "A2x1"
 
             Public Property netWorkHash As String = ""
             Public Property chainHash As String = ""
@@ -61,7 +61,7 @@ Namespace AreaProtocol
             Public Overrides Function toString() As String
                 Dim tmp As String = ""
 
-                tmp += requestCode
+                tmp += [type]
                 tmp += netWorkHash
                 tmp += chainHash
                 tmp += publicAddressRequester

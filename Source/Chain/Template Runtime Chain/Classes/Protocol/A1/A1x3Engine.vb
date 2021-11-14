@@ -1,169 +1,169 @@
-﻿Option Compare Text
-Option Explicit On
+﻿'Option Compare Text
+'Option Explicit On
 
-Imports CHCCommonLibrary.Support
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
-Imports CHCCommonLibrary.AreaEngine.Encryption
-
-
+'Imports CHCCommonLibrary.Support
+'Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
+'Imports CHCCommonLibrary.AreaEngine.Encryption
 
 
-Namespace AreaProtocol
-
-    Public Class A1x3
-
-        Public Class RequestModel
-
-            Public Property requestDateTimeStamp As Double = 0
-            Public Property publicWalletAddressRequester As String = ""
-            Public Property requestHash As String = ""
-            Public Property signature As String = ""
-
-            Public Property chainName As String = ""
-            Public Property additionalSetProtocol As String = ""
-
-            Public Overrides Function toString() As String
-                Dim tmp As String = ""
-
-                tmp += MyBase.toString()
-                tmp += chainName
-                tmp += additionalSetProtocol
-
-                Return tmp
-            End Function
-
-            Public Function getHash() As String
-                Return HashSHA.generateSHA256(Me.toString())
-            End Function
-
-        End Class
-
-        Public Class FileEngine
-
-            Inherits BaseFile(Of RequestModel)
-
-        End Class
-
-        Public Class RecoveryState
-
-            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
-                Dim item As New AreaState.ChainStateEngine.itemIdentityStructure
-
-                item.coordinate = transactionChainRecord.coordinate
-                item.hash = transactionChainRecord.hash
-                item.value = value.additionalSetProtocol
-
-                AreaCommon.state.runtimeState.getDataChain(value.chainName).protocolSets.Add(item)
-
-                Return True
-            End Function
-
-            Public Shared Function fromTransactionLedger(ByVal chainName As String, ByRef value As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
-                Dim item As New AreaState.ChainStateEngine.itemIdentityStructure
-
-                item.coordinate = "---"
-                item.hash = "---"
-                item.value = chainName
-
-                AreaCommon.state.runtimeState.getDataChain(chainName).protocolSets.Add(item)
-
-                Return True
-            End Function
-
-        End Class
-
-        Public Class Manager
-
-            Private data As New RequestModel
-
-            Public Property log As LogEngine
-            Public Property currentService As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
-            Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
-                Try
-                    With AreaCommon.state.currentBlockLedger.currentApprovedTransaction
-                        .actionCode = "a1x3"
-                        .registrationTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
-                        .detailInformation = data.additionalSetProtocol
-                        .requesterPublicAddress = data.publicWalletAddressRequester
-                        .requestHash = data.requestHash
-                    End With
+'Namespace AreaProtocol
 
-                    'If AreaCommon.state.currentBlockLedger.BlockComplete() Then
-                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
-                    'End If
-                Catch ex As Exception
-                    currentService.currentAction.setError(Err.Number, ex.Message)
+'    Public Class A1x3
 
-                    log.track("A1x3Manager.init", ex.Message, "fatal")
-                End Try
+'        Public Class RequestModel
 
-                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
-            End Function
+'            Public Property requestDateTimeStamp As Double = 0
+'            Public Property publicWalletAddressRequester As String = ""
+'            Public Property requestHash As String = ""
+'            Public Property signature As String = ""
+
+'            Public Property chainName As String = ""
+'            Public Property additionalSetProtocol As String = ""
+
+'            Public Overrides Function toString() As String
+'                Dim tmp As String = ""
+
+'                tmp += MyBase.toString()
+'                tmp += chainName
+'                tmp += additionalSetProtocol
+
+'                Return tmp
+'            End Function
+
+'            Public Function getHash() As String
+'                Return HashSHA.generateSHA256(Me.toString())
+'            End Function
+
+'        End Class
+
+'        Public Class FileEngine
+
+'            Inherits BaseFile(Of RequestModel)
+
+'        End Class
+
+'        Public Class RecoveryState
+
+'            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+'                Dim item As New AreaState.ChainStateEngine.itemIdentityStructure
+
+'                item.coordinate = transactionChainRecord.coordinate
+'                item.hash = transactionChainRecord.hash
+'                item.value = value.additionalSetProtocol
+
+'                AreaCommon.state.runtimeState.getDataChain(value.chainName).protocolSets.Add(item)
+
+'                Return True
+'            End Function
+
+'            Public Shared Function fromTransactionLedger(ByVal chainName As String, ByRef value As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
+'                Dim item As New AreaState.ChainStateEngine.itemIdentityStructure
+
+'                item.coordinate = "---"
+'                item.hash = "---"
+'                item.value = chainName
+
+'                AreaCommon.state.runtimeState.getDataChain(chainName).protocolSets.Add(item)
+
+'                Return True
+'            End Function
+
+'        End Class
+
+'        Public Class Manager
+
+'            Private data As New RequestModel
+
+'            Public Property log As LogEngine
+'            Public Property currentService As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
-            Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal setProtocolParameter As String, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
-                Try
-                    Dim requestFileEngine As New FileEngine
-                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+'            Private Function writeDataIntoLedger() As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+'                Try
+'                    With AreaCommon.state.currentBlockLedger.currentApprovedTransaction
+'                        .actionCode = "a1x3"
+'                        .registrationTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
+'                        .detailInformation = data.additionalSetProtocol
+'                        .requesterPublicAddress = data.publicWalletAddressRequester
+'                        .requestHash = data.requestHash
+'                    End With
 
-                    log.track("A1x3Manager.init", "Begin")
+'                    'If AreaCommon.state.currentBlockLedger.BlockComplete() Then
+'                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
+'                    'End If
+'                Catch ex As Exception
+'                    currentService.currentAction.setError(Err.Number, ex.Message)
 
-                    currentService.currentAction.setAction("3x0004", "BuildManager - A1x3 - A1x3Manager")
+'                    log.track("A1x3Manager.init", ex.Message, "fatal")
+'                End Try
 
-                    If currentService.requestCancelCurrentRunCommand Then Return False
+'                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+'            End Function
 
-                    data.additionalSetProtocol = setProtocolParameter
-                    data.publicWalletAddressRequester = publicWalletIdAddress
-                    data.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime(Now)
-                    data.requestHash = data.getHash
-                    data.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, data.requestHash)
 
-                    requestFileEngine.data = data
+'            Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal setProtocolParameter As String, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
+'                Try
+'                    Dim requestFileEngine As New FileEngine
+'                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
-                    requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, data.requestHash & ".request")
+'                    log.track("A1x3Manager.init", "Begin")
 
-                    If requestFileEngine.save() Then
-                        log.track("A1x3Manager.init", "request - Saved")
+'                    currentService.currentAction.setAction("3x0004", "BuildManager - A1x3 - A1x3Manager")
 
-                        ledgerCoordinate = writeDataIntoLedger()
+'                    If currentService.requestCancelCurrentRunCommand Then Return False
 
-                        If (ledgerCoordinate.coordinate.Length = 0) Then
-                            currentService.currentAction.setError("-1", "Error during update ledger")
-                            currentService.currentAction.reset()
+'                    data.additionalSetProtocol = setProtocolParameter
+'                    data.publicWalletAddressRequester = publicWalletIdAddress
+'                    data.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime(Now)
+'                    data.requestHash = data.getHash
+'                    data.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, data.requestHash)
 
-                            log.track("A1x3Manager.init", "Error: Error during update ledger", "fatal")
+'                    requestFileEngine.data = data
 
-                            Return False
-                        End If
+'                    requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, data.requestHash & ".request")
 
-                        log.track("A1x3Manager.init", "Ledger updated")
+'                    If requestFileEngine.save() Then
+'                        log.track("A1x3Manager.init", "request - Saved")
 
-                        If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
-                            currentService.currentAction.setError("-1", "Error create state")
-                            currentService.currentAction.reset()
+'                        ledgerCoordinate = writeDataIntoLedger()
 
-                            log.track("A1x3Manager.init", "Error: Error during update State", "fatal")
+'                        If (ledgerCoordinate.coordinate.Length = 0) Then
+'                            currentService.currentAction.setError("-1", "Error during update ledger")
+'                            currentService.currentAction.reset()
 
-                            Return False
-                        End If
+'                            log.track("A1x3Manager.init", "Error: Error during update ledger", "fatal")
 
-                        log.track("A1x3Manager.init", "State updated")
+'                            Return False
+'                        End If
 
-                        Return True
-                    End If
-                Catch ex As Exception
-                    currentService.currentAction.setError(Err.Number, ex.Message)
+'                        log.track("A1x3Manager.init", "Ledger updated")
 
-                    log.track("A1x3Manager.init", ex.Message, "fatal")
-                End Try
+'                        If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
+'                            currentService.currentAction.setError("-1", "Error create state")
+'                            currentService.currentAction.reset()
 
-                Return False
-            End Function
+'                            log.track("A1x3Manager.init", "Error: Error during update State", "fatal")
 
-        End Class
+'                            Return False
+'                        End If
 
-    End Class
+'                        log.track("A1x3Manager.init", "State updated")
 
-End Namespace
+'                        Return True
+'                    End If
+'                Catch ex As Exception
+'                    currentService.currentAction.setError(Err.Number, ex.Message)
+
+'                    log.track("A1x3Manager.init", ex.Message, "fatal")
+'                End Try
+
+'                Return False
+'            End Function
+
+'        End Class
+
+'    End Class
+
+'End Namespace

@@ -23,6 +23,7 @@ Namespace AreaConsensus
             Public Property notifyNetworkForUpdate As Boolean = False
             Public Property newProposalReadyToConsolidate As Boolean = False
             Public Property newIdentity As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+            Public Property blockNumber As String = ""
 
         End Class
 
@@ -99,9 +100,9 @@ Namespace AreaConsensus
 
                             With .lastApprovedTransaction
                                 .coordinate = AreaCommon.state.currentBlockLedger.composeCoordinateTransaction()
-                                .registrationTimeStamp = AreaCommon.state.currentBlockLedger.currentApprovedTransaction.registrationTimeStamp
-                                .hash = AreaCommon.state.currentBlockLedger.currentApprovedTransaction.currentHash
-                                .progressiveHash = AreaCommon.state.currentBlockLedger.currentApprovedTransaction.progressiveHash
+                                .registrationTimeStamp = AreaCommon.state.currentBlockLedger.approvedTransaction.registrationTimeStamp
+                                .hash = AreaCommon.state.currentBlockLedger.approvedTransaction.currentHash
+                                .progressiveHash = AreaCommon.state.currentBlockLedger.approvedTransaction.progressiveHash
                             End With
                         End With
                     Else
@@ -111,9 +112,9 @@ Namespace AreaConsensus
 
                             With .lastApprovedTransaction
                                 .coordinate = AreaCommon.state.currentBlockLedger.composeCoordinateTransaction()
-                                .registrationTimeStamp = AreaCommon.state.currentBlockLedger.currentApprovedTransaction.registrationTimeStamp
-                                .hash = AreaCommon.state.currentBlockLedger.currentApprovedTransaction.currentHash
-                                .progressiveHash = AreaCommon.state.currentBlockLedger.currentApprovedTransaction.progressiveHash
+                                .registrationTimeStamp = AreaCommon.state.currentBlockLedger.approvedTransaction.registrationTimeStamp
+                                .hash = AreaCommon.state.currentBlockLedger.approvedTransaction.currentHash
+                                .progressiveHash = AreaCommon.state.currentBlockLedger.approvedTransaction.progressiveHash
                             End With
                         End With
                     End If
@@ -309,7 +310,7 @@ Namespace AreaConsensus
 
                 AreaCommon.log.track("ConsensusEngine.useNewProposalForApproval", "Begin")
 
-                request = AreaCommon.flow.getRequest(registration.requestHash)
+                request = AreaCommon.flow.getActiveRequest(registration.requestHash)
 
                 With bulletin.proposalsForApprovalData
                     .registerBulletinAssessmentTimeStamp = registration.assessmentTimeStamp
@@ -360,7 +361,7 @@ Namespace AreaConsensus
                     proceed = (bulletin.proposalUpdateNewTransactionHash.requestHash.CompareTo(bulletin.proposalsForApprovalData.requestHash) <> 0)
                 End If
                 If proceed Then
-                    request = AreaCommon.flow.getRequest(bulletin.proposalsForApprovalData.requestHash)
+                    request = AreaCommon.flow.getActiveRequest(bulletin.proposalsForApprovalData.requestHash)
 
                     If (request.evaluations.notExpressed.count = 0) Then
 
@@ -475,7 +476,7 @@ Namespace AreaConsensus
 
                     For Each assessment In bulletin.acceptOrAbstainRequestList
                         If (assessment.model = EnumModel.abstained) Then
-                            dataRequest = AreaCommon.flow.getRequest(assessment.requestHash)
+                            dataRequest = AreaCommon.flow.getActiveRequest(assessment.requestHash)
 
                             If dataRequest.position.deliveryBulletinNodeRemain.ContainsKey("delivered") Then
                                 bulletin.acceptOrAbstainRequestList.Remove(assessment)
@@ -544,7 +545,7 @@ Namespace AreaConsensus
                     haveChangeList = False
 
                     For Each rejected In bulletin.rejectedRequestData
-                        dataRequest = AreaCommon.flow.getRequest(rejected.requestHash)
+                        dataRequest = AreaCommon.flow.getActiveRequest(rejected.requestHash)
 
                         If dataRequest.position.deliveryBulletinNodeRemain.ContainsKey("delivered") Then
                             bulletin.rejectedRequestData.Remove(rejected)
@@ -643,7 +644,7 @@ Namespace AreaConsensus
                 AreaCommon.log.track("ConsensusEngine.loadListSenderIntoRequests", "Begin")
 
                 For Each request In requests
-                    requestData = AreaCommon.flow.getRequest(request)
+                    requestData = AreaCommon.flow.getActiveRequest(request)
 
                     If (requestData.position.deliveryBulletinNodeRemain.Count = 0) Then
                         For i As Integer = 0 To listSender.count - 1
@@ -697,7 +698,7 @@ Namespace AreaConsensus
                 Dim percReject As Decimal = bulletin.proposalsForApprovalData.totalVotes.rejected / bulletin.proposalsForApprovalData.totalVotes.total * 100
                 Dim dataRequest As AreaFlow.RequestExtended
 
-                dataRequest = AreaCommon.flow.getRequest(bulletin.proposalsForApprovalData.requestHash)
+                dataRequest = AreaCommon.flow.getActiveRequest(bulletin.proposalsForApprovalData.requestHash)
 
                 If (percApproved >= percReject) Then
                     dataRequest.position.process = AreaFlow.EnumOperationPosition.completeWithPositiveResult
@@ -723,14 +724,14 @@ Namespace AreaConsensus
             Try
                 AreaCommon.log.track("ConsensusEngine.updateLedger", "Begin")
 
-                Dim request As AreaFlow.RequestExtended = AreaCommon.flow.getRequest(bulletin.proposalUpdateNewTransactionHash.requestHash)
+                Dim request As AreaFlow.RequestExtended = AreaCommon.flow.getActiveRequest(bulletin.proposalUpdateNewTransactionHash.requestHash)
                 Dim registrant As String = bulletin.proposalsForApprovalData.registerMasternodeAddress
                 Dim registrationTimeStamp As Double = bulletin.proposalsForApprovalData.registerBulletinAssessmentTimeStamp
                 Dim consensusHash As String = bulletin.proposalUpdateNewTransactionHash.consensusHash
                 Dim requestHash As String = bulletin.proposalUpdateNewTransactionHash.requestHash
 
-                Select Case request.dataCommon.requestCode
-                    Case "a0x0" : support.newIdentity = AreaProtocol.A0x0.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.netName, request.data.common.publicAddressRequester, requestHash)
+                Select Case request.dataCommon.type
+                    Case "a0x0" : support.newIdentity = AreaProtocol.A0x0.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x1" : support.newIdentity = AreaProtocol.A0x1.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.whitePaper, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x2" : support.newIdentity = AreaProtocol.A0x2.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.yellowPaper, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x3" : support.newIdentity = AreaProtocol.A0x3.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.primaryAsset, request.data.common.publicAddressRequester, requestHash)
@@ -738,9 +739,15 @@ Namespace AreaConsensus
                     Case "a0x5" : support.newIdentity = AreaProtocol.A0x5.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.privacyPolicy, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x6" : support.newIdentity = AreaProtocol.A0x6.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.generalCondition, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x7" : support.newIdentity = AreaProtocol.A0x7.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.refundPlan, request.data.common.publicAddressRequester, requestHash)
+
+                    Case "a1x0" : support.newIdentity = AreaProtocol.A1x0.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.extractMinimal(), request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x1" : support.newIdentity = AreaProtocol.A1x1.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.extractMinimal(), request.data.common.publicAddressRequester, requestHash)
+
+                        ''' BOOKMARK: Add in this point 1
                 End Select
 
                 support.proceed = Not IsNothing(support.newIdentity)
+                support.blockNumber = AreaCommon.state.currentBlockLedger.composeCoordinateTransaction(False, True)
 
                 AreaCommon.log.track("ConsensusEngine.updateLedger", "Complete")
 
@@ -762,19 +769,24 @@ Namespace AreaConsensus
             Try
                 AreaCommon.log.track("ConsensusEngine.updateState", "Begin")
 
-                Dim request As AreaFlow.RequestExtended = AreaCommon.flow.getRequest(bulletin.proposalUpdateNewTransactionHash.requestHash)
+                Dim request As AreaFlow.RequestExtended = AreaCommon.flow.getActiveRequest(bulletin.proposalUpdateNewTransactionHash.requestHash)
 
                 support.proceed = False
 
-                Select Case request.dataCommon.requestCode
+                Select Case request.dataCommon.type
                     Case "a0x0" : support.proceed = AreaProtocol.A0x0.RecoveryState.fromRequest(request.data, support.newIdentity)
-                    Case "a0x1" : support.proceed = AreaProtocol.A0x1.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
-                    Case "a0x2" : support.proceed = AreaProtocol.A0x2.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
-                    Case "a0x3" : support.proceed = AreaProtocol.A0x3.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
-                    Case "a0x4" : support.proceed = AreaProtocol.A0x4.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
-                    Case "a0x5" : support.proceed = AreaProtocol.A0x5.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
-                    Case "a0x6" : support.proceed = AreaProtocol.A0x6.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
-                    Case "a0x7" : support.proceed = AreaProtocol.A0x7.RecoveryState.fromRequest(request.data, support.newIdentity, request.dataCommon.hash)
+                    Case "a0x1" : support.proceed = AreaProtocol.A0x1.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a0x2" : support.proceed = AreaProtocol.A0x2.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a0x3" : support.proceed = AreaProtocol.A0x3.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a0x4" : support.proceed = AreaProtocol.A0x4.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a0x5" : support.proceed = AreaProtocol.A0x5.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a0x6" : support.proceed = AreaProtocol.A0x6.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a0x7" : support.proceed = AreaProtocol.A0x7.RecoveryState.fromRequest(request.data, support.newIdentity)
+
+                    Case "a1x0" : support.proceed = AreaProtocol.A1x0.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a1x1" : support.proceed = AreaProtocol.A1x1.RecoveryState.fromRequest(request.data, support.newIdentity)
+
+                        ''' BOOKMARK: Add in this point 2
                 End Select
 
                 AreaCommon.log.track("ConsensusEngine.updateState", "Complete")
@@ -797,8 +809,8 @@ Namespace AreaConsensus
             Try
                 AreaCommon.log.track("ConsensusEngine.moveRequestToCurrentLedger", "Begin")
 
-                Dim fileSource As String = IO.Path.Combine(AreaCommon.paths.workData.temporally, request.dataCommon.hash & ".request")
-                Dim fileDestination As String = IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, request.dataCommon.hash & ".request")
+                Dim fileSource As String = IO.Path.Combine(AreaCommon.paths.workData.requestData.received, request.dataCommon.hash & ".request")
+                Dim fileDestination As String = IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.requests, request.dataCommon.hash & ".request")
 
                 IO.File.Move(fileSource, fileDestination)
 
@@ -947,7 +959,7 @@ Namespace AreaConsensus
                     End If
                 End If
                 If support.proceed Then
-                    support.proceed = AreaCommon.flow.setRequestProcessed(dataRequest)
+                    support.proceed = AreaCommon.flow.setRequestProcessed(dataRequest, support.blockNumber)
                 End If
                 If support.proceed Then
                     support.proceed = moveRequestToCurrentLedger(dataRequest)

@@ -70,10 +70,13 @@ Namespace AreaFlow
                 End Try
             End Get
         End Property
-        Public ReadOnly Property data As Object
+        Public Property data As Object
             Get
                 Return _Data
             End Get
+            Set(value As Object)
+                _Data = value
+            End Set
         End Property
         Public Property source As New SourceRequestExtended
         Public Property position As New MonitorPositionRequestExtended
@@ -110,21 +113,6 @@ Namespace AreaFlow
             End Try
         End Function
 
-
-        ''' <summary>
-        ''' This method provide to add a data object (request)
-        ''' </summary>
-        ''' <param name="value"></param>
-        ''' <returns></returns>
-        Public Function addDataObject(ByRef value As Object) As Boolean
-            Try
-                _Data = value
-
-                Return True
-            Catch ex As Exception
-                Return False
-            End Try
-        End Function
 
         ''' <summary>
         ''' This method provide clear old consensus, swap information of evaluation and create consensus structures
@@ -192,7 +180,7 @@ Namespace AreaFlow
         Public Property sendType As EnumEntityToSend = EnumEntityToSend.request
 
         Public Property addTimeStamp As Double = 0
-        Public Property requestCode As String = ""
+        Public Property [type] As String = ""
         Public Property requestHash As String = ""
         Public Property deliveryList As AreaCommon.Masternode.MasternodeSenders
 

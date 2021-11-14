@@ -122,11 +122,11 @@ Namespace AreaWorker
         ''' <summary>
         ''' This method provide to send a broadcast a request
         ''' </summary>
-        ''' <param name="requestCode"></param>
+        ''' <param name="type"></param>
         ''' <param name="requestHash"></param>
         ''' <param name="deliveryList"></param>
         ''' <returns></returns>
-        Private Function sendInBroadCast(ByRef requestCode As String, ByVal requestHash As String, ByRef deliveryList As AreaCommon.Masternode.MasternodeSenders) As AreaCommon.Masternode.MasternodeSenders
+        Private Function sendInBroadCast(ByRef [type] As String, ByVal requestHash As String, ByRef deliveryList As AreaCommon.Masternode.MasternodeSenders) As AreaCommon.Masternode.MasternodeSenders
             Dim newDeliveryList As New AreaCommon.Masternode.MasternodeSenders
 
             Try
@@ -142,7 +142,7 @@ Namespace AreaWorker
                     dataPack.publicAddress = AreaCommon.state.publicIpAddress
                 End If
 
-                dataPack.requestCode = requestCode
+                dataPack.type = type
                 dataPack.requestHash = requestHash
                 dataPack.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, dataPack.getHash)
 
@@ -192,7 +192,7 @@ Namespace AreaWorker
                     deliveryList.removeFirst()
 
                     For Each singleRequest In requests
-                        requestData = AreaCommon.flow.getRequest(singleRequest)
+                        requestData = AreaCommon.flow.getActiveRequest(singleRequest)
 
                         If requestData.position.deliveryBulletinNodeRemain.ContainsKey(masterNode.publicAddress) Then
                             requestData.position.deliveryBulletinNodeRemain.Remove(masterNode.publicAddress)
@@ -256,11 +256,11 @@ Namespace AreaWorker
                 Do While (AreaCommon.flow.workerOn And workerOn)
                     item = AreaCommon.flow.getFirstRequestToSend()
 
-                    If (item.requestCode.Length > 0) Then
+                    If (item.type.Length > 0) Then
 
                         Select Case item.sendType
                             Case AreaFlow.EnumEntityToSend.bulletin : newDeliveryList = sendBulletinInBroadCast(item.dataObject, item.deliveryList)
-                            Case AreaFlow.EnumEntityToSend.request : newDeliveryList = sendInBroadCast(item.requestCode, item.dataObject.requestHash, item.deliveryList)
+                            Case AreaFlow.EnumEntityToSend.request : newDeliveryList = sendInBroadCast(item.type, item.dataObject.requestHash, item.deliveryList)
                             Case AreaFlow.EnumEntityToSend.requestResponse : newDeliveryList = sendRequestEvaluation(item.requestHash, item.deliveryList)
                         End Select
 
@@ -268,7 +268,7 @@ Namespace AreaWorker
 
                         If (newDeliveryList.count > 0) Then
                             If (item.tryNumber < 3) Then
-                                AreaCommon.flow.addNewRequestToSend(item.requestCode, item.requestHash, newDeliveryList, item.dataObject, item.tryNumber + 1)
+                                AreaCommon.flow.addNewRequestToSend(item.type, item.requestHash, newDeliveryList, item.dataObject, item.tryNumber + 1)
                             End If
                         End If
                     End If

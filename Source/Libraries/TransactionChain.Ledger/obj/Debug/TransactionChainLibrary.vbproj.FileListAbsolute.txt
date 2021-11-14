@@ -15,3 +15,5 @@ E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\obj\Debug\Transact
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\obj\Debug\TransactionChainLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\System.Data.SQLite.dll
 E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\System.Data.SQLite.xml
+E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\TransactionChain.Ledger\bin\Debug\CHCProtocolLibrary.xml

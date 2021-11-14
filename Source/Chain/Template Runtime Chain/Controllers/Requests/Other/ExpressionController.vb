@@ -32,7 +32,7 @@ Namespace Controllers
             Dim dataNode As AreaState.ChainStateEngine.DataMasternode
             Dim dataBulletin As New AreaConsensus.BulletinInformation
             Try
-            AreaCommon.log.track("ExpressionController.getValue", "Begin")
+                AreaCommon.log.track("ExpressionController.getValue", "Begin")
 
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
@@ -61,7 +61,7 @@ Namespace Controllers
                     End If
                 End If
                 If proceed Then
-                    dataBulletin = AreaCommon.flow.getRequest(value.requestHash).bulletin
+                    dataBulletin = AreaCommon.flow.getActiveRequest(value.requestHash).bulletin
 
                     If (dataBulletin.hash.Length = 0) Then
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.commandNotAllowed
@@ -90,7 +90,6 @@ Namespace Controllers
             Return AreaSecurity.completeResponse(result, True)
         End Function
 
-
         ''' <summary>
         ''' This API (put method) provide to set a model A0x0 of a hashValue request
         ''' </summary>
@@ -98,11 +97,11 @@ Namespace Controllers
         Public Function putValue(ByRef value As AreaProtocol.A0x0.RequestModel, ByVal ticketNumber As String) As RemoteResponse
             Dim result As New RemoteResponse
             Try
-                AreaCommon.log.track("A0x0Controller.putValue", "Begin")
+                AreaCommon.log.track("ExpressionController.putValue", "Begin")
 
                 If AreaSecurity.checkSignature(value.getHash(), value.common.signature, value.common.publicAddressRequester) Then
                     If AreaProtocol.A0x0.Manager.saveTemporallyRequest(value) Then
-                        AreaCommon.log.track("A0x0Manager.putValue", "request - Saved")
+                        AreaCommon.log.track("ExpressionController.putValue", "request - Saved")
                     Else
                         result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                         result.errorDescription = "503 - Generic Error"
@@ -121,7 +120,7 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.log.track("A0x0Controller.putValue", "An error occurrent during execute: " & ex.Message, "fatal")
+                AreaCommon.log.track("ExpressionController.putValue", "An error occurrent during execute: " & ex.Message, "fatal")
             End Try
 
             Return AreaSecurity.completeResponse(result, value.common.signature)

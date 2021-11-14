@@ -13,7 +13,7 @@ Namespace AreaP2P
 
             Public Property id As Integer = 0
             Public Property approvedDate As Double = 0
-            Public Property actionCode As String = ""
+            Public Property [type] As String = ""
             Public Property requester As String = ""
             Public Property detailInformation As String = ""
             Public Property requestHash As String = ""
@@ -35,7 +35,7 @@ Namespace AreaP2P
 
                 tmp += id.ToString() & separator
                 tmp += approvedDate.ToString() & separator
-                tmp += actionCode & separator
+                tmp += [type] & separator
                 tmp += requester & separator
                 tmp += detailInformation & separator
                 tmp += requestHash & separator

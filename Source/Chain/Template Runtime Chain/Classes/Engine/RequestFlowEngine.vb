@@ -7,7 +7,9 @@ Option Explicit On
 
 Namespace AreaFlow
 
-
+    ''' <summary>
+    ''' This class contain the engine of a flow
+    ''' </summary>
     Public Class FlowEngine
 
         Private _TicketNumberValue As Integer = 0
@@ -22,6 +24,8 @@ Namespace AreaFlow
         Private _RequestProcessed As New Dictionary(Of String, RequestExtended)
 
         Private _RemoteBulletin As New List(Of AreaConsensus.BulletinInformation)
+
+        Private _RequestManager As New TransactionChainLibrary.AreaEngine.Requests.RequestManager
 
         Public Enum EnumPhases
             toSelect
@@ -108,9 +112,7 @@ Namespace AreaFlow
         ''' <summary>
         ''' This method provide to add a new direct request
         ''' </summary>
-        ''' <param name="requestHash"></param>
-        ''' <param name="requestCode"></param>
-        ''' <param name="dateRequest"></param>
+        ''' <param name="request"></param>
         ''' <param name="ticketNumber"></param>
         ''' <returns></returns>
         Public Function addNewRequestDirect(ByRef request As Object, Optional ByVal ticketNumber As String = "") As Boolean
@@ -120,20 +122,26 @@ Namespace AreaFlow
                 AreaCommon.log.track("RequestFlowEngine.addNewRequestDirect", "Begin")
 
                 If Not _Requests.ContainsKey(request.common.hash) Then
-                    value.addDataObject(request)
+                    value.data = request
                     value.source.acquireTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                     value.source.directRequest = True
 
                     If (value.source.ticketNumber.Length > 0) Then
                         _TicketNumberValue = value.source.ticketNumber
+                    ElseIf (ticketNumber.Length > 0) Then
+                        value.source.ticketNumber = ticketNumber
+
+                        _TicketNumberValue = ticketNumber
                     Else
                         _TicketNumberValue += 1
 
                         value.source.ticketNumber = _TicketNumberValue
                     End If
 
-                    _Requests.Add(request.common.hash, value)
-                    _RequestToSelected.Add(value)
+                    If _RequestManager.addNewRequest(request.common.hash, request.common.type) Then
+                        _Requests.Add(request.common.hash, value)
+                        _RequestToSelected.Add(value)
+                    End If
                 End If
 
                 AreaCommon.log.track("RequestFlowEngine.addNewRequestDirect", "Complete")
@@ -150,11 +158,11 @@ Namespace AreaFlow
         ''' This method provide to add a new request into notify
         ''' </summary>
         ''' <param name="requestHash"></param>
-        ''' <param name="requestCode"></param>
+        ''' <param name="type"></param>
         ''' <param name="dateRequest"></param>
         ''' <param name="externalSource"></param>
         ''' <returns></returns>
-        Public Function addNewRequestNotify(ByVal requestHash As String, ByVal requestCode As String, ByVal dateRequest As Double, ByVal externalSource As String) As Boolean
+        Public Function addNewRequestNotify(ByVal requestHash As String, ByVal [type] As String, ByVal dateRequest As Double, ByVal externalSource As String) As Boolean
             Try
                 Dim value As New RequestExtended
 
@@ -164,7 +172,7 @@ Namespace AreaFlow
                     _TicketNumberValue += 1
 
                     value.dataCommon.hash = requestHash
-                    value.dataCommon.requestCode = requestCode
+                    value.dataCommon.type = [type]
                     value.source.directRequest = False
                     value.source.notifiedPublicAddress = externalSource
                     value.source.ticketNumber = _TicketNumberValue
@@ -219,19 +227,19 @@ Namespace AreaFlow
         ''' <summary>
         ''' This method provide to add a new request to send
         ''' </summary>
-        ''' <param name="requestCode"></param>
+        ''' <param name="type"></param>
         ''' <param name="requestHash"></param>
         ''' <param name="sender"></param>
         ''' <param name="dataRequest"></param>
         ''' <param name="times"></param>
         ''' <returns></returns>
-        Public Function addNewRequestToSend(ByVal requestCode As String, ByRef requestHash As String, ByRef sender As AreaCommon.Masternode.MasternodeSenders, ByRef dataRequest As Object, Optional ByVal times As Byte = 0) As Boolean
+        Public Function addNewRequestToSend(ByVal [type] As String, ByRef requestHash As String, ByRef sender As AreaCommon.Masternode.MasternodeSenders, ByRef dataRequest As Object, Optional ByVal times As Byte = 0) As Boolean
             Try
                 AreaCommon.log.track("RequestFlowEngine.addNewRequestToSend", "Begin")
 
                 Dim item As New RequestToSend
 
-                item.requestCode = requestCode
+                item.type = [type]
                 item.requestHash = requestHash
                 item.addTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                 item.deliveryList = sender
@@ -358,14 +366,21 @@ Namespace AreaFlow
         ''' <returns></returns>
         Public Function setRequestToSelect(ByRef item As RequestExtended) As Boolean
             Try
+                Dim proceed As Boolean = True
+
                 AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", "Begin")
 
-                removeFirstRequestToDownload(item.dataCommon.hash, item.source.notifiedPublicAddress)
+                If proceed Then
+                    proceed = removeFirstRequestToDownload(item.dataCommon.hash, item.source.notifiedPublicAddress)
+                End If
                 _RequestToSelected.Add(item)
+                If proceed Then
+                    proceed = _RequestManager.addNewRequest(item.dataCommon.hash, item.dataCommon.type)
+                End If
 
                 AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", "Complete")
 
-                Return True
+                Return proceed
             Catch ex As Exception
                 AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", ex.Message, "fatal")
 
@@ -400,9 +415,9 @@ Namespace AreaFlow
         ''' </summary>
         ''' <param name="item"></param>
         ''' <returns></returns>
-        Public Function setRequestProcessed(ByRef item As RequestExtended) As Boolean
+        Public Function setRequestProcessed(ByRef item As RequestExtended, ByVal block As String, Optional ByVal rejected As Boolean = False) As Boolean
             Try
-                AreaCommon.log.track("RequestFlowEngine.setRequestRejected", "Begin")
+                AreaCommon.log.track("RequestFlowEngine.setRequestProcessed", "Begin")
 
                 If _RequestToSelected.Contains(item) Then
                     _RequestToSelected.Remove(item)
@@ -412,11 +427,17 @@ Namespace AreaFlow
                 End If
                 _RequestProcessed.Add(item.dataCommon.hash, item)
 
-                AreaCommon.log.track("RequestFlowEngine.setRequestRejected", "Complete")
+                If rejected Or (item.position.process <> EnumOperationPosition.completeWithPositiveResult) Then
+                    _RequestManager.completedRequest(item.dataCommon.hash, TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.rejected, block)
+                Else
+                    _RequestManager.completedRequest(item.dataCommon.hash, TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.stored, block)
+                End If
+
+                AreaCommon.log.track("RequestFlowEngine.setRequestProcessed", "Complete")
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.setRequestRejected", ex.Message, "fatal")
+                AreaCommon.log.track("RequestFlowEngine.setRequestProcessed", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -510,14 +531,14 @@ Namespace AreaFlow
                 AreaCommon.log.track("RequestFlowEngine.getFirstRequestToSend", "Begin")
 
                 For Each item In _RequestToSend
-                    If (result.requestCode.Length = 0) Then
+                    If (result.type.Length = 0) Then
                         result = item
                     ElseIf (result.addTimeStamp <= item.addTimeStamp) Then
                         result = item
                     End If
                 Next
 
-                If (result.requestCode.Length > 0) Then
+                If (result.type.Length > 0) Then
                     _RequestToSend.Remove(result)
                 End If
 
@@ -536,12 +557,12 @@ Namespace AreaFlow
         ''' </summary>
         ''' <param name="requestHash"></param>
         ''' <returns></returns>
-        Public Function getRequest(ByVal requestHash As String) As RequestExtended
+        Public Function getActiveRequest(ByVal hash As String) As RequestExtended
             Try
                 AreaCommon.log.track("RequestFlowEngine.getRequest", "Begin")
 
-                If _Requests.ContainsKey(requestHash) Then
-                    Return _Requests(requestHash)
+                If _Requests.ContainsKey(hash) Then
+                    Return _Requests(hash)
                 End If
 
                 AreaCommon.log.track("RequestFlowEngine.getRequest", "Complete")
@@ -550,6 +571,51 @@ Namespace AreaFlow
             End Try
 
             Return New RequestExtended
+        End Function
+
+        ''' <summary>
+        ''' This method provide to ge a request from a memory or DB
+        ''' </summary>
+        ''' <param name="hash"></param>
+        ''' <returns></returns>
+        Public Function getRequest(ByVal hash As String) As RequestExtended
+            Try
+                Dim result As RequestExtended
+                Dim request As TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData
+
+                AreaCommon.log.track("RequestFlowEngine.getRequest", "Begin")
+
+                result = getActiveRequest(hash)
+
+                If (result.dataCommon.hash.Length = 0) Then
+                    request = _RequestManager.getRequest(hash)
+
+                    If (request.hash.Length > 0) Then
+                        Dim requestPath As String = AreaCommon.state.ledgerMap.getRequestPath(request.block)
+
+                        If (requestPath.Length > 0) Then
+                            Select Case request.type
+                                Case "a0x0" : result.data = AreaProtocol.A0x0.Manager.loadRequest(requestPath, hash)
+                                Case "a0x1" : result.data = AreaProtocol.A0x1.Manager.loadRequest(requestPath, hash)
+                                Case "a0x2" : result.data = AreaProtocol.A0x2.Manager.loadRequest(requestPath, hash)
+                                Case "a0x3" : result.data = AreaProtocol.A0x3.Manager.loadRequest(requestPath, hash)
+                                Case "a0x4" : result.data = AreaProtocol.A0x4.Manager.loadRequest(requestPath, hash)
+                                Case "a0x5" : result.data = AreaProtocol.A0x5.Manager.loadRequest(requestPath, hash)
+                                Case "a0x6" : result.data = AreaProtocol.A0x6.Manager.loadRequest(requestPath, hash)
+                                Case "a0x7" : result.data = AreaProtocol.A0x7.Manager.loadRequest(requestPath, hash)
+
+                                    ''' BOOKMARK: Add in this point
+                            End Select
+                        End If
+                    End If
+                End If
+
+                Return result
+
+                AreaCommon.log.track("RequestFlowEngine.getRequest", "Complete")
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.getRequest", ex.Message, "fatal")
+            End Try
         End Function
 
         ''' <summary>
@@ -815,12 +881,20 @@ Namespace AreaFlow
                 Dim work5 As New Threading.Thread(AddressOf AreaWorker.Sender.work)
                 Dim work6 As New Threading.Thread(AddressOf AreaWorker.RemoteVerifier.work)
 
+                AreaCommon.log.track("RequestFlowEngine.init", "Complete declaration")
+
                 work1.Start()
                 work2.Start()
                 work3.Start()
                 work4.Start()
                 work5.Start()
                 work6.Start()
+
+                AreaCommon.log.track("RequestFlowEngine.init", "All worker on")
+
+                _RequestManager.logIstance = AreaCommon.log
+
+                _RequestManager.init(AreaCommon.paths.workData.requestData.path)
 
                 AreaCommon.log.track("RequestFlowEngine.init", "Complete")
 

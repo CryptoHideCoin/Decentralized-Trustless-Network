@@ -697,7 +697,7 @@ Namespace AreaConsensus
         ''' <returns></returns>
         Public Function save() As Boolean
             Try
-                Return IOFast(Of BulletinInformation).save(IO.Path.Combine(AreaCommon.paths.workData.currentVolume.bulletines, proposalsForApprovalData.requestHash & ".bulletin"), Me)
+                Return IOFast(Of BulletinInformation).save(IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.bulletines, proposalsForApprovalData.requestHash & ".bulletin"), Me)
             Catch ex As Exception
                 Return False
             End Try
@@ -875,7 +875,7 @@ Namespace AreaConsensus
         ''' <returns></returns>
         Public Function save() As Boolean
             Try
-                Return IOFast(Of ConsensusNetwork).save(IO.Path.Combine(AreaCommon.paths.workData.currentVolume.consensus, requestHash & ".consensus"), Me)
+                Return IOFast(Of ConsensusNetwork).save(IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.consensus, requestHash & ".consensus"), Me)
             Catch ex As Exception
                 Return False
             End Try

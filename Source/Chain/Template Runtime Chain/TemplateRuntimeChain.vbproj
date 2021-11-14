@@ -55,11 +55,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.12.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.12.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.5.5.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.5.6.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
@@ -93,7 +93,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="TransactionChainLibrary, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="TransactionChainLibrary, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCTransactionChainLibrary\TransactionChainLibrary.dll</HintPath>
     </Reference>
@@ -138,6 +138,7 @@
     <Compile Include="Classes\Protocol\A2\A2x0Engine.vb" />
     <Compile Include="Classes\Protocol\A2\A2x1Engine.vb" />
     <Compile Include="Classes\State\ChainStateEngine.vb" />
+    <Compile Include="Classes\State\DAO\DAOChainMain.vb" />
     <Compile Include="Controllers\Administration\DoAction\BuildNetworkController.vb" />
     <Compile Include="Controllers\Administration\DoAction\CleanLocalDataController.vb" />
     <Compile Include="Controllers\Administration\DoAction\VerifyDataController.vb" />
@@ -157,13 +158,17 @@
     <Compile Include="Controllers\QoS\Ticket\InformationController.vb" />
     <Compile Include="Controllers\QoS\Ticket\QueueTickets.vb" />
     <Compile Include="Controllers\QoS\Ticket\RequestNewController.vb" />
-    <Compile Include="Controllers\Requests\A0x0Controller.vb" />
-    <Compile Include="Controllers\Requests\A0x1Controller.vb" />
-    <Compile Include="Controllers\Requests\A0x2Controller.vb" />
-    <Compile Include="Controllers\Requests\A0x3Controller.vb" />
-    <Compile Include="Controllers\Requests\A0x4Controller.vb" />
-    <Compile Include="Controllers\Requests\A0x5Controller.vb" />
-    <Compile Include="Controllers\Requests\ExpressionController.vb" />
+    <Compile Include="Controllers\Requests\A0\A0x0Controller.vb" />
+    <Compile Include="Controllers\Requests\A0\A0x1Controller.vb" />
+    <Compile Include="Controllers\Requests\A0\A0x2Controller.vb" />
+    <Compile Include="Controllers\Requests\A0\A0x3Controller.vb" />
+    <Compile Include="Controllers\Requests\A0\A0x4Controller.vb" />
+    <Compile Include="Controllers\Requests\A0\A0x5Controller.vb" />
+    <Compile Include="Controllers\Requests\A0\A0x6Controller.vb" />
+    <Compile Include="Controllers\Requests\A0\A0x7Controller.vb" />
+    <Compile Include="Controllers\Requests\A1\A1x0Controller.vb" />
+    <Compile Include="Controllers\Requests\A1\A1x1Controller.vb" />
+    <Compile Include="Controllers\Requests\Other\ExpressionController.vb" />
     <Compile Include="Controllers\Security\ChangeCertificateController.vb" />
     <Compile Include="Controllers\Security\SetIdentityKeyPairController.vb" />
     <Compile Include="Controllers\Service\InformationController.vb" />
@@ -191,8 +196,8 @@
     <Compile Include="Models\NetworkModel.vb" />
     <Compile Include="Models\QosModel.vb" />
     <Compile Include="Models\RequestExpressionModel.vb" />
-    <Compile Include="Modules\Service\BuildNetworkData.vb" />
-    <Compile Include="Modules\Service\CleanLocalData.vb" />
+    <Compile Include="Modules\Service\BuildNetworkEngine.vb" />
+    <Compile Include="Modules\Service\CleanLocalEngine.vb" />
     <Compile Include="Modules\Service\Network.vb" />
     <Compile Include="Modules\Service\Security.vb" />
     <Compile Include="Modules\Service\VerifyData.vb" />

@@ -86,7 +86,7 @@ Namespace AreaWorker
                     End If
                 End If
                 If proceed Then
-                    proceed = (remote.data.netName.Length > 0)
+                    proceed = (remote.data.content.netName.Length > 0)
                 End If
                 If proceed Then
                     If AreaProtocol.A0x0.Manager.saveTemporallyRequest(remote.data) Then
@@ -556,6 +556,132 @@ Namespace AreaWorker
         End Function
 
         ''' <summary>
+        ''' This method provide to get a request with code A1X0
+        ''' </summary>
+        ''' <param name="addressValue"></param>
+        ''' <param name="value"></param>
+        ''' <param name="dontRetry"></param>
+        ''' <returns></returns>
+        Private Function getRequestA1x0(ByVal addressValue As String, ByVal value As String, Optional ByVal dontRetry As Boolean = False) As EnumResponseGet
+            Try
+                AreaCommon.log.track("Downloader.getRequestA1x0", "Begin")
+
+                Dim remote As New ProxyWS(Of AreaProtocol.A1x0.RequestResponseModel)
+                Dim proceed As Boolean = True
+
+                remote.url = addressValue & "/requests/a1x0/?hashValue=" & value
+
+                If proceed Then
+                    proceed = (remote.getData() = "")
+                End If
+                If proceed Then
+                    proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+                Else
+                    AreaCommon.log.track("Downloader.getRequestA1x0", "Connection failed url = " & remote.url, "fatal")
+
+                    If dontRetry Then
+                        Return EnumResponseGet.connectionFailed
+                    Else
+                        If testMasterNode(addressValue) Then
+                            Return getRequestA1x0(addressValue, value, True)
+                        Else
+                            Return EnumResponseGet.connectionFailed
+                        End If
+                    End If
+                End If
+                If proceed Then
+                    proceed = (remote.data.common.chainReferement.Length > 0)
+                End If
+                If proceed Then
+                    If AreaProtocol.A1x0.Manager.saveTemporallyRequest(remote.data) Then
+                        AreaCommon.log.track("Downloader.getRequestA1x0", "request - Saved")
+
+                        Return EnumResponseGet.connectionSuccessfully
+                    Else
+                        AreaCommon.log.track("Downloader.getRequestA1x0", "Request not saved", "fatal")
+
+                        Return EnumResponseGet.inError
+                    End If
+                Else
+                    AreaCommon.log.track("Downloader.getRequestA1x0", "Request not found", "fatal")
+
+                    Return EnumResponseGet.inError
+                End If
+
+                AreaCommon.log.track("Downloader.getRequestA1x0", "Complete")
+
+                remote = Nothing
+            Catch ex As Exception
+                AreaCommon.log.track("Downloader.getRequestA1x0", ex.Message, "fatal")
+
+                Return EnumResponseGet.inError
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get a request with code A1X0
+        ''' </summary>
+        ''' <param name="addressValue"></param>
+        ''' <param name="value"></param>
+        ''' <param name="dontRetry"></param>
+        ''' <returns></returns>
+        Private Function getRequestA1x1(ByVal addressValue As String, ByVal value As String, Optional ByVal dontRetry As Boolean = False) As EnumResponseGet
+            Try
+                AreaCommon.log.track("Downloader.getRequestA1x1", "Begin")
+
+                Dim remote As New ProxyWS(Of AreaProtocol.A1x1.RequestResponseModel)
+                Dim proceed As Boolean = True
+
+                remote.url = addressValue & "/requests/a1x1/?hashValue=" & value
+
+                If proceed Then
+                    proceed = (remote.getData() = "")
+                End If
+                If proceed Then
+                    proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+                Else
+                    AreaCommon.log.track("Downloader.getRequestA1x1", "Connection failed url = " & remote.url, "fatal")
+
+                    If dontRetry Then
+                        Return EnumResponseGet.connectionFailed
+                    Else
+                        If testMasterNode(addressValue) Then
+                            Return getRequestA1x1(addressValue, value, True)
+                        Else
+                            Return EnumResponseGet.connectionFailed
+                        End If
+                    End If
+                End If
+                If proceed Then
+                    proceed = (remote.data.common.chainReferement.Length > 0)
+                End If
+                If proceed Then
+                    If AreaProtocol.A1x1.Manager.saveTemporallyRequest(remote.data) Then
+                        AreaCommon.log.track("Downloader.getRequestA1x1", "request - Saved")
+
+                        Return EnumResponseGet.connectionSuccessfully
+                    Else
+                        AreaCommon.log.track("Downloader.getRequestA1x1", "Request not saved", "fatal")
+
+                        Return EnumResponseGet.inError
+                    End If
+                Else
+                    AreaCommon.log.track("Downloader.getRequestA1x1", "Request not found", "fatal")
+
+                    Return EnumResponseGet.inError
+                End If
+
+                AreaCommon.log.track("Downloader.getRequestA1x1", "Complete")
+
+                remote = Nothing
+            Catch ex As Exception
+                AreaCommon.log.track("Downloader.getRequestA1x1", ex.Message, "fatal")
+
+                Return EnumResponseGet.inError
+            End Try
+        End Function
+
+        ''' <summary>
         ''' This method provide to download a specific request
         ''' </summary>
         ''' <param name="value"></param>
@@ -573,7 +699,7 @@ Namespace AreaWorker
                         Return False
                     End If
 
-                    Select Case value.dataCommon.requestCode
+                    Select Case value.dataCommon.type
                         Case "a0x0" : response = getRequestA0x0(baseAddress, value.dataCommon.hash)
                         Case "a0x1" : response = getRequestA0x1(baseAddress, value.dataCommon.hash)
                         Case "a0x2" : response = getRequestA0x2(baseAddress, value.dataCommon.hash)
@@ -582,6 +708,11 @@ Namespace AreaWorker
                         Case "a0x5" : response = getRequestA0x5(baseAddress, value.dataCommon.hash)
                         Case "a0x6" : response = getRequestA0x6(baseAddress, value.dataCommon.hash)
                         Case "a0x7" : response = getRequestA0x7(baseAddress, value.dataCommon.hash)
+
+                        Case "a1x0" : response = getRequestA1x0(baseAddress, value.dataCommon.hash)
+                        Case "a1x1" : response = getRequestA1x0(baseAddress, value.dataCommon.hash)
+
+                            ''' BOOKMARK: Add in this point 3
                     End Select
 
                     If (response = EnumResponseGet.connectionFailed) Then

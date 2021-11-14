@@ -59,9 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.5.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.5.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCSupportUIControls\CHCProtocolLibrary.dll</HintPath>
+      <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCSupportUIControls, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

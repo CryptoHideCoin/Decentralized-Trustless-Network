@@ -68,7 +68,9 @@ Namespace AreaData
                     .currentBlockLedger.log = AreaCommon.log
                     .currentBlockLedger.identifyBlockChain = "B0"
 
-                    Return .currentBlockLedger.init(AreaCommon.paths.workData.currentVolume.ledger, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate)
+                    .ledgerMap.log = AreaCommon.log
+
+                    Return .currentBlockLedger.init(AreaCommon.paths.workData.ledger, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate)
                 End With
 
                 AreaCommon.log.track("BuildNetwork.createLedger", "Complete")
@@ -86,7 +88,7 @@ Namespace AreaData
         ''' </summary>
         ''' <returns></returns>
         Private Function createState() As Boolean
-            Return AreaCommon.state.runtimeState.init(AreaCommon.paths.workData.state.db)
+            Return AreaCommon.state.runtimeState.init(AreaCommon.paths.workData.state.path)
         End Function
 
         ''' <summary>
@@ -129,10 +131,11 @@ Namespace AreaData
         ''' This method provide to create the request and wait the approvation
         ''' </summary>
         ''' <returns></returns>
-        Private Function createAndWaitRequest(ByRef requestCode As String) As Boolean
+        Private Function createAndWaitRequest(ByRef [type] As String, Optional ByVal checkChainReferement As Boolean = False) As Boolean
             Try
-                Do While (AreaCommon.flow.getRequest(requestCode).position.process <> AreaFlow.EnumOperationPosition.inWork)
-                    System.Threading.Thread.Sleep(10)
+                Do While (Not checkChainReferement And (AreaCommon.flow.getActiveRequest([type]).position.process <> AreaFlow.EnumOperationPosition.completeWithPositiveResult)) Or
+                         (checkChainReferement And (AreaCommon.state.runtimeState.activeChain.hash.Length = 0))
+                    Threading.Thread.Sleep(10)
                 Loop
 
                 Return True
@@ -142,114 +145,82 @@ Namespace AreaData
         End Function
 
 
+        'Private Sub manageA1x2()
+        '    If _Proceed Then
+        '        Dim commandA1x2 As New AreaProtocol.A1x2.Manager
 
+        '        commandA1x2.log = AreaCommon.log
+        '        commandA1x2.currentService = AreaCommon.state.currentService
 
-        Private Sub manageA1x0()
-            If _Proceed Then
-                Dim commandA1x0 As New AreaProtocol.A1x0.Manager
+        '        With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
+        '            _Proceed = commandA1x2.init(AreaCommon.paths, AreaCommon.Customize.chainProtocolDocument, .publicAddress, .privateKey)
+        '        End With
 
-                commandA1x0.log = AreaCommon.log
-                commandA1x0.currentService = AreaCommon.state.currentService
+        '        commandA1x2 = Nothing
+        '    End If
+        'End Sub
 
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA1x0.init(AreaCommon.paths, AreaCommon.state.internalInformation.chainName, .publicAddress, .privateKey)
-                End With
+        'Private Sub manageA1x3()
+        '    If _Proceed Then
+        '        Dim commandA1x3 As New AreaProtocol.A1x3.Manager
 
-                commandA1x0 = Nothing
-            End If
-        End Sub
+        '        commandA1x3.log = AreaCommon.log
+        '        commandA1x3.currentService = AreaCommon.state.currentService
 
-        Private Sub manageA1x1()
-            If _Proceed Then
-                Dim commandA1x1 As New AreaProtocol.A1x1.Manager
+        '        With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
+        '            _Proceed = commandA1x3.init(AreaCommon.paths, "BaseCommonServiceChain", .publicAddress, .privateKey)
+        '        End With
 
-                commandA1x1.log = AreaCommon.log
-                commandA1x1.currentService = AreaCommon.state.currentService
+        '        commandA1x3 = Nothing
+        '    End If
+        'End Sub
 
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA1x1.init(AreaCommon.paths, AreaCommon.Customize.chainDescription, .publicAddress, .privateKey)
-                End With
+        'Private Sub manageA1x4()
+        '    If _Proceed Then
+        '        Dim commandA1x4 As New AreaProtocol.A1x4.Manager
 
-                commandA1x1 = Nothing
-            End If
-        End Sub
+        '        commandA1x4.log = AreaCommon.log
+        '        commandA1x4.currentService = AreaCommon.state.currentService
 
-        Private Sub manageA1x2()
-            If _Proceed Then
-                Dim commandA1x2 As New AreaProtocol.A1x2.Manager
+        '        With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
+        '            _Proceed = commandA1x4.init(AreaCommon.paths, New CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel, .publicAddress, .privateKey)
+        '        End With
 
-                commandA1x2.log = AreaCommon.log
-                commandA1x2.currentService = AreaCommon.state.currentService
+        '        commandA1x4 = Nothing
+        '    End If
+        'End Sub
 
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA1x2.init(AreaCommon.paths, AreaCommon.Customize.chainProtocolDocument, .publicAddress, .privateKey)
-                End With
+        'Private Sub manageA1x5()
+        '    If _Proceed Then
+        '        Dim commandA1x5 As New AreaProtocol.A1x5.Manager
 
-                commandA1x2 = Nothing
-            End If
-        End Sub
+        '        commandA1x5.log = AreaCommon.log
+        '        commandA1x5.currentService = AreaCommon.state.currentService
 
-        Private Sub manageA1x3()
-            If _Proceed Then
-                Dim commandA1x3 As New AreaProtocol.A1x3.Manager
+        '        With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
+        '            _Proceed = commandA1x5.init(AreaCommon.paths, "", .publicAddress, .privateKey)
+        '        End With
 
-                commandA1x3.log = AreaCommon.log
-                commandA1x3.currentService = AreaCommon.state.currentService
+        '        commandA1x5 = Nothing
+        '    End If
+        'End Sub
 
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA1x3.init(AreaCommon.paths, "BaseCommonServiceChain", .publicAddress, .privateKey)
-                End With
+        'Private Sub manageA1x6()
+        '    If _Proceed Then
+        '        Dim commandA1x6 As New AreaProtocol.A1x6.Manager
 
-                commandA1x3 = Nothing
-            End If
-        End Sub
+        '        commandA1x6.log = AreaCommon.log
+        '        commandA1x6.currentService = AreaCommon.state.currentService
 
-        Private Sub manageA1x4()
-            If _Proceed Then
-                Dim commandA1x4 As New AreaProtocol.A1x4.Manager
+        '        With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
+        '            _Proceed = commandA1x6.init(AreaCommon.paths, "", .publicAddress, .privateKey)
+        '        End With
 
-                commandA1x4.log = AreaCommon.log
-                commandA1x4.currentService = AreaCommon.state.currentService
+        '        commandA1x6 = Nothing
 
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA1x4.init(AreaCommon.paths, New CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel, .publicAddress, .privateKey)
-                End With
-
-                commandA1x4 = Nothing
-            End If
-        End Sub
-
-        Private Sub manageA1x5()
-            If _Proceed Then
-                Dim commandA1x5 As New AreaProtocol.A1x5.Manager
-
-                commandA1x5.log = AreaCommon.log
-                commandA1x5.currentService = AreaCommon.state.currentService
-
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA1x5.init(AreaCommon.paths, "", .publicAddress, .privateKey)
-                End With
-
-                commandA1x5 = Nothing
-            End If
-        End Sub
-
-        Private Sub manageA1x6()
-            If _Proceed Then
-                Dim commandA1x6 As New AreaProtocol.A1x6.Manager
-
-                commandA1x6.log = AreaCommon.log
-                commandA1x6.currentService = AreaCommon.state.currentService
-
-                With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                    _Proceed = commandA1x6.init(AreaCommon.paths, "", .publicAddress, .privateKey)
-                End With
-
-                commandA1x6 = Nothing
-
-                _CompleteProcess = True
-            End If
-        End Sub
+        '        _CompleteProcess = True
+        '    End If
+        'End Sub
 
         Public Function buildNetwork() As Boolean
             Dim proceed As Boolean = True
@@ -265,17 +236,19 @@ Namespace AreaData
                 If proceed Then proceed = rebuildCommandList()
                 If proceed Then proceed = createState()
                 If proceed Then proceed = createVirtualNodeList()
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x0.Manager.createRequest(dataNetwork.name))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x1.Manager.createRequest(dataNetwork.whitePaper.content))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x2.Manager.createRequest(dataNetwork.yellowPaper.content))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x3.Manager.createRequest(dataNetwork.primaryAsset))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x4.Manager.createRequest(dataNetwork.transactionChainParameter))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x5.Manager.createRequest(dataNetwork.privacyPolicy.content))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x6.Manager.createRequest(dataNetwork.generalCondition.content))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x7.Manager.createRequest(dataNetwork.refundPlan))
 
-                'manageA1x0()
-                'manageA1x1()
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x0.Manager.createInternalRequest(dataNetwork.informationBase))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x1.Manager.createInternalRequest(dataNetwork.whitePaper.content))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x2.Manager.createInternalRequest(dataNetwork.yellowPaper.content))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x3.Manager.createInternalRequest(dataNetwork.primaryAsset))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x4.Manager.createInternalRequest(dataNetwork.transactionChainParameter))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x5.Manager.createInternalRequest(dataNetwork.privacyPolicy.content))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x6.Manager.createInternalRequest(dataNetwork.generalCondition.content))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x7.Manager.createInternalRequest(dataNetwork.refundPlan))
+
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A1x0.Manager.createInternalRequest(AreaCommon.state.runtimeState.activeNetwork.hash, "Primary", "Primary Chain"), True)
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A1x1.Manager.createInternalRequest(AreaCommon.state.runtimeState.activeNetwork.hash, AreaCommon.state.runtimeState.activeChain.hash, "BaseOne", "First base of Primary Chain", "a0x0, a0x1, a0x2, a0x3, a0x4, a0x5, a0x6, a0x7, a1x0, a1x1, a1x2, a1x3, a1x4, a1x5, a1x6, a2x0, a2x1, a2x2, a2x3, a2x4"))
+
                 'manageA1x2()
                 'manageA1x3()
                 'manageA1x4()

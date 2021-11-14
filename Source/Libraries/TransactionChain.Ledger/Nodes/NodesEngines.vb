@@ -245,18 +245,20 @@ Namespace AreaEngine.Ledger
 
                     serviceState.currentAction.setAction("0x0005", "VerifyData - Nodelist")
 
-                    nodeChainEngine.fileName = IO.Path.Combine(paths.workData.state.db, "NodeChain.Trusted")
+                    ''' TODO: Correct Path
+                    'nodeChainEngine.fileName = IO.Path.Combine(paths.workData.state.db, "NodeChain.Trusted")
+                    nodeChainEngine.fileName = IO.Path.Combine("", "NodeChain.Trusted")
 
                     If serviceState.requestCancelCurrentRunCommand Then Return False
 
                     If nodeChainEngine.fileCorrupted Or nodeChainEngine.mismatchedSignature Then
 
-                        generalState = AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
+                        generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlNotPassed
                     Else
                         If nodeChainEngine.fileExist() Then
-                            generalState = AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.checkControlPassed
                         Else
-                            generalState = AreaCommon.Models.Administration.EnumDataPosition.missing
+                            generalState = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumDataPosition.missing
                         End If
                     End If
 

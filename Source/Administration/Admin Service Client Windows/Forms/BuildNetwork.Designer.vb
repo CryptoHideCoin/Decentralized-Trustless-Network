@@ -83,6 +83,8 @@ Partial Class BuildNetwork
         Me.cancelButton = New System.Windows.Forms.Button()
         Me.loadButton = New System.Windows.Forms.Button()
         Me.saveButton = New System.Windows.Forms.Button()
+        Me.specialEnvironmentText = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.mainTabControl.SuspendLayout()
         Me.generalTab.SuspendLayout()
         Me.whitePaperTab.SuspendLayout()
@@ -113,6 +115,8 @@ Partial Class BuildNetwork
         '
         'generalTab
         '
+        Me.generalTab.Controls.Add(Me.specialEnvironmentText)
+        Me.generalTab.Controls.Add(Me.Label1)
         Me.generalTab.Controls.Add(Me.adminWalletAddress)
         Me.generalTab.Controls.Add(Me.networkNameText)
         Me.generalTab.Controls.Add(Me.networkNameLabel)
@@ -130,7 +134,7 @@ Partial Class BuildNetwork
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.adminWalletAddress.caption = "Admin wallet address"
         Me.adminWalletAddress.dataPath = ""
-        Me.adminWalletAddress.Location = New System.Drawing.Point(6, 47)
+        Me.adminWalletAddress.Location = New System.Drawing.Point(6, 75)
         Me.adminWalletAddress.Name = "adminWalletAddress"
         Me.adminWalletAddress.Size = New System.Drawing.Size(684, 51)
         Me.adminWalletAddress.TabIndex = 1
@@ -433,6 +437,7 @@ Partial Class BuildNetwork
         Me.initialCoinReleaseBlockText.Name = "initialCoinReleaseBlockText"
         Me.initialCoinReleaseBlockText.Size = New System.Drawing.Size(75, 21)
         Me.initialCoinReleaseBlockText.TabIndex = 0
+        Me.initialCoinReleaseBlockText.Text = "0.000"
         Me.initialCoinReleaseBlockText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.initialCoinReleaseBlockText.useDecimal = False
         '
@@ -739,6 +744,26 @@ Partial Class BuildNetwork
         Me.saveButton.Text = "Save"
         Me.saveButton.UseVisualStyleBackColor = True
         '
+        'specialEnvironmentText
+        '
+        Me.specialEnvironmentText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.specialEnvironmentText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.specialEnvironmentText.Location = New System.Drawing.Point(145, 49)
+        Me.specialEnvironmentText.Name = "specialEnvironmentText"
+        Me.specialEnvironmentText.Size = New System.Drawing.Size(470, 21)
+        Me.specialEnvironmentText.TabIndex = 30
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(15, 52)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(124, 13)
+        Me.Label1.TabIndex = 31
+        Me.Label1.Text = "Special Environment"
+        '
         'BuildNetwork
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -839,4 +864,6 @@ Partial Class BuildNetwork
     Friend WithEvents initialStakeQuantityText As CHCSupportUIControls.NumericText
     Friend WithEvents quantityTotalText As CHCSupportUIControls.NumericText
     Friend WithEvents initialCoinReleaseBlockText As CHCSupportUIControls.NumericText
+    Friend WithEvents specialEnvironmentText As TextBox
+    Friend WithEvents Label1 As Label
 End Class

@@ -38,8 +38,9 @@ Namespace AreaCommon.Models.Network
             tmp += name
             tmp += networkCreationDate
             tmp += genesisPublicAddress
-            tmp += integrityTransactionChain.recordCoordinate
-            tmp += integrityTransactionChain.recordHash
+            tmp += MyBase.integrityTransactionChain.coordinate
+            tmp += MyBase.integrityTransactionChain.progressiveHash
+            tmp += MyBase.integrityTransactionChain.registrationTimeStamp
 
             Return tmp
         End Function
@@ -71,8 +72,9 @@ Namespace AreaCommon.Models.Network
             Dim tmp As String = ""
 
             tmp += value
-            tmp += integrityTransactionChain.recordCoordinate
-            tmp += integrityTransactionChain.recordHash
+            tmp += MyBase.integrityTransactionChain.coordinate
+            tmp += MyBase.integrityTransactionChain.progressiveHash
+            tmp += MyBase.integrityTransactionChain.registrationTimeStamp
 
             Return tmp
         End Function
@@ -103,8 +105,9 @@ Namespace AreaCommon.Models.Network
         <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
             Dim tmp As String = ""
 
-            tmp += integrityTransactionChain.recordCoordinate
-            tmp += integrityTransactionChain.recordHash
+            tmp += MyBase.integrityTransactionChain.coordinate
+            tmp += MyBase.integrityTransactionChain.progressiveHash
+            tmp += MyBase.integrityTransactionChain.registrationTimeStamp
             tmp += value.toString()
 
             Return tmp
@@ -136,8 +139,9 @@ Namespace AreaCommon.Models.Network
         <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
             Dim tmp As String = ""
 
-            tmp += integrityTransactionChain.recordCoordinate
-            tmp += integrityTransactionChain.recordHash
+            tmp += MyBase.integrityTransactionChain.coordinate
+            tmp += MyBase.integrityTransactionChain.progressiveHash
+            tmp += MyBase.integrityTransactionChain.registrationTimeStamp
             tmp += value.toString()
 
             Return tmp
@@ -169,8 +173,9 @@ Namespace AreaCommon.Models.Network
         <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
             Dim tmp As String = ""
 
-            tmp += integrityTransactionChain.recordCoordinate
-            tmp += integrityTransactionChain.recordHash
+            tmp += MyBase.integrityTransactionChain.coordinate
+            tmp += MyBase.integrityTransactionChain.progressiveHash
+            tmp += MyBase.integrityTransactionChain.registrationTimeStamp
             tmp += value.toString()
 
             Return tmp

@@ -48,7 +48,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.12.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
@@ -82,11 +82,13 @@
     <Compile Include="Models\PrimaryChain\BuildNetworkModel.vb" />
     <Compile Include="Models\DocumentModel.vb" />
     <Compile Include="Models\GeneralSettingsModel.vb" />
+    <Compile Include="Models\PrimaryChain\ChainModel.vb" />
     <Compile Include="Models\PrimaryChain\InfoNetworkBaseModel.vb" />
     <Compile Include="Models\SecurityModel.vb" />
     <Compile Include="Models\ServiceModel.vb" />
     <Compile Include="Models\SetIdentityKeyPairModel.vb" />
     <Compile Include="Models\SideChain\NotifyModel.vb" />
+    <Compile Include="Models\SideChain\PaymentModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
