@@ -234,6 +234,12 @@ CHCProtocolLibrary
  This method provide to initialize component
  </summary>
 </member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel.ToString">
+ <summary>
+ This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:CHCProtocolLibrary.AreaCommon.Models.Network.BaseNetworkModel">
  <summary>
  This method provide to contain the essential data of a network

@@ -1,113 +1,211 @@
-﻿'Option Compare Text
-'Option Explicit On
+﻿Option Compare Text
+Option Explicit On
 
-'Imports System.Data.SQLite
-'Imports CHCCommonLibrary.Support
-
-
-
-
-''' TODO: To delete
-
-'Namespace AreaLedger
-
-'    Public Class LedgerSupportEngine
-
-'        Private Property _DBCurrentLedgerConnectionString As String = "Data source = {0};Version=3;"
-'        Private Property _DBPreviousLedgerConnectionString As String = "Data source = {0};Version=3;"
-
-'        Public Property NoUsePrevious As Boolean = False
-'        Public Property currentIdBlock As Integer = 0
-'        Public Property currentIdVolume As Byte = 0
-'        Public Property previousIdBlock As Integer = 0
-'        Public Property previousIdVolume As Byte = 0
-'        Public Property identifyBlockChain As String = ""
-'        Public Property log As LogEngine
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
+Imports CHCCommonLibrary.Support
+Imports System.IO.Compression
 
 
-'        'Private Function foundRequestInLedger(ByVal requestHash As String, ByVal currentBlock As Boolean) As Boolean
-'        '    Try
-'        '        Dim sql As String = ""
-'        '        Dim connectionDB As SQLiteConnection
-'        '        Dim sqlCommand As SQLiteCommand
-'        '        Dim result As Boolean
 
-'        '        log.track("LedgerSupportEngine.foundRequestInLedger", "Begin")
 
-'        '        sql += "SELECT Count(record_id) "
-'        '        sql += "FROM blockData "
-'        '        sql += "WHERE requestHash = '" & requestHash & "'"
 
-'        '        If currentBlock Then
-'        '            connectionDB = New SQLiteConnection(_DBCurrentLedgerConnectionString)
-'        '        Else
-'        '            connectionDB = New SQLiteConnection(_DBPreviousLedgerConnectionString)
-'        '        End If
 
-'        '        connectionDB.Open()
+Namespace AreaLedger
 
-'        '        log.track("LedgerSupportEngine.foundRequestInLedger", "Connection Open")
+    ''' <summary>
+    ''' This class contain all method relative of a support of a ledger
+    ''' </summary>
+    Public Class LedgerSupportEngine
 
-'        '        sqlCommand = New SQLiteCommand(connectionDB)
+        ''' <summary>
+        ''' This class contain all information relative one block
+        ''' </summary>
+        Public Class HeaderBlock
 
-'        '        sqlCommand.CommandText = sql
+            Public Property netWorkReferement As String = ""
+            Public Property chainReferement As String = ""
+            Public Property blockChainIdentity As String = ""
+            Public Property blockIdentity As String = ""
+            Public Property hashBlock As String = ""
+            Public Property fromTimeStamp As Double = 0
+            Public Property toTimeStamp As Double = 0
 
-'        '        result = (sqlCommand.ExecuteScalar() > 0)
+        End Class
 
-'        '        log.track("LedgerSupportEngine.foundRequestInLedger", "Command executed")
+        ''' <summary>
+        ''' This class contain the zip archive data
+        ''' </summary>
+        Public Class FileZipArchive
 
-'        '        connectionDB.Close()
+            Public Property fullName As String = ""
+            Public Property zipFileName As String = ""
 
-'        '        log.track("LedgerSupportEngine.foundRequestInLedger", "Connection Closed")
+        End Class
 
-'        '        Return result
-'        '    Catch ex As Exception
-'        '        log.track("LedgerSupportEngine.foundRequestInLedger", ex.Message, "fatal")
+        Private Property daoLedger As New AreaCommon.DAO.DAOLedger
 
-'        '        Return False
-'        '    End Try
-'        'End Function
+        Public Property headerData As New HeaderBlock
+        Public Property mainPath As CHCProtocolLibrary.AreaSystem.VirtualPathEngine.LedgerBlockPath
+        Public Property log As LogEngine
 
-'        'Public Function foundRequestInLedger(ByVal requestHash As String) As Boolean
-'        '    If foundRequestInLedger(requestHash, True) Then
-'        '        Return True
-'        '    ElseIf Not NoUsePrevious Then
-'        '        If foundRequestInLedger(requestHash, True) Then
-'        '            Return True
-'        '        End If
-'        '    End If
+        ''' <summary>
+        ''' This method provide to create header
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function createHeader() As Boolean
+            Try
+                Dim completeFileName As String = System.IO.Path.Combine(mainPath.path, "Block.Header")
 
-'        '    Return False
-'        'End Function
+                log.track("LedgerSupportEngine.createHeader", "Begin")
 
-'        'Public Function init(ByVal currentLedgerPath As String, ByVal previousLedgerPath As String) As Boolean
-'        '    Try
-'        '        Dim fileName As String
+                daoLedger.log = log
+                daoLedger.init(mainPath.path)
 
-'        '        log.track("LedgerSupportEngine.init", "Begin")
+                headerData.fromTimeStamp = daoLedger.getFromTimeStampWithConnectionPersistent()
+                headerData.toTimeStamp = daoLedger.getToTimeStampAndCloseConnection()
 
-'        '        fileName = CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, currentIdVolume, currentIdBlock)
-'        '        fileName = IO.Path.Combine(currentLedgerPath, fileName & ".db")
+                Return IOFast(Of HeaderBlock).save(completeFileName, headerData)
+            Catch ex As Exception
+                log.track("LedgerSupportEngine.createHeader", ex.Message, "fatal")
 
-'        '        _DBCurrentLedgerConnectionString = String.Format(_DBCurrentLedgerConnectionString, fileName)
+                Return False
+            Finally
+                log.track("LedgerSupportEngine.createHeader", "Complete")
+            End Try
+        End Function
 
-'        '        fileName = CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, previousIdVolume, previousIdBlock)
-'        '        fileName = IO.Path.Combine(previousLedgerPath, fileName & ".db")
+        ''' <summary>
+        ''' This method provide to add folder to zip file
+        ''' </summary>
+        ''' <param name="folderName"></param>
+        ''' <param name="completeZipFileName"></param>
+        ''' <returns></returns>
+        Private Function addFolderToList(ByVal folderName As String, ByVal intermediatePath As String, ByRef completeZipFileName As IO.FileStream, ByRef items As List(Of FileZipArchive)) As List(Of FileZipArchive)
+            Try
+                log.track("LedgerSupportEngine.addFolderToList", "Begin")
 
-'        '        _DBPreviousLedgerConnectionString = String.Format(_DBPreviousLedgerConnectionString, fileName)
+                Dim dirInfo As New IO.DirectoryInfo(folderName)
+                Dim singleItem As FileZipArchive
 
-'        '        If Not NoUsePrevious Then
-'        '            NoUsePrevious = Not IO.File.Exists(fileName)
-'        '        End If
+                Dim fileInformation As IO.FileInfo() = dirInfo.GetFiles()
 
-'        '        log.track("LedgerSupportEngine.init", "Complete")
-'        '    Catch ex As Exception
-'        '        log.track("LedgerSupportEngine.init", ex.Message, "fatal")
-'        '    End Try
+                For Each item As IO.FileInfo In fileInformation
 
-'        '    Return False
-'        'End Function
+                    singleItem = New FileZipArchive
 
-'    End Class
+                    singleItem.fullName = item.FullName
 
-'End Namespace
+                    If (intermediatePath.Length > 0) Then
+                        singleItem.zipFileName = intermediatePath & "\" & New IO.FileInfo(item.FullName).Name
+                    Else
+                        singleItem.zipFileName = New IO.FileInfo(item.FullName).Name
+                    End If
+
+                    items.Add(singleItem)
+                Next
+
+                log.track("LedgerSupportEngine.addFolderToList", "Complete")
+
+                Return items
+            Catch ex As Exception
+                log.track("LedgerSupportEngine.addFolderToList", ex.Message, "fatal")
+
+                Return New List(Of FileZipArchive)
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to add a file into list
+        ''' </summary>
+        ''' <param name="fullPathFile"></param>
+        ''' <param name="fileInZip"></param>
+        ''' <param name="items"></param>
+        ''' <returns></returns>
+        Private Function addFileToList(ByVal fullPathFile As String, ByVal fileInZip As String, ByRef items As List(Of FileZipArchive)) As List(Of FileZipArchive)
+            Try
+                Dim singleItem As New FileZipArchive
+
+                log.track("LedgerSupportEngine.addFileToList", "Begin")
+
+                singleItem.fullName = fullPathFile
+                singleItem.zipFileName = fileInZip
+
+                items.Add(singleItem)
+
+                log.track("LedgerSupportEngine.addFileToList", "Complete")
+
+                Return items
+            Catch ex As Exception
+                log.track("LedgerSupportEngine.addFileToList", ex.Message, "fatal")
+
+                Return New List(Of FileZipArchive)
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to create a zip file
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function createZipFile() As Boolean
+            Try
+                log.track("LedgerSupportEngine.createZipFile", "Begin")
+
+                Dim completeZipFileName As IO.FileStream = System.IO.File.Create(IO.Path.Combine(mainPath.path, "Block.Compact"))
+                Dim zipManager As New ZipArchive(completeZipFileName, ZipArchiveMode.Update)
+                Dim items As New List(Of FileZipArchive)
+
+                items = addFolderToList(mainPath.bulletines, "Bulletines", completeZipFileName, items)
+                items = addFolderToList(mainPath.consensus, "Consensus", completeZipFileName, items)
+                items = addFolderToList(mainPath.contents, "Contents", completeZipFileName, items)
+                items = addFolderToList(mainPath.requests, "Requests", completeZipFileName, items)
+
+                items = addFileToList(IO.Path.Combine(mainPath.path, "Block.Header"), "Block.Header", items)
+                items = addFileToList(IO.Path.Combine(mainPath.path, "BlockData.Ledger"), "BlockData.Ledger", items)
+
+                Using zipArchiveFileZip As New ZipArchive(completeZipFileName, ZipArchiveMode.Update)
+                    For Each item As FileZipArchive In items
+                        zipArchiveFileZip.CreateEntryFromFile(item.fullName, item.zipFileName)
+                    Next
+                End Using
+
+                log.track("LedgerSupportEngine.createZipFile", "Complete")
+
+                Return True
+            Catch ex As Exception
+                log.track("LedgerSupportEngine.createZipFile", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+
+        ''' <summary>
+        ''' This method provide to initialize the object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function init() As Boolean
+            Try
+                Dim proceed As Boolean = True
+
+                log.track("LedgerSupportEngine.init", "Begin")
+
+                If proceed Then
+                    proceed = createHeader()
+                End If
+                If proceed Then
+                    proceed = createZipFile()
+                End If
+
+                log.track("LedgerSupportEngine.init", "Complete")
+
+                Return proceed
+            Catch ex As Exception
+                log.track("LedgerSupportEngine.init", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+    End Class
+
+End Namespace

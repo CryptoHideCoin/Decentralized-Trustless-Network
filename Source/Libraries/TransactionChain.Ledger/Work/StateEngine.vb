@@ -48,7 +48,7 @@ Namespace AreaEngine.Ledger
 
             Public Shared Function readContentFromFile(ByVal statePath As String, ByVal contentHash As String) As String
                 Try
-                    Dim fileName As String = IO.Path.Combine(statePath, "Contents", contentHash & ".content")
+                    Dim fileName As String = IO.Path.Combine(statePath, "Contents", contentHash & ".Content")
 
                     Dim value As String = IO.File.ReadAllText(fileName)
 
@@ -60,7 +60,7 @@ Namespace AreaEngine.Ledger
 
             Public Shared Function writeDataContent(ByVal contentStatePath As String, ByVal content As String, ByVal contentHash As String) As Boolean
                 Try
-                    Dim fileName As String = IO.Path.Combine(contentStatePath, contentHash & ".content")
+                    Dim fileName As String = IO.Path.Combine(contentStatePath, contentHash & ".Content")
 
                     If Not IO.File.Exists(fileName) Then
                         IO.File.WriteAllText(fileName, content)

@@ -317,7 +317,7 @@ Namespace AreaFlow
         End Function
 
         ''' <summary>
-        ''' This method provide to add new request remote bullettin
+        ''' This method provide to add new request remote bulletin
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
@@ -604,7 +604,14 @@ Namespace AreaFlow
                                 Case "a0x6" : result.data = AreaProtocol.A0x6.Manager.loadRequest(requestPath, hash)
                                 Case "a0x7" : result.data = AreaProtocol.A0x7.Manager.loadRequest(requestPath, hash)
 
-                                    ''' BOOKMARK: Add in this point
+                                Case "a1x0" : result.data = AreaProtocol.A1x0.Manager.loadRequest(requestPath, hash)
+                                Case "a1x1" : result.data = AreaProtocol.A1x1.Manager.loadRequest(requestPath, hash)
+                                Case "a1x2" : result.data = AreaProtocol.A1x2.Manager.loadRequest(requestPath, hash)
+                                Case "a1x3" : result.data = AreaProtocol.A1x3.Manager.loadRequest(requestPath, hash)
+                                Case "a1x4" : result.data = AreaProtocol.A1x4.Manager.loadRequest(requestPath, hash)
+                                Case "a1x5" : result.data = AreaProtocol.A1x5.Manager.loadRequest(requestPath, hash)
+
+                                    ''' BOOKMARK: Add in this point 3
                             End Select
                         End If
                     End If
@@ -615,6 +622,27 @@ Namespace AreaFlow
                 AreaCommon.log.track("RequestFlowEngine.getRequest", "Complete")
             Catch ex As Exception
                 AreaCommon.log.track("RequestFlowEngine.getRequest", ex.Message, "fatal")
+
+                Return New RequestExtended
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get a request block position
+        ''' </summary>
+        ''' <param name="requestHash"></param>
+        ''' <returns></returns>
+        Public Function getRequestBlockPosition(ByVal requestHash As String) As String
+            Try
+                AreaCommon.log.track("RequestFlowEngine.getRequestBlockPosition", "Begin")
+
+                Return _RequestManager.getRequestBlockPosition(requestHash)
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.getRequestBlockPosition", ex.Message, "fatal")
+
+                Return ""
+            Finally
+                AreaCommon.log.track("RequestFlowEngine.getRequestBlockPosition", "Complete")
             End Try
         End Function
 
@@ -901,18 +929,6 @@ Namespace AreaFlow
                 Return True
             Catch ex As Exception
                 AreaCommon.log.track("RequestFlowEngine.init", ex.Message, "fatal")
-
-                Return False
-            End Try
-        End Function
-
-
-        Public Function manageCloseBlock() As Boolean
-            Try
-                ''' TODO: manage close block
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.checkCloseBlock", ex.Message, "fatal")
 
                 Return False
             End Try

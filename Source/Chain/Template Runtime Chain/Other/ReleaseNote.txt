@@ -9,10 +9,11 @@ Release Note
 0.8.0   - 01.11.2021 - Complete Transaction Chain Runtime
 0.9.0   - 03.11.2021 - Add all eight (8) network command
 0.10.0  - 15.11.2021 - Refactor with the new path structure
+0.11.0  - 16.11.2021 - Implement A1x3 e A1x4
+0.12.0  - 24.11.2021 - Implement Close Block
 
 TO DO
 =====
 
-· Manage Close Block
 · Revision ConsensusEngine
 · Complete NotifyConsensus Controller

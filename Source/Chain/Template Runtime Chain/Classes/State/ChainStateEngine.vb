@@ -112,20 +112,26 @@ Namespace AreaState
         ''' </summary>
         Public Class DataChain
 
+            Public Property name As New ItemIdentityStructure
+
+            Public Property isPrivate As New ItemIdentityStructure
+            Public Property description As New ItemIdentityStructure
+            Public Property protocolSets As New List(Of ProtocolSetStructure)
+            Public Property priceList As New ChainPriceListStructure
+            Public Property privacyPolicy As New ItemIdentityStructure
+            Public Property termsAndConditions As New ItemIdentityStructure
+            Public Property lastCloseBlock As New ItemIdentityStructure
+
             Public ReadOnly Property hash As String
                 Get
                     Return name.progressiveHash
                 End Get
             End Property
-            Public Property name As New ItemIdentityStructure
-            Public Property isPrivate As New ItemIdentityStructure
-            Public Property description As New ItemIdentityStructure
-            Public Property protocolSets As New List(Of ProtocolSetStructure)
-            Public Property priceList As New ChainPriceListStructure
-            Public Property privacyPolicy As New itemIdentityStructure
-            Public Property generalCondition As New itemIdentityStructure
-
-            Public Property creationDateLedger As Double = 0
+            Public ReadOnly Property creationDateLedger As Double
+                Get
+                    Return name.registrationTimeStamp
+                End Get
+            End Property
 
         End Class
 
@@ -198,7 +204,7 @@ Namespace AreaState
 
                 If (oldHashContent.Length > 0) Then
                     Try
-                        IO.File.Delete(IO.Path.Combine(AreaCommon.paths.workData.state.contents, oldHashContent) & ".content")
+                        IO.File.Delete(IO.Path.Combine(AreaCommon.paths.workData.state.contents, oldHashContent) & ".Content")
                     Catch ex As Exception
                     End Try
                 End If
@@ -291,6 +297,11 @@ Namespace AreaState
                     newValue.description.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                     newValue.description.progressiveHash = transactionChainRecord.progressiveHash
 
+                    newValue.lastCloseBlock.value = transactionChainRecord.registrationTimeStamp.ToString()
+                    newValue.lastCloseBlock.coordinate = transactionChainRecord.coordinate
+                    newValue.lastCloseBlock.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                    newValue.lastCloseBlock.progressiveHash = transactionChainRecord.progressiveHash
+
                     If (newValue.name.value.CompareTo(AreaCommon.state.internalInformation.chainName) = 0) Then
                         AreaCommon.log.track("ChainStateEngine.addNewChain", "Set activeChain")
 
@@ -362,23 +373,82 @@ Namespace AreaState
         ''' <summary>
         ''' This method provide to update price list
         ''' </summary>
+        ''' <param name="chainReferement"></param>
+        ''' <param name="value"></param>
+        ''' <param name="hashContent"></param>
+        ''' <param name="transactionChainRecord"></param>
         ''' <returns></returns>
         Public Function updatePriceList(ByVal chainReferement As String, ByVal value As CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel, ByVal hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
             Try
                 AreaCommon.log.track("ChainStateEngine.updatePriceList", "Begin")
 
                 Dim chain As DataChain
-                Dim protocolData As New ProtocolSetStructure
+                Dim proceed As Boolean = True
 
-                If _DBChain.updateDetail(chainReferement, AreaCommon.DAO.DBChain.DetailPropertyID.priceList, value, transactionChainRecord) Then
+                If proceed Then
+                    proceed = _DBChain.updateDetail(chainReferement, AreaCommon.DAO.DBChain.DetailPropertyID.priceList, value.getHash(), transactionChainRecord)
+                End If
+                If proceed Then
                     chain = chainByHash(chainReferement)
 
-                    'chain.priceList = value
+                    chain.priceList.coordinate = transactionChainRecord.coordinate
+                    chain.priceList.hash = transactionChainRecord.hash
+                    chain.priceList.progressiveHash = transactionChainRecord.progressiveHash
+                    chain.priceList.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                    chain.priceList.value = value
 
-                    Return True
+                    proceed = True
                 End If
 
+                Return proceed
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.updatePriceList", ex.Message, "fatal")
+
                 Return False
+            Finally
+                AreaCommon.log.track("ChainStateEngine.updatePriceList", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to update chain property
+        ''' </summary>
+        ''' <param name="chainReferement"></param>
+        ''' <param name="propertyID"></param>
+        ''' <param name="value"></param>
+        ''' <param name="transactionChainRecord"></param>
+        ''' <returns></returns>
+        Public Function updateChainProperty(ByVal chainReferement As String, ByVal propertyID As AreaCommon.DAO.DBChain.DetailPropertyID, ByVal value As String, ByVal hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+            Try
+                AreaCommon.log.track("ChainStateEngine.updateChainProperty", "Begin")
+
+                Dim chain As DataChain
+                Dim contentPath As String = AreaCommon.paths.workData.state.contents
+                Dim proceed As Boolean = True
+                Dim dataObject As Object
+
+                If proceed Then
+                    proceed = _DBChain.updateDetail(chainReferement, propertyID, hashContent, transactionChainRecord)
+                End If
+                If proceed Then
+                    chain = chainByHash(chainReferement)
+
+                    Select Case propertyID
+                        Case AreaCommon.DAO.DBChain.DetailPropertyID.lastCloseBlock : dataObject = chain.lastCloseBlock
+                        Case AreaCommon.DAO.DBChain.DetailPropertyID.policyPrivacy : dataObject = chain.privacyPolicy
+                        Case Else : dataObject = chain.termsAndConditions
+                    End Select
+
+                    dataObject.coordinate = transactionChainRecord.coordinate
+                    dataObject.hash = transactionChainRecord.hash
+                    dataObject.progressiveHash = transactionChainRecord.progressiveHash
+                    dataObject.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                    dataObject.value = value
+
+                    proceed = True
+                End If
+
+                Return proceed
             Catch ex As Exception
                 AreaCommon.log.track("ChainStateEngine.updatePriceList", ex.Message, "fatal")
 

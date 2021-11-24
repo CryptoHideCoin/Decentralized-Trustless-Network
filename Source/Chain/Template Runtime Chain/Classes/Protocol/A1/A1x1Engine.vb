@@ -19,6 +19,7 @@ Namespace AreaProtocol
 
         Inherits CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData
 
+        Public Property approveConfiguration As New CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel
         Public Property feeConfiguration As New CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel
 
         ''' <summary>
@@ -29,6 +30,7 @@ Namespace AreaProtocol
             Dim result As String = ""
 
             result += MyBase.toString()
+            result += approveConfiguration.toString()
             result += feeConfiguration.toString()
 
             Return result
@@ -125,6 +127,14 @@ Namespace AreaProtocol
                     _Base.documentation = value
                 End Set
             End Property
+            Public Property approveConfiguration As CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel
+                Get
+                    Return _Base.approveConfiguration
+                End Get
+                Set(value As CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel)
+                    _Base.approveConfiguration = value
+                End Set
+            End Property
             Public Property feeConfiguration As CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel
                 Get
                     Return _Base.feeConfiguration
@@ -185,7 +195,7 @@ Namespace AreaProtocol
                     Dim proceed As Boolean = True
                     Dim content As CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData = value.extractMinimal()
                     Dim hashContent As String = HashSHA.generateSHA256(content.toString())
-                    Dim completefileName As String = IO.Path.Combine(AreaCommon.paths.workData.state.contents, hashContent) & ".content"
+                    Dim completefileName As String = IO.Path.Combine(AreaCommon.paths.workData.state.contents, hashContent) & ".Content"
 
                     AreaCommon.log.track("RecoveryState.fromRequest", "Begin")
 
@@ -313,7 +323,7 @@ Namespace AreaProtocol
 
                     AreaCommon.log.track("A1x1.Manager.addIntoLedger", "Begin")
 
-                    contentPath = IO.Path.Combine(contentPath, hash & ".content")
+                    contentPath = IO.Path.Combine(contentPath, hash & ".Content")
 
                     If IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData).save(contentPath, value) Then
                         With AreaCommon.state.currentBlockLedger.proposeNewTransaction
@@ -365,10 +375,23 @@ Namespace AreaProtocol
             End Function
 
             ''' <summary>
+            ''' This method provide to load a request from a repository
+            ''' </summary>
+            ''' <param name="hash"></param>
+            ''' <returns></returns>
+            Public Shared Function loadRequest(ByVal completePath As String, ByVal hash As String) As RequestModel
+                Try
+                    Return IOFast(Of RequestModel).read(IO.Path.Combine(completePath, hash & ".request"))
+                Catch ex As Exception
+                    Return New RequestModel
+                End Try
+            End Function
+
+            ''' <summary>
             ''' This method provide to create a initial procedure A1x1
             ''' </summary>
             ''' <param name="networkNameParameter"></param>
-            ''' <param name="chainNameParameter"></param>
+            ''' <param name="chainReferementParameter"></param>
             ''' <param name="setCode"></param>
             ''' <param name="protocol"></param>
             ''' <param name="documentation"></param>

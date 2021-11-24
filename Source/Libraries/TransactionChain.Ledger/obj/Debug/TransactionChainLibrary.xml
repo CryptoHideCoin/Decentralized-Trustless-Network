@@ -57,6 +57,13 @@ TransactionChainLibrary
  <param name="hash"></param>
  <returns></returns>
 </member>
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.getRequestBlockPosition(System.String)">
+ <summary>
+ This method provide to get a request a block position
+ </summary>
+ <param name="hash"></param>
+ <returns></returns>
+</member>
 <member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.completedRequest(System.String,TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest,System.String)">
  <summary>
  This method provide to complete a request into db
@@ -140,6 +147,24 @@ TransactionChainLibrary
  </summary>
  <returns></returns>
 </member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.createRegistrationDateIndex">
+ <summary>
+ This method provide to create a registration date index
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.getFromTimeStampWithConnectionPersistent">
+ <summary>
+ This method provide to retrieve a minimum timeStamp (registrationDate) from a blockData table and matain the connection opened
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.getToTimeStampAndCloseConnection">
+ <summary>
+ This method provide to retrieve a maximum timeStamp (registrationDate) from a blockData table and close connection
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.createTableLedgerMap">
  <summary>
  This method provide to create a table ledger map
@@ -173,6 +198,14 @@ TransactionChainLibrary
  <param name="blockName"></param>
  <returns></returns>
 </member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.updateBlockPath(System.String,System.String)">
+ <summary>
+ This method provide to update a block path  
+ </summary>
+ <param name="blockName"></param>
+ <param name="hash"></param>
+ <returns></returns>
+</member>
 <member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.retrievePathOrigin(System.String)">
  <summary>
  This method provide to retrieve a path origin
@@ -202,6 +235,13 @@ TransactionChainLibrary
 <member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.createDBLedgerMap(System.String)">
  <summary>
  This method provide to create a db ledger Map
+ </summary>
+ <param name="basePath"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAOLedger.init(System.String,System.Boolean)">
+ <summary>
+ This method provide to initialize the object
  </summary>
  <param name="basePath"></param>
  <returns></returns>
@@ -297,11 +337,10 @@ TransactionChainLibrary
  This enumeration contain the property ID
  </summary>
 </member>
-<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.createNextCloseAtTime">
+<member name="T:TransactionChainLibrary.AreaLedger.LedgerEngine.LastCloseBlock">
  <summary>
- This methdo provide to create a next close time of a block 
+ This class contain the last block essential information
  </summary>
- <returns></returns>
 </member>
 <member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.createDBBlock">
  <summary>
@@ -317,16 +356,11 @@ TransactionChainLibrary
  <param name="noTransaction"></param>
  <returns></returns>
 </member>
-<member name="P:TransactionChainLibrary.AreaLedger.LedgerEngine.CurrentTotalHash">
+<member name="P:TransactionChainLibrary.AreaLedger.LedgerEngine.currentTotalHash">
  <summary>
  This property get a current total hash
  </summary>
  <returns></returns>
-</member>
-<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.completeRecord">
- <summary>
- This method provide to complete a record
- </summary>
 </member>
 <member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.calculateProgressiveHash(System.String)">
  <summary>
@@ -338,6 +372,12 @@ TransactionChainLibrary
 <member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.saveAndClean">
  <summary>
  This method provide to save into db the transaction and update a block file with transaction and prepare the engine to create another one
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.changeBlock">
+ <summary>
+ This method provide to change a block
  </summary>
  <returns></returns>
 </member>
@@ -359,6 +399,71 @@ TransactionChainLibrary
  This method provide to get a request path
  </summary>
  <param name="blockPath"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerMapEngine.updateBlockPath(System.String,System.String)">
+ <summary>
+ This method provide to update block path
+ </summary>
+ <param name="blockName"></param>
+ <param name="hash"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerMapEngine.init(System.String)">
+ <summary>
+ This method provide to initialize a class
+ </summary>
+ <param name="basePath"></param>
+ <returns></returns>
+</member>
+<member name="T:TransactionChainLibrary.AreaLedger.LedgerSupportEngine">
+ <summary>
+ This class contain all method relative of a support of a ledger
+ </summary>
+</member>
+<member name="T:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.HeaderBlock">
+ <summary>
+ This class contain all information relative one block
+ </summary>
+</member>
+<member name="T:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.FileZipArchive">
+ <summary>
+ This class contain the zip archive data
+ </summary>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.createHeader">
+ <summary>
+ This method provide to create header
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.addFolderToList(System.String,System.String,System.IO.FileStream@,System.Collections.Generic.List{TransactionChainLibrary.AreaLedger.LedgerSupportEngine.FileZipArchive}@)">
+ <summary>
+ This method provide to add folder to zip file
+ </summary>
+ <param name="folderName"></param>
+ <param name="completeZipFileName"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.addFileToList(System.String,System.String,System.Collections.Generic.List{TransactionChainLibrary.AreaLedger.LedgerSupportEngine.FileZipArchive}@)">
+ <summary>
+ This method provide to add a file into list
+ </summary>
+ <param name="fullPathFile"></param>
+ <param name="fileInZip"></param>
+ <param name="items"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.createZipFile">
+ <summary>
+ This method provide to create a zip file
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.init">
+ <summary>
+ This method provide to initialize the object
+ </summary>
  <returns></returns>
 </member>
 </members>

@@ -202,28 +202,28 @@ Namespace AreaEngine.Ledger
                             If (UBound(fields) > 6) Then
                                 requestHash = fields(5)
 
-                                If Not IO.File.Exists(IO.Path.Combine(basePathRequest, requestHash & ".request")) Then
+                                If Not IO.File.Exists(IO.Path.Combine(basePathRequest, requestHash & ".Request")) Then
                                     _problemDescription = "The request file " & requestHash & " is missing"
 
                                     Return False
                                 Else
-                                    Me.fileName = IO.Path.Combine(basePathRequest, requestHash & ".request")
+                                    Me.fileName = IO.Path.Combine(basePathRequest, requestHash & ".Request")
 
                                     If Me.read() Then
                                         If (Me.data.requestHash.CompareTo(requestHash) <> 0) Then
-                                            _problemDescription = "The file " & requestHash & ".request is corrupt"
+                                            _problemDescription = "The file " & requestHash & ".Request is corrupt"
 
                                             Return False
                                         End If
                                     End If
                                 End If
 
-                                If Not IO.File.Exists(IO.Path.Combine(basePathConsensus, requestHash & ".consensus")) Then
+                                If Not IO.File.Exists(IO.Path.Combine(basePathConsensus, requestHash & ".Consensus")) Then
                                     _problemDescription = "The consensus file " & requestHash & " is missing"
 
                                     Return False
                                 Else
-                                    Me.fileName = IO.Path.Combine(basePathRequest, requestHash & ".consensus")
+                                    Me.fileName = IO.Path.Combine(basePathRequest, requestHash & ".Consensus")
 
                                     If Me.read() Then
                                         If (Me.data.requestHash.CompareTo(requestHash) <> 0) Then

@@ -306,7 +306,7 @@ Namespace AreaProtocol
 
                     AreaCommon.log.track("A1x0.Manager.addIntoLedger", "Begin")
 
-                    contentPath = IO.Path.Combine(contentPath, hash & ".content")
+                    contentPath = IO.Path.Combine(contentPath, hash & ".Content")
 
                     If IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData).save(contentPath, value) Then
                         With AreaCommon.state.currentBlockLedger.proposeNewTransaction
@@ -342,7 +342,7 @@ Namespace AreaProtocol
             ''' <returns></returns>
             Public Shared Function saveTemporallyRequest(ByRef value As RequestModel) As Boolean
                 Try
-                    Return IOFast(Of RequestModel).save(IO.Path.Combine(AreaCommon.paths.workData.requestData.received, value.getHash & ".request"), value)
+                    Return IOFast(Of RequestModel).save(IO.Path.Combine(AreaCommon.paths.workData.requestData.received, value.getHash & ".Request"), value)
                 Catch ex As Exception
                     Return False
                 End Try
@@ -356,6 +356,20 @@ Namespace AreaProtocol
             Public Shared Function saveTemporallyRequest(ByRef value As RequestResponseModel) As Boolean
                 Return saveTemporallyRequest(value)
             End Function
+
+            ''' <summary>
+            ''' This method provide to load a request from a repository
+            ''' </summary>
+            ''' <param name="hash"></param>
+            ''' <returns></returns>
+            Public Shared Function loadRequest(ByVal completePath As String, ByVal hash As String) As RequestModel
+                Try
+                    Return IOFast(Of RequestModel).read(IO.Path.Combine(completePath, hash & ".Request"))
+                Catch ex As Exception
+                    Return New RequestModel
+                End Try
+            End Function
+
 
             ''' <summary>
             ''' This method provide to create a initial procedure A1x0

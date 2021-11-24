@@ -242,7 +242,7 @@ Namespace AreaProtocol
 
                     AreaCommon.log.track("Manager.addIntoLedger", "Begin")
 
-                    contentPath = IO.Path.Combine(contentPath, hash & ".content")
+                    contentPath = IO.Path.Combine(contentPath, hash & ".Content")
 
                     If IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.BaseNetworkModel).save(contentPath, value) Then
                         With AreaCommon.state.currentBlockLedger.proposeNewTransaction

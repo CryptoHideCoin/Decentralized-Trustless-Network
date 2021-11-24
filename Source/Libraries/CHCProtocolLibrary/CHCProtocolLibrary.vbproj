@@ -79,6 +79,7 @@
     <Compile Include="General\Package.vb" />
     <Compile Include="General\VirtualPath.vb" />
     <Compile Include="Models\AdministrationModel.vb" />
+    <Compile Include="Models\AuthorizationModel.vb" />
     <Compile Include="Models\PrimaryChain\BuildNetworkModel.vb" />
     <Compile Include="Models\DocumentModel.vb" />
     <Compile Include="Models\GeneralSettingsModel.vb" />
@@ -88,7 +89,7 @@
     <Compile Include="Models\ServiceModel.vb" />
     <Compile Include="Models\SetIdentityKeyPairModel.vb" />
     <Compile Include="Models\SideChain\NotifyModel.vb" />
-    <Compile Include="Models\SideChain\PaymentModel.vb" />
+    <Compile Include="Models\PaymentModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

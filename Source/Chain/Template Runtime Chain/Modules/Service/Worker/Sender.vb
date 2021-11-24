@@ -87,7 +87,7 @@ Namespace AreaWorker
         End Function
 
         ''' <summary>
-        ''' This method provide to send a bullettin to masternode
+        ''' This method provide to send a bulletin to masternode
         ''' </summary>
         ''' <param name="dataObject"></param>
         ''' <param name="publicAddressIP"></param>
@@ -167,7 +167,7 @@ Namespace AreaWorker
         End Function
 
         ''' <summary>
-        ''' This method provide to send bullettin in broadcast
+        ''' This method provide to send bulletin in broadcast
         ''' </summary>
         ''' <param name="dataObject"></param>
         ''' <param name="deliveryList"></param>

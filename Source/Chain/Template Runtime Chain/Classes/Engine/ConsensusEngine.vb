@@ -25,6 +25,8 @@ Namespace AreaConsensus
             Public Property newIdentity As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
             Public Property blockNumber As String = ""
 
+            Public Property currentPath As CHCProtocolLibrary.AreaSystem.VirtualPathEngine.LedgerBlockPath
+
         End Class
 
         Private _QueueProcessUpdateBulletin As New List(Of String)
@@ -82,42 +84,25 @@ Namespace AreaConsensus
         ''' This method provide to check and create new bulletin
         ''' </summary>
         ''' <returns></returns>
-        Private Function checkAndCreateNewBulletin(Optional updateBulletin As Boolean = False) As Boolean
+        Private Function updateHeaderBulletin() As Boolean
             Try
                 AreaCommon.log.track("ConsensusEngine.checkAndCreateNewBulletin", "Begin")
 
-                updateBulletin = updateBulletin Or (bulletin.header.bulletinTimeStamp = 0)
-
                 With bulletin.header
                     .bulletinTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    .publicAddress = AreaCommon.state.network.publicAddressIdentity
 
-                    If updateBulletin Then
-                        .publicAddress = AreaCommon.state.network.publicAddressIdentity
+                    With .netSynchronizationData
+                        .hashNetwork = AreaCommon.state.runtimeState.activeNetwork.hash
+                        .hashChain = AreaCommon.state.runtimeState.activeChain.hash
 
-                        With .netSynchronizationData
-                            .hashNetwork = AreaCommon.state.runtimeState.activeNetwork.networkName.hash
-                            .hashChain = AreaCommon.state.runtimeState.activeChain.name.hash
-
-                            With .lastApprovedTransaction
-                                .coordinate = AreaCommon.state.currentBlockLedger.composeCoordinateTransaction()
-                                .registrationTimeStamp = AreaCommon.state.currentBlockLedger.approvedTransaction.registrationTimeStamp
-                                .hash = AreaCommon.state.currentBlockLedger.approvedTransaction.currentHash
-                                .progressiveHash = AreaCommon.state.currentBlockLedger.approvedTransaction.progressiveHash
-                            End With
+                        With .lastApprovedTransaction
+                            .coordinate = AreaCommon.state.currentBlockLedger.composeCoordinateTransaction()
+                            .registrationTimeStamp = AreaCommon.state.currentBlockLedger.approvedTransaction.registrationTimeStamp
+                            .hash = AreaCommon.state.currentBlockLedger.approvedTransaction.currentHash
+                            .progressiveHash = AreaCommon.state.currentBlockLedger.approvedTransaction.progressiveHash
                         End With
-                    Else
-                        With .netSynchronizationData
-                            .hashNetwork = AreaCommon.state.runtimeState.activeNetwork.networkName.hash
-                            .hashChain = AreaCommon.state.runtimeState.activeChain.name.hash
-
-                            With .lastApprovedTransaction
-                                .coordinate = AreaCommon.state.currentBlockLedger.composeCoordinateTransaction()
-                                .registrationTimeStamp = AreaCommon.state.currentBlockLedger.approvedTransaction.registrationTimeStamp
-                                .hash = AreaCommon.state.currentBlockLedger.approvedTransaction.currentHash
-                                .progressiveHash = AreaCommon.state.currentBlockLedger.approvedTransaction.progressiveHash
-                            End With
-                        End With
-                    End If
+                    End With
                 End With
 
                 AreaCommon.log.track("ConsensusEngine.checkAndCreateNewBulletin", "Complete")
@@ -742,6 +727,10 @@ Namespace AreaConsensus
 
                     Case "a1x0" : support.newIdentity = AreaProtocol.A1x0.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.extractMinimal(), request.data.common.publicAddressRequester, requestHash)
                     Case "a1x1" : support.newIdentity = AreaProtocol.A1x1.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.extractMinimal(), request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x2" : support.newIdentity = AreaProtocol.A1x2.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.extractMinimal(), request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x3" : support.newIdentity = AreaProtocol.A1x3.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.extractMinimal(), request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x4" : support.newIdentity = AreaProtocol.A1x4.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.extractMinimal(), request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x5" : support.newIdentity = AreaProtocol.A1x5.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.common.publicAddressRequester, requestHash)
 
                         ''' BOOKMARK: Add in this point 1
                 End Select
@@ -785,6 +774,10 @@ Namespace AreaConsensus
 
                     Case "a1x0" : support.proceed = AreaProtocol.A1x0.RecoveryState.fromRequest(request.data, support.newIdentity)
                     Case "a1x1" : support.proceed = AreaProtocol.A1x1.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a1x2" : support.proceed = AreaProtocol.A1x2.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a1x3" : support.proceed = AreaProtocol.A1x3.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a1x4" : support.proceed = AreaProtocol.A1x4.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a1x5" : support.proceed = AreaProtocol.A1x5.RecoveryState.fromRequest(request.data, support.newIdentity)
 
                         ''' BOOKMARK: Add in this point 2
                 End Select
@@ -805,12 +798,22 @@ Namespace AreaConsensus
         ''' This method provide to move a request into current ledger directory
         ''' </summary>
         ''' <returns></returns>
-        Private Function moveRequestToCurrentLedger(ByRef request As AreaFlow.RequestExtended) As Boolean
+        Private Function moveFileToCurrentLedger(ByRef request As AreaFlow.RequestExtended) As Boolean
             Try
                 AreaCommon.log.track("ConsensusEngine.moveRequestToCurrentLedger", "Begin")
 
-                Dim fileSource As String = IO.Path.Combine(AreaCommon.paths.workData.requestData.received, request.dataCommon.hash & ".request")
-                Dim fileDestination As String = IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.requests, request.dataCommon.hash & ".request")
+                Dim fileSource As String = IO.Path.Combine(AreaCommon.paths.workData.requestData.received, request.dataCommon.hash & ".Request")
+                Dim fileDestination As String = IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.requests, request.dataCommon.hash & ".Request")
+
+                IO.File.Move(fileSource, fileDestination)
+
+                fileSource = IO.Path.Combine(AreaCommon.paths.workData.temp, request.dataCommon.hash & ".Bulletin")
+                fileDestination = IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.bulletines, request.dataCommon.hash & ".Bulletin")
+
+                IO.File.Move(fileSource, fileDestination)
+
+                fileSource = IO.Path.Combine(AreaCommon.paths.workData.temp, request.dataCommon.hash & ".Consensus")
+                fileDestination = IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.consensus, request.dataCommon.hash & ".Consensus")
 
                 IO.File.Move(fileSource, fileDestination)
 
@@ -844,6 +847,38 @@ Namespace AreaConsensus
                 Return False
             Finally
                 AreaCommon.log.track("ConsensusEngine.removeProposalFromBulletin", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to manage an other operation
+        ''' </summary>
+        ''' <param name="support"></param>
+        ''' <returns></returns>
+        Private Function otherOperations(ByRef support As SupportUpdateBulletin, ByVal requestHash As String) As SupportUpdateBulletin
+            Try
+                AreaCommon.log.track("ConsensusEngine.otherOperation", "Begin")
+
+                Dim request As AreaFlow.RequestExtended = AreaCommon.flow.getActiveRequest(bulletin.proposalUpdateNewTransactionHash.requestHash)
+
+                support.proceed = False
+
+                Select Case request.dataCommon.type
+                    Case "a1x5" : support.proceed = AreaProtocol.A1x5.Manager.finalizeBlock(requestHash, support.blockNumber)
+                    Case Else : support.proceed = True
+
+                        ''' BOOKMARK: Add in this point 10
+                End Select
+
+                AreaCommon.log.track("ConsensusEngine.otherOperation", "Complete")
+
+                Return support
+            Catch ex As Exception
+                AreaCommon.log.track("ConsensusEngine.otherOperation", ex.Message, "fatal")
+
+                support.proceed = False
+
+                Return support
             End Try
         End Function
 
@@ -894,7 +929,7 @@ Namespace AreaConsensus
                 If support.proceed Then
                     dataRequest.position.process = AreaFlow.EnumOperationPosition.inWork
 
-                    support.proceed = checkAndCreateNewBulletin()
+                    support.proceed = updateHeaderBulletin()
                 End If
                 If support.proceed Then
                     support = routeAssessment(dataRequest)
@@ -927,6 +962,8 @@ Namespace AreaConsensus
                     support = saveBulletin(dataRequest, support)
                 End If
                 If support.proceed Then
+                    support.currentPath = AreaCommon.state.currentBlockLedger.approvedTransaction.pathData
+
                     cloneBulletin = bulletin.clone()
 
                     If Not IsNothing(dataRequest.bulletin) Then
@@ -959,10 +996,13 @@ Namespace AreaConsensus
                     End If
                 End If
                 If support.proceed Then
+                    support = otherOperations(support, dataRequest.dataCommon.hash)
+                End If
+                If support.proceed Then
                     support.proceed = AreaCommon.flow.setRequestProcessed(dataRequest, support.blockNumber)
                 End If
                 If support.proceed Then
-                    support.proceed = moveRequestToCurrentLedger(dataRequest)
+                    support.proceed = moveFileToCurrentLedger(dataRequest)
                 End If
                 If support.proceed Then
                     If Not proposalDataApproved() Then

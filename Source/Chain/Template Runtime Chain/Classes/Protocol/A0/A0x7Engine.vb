@@ -126,7 +126,7 @@ Namespace AreaProtocol
                         AreaCommon.state.runtimeState.activeNetwork.refundPlan.value = value.refundPlan
                     End If
                     If proceed Then
-                        contentPath = IO.Path.Combine(contentPath, hashContent & ".content")
+                        contentPath = IO.Path.Combine(contentPath, hashContent & ".Content")
 
                         Return IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList).save(contentPath, value.refundPlan)
                     End If
@@ -168,7 +168,7 @@ Namespace AreaProtocol
                         proceed = (request.common.netWorkReferement.Length > 0)
                     End If
                     If proceed Then
-                        proceed = (request.common.netWorkReferement.CompareTo(AreaCommon.state.internalInformation.networkName) = 0)
+                        proceed = (request.common.netWorkReferement.CompareTo(AreaCommon.state.runtimeState.activeNetwork.hash) = 0)
                     End If
                     If proceed Then
                         proceed = (request.common.chainReferement.CompareTo(AreaCommon.state.internalInformation.chainName) = 0)
@@ -249,7 +249,7 @@ Namespace AreaProtocol
 
                     AreaCommon.log.track("A0x7.Manager.addIntoLedger", "Begin")
 
-                    contentPath = IO.Path.Combine(contentPath, hash & ".content")
+                    contentPath = IO.Path.Combine(contentPath, hash & ".Content")
 
                     If IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList).save(contentPath, value) Then
 
@@ -331,9 +331,9 @@ Namespace AreaProtocol
 
                     With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                         data.refundPlan = valueAsset
-                        data.common.netWorkReferement = AreaCommon.state.internalInformation.networkName
+                        data.common.netWorkReferement = AreaCommon.state.runtimeState.activeNetwork.hash
                         data.common.chainReferement = AreaCommon.state.internalInformation.chainName
-                        data.common.type = "A0x7"
+                        data.common.type = "a0x7"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                         data.common.hash = data.getHash()

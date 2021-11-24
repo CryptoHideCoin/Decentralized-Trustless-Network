@@ -205,7 +205,7 @@ Namespace AreaCommon.DAO
 
                 logIstance.track("init.initDBLedger", "Begin")
 
-                _DBFileName = IO.Path.Combine(basePath, "Requests.db")
+                _DBFileName = IO.Path.Combine(basePath, "Requests.Db")
 
                 DBGeneric.logIstance = logIstance
 

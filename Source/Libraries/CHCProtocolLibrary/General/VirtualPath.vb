@@ -135,6 +135,7 @@ Namespace AreaSystem
             Public Property internal As String = ""
             Public Property ledger As String = ""
             Public Property requestData As New RequestPath
+            Public Property temp As String = ""
 
         End Class
 
@@ -172,6 +173,7 @@ Namespace AreaSystem
         Private Const receivedName As String = "Received"
         Private Const rejectedName As String = "Rejected"
         Private Const trashedName As String = "Trashed"
+        Private Const temporallyName As String = "Temp"
 
         Private Const defaultAdminServiceSettings As String = "AdminService.Settings"
         Private Const defaultRunTimeServiceSettings As String = "RunTimeService.Settings"
@@ -407,6 +409,7 @@ Namespace AreaSystem
 
                         .internal = manageSinglePath(.path, internalName)
                         .ledger = manageSinglePath(.path, ledgerName)
+                        .temp = manageSinglePath(.path, temporallyName)
                     End With
 
                     With workDefine

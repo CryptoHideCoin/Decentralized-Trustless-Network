@@ -32,8 +32,12 @@ Namespace AreaWorker
 
                     Case "a1x0" : Return AreaProtocol.A1x0.FormalCheck.verify(value.dataCommon.hash)
                     Case "a1x1" : Return AreaProtocol.A1x1.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a1x2" : Return AreaProtocol.A1x2.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a1x3" : Return AreaProtocol.A1x3.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a1x4" : Return AreaProtocol.A1x4.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a1x5" : Return AreaProtocol.A1x5.FormalCheck.verify(value.dataCommon.hash)
 
-                        ''' BOOKMARK: Add in this point 4
+                        ''' BOOKMARK: Add in this point 5
                 End Select
 
                 AreaCommon.log.track("Requester.formalCheck", "Complete")
@@ -124,7 +128,7 @@ Namespace AreaWorker
                     item = Nothing
 
                     AreaCommon.flow.removeOldRequest()
-                    AreaCommon.flow.manageCloseBlock()
+                    AreaProtocol.A1x5.Manager.manageCloseBlock()
 
                     Threading.Thread.Sleep(1)
                 Loop

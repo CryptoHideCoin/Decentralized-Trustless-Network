@@ -254,6 +254,7 @@ Namespace AreaCommon.DAO
             priceList
             policyPrivacy
             termAndConditions
+            lastCloseBlock
 
         End Enum
 
@@ -431,7 +432,7 @@ Namespace AreaCommon.DAO
         ''' <param name="chainReferement"></param>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function updateDetail(ByVal chainReferement As String, ByVal propertyChain_id As DetailPropertyID, ByRef value As CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+        Public Function updateDetail(ByVal chainReferement As String, ByVal propertyChain_id As DetailPropertyID, ByRef hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
             If deleteDetail(chainReferement, propertyChain_id) Then
                 Dim sql As String = ""
 
@@ -441,12 +442,12 @@ Namespace AreaCommon.DAO
                 sql += "  recordCoordinate, recordHash, "
                 sql += "  hashContent)"
                 sql += " VALUES "
-                sql += " ('" & chainReferement
+                sql += " ('" & chainReferement & "'"
                 sql += "," & propertyChain_id
                 sql += ",'" & transactionChainRecord.registrationTimeStamp & "'"
                 sql += ",'" & transactionChainRecord.coordinate & "'"
                 sql += ",'" & transactionChainRecord.progressiveHash & "'"
-                sql += ",'" & value.getHash() & "')"
+                sql += ",'" & hashContent & "')"
 
                 Return DBGeneric.executeDataTable(sql, String.Format(_DBStateConnectionString, _DBStateFileName))
             Else

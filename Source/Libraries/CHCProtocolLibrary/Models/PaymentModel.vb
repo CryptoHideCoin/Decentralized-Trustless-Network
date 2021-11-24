@@ -2,14 +2,13 @@
 Option Compare Text
 
 ' ****************************************
-' File: Notify Model
+' File: Payment Model
 ' Release Engine: 1.0 
 ' 
 ' Date last successfully test: 03/10/2021
 ' ****************************************
 
 
-Imports CHCCommonLibrary.AreaEngine.Encryption
 
 
 Namespace AreaCommon.Models.Payments

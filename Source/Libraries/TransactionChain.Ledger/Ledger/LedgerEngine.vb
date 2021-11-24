@@ -2,7 +2,6 @@
 Option Explicit On
 
 Imports CHCCommonLibrary.AreaEngine.Encryption
-Imports System.Data.SQLite
 Imports CHCCommonLibrary.Support
 
 
@@ -164,12 +163,21 @@ Namespace AreaLedger
 
         End Enum
 
+        ''' <summary>
+        ''' This class contain the last block essential information
+        ''' </summary>
+        Public Class LastCloseBlock
+
+            Public Property blockIdentity As String = ""
+            Public Property hash As String = ""
+
+        End Class
+
         Private Property _NewIdTransaction As Integer = 0
         Private Property _BasePath As String = ""
         Private Property _CompleteFileName As String = ""
         Private Property _CurrentTotalHash As String = ""
         Private Property _CreationLedgerDate As Double = 0
-        Private Property _NextBlockCloseAtTime As DateTime
         Private Property _DAO As New AreaCommon.DAO.DAOLedger
 
         Public Property approvedTransaction As New SingleTransactionLedger
@@ -179,36 +187,9 @@ Namespace AreaLedger
         Public Property currentIdVolume As Byte = 0
         Public Property nextIdBlock As Integer = 0
         Public Property nextIdVolume As Byte = 0
-        Public Property requestChangeBlock As Boolean = False
+        Public Property lastBlockClosed As New LastCloseBlock
         Public Property log As LogEngine
 
-
-        ''' <summary>
-        ''' This methdo provide to create a next close time of a block 
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function createNextCloseAtTime() As DateTime
-            Try
-                log.track("LedgerEngine.createNextCloseAtTime", "Begin")
-
-                Dim dateCreation As Date = CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(_CreationLedgerDate)
-                Dim currentYear As Short = Now.ToUniversalTime.Year
-                Dim currentMonth As Byte = Now.ToUniversalTime.Month
-                Dim currentDay As Byte = Now.ToUniversalTime.Day
-
-                Dim currentHour As Byte = dateCreation.Hour
-                Dim currentMinute As Byte = dateCreation.Minute
-                Dim currentSecond As Byte = dateCreation.Second
-
-                Return New Date(currentYear, currentMonth, currentDay, currentHour, currentMinute, currentSecond)
-            Catch ex As Exception
-                log.track("LedgerEngine.createNextCloseAtTime", ex.Message, "fatal")
-
-                Return New Date()
-            Finally
-                log.track("LedgerEngine.createNextCloseAtTime", "Complete")
-            End Try
-        End Function
 
         ''' <summary>
         ''' This method provide to create a db block
@@ -224,13 +205,14 @@ Namespace AreaLedger
 
                 blockName = CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, currentIdVolume, currentIdBlock)
                 proposeNewTransaction.pathData = CHCProtocolLibrary.AreaSystem.VirtualPathEngine.createBlockPath(_BasePath, blockName)
+                proposeNewTransaction.id = _NewIdTransaction
 
                 If IsNothing(approvedTransaction.pathData) Then
                     approvedTransaction.pathData = proposeNewTransaction.pathData
                 End If
 
                 intermediatePath = proposeNewTransaction.pathData.path
-                _CompleteFileName = IO.Path.Combine(intermediatePath, "current.BlockData")
+                _CompleteFileName = IO.Path.Combine(intermediatePath, "Current.BlockData")
 
                 log.track("LedgerEngine.createDBBlock", "Set Complete file name = " & _CompleteFileName)
 
@@ -299,20 +281,11 @@ Namespace AreaLedger
         ''' This property get a current total hash
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property CurrentTotalHash() As String
+        Public ReadOnly Property currentTotalHash() As String
             Get
                 Return _CurrentTotalHash
             End Get
         End Property
-
-        ''' <summary>
-        ''' This method provide to complete a record
-        ''' </summary>
-        Public Sub completeRecord()
-            proposeNewTransaction.id = _NewIdTransaction
-            proposeNewTransaction.currentHash = proposeNewTransaction.getHash
-            proposeNewTransaction.progressiveHash = HashSHA.generateSHA256(proposeNewTransaction.currentHash & _CurrentTotalHash)
-        End Sub
 
         ''' <summary>
         ''' This method provide to calculate progressive hash
@@ -337,7 +310,6 @@ Namespace AreaLedger
             Try
                 log.track("LedgerEngine.saveAndClean", "Begin")
 
-                proposeNewTransaction.id = _NewIdTransaction
                 proposeNewTransaction.currentHash = proposeNewTransaction.getHash()
 
                 result.coordinate = CHCCommonLibrary.AreaCommon.Models.General.EssentialDataTransaction.composeCoordinate(identifyBlockChain, _currentIdVolume, _currentIdBlock, _NewIdTransaction)
@@ -348,7 +320,7 @@ Namespace AreaLedger
 
                 log.track("LedgerEngine.saveAndClean", "Assign value")
 
-                _CompleteFileName = IO.Path.Combine(proposeNewTransaction.pathData.path, CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction.composeCoordinate(identifyBlockChain, currentIdVolume, currentIdBlock) & ".ledger")
+                _CompleteFileName = IO.Path.Combine(proposeNewTransaction.pathData.path, "BlockData.Ledger")
 
                 Using fileData As IO.StreamWriter = IO.File.AppendText(_CompleteFileName)
                     fileData.WriteLine(proposeNewTransaction.toStringFormatToFile())
@@ -366,6 +338,7 @@ Namespace AreaLedger
                     proposeNewTransaction = New SingleTransactionLedger
 
                     proposeNewTransaction.pathData = approvedTransaction.pathData
+                    proposeNewTransaction.id = _NewIdTransaction
                 End If
 
                 Return result
@@ -376,6 +349,41 @@ Namespace AreaLedger
             Finally
                 log.track("LedgerEngine.saveAndClean", "Complete")
             End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to change a block
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function changeBlock() As Boolean
+            Try
+                log.track("LedgerEngine.changeBlock", "Begin")
+
+                lastBlockClosed.blockIdentity = composeCoordinateTransaction(False, True)
+                lastBlockClosed.hash = approvedTransaction.progressiveHash
+
+                If (nextIdBlock = 0) And (nextIdVolume = 0) Then
+                    nextIdBlock = 1
+                End If
+
+                currentIdBlock = nextIdBlock
+                currentIdVolume = nextIdVolume
+
+                If (nextIdBlock = 365) Then
+                    nextIdVolume += 1
+                Else
+                    nextIdBlock += 1
+                End If
+
+                log.track("LedgerEngine.changeBlock", "Local data set")
+
+                Return createDBBlock()
+            Catch ex As Exception
+                log.track("LedgerEngine.changeBlock", ex.Message, "fatal")
+
+            End Try
+
+            Return False
         End Function
 
         ''' <summary>
@@ -391,7 +399,6 @@ Namespace AreaLedger
                 _BasePath = path
 
                 _CreationLedgerDate = creationLedgerDate
-                _NextBlockCloseAtTime = createNextCloseAtTime()
 
                 _DAO.log = log
 
@@ -443,6 +450,33 @@ Namespace AreaLedger
                 Return ""
             Finally
                 log.track("LedgerMapEngine.getRequestPath", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to update block path
+        ''' </summary>
+        ''' <param name="blockName"></param>
+        ''' <param name="hash"></param>
+        ''' <returns></returns>
+        Public Function updateBlockPath(ByVal blockName As String, ByVal hash As String) As Boolean
+            _DAO.log = log
+
+            Return _DAO.updateBlockPath(blockName, hash)
+        End Function
+
+        ''' <summary>
+        ''' This method provide to initialize a class
+        ''' </summary>
+        ''' <param name="basePath"></param>
+        ''' <returns></returns>
+        Public Function init(ByVal basePath As String) As Boolean
+            Try
+                _DAO.log = log
+
+                Return _DAO.init(basePath, True)
+            Catch ex As Exception
+                Return False
             End Try
         End Function
 

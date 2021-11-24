@@ -32,8 +32,12 @@ Namespace AreaWorker
 
                     Case "a1x0" : Return AreaProtocol.A1x0.FormalCheck.evaluate(value)
                     Case "a1x1" : Return AreaProtocol.A1x1.FormalCheck.evaluate(value)
+                    Case "a1x2" : Return AreaProtocol.A1x2.FormalCheck.evaluate(value)
+                    Case "a1x3" : Return AreaProtocol.A1x3.FormalCheck.evaluate(value)
+                    Case "a1x4" : Return AreaProtocol.A1x4.FormalCheck.evaluate(value)
+                    Case "a1x5" : Return AreaProtocol.A1x5.FormalCheck.evaluate(value)
 
-                        ''' BOOKMARK: Add in this point 4
+                        ''' BOOKMARK: Add in this point 6
                 End Select
 
                 AreaCommon.log.track("Verifier.evaluateTheRequest", "Complete")

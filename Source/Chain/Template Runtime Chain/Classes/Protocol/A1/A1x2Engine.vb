@@ -12,12 +12,13 @@ Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
 Namespace AreaProtocol
 
     ''' <summary>
-    ''' This class contain the minimal data essential A1x2
+    ''' This class contain the minimal data essential A1x2 (ItemPriceTableListModel)
     ''' </summary>
     Public Class EssentialA1x2
 
         Inherits CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel
 
+        Public Property approveConfiguration As New CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel
         Public Property feeConfiguration As New CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel
 
         ''' <summary>
@@ -28,6 +29,7 @@ Namespace AreaProtocol
             Dim result As String = ""
 
             result += MyBase.toString()
+            result += approveConfiguration.toString()
             result += feeConfiguration.toString()
 
             Return result
@@ -112,6 +114,23 @@ Namespace AreaProtocol
                 End Set
             End Property
 
+            Public Property approveConfiguration As CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel
+                Get
+                    Return _Base.approveConfiguration
+                End Get
+                Set(value As CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel)
+                    _Base.approveConfiguration = value
+                End Set
+            End Property
+            Public Property feeConfiguration As CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel
+                Get
+                    Return _Base.feeConfiguration
+                End Get
+                Set(value As CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel)
+                    _Base.feeConfiguration = value
+                End Set
+            End Property
+
             Public Overrides Property signature As String
                 Get
                     Return MyBase.signature
@@ -163,7 +182,7 @@ Namespace AreaProtocol
                     Dim proceed As Boolean = True
                     Dim content As CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel = value.extractMinimal()
                     Dim hashContent As String = HashSHA.generateSHA256(content.toString())
-                    Dim completefileName As String = IO.Path.Combine(AreaCommon.paths.workData.state.contents, hashContent) & ".content"
+                    Dim completefileName As String = IO.Path.Combine(AreaCommon.paths.workData.state.contents, hashContent) & ".Content"
 
                     AreaCommon.log.track("RecoveryState.fromRequest", "Begin")
 
@@ -217,10 +236,13 @@ Namespace AreaProtocol
                         proceed = (request.common.netWorkReferement.Length > 0)
                     End If
                     If proceed Then
-                        proceed = (request.common.netWorkReferement.CompareTo(AreaCommon.state.internalInformation.networkName) = 0)
+                        proceed = (request.common.netWorkReferement.CompareTo(AreaCommon.state.runtimeState.activeNetwork.hash) = 0)
                     End If
                     If proceed Then
-                        proceed = (request.common.chainReferement.CompareTo(AreaCommon.state.internalInformation.chainName) = 0)
+                        proceed = (request.common.chainReferement.Length > 0)
+                    End If
+                    If proceed Then
+                        proceed = request.common.chainReferement.CompareTo(AreaCommon.state.runtimeState.activeChain.hash) = 0
                     End If
                     If proceed Then
                         proceed = (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
@@ -252,7 +274,7 @@ Namespace AreaProtocol
             ''' <returns></returns>
             Shared Function evaluate(ByRef value As AreaFlow.RequestExtended) As Boolean
                 Try
-                    Dim request As A0x7.RequestModel = value.data
+                    Dim request As A1x2.RequestModel = value.data
 
                     AreaCommon.log.track("FormalCheck.evaluate", "Begin")
 
@@ -262,12 +284,7 @@ Namespace AreaProtocol
 
                         Return True
                     End If
-                    If (AreaCommon.state.network.position <> CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation) Then
-                        value.evaluations.rejectedNote = "Not permitted"
-                        value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
 
-                        Return True
-                    End If
                     value.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult
 
                     AreaCommon.log.track("FormalCheck.evaluate", "Complete")
@@ -298,7 +315,7 @@ Namespace AreaProtocol
 
                     AreaCommon.log.track("A1x2.Manager.addIntoLedger", "Begin")
 
-                    contentPath = IO.Path.Combine(contentPath, hash & ".content")
+                    contentPath = IO.Path.Combine(contentPath, hash & ".Content")
 
                     If IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList).save(contentPath, value) Then
 
@@ -338,6 +355,19 @@ Namespace AreaProtocol
                     Return IOFast(Of RequestModel).save(IO.Path.Combine(AreaCommon.paths.workData.requestData.received, value.getHash & ".request"), value)
                 Catch ex As Exception
                     Return False
+                End Try
+            End Function
+
+            ''' <summary>
+            ''' This method provide to load a request from a repository
+            ''' </summary>
+            ''' <param name="hash"></param>
+            ''' <returns></returns>
+            Public Shared Function loadRequest(ByVal completePath As String, ByVal hash As String) As RequestModel
+                Try
+                    Return IOFast(Of RequestModel).read(IO.Path.Combine(completePath, hash & ".request"))
+                Catch ex As Exception
+                    Return New RequestModel
                 End Try
             End Function
 

@@ -123,7 +123,7 @@ Namespace AreaProtocol
                         proceed = AreaCommon.state.runtimeState.addNetworkProperty(AreaCommon.DAO.DBNetwork.MainPropertyID.privacyPolicy, value.privacyPolicy, transactionChainRecord, hashContent, False)
                     End If
                     If proceed Then
-                        contentPath = IO.Path.Combine(contentPath, hashContent & ".content")
+                        contentPath = IO.Path.Combine(contentPath, hashContent & ".Content")
 
                         My.Computer.FileSystem.WriteAllText(contentPath, value.privacyPolicy, False)
 
@@ -167,7 +167,7 @@ Namespace AreaProtocol
                         proceed = (request.common.netWorkReferement.Length > 0)
                     End If
                     If proceed Then
-                        proceed = (request.common.netWorkReferement.CompareTo(AreaCommon.state.internalInformation.networkName) = 0)
+                        proceed = (request.common.netWorkReferement.CompareTo(AreaCommon.state.runtimeState.activeNetwork.hash) = 0)
                     End If
                     If proceed Then
                         proceed = (request.common.chainReferement.CompareTo(AreaCommon.state.internalInformation.chainName) = 0)
@@ -248,7 +248,7 @@ Namespace AreaProtocol
 
                     AreaCommon.log.track("A0x5.Manager.addIntoLedger", "Begin")
 
-                    contentPath = IO.Path.Combine(contentPath, hashContent & ".content")
+                    contentPath = IO.Path.Combine(contentPath, hashContent & ".Content")
 
                     My.Computer.FileSystem.WriteAllText(contentPath, detailInformation, False)
 
@@ -328,9 +328,9 @@ Namespace AreaProtocol
 
                     With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                         data.privacyPolicy = privacyPolicyParameter
-                        data.common.netWorkReferement = AreaCommon.state.internalInformation.networkName
+                        data.common.netWorkReferement = AreaCommon.state.runtimeState.activeNetwork.hash
                         data.common.chainReferement = AreaCommon.state.internalInformation.chainName
-                        data.common.type = "A0x5"
+                        data.common.type = "a0x5"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                         data.common.hash = data.getHash()

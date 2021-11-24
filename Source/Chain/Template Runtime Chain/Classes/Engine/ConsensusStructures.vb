@@ -64,7 +64,7 @@ Namespace AreaConsensus
     Public Class ReceiptOfConsensusAssessment
 
         Public Property model As EnumModel = EnumModel.absented
-        Public Property requestHash As String = ""
+        Public Overridable Property requestHash As String = ""
         Public Property assessmentTimeStamp As Double = 0
 
         ''' <summary>
@@ -158,7 +158,7 @@ Namespace AreaConsensus
 
         Inherits ReceiptOfConsensusAssessment
 
-        Public Property requestHash As String = ""
+        Public Overrides Property requestHash As String = ""
 
         ''' <summary>
         ''' This method provide to create a string the element of this class
@@ -229,7 +229,7 @@ Namespace AreaConsensus
             Try
                 Dim result As New RejectedRequest
 
-                result = Me.MemberwiseClone()
+                result = MemberwiseClone()
 
                 Return result
             Catch ex As Exception
@@ -697,7 +697,7 @@ Namespace AreaConsensus
         ''' <returns></returns>
         Public Function save() As Boolean
             Try
-                Return IOFast(Of BulletinInformation).save(IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.bulletines, proposalsForApprovalData.requestHash & ".bulletin"), Me)
+                Return IOFast(Of BulletinInformation).save(IO.Path.Combine(AreaCommon.paths.workData.temp, proposalsForApprovalData.requestHash & ".Bulletin"), Me)
             Catch ex As Exception
                 Return False
             End Try
@@ -731,7 +731,7 @@ Namespace AreaConsensus
         ''' This method provide to create a string hash resultant
         ''' </summary>
         ''' <returns></returns>
-        Private Function toString() As String
+        Private Overloads Function toString() As String
             Try
                 Dim tmp As String = ""
 
@@ -875,7 +875,7 @@ Namespace AreaConsensus
         ''' <returns></returns>
         Public Function save() As Boolean
             Try
-                Return IOFast(Of ConsensusNetwork).save(IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.consensus, requestHash & ".consensus"), Me)
+                Return IOFast(Of ConsensusNetwork).save(IO.Path.Combine(AreaCommon.paths.workData.temp, requestHash & ".Consensus"), Me)
             Catch ex As Exception
                 Return False
             End Try

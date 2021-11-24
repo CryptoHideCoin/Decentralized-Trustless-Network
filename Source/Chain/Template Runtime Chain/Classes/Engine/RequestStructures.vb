@@ -147,7 +147,7 @@ Namespace AreaFlow
                     consensus.nodeRegistrant = currentBulletin.proposalsForApprovalData.registerMasternodeAddress
                     consensus.nodeRegistrantTimeStamp = currentBulletin.proposalsForApprovalData.registerBulletinAssessmentTimeStamp
                     consensus.voteValueApproved = evaluations.approved.totalValuePoints
-                    consensus.voteValueRejected = evaluations.approved.totalValuePoints
+                    consensus.voteValueRejected = evaluations.rejected.totalValuePoints
                 End If
                 If proceed Then
                     proceed = consensus.reorderElements()

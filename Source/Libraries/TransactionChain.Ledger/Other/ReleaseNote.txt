@@ -4,3 +4,4 @@ Release Note
 0.0.4   - 11.09.2021 - Review LedgerEngine
 0.0.5   - 03.11.2021 - Ultimate complete
 0.0.6   - 15.11.2021 - Refactor with new path
+0.0.7   - 24.11.2021 - Implements new command

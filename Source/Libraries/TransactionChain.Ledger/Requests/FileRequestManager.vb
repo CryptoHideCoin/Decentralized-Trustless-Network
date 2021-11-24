@@ -118,6 +118,15 @@ Namespace AreaEngine.Requests
         End Function
 
         ''' <summary>
+        ''' This method provide to get a request a block position
+        ''' </summary>
+        ''' <param name="hash"></param>
+        ''' <returns></returns>
+        Public Function getRequestBlockPosition(ByVal hash As String) As String
+            Return _DAORequest.getRequest(hash).block
+        End Function
+
+        ''' <summary>
         ''' This method provide to complete a request into db
         ''' </summary>
         ''' <param name="hash"></param>
