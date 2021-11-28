@@ -1223,6 +1223,35 @@ CHCPrimaryRuntimeService
  </summary>
  <returns></returns>
 </member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.removeOldRequestRejectedAndTrashedIntoDB(System.Int32)">
+ <summary>
+ This method provide to delete fron DB all request rejected or trashed
+ </summary>
+ <param name="minimalMaintainRequestBlock"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.removeOldRequestDB(System.Int32)">
+ <summary>
+ This method provide to remove old request into db
+ </summary>
+ <param name="minimalMaintainRequestBlock"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getBlockList(System.Int32)">
+ <summary>
+ This method provide to get a old request block
+ </summary>
+ <param name="minimalMantainRequestBlock"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getFileList(System.Int32,TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest)">
+ <summary>
+ This method provide to extract the file list
+ </summary>
+ <param name="minimalMaintenanceRejectFile"></param>
+ <param name="state"></param>
+ <returns></returns>
+</member>
 <member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.actionAfterAssessment">
  <summary>
  This method provide to execute the action after assessment 
@@ -1696,7 +1725,7 @@ CHCPrimaryRuntimeService
  This static class provides to static method to manage a request
  </summary>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x3.Manager.addIntoLedger(System.String,System.String,System.String,CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel,System.String,System.String)">
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x3.Manager.addIntoLedger(System.String,System.String,System.String,CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel,System.String,System.String)">
  <summary>
  This method provide to write request into ledger
  </summary>
@@ -1723,7 +1752,7 @@ CHCPrimaryRuntimeService
  <param name="hash"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x3.Manager.createInternalRequest(CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel)">
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x3.Manager.createInternalRequest(CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel)">
  <summary>
  This method provide to create a initial procedure A0x3
  </summary>
@@ -2951,15 +2980,6 @@ CHCPrimaryRuntimeService
  This method provide to create a post procedure a close block
  </summary>
  <param name="pathBlock"></param>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x5.Manager.moveApprovedFile(System.String,System.String,CHCProtocolLibrary.AreaSystem.VirtualPathEngine.LedgerBlockPath,CHCProtocolLibrary.AreaSystem.VirtualPathEngine.LedgerBlockPath)">
- <summary>
- This method provide to move a consensus file and bulletin file into currect directory
- </summary>
- <param name="requestHash"></param>
- <param name="previousPath"></param>
- <param name="currentPath"></param>
- <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x5.Manager.finalizeBlock(System.String,System.String)">
  <summary>

@@ -3,3 +3,4 @@ Release Note
 
 0.5.0   - 11.09.2021 - Support to BuildNetwork
 0.6.0   - 15.11.2021 - Support with new library
+0.7.0   - 28.11.2021 - Review Asset Primary and Transaction Chain

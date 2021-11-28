@@ -143,6 +143,80 @@ Namespace AreaEngine.Requests
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to delete an old request
+        ''' </summary>
+        ''' <param name="minimalMaintainanceRequestBlock"></param>
+        ''' <returns></returns>
+        Public Function deleteOldRequest(ByVal minimalMaintainanceRequestBlock As Integer) As Boolean
+            Try
+                logIstance.track("RequestManager.extractAndDeleteOldRequestBlock", "Begin")
+
+                Return _DAORequest.deleteOldRequest(minimalMaintainanceRequestBlock)
+            Catch ex As Exception
+                logIstance.track("RequestManager.deleteOldRequest", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to delete old request rejected and trashed request
+        ''' </summary>
+        ''' <param name="minimalMaintenanceRequestFile"></param>
+        ''' <returns></returns>
+        Public Function deleteOldRequestRejectedAndTrashed(ByVal minimalMaintenanceRequestFile As Integer) As Boolean
+            Try
+                logIstance.track("RequestManager.deleteOldRequestRejectedAndTrashed", "Begin")
+
+                Return _DAORequest.deleteOldRequest(minimalMaintenanceRequestFile)
+            Catch ex As Exception
+                logIstance.track("RequestManager.deleteOldRequestRejectedAndTrashed", ex.Message, "fatal")
+
+                Return False
+            Finally
+                logIstance.track("RequestManager.deleteOldRequestRejectedAndTrashed", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to extract old request block
+        ''' </summary>
+        ''' <param name="minimalMantainRequestBlock"></param>
+        ''' <returns></returns>
+        Public Function extractOldRequestBlock(ByVal minimalMaintenanceRequestBlock As Integer) As List(Of String)
+            Try
+                logIstance.track("RequestManager.extractOldRequestBlock", "Begin")
+
+                Return _DAORequest.getOldBlock(minimalMaintenanceRequestBlock)
+            Catch ex As Exception
+                logIstance.track("RequestManager.extractOldRequestBlock", ex.Message, "fatal")
+
+                Return New List(Of String)
+            Finally
+                logIstance.track("RequestManager.extractOldRequestBlock", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to extract the maintenance request file
+        ''' </summary>
+        ''' <param name="minimalMaintenanceRequestFile"></param>
+        ''' <returns></returns>
+        Public Function extractOldRequestRejectOrTrashedFile(ByVal minimalMaintenanceRequestFile As Integer, ByVal state As RequestData.stateRequest) As List(Of String)
+            Try
+                logIstance.track("RequestManager.extractOldRequestRejectFile", "Begin")
+
+                Return _DAORequest.getOldFile(minimalMaintenanceRequestFile, state)
+            Catch ex As Exception
+                logIstance.track("RequestManager.extractOldRequestRejectFile", ex.Message, "fatal")
+
+                Return New List(Of String)
+            Finally
+                logIstance.track("RequestManager.extractOldRequestRejectFile", "Complete")
+            End Try
+        End Function
+
     End Class
 
 End Namespace

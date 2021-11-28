@@ -348,7 +348,7 @@ Namespace AreaProtocol
                     If (AreaCommon.state.runtimeState.activeChain.lastCloseBlock.value.Length = 0) Then Return False
 
                     Dim proceed As Boolean = True
-                    Dim nextBlockClosedTimeStamp As Double = CDbl(AreaCommon.state.runtimeState.activeChain.lastCloseBlock.value) + 50000
+                    Dim nextBlockClosedTimeStamp As Double = CDbl(AreaCommon.state.runtimeState.activeChain.lastCloseBlock.value) + AreaCommon.Customize.defaultChainCloseBlockTimingSecond
 
                     If proceed Then
                         proceed = (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > nextBlockClosedTimeStamp)
@@ -377,7 +377,12 @@ Namespace AreaProtocol
             Shared Sub postCloseBlock(ByVal pathBlock As CHCProtocolLibrary.AreaSystem.VirtualPathEngine.LedgerBlockPath)
                 Try
                     Dim finalizeBlockEngine As New TransactionChainLibrary.AreaLedger.LedgerSupportEngine
-                    Dim proceed As Boolean = True
+                    Dim proceed As Boolean = True, haveRejectOrTrash As Boolean = False
+                    Dim requestBlockList As List(Of String)
+                    Dim consensusBlockList As List(Of String)
+                    Dim bulletinBlockList As List(Of String)
+                    Dim requestList As List(Of String)
+                    Dim internalList As List(Of String)
 
                     AreaCommon.log.track("A1x5Manager.postCloseBlock", "Begin")
 
@@ -394,8 +399,68 @@ Namespace AreaProtocol
 
                     End With
 
-                    If finalizeBlockEngine.init() Then
-                        AreaCommon.state.ledgerMap.updateBlockPath(AreaCommon.state.currentBlockLedger.lastBlockClosed.blockIdentity, AreaCommon.state.currentBlockLedger.lastBlockClosed.hash)
+                    If proceed Then
+                        proceed = finalizeBlockEngine.init()
+                    End If
+                    If proceed Then
+                        proceed = AreaCommon.state.ledgerMap.updateBlockPath(AreaCommon.state.currentBlockLedger.lastBlockClosed.blockIdentity, AreaCommon.state.currentBlockLedger.lastBlockClosed.hash)
+                    End If
+                    If proceed Then
+                        requestBlockList = AreaCommon.flow.getBlockList(AreaCommon.Customize.defaultMinimalMaintainRequestBlock)
+
+                        proceed = (requestBlockList.Count > 0)
+                    End If
+                    If proceed Then
+                        consensusBlockList = AreaCommon.flow.getBlockList(AreaCommon.Customize.defaultMinimalMaintainConsensusBlock)
+
+                        proceed = (consensusBlockList.Count > 0)
+                    End If
+                    If proceed Then
+                        bulletinBlockList = AreaCommon.flow.getBlockList(AreaCommon.Customize.defaultMinimalMaintainBulletinBlock)
+
+                        proceed = (bulletinBlockList.Count > 0)
+                    End If
+                    If proceed Then
+                        proceed = finalizeBlockEngine.removeOldFiles(AreaCommon.paths.workData.ledger, "Requests", requestBlockList)
+                    End If
+                    If proceed Then
+                        proceed = finalizeBlockEngine.removeOldFiles(AreaCommon.paths.workData.ledger, "Consensus", consensusBlockList)
+                    End If
+                    If proceed Then
+                        proceed = finalizeBlockEngine.removeOldFiles(AreaCommon.paths.workData.ledger, "Bulletines", bulletinBlockList)
+                    End If
+                    If proceed Then
+                        proceed = AreaCommon.flow.removeOldRequestDB(AreaCommon.Customize.defaultMinimalMaintainRequestBlock)
+                    End If
+                    If proceed Then
+                        requestList = AreaCommon.flow.getFileList(AreaCommon.Customize.defaultMinimalMaintainRejectedBlock, TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.rejected)
+
+                        If (requestList.Count > 0) Then
+                            haveRejectOrTrash = True
+
+                            proceed = finalizeBlockEngine.removeOldTemporallyRequest(AreaCommon.paths.workData.requestData.rejected, requestList)
+                        End If
+                    End If
+                    If proceed Then
+                        requestList = AreaCommon.flow.getFileList(AreaCommon.Customize.defaultMinimalMaintainRejectedBlock, TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.trashed)
+
+                        If (requestList.Count > 0) Then
+                            haveRejectOrTrash = True
+
+                            proceed = finalizeBlockEngine.removeOldTemporallyRequest(AreaCommon.paths.workData.requestData.trashed, requestList)
+                        End If
+                    End If
+                    If proceed Then
+                        If haveRejectOrTrash Then
+                            proceed = AreaCommon.flow.removeOldRequestRejectedAndTrashedIntoDB(AreaCommon.Customize.defaultMinimalMaintainRejectedBlock)
+                        End If
+                    End If
+                    If proceed Then
+                        ' Insert the internalList journal
+
+                    End If
+                    If proceed Then
+                        proceed = finalizeBlockEngine.finalizeSingleBlock(AreaCommon.paths.workData.ledger, requestBlockList)
                     End If
 
                     AreaCommon.log.track("A1x5Manager.postCloseBlock", "Complete")

@@ -786,23 +786,32 @@ Namespace AreaFlow
         Public Function removeOldRequest() As Boolean
             Try
                 Dim item As RequestExtended
-                Dim counter As Integer = 0
+                Dim counter As Integer
+                Dim repeat As Boolean = True
 
                 AreaCommon.log.track("RequestFlowEngine.removeOldRequest", "Begin")
 
                 If (_RequestProcessed.Count > 0) Then
+                    Do While repeat
+                        repeat = False
 
-                    Do While (counter < _RequestProcessed.Count)
-                        item = _RequestProcessed.Values.ElementAt(counter)
+                        Try
+                            counter = 0
 
-                        If (item.source.acquireTimeStamp + (60000 * 60 * 24) < CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) Then
-                            _RequestProcessed.Remove(item.dataCommon.hash)
-                            _Requests.Remove(item.dataCommon.hash)
-                        End If
+                            Do While (counter < _RequestProcessed.Count)
+                                item = _RequestProcessed.Values.ElementAt(counter)
 
-                        counter += 1
+                                If (item.source.acquireTimeStamp + (60000 * 60 * 24) < CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) Then
+                                    _RequestProcessed.Remove(item.dataCommon.hash)
+                                    _Requests.Remove(item.dataCommon.hash)
+                                End If
+
+                                counter += 1
+                            Loop
+                        Catch ex As Exception
+                            repeat = True
+                        End Try
                     Loop
-
                 End If
 
                 AreaCommon.log.track("RequestFlowEngine.removeOldRequest", "Complete")
@@ -812,6 +821,83 @@ Namespace AreaFlow
                 AreaCommon.log.track("RequestFlowEngine.removeOldRequest", ex.Message, "fatal")
 
                 Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to delete fron DB all request rejected or trashed
+        ''' </summary>
+        ''' <param name="minimalMaintainRequestBlock"></param>
+        ''' <returns></returns>
+        Public Function removeOldRequestRejectedAndTrashedIntoDB(ByVal minimalMaintainRequestBlock As Integer) As Boolean
+            Try
+                AreaCommon.log.track("RequestFlowEngine.removeOldRequestRejectedAndTrashedIntoDB", "Begin")
+
+                Return _RequestManager.deleteOldRequestRejectedAndTrashed(minimalMaintainRequestBlock)
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.removeOldRequestRejectedAndTrashedIntoDB", ex.Message, "fatal")
+
+                Return False
+            Finally
+                AreaCommon.log.track("RequestFlowEngine.removeOldRequestRejectedAndTrashedIntoDB", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to remove old request into db
+        ''' </summary>
+        ''' <param name="minimalMaintainRequestBlock"></param>
+        ''' <returns></returns>
+        Public Function removeOldRequestDB(ByVal minimalMaintainRequestBlock As Integer) As Boolean
+            Try
+                AreaCommon.log.track("RequestFlowEngine.removeOldRequestDB", "Begin")
+
+                Return _RequestManager.deleteOldRequest(minimalMaintainRequestBlock)
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.removeOldRequestDB", ex.Message, "fatal")
+
+                Return False
+            Finally
+                AreaCommon.log.track("RequestFlowEngine.removeOldRequestDB", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get a old request block
+        ''' </summary>
+        ''' <param name="minimalMantainRequestBlock"></param>
+        ''' <returns></returns>
+        Public Function getBlockList(ByVal minimalMaintainRequestBlock As Integer) As List(Of String)
+            Try
+                AreaCommon.log.track("RequestFlowEngine.getBlockList", "Begin")
+
+                Return _RequestManager.extractOldRequestBlock(minimalMaintainRequestBlock)
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.getBlockList", ex.Message, "fatal")
+
+                Return New List(Of String)
+            Finally
+                AreaCommon.log.track("RequestFlowEngine.getBlockList", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to extract the file list
+        ''' </summary>
+        ''' <param name="minimalMaintenanceRejectFile"></param>
+        ''' <param name="state"></param>
+        ''' <returns></returns>
+        Public Function getFileList(ByVal minimalMaintenanceRejectFile As Integer, ByVal state As TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest) As List(Of String)
+            Try
+                AreaCommon.log.track("RequestFlowEngine.getFileList", "Begin")
+
+                Return _RequestManager.extractOldRequestRejectOrTrashedFile(minimalMaintenanceRejectFile, state)
+            Catch ex As Exception
+                AreaCommon.log.track("RequestFlowEngine.getFileList", ex.Message, "fatal")
+
+                Return New List(Of String)
+            Finally
+                AreaCommon.log.track("RequestFlowEngine.getFileList", "Complete")
             End Try
         End Function
 

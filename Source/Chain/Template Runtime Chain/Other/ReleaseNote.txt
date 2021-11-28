@@ -11,6 +11,7 @@ Release Note
 0.10.0  - 15.11.2021 - Refactor with the new path structure
 0.11.0  - 16.11.2021 - Implement A1x3 e A1x4
 0.12.0  - 24.11.2021 - Implement Close Block
+0.13.0  - 27.11.2021 - Revision Asset Primary
 
 TO DO
 =====

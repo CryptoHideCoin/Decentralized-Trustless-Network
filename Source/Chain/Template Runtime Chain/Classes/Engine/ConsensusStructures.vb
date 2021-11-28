@@ -875,7 +875,7 @@ Namespace AreaConsensus
         ''' <returns></returns>
         Public Function save() As Boolean
             Try
-                Return IOFast(Of ConsensusNetwork).save(IO.Path.Combine(AreaCommon.paths.workData.temp, requestHash & ".Consensus"), Me)
+                Return IOFast(Of ConsensusNetwork).save(IO.Path.Combine(AreaCommon.paths.workData.temp, requestHash & ".Consent"), Me)
             Catch ex As Exception
                 Return False
             End Try

@@ -73,6 +73,34 @@ TransactionChainLibrary
  <param name="block"></param>
  <returns></returns>
 </member>
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.deleteOldRequest(System.Int32)">
+ <summary>
+ This method provide to delete an old request
+ </summary>
+ <param name="minimalMaintainanceRequestBlock"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.deleteOldRequestRejectedAndTrashed(System.Int32)">
+ <summary>
+ This method provide to delete old request rejected and trashed request
+ </summary>
+ <param name="minimalMaintenanceRequestFile"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.extractOldRequestBlock(System.Int32)">
+ <summary>
+ This method provide to extract old request block
+ </summary>
+ <param name="minimalMantainRequestBlock"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.extractOldRequestRejectOrTrashedFile(System.Int32,TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest)">
+ <summary>
+ This method provide to extract the maintenance request file
+ </summary>
+ <param name="minimalMaintenanceRequestFile"></param>
+ <returns></returns>
+</member>
 <member name="T:TransactionChainLibrary.AreaCommon.DAO.DBGeneric">
  <summary>
  This class contain the generic method to manage a db
@@ -270,11 +298,32 @@ TransactionChainLibrary
  <param name="requestHash"></param>
  <returns></returns>
 </member>
-<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAORequest.updateState(System.String,System.Object,System.String)">
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAORequest.updateState(System.String,System.Int32,System.String)">
  <summary>
  This method provide to set a request state
  </summary>
  <param name="hash"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAORequest.deleteOldRequest(System.Double)">
+ <summary>
+ This method provide to delete old request
+ </summary>
+ <param name="minimalMantainRequestBlock"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAORequest.getOldBlock(System.Double)">
+ <summary>
+ This method provide to get an old block
+ </summary>
+ <param name="minimalMaintenanceRequestBlock "></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaCommon.DAO.DAORequest.getOldFile(System.Double,System.Int32)">
+ <summary>
+ This method provide to get an old file
+ </summary>
+ <param name="minimalMaintenanceRequestBlock"></param>
  <returns></returns>
 </member>
 <member name="M:TransactionChainLibrary.AreaCommon.DAO.DAORequest.init(System.String)">
@@ -454,16 +503,48 @@ TransactionChainLibrary
  <param name="items"></param>
  <returns></returns>
 </member>
-<member name="M:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.createZipFile">
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.createZipFile(System.String)">
  <summary>
  This method provide to create a zip file
  </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.deleteFiles(System.String,System.String,System.String)">
+ <summary>
+ This method provide to delete file request
+ </summary>
+ <param name="mainPath"></param>
+ <param name="block"></param>
  <returns></returns>
 </member>
 <member name="M:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.init">
  <summary>
  This method provide to initialize the object
  </summary>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.removeOldFiles(System.String,System.String,System.Collections.Generic.List{System.String}@)">
+ <summary>
+ This method provide to remove an old request
+ </summary>
+ <param name="mainPath"></param>
+ <param name="blockList"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.removeOldTemporallyRequest(System.String,System.Collections.Generic.List{System.String}@)">
+ <summary>
+ This method provide to delete a list of file
+ </summary>
+ <param name="requestPath"></param>
+ <param name="fileList"></param>
+ <returns></returns>
+</member>
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerSupportEngine.finalizeSingleBlock(System.String,System.Collections.Generic.List{System.String}@)">
+ <summary>
+ This method provide to finalize all single block in a list
+ </summary>
+ <param name="ledgerPath"></param>
+ <param name="blockList"></param>
  <returns></returns>
 </member>
 </members>

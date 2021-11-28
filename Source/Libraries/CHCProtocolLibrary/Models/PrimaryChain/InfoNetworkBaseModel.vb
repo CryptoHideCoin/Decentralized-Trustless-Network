@@ -96,7 +96,7 @@ Namespace AreaCommon.Models.Network
 
         Inherits General.RemoteResponse
 
-        Public Property value As AssetModel
+        Public Property value As AssetConfigurationModel
 
         ''' <summary>
         ''' This method provide to create a string summary of the member of a class

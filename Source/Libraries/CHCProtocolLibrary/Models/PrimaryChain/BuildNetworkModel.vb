@@ -5,7 +5,7 @@ Option Compare Text
 ' File: Network Builder Model
 ' Release Engine: 1.1
 ' 
-' Date last successfully test: 11/11/2021
+' Date last successfully test: 28/11/2021
 ' ****************************************
 
 
@@ -57,16 +57,20 @@ Namespace AreaCommon.Models.Network
     ''' </summary>
     Public Class AssetModel
 
+        Public Enum AssetTypeEnum
+
+            coin
+            token
+
+        End Enum
+
         Public Property name As String = ""
         Public Property shortName As String = ""
         Public Property symbol As String = ""
-        Public Property qtaTotal As Decimal = 0
         Public Property digit As Byte = 0
-        Public Property stakeable As Boolean = False
-        Public Property prestake As Boolean = False
-        Public Property burnable As Boolean = False
         Public Property nameUnit As String = ""
-        Public Property qtaInitialStake As Decimal = 0
+        Public Property [type] As AssetTypeEnum = AssetTypeEnum.coin
+        Public Property netWorkReferement As String = ""
 
         ''' <summary>
         ''' This method provide to code symbol to trasmit with a webservice
@@ -92,13 +96,93 @@ Namespace AreaCommon.Models.Network
             tmp += name
             tmp += shortName
             tmp += symbol
-            tmp += qtaTotal.ToString()
             tmp += digit.ToString()
-            If stakeable Then tmp += "1" Else tmp += "0"
-            If prestake Then tmp += "1" Else tmp += "0"
-            If burnable Then tmp += "1" Else tmp += "0"
             tmp += nameUnit
+
+            If [type] Then
+                tmp += "1"
+            Else
+                tmp += "0"
+            End If
+
+            tmp += netWorkReferement
+
+            Return tmp
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain all information reguard the minting information
+    ''' </summary>
+    Public Class assetPolicyModel
+
+        Public Property shortAssetReferement As String = ""
+        Public Property unlimited As Boolean = False
+        Public Property burnable As Boolean = False
+        Public Property qtaTotal As Decimal = 0
+        Public Property stakeable As Boolean = False
+        Public Property preStake As Boolean = False
+        Public Property qtaInitialStake As Decimal = 0
+
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
+            Dim tmp As String = ""
+
+            tmp += shortAssetReferement
+
+            If unlimited Then tmp += "1" Else tmp += "0"
+            If burnable Then tmp += "1" Else tmp += "0"
+
+            tmp += qtaTotal.ToString()
+
+            If stakeable Then tmp += "1" Else tmp += "0"
+            If preStake Then tmp += "1" Else tmp += "0"
+
             tmp += qtaInitialStake.ToString()
+
+            Return tmp
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain the information complete of the asset (data and mint)
+    ''' </summary>
+    Public Class AssetConfigurationModel
+
+        Public Property assetInformation As New AssetModel
+        Public Property assetPolicyInformation As New assetPolicyModel
+
+
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
+            Dim tmp As String = ""
+
+            tmp += assetInformation.toString()
+            tmp += assetPolicyInformation.toString()
 
             Return tmp
         End Function
@@ -193,11 +277,17 @@ Namespace AreaCommon.Models.Network
 
         Public Property blockSizeFrequency As String = "24h"
         Public Property numberBlockInVolume As Short = 365
-        Public Property initialMaxComputeTransaction As String = "300sec"
-        Public Property initialCoinReleasePerBlock As Decimal = "100000"
+        Public Property maxTimeOutNotRespondNode As String = "120sec"
+        Public Property initialCoinReleasePerBlock As Decimal = "200000"
         Public Property ruleFutureRelease As String = ""
         Public Property reviewReleaseAlgorithm As String = "OnTransaction"
         Public Property consensusMethod As String = "Proof Of Stake"
+        Public Property minimalMaintainRequest As String = "3years"
+        Public Property minimalMaintainConsensus As String = "2year"
+        Public Property minimalMaintainBulletines As String = "1year"
+        Public Property minimalMaintainRejected As String = "14days"
+        Public Property minimalMaintainTrashed As String = "7days"
+        Public Property minimalMaintainInternalRegistry As String = "5days"
 
         ''' <summary>
         ''' This method provide to create a string summary of the member of a class
@@ -208,10 +298,17 @@ Namespace AreaCommon.Models.Network
 
             tmp += blockSizeFrequency
             tmp += numberBlockInVolume.ToString()
-            tmp += initialMaxComputeTransaction
+            tmp += maxTimeOutNotRespondNode
             tmp += initialCoinReleasePerBlock.ToString()
+            tmp += ruleFutureRelease
             tmp += reviewReleaseAlgorithm
             tmp += consensusMethod
+            tmp += minimalMaintainRequest
+            tmp += minimalMaintainConsensus
+            tmp += minimalMaintainBulletines
+            tmp += minimalMaintainRejected
+            tmp += minimalMaintainTrashed
+            tmp += minimalMaintainInternalRegistry
 
             Return tmp
         End Function
@@ -330,7 +427,7 @@ Namespace AreaCommon.Models.Network
         Public Property publicAddressGenesis As String = ""
         Public Property whitePaper As New Document.DocumentModel
         Public Property yellowPaper As New Document.DocumentModel
-        Public Property primaryAsset As New AssetModel
+        Public Property primaryAsset As New AssetConfigurationModel
         Public Property transactionChainParameter As New TransactionChainModel
         Public Property refundPlan As New RefundItemList
         Public Property privacyPolicy As New Document.DocumentModel

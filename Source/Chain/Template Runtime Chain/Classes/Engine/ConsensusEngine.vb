@@ -719,7 +719,7 @@ Namespace AreaConsensus
                     Case "a0x0" : support.newIdentity = AreaProtocol.A0x0.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x1" : support.newIdentity = AreaProtocol.A0x1.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.whitePaper, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x2" : support.newIdentity = AreaProtocol.A0x2.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.yellowPaper, request.data.common.publicAddressRequester, requestHash)
-                    Case "a0x3" : support.newIdentity = AreaProtocol.A0x3.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.primaryAsset, request.data.common.publicAddressRequester, requestHash)
+                    Case "a0x3" : support.newIdentity = AreaProtocol.A0x3.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x4" : support.newIdentity = AreaProtocol.A0x4.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.transactionChainSettings, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x5" : support.newIdentity = AreaProtocol.A0x5.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.privacyPolicy, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x6" : support.newIdentity = AreaProtocol.A0x6.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.generalCondition, request.data.common.publicAddressRequester, requestHash)
@@ -812,8 +812,8 @@ Namespace AreaConsensus
 
                 IO.File.Move(fileSource, fileDestination)
 
-                fileSource = IO.Path.Combine(AreaCommon.paths.workData.temp, request.dataCommon.hash & ".Consensus")
-                fileDestination = IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.consensus, request.dataCommon.hash & ".Consensus")
+                fileSource = IO.Path.Combine(AreaCommon.paths.workData.temp, request.dataCommon.hash & ".Consent")
+                fileDestination = IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.consensus, request.dataCommon.hash & ".Consent")
 
                 IO.File.Move(fileSource, fileDestination)
 

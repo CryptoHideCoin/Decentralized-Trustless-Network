@@ -32,9 +32,3 @@ E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\System.Data.S
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCRuntimeChainLibrary.dll
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\Newtonsoft.Json.dll
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Debug\CHCPrimaryRuntimeService.exe.config
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCProtocolLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCProtocolLibrary.xml
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\TransactionChainLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\TransactionChainLibrary.xml
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCCommonLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCCommonLibrary.xml

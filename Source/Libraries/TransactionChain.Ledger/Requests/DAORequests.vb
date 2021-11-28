@@ -126,12 +126,14 @@ Namespace AreaCommon.DAO
 
                 sqlDataReader = sqlCommand.ExecuteReader()
 
-                sqlDataReader.Read()
+                If sqlDataReader.HasRows Then
+                    sqlDataReader.Read()
 
-                result.acquire = sqlDataReader("acquire")
-                result.state = sqlDataReader("state")
-                result.block = sqlDataReader("block")
-                result.type = sqlDataReader("type")
+                    result.acquire = sqlDataReader("acquire")
+                    result.state = sqlDataReader("state")
+                    result.block = sqlDataReader("block")
+                    result.type = sqlDataReader("type")
+                End If
 
                 logIstance.track("DAORequest.getRequest", "Command executed")
 
@@ -154,7 +156,7 @@ Namespace AreaCommon.DAO
         ''' </summary>
         ''' <param name="hash"></param>
         ''' <returns></returns>
-        Public Function updateState(ByVal hash As String, ByVal state As Object, ByVal block As String) As Boolean
+        Public Function updateState(ByVal hash As String, ByVal state As Integer, ByVal block As String) As Boolean
             Try
                 Dim sql As String = ""
                 Dim connectionDB As SQLiteConnection
@@ -192,6 +194,161 @@ Namespace AreaCommon.DAO
                 Return False
             Finally
                 logIstance.track("DAORequest.updateState", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to delete old request
+        ''' </summary>
+        ''' <param name="minimalMantainRequestBlock"></param>
+        ''' <returns></returns>
+        Public Function deleteOldRequest(ByVal minimalMantainRequestBlock As Double) As Boolean
+            Try
+                Dim sql As String = ""
+                Dim connectionDB As SQLiteConnection
+                Dim sqlCommand As SQLiteCommand
+                Dim result As New AreaEngine.Requests.RequestManager.RequestData
+
+                logIstance.track("DAORequest.deleteOldRequest", "Begin")
+
+                sql += "DELETE FROM Requests "
+
+                sql += "WHERE acquire < '" & CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime - (minimalMantainRequestBlock * 60 * 60 * 24 * 1000) & "'"
+                sql += "  AND block <> ''"
+
+                connectionDB = New SQLiteConnection(String.Format(_DBLedgerConnectionString, _DBFileName))
+
+                connectionDB.Open()
+
+                logIstance.track("DAORequest.deleteOldRequest", "Connection Open")
+
+                sqlCommand = New SQLiteCommand(connectionDB)
+
+                sqlCommand.CommandText = sql
+
+                sqlCommand.ExecuteNonQuery()
+
+                logIstance.track("DAORequest.deleteOldRequest", "Command executed")
+
+                connectionDB.Close()
+
+                logIstance.track("DAORequest.deleteOldRequest", "Connection Closed")
+
+                Return True
+            Catch ex As Exception
+                logIstance.track("DAORequest.deleteOldRequest", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get an old block
+        ''' </summary>
+        ''' <param name="minimalMaintenanceRequestBlock "></param>
+        ''' <returns></returns>
+        Public Function getOldBlock(ByVal minimalMaintenanceRequestBlock As Double) As List(Of String)
+            Try
+                Dim sql As String = ""
+                Dim connectionDB As SQLiteConnection
+                Dim sqlCommand As SQLiteCommand
+                Dim sqlDataReader As SQLiteDataReader
+                Dim result As New List(Of String)
+
+                logIstance.track("DAORequest.getOldBlock", "Begin")
+
+                sql += "SELECT DISTINCT block "
+                sql += "FROM Requests "
+
+                sql += "WHERE acquire < '" & CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime - (minimalMaintenanceRequestBlock * 60 * 60 * 24 * 1000) & "'"
+                sql += "  AND block <> ''"
+
+                connectionDB = New SQLiteConnection(String.Format(_DBLedgerConnectionString, _DBFileName))
+
+                connectionDB.Open()
+
+                logIstance.track("DAORequest.getOldBlock", "Connection Open")
+
+                sqlCommand = New SQLiteCommand(connectionDB)
+
+                sqlCommand.CommandText = sql
+
+                sqlDataReader = sqlCommand.ExecuteReader()
+
+                If sqlDataReader.HasRows() Then
+                    Do While sqlDataReader.Read()
+                        result.Add(sqlDataReader("block"))
+                    Loop
+                End If
+
+                logIstance.track("DAORequest.getOldBlock", "Command executed")
+
+                connectionDB.Close()
+
+                logIstance.track("DAORequest.getOldBlock", "End")
+
+                Return result
+            Catch ex As Exception
+                logIstance.track("DAORequest.getOldBlock", ex.Message, "fatal")
+
+                Return New List(Of String)
+            Finally
+                logIstance.track("DAORequest.getOldBlock", "Complete")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get an old file
+        ''' </summary>
+        ''' <param name="minimalMaintenanceRequestBlock"></param>
+        ''' <returns></returns>
+        Public Function getOldFile(ByVal minimalMaintenanceRequestBlock As Double, ByVal state As Integer) As List(Of String)
+            Try
+                Dim sql As String = ""
+                Dim connectionDB As SQLiteConnection
+                Dim sqlCommand As SQLiteCommand
+                Dim sqlDataReader As SQLiteDataReader
+                Dim result As New List(Of String)
+
+                logIstance.track("DAORequest.getOldFile", "Begin")
+
+                sql += "SELECT hash "
+                sql += "FROM Requests "
+
+                sql += "WHERE acquire < '" & CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime - (minimalMaintenanceRequestBlock * 60 * 60 * 24 * 1000) & "'"
+                sql += " AND state = " & state
+
+                connectionDB = New SQLiteConnection(String.Format(_DBLedgerConnectionString, _DBFileName))
+
+                connectionDB.Open()
+
+                logIstance.track("DAORequest.getOldFile", "Connection Open")
+
+                sqlCommand = New SQLiteCommand(connectionDB)
+
+                sqlCommand.CommandText = sql
+
+                sqlDataReader = sqlCommand.ExecuteReader()
+
+                If sqlDataReader.HasRows() Then
+                    Do While sqlDataReader.Read()
+                        result.Add(sqlDataReader("hash"))
+                    Loop
+                End If
+
+                logIstance.track("DAORequest.getOldFile", "Command executed")
+
+                connectionDB.Close()
+
+                logIstance.track("DAORequest.getOldFile", "End")
+
+                Return result
+            Catch ex As Exception
+                logIstance.track("DAORequest.getOldFile", ex.Message, "fatal")
+
+                Return New List(Of String)
+            Finally
+                logIstance.track("DAORequest.getOldFile", "Complete")
             End Try
         End Function
 

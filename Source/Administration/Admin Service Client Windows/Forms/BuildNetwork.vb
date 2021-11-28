@@ -51,26 +51,38 @@ Public Class BuildNetwork
 
                 .whitePaper.content = whitePaperText.Text
                 .yellowPaper.content = yellowPaperText.Text
-                With .primaryAsset
+
+                With .primaryAsset.assetInformation
                     .name = assetNameText.Text
                     .shortName = shortNameText.Text
                     .symbol = symbolText.Text
                     .digit = digitText.Value
                     .nameUnit = nameUnitText.Text
-                    .qtaTotal = quantityTotalText.text
-                    .stakeable = stakableCheck.Checked
-                    .prestake = prestakeCheck.Checked
-                    .qtaInitialStake = initialStakeQuantityText.text
+                    .type = CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel.AssetTypeEnum.coin
+                    .netWorkReferement = ""
+                End With
+                With .primaryAsset.assetPolicyInformation
+                    .unlimited = unLimitedCheck.Checked
                     .burnable = burnableCheck.Checked
+                    .qtaTotal = quantityTotalText.Text
+                    .stakeable = stakableCheck.Checked
+                    .preStake = prestakeCheck.Checked
+                    .qtaInitialStake = initialStakeQuantityText.Text
                 End With
                 With .transactionChainParameter
                     .blockSizeFrequency = blockSizeFrequencyText.Text
                     .numberBlockInVolume = numberBlockInVolumeText.Text
-                    .initialMaxComputeTransaction = initialMaxComputeText.Text
-                    .initialCoinReleasePerBlock = initialCoinReleaseBlockText.text
+                    .maxTimeOutNotRespondNode = maxTimeOutResponseNodeText.Text
+                    .initialCoinReleasePerBlock = initialCoinReleaseBlockText.Text
                     .ruleFutureRelease = ruleFutureReleaseText.Text
                     .reviewReleaseAlgorithm = reviewReleaseAlgorithmText.Text
                     .consensusMethod = consensusMethodText.Text
+                    .minimalMaintainRequest = minimalMaintainRequestText.Text
+                    .minimalMaintainConsensus = minimalMaintainConsensusText.Text
+                    .minimalMaintainBulletines = minimalMaintainBulletinesText.Text
+                    .minimalMaintainRejected = minimalMaintainRejectedText.Text
+                    .minimalMaintainTrashed = minimalMaintainTrashedText.Text
+                    .minimalMaintainInternalRegistry = minimalMaintainInternalText.Text
                 End With
 
                 .refundPlan.items.Clear()
@@ -106,17 +118,20 @@ Public Class BuildNetwork
                 adminWalletAddress.value = .publicAddressGenesis
                 whitePaperText.Text = .whitePaper.content
                 yellowPaperText.Text = .yellowPaper.content
-                With .primaryAsset
+                With .primaryAsset.assetInformation
                     assetNameText.Text = .name
                     shortNameText.Text = .shortName
                     symbolText.Text = .symbol
-                    digitText.text = .digit
+                    digitText.Text = .digit
                     nameUnitText.Text = .nameUnit
-                    quantityTotalText.text = .qtaTotal
-                    stakableCheck.Checked = .stakeable
-                    prestakeCheck.Checked = .prestake
-                    initialStakeQuantityText.text = .qtaInitialStake
+                End With
+                With .primaryAsset.assetPolicyInformation
+                    unLimitedCheck.Checked = .unlimited
                     burnableCheck.Checked = .burnable
+                    quantityTotalText.Text = .qtaTotal
+                    stakableCheck.Checked = .stakeable
+                    prestakeCheck.Checked = .preStake
+                    initialStakeQuantityText.Text = .qtaInitialStake
                 End With
                 With .transactionChainParameter
                     initialCoinReleaseBlockText.text = .initialCoinReleasePerBlock

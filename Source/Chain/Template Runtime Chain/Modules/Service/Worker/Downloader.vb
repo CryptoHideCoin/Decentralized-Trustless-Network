@@ -275,7 +275,7 @@ Namespace AreaWorker
                     End If
                 End If
                 If proceed Then
-                    proceed = (remote.data.primaryAsset.name.Length > 0)
+                    proceed = (remote.data.content.assetInformation.name.Length > 0)
                 End If
                 If proceed Then
                     If AreaProtocol.A0x3.Manager.saveTemporallyRequest(remote.data) Then

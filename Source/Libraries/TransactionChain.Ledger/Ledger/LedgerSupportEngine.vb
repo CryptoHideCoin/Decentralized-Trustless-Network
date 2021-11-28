@@ -146,11 +146,15 @@ Namespace AreaLedger
         ''' This method provide to create a zip file
         ''' </summary>
         ''' <returns></returns>
-        Private Function createZipFile() As Boolean
+        Private Function createZipFile(Optional ByVal completeFileName As String = "") As Boolean
             Try
                 log.track("LedgerSupportEngine.createZipFile", "Begin")
 
-                Dim completeZipFileName As IO.FileStream = System.IO.File.Create(IO.Path.Combine(mainPath.path, "Block.Compact"))
+                If (completeFileName.Length = 0) Then
+                    completeFileName = IO.Path.Combine(mainPath.path, "Block.Compact")
+                End If
+
+                Dim completeZipFileName As IO.FileStream = System.IO.File.Create(completeFileName)
                 Dim zipManager As New ZipArchive(completeZipFileName, ZipArchiveMode.Update)
                 Dim items As New List(Of FileZipArchive)
 
@@ -173,6 +177,35 @@ Namespace AreaLedger
                 Return True
             Catch ex As Exception
                 log.track("LedgerSupportEngine.createZipFile", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to delete file request
+        ''' </summary>
+        ''' <param name="mainPath"></param>
+        ''' <param name="block"></param>
+        ''' <returns></returns>
+        Private Function deleteFiles(ByVal mainPath As String, ByVal intermediateFolder As String, ByVal block As String) As Boolean
+            Try
+                Dim directoryPath As String
+
+                log.track("LedgerSupportEngine.deleteFiles", "Begin")
+
+                directoryPath = System.IO.Path.Combine(mainPath, block)
+                directoryPath = System.IO.Path.Combine(directoryPath, intermediateFolder)
+
+                For Each filepath As String In IO.Directory.GetFiles(directoryPath)
+                    System.IO.File.Delete(filepath)
+                Next
+
+                log.track("LedgerSupportEngine.deleteFiles", "Complete")
+
+                Return True
+            Catch ex As Exception
+                log.track("LedgerSupportEngine.deleteFiles", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -201,6 +234,96 @@ Namespace AreaLedger
                 Return proceed
             Catch ex As Exception
                 log.track("LedgerSupportEngine.init", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to remove an old request
+        ''' </summary>
+        ''' <param name="mainPath"></param>
+        ''' <param name="blockList"></param>
+        ''' <returns></returns>
+        Public Function removeOldFiles(ByVal mainPath As String, ByVal intermediatePath As String, ByRef blockList As List(Of String)) As Boolean
+            Try
+                Dim proceed As Boolean = True
+
+                log.track("LedgerSupportEngine.removeOldFiles", "Begin")
+
+                If proceed Then
+                    For Each block In blockList
+                        If Not deleteFiles(mainPath, intermediatePath, block) Then
+                            Return False
+                        End If
+                    Next
+                End If
+
+                log.track("LedgerSupportEngine.removeOldFiles", "Complete")
+
+                Return proceed
+            Catch ex As Exception
+                log.track("LedgerSupportEngine.removeOldFiles", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to delete a list of file
+        ''' </summary>
+        ''' <param name="requestPath"></param>
+        ''' <param name="fileList"></param>
+        ''' <returns></returns>
+        Public Function removeOldTemporallyRequest(ByVal requestPath As String, ByRef fileList As List(Of String)) As Boolean
+            Try
+                Dim completeFileName As String
+                log.track("LedgerSupportEngine.removeOldTemporallyRequest", "Begin")
+
+                For Each singleFile In fileList
+                    completeFileName = IO.Path.Combine(requestPath, singleFile)
+
+                    If System.IO.File.Exists(completeFileName) Then
+                        System.IO.File.Delete(completeFileName)
+                    End If
+                Next
+
+                log.track("LedgerSupportEngine.removeOldTemporallyRequest", "Complete")
+
+                Return True
+            Catch ex As Exception
+                log.track("LedgerSupportEngine.removeOldTemporallyRequest", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to finalize all single block in a list
+        ''' </summary>
+        ''' <param name="ledgerPath"></param>
+        ''' <param name="blockList"></param>
+        ''' <returns></returns>
+        Public Function finalizeSingleBlock(ByVal ledgerPath As String, ByRef blockList As List(Of String)) As Boolean
+            Try
+                Dim completeFile As String
+
+                For Each singleBlock In blockList
+                    completeFile = System.IO.Path.Combine(ledgerPath, singleBlock)
+                    completeFile = System.IO.Path.Combine(completeFile, "Block.Compact")
+
+                    If System.IO.File.Exists(completeFile) Then
+                        System.IO.File.Delete(completeFile)
+                    End If
+
+                    If Not createZipFile(completeFile) Then
+                        Return False
+                    End If
+                Next
+
+                Return True
+            Catch ex As Exception
+                log.track("LedgerSupportEngine.finalizeSingleBlock", ex.Message, "fatal")
 
                 Return False
             End Try

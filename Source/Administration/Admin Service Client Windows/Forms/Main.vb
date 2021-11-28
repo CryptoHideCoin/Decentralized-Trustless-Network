@@ -677,7 +677,7 @@ Public Class Main
 
                 Dim rt As DateTime = Now
 
-                data.primaryAsset.codeSymbol()
+                data.primaryAsset.assetInformation.codeSymbol()
 
                 remote.data = data
 

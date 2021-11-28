@@ -26,6 +26,8 @@ Partial Class BuildNetwork
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(BuildNetwork))
         Me.mainTabControl = New System.Windows.Forms.TabControl()
         Me.generalTab = New System.Windows.Forms.TabPage()
+        Me.specialEnvironmentText = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.adminWalletAddress = New CHCSupportUIControls.WalletAddress()
         Me.networkNameText = New System.Windows.Forms.TextBox()
         Me.networkNameLabel = New System.Windows.Forms.Label()
@@ -34,6 +36,12 @@ Partial Class BuildNetwork
         Me.yellowPaperTab = New System.Windows.Forms.TabPage()
         Me.yellowPaperText = New System.Windows.Forms.TextBox()
         Me.primaryAssetTab = New System.Windows.Forms.TabPage()
+        Me.unLimitedCheck = New System.Windows.Forms.CheckBox()
+        Me.policyAssetLabel = New System.Windows.Forms.Label()
+        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.typeAssetLabel = New System.Windows.Forms.Label()
+        Me.generalInformationAssetLabel = New System.Windows.Forms.Label()
         Me.initialStakeQuantityText = New CHCSupportUIControls.NumericText()
         Me.quantityTotalText = New CHCSupportUIControls.NumericText()
         Me.digitText = New CHCSupportUIControls.NumericText()
@@ -52,6 +60,18 @@ Partial Class BuildNetwork
         Me.assetNameText = New System.Windows.Forms.TextBox()
         Me.assetNameLabel = New System.Windows.Forms.Label()
         Me.transactionChainParameterTab = New System.Windows.Forms.TabPage()
+        Me.minimalMaintainInternalText = New System.Windows.Forms.TextBox()
+        Me.minimalMaintainInternalRegistryLabel = New System.Windows.Forms.Label()
+        Me.minimalMaintainTrashedText = New System.Windows.Forms.TextBox()
+        Me.minimalMaintainTrashedLabel = New System.Windows.Forms.Label()
+        Me.minimalMaintainRejectedText = New System.Windows.Forms.TextBox()
+        Me.minimalMaintainRejectedLabel = New System.Windows.Forms.Label()
+        Me.minimalMaintainBulletinesText = New System.Windows.Forms.TextBox()
+        Me.minimalMaintainBulletinesLabel = New System.Windows.Forms.Label()
+        Me.minimalMaintainConsensusText = New System.Windows.Forms.TextBox()
+        Me.minimalMaintainConsensusLabel = New System.Windows.Forms.Label()
+        Me.minimalMaintainRequestText = New System.Windows.Forms.TextBox()
+        Me.minimalMaintainRequestLabel = New System.Windows.Forms.Label()
         Me.initialCoinReleaseBlockText = New CHCSupportUIControls.NumericText()
         Me.reviewReleaseAlgorithmText = New System.Windows.Forms.TextBox()
         Me.reviewReleaseAlgorithmLabel = New System.Windows.Forms.Label()
@@ -61,8 +81,8 @@ Partial Class BuildNetwork
         Me.ruleFutureReleaseLabel = New System.Windows.Forms.Label()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.initialCoinReleaseBlockLabel = New System.Windows.Forms.Label()
-        Me.initialMaxComputeText = New System.Windows.Forms.TextBox()
-        Me.initialMaxComputeLabel = New System.Windows.Forms.Label()
+        Me.maxTimeOutResponseNodeText = New System.Windows.Forms.TextBox()
+        Me.maxTimeOutNotRespondeNodeLabel = New System.Windows.Forms.Label()
         Me.numberBlockInVolumeText = New System.Windows.Forms.TextBox()
         Me.numberBlockInVolumeLabel = New System.Windows.Forms.Label()
         Me.blockSizeFrequencyText = New System.Windows.Forms.TextBox()
@@ -83,8 +103,6 @@ Partial Class BuildNetwork
         Me.cancelButton = New System.Windows.Forms.Button()
         Me.loadButton = New System.Windows.Forms.Button()
         Me.saveButton = New System.Windows.Forms.Button()
-        Me.specialEnvironmentText = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.mainTabControl.SuspendLayout()
         Me.generalTab.SuspendLayout()
         Me.whitePaperTab.SuspendLayout()
@@ -127,6 +145,26 @@ Partial Class BuildNetwork
         Me.generalTab.TabIndex = 0
         Me.generalTab.Text = "General"
         Me.generalTab.UseVisualStyleBackColor = True
+        '
+        'specialEnvironmentText
+        '
+        Me.specialEnvironmentText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.specialEnvironmentText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.specialEnvironmentText.Location = New System.Drawing.Point(145, 49)
+        Me.specialEnvironmentText.Name = "specialEnvironmentText"
+        Me.specialEnvironmentText.Size = New System.Drawing.Size(470, 21)
+        Me.specialEnvironmentText.TabIndex = 30
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(15, 52)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(124, 13)
+        Me.Label1.TabIndex = 31
+        Me.Label1.Text = "Special Environment"
         '
         'adminWalletAddress
         '
@@ -200,6 +238,12 @@ Partial Class BuildNetwork
         '
         'primaryAssetTab
         '
+        Me.primaryAssetTab.Controls.Add(Me.unLimitedCheck)
+        Me.primaryAssetTab.Controls.Add(Me.policyAssetLabel)
+        Me.primaryAssetTab.Controls.Add(Me.TextBox2)
+        Me.primaryAssetTab.Controls.Add(Me.TextBox1)
+        Me.primaryAssetTab.Controls.Add(Me.typeAssetLabel)
+        Me.primaryAssetTab.Controls.Add(Me.generalInformationAssetLabel)
         Me.primaryAssetTab.Controls.Add(Me.initialStakeQuantityText)
         Me.primaryAssetTab.Controls.Add(Me.quantityTotalText)
         Me.primaryAssetTab.Controls.Add(Me.digitText)
@@ -221,40 +265,107 @@ Partial Class BuildNetwork
         Me.primaryAssetTab.Name = "primaryAssetTab"
         Me.primaryAssetTab.Size = New System.Drawing.Size(712, 352)
         Me.primaryAssetTab.TabIndex = 3
-        Me.primaryAssetTab.Text = "Primary Asset"
+        Me.primaryAssetTab.Text = "Asset"
         Me.primaryAssetTab.UseVisualStyleBackColor = True
+        '
+        'unLimitedCheck
+        '
+        Me.unLimitedCheck.AutoSize = True
+        Me.unLimitedCheck.Location = New System.Drawing.Point(101, 200)
+        Me.unLimitedCheck.Name = "unLimitedCheck"
+        Me.unLimitedCheck.Size = New System.Drawing.Size(79, 17)
+        Me.unLimitedCheck.TabIndex = 8
+        Me.unLimitedCheck.Text = "Unlimited"
+        Me.unLimitedCheck.UseVisualStyleBackColor = True
+        '
+        'policyAssetLabel
+        '
+        Me.policyAssetLabel.BackColor = System.Drawing.Color.CadetBlue
+        Me.policyAssetLabel.Font = New System.Drawing.Font("Verdana", 8.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.policyAssetLabel.ForeColor = System.Drawing.Color.SandyBrown
+        Me.policyAssetLabel.Location = New System.Drawing.Point(25, 168)
+        Me.policyAssetLabel.Name = "policyAssetLabel"
+        Me.policyAssetLabel.Size = New System.Drawing.Size(631, 17)
+        Me.policyAssetLabel.TabIndex = 51
+        Me.policyAssetLabel.Text = "Policy Asset Information"
+        '
+        'TextBox2
+        '
+        Me.TextBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox2.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox2.Location = New System.Drawing.Point(101, 126)
+        Me.TextBox2.Name = "TextBox2"
+        Me.TextBox2.Size = New System.Drawing.Size(555, 21)
+        Me.TextBox2.TabIndex = 7
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TextBox1.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox1.Location = New System.Drawing.Point(101, 99)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.ReadOnly = True
+        Me.TextBox1.Size = New System.Drawing.Size(142, 21)
+        Me.TextBox1.TabIndex = 5
+        Me.TextBox1.Text = "Coin"
+        '
+        'typeAssetLabel
+        '
+        Me.typeAssetLabel.AutoSize = True
+        Me.typeAssetLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.typeAssetLabel.Location = New System.Drawing.Point(62, 102)
+        Me.typeAssetLabel.Name = "typeAssetLabel"
+        Me.typeAssetLabel.Size = New System.Drawing.Size(34, 13)
+        Me.typeAssetLabel.TabIndex = 49
+        Me.typeAssetLabel.Text = "Type"
+        '
+        'generalInformationAssetLabel
+        '
+        Me.generalInformationAssetLabel.BackColor = System.Drawing.Color.CadetBlue
+        Me.generalInformationAssetLabel.Font = New System.Drawing.Font("Verdana", 8.25!, CType((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.generalInformationAssetLabel.ForeColor = System.Drawing.Color.SandyBrown
+        Me.generalInformationAssetLabel.Location = New System.Drawing.Point(25, 14)
+        Me.generalInformationAssetLabel.Name = "generalInformationAssetLabel"
+        Me.generalInformationAssetLabel.Size = New System.Drawing.Size(631, 17)
+        Me.generalInformationAssetLabel.TabIndex = 47
+        Me.generalInformationAssetLabel.Text = "General Information"
         '
         'initialStakeQuantityText
         '
         Me.initialStakeQuantityText.currentFormat = "0,000"
         Me.initialStakeQuantityText.Enabled = False
-        Me.initialStakeQuantityText.Location = New System.Drawing.Point(328, 126)
+        Me.initialStakeQuantityText.Location = New System.Drawing.Point(328, 279)
         Me.initialStakeQuantityText.locationCode = "it-IT"
         Me.initialStakeQuantityText.Name = "initialStakeQuantityText"
         Me.initialStakeQuantityText.Size = New System.Drawing.Size(100, 21)
-        Me.initialStakeQuantityText.TabIndex = 8
+        Me.initialStakeQuantityText.TabIndex = 13
+        Me.initialStakeQuantityText.Text = "0.000"
         Me.initialStakeQuantityText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.initialStakeQuantityText.useDecimal = False
         '
         'quantityTotalText
         '
         Me.quantityTotalText.currentFormat = "0,000"
-        Me.quantityTotalText.Location = New System.Drawing.Point(101, 73)
+        Me.quantityTotalText.Location = New System.Drawing.Point(101, 223)
         Me.quantityTotalText.locationCode = "it-IT"
         Me.quantityTotalText.Name = "quantityTotalText"
         Me.quantityTotalText.Size = New System.Drawing.Size(142, 21)
-        Me.quantityTotalText.TabIndex = 5
+        Me.quantityTotalText.TabIndex = 10
+        Me.quantityTotalText.Text = "0.000"
         Me.quantityTotalText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.quantityTotalText.useDecimal = False
         '
         'digitText
         '
         Me.digitText.currentFormat = ""
-        Me.digitText.Location = New System.Drawing.Point(397, 44)
+        Me.digitText.Location = New System.Drawing.Point(390, 72)
         Me.digitText.locationCode = "it-IT"
         Me.digitText.Name = "digitText"
         Me.digitText.Size = New System.Drawing.Size(21, 21)
         Me.digitText.TabIndex = 3
+        Me.digitText.Text = "0"
         Me.digitText.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.digitText.useDecimal = False
         '
@@ -263,7 +374,7 @@ Partial Class BuildNetwork
         Me.initialStakeQuantityLabel.AutoSize = True
         Me.initialStakeQuantityLabel.Enabled = False
         Me.initialStakeQuantityLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.initialStakeQuantityLabel.Location = New System.Drawing.Point(194, 130)
+        Me.initialStakeQuantityLabel.Location = New System.Drawing.Point(194, 283)
         Me.initialStakeQuantityLabel.Name = "initialStakeQuantityLabel"
         Me.initialStakeQuantityLabel.Size = New System.Drawing.Size(128, 13)
         Me.initialStakeQuantityLabel.TabIndex = 46
@@ -274,7 +385,7 @@ Partial Class BuildNetwork
         Me.nameUnitText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.nameUnitText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.nameUnitText.Location = New System.Drawing.Point(514, 44)
+        Me.nameUnitText.Location = New System.Drawing.Point(514, 72)
         Me.nameUnitText.Name = "nameUnitText"
         Me.nameUnitText.Size = New System.Drawing.Size(142, 21)
         Me.nameUnitText.TabIndex = 4
@@ -284,7 +395,7 @@ Partial Class BuildNetwork
         '
         Me.nameUnitLabel.AutoSize = True
         Me.nameUnitLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.nameUnitLabel.Location = New System.Drawing.Point(435, 47)
+        Me.nameUnitLabel.Location = New System.Drawing.Point(439, 75)
         Me.nameUnitLabel.Name = "nameUnitLabel"
         Me.nameUnitLabel.Size = New System.Drawing.Size(65, 13)
         Me.nameUnitLabel.TabIndex = 44
@@ -293,7 +404,7 @@ Partial Class BuildNetwork
         'burnableCheck
         '
         Me.burnableCheck.AutoSize = True
-        Me.burnableCheck.Location = New System.Drawing.Point(101, 151)
+        Me.burnableCheck.Location = New System.Drawing.Point(272, 200)
         Me.burnableCheck.Name = "burnableCheck"
         Me.burnableCheck.Size = New System.Drawing.Size(77, 17)
         Me.burnableCheck.TabIndex = 9
@@ -303,20 +414,20 @@ Partial Class BuildNetwork
         'prestakeCheck
         '
         Me.prestakeCheck.AutoSize = True
-        Me.prestakeCheck.Location = New System.Drawing.Point(101, 128)
+        Me.prestakeCheck.Location = New System.Drawing.Point(101, 281)
         Me.prestakeCheck.Name = "prestakeCheck"
         Me.prestakeCheck.Size = New System.Drawing.Size(76, 17)
-        Me.prestakeCheck.TabIndex = 7
+        Me.prestakeCheck.TabIndex = 12
         Me.prestakeCheck.Text = "Prestake"
         Me.prestakeCheck.UseVisualStyleBackColor = True
         '
         'stakableCheck
         '
         Me.stakableCheck.AutoSize = True
-        Me.stakableCheck.Location = New System.Drawing.Point(101, 105)
+        Me.stakableCheck.Location = New System.Drawing.Point(101, 255)
         Me.stakableCheck.Name = "stakableCheck"
         Me.stakableCheck.Size = New System.Drawing.Size(76, 17)
-        Me.stakableCheck.TabIndex = 6
+        Me.stakableCheck.TabIndex = 11
         Me.stakableCheck.Text = "Stakable"
         Me.stakableCheck.UseVisualStyleBackColor = True
         '
@@ -324,7 +435,7 @@ Partial Class BuildNetwork
         '
         Me.digitLabel.AutoSize = True
         Me.digitLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.digitLabel.Location = New System.Drawing.Point(358, 47)
+        Me.digitLabel.Location = New System.Drawing.Point(353, 75)
         Me.digitLabel.Name = "digitLabel"
         Me.digitLabel.Size = New System.Drawing.Size(33, 13)
         Me.digitLabel.TabIndex = 39
@@ -334,7 +445,7 @@ Partial Class BuildNetwork
         '
         Me.quantityTotalLabel.AutoSize = True
         Me.quantityTotalLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.quantityTotalLabel.Location = New System.Drawing.Point(10, 76)
+        Me.quantityTotalLabel.Location = New System.Drawing.Point(10, 226)
         Me.quantityTotalLabel.Name = "quantityTotalLabel"
         Me.quantityTotalLabel.Size = New System.Drawing.Size(86, 13)
         Me.quantityTotalLabel.TabIndex = 37
@@ -345,7 +456,7 @@ Partial Class BuildNetwork
         Me.symbolText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.symbolText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.symbolText.Location = New System.Drawing.Point(316, 44)
+        Me.symbolText.Location = New System.Drawing.Point(310, 72)
         Me.symbolText.MaxLength = 1
         Me.symbolText.Name = "symbolText"
         Me.symbolText.Size = New System.Drawing.Size(21, 21)
@@ -357,7 +468,7 @@ Partial Class BuildNetwork
         '
         Me.symbolLabel.AutoSize = True
         Me.symbolLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.symbolLabel.Location = New System.Drawing.Point(260, 47)
+        Me.symbolLabel.Location = New System.Drawing.Point(255, 75)
         Me.symbolLabel.Name = "symbolLabel"
         Me.symbolLabel.Size = New System.Drawing.Size(50, 13)
         Me.symbolLabel.TabIndex = 35
@@ -368,7 +479,7 @@ Partial Class BuildNetwork
         Me.shortNameText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.shortNameText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.shortNameText.Location = New System.Drawing.Point(101, 44)
+        Me.shortNameText.Location = New System.Drawing.Point(101, 72)
         Me.shortNameText.Name = "shortNameText"
         Me.shortNameText.Size = New System.Drawing.Size(142, 21)
         Me.shortNameText.TabIndex = 1
@@ -378,7 +489,7 @@ Partial Class BuildNetwork
         '
         Me.shortNameLabel.AutoSize = True
         Me.shortNameLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.shortNameLabel.Location = New System.Drawing.Point(22, 47)
+        Me.shortNameLabel.Location = New System.Drawing.Point(22, 75)
         Me.shortNameLabel.Name = "shortNameLabel"
         Me.shortNameLabel.Size = New System.Drawing.Size(74, 13)
         Me.shortNameLabel.TabIndex = 33
@@ -389,7 +500,7 @@ Partial Class BuildNetwork
         Me.assetNameText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.assetNameText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.assetNameText.Location = New System.Drawing.Point(101, 14)
+        Me.assetNameText.Location = New System.Drawing.Point(101, 45)
         Me.assetNameText.Name = "assetNameText"
         Me.assetNameText.Size = New System.Drawing.Size(555, 21)
         Me.assetNameText.TabIndex = 0
@@ -399,7 +510,7 @@ Partial Class BuildNetwork
         '
         Me.assetNameLabel.AutoSize = True
         Me.assetNameLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.assetNameLabel.Location = New System.Drawing.Point(22, 17)
+        Me.assetNameLabel.Location = New System.Drawing.Point(22, 48)
         Me.assetNameLabel.Name = "assetNameLabel"
         Me.assetNameLabel.Size = New System.Drawing.Size(74, 13)
         Me.assetNameLabel.TabIndex = 31
@@ -407,6 +518,18 @@ Partial Class BuildNetwork
         '
         'transactionChainParameterTab
         '
+        Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainInternalText)
+        Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainInternalRegistryLabel)
+        Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainTrashedText)
+        Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainTrashedLabel)
+        Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainRejectedText)
+        Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainRejectedLabel)
+        Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainBulletinesText)
+        Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainBulletinesLabel)
+        Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainConsensusText)
+        Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainConsensusLabel)
+        Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainRequestText)
+        Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainRequestLabel)
         Me.transactionChainParameterTab.Controls.Add(Me.initialCoinReleaseBlockText)
         Me.transactionChainParameterTab.Controls.Add(Me.reviewReleaseAlgorithmText)
         Me.transactionChainParameterTab.Controls.Add(Me.reviewReleaseAlgorithmLabel)
@@ -416,8 +539,8 @@ Partial Class BuildNetwork
         Me.transactionChainParameterTab.Controls.Add(Me.ruleFutureReleaseLabel)
         Me.transactionChainParameterTab.Controls.Add(Me.Label12)
         Me.transactionChainParameterTab.Controls.Add(Me.initialCoinReleaseBlockLabel)
-        Me.transactionChainParameterTab.Controls.Add(Me.initialMaxComputeText)
-        Me.transactionChainParameterTab.Controls.Add(Me.initialMaxComputeLabel)
+        Me.transactionChainParameterTab.Controls.Add(Me.maxTimeOutResponseNodeText)
+        Me.transactionChainParameterTab.Controls.Add(Me.maxTimeOutNotRespondeNodeLabel)
         Me.transactionChainParameterTab.Controls.Add(Me.numberBlockInVolumeText)
         Me.transactionChainParameterTab.Controls.Add(Me.numberBlockInVolumeLabel)
         Me.transactionChainParameterTab.Controls.Add(Me.blockSizeFrequencyText)
@@ -429,10 +552,148 @@ Partial Class BuildNetwork
         Me.transactionChainParameterTab.Text = "Transaction Chain"
         Me.transactionChainParameterTab.UseVisualStyleBackColor = True
         '
+        'minimalMaintainInternalText
+        '
+        Me.minimalMaintainInternalText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.minimalMaintainInternalText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.minimalMaintainInternalText.Location = New System.Drawing.Point(545, 293)
+        Me.minimalMaintainInternalText.Name = "minimalMaintainInternalText"
+        Me.minimalMaintainInternalText.ReadOnly = True
+        Me.minimalMaintainInternalText.Size = New System.Drawing.Size(119, 21)
+        Me.minimalMaintainInternalText.TabIndex = 57
+        Me.minimalMaintainInternalText.Text = "5 days"
+        '
+        'minimalMaintainInternalRegistryLabel
+        '
+        Me.minimalMaintainInternalRegistryLabel.AutoSize = True
+        Me.minimalMaintainInternalRegistryLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.minimalMaintainInternalRegistryLabel.ForeColor = System.Drawing.SystemColors.ControlDark
+        Me.minimalMaintainInternalRegistryLabel.Location = New System.Drawing.Point(389, 296)
+        Me.minimalMaintainInternalRegistryLabel.Name = "minimalMaintainInternalRegistryLabel"
+        Me.minimalMaintainInternalRegistryLabel.Size = New System.Drawing.Size(150, 13)
+        Me.minimalMaintainInternalRegistryLabel.TabIndex = 58
+        Me.minimalMaintainInternalRegistryLabel.Text = "Minimal Maintain Internal"
+        '
+        'minimalMaintainTrashedText
+        '
+        Me.minimalMaintainTrashedText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.minimalMaintainTrashedText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.minimalMaintainTrashedText.Location = New System.Drawing.Point(221, 293)
+        Me.minimalMaintainTrashedText.Name = "minimalMaintainTrashedText"
+        Me.minimalMaintainTrashedText.ReadOnly = True
+        Me.minimalMaintainTrashedText.Size = New System.Drawing.Size(134, 21)
+        Me.minimalMaintainTrashedText.TabIndex = 55
+        Me.minimalMaintainTrashedText.Text = "7 days"
+        '
+        'minimalMaintainTrashedLabel
+        '
+        Me.minimalMaintainTrashedLabel.AutoSize = True
+        Me.minimalMaintainTrashedLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.minimalMaintainTrashedLabel.ForeColor = System.Drawing.SystemColors.ControlDark
+        Me.minimalMaintainTrashedLabel.Location = New System.Drawing.Point(60, 296)
+        Me.minimalMaintainTrashedLabel.Name = "minimalMaintainTrashedLabel"
+        Me.minimalMaintainTrashedLabel.Size = New System.Drawing.Size(150, 13)
+        Me.minimalMaintainTrashedLabel.TabIndex = 56
+        Me.minimalMaintainTrashedLabel.Text = "Minimal Maintain Trashed"
+        '
+        'minimalMaintainRejectedText
+        '
+        Me.minimalMaintainRejectedText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.minimalMaintainRejectedText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.minimalMaintainRejectedText.Location = New System.Drawing.Point(545, 266)
+        Me.minimalMaintainRejectedText.Name = "minimalMaintainRejectedText"
+        Me.minimalMaintainRejectedText.ReadOnly = True
+        Me.minimalMaintainRejectedText.Size = New System.Drawing.Size(119, 21)
+        Me.minimalMaintainRejectedText.TabIndex = 53
+        Me.minimalMaintainRejectedText.Text = "14 days"
+        '
+        'minimalMaintainRejectedLabel
+        '
+        Me.minimalMaintainRejectedLabel.AutoSize = True
+        Me.minimalMaintainRejectedLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.minimalMaintainRejectedLabel.ForeColor = System.Drawing.SystemColors.ControlDark
+        Me.minimalMaintainRejectedLabel.Location = New System.Drawing.Point(384, 269)
+        Me.minimalMaintainRejectedLabel.Name = "minimalMaintainRejectedLabel"
+        Me.minimalMaintainRejectedLabel.Size = New System.Drawing.Size(155, 13)
+        Me.minimalMaintainRejectedLabel.TabIndex = 54
+        Me.minimalMaintainRejectedLabel.Text = "Minimal Maintain Rejected"
+        '
+        'minimalMaintainBulletinesText
+        '
+        Me.minimalMaintainBulletinesText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.minimalMaintainBulletinesText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.minimalMaintainBulletinesText.Location = New System.Drawing.Point(221, 266)
+        Me.minimalMaintainBulletinesText.Name = "minimalMaintainBulletinesText"
+        Me.minimalMaintainBulletinesText.ReadOnly = True
+        Me.minimalMaintainBulletinesText.Size = New System.Drawing.Size(134, 21)
+        Me.minimalMaintainBulletinesText.TabIndex = 51
+        Me.minimalMaintainBulletinesText.Text = "1 year"
+        '
+        'minimalMaintainBulletinesLabel
+        '
+        Me.minimalMaintainBulletinesLabel.AutoSize = True
+        Me.minimalMaintainBulletinesLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.minimalMaintainBulletinesLabel.ForeColor = System.Drawing.SystemColors.ControlDark
+        Me.minimalMaintainBulletinesLabel.Location = New System.Drawing.Point(55, 269)
+        Me.minimalMaintainBulletinesLabel.Name = "minimalMaintainBulletinesLabel"
+        Me.minimalMaintainBulletinesLabel.Size = New System.Drawing.Size(160, 13)
+        Me.minimalMaintainBulletinesLabel.TabIndex = 52
+        Me.minimalMaintainBulletinesLabel.Text = "Minimal Maintain Bulletines"
+        '
+        'minimalMaintainConsensusText
+        '
+        Me.minimalMaintainConsensusText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.minimalMaintainConsensusText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.minimalMaintainConsensusText.Location = New System.Drawing.Point(545, 239)
+        Me.minimalMaintainConsensusText.Name = "minimalMaintainConsensusText"
+        Me.minimalMaintainConsensusText.ReadOnly = True
+        Me.minimalMaintainConsensusText.Size = New System.Drawing.Size(119, 21)
+        Me.minimalMaintainConsensusText.TabIndex = 49
+        Me.minimalMaintainConsensusText.Text = "2 years"
+        '
+        'minimalMaintainConsensusLabel
+        '
+        Me.minimalMaintainConsensusLabel.AutoSize = True
+        Me.minimalMaintainConsensusLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.minimalMaintainConsensusLabel.ForeColor = System.Drawing.SystemColors.ControlDark
+        Me.minimalMaintainConsensusLabel.Location = New System.Drawing.Point(372, 242)
+        Me.minimalMaintainConsensusLabel.Name = "minimalMaintainConsensusLabel"
+        Me.minimalMaintainConsensusLabel.Size = New System.Drawing.Size(167, 13)
+        Me.minimalMaintainConsensusLabel.TabIndex = 50
+        Me.minimalMaintainConsensusLabel.Text = "Minimal Maintain Consensus"
+        '
+        'minimalMaintainRequestText
+        '
+        Me.minimalMaintainRequestText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.minimalMaintainRequestText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.minimalMaintainRequestText.Location = New System.Drawing.Point(221, 239)
+        Me.minimalMaintainRequestText.Name = "minimalMaintainRequestText"
+        Me.minimalMaintainRequestText.ReadOnly = True
+        Me.minimalMaintainRequestText.Size = New System.Drawing.Size(134, 21)
+        Me.minimalMaintainRequestText.TabIndex = 47
+        Me.minimalMaintainRequestText.Text = "3 years"
+        '
+        'minimalMaintainRequestLabel
+        '
+        Me.minimalMaintainRequestLabel.AutoSize = True
+        Me.minimalMaintainRequestLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.minimalMaintainRequestLabel.ForeColor = System.Drawing.SystemColors.ControlDark
+        Me.minimalMaintainRequestLabel.Location = New System.Drawing.Point(63, 242)
+        Me.minimalMaintainRequestLabel.Name = "minimalMaintainRequestLabel"
+        Me.minimalMaintainRequestLabel.Size = New System.Drawing.Size(151, 13)
+        Me.minimalMaintainRequestLabel.TabIndex = 48
+        Me.minimalMaintainRequestLabel.Text = "Minimal Maintain Request"
+        '
         'initialCoinReleaseBlockText
         '
         Me.initialCoinReleaseBlockText.currentFormat = "0,000"
-        Me.initialCoinReleaseBlockText.Location = New System.Drawing.Point(221, 95)
+        Me.initialCoinReleaseBlockText.Location = New System.Drawing.Point(539, 41)
         Me.initialCoinReleaseBlockText.locationCode = "it-IT"
         Me.initialCoinReleaseBlockText.Name = "initialCoinReleaseBlockText"
         Me.initialCoinReleaseBlockText.Size = New System.Drawing.Size(75, 21)
@@ -446,7 +707,7 @@ Partial Class BuildNetwork
         Me.reviewReleaseAlgorithmText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.reviewReleaseAlgorithmText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.reviewReleaseAlgorithmText.Location = New System.Drawing.Point(221, 293)
+        Me.reviewReleaseAlgorithmText.Location = New System.Drawing.Point(221, 212)
         Me.reviewReleaseAlgorithmText.Name = "reviewReleaseAlgorithmText"
         Me.reviewReleaseAlgorithmText.ReadOnly = True
         Me.reviewReleaseAlgorithmText.Size = New System.Drawing.Size(134, 21)
@@ -458,7 +719,7 @@ Partial Class BuildNetwork
         Me.reviewReleaseAlgorithmLabel.AutoSize = True
         Me.reviewReleaseAlgorithmLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.reviewReleaseAlgorithmLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.reviewReleaseAlgorithmLabel.Location = New System.Drawing.Point(63, 296)
+        Me.reviewReleaseAlgorithmLabel.Location = New System.Drawing.Point(63, 215)
         Me.reviewReleaseAlgorithmLabel.Name = "reviewReleaseAlgorithmLabel"
         Me.reviewReleaseAlgorithmLabel.Size = New System.Drawing.Size(152, 13)
         Me.reviewReleaseAlgorithmLabel.TabIndex = 46
@@ -469,19 +730,19 @@ Partial Class BuildNetwork
         Me.consensusMethodText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.consensusMethodText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.consensusMethodText.Location = New System.Drawing.Point(221, 320)
+        Me.consensusMethodText.Location = New System.Drawing.Point(501, 212)
         Me.consensusMethodText.Name = "consensusMethodText"
         Me.consensusMethodText.ReadOnly = True
-        Me.consensusMethodText.Size = New System.Drawing.Size(134, 21)
+        Me.consensusMethodText.Size = New System.Drawing.Size(163, 21)
         Me.consensusMethodText.TabIndex = 43
-        Me.consensusMethodText.Text = "Proof Of Stake"
+        Me.consensusMethodText.Text = "Proof Of Stake Declarative"
         '
         'consensusMethodLabel
         '
         Me.consensusMethodLabel.AutoSize = True
         Me.consensusMethodLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.consensusMethodLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.consensusMethodLabel.Location = New System.Drawing.Point(99, 323)
+        Me.consensusMethodLabel.Location = New System.Drawing.Point(379, 218)
         Me.consensusMethodLabel.Name = "consensusMethodLabel"
         Me.consensusMethodLabel.Size = New System.Drawing.Size(116, 13)
         Me.consensusMethodLabel.TabIndex = 44
@@ -492,17 +753,17 @@ Partial Class BuildNetwork
         Me.ruleFutureReleaseText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ruleFutureReleaseText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ruleFutureReleaseText.Location = New System.Drawing.Point(221, 122)
+        Me.ruleFutureReleaseText.Location = New System.Drawing.Point(221, 68)
         Me.ruleFutureReleaseText.Multiline = True
         Me.ruleFutureReleaseText.Name = "ruleFutureReleaseText"
-        Me.ruleFutureReleaseText.Size = New System.Drawing.Size(443, 165)
+        Me.ruleFutureReleaseText.Size = New System.Drawing.Size(443, 138)
         Me.ruleFutureReleaseText.TabIndex = 1
         '
         'ruleFutureReleaseLabel
         '
         Me.ruleFutureReleaseLabel.AutoSize = True
         Me.ruleFutureReleaseLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ruleFutureReleaseLabel.Location = New System.Drawing.Point(94, 125)
+        Me.ruleFutureReleaseLabel.Location = New System.Drawing.Point(94, 71)
         Me.ruleFutureReleaseLabel.Name = "ruleFutureReleaseLabel"
         Me.ruleFutureReleaseLabel.Size = New System.Drawing.Size(116, 13)
         Me.ruleFutureReleaseLabel.TabIndex = 42
@@ -512,7 +773,7 @@ Partial Class BuildNetwork
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(302, 98)
+        Me.Label12.Location = New System.Drawing.Point(620, 44)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(30, 13)
         Me.Label12.TabIndex = 40
@@ -522,41 +783,41 @@ Partial Class BuildNetwork
         '
         Me.initialCoinReleaseBlockLabel.AutoSize = True
         Me.initialCoinReleaseBlockLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.initialCoinReleaseBlockLabel.Location = New System.Drawing.Point(41, 98)
+        Me.initialCoinReleaseBlockLabel.Location = New System.Drawing.Point(359, 44)
         Me.initialCoinReleaseBlockLabel.Name = "initialCoinReleaseBlockLabel"
         Me.initialCoinReleaseBlockLabel.Size = New System.Drawing.Size(169, 13)
         Me.initialCoinReleaseBlockLabel.TabIndex = 39
         Me.initialCoinReleaseBlockLabel.Text = "Initial coin release per block"
         '
-        'initialMaxComputeText
+        'maxTimeOutResponseNodeText
         '
-        Me.initialMaxComputeText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.maxTimeOutResponseNodeText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.initialMaxComputeText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.initialMaxComputeText.Location = New System.Drawing.Point(221, 68)
-        Me.initialMaxComputeText.Name = "initialMaxComputeText"
-        Me.initialMaxComputeText.ReadOnly = True
-        Me.initialMaxComputeText.Size = New System.Drawing.Size(75, 21)
-        Me.initialMaxComputeText.TabIndex = 36
-        Me.initialMaxComputeText.Text = "60 sec."
+        Me.maxTimeOutResponseNodeText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.maxTimeOutResponseNodeText.Location = New System.Drawing.Point(221, 41)
+        Me.maxTimeOutResponseNodeText.Name = "maxTimeOutResponseNodeText"
+        Me.maxTimeOutResponseNodeText.ReadOnly = True
+        Me.maxTimeOutResponseNodeText.Size = New System.Drawing.Size(75, 21)
+        Me.maxTimeOutResponseNodeText.TabIndex = 36
+        Me.maxTimeOutResponseNodeText.Text = "120 sec."
         '
-        'initialMaxComputeLabel
+        'maxTimeOutNotRespondeNodeLabel
         '
-        Me.initialMaxComputeLabel.AutoSize = True
-        Me.initialMaxComputeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.initialMaxComputeLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.initialMaxComputeLabel.Location = New System.Drawing.Point(22, 71)
-        Me.initialMaxComputeLabel.Name = "initialMaxComputeLabel"
-        Me.initialMaxComputeLabel.Size = New System.Drawing.Size(188, 13)
-        Me.initialMaxComputeLabel.TabIndex = 37
-        Me.initialMaxComputeLabel.Text = "Initial max compute transaction"
+        Me.maxTimeOutNotRespondeNodeLabel.AutoSize = True
+        Me.maxTimeOutNotRespondeNodeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.maxTimeOutNotRespondeNodeLabel.ForeColor = System.Drawing.SystemColors.ControlDark
+        Me.maxTimeOutNotRespondeNodeLabel.Location = New System.Drawing.Point(22, 44)
+        Me.maxTimeOutNotRespondeNodeLabel.Name = "maxTimeOutNotRespondeNodeLabel"
+        Me.maxTimeOutNotRespondeNodeLabel.Size = New System.Drawing.Size(188, 13)
+        Me.maxTimeOutNotRespondeNodeLabel.TabIndex = 37
+        Me.maxTimeOutNotRespondeNodeLabel.Text = "Max timeout not responde node"
         '
         'numberBlockInVolumeText
         '
         Me.numberBlockInVolumeText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.numberBlockInVolumeText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.numberBlockInVolumeText.Location = New System.Drawing.Point(221, 41)
+        Me.numberBlockInVolumeText.Location = New System.Drawing.Point(539, 14)
         Me.numberBlockInVolumeText.Name = "numberBlockInVolumeText"
         Me.numberBlockInVolumeText.ReadOnly = True
         Me.numberBlockInVolumeText.Size = New System.Drawing.Size(75, 21)
@@ -568,7 +829,7 @@ Partial Class BuildNetwork
         Me.numberBlockInVolumeLabel.AutoSize = True
         Me.numberBlockInVolumeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.numberBlockInVolumeLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.numberBlockInVolumeLabel.Location = New System.Drawing.Point(61, 44)
+        Me.numberBlockInVolumeLabel.Location = New System.Drawing.Point(379, 17)
         Me.numberBlockInVolumeLabel.Name = "numberBlockInVolumeLabel"
         Me.numberBlockInVolumeLabel.Size = New System.Drawing.Size(149, 13)
         Me.numberBlockInVolumeLabel.TabIndex = 35
@@ -744,26 +1005,6 @@ Partial Class BuildNetwork
         Me.saveButton.Text = "Save"
         Me.saveButton.UseVisualStyleBackColor = True
         '
-        'specialEnvironmentText
-        '
-        Me.specialEnvironmentText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.specialEnvironmentText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.specialEnvironmentText.Location = New System.Drawing.Point(145, 49)
-        Me.specialEnvironmentText.Name = "specialEnvironmentText"
-        Me.specialEnvironmentText.Size = New System.Drawing.Size(470, 21)
-        Me.specialEnvironmentText.TabIndex = 30
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(15, 52)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(124, 13)
-        Me.Label1.TabIndex = 31
-        Me.Label1.Text = "Special Environment"
-        '
         'BuildNetwork
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -836,8 +1077,8 @@ Partial Class BuildNetwork
     Friend WithEvents ruleFutureReleaseLabel As Label
     Friend WithEvents Label12 As Label
     Friend WithEvents initialCoinReleaseBlockLabel As Label
-    Friend WithEvents initialMaxComputeText As TextBox
-    Friend WithEvents initialMaxComputeLabel As Label
+    Friend WithEvents maxTimeOutResponseNodeText As TextBox
+    Friend WithEvents maxTimeOutNotRespondeNodeLabel As Label
     Friend WithEvents numberBlockInVolumeText As TextBox
     Friend WithEvents numberBlockInVolumeLabel As Label
     Friend WithEvents blockSizeFrequencyText As TextBox
@@ -866,4 +1107,22 @@ Partial Class BuildNetwork
     Friend WithEvents initialCoinReleaseBlockText As CHCSupportUIControls.NumericText
     Friend WithEvents specialEnvironmentText As TextBox
     Friend WithEvents Label1 As Label
+    Friend WithEvents unLimitedCheck As CheckBox
+    Friend WithEvents policyAssetLabel As Label
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents typeAssetLabel As Label
+    Friend WithEvents generalInformationAssetLabel As Label
+    Friend WithEvents minimalMaintainInternalText As TextBox
+    Friend WithEvents minimalMaintainInternalRegistryLabel As Label
+    Friend WithEvents minimalMaintainTrashedText As TextBox
+    Friend WithEvents minimalMaintainTrashedLabel As Label
+    Friend WithEvents minimalMaintainRejectedText As TextBox
+    Friend WithEvents minimalMaintainRejectedLabel As Label
+    Friend WithEvents minimalMaintainBulletinesText As TextBox
+    Friend WithEvents minimalMaintainBulletinesLabel As Label
+    Friend WithEvents minimalMaintainConsensusText As TextBox
+    Friend WithEvents minimalMaintainConsensusLabel As Label
+    Friend WithEvents minimalMaintainRequestText As TextBox
+    Friend WithEvents minimalMaintainRequestLabel As Label
 End Class

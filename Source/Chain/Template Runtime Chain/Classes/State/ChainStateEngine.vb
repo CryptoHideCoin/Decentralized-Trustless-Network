@@ -28,7 +28,7 @@ Namespace AreaState
         Public Class NetworkAssetStructure
             Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
-            Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel
+            Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel
         End Class
 
         ''' <summary>

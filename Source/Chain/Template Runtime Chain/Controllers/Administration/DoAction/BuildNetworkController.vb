@@ -51,7 +51,7 @@ Namespace Controllers
                     End If
                 End If
                 If proceed Then
-                    value.primaryAsset.deCodeSymbol()
+                    value.primaryAsset.assetInformation.deCodeSymbol()
 
                     For Each item In AreaCommon.state.currentService.listAvailableCommand
                         If (item = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.buildNetwork) Then

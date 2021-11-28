@@ -22,7 +22,7 @@ Namespace AreaProtocol
         Public Class RequestModel : Implements IRequestModel
 
             Public Property common As New CommonRequest Implements IRequestModel.common
-            Public Property primaryAsset As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel
+            Public Property content As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel
 
             ''' <summary>
             ''' This method provide to convert into a string the element of the object
@@ -31,7 +31,7 @@ Namespace AreaProtocol
             Public Overrides Function toString() As String Implements IRequestModel.toString
                 Dim tmp As String = common.toString()
 
-                tmp += primaryAsset.ToString()
+                tmp += content.toString()
 
                 Return tmp
             End Function
@@ -65,12 +65,12 @@ Namespace AreaProtocol
                 End Set
             End Property
 
-            Public Property primaryAsset As CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel
+            Public Property content As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel
                 Get
-                    Return _Base.primaryAsset
+                    Return _Base.content
                 End Get
-                Set(value As CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel)
-                    _Base.primaryAsset = value
+                Set(value As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel)
+                    _Base.content = value
                 End Set
             End Property
 
@@ -116,7 +116,7 @@ Namespace AreaProtocol
                 Try
                     Dim proceed As Boolean = True
                     Dim contentPath As String = AreaCommon.paths.workData.state.contents
-                    Dim hashContent As String = HashSHA.generateSHA256(value.primaryAsset.toString())
+                    Dim hashContent As String = HashSHA.generateSHA256(value.content.toString())
 
                     AreaCommon.log.track("RecoveryState.fromRequest", "Begin")
 
@@ -124,12 +124,12 @@ Namespace AreaProtocol
                         proceed = AreaCommon.state.runtimeState.addNetworkProperty(AreaCommon.DAO.DBNetwork.MainPropertyID.assetData, "", transactionChainRecord, hashContent, False)
                     End If
                     If proceed Then
-                        AreaCommon.state.runtimeState.activeNetwork.primaryAssetData.value = value.primaryAsset
+                        AreaCommon.state.runtimeState.activeNetwork.primaryAssetData.value = value.content
                     End If
                     If proceed Then
                         contentPath = IO.Path.Combine(contentPath, hashContent & ".Content")
 
-                        Return IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel).save(contentPath, value.primaryAsset)
+                        Return IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel).save(contentPath, value.content)
                     End If
 
                     AreaCommon.log.track("RecoveryState.fromRequest", "Complete")
@@ -178,7 +178,10 @@ Namespace AreaProtocol
                         proceed = (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
                     End If
                     If proceed Then
-                        proceed = (request.primaryAsset.name.Length > 0)
+                        proceed = (request.content.assetInformation.name.Length > 0)
+                    End If
+                    If proceed Then
+                        proceed = request.content.assetPolicyInformation.unlimited Or (request.content.assetPolicyInformation.qtaTotal > 0)
                     End If
                     If proceed Then
                         proceed = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.SingleKeyPair.checkFormatPublicAddress(request.common.publicAddressRequester)
@@ -243,7 +246,7 @@ Namespace AreaProtocol
             ''' This method provide to write request into ledger
             ''' </summary>
             ''' <returns></returns>
-            Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal value As CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+            Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal value As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
                     Dim contentPath As String = AreaCommon.state.currentBlockLedger.proposeNewTransaction.pathData.contents
                     Dim hash As String = value.getHash()
@@ -252,8 +255,7 @@ Namespace AreaProtocol
 
                     contentPath = IO.Path.Combine(contentPath, hash & ".Content")
 
-                    If IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel).save(contentPath, value) Then
-
+                    If IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel).save(contentPath, value) Then
                         With AreaCommon.state.currentBlockLedger.proposeNewTransaction
                             .type = "a0x3"
                             .approverPublicAddress = approverPublicAddress
@@ -320,7 +322,7 @@ Namespace AreaProtocol
             ''' </summary>
             ''' <param name="valueAsset"></param>
             ''' <returns></returns>
-            Public Shared Function createInternalRequest(ByVal valueAsset As CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel) As String
+            Public Shared Function createInternalRequest(ByVal valueAsset As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel) As String
                 Try
                     Dim data As New RequestModel
 
@@ -331,7 +333,7 @@ Namespace AreaProtocol
                     If AreaCommon.state.currentService.requestCancelCurrentRunCommand Then Return False
 
                     With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                        data.primaryAsset = valueAsset
+                        data.content = valueAsset
                         data.common.netWorkReferement = AreaCommon.state.runtimeState.activeNetwork.hash
                         data.common.chainReferement = AreaCommon.state.internalInformation.chainName
                         data.common.type = "a0x3"

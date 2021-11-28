@@ -45,7 +45,7 @@ Namespace Controllers
                         Else
                             If (request.data.hash.lenght > 0) Then
                                 result.common = request.data.common
-                                result.primaryAsset = request.data.primaryAsset
+                                result.content = request.data.primaryAsset
                                 result.signature = request.data.common.signature
                             End If
                         End If
