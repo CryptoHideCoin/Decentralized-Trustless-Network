@@ -46,7 +46,7 @@ Namespace AreaConsensus
                 _QueueProcessUpdateBulletin.Add(key)
 
                 Do While (_QueueProcessUpdateBulletin(0).CompareTo(key) <> 0)
-                    Threading.Thread.Sleep(1)
+                    Threading.Thread.Sleep(AreaCommon.support.timeSleep)
                 Loop
 
                 AreaCommon.log.track("ConsensusEngine.unlockUpdateBulletin", "Complete")

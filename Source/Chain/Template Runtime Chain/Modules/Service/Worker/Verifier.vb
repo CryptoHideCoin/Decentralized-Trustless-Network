@@ -85,7 +85,7 @@ Namespace AreaWorker
                         End If
                     End If
 
-                    Threading.Thread.Sleep(1)
+                    Threading.Thread.Sleep(AreaCommon.support.timeSleep)
                 Loop
 
                 workerOn = False

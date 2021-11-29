@@ -120,6 +120,7 @@
     <Compile Include="Classes\Engine\ConsensusStructures.vb" />
     <Compile Include="Classes\Engine\RequestFlowEngine.vb" />
     <Compile Include="Classes\Engine\RequestStructures.vb" />
+    <Compile Include="Classes\Engine\SupportEngine.vb" />
     <Compile Include="Classes\Protocol\A0\A0x0Engine.vb" />
     <Compile Include="Classes\Protocol\A0\A0x1Engine.vb" />
     <Compile Include="Classes\Protocol\A0\A0x2Engine.vb" />

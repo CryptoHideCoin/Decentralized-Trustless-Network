@@ -18,6 +18,7 @@ Namespace AreaCommon
         Public registry As New RegistryEngine
         Public settings As New CHCRuntimeChainLibrary.AreaRuntime.AppSettings
         Public flow As New AreaFlow.FlowEngine
+        Public support As New Engine.SupportEngine
         Public consensus As New AreaConsensus.ConsensusEngine
         Public state As New AppState
 

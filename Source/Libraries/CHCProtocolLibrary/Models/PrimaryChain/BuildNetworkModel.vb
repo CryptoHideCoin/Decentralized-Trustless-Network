@@ -278,6 +278,7 @@ Namespace AreaCommon.Models.Network
         Public Property blockSizeFrequency As String = "24h"
         Public Property numberBlockInVolume As Short = 365
         Public Property maxTimeOutNotRespondNode As String = "120sec"
+        Public Property maxTimeOutNotEvaluateNode As String = "180sec"
         Public Property initialCoinReleasePerBlock As Decimal = "200000"
         Public Property ruleFutureRelease As String = ""
         Public Property reviewReleaseAlgorithm As String = "OnTransaction"

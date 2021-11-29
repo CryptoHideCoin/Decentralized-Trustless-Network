@@ -242,7 +242,7 @@ Namespace AreaWorker
         ''' This method provide to work a sender process
         ''' </summary>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()>
+        '<DebuggerHiddenAttribute()>
         Public Function work() As Boolean
             Try
                 Dim newDeliveryList As New AreaCommon.Masternode.MasternodeSenders
@@ -256,7 +256,7 @@ Namespace AreaWorker
                 Do While (AreaCommon.flow.workerOn And workerOn)
                     item = AreaCommon.flow.getFirstRequestToSend()
 
-                    If (item.type.Length > 0) Then
+                    If (item.type.Length > 0) Or (item.sendType = AreaFlow.EnumEntityToSend.bulletin) Or (item.sendType = AreaFlow.EnumEntityToSend.requestResponse) Then
 
                         Select Case item.sendType
                             Case AreaFlow.EnumEntityToSend.bulletin : newDeliveryList = sendBulletinInBroadCast(item.dataObject, item.deliveryList)
@@ -273,7 +273,7 @@ Namespace AreaWorker
                         End If
                     End If
 
-                    Threading.Thread.Sleep(1)
+                    Threading.Thread.Sleep(AreaCommon.support.timeSleep)
                 Loop
 
                 workerOn = False

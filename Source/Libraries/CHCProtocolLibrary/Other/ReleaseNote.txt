@@ -8,3 +8,4 @@ Release Note
 1.5.6	- 07.11.2021 - Add ChainModel, Add FeeModel, Revision informationBaseNetwork, Refactor VirtualPath
 1.5.7   - 24.11.2021 - Introduce the temporally path
 1.5.8   - 28.11.2021 - Reorganize Asset Structure
+1.5.9   - 29.11.2021 - Complete Transaction Chain Settings Parameters

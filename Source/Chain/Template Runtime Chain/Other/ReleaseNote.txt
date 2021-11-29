@@ -12,6 +12,9 @@ Release Note
 0.11.0  - 16.11.2021 - Implement A1x3 e A1x4
 0.12.0  - 24.11.2021 - Implement Close Block
 0.13.0  - 27.11.2021 - Revision Asset Primary
+0.14.0  - 29.11.2021 - Revision Transaction Chain Settings
+                       Suspend Protection
+					   Manage Work Load Balance
 
 TO DO
 =====

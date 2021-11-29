@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RequestModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <requestDateTimeStamp>1629486562165.9624</requestDateTimeStamp>
-  <publicWalletAddressRequester>CWA:RNCgcdApx5aieQBF4KbTiggvZnNGysL5DmowMra2fBPK6fzGGbEfHa2iw1FhQgV3kEsQkTSmYa5BqDi4NwxKdL1J1E04//</publicWalletAddressRequester>
-  <requestHash>658DB1A9819357B5437B543B602B64CDBDE088B7189187ED7EBF453B6E2B14F0</requestHash>
-  <signature>iKx1CJPVmBbeaFZAXrdKiZCQqSHeGoWW8ujuRC4vCS3ffiWRr4ZBYTnbuHR3guJM3FD4AEAvnkJYTg2qn2tGKQyrbYKnkevFS4</signature>
-  <yellowPaper>yellowpaper</yellowPaper>
-</RequestModel>

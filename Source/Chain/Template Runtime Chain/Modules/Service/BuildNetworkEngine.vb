@@ -138,7 +138,7 @@ Namespace AreaData
                 Do While (AreaCommon.flow.getActiveRequest([type]).position.process <> AreaFlow.EnumOperationPosition.completeWithPositiveResult) Or
                          (AreaCommon.state.runtimeState.activeNetwork.hash.Length = 0) Or
                           (checkChainReferement And (AreaCommon.state.runtimeState.activeChain.hash.Length = 0))
-                    Threading.Thread.Sleep(10)
+                    Threading.Thread.Sleep(AreaCommon.support.timeSleep)
                 Loop
 
                 Return True

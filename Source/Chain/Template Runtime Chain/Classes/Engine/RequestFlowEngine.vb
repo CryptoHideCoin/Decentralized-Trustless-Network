@@ -974,6 +974,18 @@ Namespace AreaFlow
         End Function
 
         ''' <summary>
+        ''' This method provide to check if the chain is in idle mode
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function inIdleMode() As Boolean
+            Return (_RequestToDownload.Count = 0) And
+                   (_RequestToProcess.Count = 0) And
+                   (_RequestToSelected.Count = 0) And
+                   (_RequestToSend.Count = 0) And
+                   (_RequestToVerify.Count = 0)
+        End Function
+
+        ''' <summary>
         ''' This method provide to initialize the component
         ''' </summary>
         ''' <returns></returns>

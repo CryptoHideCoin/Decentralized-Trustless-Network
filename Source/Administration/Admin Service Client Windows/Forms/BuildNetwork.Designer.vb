@@ -103,6 +103,8 @@ Partial Class BuildNetwork
         Me.cancelButton = New System.Windows.Forms.Button()
         Me.loadButton = New System.Windows.Forms.Button()
         Me.saveButton = New System.Windows.Forms.Button()
+        Me.maxTimeOutNotEvaluateNodeText = New System.Windows.Forms.TextBox()
+        Me.maxTimeOutNotEvaluateNodeLabel = New System.Windows.Forms.Label()
         Me.mainTabControl.SuspendLayout()
         Me.generalTab.SuspendLayout()
         Me.whitePaperTab.SuspendLayout()
@@ -518,6 +520,8 @@ Partial Class BuildNetwork
         '
         'transactionChainParameterTab
         '
+        Me.transactionChainParameterTab.Controls.Add(Me.maxTimeOutNotEvaluateNodeText)
+        Me.transactionChainParameterTab.Controls.Add(Me.maxTimeOutNotEvaluateNodeLabel)
         Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainInternalText)
         Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainInternalRegistryLabel)
         Me.transactionChainParameterTab.Controls.Add(Me.minimalMaintainTrashedText)
@@ -557,7 +561,7 @@ Partial Class BuildNetwork
         Me.minimalMaintainInternalText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.minimalMaintainInternalText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.minimalMaintainInternalText.Location = New System.Drawing.Point(545, 293)
+        Me.minimalMaintainInternalText.Location = New System.Drawing.Point(545, 324)
         Me.minimalMaintainInternalText.Name = "minimalMaintainInternalText"
         Me.minimalMaintainInternalText.ReadOnly = True
         Me.minimalMaintainInternalText.Size = New System.Drawing.Size(119, 21)
@@ -569,7 +573,7 @@ Partial Class BuildNetwork
         Me.minimalMaintainInternalRegistryLabel.AutoSize = True
         Me.minimalMaintainInternalRegistryLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.minimalMaintainInternalRegistryLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.minimalMaintainInternalRegistryLabel.Location = New System.Drawing.Point(389, 296)
+        Me.minimalMaintainInternalRegistryLabel.Location = New System.Drawing.Point(389, 327)
         Me.minimalMaintainInternalRegistryLabel.Name = "minimalMaintainInternalRegistryLabel"
         Me.minimalMaintainInternalRegistryLabel.Size = New System.Drawing.Size(150, 13)
         Me.minimalMaintainInternalRegistryLabel.TabIndex = 58
@@ -580,7 +584,7 @@ Partial Class BuildNetwork
         Me.minimalMaintainTrashedText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.minimalMaintainTrashedText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.minimalMaintainTrashedText.Location = New System.Drawing.Point(221, 293)
+        Me.minimalMaintainTrashedText.Location = New System.Drawing.Point(221, 324)
         Me.minimalMaintainTrashedText.Name = "minimalMaintainTrashedText"
         Me.minimalMaintainTrashedText.ReadOnly = True
         Me.minimalMaintainTrashedText.Size = New System.Drawing.Size(134, 21)
@@ -592,7 +596,7 @@ Partial Class BuildNetwork
         Me.minimalMaintainTrashedLabel.AutoSize = True
         Me.minimalMaintainTrashedLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.minimalMaintainTrashedLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.minimalMaintainTrashedLabel.Location = New System.Drawing.Point(60, 296)
+        Me.minimalMaintainTrashedLabel.Location = New System.Drawing.Point(60, 327)
         Me.minimalMaintainTrashedLabel.Name = "minimalMaintainTrashedLabel"
         Me.minimalMaintainTrashedLabel.Size = New System.Drawing.Size(150, 13)
         Me.minimalMaintainTrashedLabel.TabIndex = 56
@@ -603,7 +607,7 @@ Partial Class BuildNetwork
         Me.minimalMaintainRejectedText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.minimalMaintainRejectedText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.minimalMaintainRejectedText.Location = New System.Drawing.Point(545, 266)
+        Me.minimalMaintainRejectedText.Location = New System.Drawing.Point(545, 297)
         Me.minimalMaintainRejectedText.Name = "minimalMaintainRejectedText"
         Me.minimalMaintainRejectedText.ReadOnly = True
         Me.minimalMaintainRejectedText.Size = New System.Drawing.Size(119, 21)
@@ -615,7 +619,7 @@ Partial Class BuildNetwork
         Me.minimalMaintainRejectedLabel.AutoSize = True
         Me.minimalMaintainRejectedLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.minimalMaintainRejectedLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.minimalMaintainRejectedLabel.Location = New System.Drawing.Point(384, 269)
+        Me.minimalMaintainRejectedLabel.Location = New System.Drawing.Point(384, 300)
         Me.minimalMaintainRejectedLabel.Name = "minimalMaintainRejectedLabel"
         Me.minimalMaintainRejectedLabel.Size = New System.Drawing.Size(155, 13)
         Me.minimalMaintainRejectedLabel.TabIndex = 54
@@ -626,7 +630,7 @@ Partial Class BuildNetwork
         Me.minimalMaintainBulletinesText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.minimalMaintainBulletinesText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.minimalMaintainBulletinesText.Location = New System.Drawing.Point(221, 266)
+        Me.minimalMaintainBulletinesText.Location = New System.Drawing.Point(221, 297)
         Me.minimalMaintainBulletinesText.Name = "minimalMaintainBulletinesText"
         Me.minimalMaintainBulletinesText.ReadOnly = True
         Me.minimalMaintainBulletinesText.Size = New System.Drawing.Size(134, 21)
@@ -638,7 +642,7 @@ Partial Class BuildNetwork
         Me.minimalMaintainBulletinesLabel.AutoSize = True
         Me.minimalMaintainBulletinesLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.minimalMaintainBulletinesLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.minimalMaintainBulletinesLabel.Location = New System.Drawing.Point(55, 269)
+        Me.minimalMaintainBulletinesLabel.Location = New System.Drawing.Point(55, 300)
         Me.minimalMaintainBulletinesLabel.Name = "minimalMaintainBulletinesLabel"
         Me.minimalMaintainBulletinesLabel.Size = New System.Drawing.Size(160, 13)
         Me.minimalMaintainBulletinesLabel.TabIndex = 52
@@ -649,7 +653,7 @@ Partial Class BuildNetwork
         Me.minimalMaintainConsensusText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.minimalMaintainConsensusText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.minimalMaintainConsensusText.Location = New System.Drawing.Point(545, 239)
+        Me.minimalMaintainConsensusText.Location = New System.Drawing.Point(545, 270)
         Me.minimalMaintainConsensusText.Name = "minimalMaintainConsensusText"
         Me.minimalMaintainConsensusText.ReadOnly = True
         Me.minimalMaintainConsensusText.Size = New System.Drawing.Size(119, 21)
@@ -661,7 +665,7 @@ Partial Class BuildNetwork
         Me.minimalMaintainConsensusLabel.AutoSize = True
         Me.minimalMaintainConsensusLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.minimalMaintainConsensusLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.minimalMaintainConsensusLabel.Location = New System.Drawing.Point(372, 242)
+        Me.minimalMaintainConsensusLabel.Location = New System.Drawing.Point(372, 273)
         Me.minimalMaintainConsensusLabel.Name = "minimalMaintainConsensusLabel"
         Me.minimalMaintainConsensusLabel.Size = New System.Drawing.Size(167, 13)
         Me.minimalMaintainConsensusLabel.TabIndex = 50
@@ -672,7 +676,7 @@ Partial Class BuildNetwork
         Me.minimalMaintainRequestText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.minimalMaintainRequestText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.minimalMaintainRequestText.Location = New System.Drawing.Point(221, 239)
+        Me.minimalMaintainRequestText.Location = New System.Drawing.Point(221, 270)
         Me.minimalMaintainRequestText.Name = "minimalMaintainRequestText"
         Me.minimalMaintainRequestText.ReadOnly = True
         Me.minimalMaintainRequestText.Size = New System.Drawing.Size(134, 21)
@@ -684,7 +688,7 @@ Partial Class BuildNetwork
         Me.minimalMaintainRequestLabel.AutoSize = True
         Me.minimalMaintainRequestLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.minimalMaintainRequestLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.minimalMaintainRequestLabel.Location = New System.Drawing.Point(63, 242)
+        Me.minimalMaintainRequestLabel.Location = New System.Drawing.Point(63, 273)
         Me.minimalMaintainRequestLabel.Name = "minimalMaintainRequestLabel"
         Me.minimalMaintainRequestLabel.Size = New System.Drawing.Size(151, 13)
         Me.minimalMaintainRequestLabel.TabIndex = 48
@@ -693,7 +697,7 @@ Partial Class BuildNetwork
         'initialCoinReleaseBlockText
         '
         Me.initialCoinReleaseBlockText.currentFormat = "0,000"
-        Me.initialCoinReleaseBlockText.Location = New System.Drawing.Point(539, 41)
+        Me.initialCoinReleaseBlockText.Location = New System.Drawing.Point(221, 72)
         Me.initialCoinReleaseBlockText.locationCode = "it-IT"
         Me.initialCoinReleaseBlockText.Name = "initialCoinReleaseBlockText"
         Me.initialCoinReleaseBlockText.Size = New System.Drawing.Size(75, 21)
@@ -707,7 +711,7 @@ Partial Class BuildNetwork
         Me.reviewReleaseAlgorithmText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.reviewReleaseAlgorithmText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.reviewReleaseAlgorithmText.Location = New System.Drawing.Point(221, 212)
+        Me.reviewReleaseAlgorithmText.Location = New System.Drawing.Point(221, 243)
         Me.reviewReleaseAlgorithmText.Name = "reviewReleaseAlgorithmText"
         Me.reviewReleaseAlgorithmText.ReadOnly = True
         Me.reviewReleaseAlgorithmText.Size = New System.Drawing.Size(134, 21)
@@ -719,7 +723,7 @@ Partial Class BuildNetwork
         Me.reviewReleaseAlgorithmLabel.AutoSize = True
         Me.reviewReleaseAlgorithmLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.reviewReleaseAlgorithmLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.reviewReleaseAlgorithmLabel.Location = New System.Drawing.Point(63, 215)
+        Me.reviewReleaseAlgorithmLabel.Location = New System.Drawing.Point(63, 246)
         Me.reviewReleaseAlgorithmLabel.Name = "reviewReleaseAlgorithmLabel"
         Me.reviewReleaseAlgorithmLabel.Size = New System.Drawing.Size(152, 13)
         Me.reviewReleaseAlgorithmLabel.TabIndex = 46
@@ -730,7 +734,7 @@ Partial Class BuildNetwork
         Me.consensusMethodText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.consensusMethodText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.consensusMethodText.Location = New System.Drawing.Point(501, 212)
+        Me.consensusMethodText.Location = New System.Drawing.Point(501, 243)
         Me.consensusMethodText.Name = "consensusMethodText"
         Me.consensusMethodText.ReadOnly = True
         Me.consensusMethodText.Size = New System.Drawing.Size(163, 21)
@@ -742,7 +746,7 @@ Partial Class BuildNetwork
         Me.consensusMethodLabel.AutoSize = True
         Me.consensusMethodLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.consensusMethodLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.consensusMethodLabel.Location = New System.Drawing.Point(379, 218)
+        Me.consensusMethodLabel.Location = New System.Drawing.Point(379, 249)
         Me.consensusMethodLabel.Name = "consensusMethodLabel"
         Me.consensusMethodLabel.Size = New System.Drawing.Size(116, 13)
         Me.consensusMethodLabel.TabIndex = 44
@@ -753,7 +757,7 @@ Partial Class BuildNetwork
         Me.ruleFutureReleaseText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ruleFutureReleaseText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ruleFutureReleaseText.Location = New System.Drawing.Point(221, 68)
+        Me.ruleFutureReleaseText.Location = New System.Drawing.Point(221, 99)
         Me.ruleFutureReleaseText.Multiline = True
         Me.ruleFutureReleaseText.Name = "ruleFutureReleaseText"
         Me.ruleFutureReleaseText.Size = New System.Drawing.Size(443, 138)
@@ -763,7 +767,7 @@ Partial Class BuildNetwork
         '
         Me.ruleFutureReleaseLabel.AutoSize = True
         Me.ruleFutureReleaseLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ruleFutureReleaseLabel.Location = New System.Drawing.Point(94, 71)
+        Me.ruleFutureReleaseLabel.Location = New System.Drawing.Point(94, 102)
         Me.ruleFutureReleaseLabel.Name = "ruleFutureReleaseLabel"
         Me.ruleFutureReleaseLabel.Size = New System.Drawing.Size(116, 13)
         Me.ruleFutureReleaseLabel.TabIndex = 42
@@ -773,7 +777,7 @@ Partial Class BuildNetwork
         '
         Me.Label12.AutoSize = True
         Me.Label12.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(620, 44)
+        Me.Label12.Location = New System.Drawing.Point(302, 75)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(30, 13)
         Me.Label12.TabIndex = 40
@@ -783,7 +787,7 @@ Partial Class BuildNetwork
         '
         Me.initialCoinReleaseBlockLabel.AutoSize = True
         Me.initialCoinReleaseBlockLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.initialCoinReleaseBlockLabel.Location = New System.Drawing.Point(359, 44)
+        Me.initialCoinReleaseBlockLabel.Location = New System.Drawing.Point(41, 75)
         Me.initialCoinReleaseBlockLabel.Name = "initialCoinReleaseBlockLabel"
         Me.initialCoinReleaseBlockLabel.Size = New System.Drawing.Size(169, 13)
         Me.initialCoinReleaseBlockLabel.TabIndex = 39
@@ -794,7 +798,7 @@ Partial Class BuildNetwork
         Me.maxTimeOutResponseNodeText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.maxTimeOutResponseNodeText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.maxTimeOutResponseNodeText.Location = New System.Drawing.Point(221, 41)
+        Me.maxTimeOutResponseNodeText.Location = New System.Drawing.Point(221, 45)
         Me.maxTimeOutResponseNodeText.Name = "maxTimeOutResponseNodeText"
         Me.maxTimeOutResponseNodeText.ReadOnly = True
         Me.maxTimeOutResponseNodeText.Size = New System.Drawing.Size(75, 21)
@@ -806,7 +810,7 @@ Partial Class BuildNetwork
         Me.maxTimeOutNotRespondeNodeLabel.AutoSize = True
         Me.maxTimeOutNotRespondeNodeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.maxTimeOutNotRespondeNodeLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.maxTimeOutNotRespondeNodeLabel.Location = New System.Drawing.Point(22, 44)
+        Me.maxTimeOutNotRespondeNodeLabel.Location = New System.Drawing.Point(22, 48)
         Me.maxTimeOutNotRespondeNodeLabel.Name = "maxTimeOutNotRespondeNodeLabel"
         Me.maxTimeOutNotRespondeNodeLabel.Size = New System.Drawing.Size(188, 13)
         Me.maxTimeOutNotRespondeNodeLabel.TabIndex = 37
@@ -817,7 +821,7 @@ Partial Class BuildNetwork
         Me.numberBlockInVolumeText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.numberBlockInVolumeText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.numberBlockInVolumeText.Location = New System.Drawing.Point(539, 14)
+        Me.numberBlockInVolumeText.Location = New System.Drawing.Point(539, 18)
         Me.numberBlockInVolumeText.Name = "numberBlockInVolumeText"
         Me.numberBlockInVolumeText.ReadOnly = True
         Me.numberBlockInVolumeText.Size = New System.Drawing.Size(75, 21)
@@ -829,7 +833,7 @@ Partial Class BuildNetwork
         Me.numberBlockInVolumeLabel.AutoSize = True
         Me.numberBlockInVolumeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.numberBlockInVolumeLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.numberBlockInVolumeLabel.Location = New System.Drawing.Point(379, 17)
+        Me.numberBlockInVolumeLabel.Location = New System.Drawing.Point(379, 21)
         Me.numberBlockInVolumeLabel.Name = "numberBlockInVolumeLabel"
         Me.numberBlockInVolumeLabel.Size = New System.Drawing.Size(149, 13)
         Me.numberBlockInVolumeLabel.TabIndex = 35
@@ -840,7 +844,7 @@ Partial Class BuildNetwork
         Me.blockSizeFrequencyText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.blockSizeFrequencyText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.blockSizeFrequencyText.Location = New System.Drawing.Point(221, 14)
+        Me.blockSizeFrequencyText.Location = New System.Drawing.Point(221, 18)
         Me.blockSizeFrequencyText.Name = "blockSizeFrequencyText"
         Me.blockSizeFrequencyText.ReadOnly = True
         Me.blockSizeFrequencyText.Size = New System.Drawing.Size(75, 21)
@@ -852,7 +856,7 @@ Partial Class BuildNetwork
         Me.blockSizeFrequencyLabel.AutoSize = True
         Me.blockSizeFrequencyLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.blockSizeFrequencyLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.blockSizeFrequencyLabel.Location = New System.Drawing.Point(81, 17)
+        Me.blockSizeFrequencyLabel.Location = New System.Drawing.Point(81, 21)
         Me.blockSizeFrequencyLabel.Name = "blockSizeFrequencyLabel"
         Me.blockSizeFrequencyLabel.Size = New System.Drawing.Size(129, 13)
         Me.blockSizeFrequencyLabel.TabIndex = 33
@@ -1005,6 +1009,29 @@ Partial Class BuildNetwork
         Me.saveButton.Text = "Save"
         Me.saveButton.UseVisualStyleBackColor = True
         '
+        'maxTimeOutNotEvaluateNodeText
+        '
+        Me.maxTimeOutNotEvaluateNodeText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.maxTimeOutNotEvaluateNodeText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.maxTimeOutNotEvaluateNodeText.Location = New System.Drawing.Point(539, 45)
+        Me.maxTimeOutNotEvaluateNodeText.Name = "maxTimeOutNotEvaluateNodeText"
+        Me.maxTimeOutNotEvaluateNodeText.ReadOnly = True
+        Me.maxTimeOutNotEvaluateNodeText.Size = New System.Drawing.Size(75, 21)
+        Me.maxTimeOutNotEvaluateNodeText.TabIndex = 59
+        Me.maxTimeOutNotEvaluateNodeText.Text = "120 sec."
+        '
+        'maxTimeOutNotEvaluateNodeLabel
+        '
+        Me.maxTimeOutNotEvaluateNodeLabel.AutoSize = True
+        Me.maxTimeOutNotEvaluateNodeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.maxTimeOutNotEvaluateNodeLabel.ForeColor = System.Drawing.SystemColors.ControlDark
+        Me.maxTimeOutNotEvaluateNodeLabel.Location = New System.Drawing.Point(340, 48)
+        Me.maxTimeOutNotEvaluateNodeLabel.Name = "maxTimeOutNotEvaluateNodeLabel"
+        Me.maxTimeOutNotEvaluateNodeLabel.Size = New System.Drawing.Size(184, 13)
+        Me.maxTimeOutNotEvaluateNodeLabel.TabIndex = 60
+        Me.maxTimeOutNotEvaluateNodeLabel.Text = "Max timeout not evaluate node"
+        '
         'BuildNetwork
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -1125,4 +1152,6 @@ Partial Class BuildNetwork
     Friend WithEvents minimalMaintainConsensusLabel As Label
     Friend WithEvents minimalMaintainRequestText As TextBox
     Friend WithEvents minimalMaintainRequestLabel As Label
+    Friend WithEvents maxTimeOutNotEvaluateNodeText As TextBox
+    Friend WithEvents maxTimeOutNotEvaluateNodeLabel As Label
 End Class

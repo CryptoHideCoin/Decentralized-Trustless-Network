@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RequestModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <requestDateTimeStamp>1629486558166.7205</requestDateTimeStamp>
-  <publicWalletAddressRequester>CWA:RNCgcdApx5aieQBF4KbTiggvZnNGysL5DmowMra2fBPK6fzGGbEfHa2iw1FhQgV3kEsQkTSmYa5BqDi4NwxKdL1J1E04//</publicWalletAddressRequester>
-  <requestHash>2E0C943A6DB316DCCE50B1576E8D02AD363D27536A07FE098A5EF1852E90A167</requestHash>
-  <signature>AN1rKvtXHzVdi8HQZKLHs7tpkbCScEcQtL5qiZAioRMuAVc1xNfRyThkVKbKFF3cHjasRRbKvEjpNQj2iPnzKgsbNsiBxu7N9</signature>
-  <netName>Chain Society Official Network</netName>
-</RequestModel>

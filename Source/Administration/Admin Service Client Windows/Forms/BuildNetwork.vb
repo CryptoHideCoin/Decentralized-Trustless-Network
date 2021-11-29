@@ -73,6 +73,7 @@ Public Class BuildNetwork
                     .blockSizeFrequency = blockSizeFrequencyText.Text
                     .numberBlockInVolume = numberBlockInVolumeText.Text
                     .maxTimeOutNotRespondNode = maxTimeOutResponseNodeText.Text
+                    .maxTimeOutNotEvaluateNode = maxTimeOutResponseNodeText.Text
                     .initialCoinReleasePerBlock = initialCoinReleaseBlockText.Text
                     .ruleFutureRelease = ruleFutureReleaseText.Text
                     .reviewReleaseAlgorithm = reviewReleaseAlgorithmText.Text

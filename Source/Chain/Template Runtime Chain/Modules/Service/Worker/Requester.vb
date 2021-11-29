@@ -129,8 +129,10 @@ Namespace AreaWorker
 
                     AreaCommon.flow.removeOldRequest()
                     AreaProtocol.A1x5.Manager.manageCloseBlock()
+                    AreaCommon.support.checkLastTime()
+                    AreaCommon.support.inIdle = AreaCommon.flow.inIdleMode()
 
-                    Threading.Thread.Sleep(1)
+                    Threading.Thread.Sleep(AreaCommon.support.timeSleep)
                 Loop
 
                 workerOn = False

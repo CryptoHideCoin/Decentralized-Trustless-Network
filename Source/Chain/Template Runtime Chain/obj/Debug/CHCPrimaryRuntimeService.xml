@@ -234,6 +234,23 @@ CHCPrimaryRuntimeService
  This class manage a delivery of a message rejected
  </summary>
 </member>
+<member name="T:CHCPrimaryRuntimeService.AreaCommon.Engine.SupportEngine">
+ <summary>
+ This class contain all element to support the chain
+ </summary>
+</member>
+<member name="P:CHCPrimaryRuntimeService.AreaCommon.Engine.SupportEngine.timeSleep">
+ <summary>
+ This property return the time of sleep
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.Engine.SupportEngine.checkLastTime">
+ <summary>
+ This method provide to check last time that this method is invoke. If it is major of two second the node enter in the protection mode
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:CHCPrimaryRuntimeService.AreaCommon.DAO.DBNetwork">
  <summary>
  This class contain all method manage a DB main properties
@@ -1264,6 +1281,12 @@ CHCPrimaryRuntimeService
  </summary>
  <param name="requestHash"></param>
  <param name="publicAddress"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.inIdleMode">
+ <summary>
+ This method provide to check if the chain is in idle mode
+ </summary>
  <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.init">
@@ -3714,12 +3737,6 @@ CHCPrimaryRuntimeService
  </summary>
  <param name="requestHash"></param>
  <param name="deliveryList"></param>
- <returns></returns>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaWorker.Sender.work">
- <summary>
- This method provide to work a sender process
- </summary>
  <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaWorker.Verifier.evaluateTheRequest(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">

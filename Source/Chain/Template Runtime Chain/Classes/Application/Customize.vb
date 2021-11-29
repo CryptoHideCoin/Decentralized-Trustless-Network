@@ -21,6 +21,7 @@ Namespace AreaCommon
 
         Public Const defaultChainCloseBlockTimingSecond As Integer = oneSecond * oneMinute * oneHour * oneDay
         Public Const defaultTimeOutNotResponseMasternodeSecond As Integer = oneSecond * oneMinute * 2
+        Public Const defaultTimeOutNotEvaluateMasternodeSecond As Integer = oneSecond * oneMinute * 3
         Public Const defaultMinimalMaintainRequestBlock As Integer = 365 * 3
         Public Const defaultMinimalMaintainConsensusBlock As Integer = 365 * 2
         Public Const defaultMinimalMaintainBulletinBlock As Integer = 365

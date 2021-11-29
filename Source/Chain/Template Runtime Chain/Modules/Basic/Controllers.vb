@@ -65,6 +65,7 @@ Namespace AreaCommon
 
                     Do
                         Application.DoEvents()
+                        Threading.Thread.Sleep(AreaCommon.support.timeSleep)
                     Loop Until (state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown)
 
                     server.CloseAsync().Wait()
@@ -107,6 +108,7 @@ Namespace AreaCommon
                 objWS.Start()
 
                 Do While Not _controllerComplete
+                    Threading.Thread.Sleep(AreaCommon.support.timeSleep)
                     Application.DoEvents()
                 Loop
 

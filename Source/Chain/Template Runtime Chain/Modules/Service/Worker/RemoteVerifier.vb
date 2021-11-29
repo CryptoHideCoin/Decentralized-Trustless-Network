@@ -32,7 +32,7 @@ Namespace AreaWorker
                         AreaCommon.consensus.processRemoteNotify(item)
                     End If
 
-                    Threading.Thread.Sleep(1)
+                    Threading.Thread.Sleep(AreaCommon.support.timeSleep)
                 Loop
 
                 workerOn = False
