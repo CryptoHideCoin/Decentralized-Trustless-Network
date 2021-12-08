@@ -19,7 +19,7 @@ Namespace AreaCommon.DAO
         ''' </summary>
         Public Enum DBPropertyID
 
-            notDefined
+            undefined
             typeOfDB
             dateCreation
             name

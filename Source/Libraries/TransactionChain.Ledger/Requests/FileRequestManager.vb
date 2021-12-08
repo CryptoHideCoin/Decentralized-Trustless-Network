@@ -148,7 +148,7 @@ Namespace AreaEngine.Requests
         ''' </summary>
         ''' <param name="minimalMaintainanceRequestBlock"></param>
         ''' <returns></returns>
-        Public Function deleteOldRequest(ByVal minimalMaintainanceRequestBlock As Integer) As Boolean
+        Public Function deleteOldRequest(ByVal minimalMaintainanceRequestBlock As Double) As Boolean
             Try
                 logIstance.track("RequestManager.extractAndDeleteOldRequestBlock", "Begin")
 
@@ -165,7 +165,7 @@ Namespace AreaEngine.Requests
         ''' </summary>
         ''' <param name="minimalMaintenanceRequestFile"></param>
         ''' <returns></returns>
-        Public Function deleteOldRequestRejectedAndTrashed(ByVal minimalMaintenanceRequestFile As Integer) As Boolean
+        Public Function deleteOldRequestRejectedAndTrashed(ByVal minimalMaintenanceRequestFile As Double) As Boolean
             Try
                 logIstance.track("RequestManager.deleteOldRequestRejectedAndTrashed", "Begin")
 
@@ -184,7 +184,7 @@ Namespace AreaEngine.Requests
         ''' </summary>
         ''' <param name="minimalMantainRequestBlock"></param>
         ''' <returns></returns>
-        Public Function extractOldRequestBlock(ByVal minimalMaintenanceRequestBlock As Integer) As List(Of String)
+        Public Function extractOldRequestBlock(ByVal minimalMaintenanceRequestBlock As Double) As List(Of String)
             Try
                 logIstance.track("RequestManager.extractOldRequestBlock", "Begin")
 
@@ -203,7 +203,7 @@ Namespace AreaEngine.Requests
         ''' </summary>
         ''' <param name="minimalMaintenanceRequestFile"></param>
         ''' <returns></returns>
-        Public Function extractOldRequestRejectOrTrashedFile(ByVal minimalMaintenanceRequestFile As Integer, ByVal state As RequestData.stateRequest) As List(Of String)
+        Public Function extractOldRequestRejectOrTrashedFile(ByVal minimalMaintenanceRequestFile As Double, ByVal state As RequestData.stateRequest) As List(Of String)
             Try
                 logIstance.track("RequestManager.extractOldRequestRejectFile", "Begin")
 

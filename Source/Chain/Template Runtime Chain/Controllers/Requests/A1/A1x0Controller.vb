@@ -35,12 +35,18 @@ Namespace Controllers
 
                 If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
                     If (AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.onLine) Then
-                        ''' Correct Path
-                        'With IOFast(Of AreaProtocol.A1x0.RequestModel).read(IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, hashValue & ".request"))
-                        With IOFast(Of AreaProtocol.A1x0.RequestModel).read(IO.Path.Combine("", hashValue & ".request"))
-                            result.common = .common
-                            result.signature = .common.signature
-                        End With
+                        Dim request As AreaFlow.RequestExtended = AreaCommon.flow.getRequest(hashValue)
+
+                        If IsNothing(request.data) Then
+                            result.responseStatus = RemoteResponse.EnumResponseStatus.inError
+                            result.errorDescription = "503 - Missing request or request expired"
+
+                            AreaCommon.log.track("A1x0Controller.getValue", "Missing request or request expired")
+                        Else
+                            If (request.data.hash.lenght > 0) Then
+                                result = request.data
+                            End If
+                        End If
                     Else
                         result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                     End If
@@ -48,7 +54,7 @@ Namespace Controllers
                     result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                 End If
 
-                AreaCommon.log.track("A1x0Controller.getValue", "Complete")
+                AreaCommon.log.track("A1x0Controller.getValue", "Completed")
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
@@ -84,7 +90,7 @@ Namespace Controllers
                     result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
                 End If
 
-                AreaCommon.log.track("A1x0Controller.putValue", "Complete")
+                AreaCommon.log.track("A1x0Controller.putValue", "Completed")
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"

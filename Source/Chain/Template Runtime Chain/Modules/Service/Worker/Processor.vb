@@ -34,14 +34,13 @@ Namespace AreaWorker
                     End If
 
                     AreaCommon.flow.removeOldRequest()
-                    AreaCommon.flow.actionAfterAssessment()
 
                     Threading.Thread.Sleep(AreaCommon.support.timeSleep)
                 Loop
 
                 workerOn = False
 
-                AreaCommon.log.track("Processor.work", "Complete")
+                AreaCommon.log.track("Processor.work", "Completed")
 
                 Return True
             Catch ex As Exception

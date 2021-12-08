@@ -177,7 +177,7 @@ Namespace AreaCommon
 
                         readAdminKeyStore(command.keyStoreSecurityKey)
 
-                        log.track("StartUp.bootStrap", "KeyStore procedure complete", , True)
+                        log.track("StartUp.bootStrap", "KeyStore procedure Completed", , True)
                     End If
 
                     log.track("StartUp.bootStrap", "Root paths set " & paths.directoryData, , True)
@@ -208,8 +208,11 @@ Namespace AreaCommon
 
                 state.currentService.init()
 
+                state.serviceParameters = AreaService.ServiceParameterEngine.acquireDefaultParameter()
+
                 Do
                     Application.DoEvents()
+                    Threading.Thread.Sleep(AreaCommon.support.timeSleep)
                 Loop While (state.service <> CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown)
             Catch ex As Exception
                 log.track("startUp.runApplication", ex.Message, "fatal")
@@ -346,7 +349,7 @@ Namespace AreaCommon
 
                 state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown
 
-                log.track("startUp.[Stop]", "Complete")
+                log.track("startUp.[Stop]", "Completed")
 
                 log.trackIntoConsole("System is shutdown")
             Catch ex As Exception

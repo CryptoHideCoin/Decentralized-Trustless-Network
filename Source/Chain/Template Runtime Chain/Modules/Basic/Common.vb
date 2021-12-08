@@ -73,7 +73,7 @@ Namespace AreaCommon
 
                 Return False
             Finally
-                adapterLog.track("moduleMain.refreshBatch", "Complete")
+                adapterLog.track("moduleMain.refreshBatch", "Completed")
             End Try
         End Function
 

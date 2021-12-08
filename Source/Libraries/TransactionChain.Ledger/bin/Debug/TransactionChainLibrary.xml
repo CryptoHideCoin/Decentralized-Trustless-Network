@@ -73,28 +73,28 @@ TransactionChainLibrary
  <param name="block"></param>
  <returns></returns>
 </member>
-<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.deleteOldRequest(System.Int32)">
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.deleteOldRequest(System.Double)">
  <summary>
  This method provide to delete an old request
  </summary>
  <param name="minimalMaintainanceRequestBlock"></param>
  <returns></returns>
 </member>
-<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.deleteOldRequestRejectedAndTrashed(System.Int32)">
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.deleteOldRequestRejectedAndTrashed(System.Double)">
  <summary>
  This method provide to delete old request rejected and trashed request
  </summary>
  <param name="minimalMaintenanceRequestFile"></param>
  <returns></returns>
 </member>
-<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.extractOldRequestBlock(System.Int32)">
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.extractOldRequestBlock(System.Double)">
  <summary>
  This method provide to extract old request block
  </summary>
  <param name="minimalMantainRequestBlock"></param>
  <returns></returns>
 </member>
-<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.extractOldRequestRejectOrTrashedFile(System.Int32,TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest)">
+<member name="M:TransactionChainLibrary.AreaEngine.Requests.RequestManager.extractOldRequestRejectOrTrashedFile(System.Double,TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest)">
  <summary>
  This method provide to extract the maintenance request file
  </summary>
@@ -424,7 +424,7 @@ TransactionChainLibrary
  </summary>
  <returns></returns>
 </member>
-<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.changeBlock">
+<member name="M:TransactionChainLibrary.AreaLedger.LedgerEngine.changeBlock(System.Int32)">
  <summary>
  This method provide to change a block
  </summary>

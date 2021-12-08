@@ -284,18 +284,18 @@ CHCProtocolLibrary
  </summary>
  <returns></returns>
 </member>
-<member name="T:CHCProtocolLibrary.AreaCommon.Models.Network.assetPolicyModel">
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Network.AssetPolicyModel">
  <summary>
  This class contain all information reguard the minting information
  </summary>
 </member>
-<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.assetPolicyModel.ToString">
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.AssetPolicyModel.ToString">
  <summary>
  This method provide to create a string summary of the member of a class
  </summary>
  <returns></returns>
 </member>
-<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.assetPolicyModel.getHash">
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.AssetPolicyModel.getHash">
  <summary>
  This method provide to get hash value from a string of a class
  </summary>
@@ -412,6 +412,23 @@ CHCProtocolLibrary
 <member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel.clone">
  <summary>
  This method provide to clone the object into another
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Network.CloseBlockOrIntegrityConfiguration">
+ <summary>
+ This class contain all element to create an request to close or integrity of a chain
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.CloseBlockOrIntegrityConfiguration.ToString">
+ <summary>
+ This method provide to convert into string a data class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.CloseBlockOrIntegrityConfiguration.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
  </summary>
  <returns></returns>
 </member>
@@ -583,6 +600,23 @@ CHCProtocolLibrary
  </summary>
  <returns></returns>
 </member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.ChainParameterModel">
+ <summary>
+ This class contain the element of parameter configuration of a chain
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.ChainParameterModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.ChainParameterModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData">
  <summary>
  This class contain the minimal element to install or upgrade a protocol
@@ -655,6 +689,12 @@ CHCProtocolLibrary
 <member name="M:CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel.ToString">
  <summary>
  This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel.clone">
+ <summary>
+ This method provide to clone this class
  </summary>
  <returns></returns>
 </member>

@@ -19,7 +19,7 @@ Namespace AreaCommon.Models.Settings
     ''' This enumeration contain the value of position of the service
     ''' </summary>
     Public Enum EnumStateApplication
-        notDefined
+        undefined
         waitingToStart
         inStarting
         inRunning

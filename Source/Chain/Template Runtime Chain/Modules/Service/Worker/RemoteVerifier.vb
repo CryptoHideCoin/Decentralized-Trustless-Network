@@ -37,7 +37,7 @@ Namespace AreaWorker
 
                 workerOn = False
 
-                AreaCommon.log.track("RemoteVerifier.work", "Complete")
+                AreaCommon.log.track("RemoteVerifier.work", "Completed")
 
                 Return True
             Catch ex As Exception

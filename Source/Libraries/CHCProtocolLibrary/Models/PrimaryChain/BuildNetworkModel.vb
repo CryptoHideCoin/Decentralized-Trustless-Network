@@ -123,7 +123,7 @@ Namespace AreaCommon.Models.Network
     ''' <summary>
     ''' This class contain all information reguard the minting information
     ''' </summary>
-    Public Class assetPolicyModel
+    Public Class AssetPolicyModel
 
         Public Property shortAssetReferement As String = ""
         Public Property unlimited As Boolean = False
@@ -284,8 +284,8 @@ Namespace AreaCommon.Models.Network
         Public Property reviewReleaseAlgorithm As String = "OnTransaction"
         Public Property consensusMethod As String = "Proof Of Stake"
         Public Property minimalMaintainRequest As String = "3years"
-        Public Property minimalMaintainConsensus As String = "2year"
-        Public Property minimalMaintainBulletines As String = "1year"
+        Public Property minimalMaintainConsensus As String = "2years"
+        Public Property minimalMaintainBulletines As String = "1years"
         Public Property minimalMaintainRejected As String = "14days"
         Public Property minimalMaintainTrashed As String = "7days"
         Public Property minimalMaintainInternalRegistry As String = "5days"
@@ -415,6 +415,42 @@ Namespace AreaCommon.Models.Network
             Next
 
             Return result
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain all element to create an request to close or integrity of a chain
+    ''' </summary>
+    Public Class CloseBlockOrIntegrityConfiguration
+
+        Public Property closeBlock As Boolean = True
+        Public Property dataLastRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+
+        ''' <summary>
+        ''' This method provide to convert into string a data class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
+            Dim tmp As String = ""
+
+            If closeBlock Then
+                tmp += "1"
+            Else
+                tmp += "0"
+            End If
+
+            tmp += dataLastRecord.ToString()
+
+            Return tmp
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overridable Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
         End Function
 
     End Class

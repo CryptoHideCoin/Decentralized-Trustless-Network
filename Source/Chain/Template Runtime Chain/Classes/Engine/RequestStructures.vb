@@ -80,6 +80,7 @@ Namespace AreaFlow
         End Property
         Public Property source As New SourceRequestExtended
         Public Property position As New MonitorPositionRequestExtended
+        Public Property processOperationComplete As Boolean = False
         Public Property evaluations As New AreaCommon.Masternode.MasternodeEvaluations
         Public Property consensus As New AreaConsensus.ConsensusNetwork
         Public Property bulletin As New AreaConsensus.BulletinInformation
@@ -98,10 +99,10 @@ Namespace AreaFlow
                                 .hash = .getHash(consensus.requestHash, typology)
                                 .signature = AreaSecurity.createSignature(.hash)
                             End If
-                            .votePoint = AreaCommon.state.network.coinWarranty
+                            .power = AreaCommon.state.network.coinWarranty
                         End If
 
-                        If Not consensus.addNewAssessment(typology, .assessmentTimeStamp, .hash, .signature, .votePoint, .publicAddress) Then
+                        If Not consensus.addNewAssessment(typology, .assessmentTimeStamp, .hash, .signature, .power, .publicAddress) Then
                             Return False
                         End If
                     End With
@@ -146,8 +147,8 @@ Namespace AreaFlow
                     consensus.masterNodePublicAddress = AreaCommon.state.network.publicAddressIdentity
                     consensus.nodeRegistrant = currentBulletin.proposalsForApprovalData.registerMasternodeAddress
                     consensus.nodeRegistrantTimeStamp = currentBulletin.proposalsForApprovalData.registerBulletinAssessmentTimeStamp
-                    consensus.voteValueApproved = evaluations.approved.totalValuePoints
-                    consensus.voteValueRejected = evaluations.rejected.totalValuePoints
+                    consensus.powerApproved = evaluations.approved.totalPower
+                    consensus.powerRejected = evaluations.rejected.totalPower
                 End If
                 If proceed Then
                     proceed = consensus.reorderElements()
@@ -166,7 +167,7 @@ Namespace AreaFlow
 
                 Return True
             Finally
-                AreaCommon.log.track("RequestExtended.createConsensus", "Complete")
+                AreaCommon.log.track("RequestExtended.createConsensus", "Completed")
             End Try
         End Function
 

@@ -9,7 +9,6 @@ Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
 
 
 
-
 Namespace AreaProtocol
 
     ''' <summary>
@@ -17,7 +16,7 @@ Namespace AreaProtocol
     ''' </summary>
     Public Class EssentialA1x1
 
-        Inherits CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData
+        Inherits CHCProtocolLibrary.AreaCommon.Models.Chain.ChainParameterModel
 
         Public Property approveConfiguration As New CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel
         Public Property feeConfiguration As New CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel
@@ -40,12 +39,21 @@ Namespace AreaProtocol
         ''' This method provide to extract minimal data from this request
         ''' </summary>
         ''' <returns></returns>
-        Public Function extractMinimal() As CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData
-            Dim result As New CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData
+        Public Function extractMinimal() As CHCProtocolLibrary.AreaCommon.Models.Chain.ChainParameterModel
+            Dim result As New CHCProtocolLibrary.AreaCommon.Models.Chain.ChainParameterModel
 
-            result.setCode = MyBase.setCode
-            result.protocol = MyBase.protocol
-            result.documentation = MyBase.documentation
+            result.blockSizeFrequency = MyBase.blockSizeFrequency
+            result.numberBlockInVolume = MyBase.numberBlockInVolume
+            result.maxTimeOutNotEvaluateNode = MyBase.maxTimeOutNotEvaluateNode
+            result.maxTimeOutNotRespondNode = MyBase.maxTimeOutNotRespondNode
+            result.initialCoinReleasePerBlock = MyBase.initialCoinReleasePerBlock
+            result.ruleFutureRelease = MyBase.ruleFutureRelease
+            result.minimalMaintainBulletines = MyBase.minimalMaintainBulletines
+            result.minimalMaintainConsensus = MyBase.minimalMaintainConsensus
+            result.minimalMaintainInternalRegistry = MyBase.minimalMaintainInternalRegistry
+            result.minimalMaintainRejected = MyBase.minimalMaintainRejected
+            result.minimalMaintainRequest = MyBase.minimalMaintainRequest
+            result.minimalMaintainTrashed = MyBase.minimalMaintainTrashed
 
             Return result
         End Function
@@ -60,9 +68,10 @@ Namespace AreaProtocol
         ''' <summary>
         ''' This method contain a request model
         ''' </summary>
-        Public Class RequestModel : Inherits EssentialA1x1 : Implements IRequestModel
+        Public Class RequestModel : Implements IRequestModel
 
             Public Property common As New CommonRequest Implements IRequestModel.common
+            Public Property content As New EssentialA1x1
 
             ''' <summary>
             ''' This method provide to convert into a string the element of the object
@@ -72,6 +81,7 @@ Namespace AreaProtocol
                 Dim tmp As String = common.toString()
 
                 tmp += MyBase.toString()
+                tmp += content.toString()
 
                 Return tmp
             End Function
@@ -80,7 +90,7 @@ Namespace AreaProtocol
             ''' This methdo provide to get an hash of the object
             ''' </summary>
             ''' <returns></returns>
-            Public Overrides Function getHash() As String Implements IRequestModel.getHash
+            Public Function getHash() As String Implements IRequestModel.getHash
                 Return HashSHA.generateSHA256(Me.toString())
             End Function
 
@@ -103,47 +113,14 @@ Namespace AreaProtocol
                     _Base.common = value
                 End Set
             End Property
-            Public Property setCode As String
+            Public Property content As CHCProtocolLibrary.AreaCommon.Models.Chain.ChainParameterModel
                 Get
-                    Return _Base.setCode
+                    Return _Base.content
                 End Get
-                Set(value As String)
-                    _Base.setCode = value
+                Set(value As CHCProtocolLibrary.AreaCommon.Models.Chain.ChainParameterModel)
+                    _Base.content = value
                 End Set
             End Property
-            Public Property protocol As String
-                Get
-                    Return _Base.protocol
-                End Get
-                Set(value As String)
-                    _Base.protocol = value
-                End Set
-            End Property
-            Public Property documentation As String
-                Get
-                    Return _Base.documentation
-                End Get
-                Set(value As String)
-                    _Base.documentation = value
-                End Set
-            End Property
-            Public Property approveConfiguration As CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel
-                Get
-                    Return _Base.approveConfiguration
-                End Get
-                Set(value As CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel)
-                    _Base.approveConfiguration = value
-                End Set
-            End Property
-            Public Property feeConfiguration As CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel
-                Get
-                    Return _Base.feeConfiguration
-                End Get
-                Set(value As CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel)
-                    _Base.feeConfiguration = value
-                End Set
-            End Property
-
             Public Overrides Property signature As String
                 Get
                     Return MyBase.signature
@@ -169,14 +146,6 @@ Namespace AreaProtocol
                 Return _Base.getHash()
             End Function
 
-            ''' <summary>
-            ''' This method provide to extract minimal data from this request
-            ''' </summary>
-            ''' <returns></returns>
-            Public Function extractMinimal() As CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData
-                Return _Base.extractMinimal()
-            End Function
-
         End Class
 
         ''' <summary>
@@ -193,14 +162,14 @@ Namespace AreaProtocol
             Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
                 Try
                     Dim proceed As Boolean = True
-                    Dim content As CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData = value.extractMinimal()
+                    Dim content As CHCProtocolLibrary.AreaCommon.Models.Chain.ChainParameterModel = value.content
                     Dim hashContent As String = HashSHA.generateSHA256(content.toString())
                     Dim completefileName As String = IO.Path.Combine(AreaCommon.paths.workData.state.contents, hashContent) & ".Content"
 
                     AreaCommon.log.track("RecoveryState.fromRequest", "Begin")
 
                     If proceed Then
-                        proceed = AreaCommon.state.runtimeState.updateNewProtocol(value.common.chainReferement, content, hashContent, transactionChainRecord)
+                        proceed = AreaCommon.state.runtimeState.updateChainProperty(value.common.chainReferement, AreaCommon.DAO.DBChain.DetailPropertyID.chainParameters, "", hashContent, transactionChainRecord)
                     End If
                     If proceed Then
                         If IO.File.Exists(completefileName) Then
@@ -209,10 +178,13 @@ Namespace AreaProtocol
                         proceed = Not IO.File.Exists(completefileName)
                     End If
                     If proceed Then
-                        proceed = IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData).save(completefileName, content)
+                        proceed = IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Chain.ChainParameterModel).save(completefileName, content)
+                    End If
+                    If proceed Then
+                        AreaCommon.state.serviceParameters = AreaService.ServiceParameterEngine.acquireChainParameter(value.content)
                     End If
 
-                    AreaCommon.log.track("RecoveryState.fromRequest", "Complete")
+                    AreaCommon.log.track("RecoveryState.fromRequest", "Completed")
 
                     Return proceed
                 Catch ex As Exception
@@ -249,7 +221,7 @@ Namespace AreaProtocol
                             proceed = (.common.netWorkReferement.Length > 0)
                         End If
                         If proceed Then
-                            proceed = (.common.netWorkReferement.CompareTo(AreaCommon.state.runtimeState.activeNetwork.hash) = 0)
+                            proceed = (.common.netWorkReferement.CompareTo(AreaCommon.state.runTimeState.activeNetwork.hash) = 0)
                         End If
                         If proceed Then
                             proceed = (.common.chainReferement.length > 0)
@@ -265,7 +237,7 @@ Namespace AreaProtocol
                         End If
                     End With
 
-                    AreaCommon.log.track("FormalCheck.verify", "Complete")
+                    AreaCommon.log.track("FormalCheck.verify", "Completed")
 
                     Return proceed
                 Catch ex As Exception
@@ -286,6 +258,18 @@ Namespace AreaProtocol
 
                     AreaCommon.log.track("FormalCheck.evaluate", "Begin")
 
+                    If Not AreaCommon.state.runTimeState.chainByHash.ContainsKey(request.common.chainReferement) Then
+                        value.evaluations.rejectedNote = "Chain not exist"
+                        value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
+
+                        Return True
+                    End If
+                    If (AreaCommon.state.runTimeState.chainByHash(request.common.chainReferement).parameters.coordinate.Length > 0) Then
+                        value.evaluations.rejectedNote = "Parameter exist"
+                        value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
+
+                        Return True
+                    End If
                     If (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(Now.ToUniversalTime.AddDays(-1))) Then
                         value.evaluations.rejectedNote = "Request expired"
                         value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
@@ -295,7 +279,7 @@ Namespace AreaProtocol
 
                     value.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult
 
-                    AreaCommon.log.track("FormalCheck.evaluate", "Complete")
+                    AreaCommon.log.track("FormalCheck.evaluate", "Completed")
 
                     Return True
                 Catch ex As Exception
@@ -316,7 +300,7 @@ Namespace AreaProtocol
             ''' This method provide to write request into ledger
             ''' </summary>
             ''' <returns></returns>
-            Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal value As CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+            Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal value As EssentialA1x1, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
                     Dim contentPath As String = AreaCommon.state.currentBlockLedger.proposeNewTransaction.pathData.contents
                     Dim hash As String = value.getHash()
@@ -325,7 +309,7 @@ Namespace AreaProtocol
 
                     contentPath = IO.Path.Combine(contentPath, hash & ".Content")
 
-                    If IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData).save(contentPath, value) Then
+                    If IOFast(Of EssentialA1x1).save(contentPath, value) Then
                         With AreaCommon.state.currentBlockLedger.proposeNewTransaction
                             .type = "a1x1"
                             .approverPublicAddress = approverPublicAddress
@@ -348,7 +332,7 @@ Namespace AreaProtocol
 
                     Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Finally
-                    AreaCommon.log.track("A1x1.Manager.addIntoLedger", "Complete")
+                    AreaCommon.log.track("A1x1.Manager.addIntoLedger", "Completed")
                 End Try
             End Function
 
@@ -385,58 +369,6 @@ Namespace AreaProtocol
                 Catch ex As Exception
                     Return New RequestModel
                 End Try
-            End Function
-
-            ''' <summary>
-            ''' This method provide to create a initial procedure A1x1
-            ''' </summary>
-            ''' <param name="networkNameParameter"></param>
-            ''' <param name="chainReferementParameter"></param>
-            ''' <param name="setCode"></param>
-            ''' <param name="protocol"></param>
-            ''' <param name="documentation"></param>
-            ''' <returns></returns>
-            Public Shared Function createInternalRequest(ByVal networkNameParameter As String, ByVal chainReferementParameter As String, ByVal setCode As String, ByVal protocol As String, ByVal documentation As String) As String
-                Try
-                    Dim data As New RequestModel
-
-                    AreaCommon.log.track("A1x1Manager.createInternalRequest", "Begin")
-
-                    AreaCommon.state.currentService.currentAction.setAction("11x0001", "A1x1 - A1x1Manager")
-
-                    If AreaCommon.state.currentService.requestCancelCurrentRunCommand Then Return False
-
-                    With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                        data.setCode = setCode
-                        data.protocol = protocol
-                        data.documentation = documentation
-                        data.common.netWorkReferement = networkNameParameter
-                        data.common.chainReferement = chainReferementParameter
-                        data.common.type = "a1x1"
-                        data.common.publicAddressRequester = .publicAddress
-                        data.common.requestDateTimeStamp = AreaCommon.state.runtimeState.activeNetwork.networkCreationDate
-                        data.common.hash = data.getHash()
-                        data.common.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(.privateKey, data.common.hash)
-                    End With
-
-                    If saveTemporallyRequest(data) Then
-                        AreaCommon.log.track("A1x1Manager.createInternalRequest", "request - Saved")
-
-                        If AreaCommon.flow.addNewRequestDirect(data) Then
-                            Return data.common.hash
-                        Else
-                            Return ""
-                        End If
-                    End If
-                Catch ex As Exception
-                    AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
-
-                    AreaCommon.log.track("A1x1Manager.createInternalRequest", ex.Message, "fatal")
-                Finally
-                    AreaCommon.log.track("A1x1Manager.createInternalRequest", "Completed")
-                End Try
-
-                Return ""
             End Function
 
         End Class

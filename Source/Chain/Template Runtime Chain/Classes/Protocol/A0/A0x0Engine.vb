@@ -129,7 +129,7 @@ Namespace AreaProtocol
                         AreaCommon.state.runtimeState.addNetworkProperty(AreaCommon.DAO.DBNetwork.MainPropertyID.specialEnvironment, value.content.specialEnvironment, transactionChainRecord)
                     End If
 
-                    AreaCommon.log.track("RecoveryState.fromRequest", "Complete")
+                    AreaCommon.log.track("RecoveryState.fromRequest", "Completed")
 
                     Return proceed
                 Catch ex As Exception
@@ -179,7 +179,7 @@ Namespace AreaProtocol
                         End If
                     End With
 
-                    AreaCommon.log.track("FormalCheck.verify", "Complete")
+                    AreaCommon.log.track("FormalCheck.verify", "Completed")
 
                     Return proceed
                 Catch ex As Exception
@@ -214,7 +214,7 @@ Namespace AreaProtocol
                     End If
                     value.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult
 
-                    AreaCommon.log.track("FormalCheck.evaluate", "Complete")
+                    AreaCommon.log.track("FormalCheck.evaluate", "Completed")
 
                     Return True
                 Catch ex As Exception
@@ -267,7 +267,7 @@ Namespace AreaProtocol
 
                     Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Finally
-                    AreaCommon.log.track("Manager.addIntoLedger", "Complete")
+                    AreaCommon.log.track("Manager.addIntoLedger", "Completed")
                 End Try
             End Function
 

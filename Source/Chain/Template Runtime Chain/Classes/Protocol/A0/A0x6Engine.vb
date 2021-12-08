@@ -129,7 +129,7 @@ Namespace AreaProtocol
                         proceed = True
                     End If
 
-                    AreaCommon.log.track("RecoveryState.fromRequest", "Complete")
+                    AreaCommon.log.track("RecoveryState.fromRequest", "Completed")
 
                     Return proceed
                 Catch ex As Exception
@@ -169,7 +169,7 @@ Namespace AreaProtocol
                         proceed = (request.common.netWorkReferement.CompareTo(AreaCommon.state.runtimeState.activeNetwork.hash) = 0)
                     End If
                     If proceed Then
-                        proceed = (request.common.chainReferement.CompareTo(AreaCommon.state.internalInformation.chainName) = 0)
+                        proceed = (request.common.chainReferement.CompareTo(AreaCommon.state.runTimeState.activeChain.hash) = 0)
                     End If
                     If proceed Then
                         proceed = (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
@@ -184,7 +184,7 @@ Namespace AreaProtocol
                         proceed = AreaSecurity.checkSignature(request.getHash, request.common.signature, request.common.publicAddressRequester)
                     End If
 
-                    AreaCommon.log.track("FormalCheck.verify", "Complete")
+                    AreaCommon.log.track("FormalCheck.verify", "Completed")
 
                     Return proceed
                 Catch ex As Exception
@@ -219,7 +219,7 @@ Namespace AreaProtocol
                     End If
                     value.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult
 
-                    AreaCommon.log.track("FormalCheck.evaluate", "Complete")
+                    AreaCommon.log.track("FormalCheck.evaluate", "Completed")
 
                     Return True
                 Catch ex As Exception
@@ -271,7 +271,7 @@ Namespace AreaProtocol
 
                     Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Finally
-                    AreaCommon.log.track("A0x6.Manager.addIntoLedger", "Complete")
+                    AreaCommon.log.track("A0x6.Manager.addIntoLedger", "Completed")
                 End Try
             End Function
 
@@ -328,7 +328,7 @@ Namespace AreaProtocol
                     With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                         data.generalCondition = generalConditionParameter
                         data.common.netWorkReferement = AreaCommon.state.runtimeState.activeNetwork.hash
-                        data.common.chainReferement = AreaCommon.state.internalInformation.chainName
+                        data.common.chainReferement = AreaCommon.state.runTimeState.activeChain.hash
                         data.common.type = "a0x6"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()

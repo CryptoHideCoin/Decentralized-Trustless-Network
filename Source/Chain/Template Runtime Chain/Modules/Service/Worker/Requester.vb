@@ -36,11 +36,17 @@ Namespace AreaWorker
                     Case "a1x3" : Return AreaProtocol.A1x3.FormalCheck.verify(value.dataCommon.hash)
                     Case "a1x4" : Return AreaProtocol.A1x4.FormalCheck.verify(value.dataCommon.hash)
                     Case "a1x5" : Return AreaProtocol.A1x5.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a1x6" : Return AreaProtocol.A1x6.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a1x7" : Return AreaProtocol.A1x7.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a1x8" : Return AreaProtocol.A1x8.FormalCheck.verify(value.dataCommon.hash)
+                    Case "a1x9" : Return AreaProtocol.A1x9.FormalCheck.verify(value.dataCommon.hash)
+
+                    Case "a2x0" : Return AreaProtocol.A2x0.FormalCheck.verify(value.dataCommon.hash)
 
                         ''' BOOKMARK: Add in this point 5
                 End Select
 
-                AreaCommon.log.track("Requester.formalCheck", "Complete")
+                AreaCommon.log.track("Requester.formalCheck", "Completed")
 
                 Return False
             Catch ex As Exception
@@ -67,7 +73,7 @@ Namespace AreaWorker
                     Return AreaCommon.flow.addNewRequestToSend(value.dataCommon.type, value.dataCommon.hash, AreaCommon.Masternode.MasternodeSenders.createMasterNodeList(), value, 0)
                 End If
 
-                AreaCommon.log.track("Requester.sendBroadCastNotice", "Complete")
+                AreaCommon.log.track("Requester.sendBroadCastNotice", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -99,6 +105,7 @@ Namespace AreaWorker
                     formalCorrect = Nothing
 
                     If (item.dataCommon.type.Length > 0) Then
+
                         item.position.request = AreaFlow.EnumOperationPosition.inWork
 
                         If proceed Then
@@ -106,6 +113,7 @@ Namespace AreaWorker
 
                             proceed = Not IsNothing(formalCorrect)
                         End If
+
                         If proceed Then proceed = sendBroadCastNotice(item)
 
                         If proceed Then
@@ -128,7 +136,7 @@ Namespace AreaWorker
                     item = Nothing
 
                     AreaCommon.flow.removeOldRequest()
-                    AreaProtocol.A1x5.Manager.manageCloseBlock()
+                    AreaProtocol.A1x7.Manager.manageCloseBlock()
                     AreaCommon.support.checkLastTime()
                     AreaCommon.support.inIdle = AreaCommon.flow.inIdleMode()
 
@@ -137,7 +145,7 @@ Namespace AreaWorker
 
                 workerOn = False
 
-                AreaCommon.log.track("Requester.work", "Complete")
+                AreaCommon.log.track("Requester.work", "Completed")
 
                 Return True
             Catch ex As Exception

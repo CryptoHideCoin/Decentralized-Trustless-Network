@@ -36,11 +36,17 @@ Namespace AreaWorker
                     Case "a1x3" : Return AreaProtocol.A1x3.FormalCheck.evaluate(value)
                     Case "a1x4" : Return AreaProtocol.A1x4.FormalCheck.evaluate(value)
                     Case "a1x5" : Return AreaProtocol.A1x5.FormalCheck.evaluate(value)
+                    Case "a1x6" : Return AreaProtocol.A1x6.FormalCheck.evaluate(value)
+                    Case "a1x7" : Return AreaProtocol.A1x7.FormalCheck.evaluate(value)
+                    Case "a1x8" : Return AreaProtocol.A1x8.FormalCheck.evaluate(value)
+                    Case "a1x9" : Return AreaProtocol.A1x9.FormalCheck.evaluate(value)
+
+                    Case "a2x0" : Return AreaProtocol.A2x0.FormalCheck.evaluate(value)
 
                         ''' BOOKMARK: Add in this point 6
                 End Select
 
-                AreaCommon.log.track("Verifier.evaluateTheRequest", "Complete")
+                AreaCommon.log.track("Verifier.evaluateTheRequest", "Completed")
 
                 Return False
             Catch ex As Exception
@@ -71,7 +77,7 @@ Namespace AreaWorker
 
                         If evaluateTheRequest(item) Then
                             item.evaluations.notExpressed = AreaCommon.flow.createEvaluationList()
-                            item.evaluations.currentChainNodeTotalVotes = item.evaluations.notExpressed.totalValuePoints
+                            item.evaluations.currentChainNodeTotalPower = item.evaluations.notExpressed.totalPower
 
                             If (item.position.verify = AreaFlow.EnumOperationPosition.inError) Then
                                 item.evaluations.setAbstained(AreaCommon.state.network.publicAddressIdentity)
@@ -90,7 +96,7 @@ Namespace AreaWorker
 
                 workerOn = False
 
-                AreaCommon.log.track("Verifier.work", "Complete")
+                AreaCommon.log.track("Verifier.work", "Completed")
 
                 Return True
             Catch ex As Exception

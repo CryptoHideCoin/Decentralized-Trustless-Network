@@ -50,18 +50,18 @@ Namespace AreaCommon.Masternode
                 Dim result As New MasternodeSenders
                 Dim singleItem As MasternodeSender
 
-                For Each item In state.runtimeState.activeMasterNode
-                    If (item.Value.itsMe And includeMe) Or Not item.Value.itsMe Then
+                For Each item In state.runTimeState.activeChain.internalNodeList.Values
+                    If (item.itsMe And includeMe) Or Not item.itsMe Then
                         singleItem = New MasternodeSender
 
-                        singleItem.publicAddress = item.Value.identityPublicAddress
-                        singleItem.publicAddressIP = item.Value.ipAddress
+                        singleItem.publicAddress = item.identityPublicAddress
+                        singleItem.publicAddressIP = item.ipAddress
 
                         result.add(singleItem)
                     End If
                 Next
 
-                log.track("MasternodeSenders.createMasterNodeList", "Complete")
+                log.track("MasternodeSenders.createMasterNodeList", "Completed")
 
                 Return result
             Catch ex As Exception
@@ -89,7 +89,7 @@ Namespace AreaCommon.Masternode
 
                 result.add(singleItem)
 
-                log.track("MasternodeSenders.createMasterNodeList", "Complete")
+                log.track("MasternodeSenders.createMasterNodeList", "Completed")
 
                 Return result
             Catch ex As Exception
@@ -172,7 +172,7 @@ Namespace AreaCommon.Masternode
     End Class
 
     ''' <summary>
-    ''' This class is used to collect e manage an information relative an assessment vote of a masternode
+    ''' This class is used to collect e manage an information relative an assessment power of a masternode
     ''' </summary>
     Public Class MinimalDataMasternodeList
 
@@ -180,7 +180,7 @@ Namespace AreaCommon.Masternode
 
             Public Property publicAddress As String = ""
             Public Property publicIPAddress As String = ""
-            Public Property votePoint As Double = 0
+            Public Property power As Double = 0
             Public Property assessmentTimeStamp As Double = 0
             Public Property hash As String = ""
             Public Property signature As String = ""
@@ -205,7 +205,7 @@ Namespace AreaCommon.Masternode
 
                 result += publicAddress
                 result += assessmentTimeStamp.ToString()
-                result += votePoint.ToString()
+                result += power.ToString()
 
                 Return result
             End Function
@@ -222,7 +222,7 @@ Namespace AreaCommon.Masternode
 
         Private Property _Items As New Dictionary(Of String, MinimalDataMasternode)
 
-        Public Property totalValuePoints As Double = 0
+        Public Property totalPower As Double = 0
 
         ''' <summary>
         ''' This method provide to add a new element into internal collection
@@ -236,7 +236,7 @@ Namespace AreaCommon.Masternode
 
                 item.publicAddress = node.publicAddress
                 item.publicIPAddress = node.publicIPAddress
-                item.votePoint = node.votePoint
+                item.power = node.power
 
                 item.assessmentTimeStamp = assessmentTimeStamp
 
@@ -245,7 +245,7 @@ Namespace AreaCommon.Masternode
                 End If
                 _Items.Add(node.publicAddress, item)
 
-                totalValuePoints += node.votePoint
+                totalPower += node.power
 
                 Return True
             Catch ex As Exception
@@ -317,29 +317,29 @@ Namespace AreaCommon.Masternode
 
         Private Property _Items As New Dictionary(Of String, ContactDataMasternode)
 
-        Public Property totalValuePoints As Double = 0
+        Public Property totalPower As Double = 0
 
         ''' <summary>
         ''' This method provide to add a new element in dictionary
         ''' </summary>
         ''' <param name="publicAddress"></param>
         ''' <param name="publicIPAddress"></param>
-        ''' <param name="votePoint"></param>
+        ''' <param name="power"></param>
         ''' <returns></returns>
-        Public Function addNew(ByVal publicAddress As String, ByVal publicIPAddress As String, ByVal votePoint As Double) As Boolean
+        Public Function addNew(ByVal publicAddress As String, ByVal publicIPAddress As String, ByVal power As Double) As Boolean
             Try
                 Dim item As New ContactDataMasternode
 
                 item.publicAddress = publicAddress
                 item.publicIPAddress = publicIPAddress
-                item.votePoint = votePoint
+                item.power = power
 
                 If _Items.ContainsKey(publicAddress) Then
                     _Items.Remove(publicAddress)
                 End If
                 _Items.Add(publicAddress, item)
 
-                totalValuePoints += votePoint
+                totalPower += power
 
                 Return True
             Catch ex As Exception
@@ -356,7 +356,7 @@ Namespace AreaCommon.Masternode
             Try
                 _Items.Add(value.publicAddress, value)
 
-                totalValuePoints += value.votePoint
+                totalPower += value.power
 
                 Return True
             Catch ex As Exception
@@ -416,11 +416,11 @@ Namespace AreaCommon.Masternode
         ''' <returns></returns>
         Public Function remove(ByVal publicAddress As String) As Boolean
             If _Items.ContainsKey(publicAddress) Then
-                Dim votePoint As Double = _Items.Item(publicAddress).votePoint
+                Dim power As Double = _Items.Item(publicAddress).power
 
                 _Items.Remove(publicAddress)
 
-                totalValuePoints -= votePoint
+                totalPower -= power
 
                 Return True
             Else
@@ -431,7 +431,7 @@ Namespace AreaCommon.Masternode
     End Class
 
     ''' <summary>
-    ''' This class contains the expression to vote
+    ''' This class contains the expression to power
     ''' </summary>
     Public Class MasternodeEvaluations
 
@@ -443,7 +443,7 @@ Namespace AreaCommon.Masternode
         Public Property abstained As New MinimalDataMasternodeList
         Public Property absents As New MinimalDataMasternodeList
 
-        Public Property currentChainNodeTotalVotes As Double = 0
+        Public Property currentChainNodeTotalPower As Double = 0
 
         ''' <summary>
         ''' This method provide to set a result of evaluation
@@ -469,7 +469,7 @@ Namespace AreaCommon.Masternode
                     End Select
 
                     If proceed Then
-                        log.track("MasternodeEvaluations.setResult", "Complete")
+                        log.track("MasternodeEvaluations.setResult", "Completed")
 
                         Return notExpressed.remove(publicAddress)
                     End If
@@ -479,7 +479,7 @@ Namespace AreaCommon.Masternode
 
                 Return False
             Finally
-                log.track("MasternodeEvaluations.setResult", "Complete")
+                log.track("MasternodeEvaluations.setResult", "Completed")
             End Try
 
             Return False

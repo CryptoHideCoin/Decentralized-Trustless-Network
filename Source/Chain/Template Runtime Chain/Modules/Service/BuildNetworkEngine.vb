@@ -45,7 +45,7 @@ Namespace AreaData
                     .role = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumMasternodeRole.fullRole
                 End With
 
-                AreaCommon.log.track("BuildNetwork.setNetworkState", "Complete")
+                AreaCommon.log.track("BuildNetwork.setNetworkState", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -64,18 +64,18 @@ Namespace AreaData
                 AreaCommon.log.track("BuildNetwork.createLedger", "Begin")
 
                 With AreaCommon.state
-                    .runtimeState.activeNetwork.networkCreationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    .runTimeState.activeNetwork.networkCreationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                     .currentBlockLedger.log = AreaCommon.log
-                    .currentBlockLedger.identifyBlockChain = "B0"
+                    .currentBlockLedger.identifyBlockChain = "A0"
 
                     .ledgerMap.log = AreaCommon.log
 
-                    If .currentBlockLedger.init(AreaCommon.paths.workData.ledger, AreaCommon.state.runtimeState.activeNetwork.networkCreationDate) Then
+                    If .currentBlockLedger.init(AreaCommon.paths.workData.ledger, AreaCommon.state.runTimeState.activeNetwork.networkCreationDate) Then
                         .ledgerMap.init(AreaCommon.paths.workData.ledger)
                     End If
                 End With
 
-                AreaCommon.log.track("BuildNetwork.createLedger", "Complete")
+                AreaCommon.log.track("BuildNetwork.createLedger", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -90,7 +90,7 @@ Namespace AreaData
         ''' </summary>
         ''' <returns></returns>
         Private Function createState() As Boolean
-            Return AreaCommon.state.runtimeState.init(AreaCommon.paths.workData.state.path)
+            Return AreaCommon.state.runTimeState.init(AreaCommon.paths.workData.state.path)
         End Function
 
         ''' <summary>
@@ -99,27 +99,21 @@ Namespace AreaData
         ''' <returns></returns>
         Private Function createVirtualNodeList() As Boolean
             Try
+                Dim singleNode As New AreaProtocol.NodeComplete
+
                 AreaCommon.log.track("BuildNetwork.createVirtualNodeList", "Begin")
 
-                With AreaCommon.state.runtimeState.addNewNode("Primary")
-                    .dayConnection = 0
+                AreaCommon.state.runTimeState.addGenesisChain()
 
-                    If AreaCommon.settings.data.intranetMode Then
-                        .ipAddress = AreaCommon.state.localIpAddress
-                    Else
-                        .ipAddress = AreaCommon.state.publicIpAddress
-                    End If
+                singleNode.addNewAddressIP(AreaCommon.state.internalInformation.addressIP, True)
 
-                    .lastConnectionTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                    .role = AreaState.ChainStateEngine.DataMasternode.roleMasterNode.fullService
-                    .startConnectionTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                    .votePoint = 1
-                    .warrantyCoin = 1
-                    .warrantyPublicAddress = .identityPublicAddress
-                    .refundPublicAddress = .identityPublicAddress
-                End With
+                singleNode.startConnectionTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                singleNode.role = AreaProtocol.RoleMasterNode.fullStack
+                singleNode.chainName = "Genesis"
 
-                AreaCommon.log.track("BuildNetwork.createVirtualNodeList", "Complete")
+                AreaCommon.state.runTimeState.addNewNodeToChain(AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).publicAddress, singleNode)
+
+                AreaCommon.log.track("BuildNetwork.createVirtualNodeList", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -133,13 +127,27 @@ Namespace AreaData
         ''' This method provide to create the request and wait the approvation
         ''' </summary>
         ''' <returns></returns>
-        Private Function createAndWaitRequest(ByRef [type] As String, Optional ByVal checkChainReferement As Boolean = False) As Boolean
+        Private Function createAndWaitRequest(ByRef hash As String, Optional ByVal fase As Byte = 0) As Boolean
             Try
-                Do While (AreaCommon.flow.getActiveRequest([type]).position.process <> AreaFlow.EnumOperationPosition.completeWithPositiveResult) Or
-                         (AreaCommon.state.runtimeState.activeNetwork.hash.Length = 0) Or
-                          (checkChainReferement And (AreaCommon.state.runtimeState.activeChain.hash.Length = 0))
-                    Threading.Thread.Sleep(AreaCommon.support.timeSleep)
-                Loop
+                Select Case fase
+                    Case 0
+                        Do While Not AreaCommon.flow.getActiveRequest(hash).processOperationComplete And
+                                  (AreaCommon.state.runTimeState.activeNetwork.hash.Length = 0)
+                            Threading.Thread.Sleep(AreaCommon.support.timeSleep)
+                        Loop
+
+                    Case 1
+                        Do While Not AreaCommon.flow.getActiveRequest(hash).processOperationComplete And
+                                 (AreaCommon.state.runTimeState.activeChain.hash.Length = 0)
+                            Threading.Thread.Sleep(AreaCommon.support.timeSleep)
+                        Loop
+
+                    Case 2
+                        Do While Not AreaCommon.flow.getActiveRequest(hash).processOperationComplete
+                            Threading.Thread.Sleep(AreaCommon.support.timeSleep)
+                        Loop
+
+                End Select
 
                 Return True
             Catch ex As Exception
@@ -147,9 +155,22 @@ Namespace AreaData
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to rebuild the final command list
+        ''' </summary>
+        Private Sub rebuildFinalCommandList()
+            With AreaCommon.state.currentService
+                .listAvailableCommand.Clear()
+
+                .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.requestNetworkDisconnect)
+            End With
+        End Sub
+
+
 
         Public Function buildNetwork() As Boolean
             Dim proceed As Boolean = True
+            Dim lastHash As String = ""
             Try
                 AreaCommon.log.trackIntoConsole("Build Network start")
                 AreaCommon.log.track("BuildNetwork.run", "Begin")
@@ -163,24 +184,53 @@ Namespace AreaData
                 If proceed Then proceed = createState()
                 If proceed Then proceed = createVirtualNodeList()
 
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x0.Manager.createInternalRequest(dataNetwork.informationBase))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x1.Manager.createInternalRequest(dataNetwork.whitePaper.content))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x2.Manager.createInternalRequest(dataNetwork.yellowPaper.content))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x3.Manager.createInternalRequest(dataNetwork.primaryAsset))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x4.Manager.createInternalRequest(dataNetwork.transactionChainParameter))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x5.Manager.createInternalRequest(dataNetwork.privacyPolicy.content))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x6.Manager.createInternalRequest(dataNetwork.generalCondition.content))
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x7.Manager.createInternalRequest(dataNetwork.refundPlan))
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A0x0.Manager.createInternalRequest(dataNetwork.informationBase), 0)
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A1x0.Manager.createInternalRequest("Primary", "Primary Chain"), 1)
+                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A2x0.Manager.createInternalRequest(), 2)
 
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A1x0.Manager.createInternalRequest(AreaCommon.state.runtimeState.activeNetwork.hash, "Primary", "Primary Chain"), True)
-                If proceed Then proceed = createAndWaitRequest(AreaProtocol.A1x1.Manager.createInternalRequest(AreaCommon.state.runtimeState.activeNetwork.hash, AreaCommon.state.runtimeState.activeChain.hash, "BaseOne", "First base of Primary Chain", "a0x0, a0x1, a0x2, a0x3, a0x4, a0x5, a0x6, a0x7, a1x0, a1x1, a1x2, a1x3, a1x4, a1x5, a1x6, a2x0, a2x1, a2x2, a2x3, a2x4"))
+                If proceed Then proceed = (AreaProtocol.A0x1.Manager.createInternalRequest(dataNetwork.whitePaper.content).Length > 0)
+                If proceed Then proceed = (AreaProtocol.A0x2.Manager.createInternalRequest(dataNetwork.yellowPaper.content).Length > 0)
+                If proceed Then proceed = (AreaProtocol.A0x3.Manager.createInternalRequest(dataNetwork.primaryAsset).Length > 0)
+                If proceed Then proceed = (AreaProtocol.A0x4.Manager.createInternalRequest(dataNetwork.transactionChainParameter).Length > 0)
+                If proceed Then proceed = (AreaProtocol.A0x5.Manager.createInternalRequest(dataNetwork.privacyPolicy.content).Length > 0)
+                If proceed Then proceed = (AreaProtocol.A0x6.Manager.createInternalRequest(dataNetwork.generalCondition.content).Length > 0)
+                If proceed Then proceed = (AreaProtocol.A0x7.Manager.createInternalRequest(dataNetwork.refundPlan).Length > 0)
 
                 If proceed Then
-                    AreaCommon.log.trackIntoConsole("Build Network complete")
+                    lastHash = AreaProtocol.A1x2.Manager.createInternalRequest("BaseOne", "First base of Primary Chain", "a0x0, a0x1, a0x2, a0x3, a0x4, a0x5, a0x6, a0x7, a1x0, a1x1, a1x2, a1x3, a1x4, a1x5, a1x6, a2x0, a2x1, a2x2, a2x3, a2x4")
+
+                    proceed = (lastHash.Length > 0)
+                End If
+
+                If proceed Then
+                    Do While Not AreaCommon.flow.getActiveRequest(lastHash).processOperationComplete
+                        Threading.Thread.Sleep(AreaCommon.support.timeSleep)
+                    Loop
+
+                    AreaCommon.log.trackIntoConsole("Build Network Completed")
+                    AreaCommon.log.trackIntoConsole("")
+
+                    If (AreaCommon.state.runTimeState.activeNetwork.envinronment.value.Trim.Length > 0) Then
+                        AreaCommon.log.trackIntoConsole("Net name = " & AreaCommon.state.runTimeState.activeNetwork.networkName.value & " (" & AreaCommon.state.runTimeState.activeNetwork.envinronment.value & ")")
+                    Else
+                        AreaCommon.log.trackIntoConsole("Net name = " & AreaCommon.state.runTimeState.activeNetwork.networkName.value)
+                    End If
+                    AreaCommon.log.trackIntoConsole("Chain name = " & AreaCommon.state.runTimeState.activeChain.name.value)
+                    AreaCommon.log.trackIntoConsole("Current Masternode = " & AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).publicAddress)
+                    AreaCommon.log.trackIntoConsole("")
                 Else
                     AreaCommon.log.trackIntoConsole("Build Network failed")
                 End If
-                AreaCommon.log.track("BuildNetwork.run", "Complete")
+                AreaCommon.log.track("BuildNetwork.run", "Completed")
+                AreaCommon.log.trackIntoConsole("")
+
+                rebuildFinalCommandList()
+
+                If AreaCommon.webServiceThread() Then
+                    AreaCommon.log.trackIntoConsole("Public port (" & AreaCommon.settings.data.publicPort & ") chain in listen")
+                Else
+                    AreaCommon.log.trackIntoConsole("Problem during start public service")
+                End If
 
                 Return True
             Catch ex As Exception
@@ -192,7 +242,7 @@ Namespace AreaData
                     AreaCommon.state.currentService.currentAction.reset()
                 End If
 
-                AreaCommon.state.currentService.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.notDefined
+                AreaCommon.state.currentService.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.undefined
                 AreaCommon.state.currentService.requestCancelCurrentRunCommand = False
             End Try
         End Function

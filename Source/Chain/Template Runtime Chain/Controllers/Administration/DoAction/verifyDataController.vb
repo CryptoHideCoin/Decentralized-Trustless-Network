@@ -62,7 +62,7 @@ Namespace Controllers
                     result.responseStatus = General.RemoteResponse.EnumResponseStatus.systemOffline
                 End If
 
-                AreaCommon.log.track("VerifyDataController.getValue", "Complete")
+                AreaCommon.log.track("VerifyDataController.getValue", "Completed")
             Catch ex As Exception
                 result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"

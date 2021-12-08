@@ -156,7 +156,7 @@ Namespace AreaLedger
         ''' </summary>
         Public Enum EnumPropertyID
 
-            notDefined
+            undefined
             typeOfDB
             dateCreation
             name
@@ -355,7 +355,7 @@ Namespace AreaLedger
         ''' This method provide to change a block
         ''' </summary>
         ''' <returns></returns>
-        Public Function changeBlock() As Boolean
+        Public Function changeBlock(ByVal numberBlockInVolume As Integer) As Boolean
             Try
                 log.track("LedgerEngine.changeBlock", "Begin")
 
@@ -368,9 +368,12 @@ Namespace AreaLedger
 
                 currentIdBlock = nextIdBlock
                 currentIdVolume = nextIdVolume
+                _NewIdTransaction = 0
 
-                If (nextIdBlock = 365) Then
+                If (nextIdBlock = numberBlockInVolume - 1) Then
                     nextIdVolume += 1
+
+                    nextIdBlock = 0
                 Else
                     nextIdBlock += 1
                 End If

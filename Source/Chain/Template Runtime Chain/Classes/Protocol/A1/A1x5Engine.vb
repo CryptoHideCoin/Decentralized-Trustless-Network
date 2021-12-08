@@ -11,11 +11,39 @@ Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
 
 Namespace AreaProtocol
 
-    Public Class FirstRequestData
-        Public Property data As String = ""
-        Public Property minimalRequestClose As Double = 0
-    End Class
+    ''' <summary>
+    ''' This class contain the minimal data essential A1x5 (Terms and Conditions)
+    ''' </summary>
+    Public Class EssentialA1x5
 
+        Public Property termsAndConditions As String = ""
+
+        Public Property approveConfiguration As New CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel
+        Public Property feeConfiguration As New CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel
+
+        ''' <summary>
+        ''' This method provide to convert into a string the element of the object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function toString() As String
+            Dim result As String = ""
+
+            result += termsAndConditions
+            result += approveConfiguration.ToString()
+            result += feeConfiguration.ToString()
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' This methdo provide to get an hash of the object
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overridable Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
+
+    End Class
 
     ''' <summary>
     ''' This class contain all element to manage a A1x5 command
@@ -28,6 +56,7 @@ Namespace AreaProtocol
         Public Class RequestModel : Implements IRequestModel
 
             Public Property common As New CommonRequest Implements IRequestModel.common
+            Public Property content As New EssentialA1x5
 
             ''' <summary>
             ''' This method provide to convert into a string the element of the object
@@ -68,7 +97,14 @@ Namespace AreaProtocol
                     _Base.common = value
                 End Set
             End Property
-
+            Public Property content As EssentialA1x5
+                Get
+                    Return _Base.content
+                End Get
+                Set(value As EssentialA1x5)
+                    _Base.content = value
+                End Set
+            End Property
             Public Overrides Property signature As String
                 Get
                     Return MyBase.signature
@@ -111,18 +147,22 @@ Namespace AreaProtocol
                 Try
                     Dim proceed As Boolean = True
                     Dim contentPath As String = AreaCommon.paths.workData.state.contents
+                    Dim hashContent As String = HashSHA.generateSHA256(value.content.toString())
 
                     AreaCommon.log.track("RecoveryState.fromRequest", "Begin")
 
                     If proceed Then
-                        proceed = AreaCommon.state.runtimeState.updateChainProperty(value.common.chainReferement, AreaCommon.DAO.DBChain.DetailPropertyID.lastCloseBlock, transactionChainRecord.registrationTimeStamp, "", transactionChainRecord)
+                        proceed = AreaCommon.state.runtimeState.updateChainProperty(value.common.chainReferement, AreaCommon.DAO.DBChain.DetailPropertyID.termAndConditions, value.content.termsAndConditions, hashContent, transactionChainRecord)
                     End If
                     If proceed Then
-                        Manager.firstRequestCloseBlock.data = ""
-                        Manager.firstRequestCloseBlock.minimalRequestClose = 0
+                        contentPath = IO.Path.Combine(contentPath, hashContent & ".Content")
+
+                        My.Computer.FileSystem.WriteAllText(contentPath, value.content.termsAndConditions, False)
+
+                        proceed = True
                     End If
 
-                    AreaCommon.log.track("RecoveryState.fromRequest", "Complete")
+                    AreaCommon.log.track("RecoveryState.fromRequest", "Completed")
 
                     Return proceed
                 Catch ex As Exception
@@ -133,7 +173,7 @@ Namespace AreaProtocol
             End Function
 
             Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
-                ''' TODO: A1x4 RecoveryState.fromTransactionLedger
+                ''' TODO: A1x5 RecoveryState.fromTransactionLedger
             End Function
 
         End Class
@@ -171,13 +211,16 @@ Namespace AreaProtocol
                         proceed = (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
                     End If
                     If proceed Then
+                        proceed = (request.content.termsAndConditions.Length > 0)
+                    End If
+                    If proceed Then
                         proceed = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.SingleKeyPair.checkFormatPublicAddress(request.common.publicAddressRequester)
                     End If
                     If proceed Then
                         proceed = AreaSecurity.checkSignature(request.getHash, request.common.signature, request.common.publicAddressRequester)
                     End If
 
-                    AreaCommon.log.track("FormalCheck.verify", "Complete")
+                    AreaCommon.log.track("FormalCheck.verify", "Completed")
 
                     Return proceed
                 Catch ex As Exception
@@ -207,7 +250,7 @@ Namespace AreaProtocol
 
                     value.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult
 
-                    AreaCommon.log.track("FormalCheck.evaluate", "Complete")
+                    AreaCommon.log.track("FormalCheck.evaluate", "Completed")
 
                     Return True
                 Catch ex As Exception
@@ -224,31 +267,36 @@ Namespace AreaProtocol
         ''' </summary>
         Public Class Manager
 
-            Shared Property firstRequestCloseBlock As New FirstRequestData
-
-
             ''' <summary>
             ''' This method provide to write request into ledger
             ''' </summary>
             ''' <returns></returns>
-            Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+            Public Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal value As EssentialA1x5, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
                     Dim contentPath As String = AreaCommon.state.currentBlockLedger.proposeNewTransaction.pathData.contents
+                    Dim hash As String = value.getHash()
 
                     AreaCommon.log.track("A1x5.Manager.addIntoLedger", "Begin")
 
-                    With AreaCommon.state.currentBlockLedger.proposeNewTransaction
-                        .type = "a1x5"
-                        .approverPublicAddress = approverPublicAddress
-                        .consensusHash = consensusHash
-                        .detailInformation = ""
-                        .registrationTimeStamp = registrationTimeStamp
-                        .requesterPublicAddress = requesterPublicAddress
-                        .requestHash = requestHash
-                        .currentHash = .getHash
-                    End With
+                    contentPath = IO.Path.Combine(contentPath, hash & ".Content")
 
-                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
+                    If IOFast(Of EssentialA1x5).save(contentPath, value) Then
+
+                        With AreaCommon.state.currentBlockLedger.proposeNewTransaction
+                            .type = "a1x5"
+                            .approverPublicAddress = approverPublicAddress
+                            .consensusHash = consensusHash
+                            .detailInformation = hash
+                            .registrationTimeStamp = registrationTimeStamp
+                            .requesterPublicAddress = requesterPublicAddress
+                            .requestHash = requestHash
+                            .currentHash = .getHash
+                        End With
+
+                        Return AreaCommon.state.currentBlockLedger.saveAndClean()
+                    Else
+                        Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+                    End If
                 Catch ex As Exception
                     AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
 
@@ -256,7 +304,7 @@ Namespace AreaProtocol
 
                     Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Finally
-                    AreaCommon.log.track("A1x5.Manager.addIntoLedger", "Complete")
+                    AreaCommon.log.track("A1x5.Manager.addIntoLedger", "Completed")
                 End Try
             End Function
 
@@ -265,9 +313,9 @@ Namespace AreaProtocol
             ''' </summary>
             ''' <param name="value"></param>
             ''' <returns></returns>
-            Shared Function saveTemporallyRequest(ByRef value As RequestModel) As Boolean
+            Public Shared Function saveTemporallyRequest(ByRef value As RequestModel) As Boolean
                 Try
-                    Return IOFast(Of RequestModel).save(IO.Path.Combine(AreaCommon.paths.workData.requestData.received, value.getHash & ".Request"), value)
+                    Return IOFast(Of RequestModel).save(IO.Path.Combine(AreaCommon.paths.workData.requestData.received, value.getHash & ".request"), value)
                 Catch ex As Exception
                     Return False
                 End Try
@@ -278,9 +326,9 @@ Namespace AreaProtocol
             ''' </summary>
             ''' <param name="hash"></param>
             ''' <returns></returns>
-            Shared Function loadRequest(ByVal completePath As String, ByVal hash As String) As RequestModel
+            Public Shared Function loadRequest(ByVal completePath As String, ByVal hash As String) As RequestModel
                 Try
-                    Return IOFast(Of RequestModel).read(IO.Path.Combine(completePath, hash & ".Request"))
+                    Return IOFast(Of RequestModel).read(IO.Path.Combine(completePath, hash & ".request"))
                 Catch ex As Exception
                     Return New RequestModel
                 End Try
@@ -291,216 +339,8 @@ Namespace AreaProtocol
             ''' </summary>
             ''' <param name="value"></param>
             ''' <returns></returns>
-            Shared Function saveTemporallyRequest(ByRef value As RequestResponseModel) As Boolean
+            Public Shared Function saveTemporallyRequest(ByRef value As RequestResponseModel) As Boolean
                 Return saveTemporallyRequest(value)
-            End Function
-
-            ''' <summary>
-            ''' This method provide to create a initial procedure A1x5
-            ''' </summary>
-            ''' <returns></returns>
-            Shared Function createInternalRequest() As String
-                Try
-                    Dim data As New RequestModel
-
-                    AreaCommon.log.track("A1x5Manager.createInternalRequest", "Begin")
-
-                    If AreaCommon.state.currentService.requestCancelCurrentRunCommand Then Return False
-
-                    With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
-                        data.common.netWorkReferement = AreaCommon.state.runtimeState.activeNetwork.hash
-                        data.common.chainReferement = AreaCommon.state.runtimeState.activeChain.hash
-                        data.common.type = "a1x5"
-                        data.common.publicAddressRequester = .publicAddress
-                        data.common.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                        data.common.hash = data.getHash()
-                        data.common.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(.privateKey, data.common.hash)
-                    End With
-
-                    If saveTemporallyRequest(data) Then
-                        AreaCommon.log.track("A1x5Manager.createInternalRequest", "request - Saved")
-
-                        If AreaCommon.flow.addNewRequestDirect(data) Then
-                            Return data.common.hash
-                        Else
-                            Return ""
-                        End If
-                    End If
-                Catch ex As Exception
-                    AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
-
-                    AreaCommon.log.track("A1x5Manager.createInternalRequest", ex.Message, "fatal")
-                Finally
-                    AreaCommon.log.track("A1x5Manager.createInternalRequest", "Completed")
-                End Try
-
-                Return ""
-            End Function
-
-            ''' <summary>
-            ''' This method provide to manage a close block
-            ''' </summary>
-            ''' <returns></returns>
-            Shared Function manageCloseBlock() As Boolean
-                Try
-                    AreaCommon.log.track("A1x5Manager.manageCloseBlock", "Begin")
-
-                    If (AreaCommon.state.runtimeState.activeChain.lastCloseBlock.value.Length = 0) Then Return False
-
-                    Dim proceed As Boolean = True
-                    Dim nextBlockClosedTimeStamp As Double = CDbl(AreaCommon.state.runtimeState.activeChain.lastCloseBlock.value) + AreaCommon.Customize.defaultChainCloseBlockTimingSecond
-
-                    If proceed Then
-                        proceed = (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > nextBlockClosedTimeStamp)
-                    End If
-                    If proceed Then
-                        proceed = (firstRequestCloseBlock.data.Length = 0)
-                    End If
-                    If proceed Then
-                        firstRequestCloseBlock.data = createInternalRequest()
-                    End If
-
-                    AreaCommon.log.track("A1x5Manager.manageCloseBlock", "Complete")
-
-                    Return True
-                Catch ex As Exception
-                    AreaCommon.log.track("A1x5Manager.manageCloseBlock", ex.Message, "fatal")
-
-                    Return False
-                End Try
-            End Function
-
-            ''' <summary>
-            ''' This method provide to create a post procedure a close block
-            ''' </summary>
-            ''' <param name="pathBlock"></param>
-            Shared Sub postCloseBlock(ByVal pathBlock As CHCProtocolLibrary.AreaSystem.VirtualPathEngine.LedgerBlockPath)
-                Try
-                    Dim finalizeBlockEngine As New TransactionChainLibrary.AreaLedger.LedgerSupportEngine
-                    Dim proceed As Boolean = True, haveRejectOrTrash As Boolean = False
-                    Dim requestBlockList As List(Of String)
-                    Dim consensusBlockList As List(Of String)
-                    Dim bulletinBlockList As List(Of String)
-                    Dim requestList As List(Of String)
-                    Dim internalList As List(Of String)
-
-                    AreaCommon.log.track("A1x5Manager.postCloseBlock", "Begin")
-
-                    finalizeBlockEngine.log = AreaCommon.log
-                    finalizeBlockEngine.mainPath = pathBlock
-
-                    With finalizeBlockEngine.headerData
-
-                        .blockChainIdentity = AreaCommon.state.currentBlockLedger.identifyBlockChain
-                        .blockIdentity = AreaCommon.state.currentBlockLedger.lastBlockClosed.blockIdentity
-                        .hashBlock = AreaCommon.state.currentBlockLedger.lastBlockClosed.hash
-                        .chainReferement = AreaCommon.state.runtimeState.activeChain.hash
-                        .netWorkReferement = AreaCommon.state.runtimeState.activeNetwork.hash
-
-                    End With
-
-                    If proceed Then
-                        proceed = finalizeBlockEngine.init()
-                    End If
-                    If proceed Then
-                        proceed = AreaCommon.state.ledgerMap.updateBlockPath(AreaCommon.state.currentBlockLedger.lastBlockClosed.blockIdentity, AreaCommon.state.currentBlockLedger.lastBlockClosed.hash)
-                    End If
-                    If proceed Then
-                        requestBlockList = AreaCommon.flow.getBlockList(AreaCommon.Customize.defaultMinimalMaintainRequestBlock)
-
-                        proceed = (requestBlockList.Count > 0)
-                    End If
-                    If proceed Then
-                        consensusBlockList = AreaCommon.flow.getBlockList(AreaCommon.Customize.defaultMinimalMaintainConsensusBlock)
-
-                        proceed = (consensusBlockList.Count > 0)
-                    End If
-                    If proceed Then
-                        bulletinBlockList = AreaCommon.flow.getBlockList(AreaCommon.Customize.defaultMinimalMaintainBulletinBlock)
-
-                        proceed = (bulletinBlockList.Count > 0)
-                    End If
-                    If proceed Then
-                        proceed = finalizeBlockEngine.removeOldFiles(AreaCommon.paths.workData.ledger, "Requests", requestBlockList)
-                    End If
-                    If proceed Then
-                        proceed = finalizeBlockEngine.removeOldFiles(AreaCommon.paths.workData.ledger, "Consensus", consensusBlockList)
-                    End If
-                    If proceed Then
-                        proceed = finalizeBlockEngine.removeOldFiles(AreaCommon.paths.workData.ledger, "Bulletines", bulletinBlockList)
-                    End If
-                    If proceed Then
-                        proceed = AreaCommon.flow.removeOldRequestDB(AreaCommon.Customize.defaultMinimalMaintainRequestBlock)
-                    End If
-                    If proceed Then
-                        requestList = AreaCommon.flow.getFileList(AreaCommon.Customize.defaultMinimalMaintainRejectedBlock, TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.rejected)
-
-                        If (requestList.Count > 0) Then
-                            haveRejectOrTrash = True
-
-                            proceed = finalizeBlockEngine.removeOldTemporallyRequest(AreaCommon.paths.workData.requestData.rejected, requestList)
-                        End If
-                    End If
-                    If proceed Then
-                        requestList = AreaCommon.flow.getFileList(AreaCommon.Customize.defaultMinimalMaintainRejectedBlock, TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.trashed)
-
-                        If (requestList.Count > 0) Then
-                            haveRejectOrTrash = True
-
-                            proceed = finalizeBlockEngine.removeOldTemporallyRequest(AreaCommon.paths.workData.requestData.trashed, requestList)
-                        End If
-                    End If
-                    If proceed Then
-                        If haveRejectOrTrash Then
-                            proceed = AreaCommon.flow.removeOldRequestRejectedAndTrashedIntoDB(AreaCommon.Customize.defaultMinimalMaintainRejectedBlock)
-                        End If
-                    End If
-                    If proceed Then
-                        ' Insert the internalList journal
-
-                    End If
-                    If proceed Then
-                        proceed = finalizeBlockEngine.finalizeSingleBlock(AreaCommon.paths.workData.ledger, requestBlockList)
-                    End If
-
-                    AreaCommon.log.track("A1x5Manager.postCloseBlock", "Complete")
-                Catch ex As Exception
-                    AreaCommon.log.track("A1x5Manager.postCloseBlock", ex.Message, "fatal")
-                End Try
-            End Sub
-
-            ''' <summary>
-            ''' This method provide to execute post approve into the ledger
-            ''' </summary>
-            ''' <returns></returns>
-            Shared Function finalizeBlock(ByVal requestHash As String, ByVal currentBlock As String) As Boolean
-                Try
-                    Dim proceed As Boolean = True
-                    Dim currentPath As CHCProtocolLibrary.AreaSystem.VirtualPathEngine.LedgerBlockPath = AreaCommon.state.currentBlockLedger.approvedTransaction.pathData
-
-                    AreaCommon.log.track("RecoveryState.finalizeBlock", "Begin")
-
-                    If proceed Then
-                        Manager.firstRequestCloseBlock.data = ""
-                        Manager.firstRequestCloseBlock.minimalRequestClose = 0
-
-                        proceed = AreaCommon.state.currentBlockLedger.changeBlock()
-                    End If
-                    If proceed Then
-                        Dim work1 As New Threading.Thread(Sub() AreaProtocol.A1x5.Manager.postCloseBlock(currentPath))
-
-                        work1.Start()
-                    End If
-
-                    AreaCommon.log.track("RecoveryState.finalizeBlock", "Complete")
-
-                    Return proceed
-                Catch ex As Exception
-                    AreaCommon.log.track("RecoveryState.finalizeBlock", ex.Message, "fatal")
-
-                    Return False
-                End Try
-
             End Function
 
         End Class

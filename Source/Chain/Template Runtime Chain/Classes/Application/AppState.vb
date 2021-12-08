@@ -11,8 +11,6 @@ Imports CHCProtocolLibrary.AreaCommon
 
 Public Class AppState
 
-
-
     ''' <summary>
     ''' This class provides to expone the public information of this chain
     ''' </summary>
@@ -41,7 +39,7 @@ Public Class AppState
 
     End Class
 
-    Public Property service As Models.Service.InformationResponseModel.EnumInternalServiceState = Models.Service.InformationResponseModel.EnumInternalServiceState.notDefined
+    Public Property service As Models.Service.InformationResponseModel.EnumInternalServiceState = Models.Service.InformationResponseModel.EnumInternalServiceState.undefined
     Public Property internalInformation As New InternalServiceInformation
     Public Property keys As New TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine
 
@@ -50,9 +48,10 @@ Public Class AppState
     Public Property currentService As New Models.Administration.ServiceStateResponse
     Public Property network As New CHCRuntimeChainLibrary.AreaRuntime.AppState.ConnectionNetwork
     Public Property component As New ComponentElement
-    Public Property runtimeState As New AreaState.ChainStateEngine
+    Public Property runTimeState As New AreaState.ChainStateEngine
     Public Property currentBlockLedger As New TransactionChainLibrary.AreaLedger.LedgerEngine
     Public Property ledgerMap As New TransactionChainLibrary.AreaLedger.LedgerMapEngine
+    Public Property serviceParameters As New AreaService.ServiceParameters
 
     Public Property noConsoleMessage As Boolean = False
 

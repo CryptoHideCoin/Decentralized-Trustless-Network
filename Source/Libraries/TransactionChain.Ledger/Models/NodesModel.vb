@@ -14,7 +14,7 @@ Namespace AreaTransactionChain.Models
         Public walletID As String = ""
         Public aliasName As String = ""
         Public addressIP As String = ""
-        Public valuePoint As Double = 0
+        Public power As Double = 0
         Public dayOfAlive As Integer = 0
         Public highSpeed As Boolean = False
         Public ledgerTransactionID As String = ""
@@ -26,7 +26,7 @@ Namespace AreaTransactionChain.Models
 
             tmp += walletID
             tmp += addressIP
-            tmp += valuePoint.ToString()
+            tmp += power.ToString()
             tmp += dayOfAlive.ToString()
             tmp += ledgerTransactionID
 

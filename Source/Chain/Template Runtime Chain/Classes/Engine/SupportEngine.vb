@@ -34,7 +34,7 @@ Namespace AreaCommon.Engine
                 If inIdle Then
                     If change Then
 #If DEBUG Then
-                        Console.WriteLine("In low consuption mode")
+                        'Console.WriteLine("In low consuption mode")
 #End If
                     End If
 
@@ -42,7 +42,7 @@ Namespace AreaCommon.Engine
                 Else
                     If change Then
 #If DEBUG Then
-                        Console.WriteLine("In work mode")
+                        'Console.WriteLine("In work mode")
 #End If
                     End If
 

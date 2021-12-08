@@ -12,11 +12,11 @@ Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
 Namespace AreaProtocol
 
     ''' <summary>
-    ''' This class contain the minimal data essential A1x3 (Policy Privacy)
+    ''' This class contain the minimal data essential A1x4 (Policy Privacy)
     ''' </summary>
     Public Class EssentialA1x4
 
-        Public Property termsAndConditions As String = ""
+        Public Property policyPrivacy As String = ""
 
         Public Property approveConfiguration As New CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel
         Public Property feeConfiguration As New CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel
@@ -28,9 +28,9 @@ Namespace AreaProtocol
         Public Overrides Function toString() As String
             Dim result As String = ""
 
-            result += termsAndConditions
-            result += approveConfiguration.toString()
-            result += feeConfiguration.toString()
+            result += policyPrivacy
+            result += approveConfiguration.ToString()
+            result += feeConfiguration.ToString()
 
             Return result
         End Function
@@ -43,14 +43,6 @@ Namespace AreaProtocol
             Return HashSHA.generateSHA256(Me.toString())
         End Function
 
-        ''' <summary>
-        ''' This method provide to extract minimal data from this request
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function extractMinimal() As String
-            Return termsAndConditions
-        End Function
-
     End Class
 
     ''' <summary>
@@ -59,11 +51,12 @@ Namespace AreaProtocol
     Public Class A1x4
 
         ''' <summary>
-        ''' This class contain alla member of request model
+        ''' This class contain all member of request model
         ''' </summary>
-        Public Class RequestModel : Inherits EssentialA1x4 : Implements IRequestModel
+        Public Class RequestModel : Implements IRequestModel
 
             Public Property common As New CommonRequest Implements IRequestModel.common
+            Public Property content As New EssentialA1x4
 
             ''' <summary>
             ''' This method provide to convert into a string the element of the object
@@ -72,7 +65,7 @@ Namespace AreaProtocol
             Public Overrides Function toString() As String Implements IRequestModel.toString
                 Dim tmp As String = common.toString()
 
-                tmp += MyBase.toString()
+                tmp += MyBase.ToString()
 
                 Return tmp
             End Function
@@ -81,7 +74,7 @@ Namespace AreaProtocol
             ''' This methdo provide to get an hash of the object
             ''' </summary>
             ''' <returns></returns>
-            Public Overrides Function getHash() As String Implements IRequestModel.getHash
+            Public Function getHash() As String Implements IRequestModel.getHash
                 Return HashSHA.generateSHA256(Me.toString())
             End Function
 
@@ -104,33 +97,14 @@ Namespace AreaProtocol
                     _Base.common = value
                 End Set
             End Property
-
-            Public Property termsAndConditions() As String
+            Public Property content As EssentialA1x4
                 Get
-                    Return _Base.termsAndConditions
+                    Return _Base.content
                 End Get
-                Set(value As String)
-                    _Base.termsAndConditions = value
+                Set(value As EssentialA1x4)
+                    _Base.content = value
                 End Set
             End Property
-
-            Public Property approveConfiguration As CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel
-                Get
-                    Return _Base.approveConfiguration
-                End Get
-                Set(value As CHCProtocolLibrary.AreaCommon.Models.Authorization.ApproveModel)
-                    _Base.approveConfiguration = value
-                End Set
-            End Property
-            Public Property feeConfiguration As CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel
-                Get
-                    Return _Base.feeConfiguration
-                End Get
-                Set(value As CHCProtocolLibrary.AreaCommon.Models.Payments.FeeModel)
-                    _Base.feeConfiguration = value
-                End Set
-            End Property
-
             Public Overrides Property signature As String
                 Get
                     Return MyBase.signature
@@ -156,14 +130,6 @@ Namespace AreaProtocol
                 Return _Base.getHash()
             End Function
 
-            ''' <summary>
-            ''' This method provide to extract minimal data of a base component
-            ''' </summary>
-            ''' <returns></returns>
-            Public Function extractMinimal() As String
-                Return _Base.termsAndConditions
-            End Function
-
         End Class
 
         ''' <summary>
@@ -181,22 +147,22 @@ Namespace AreaProtocol
                 Try
                     Dim proceed As Boolean = True
                     Dim contentPath As String = AreaCommon.paths.workData.state.contents
-                    Dim hashContent As String = HashSHA.generateSHA256(value.termsAndConditions)
+                    Dim hashContent As String = HashSHA.generateSHA256(value.content)
 
                     AreaCommon.log.track("RecoveryState.fromRequest", "Begin")
 
                     If proceed Then
-                        proceed = AreaCommon.state.runtimeState.updateChainProperty(value.common.chainReferement, AreaCommon.DAO.DBChain.DetailPropertyID.termAndConditions, value.termsAndConditions, hashContent, transactionChainRecord)
+                        proceed = AreaCommon.state.runtimeState.updateChainProperty(value.common.chainReferement, AreaCommon.DAO.DBChain.DetailPropertyID.policyPrivacy, value.content, hashContent, transactionChainRecord)
                     End If
                     If proceed Then
                         contentPath = IO.Path.Combine(contentPath, hashContent & ".Content")
 
-                        My.Computer.FileSystem.WriteAllText(contentPath, value.termsAndConditions, False)
+                        My.Computer.FileSystem.WriteAllText(contentPath, value.content.policyPrivacy, False)
 
                         proceed = True
                     End If
 
-                    AreaCommon.log.track("RecoveryState.fromRequest", "Complete")
+                    AreaCommon.log.track("RecoveryState.fromRequest", "Completed")
 
                     Return proceed
                 Catch ex As Exception
@@ -207,7 +173,7 @@ Namespace AreaProtocol
             End Function
 
             Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
-                ''' TODO: A1x4 RecoveryState.fromTransactionLedger
+                ''' TODO: A0x1 RecoveryState.fromTransactionLedger
             End Function
 
         End Class
@@ -245,7 +211,7 @@ Namespace AreaProtocol
                         proceed = (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
                     End If
                     If proceed Then
-                        proceed = (request.termsAndConditions.Length > 0)
+                        proceed = (request.content.policyPrivacy.Length > 0)
                     End If
                     If proceed Then
                         proceed = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.SingleKeyPair.checkFormatPublicAddress(request.common.publicAddressRequester)
@@ -254,7 +220,7 @@ Namespace AreaProtocol
                         proceed = AreaSecurity.checkSignature(request.getHash, request.common.signature, request.common.publicAddressRequester)
                     End If
 
-                    AreaCommon.log.track("FormalCheck.verify", "Complete")
+                    AreaCommon.log.track("FormalCheck.verify", "Completed")
 
                     Return proceed
                 Catch ex As Exception
@@ -271,7 +237,7 @@ Namespace AreaProtocol
             ''' <returns></returns>
             Shared Function evaluate(ByRef value As AreaFlow.RequestExtended) As Boolean
                 Try
-                    Dim request As A1x2.RequestModel = value.data
+                    Dim request As A1x4.RequestModel = value.data
 
                     AreaCommon.log.track("FormalCheck.evaluate", "Begin")
 
@@ -281,10 +247,16 @@ Namespace AreaProtocol
 
                         Return True
                     End If
+                    If Not AreaCommon.state.runtimeState.chainByHash.ContainsKey(request.common.chainReferement) Then
+                        value.evaluations.rejectedNote = "Chain not exist"
+                        value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
+
+                        Return True
+                    End If
 
                     value.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult
 
-                    AreaCommon.log.track("FormalCheck.evaluate", "Complete")
+                    AreaCommon.log.track("FormalCheck.evaluate", "Completed")
 
                     Return True
                 Catch ex As Exception
@@ -305,7 +277,7 @@ Namespace AreaProtocol
             ''' This method provide to write request into ledger
             ''' </summary>
             ''' <returns></returns>
-            Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal value As CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+            Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal value As EssentialA1x4, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
                     Dim contentPath As String = AreaCommon.state.currentBlockLedger.proposeNewTransaction.pathData.contents
                     Dim hash As String = value.getHash()
@@ -314,7 +286,7 @@ Namespace AreaProtocol
 
                     contentPath = IO.Path.Combine(contentPath, hash & ".Content")
 
-                    If IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList).save(contentPath, value) Then
+                    If IOFast(Of EssentialA1x4).save(contentPath, value) Then
 
                         With AreaCommon.state.currentBlockLedger.proposeNewTransaction
                             .type = "a1x4"
@@ -338,7 +310,7 @@ Namespace AreaProtocol
 
                     Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Finally
-                    AreaCommon.log.track("A1x4.Manager.addIntoLedger", "Complete")
+                    AreaCommon.log.track("A1x4.Manager.addIntoLedger", "Completed")
                 End Try
             End Function
 

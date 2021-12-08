@@ -60,6 +60,8 @@ Partial Class BuildNetwork
         Me.assetNameText = New System.Windows.Forms.TextBox()
         Me.assetNameLabel = New System.Windows.Forms.Label()
         Me.transactionChainParameterTab = New System.Windows.Forms.TabPage()
+        Me.maxTimeOutNotEvaluateNodeText = New System.Windows.Forms.TextBox()
+        Me.maxTimeOutNotEvaluateNodeLabel = New System.Windows.Forms.Label()
         Me.minimalMaintainInternalText = New System.Windows.Forms.TextBox()
         Me.minimalMaintainInternalRegistryLabel = New System.Windows.Forms.Label()
         Me.minimalMaintainTrashedText = New System.Windows.Forms.TextBox()
@@ -103,8 +105,6 @@ Partial Class BuildNetwork
         Me.cancelButton = New System.Windows.Forms.Button()
         Me.loadButton = New System.Windows.Forms.Button()
         Me.saveButton = New System.Windows.Forms.Button()
-        Me.maxTimeOutNotEvaluateNodeText = New System.Windows.Forms.TextBox()
-        Me.maxTimeOutNotEvaluateNodeLabel = New System.Windows.Forms.Label()
         Me.mainTabControl.SuspendLayout()
         Me.generalTab.SuspendLayout()
         Me.whitePaperTab.SuspendLayout()
@@ -556,6 +556,29 @@ Partial Class BuildNetwork
         Me.transactionChainParameterTab.Text = "Transaction Chain"
         Me.transactionChainParameterTab.UseVisualStyleBackColor = True
         '
+        'maxTimeOutNotEvaluateNodeText
+        '
+        Me.maxTimeOutNotEvaluateNodeText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.maxTimeOutNotEvaluateNodeText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.maxTimeOutNotEvaluateNodeText.Location = New System.Drawing.Point(539, 45)
+        Me.maxTimeOutNotEvaluateNodeText.Name = "maxTimeOutNotEvaluateNodeText"
+        Me.maxTimeOutNotEvaluateNodeText.ReadOnly = True
+        Me.maxTimeOutNotEvaluateNodeText.Size = New System.Drawing.Size(75, 21)
+        Me.maxTimeOutNotEvaluateNodeText.TabIndex = 59
+        Me.maxTimeOutNotEvaluateNodeText.Text = "120 sec."
+        '
+        'maxTimeOutNotEvaluateNodeLabel
+        '
+        Me.maxTimeOutNotEvaluateNodeLabel.AutoSize = True
+        Me.maxTimeOutNotEvaluateNodeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.maxTimeOutNotEvaluateNodeLabel.ForeColor = System.Drawing.SystemColors.ControlDark
+        Me.maxTimeOutNotEvaluateNodeLabel.Location = New System.Drawing.Point(340, 48)
+        Me.maxTimeOutNotEvaluateNodeLabel.Name = "maxTimeOutNotEvaluateNodeLabel"
+        Me.maxTimeOutNotEvaluateNodeLabel.Size = New System.Drawing.Size(184, 13)
+        Me.maxTimeOutNotEvaluateNodeLabel.TabIndex = 60
+        Me.maxTimeOutNotEvaluateNodeLabel.Text = "Max timeout not evaluate node"
+        '
         'minimalMaintainInternalText
         '
         Me.minimalMaintainInternalText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -849,7 +872,7 @@ Partial Class BuildNetwork
         Me.blockSizeFrequencyText.ReadOnly = True
         Me.blockSizeFrequencyText.Size = New System.Drawing.Size(75, 21)
         Me.blockSizeFrequencyText.TabIndex = 32
-        Me.blockSizeFrequencyText.Text = "24 hour"
+        Me.blockSizeFrequencyText.Text = "24 hours"
         '
         'blockSizeFrequencyLabel
         '
@@ -1008,29 +1031,6 @@ Partial Class BuildNetwork
         Me.saveButton.TabIndex = 2
         Me.saveButton.Text = "Save"
         Me.saveButton.UseVisualStyleBackColor = True
-        '
-        'maxTimeOutNotEvaluateNodeText
-        '
-        Me.maxTimeOutNotEvaluateNodeText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.maxTimeOutNotEvaluateNodeText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.maxTimeOutNotEvaluateNodeText.Location = New System.Drawing.Point(539, 45)
-        Me.maxTimeOutNotEvaluateNodeText.Name = "maxTimeOutNotEvaluateNodeText"
-        Me.maxTimeOutNotEvaluateNodeText.ReadOnly = True
-        Me.maxTimeOutNotEvaluateNodeText.Size = New System.Drawing.Size(75, 21)
-        Me.maxTimeOutNotEvaluateNodeText.TabIndex = 59
-        Me.maxTimeOutNotEvaluateNodeText.Text = "120 sec."
-        '
-        'maxTimeOutNotEvaluateNodeLabel
-        '
-        Me.maxTimeOutNotEvaluateNodeLabel.AutoSize = True
-        Me.maxTimeOutNotEvaluateNodeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.maxTimeOutNotEvaluateNodeLabel.ForeColor = System.Drawing.SystemColors.ControlDark
-        Me.maxTimeOutNotEvaluateNodeLabel.Location = New System.Drawing.Point(340, 48)
-        Me.maxTimeOutNotEvaluateNodeLabel.Name = "maxTimeOutNotEvaluateNodeLabel"
-        Me.maxTimeOutNotEvaluateNodeLabel.Size = New System.Drawing.Size(184, 13)
-        Me.maxTimeOutNotEvaluateNodeLabel.TabIndex = 60
-        Me.maxTimeOutNotEvaluateNodeLabel.Text = "Max timeout not evaluate node"
         '
         'BuildNetwork
         '

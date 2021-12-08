@@ -14,96 +14,36 @@ Namespace AreaState
     Public Class ChainStateEngine
 
         ''' <summary>
-        ''' This class contain the last identify last transaction and a value
+        ''' This class contain all internal element of single information
         ''' </summary>
-        Public Class ItemIdentityStructure
-            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+        Public Class ChainNodeInformation
 
-            Public Property value As String = ""
+            Public Property identityPublicAddress As String = ""
+            Public Property ipAddress As String = ""
+            Public Property power As Decimal = 0
+            Public Property role As AreaProtocol.RoleMasterNode = AreaProtocol.RoleMasterNode.undefined
+            Public Property startConnectionTimeStamp As Double = 0
+            Public Property dayConnection As Short = 0
+            Public Property lastConnectionTimeStamp As Double = 0
+            Public Property itsMe As Boolean = False
+            Public Property registrationCoordinate As String = ""
+
+            Public Property abstainRequest As New Dictionary(Of String, String)
+
         End Class
 
         ''' <summary>
-        ''' This class contain all information reguard of complete asset information
+        ''' This class contain all information to the community
         ''' </summary>
-        Public Class NetworkAssetStructure
-            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+        Public Class PublicChainNodeInformation
 
-            Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel
-        End Class
+            Public Property identityPublicAddress As String = ""
+            Public Property ipAddress As String = ""
+            Public Property role As AreaProtocol.RoleMasterNode = AreaProtocol.RoleMasterNode.undefined
+            Public Property startConnectionTimeStamp As Double = 0
+            Public Property dayConnection As Short = 0
 
-        ''' <summary>
-        ''' This class contain the complete information of a network transaction structure
-        ''' </summary>
-        Public Class NetworkTransactionStructure
-            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
-
-            Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.TransactionChainModel
-        End Class
-
-        ''' <summary>
-        ''' This class contain the complete information of a refund plan
-        ''' </summary>
-        Public Class NetworkRefundItemListStructure
-            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
-
-            Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.RefundItemList
-        End Class
-
-        ''' <summary>
-        ''' This class contain all element of a network
-        ''' </summary>
-        Public Class DataNetwork
-
-            Public Property networkName As New ItemIdentityStructure
-            Public Property whitePaper As New ItemIdentityStructure
-            Public Property yellowPaper As New ItemIdentityStructure
-            Public Property primaryAssetData As New NetworkAssetStructure
-            Public Property transactionChainSettings As New NetworkTransactionStructure
-            Public Property privacyPolicy As New ItemIdentityStructure
-            Public Property generalCondition As New ItemIdentityStructure
-
-            Public Property refundPlan As New NetworkRefundItemListStructure
-
-            Public Property networkCreationDate As Double = 0
-
-            Public Property genesisPublicAddress As String = ""
-
-            Public ReadOnly Property hash() As String
-                Get
-                    Return networkName.progressiveHash
-                End Get
-            End Property
-        End Class
-
-
-        Public Class ChainPriceListStructure
-            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
-
-            Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel
-        End Class
-
-        ''' <summary>
-        ''' This enumeration contain all list of chain property
-        ''' </summary>
-        Public Enum PropertyChainID
-
-            notDefined
-            chainCreationDate
-            description
-            protocolDocument
-            priceList
-            privacyPolicy
-            generalCondition
-
-        End Enum
-
-        ''' <summary>
-        ''' This class contain the element of a protocol set
-        ''' </summary>
-        Public Class ProtocolSetStructure
-
-            Public Property data As New CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData
-            Public Property integrity As New ItemIdentityStructure
+            Public Property transactionChainRecord As New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
         End Class
 
@@ -112,15 +52,25 @@ Namespace AreaState
         ''' </summary>
         Public Class DataChain
 
-            Public Property name As New ItemIdentityStructure
+            Public Property identity As Integer = 0
 
-            Public Property isPrivate As New ItemIdentityStructure
-            Public Property description As New ItemIdentityStructure
-            Public Property protocolSets As New List(Of ProtocolSetStructure)
-            Public Property priceList As New ChainPriceListStructure
-            Public Property privacyPolicy As New ItemIdentityStructure
-            Public Property termsAndConditions As New ItemIdentityStructure
-            Public Property lastCloseBlock As New ItemIdentityStructure
+            Public Property name As New PrimaryStateModel.ItemIdentityStructure
+            Public Property isPrivate As New PrimaryStateModel.ItemIdentityStructure
+            Public Property description As New PrimaryStateModel.ItemIdentityStructure
+
+            Public Property parameters As New PrimaryStateModel.ParameterIdentityStructure
+
+            Public Property protocolSets As New List(Of PrimaryStateModel.ProtocolSetStructure)
+            Public Property priceList As New PrimaryStateModel.ChainPriceListStructure
+            Public Property tokens As New List(Of PrimaryStateModel.AssetStructure)
+            Public Property privacyPolicy As New PrimaryStateModel.ItemIdentityStructure
+            Public Property termsAndConditions As New PrimaryStateModel.ItemIdentityStructure
+            Public Property lastCloseBlock As New PrimaryStateModel.ItemIdentityStructure
+
+            Public Property storedNodeList As New PrimaryStateModel.NodeListChainStructure
+            Public Property originalNodeList As New Dictionary(Of String, AreaProtocol.NodeComplete)
+            Public Property internalNodeList As New Dictionary(Of String, ChainNodeInformation)
+            Public Property serviceNodeList As New Dictionary(Of String, PublicChainNodeInformation)
 
             Public ReadOnly Property hash As String
                 Get
@@ -135,54 +85,16 @@ Namespace AreaState
 
         End Class
 
-
-        Public Class DataMasternode
-
-            Public Enum roleMasterNode
-
-                fullService
-                light
-                frontOffice
-                consensus
-                arbitration
-
-            End Enum
-
-            Public Property identityPublicAddress As String = ""
-            Public Property warrantyPublicAddress As String = ""
-            Public Property refundPublicAddress As String = ""
-            Public Property ipAddress As String = ""
-            Public Property warrantyCoin As Decimal = 0
-            Public Property votePoint As Decimal = 0
-            Public Property chainName As String = ""
-            Public Property role As roleMasterNode = roleMasterNode.arbitration
-            Public Property startConnectionTimeStamp As Double = 0
-            Public Property dayConnection As Short = 0
-            Public Property lastConnectionTimeStamp As Double = 0
-            Public Property itsMe As Boolean = False
-
-            Public Property abstainRequest As New Dictionary(Of String, String)
-
-        End Class
-
-        Public Class DataMasternodeKey
-
-            Public Property chainName As String = ""
-            Public Property identityPublicAddress As String = ""
-
-        End Class
-
-
         Private _DBNetwork As New AreaCommon.DAO.DBNetwork
         Private _DBChain As New AreaCommon.DAO.DBChain
 
 
-        Public Property activeNetwork As New DataNetwork
+        Public Property activeNetwork As New PrimaryStateModel.DataNetwork
         Public Property activeChain As New DataChain
+
         Public Property chainByName As New Dictionary(Of String, DataChain)
         Public Property chainByHash As New Dictionary(Of String, DataChain)
-
-        Public Property activeMasterNode As New Dictionary(Of DataMasternodeKey, DataMasternode)
+        Public Property chainByID As New Dictionary(Of Integer, DataChain)
 
 
         ''' <summary>
@@ -218,6 +130,11 @@ Namespace AreaState
                             activeNetwork.networkName.coordinate = transactionChainRecord.coordinate
                             activeNetwork.networkName.progressiveHash = transactionChainRecord.progressiveHash
                             activeNetwork.networkName.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.specialEnvironment
+                            activeNetwork.envinronment.value = value
+                            activeNetwork.envinronment.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.envinronment.progressiveHash = transactionChainRecord.progressiveHash
+                            activeNetwork.envinronment.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.whitePaper
                             activeNetwork.whitePaper.value = value
                             activeNetwork.whitePaper.coordinate = transactionChainRecord.coordinate
@@ -252,7 +169,7 @@ Namespace AreaState
                             activeNetwork.transactionChainSettings.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                     End Select
 
-                    AreaCommon.log.track("ChainStateEngine.addNetworkProperty", "Complete")
+                    AreaCommon.log.track("ChainStateEngine.addNetworkProperty", "Completed")
 
                     Return True
                 End If
@@ -272,16 +189,18 @@ Namespace AreaState
         ''' <param name="description"></param>
         ''' <param name="transactionChainRecord"></param>
         ''' <returns></returns>
-        Public Function addNewChain(ByVal name As String, ByVal privateChain As Boolean, ByVal description As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+        Public Function addNewChain(ByVal name As String, ByVal privateChain As Boolean, ByVal description As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Integer
             Try
                 AreaCommon.log.track("ChainStateEngine.addNewChain", "Begin")
 
                 Dim newValue As New DataChain
-                Dim hash As String
+                Dim id As Integer
 
-                hash = _DBChain.insertSQLNewChain(name, privateChain, description, transactionChainRecord)
+                id = _DBChain.addNewChain(name, privateChain, description, transactionChainRecord)
 
-                If (hash.Length > 0) Then
+                If (id > 0) Then
+                    newValue.identity = id
+
                     newValue.name.value = name
                     newValue.name.coordinate = transactionChainRecord.coordinate
                     newValue.name.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
@@ -308,11 +227,41 @@ Namespace AreaState
                         activeChain = newValue
                     End If
 
-                    chainByHash.Add(hash, newValue)
+                    chainByHash.Add(transactionChainRecord.progressiveHash, newValue)
                     chainByName.Add(name, newValue)
+                    chainByID.Add(id, newValue)
                 End If
 
-                AreaCommon.log.track("ChainStateEngine.addNewChain", "Complete")
+                AreaCommon.log.track("ChainStateEngine.addNewChain", "Completed")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.addNewChain", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to create a new chain temporally
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function addGenesisChain() As Boolean
+            Try
+                Dim newValue As New DataChain
+
+                AreaCommon.log.track("ChainStateEngine.addNewChain", "Begin")
+
+                newValue.description.value = "Genesis"
+                newValue.identity = 0
+                newValue.isPrivate.value = True
+                newValue.name.value = "Genesis"
+
+                chainByHash.Add("000-000", newValue)
+                chainByName.Add("Genesis", newValue)
+                chainByID.Add(0, newValue)
+
+                AreaCommon.log.track("ChainStateEngine.addNewChain", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -329,12 +278,12 @@ Namespace AreaState
         ''' <param name="hashContent"></param>
         ''' <param name="transactionChainRecord"></param>
         ''' <returns></returns>
-        Public Function updateNewProtocol(ByVal chainReferement As String, ByVal value As CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData, ByVal hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+        Public Function updateNewProtocol(ByVal chainReferement As String, ByRef value As CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
             Try
                 AreaCommon.log.track("ChainStateEngine.updateNewProtocol", "Begin")
 
                 Dim chain As DataChain
-                Dim protocolData As New ProtocolSetStructure
+                Dim protocolData As New PrimaryStateModel.ProtocolSetStructure
 
                 If _DBChain.updateProtocol(chainReferement, value, transactionChainRecord) Then
                     chain = chainByHash(chainReferement)
@@ -366,7 +315,49 @@ Namespace AreaState
 
                 Return False
             Finally
-                AreaCommon.log.track("ChainStateEngine.updateNewProtocol", "Complete")
+                AreaCommon.log.track("ChainStateEngine.updateNewProtocol", "Completed")
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to add a new token
+        ''' </summary>
+        ''' <param name="chainReferement"></param>
+        ''' <returns></returns>
+        Public Function addNewToken(ByVal chainReferement As String, ByRef value As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel, ByVal hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+            Try
+                Dim chain As DataChain
+                Dim newToken As New PrimaryStateModel.AssetStructure
+
+                AreaCommon.log.track("ChainStateEngine.addNewToken", "Begin")
+
+                chain = chainByHash(chainReferement)
+
+                If _DBChain.addNewToken(chain.identity, value, transactionChainRecord, hashContent) Then
+                    For Each token In chain.tokens
+                        If (token.value.assetInformation.name.CompareTo(value.assetInformation.name) = 0) Then
+                            chain.tokens.Remove(token)
+
+                            Exit For
+                        End If
+                    Next
+
+                    newToken.coordinate = transactionChainRecord.coordinate
+                    newToken.hash = transactionChainRecord.hash
+                    newToken.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+
+                    newToken.value = value
+
+                    chain.tokens.Add(newToken)
+
+                    Return True
+                End If
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.addNewToken", ex.Message, "fatal")
+
+                Return False
+            Finally
+                AreaCommon.log.track("ChainStateEngine.addNewToken", "Completed")
             End Try
         End Function
 
@@ -406,7 +397,7 @@ Namespace AreaState
 
                 Return False
             Finally
-                AreaCommon.log.track("ChainStateEngine.updatePriceList", "Complete")
+                AreaCommon.log.track("ChainStateEngine.updatePriceList", "Completed")
             End Try
         End Function
 
@@ -418,7 +409,7 @@ Namespace AreaState
         ''' <param name="value"></param>
         ''' <param name="transactionChainRecord"></param>
         ''' <returns></returns>
-        Public Function updateChainProperty(ByVal chainReferement As String, ByVal propertyID As AreaCommon.DAO.DBChain.DetailPropertyID, ByVal value As String, ByVal hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+        Public Function updateChainProperty(ByVal chainReferement As String, ByVal propertyID As AreaCommon.DAO.DBChain.DetailPropertyID, ByVal value As Object, ByVal hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
             Try
                 AreaCommon.log.track("ChainStateEngine.updateChainProperty", "Begin")
 
@@ -428,14 +419,16 @@ Namespace AreaState
                 Dim dataObject As Object
 
                 If proceed Then
-                    proceed = _DBChain.updateDetail(chainReferement, propertyID, hashContent, transactionChainRecord)
-                End If
-                If proceed Then
                     chain = chainByHash(chainReferement)
 
+                    proceed = _DBChain.updateDetail(chain.identity, propertyID, hashContent, transactionChainRecord)
+                End If
+                If proceed Then
                     Select Case propertyID
-                        Case AreaCommon.DAO.DBChain.DetailPropertyID.lastCloseBlock : dataObject = chain.lastCloseBlock
+                        Case AreaCommon.DAO.DBChain.DetailPropertyID.chainParameters : dataObject = chain.parameters
+                        Case AreaCommon.DAO.DBChain.DetailPropertyID.lastTransactionBlock : dataObject = chain.lastCloseBlock
                         Case AreaCommon.DAO.DBChain.DetailPropertyID.policyPrivacy : dataObject = chain.privacyPolicy
+                        Case AreaCommon.DAO.DBChain.DetailPropertyID.lastNodeList : dataObject = chain.storedNodeList
                         Case Else : dataObject = chain.termsAndConditions
                     End Select
 
@@ -454,7 +447,7 @@ Namespace AreaState
 
                 Return False
             Finally
-                AreaCommon.log.track("ChainStateEngine.updatePriceList", "Complete")
+                AreaCommon.log.track("ChainStateEngine.updatePriceList", "Completed")
             End Try
         End Function
 
@@ -471,40 +464,75 @@ Namespace AreaState
             End If
         End Function
 
-
         ''' <summary>
-        ''' This method provide to add new node
+        ''' This method provide to add a new node to chain
         ''' </summary>
-        ''' <param name="chainName"></param>
-        ''' <param name="publicAddress"></param>
+        ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function addNewNode(ByVal chainName As String, Optional ByVal publicAddress As String = "") As DataMasternode
-            Dim newValue As New DataMasternode
-
+        Public Function addNewNodeToChain(ByVal publicAddress As String, ByVal value As AreaProtocol.RequestAddNewNode, Optional ByVal transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction = Nothing) As Boolean
             Try
-                Dim newKey As New DataMasternodeKey
+                Dim chain As DataChain
+                Dim internalElement As New ChainNodeInformation
+                Dim publicElement As New PublicChainNodeInformation
+                Dim originalElement As AreaProtocol.NodeComplete
 
-                AreaCommon.log.track("ChainStateEngine.addNewNode", "Begin")
+                AreaCommon.log.track("ChainStateEngine.addNewNodeToChain", "Begin")
 
-                newKey.chainName = chainName
+                chain = chainByName(value.chainName)
 
-                If (publicAddress.Length = 0) Then
-                    publicAddress = AreaCommon.state.network.publicAddressIdentity
+                originalElement = value.clone()
 
-                    newValue.itsMe = True
+                originalElement.identityPublicAddress = publicAddress
+                originalElement.startConnectionTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+
+                internalElement.identityPublicAddress = publicAddress
+                internalElement.ipAddress = value.getPrimaryAddress()
+                internalElement.itsMe = (internalElement.ipAddress = AreaCommon.state.internalInformation.addressIP)
+                internalElement.lastConnectionTimeStamp = originalElement.startConnectionTimeStamp
+
+                If Not IsNothing(transactionChainRecord) Then
+                    internalElement.power = value.getPower()
+                    internalElement.registrationCoordinate = transactionChainRecord.coordinate
+                Else
+                    internalElement.power = 1
                 End If
-                newKey.identityPublicAddress = publicAddress
 
-                newValue.identityPublicAddress = publicAddress
+                internalElement.role = value.role
+                internalElement.startConnectionTimeStamp = internalElement.lastConnectionTimeStamp
 
-                activeMasterNode.Add(newKey, newValue)
+                publicElement.identityPublicAddress = publicAddress
+                publicElement.ipAddress = internalElement.ipAddress
+                publicElement.dayConnection = 0
+                publicElement.role = value.role
+                publicElement.startConnectionTimeStamp = internalElement.startConnectionTimeStamp
 
-                AreaCommon.log.track("ChainStateEngine.addNewNode", "Complete")
+                If Not IsNothing(transactionChainRecord) Then
+                    With publicElement.transactionChainRecord
+                        .coordinate = transactionChainRecord.coordinate
+                        .hash = transactionChainRecord.hash
+                        .progressiveHash = transactionChainRecord.progressiveHash
+                        .registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                    End With
+                End If
+
+                If (AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation) Then
+                    chain.internalNodeList.Clear()
+                    chain.serviceNodeList.Clear()
+                    chain.originalNodeList.Clear()
+                End If
+
+                chain.internalNodeList.Add(publicAddress, internalElement)
+                chain.serviceNodeList.Add(publicAddress, publicElement)
+                chain.originalNodeList.Add(publicAddress, originalElement)
+
+                AreaCommon.log.track("ChainStateEngine.addNewNodeToChain", "Completed")
+
+                Return True
             Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.addNewNode", ex.Message, "fatal")
-            End Try
+                AreaCommon.log.track("ChainStateEngine.addNewNodeToChain", ex.Message, "fatal")
 
-            Return newValue
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -513,29 +541,26 @@ Namespace AreaState
         ''' <param name="publicAddress"></param>
         ''' <param name="chainName"></param>
         ''' <returns></returns>
-        Public Function getDataNode(ByVal publicAddress As String, Optional ByVal chainName As String = "") As DataMasternode
-            Dim newKey As New DataMasternodeKey
-
+        Public Function getDataNode(ByVal publicAddress As String, Optional ByVal chainName As String = "") As PublicChainNodeInformation
             Try
+                Dim chain As DataChain
+
                 AreaCommon.log.track("ChainStateEngine.getDataPeer", "Begin")
 
                 If (chainName.Length = 0) Then
-                    newKey.chainName = AreaCommon.state.internalInformation.chainName
-                Else
-                    newKey.chainName = chainName
+                    chainName = AreaCommon.state.internalInformation.chainName
                 End If
-                newKey.identityPublicAddress = publicAddress
 
-                If activeMasterNode.ContainsKey(newKey) Then
-                    Return activeMasterNode.Item(newKey)
-                End If
+                chain = chainByName(chainName)
+
+                Return chain.serviceNodeList(publicAddress)
             Catch ex As Exception
                 AreaCommon.log.track("ChainStateEngine.getDataPeer", ex.Message, "fatal")
             Finally
-                AreaCommon.log.track("ChainStateEngine.getDataPeer", "Complete")
+                AreaCommon.log.track("ChainStateEngine.getDataPeer", "Completed")
             End Try
 
-            Return New DataMasternode
+            Return New PublicChainNodeInformation
         End Function
 
         ''' <summary>
@@ -545,52 +570,58 @@ Namespace AreaState
         ''' <param name="chainName"></param>
         ''' <returns></returns>
         Public Function existDataNode(ByVal publicAddress As String, Optional ByVal chainName As String = "") As Boolean
-            Dim newKey As New DataMasternodeKey
-
             Try
+                Dim chain As DataChain
+
                 AreaCommon.log.track("ChainStateEngine.getDataPeer", "Begin")
 
                 If (chainName.Length = 0) Then
-                    newKey.chainName = AreaCommon.state.internalInformation.chainName
-                Else
-                    newKey.chainName = chainName
+                    chainName = AreaCommon.state.internalInformation.chainName
                 End If
-                newKey.identityPublicAddress = publicAddress
 
-                Return activeMasterNode.ContainsKey(newKey)
+                chain = chainByName(chainName)
+
+                Return chain.serviceNodeList.ContainsKey(publicAddress)
             Catch ex As Exception
                 AreaCommon.log.track("ChainStateEngine.getDataPeer", ex.Message, "fatal")
 
                 Return False
             Finally
-                AreaCommon.log.track("ChainStateEngine.getDataPeer", "Complete")
+                AreaCommon.log.track("ChainStateEngine.getDataPeer", "Completed")
             End Try
         End Function
 
         ''' <summary>
-        ''' This method provide to return a node list able to vote a consensus
+        ''' This method provide to return a node list able to power a consensus
         ''' </summary>
         ''' <returns></returns>
-        Public Function getNodeListAbleToConsensus() As List(Of DataMasternode)
+        Public Function getNodeListAbleToConsensus() As List(Of ChainNodeInformation)
             Try
-                Dim result As New List(Of DataMasternode)
+                Dim chain As DataChain
+                Dim result As New List(Of ChainNodeInformation)
 
                 AreaCommon.log.track("ChainStateEngine.getNodeListAbleToConsensus", "Begin")
 
-                For Each item In activeMasterNode.Values
-                    If (item.role = DataMasternode.roleMasterNode.consensus) Or
-                       (item.role = DataMasternode.roleMasterNode.fullService) Then
-                        result.Add(item)
+                If (AreaCommon.state.runTimeState.activeChain.name.value.Length = 0) Then
+                    chain = chainByName("Genesis")
+                Else
+                    chain = AreaCommon.state.runTimeState.activeChain
+                End If
+
+                For Each singleNode In chain.internalNodeList.Values
+                    If (singleNode.role = AreaProtocol.RoleMasterNode.consensus) Or
+                       (singleNode.role = AreaProtocol.RoleMasterNode.fullStack) Then
+                        result.Add(singleNode)
                     End If
                 Next
 
-                AreaCommon.log.track("ChainStateEngine.getNodeListAbleToConsensus", "Complete")
+                AreaCommon.log.track("ChainStateEngine.getNodeListAbleToConsensus", "Completed")
 
                 Return result
             Catch ex As Exception
                 AreaCommon.log.track("ChainStateEngine.getNodeListAbleToConsensus", ex.Message, "fatal")
 
-                Return New List(Of DataMasternode)
+                Return New List(Of ChainNodeInformation)
             End Try
         End Function
 
@@ -602,36 +633,25 @@ Namespace AreaState
         ''' <returns></returns>
         Public Function manageAbstained(ByVal publicAddress As String, ByVal requestHash As String, Optional ByVal chainName As String = "") As Boolean
             Try
-                Dim newKey As New DataMasternodeKey
+                Dim chain As DataChain
 
                 AreaCommon.log.track("ChainStateEngine.manageAbstained", "Begin")
 
-                newKey.identityPublicAddress = publicAddress
-
                 If (chainName.Length = 0) Then
-                    newKey.chainName = AreaCommon.state.internalInformation.chainName
-                Else
-                    newKey.chainName = chainName
+                    chainName = AreaCommon.state.internalInformation.chainName
                 End If
 
-                If activeMasterNode.ContainsKey(newKey) Then
-                    If Not activeMasterNode(newKey).abstainRequest.ContainsKey(requestHash) Then
+                chain = chainByName(chainName)
 
-                        ''' UNDONE: when close a block reset this list
+                chain.internalNodeList(publicAddress).abstainRequest.Add(requestHash, requestHash)
 
-                        activeMasterNode(newKey).abstainRequest.Add(requestHash, requestHash)
-                    End If
-
-                    If (activeMasterNode(newKey).abstainRequest.Values.Count > 3) Then
-
-                        ''' UNDONE: manage Abstained
-                        ''' 
-                        ''' create a request A2x1 and manage this
-
-                    End If
+                If (chain.internalNodeList(publicAddress).abstainRequest.Count = 3) Then
+                    ''' UNDONE: manage Abstained
+                    ''' 
+                    ''' create a request A2x1 and manage this
                 End If
 
-                AreaCommon.log.track("ChainStateEngine.manageAbstained", "Complete")
+                AreaCommon.log.track("ChainStateEngine.manageAbstained", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -650,29 +670,19 @@ Namespace AreaState
         ''' <returns></returns>
         Public Function manageRejected(ByVal publicAddress As String, ByVal requestHash As String, Optional ByVal chainName As String = "") As Boolean
             Try
-                Dim newKey As New DataMasternodeKey
+                Dim chain As DataChain
 
                 AreaCommon.log.track("ChainStateEngine.manageRejected", "Begin")
 
-                newKey.identityPublicAddress = publicAddress
-
                 If (chainName.Length = 0) Then
-                    newKey.chainName = AreaCommon.state.internalInformation.chainName
-                Else
-                    newKey.chainName = chainName
+                    chainName = AreaCommon.state.internalInformation.chainName
                 End If
 
-                If activeMasterNode.ContainsKey(newKey) Then
-                    If Not activeMasterNode(newKey).abstainRequest.ContainsKey(requestHash) Then
+                ''' UNDONE: manage Rejected node
+                ''' 
+                ''' Create a A2x1 to esplunse this node for error (and penalization)
 
-                        ''' UNDONE: manage Rejected node
-                        ''' 
-                        ''' Create a A2x1 to esplunse this node for error (and penalization)
-
-                    End If
-                End If
-
-                AreaCommon.log.track("ChainStateEngine.manageRejected", "Complete")
+                AreaCommon.log.track("ChainStateEngine.manageRejected", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -691,29 +701,19 @@ Namespace AreaState
         ''' <returns></returns>
         Public Function manageAbsent(ByVal publicAddress As String, ByVal requestHash As String, Optional ByVal chainName As String = "") As Boolean
             Try
-                Dim newKey As New DataMasternodeKey
+                Dim chain As DataChain
 
                 AreaCommon.log.track("ChainStateEngine.manageAbsent", "Begin")
 
-                newKey.identityPublicAddress = publicAddress
-
                 If (chainName.Length = 0) Then
-                    newKey.chainName = AreaCommon.state.internalInformation.chainName
-                Else
-                    newKey.chainName = chainName
+                    chainName = AreaCommon.state.internalInformation.chainName
                 End If
 
-                If activeMasterNode.ContainsKey(newKey) Then
-                    If Not activeMasterNode(newKey).abstainRequest.ContainsKey(requestHash) Then
+                ''' UNDONE: manage Rejected node
+                ''' 
+                ''' Create a A2x1 to esplunse this node for error (and penalization)
 
-                        ''' UNDONE: manage Absent node
-                        ''' 
-                        ''' Create a A2x1 to esplunse this node for error (and penalization)
-
-                    End If
-                End If
-
-                AreaCommon.log.track("ChainStateEngine.manageAbsent", "Complete")
+                AreaCommon.log.track("ChainStateEngine.manageAbsent", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -722,7 +722,6 @@ Namespace AreaState
                 Return False
             End Try
         End Function
-
 
         ''' <summary>
         ''' This method provide to initialize a class
@@ -742,7 +741,7 @@ Namespace AreaState
                     proceed = _DBChain.init(workPath)
                 End If
 
-                AreaCommon.log.track("ChainStateEngine.init", "Complete")
+                AreaCommon.log.track("ChainStateEngine.init", "Completed")
 
                 Return True
             Catch ex As Exception

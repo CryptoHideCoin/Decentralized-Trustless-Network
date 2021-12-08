@@ -52,9 +52,9 @@ Namespace AreaData
 
                 rebuildCommandList()
 
-                AreaCommon.log.track("service.CleanLocalData", "Complete")
+                AreaCommon.log.track("service.CleanLocalData", "Completed")
 
-                AreaCommon.log.trackIntoConsole("Clean Local Data complete")
+                AreaCommon.log.trackIntoConsole("Clean Local Data Completed")
 
                 Return proceed
             Catch ex As Exception
@@ -66,7 +66,7 @@ Namespace AreaData
                     AreaCommon.state.currentService.currentAction.reset()
                 End If
 
-                AreaCommon.state.currentService.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.notDefined
+                AreaCommon.state.currentService.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.undefined
                 AreaCommon.state.currentService.requestCancelCurrentRunCommand = False
             End Try
         End Function

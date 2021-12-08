@@ -154,7 +154,7 @@ Namespace AreaData
                 checkNodeList()
                 rebuildCommandList()
 
-                AreaCommon.log.trackIntoConsole("Analize internal state complete")
+                AreaCommon.log.trackIntoConsole("Analize internal state Completed")
 
                 Return True
             Catch ex As Exception
@@ -166,7 +166,7 @@ Namespace AreaData
                     AreaCommon.state.currentService.currentAction.reset()
                 End If
 
-                AreaCommon.state.currentService.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.notDefined
+                AreaCommon.state.currentService.currentRunCommand = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.undefined
                 AreaCommon.state.currentService.requestCancelCurrentRunCommand = False
             End Try
         End Function

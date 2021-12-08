@@ -75,7 +75,7 @@ Namespace Controllers
                     result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
                 End If
 
-                AreaCommon.log.track("RequestController.putValue", "Complete")
+                AreaCommon.log.track("RequestController.putValue", "Completed")
             Catch ex As Exception
                 result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"

@@ -24,7 +24,7 @@ Namespace AreaCommon.Models
         ''' This enumeration contain the list of the command
         ''' </summary>
         Public Enum EnumActionAdministration
-            notDefined
+            undefined
             verifyData
             rebuildState
             downloadHistory
@@ -118,7 +118,7 @@ Namespace AreaCommon.Models
             Public Property listAvailableCommand As New List(Of EnumActionAdministration)
             Public Property currentAction As New ActionElement
             Public Property servicePosition As EnumServicePosition
-            Public Property currentRunCommand As EnumActionAdministration = EnumActionAdministration.notDefined
+            Public Property currentRunCommand As EnumActionAdministration = EnumActionAdministration.undefined
             Public Property requestCancelCurrentRunCommand As Boolean = False
 
             ''' <summary>

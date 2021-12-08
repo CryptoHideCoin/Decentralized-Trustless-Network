@@ -71,7 +71,7 @@ Namespace Controllers
                     End If
                 End If
 
-                AreaCommon.log.track("CleanLocalDataController.getValue", "Complete")
+                AreaCommon.log.track("CleanLocalDataController.getValue", "Completed")
             Catch ex As Exception
                 result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"

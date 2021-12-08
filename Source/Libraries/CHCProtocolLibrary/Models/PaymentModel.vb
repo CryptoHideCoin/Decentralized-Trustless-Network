@@ -35,6 +35,14 @@ Namespace AreaCommon.Models.Payments
             Return result
         End Function
 
+        ''' <summary>
+        ''' This method provide to clone this class
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function clone() As FeeModel
+            Return Me.MemberwiseClone
+        End Function
+
 
     End Class
 

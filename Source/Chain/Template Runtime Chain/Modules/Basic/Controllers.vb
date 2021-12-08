@@ -112,7 +112,7 @@ Namespace AreaCommon
                     Application.DoEvents()
                 Loop
 
-                log.track("Controllers.WebserviceThread", "Complete")
+                log.track("Controllers.WebserviceThread", "Completed")
 
                 Return True
             Catch ex As Exception

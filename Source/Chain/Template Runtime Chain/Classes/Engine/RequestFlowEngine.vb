@@ -78,7 +78,7 @@ Namespace AreaFlow
 
                     Try
                         For Each item In listRequest
-                            If (result.dataCommon.hash.Length = 0) Or (result.source.ticketNumber <= item.source.ticketNumber) Then
+                            If (result.dataCommon.hash.Length = 0) Or (Val(result.source.ticketNumber) >= Val(item.source.ticketNumber)) Then
                                 result = item
                             End If
                         Next
@@ -87,7 +87,7 @@ Namespace AreaFlow
                     End Try
                 Loop
 
-                AreaCommon.log.track("RequestFlowEngine.getFirstRequest", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.getFirstRequest", "Completed")
 
                 Return result
             Catch ex As Exception
@@ -96,17 +96,6 @@ Namespace AreaFlow
                 Return New RequestExtended
             End Try
         End Function
-
-        ''' <summary>
-        ''' This method provide to rebuild the final command list
-        ''' </summary>
-        Private Sub rebuildFinalCommandList()
-            With AreaCommon.state.currentService
-                .listAvailableCommand.Clear()
-
-                .listAvailableCommand.Add(CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.requestNetworkDisconnect)
-            End With
-        End Sub
 
 
         ''' <summary>
@@ -144,7 +133,7 @@ Namespace AreaFlow
                     End If
                 End If
 
-                AreaCommon.log.track("RequestFlowEngine.addNewRequestDirect", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.addNewRequestDirect", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -189,7 +178,7 @@ Namespace AreaFlow
 
                 Return False
             Finally
-                AreaCommon.log.track("RequestFlowEngine.addNewRequestNotify", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.addNewRequestNotify", "Completed")
             End Try
         End Function
 
@@ -214,7 +203,7 @@ Namespace AreaFlow
                     Return True
                 End If
 
-                AreaCommon.log.track("RequestFlowEngine.addNewRequestToDownload", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.addNewRequestToDownload", "Completed")
 
                 Return False
             Catch ex As Exception
@@ -248,7 +237,7 @@ Namespace AreaFlow
 
                 _RequestToSend.Add(item)
 
-                AreaCommon.log.track("RequestFlowEngine.addNewRequestToSend", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.addNewRequestToSend", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -277,7 +266,7 @@ Namespace AreaFlow
 
                 _RequestToSend.Add(item)
 
-                AreaCommon.log.track("RequestFlowEngine.addNewBulletinToSend", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.addNewBulletinToSend", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -306,7 +295,7 @@ Namespace AreaFlow
 
                 _RequestToSend.Add(item)
 
-                AreaCommon.log.track("RequestFlowEngine.addNewRequestToExpression", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.addNewRequestToExpression", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -327,7 +316,7 @@ Namespace AreaFlow
 
                 _RemoteBulletin.Add(value)
 
-                AreaCommon.log.track("RequestFlowEngine.addNewRequestRemoteBulletin", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.addNewRequestRemoteBulletin", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -349,7 +338,7 @@ Namespace AreaFlow
                 _RequestToVerify.Remove(item)
                 _RequestToProcess.Add(item.dataCommon.hash, item)
 
-                AreaCommon.log.track("RequestFlowEngine.setRequestToProcess", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.setRequestToProcess", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -378,7 +367,7 @@ Namespace AreaFlow
                     proceed = _RequestManager.addNewRequest(item.dataCommon.hash, item.dataCommon.type)
                 End If
 
-                AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", "Completed")
 
                 Return proceed
             Catch ex As Exception
@@ -400,7 +389,7 @@ Namespace AreaFlow
                 _RequestToSelected.Remove(item)
                 _RequestToVerify.Add(item)
 
-                AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.setRequestToSelect", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -433,7 +422,7 @@ Namespace AreaFlow
                     _RequestManager.completedRequest(item.dataCommon.hash, TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.stored, block)
                 End If
 
-                AreaCommon.log.track("RequestFlowEngine.setRequestProcessed", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.setRequestProcessed", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -469,11 +458,11 @@ Namespace AreaFlow
 
                 AreaCommon.log.track("RequestFlowEngine.createConsensusList", "Begin")
 
-                For Each item In AreaCommon.state.runtimeState.getNodeListAbleToConsensus()
-                    result.addNew(item.identityPublicAddress, item.ipAddress, item.votePoint)
+                For Each item In AreaCommon.state.runTimeState.getNodeListAbleToConsensus()
+                    result.addNew(item.identityPublicAddress, item.ipAddress, item.power)
                 Next
 
-                AreaCommon.log.track("RequestFlowEngine.createConsensusList", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.createConsensusList", "Completed")
 
                 Return result
             Catch ex As Exception
@@ -510,7 +499,7 @@ Namespace AreaFlow
                     End Try
                 Loop
 
-                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToDownload", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToDownload", "Completed")
 
                 Return result
             Catch ex As Exception
@@ -542,7 +531,7 @@ Namespace AreaFlow
                     _RequestToSend.Remove(result)
                 End If
 
-                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToSend", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToSend", "Completed")
 
                 Return result
             Catch ex As Exception
@@ -565,7 +554,7 @@ Namespace AreaFlow
                     Return _Requests(hash)
                 End If
 
-                AreaCommon.log.track("RequestFlowEngine.getRequest", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.getRequest", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("RequestFlowEngine.getRequest", ex.Message, "fatal")
             End Try
@@ -610,8 +599,15 @@ Namespace AreaFlow
                                 Case "a1x3" : result.data = AreaProtocol.A1x3.Manager.loadRequest(requestPath, hash)
                                 Case "a1x4" : result.data = AreaProtocol.A1x4.Manager.loadRequest(requestPath, hash)
                                 Case "a1x5" : result.data = AreaProtocol.A1x5.Manager.loadRequest(requestPath, hash)
+                                Case "a1x6" : result.data = AreaProtocol.A1x6.Manager.loadRequest(requestPath, hash)
+                                Case "a1x7" : result.data = AreaProtocol.A1x7.Manager.loadRequest(requestPath, hash)
+                                Case "a1x8" : result.data = AreaProtocol.A1x8.Manager.loadRequest(requestPath, hash)
+                                Case "a1x9" : result.data = AreaProtocol.A1x9.Manager.loadRequest(requestPath, hash)
+
+                                Case "a2x0" : result.data = AreaProtocol.A2x0.Manager.loadRequest(requestPath, hash)
 
                                     ''' BOOKMARK: Add in this point 3
+                                    ''' 
                             End Select
                         End If
                     End If
@@ -619,7 +615,7 @@ Namespace AreaFlow
 
                 Return result
 
-                AreaCommon.log.track("RequestFlowEngine.getRequest", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.getRequest", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("RequestFlowEngine.getRequest", ex.Message, "fatal")
 
@@ -642,7 +638,7 @@ Namespace AreaFlow
 
                 Return ""
             Finally
-                AreaCommon.log.track("RequestFlowEngine.getRequestBlockPosition", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.getRequestBlockPosition", "Completed")
             End Try
         End Function
 
@@ -662,7 +658,7 @@ Namespace AreaFlow
 
                     Try
                         For Each item In _RequestToProcess.Values
-                            If (result.source.ticketNumber <= item.source.ticketNumber) Then
+                            If ((result.dataCommon.hash.Length = 0) Or (Val(result.source.ticketNumber) >= Val(item.source.ticketNumber))) Then
                                 result = item
                             End If
                         Next
@@ -671,7 +667,7 @@ Namespace AreaFlow
                     End Try
                 Loop
 
-                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToProcess", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.getFirstRequestToProcess", "Completed")
 
                 Return result
             Catch ex As Exception
@@ -705,7 +701,7 @@ Namespace AreaFlow
                     End If
                 Next
 
-                AreaCommon.log.track("RequestFlowEngine.getApprovedTimeStamp", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.getApprovedTimeStamp", "Completed")
 
                 Return minimalAssessmentTimeStamp
             Catch ex As Exception
@@ -729,7 +725,7 @@ Namespace AreaFlow
                     Return New AreaConsensus.BulletinInformation
                 End If
 
-                AreaCommon.log.track("RequestFlowEngine.getFirstRemoteBulletin", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.getFirstRemoteBulletin", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("RequestFlowEngine.getFirstRemoteBulletin", ex.Message, "fatal")
 
@@ -752,7 +748,7 @@ Namespace AreaFlow
                     End If
                 Next
 
-                AreaCommon.log.track("RequestFlowEngine.checkRemoteBulletinFromNode", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.checkRemoteBulletinFromNode", "Completed")
 
                 Return False
             Catch ex As Exception
@@ -814,7 +810,7 @@ Namespace AreaFlow
                     Loop
                 End If
 
-                AreaCommon.log.track("RequestFlowEngine.removeOldRequest", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.removeOldRequest", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -829,7 +825,7 @@ Namespace AreaFlow
         ''' </summary>
         ''' <param name="minimalMaintainRequestBlock"></param>
         ''' <returns></returns>
-        Public Function removeOldRequestRejectedAndTrashedIntoDB(ByVal minimalMaintainRequestBlock As Integer) As Boolean
+        Public Function removeOldRequestRejectedAndTrashedIntoDB(ByVal minimalMaintainRequestBlock As Double) As Boolean
             Try
                 AreaCommon.log.track("RequestFlowEngine.removeOldRequestRejectedAndTrashedIntoDB", "Begin")
 
@@ -839,7 +835,7 @@ Namespace AreaFlow
 
                 Return False
             Finally
-                AreaCommon.log.track("RequestFlowEngine.removeOldRequestRejectedAndTrashedIntoDB", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.removeOldRequestRejectedAndTrashedIntoDB", "Completed")
             End Try
         End Function
 
@@ -848,7 +844,7 @@ Namespace AreaFlow
         ''' </summary>
         ''' <param name="minimalMaintainRequestBlock"></param>
         ''' <returns></returns>
-        Public Function removeOldRequestDB(ByVal minimalMaintainRequestBlock As Integer) As Boolean
+        Public Function removeOldRequestDB(ByVal minimalMaintainRequestBlock As Double) As Boolean
             Try
                 AreaCommon.log.track("RequestFlowEngine.removeOldRequestDB", "Begin")
 
@@ -858,16 +854,16 @@ Namespace AreaFlow
 
                 Return False
             Finally
-                AreaCommon.log.track("RequestFlowEngine.removeOldRequestDB", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.removeOldRequestDB", "Completed")
             End Try
         End Function
 
         ''' <summary>
         ''' This method provide to get a old request block
         ''' </summary>
-        ''' <param name="minimalMantainRequestBlock"></param>
+        ''' <param name="minimalMaintainRequestBlock"></param>
         ''' <returns></returns>
-        Public Function getBlockList(ByVal minimalMaintainRequestBlock As Integer) As List(Of String)
+        Public Function getBlockList(ByVal minimalMaintainRequestBlock As Double) As List(Of String)
             Try
                 AreaCommon.log.track("RequestFlowEngine.getBlockList", "Begin")
 
@@ -877,7 +873,7 @@ Namespace AreaFlow
 
                 Return New List(Of String)
             Finally
-                AreaCommon.log.track("RequestFlowEngine.getBlockList", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.getBlockList", "Completed")
             End Try
         End Function
 
@@ -887,7 +883,7 @@ Namespace AreaFlow
         ''' <param name="minimalMaintenanceRejectFile"></param>
         ''' <param name="state"></param>
         ''' <returns></returns>
-        Public Function getFileList(ByVal minimalMaintenanceRejectFile As Integer, ByVal state As TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest) As List(Of String)
+        Public Function getFileList(ByVal minimalMaintenanceRejectFile As Double, ByVal state As TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest) As List(Of String)
             Try
                 AreaCommon.log.track("RequestFlowEngine.getFileList", "Begin")
 
@@ -897,41 +893,7 @@ Namespace AreaFlow
 
                 Return New List(Of String)
             Finally
-                AreaCommon.log.track("RequestFlowEngine.getFileList", "Complete")
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to execute the action after assessment 
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function actionAfterAssessment() As Boolean
-            Try
-                AreaCommon.log.track("RequestFlowEngine.actionAfterAssessment", "Begin")
-
-                If (AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.genesisOperation) Then
-                    If (AreaCommon.state.runtimeState.activeNetwork.networkName.value.Length > 0) And
-                       (AreaCommon.state.runtimeState.activeChain.name.value.Length > 0) And
-                       (AreaCommon.state.runtimeState.activeMasterNode.Count > 0) Then
-                        AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.onLine
-
-                        rebuildFinalCommandList()
-
-                        If AreaCommon.webServiceThread() Then
-                            AreaCommon.log.trackIntoConsole("Public port (" & AreaCommon.settings.data.publicPort & ") chain in listen")
-                        Else
-                            AreaCommon.log.trackIntoConsole("Problem during start public service")
-                        End If
-                    End If
-                End If
-
-                AreaCommon.log.track("RequestFlowEngine.actionAfterAssessment", "Complete")
-
-                Return True
-            Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.actionAfterAssessment", ex.Message, "fatal")
-
-                Return False
+                AreaCommon.log.track("RequestFlowEngine.getFileList", "Completed")
             End Try
         End Function
 
@@ -970,7 +932,6 @@ Namespace AreaFlow
 
                 Return False
             End Try
-
         End Function
 
         ''' <summary>
@@ -1022,7 +983,7 @@ Namespace AreaFlow
 
                 _RequestManager.init(AreaCommon.paths.workData.requestData.path)
 
-                AreaCommon.log.track("RequestFlowEngine.init", "Complete")
+                AreaCommon.log.track("RequestFlowEngine.init", "Completed")
 
                 Return True
             Catch ex As Exception

@@ -56,7 +56,7 @@ Namespace Controllers
                     result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                 End If
 
-                AreaCommon.log.track("A0x6Controller.getValue", "Complete")
+                AreaCommon.log.track("A0x6Controller.getValue", "Completed")
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
@@ -92,7 +92,7 @@ Namespace Controllers
                     result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
                 End If
 
-                AreaCommon.log.track("A0x6Controller.putValue", "Complete")
+                AreaCommon.log.track("A0x6Controller.putValue", "Completed")
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"

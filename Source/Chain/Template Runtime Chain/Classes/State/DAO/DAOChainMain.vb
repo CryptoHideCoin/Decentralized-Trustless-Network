@@ -21,7 +21,7 @@ Namespace AreaCommon.DAO
         ''' </summary>
         Public Enum MainPropertyID
 
-            notDefined
+            undefined
             networkCreationDate
             genesisPublicAddress
             networkName
@@ -68,7 +68,6 @@ Namespace AreaCommon.DAO
         Private Function deleteOldDataNetwork(ByVal id As MainPropertyID) As Boolean
             Try
                 Dim sql As String = ""
-                Dim result As Object
 
                 log.track("DBMainProperties.deleteOldData", "Begin")
 
@@ -84,7 +83,7 @@ Namespace AreaCommon.DAO
 
                 Return False
             Finally
-                log.track("DBMainProperties.deleteOldData", "Complete")
+                log.track("DBMainProperties.deleteOldData", "Completed")
             End Try
         End Function
 
@@ -228,7 +227,7 @@ Namespace AreaCommon.DAO
                     proceed = DBGeneric.writeIdentityDB(String.Format(_DBStateConnectionString, _DBStateFileName), "State", "State")
                 End If
 
-                log.track("DBMainProperties.init", "Complete")
+                log.track("DBMainProperties.init", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -250,11 +249,13 @@ Namespace AreaCommon.DAO
         ''' </summary>
         Public Enum DetailPropertyID
 
-            notDefined
+            undefined
+            chainParameters
             priceList
             policyPrivacy
             termAndConditions
-            lastCloseBlock
+            lastTransactionBlock
+            lastNodeList
 
         End Enum
 
@@ -271,12 +272,13 @@ Namespace AreaCommon.DAO
             Dim sql As String = ""
 
             sql += "CREATE TABLE chains "
-            sql += " (name NVARCHAR(1024) NOT NULL, "
-            sql += "  privateChain INTEGER NOT NULL, "
-            sql += "  description NVARCHAR(65535) NOT NULL, "
+            sql += " (chain_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            sql += "  name NVARCHAR(1024) Not NULL, "
+            sql += "  privateChain INTEGER Not NULL, "
+            sql += "  description NVARCHAR(65535) Not NULL, "
             sql += "  recordRegistrationTimeStamp REAL, "
-            sql += "  recordCoordinate NVARCHAR(128) NOT NULL, "
-            sql += "  recordHash NVARCHAR(65) NOT NULL PRIMARY KEY); "
+            sql += "  recordCoordinate NVARCHAR(128) Not NULL, "
+            sql += "  recordHash NVARCHAR(65) Not NULL); "
 
             Return DBGeneric.executeDataTable(sql, String.Format(_DBStateConnectionString, _DBStateFileName))
         End Function
@@ -289,13 +291,13 @@ Namespace AreaCommon.DAO
             Dim sql As String = ""
 
             sql += "CREATE TABLE chainProtocolSets "
-            sql += " (chain_id NVARCHAR(65), "
+            sql += " (chain_id INTEGER Not NULL, "
             sql += "  setCode NVARCHAR(25), "
             sql += "  protocol NVARCHAR(255), "
             sql += "  recordRegistrationTimeStamp REAL, "
-            sql += "  recordCoordinate NVARCHAR(128) NOT NULL, "
-            sql += "  recordHash NVARCHAR(65) NOT NULL, "
-            sql += "  hashContent NVARCHAR(65) NOT NULL, "
+            sql += "  recordCoordinate NVARCHAR(128) Not NULL, "
+            sql += "  recordHash NVARCHAR(65) Not NULL, "
+            sql += "  hashContent NVARCHAR(65) Not NULL, "
             sql += " PRIMARY KEY (chain_id, setCode) "
             sql += "); "
 
@@ -323,17 +325,54 @@ Namespace AreaCommon.DAO
         End Function
 
         ''' <summary>
+        ''' This method provide to create a token chain DB table
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function createChainTokenDBTable() As Boolean
+            Dim sql As String = ""
+
+            sql += "CREATE TABLE chainTokenConfigurations "
+            sql += " (chain_id INTEGER Not NULL, "
+            sql += "  shortName NVARCHAR(20) Not Null, "
+            sql += "  recordRegistrationTimeStamp REAL, "
+            sql += "  recordCoordinate NVARCHAR(128) Not NULL, "
+            sql += "  recordHash NVARCHAR(65) Not NULL, "
+            sql += "  hashContent NVARCHAR(65) Not NULL, "
+            sql += "  PRIMARY KEY (chain_id, shortName) "
+            sql += ");"
+
+            Return DBGeneric.executeDataTable(sql, String.Format(_DBStateConnectionString, _DBStateFileName))
+        End Function
+
+        ''' <summary>
+        ''' This method provide to delete a token configuration
+        ''' </summary>
+        ''' <param name="chainID"></param>
+        ''' <param name="shortName"></param>
+        ''' <returns></returns>
+        Private Function deleteTokenConfiguration(ByVal chainID As Integer, ByVal shortName As String) As Boolean
+            Dim sql As String = ""
+
+            sql += "DELETE "
+            sql += "FROM chainTokenConfigurations "
+            sql += "WHERE chain_id = '" & chainID & "'"
+            sql += "  AND shortName = '" & shortName & "'"
+
+            Return DBGeneric.executeDataTable(sql, String.Format(_DBStateConnectionString, _DBStateFileName))
+        End Function
+
+        ''' <summary>
         ''' This method provide to delete a single protocol
         ''' </summary>
-        ''' <param name="chainReferement"></param>
+        ''' <param name="chainID"></param>
         ''' <param name="setCode"></param>
         ''' <returns></returns>
-        Private Function deleteProtocol(ByVal chainReferement As String, ByVal setCode As String) As Boolean
+        Private Function deleteProtocol(ByVal chainID As Integer, ByVal setCode As String) As Boolean
             Dim sql As String = ""
 
             sql += "DELETE "
             sql += "FROM chainProtocolSets "
-            sql += "WHERE chain_id = '" & chainReferement & "'"
+            sql += "WHERE chain_id = " & chainID
             sql += "  AND setCode = '" & setCode & "'"
 
             Return DBGeneric.executeDataTable(sql, String.Format(_DBStateConnectionString, _DBStateFileName))
@@ -356,6 +395,45 @@ Namespace AreaCommon.DAO
             Return DBGeneric.executeDataTable(sql, String.Format(_DBStateConnectionString, _DBStateFileName))
         End Function
 
+        ''' <summary>
+        ''' This method provide to get a last record ID
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function getLastRecordID(Optional ByRef connectionDB As SQLiteConnection = Nothing, Optional ByVal closeDB As Boolean = False) As Integer
+            Try
+                Dim sql As String = ""
+                Dim result As Object
+
+                log.track("DBChain.getLastRecordID", "Begin")
+
+                sql += "SELECT last_insert_rowid()"
+
+                log.track("DBChain.getLastRecordID", "DB Open")
+
+                If IsNothing(connectionDB) Then
+                    connectionDB = New SQLiteConnection(String.Format(_DBStateConnectionString, _DBStateFileName))
+
+                    connectionDB.Open()
+                End If
+
+                result = DBGeneric.selectResultDataTable(sql,, False, connectionDB)
+
+                If closeDB Then
+                    connectionDB.Close()
+                End If
+
+                If Not IsNothing(result) Then
+                    Return result
+                Else
+                    Return ""
+                End If
+            Catch ex As Exception
+                log.track("DBChain.getLastRecordID", "Failed = " & ex.Message, "fatal", True)
+
+                Return False
+            End Try
+        End Function
+
 
         ''' <summary>
         ''' This method provide to add a new chain into db
@@ -365,8 +443,9 @@ Namespace AreaCommon.DAO
         ''' <param name="description"></param>
         ''' <param name="transactionChainRecord"></param>
         ''' <returns></returns>
-        Public Function insertSQLNewChain(ByVal chainName As String, ByVal privateChain As Boolean, ByVal description As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As String
+        Public Function addNewChain(ByVal chainName As String, ByVal privateChain As Boolean, ByVal description As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Integer
             Dim sql As String = ""
+            Dim connectionDB As SQLiteConnection
 
             sql += "INSERT INTO chains "
             sql += " (name, privateChain, description, "
@@ -389,21 +468,25 @@ Namespace AreaCommon.DAO
             sql += ",'" & transactionChainRecord.progressiveHash
             sql += "')"
 
-            If DBGeneric.executeDataTable(sql, String.Format(_DBStateConnectionString, _DBStateFileName)) Then
-                Return transactionChainRecord.progressiveHash
+            connectionDB = New SQLiteConnection(String.Format(_DBStateConnectionString, _DBStateFileName))
+
+            connectionDB.Open()
+
+            If DBGeneric.executeDataTable(sql,, False, connectionDB) Then
+                Return getLastRecordID(connectionDB, True)
             Else
-                Return ""
+                Return 0
             End If
         End Function
 
         ''' <summary>
         ''' This method provide to update the protocol
         ''' </summary>
-        ''' <param name="chainReferement"></param>
+        ''' <param name="chainID"></param>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function updateProtocol(ByVal chainReferement As String, ByRef value As CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
-            If deleteProtocol(chainReferement, value.setCode) Then
+        Public Function updateProtocol(ByVal chainID As Integer, ByRef value As CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+            If deleteProtocol(chainID, value.setCode) Then
                 Dim sql As String = ""
 
                 sql += "INSERT INTO chainProtocolSets "
@@ -412,7 +495,7 @@ Namespace AreaCommon.DAO
                 sql += "  recordCoordinate, recordHash, "
                 sql += "  hashContent)"
                 sql += " VALUES "
-                sql += " ('" & chainReferement & "', "
+                sql += " (" & chainID & ", "
                 sql += "  '" & value.setCode & "'"
                 sql += ",'" & value.protocol & "'"
                 sql += ",'" & transactionChainRecord.registrationTimeStamp & "'"
@@ -430,10 +513,12 @@ Namespace AreaCommon.DAO
         ''' This method provide to update the protocol
         ''' </summary>
         ''' <param name="chainReferement"></param>
-        ''' <param name="value"></param>
+        ''' <param name="propertyChain_id"></param>
+        ''' <param name="hashContent"></param>
+        ''' <param name="transactionChainRecord"></param>
         ''' <returns></returns>
-        Public Function updateDetail(ByVal chainReferement As String, ByVal propertyChain_id As DetailPropertyID, ByRef hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
-            If deleteDetail(chainReferement, propertyChain_id) Then
+        Public Function updateDetail(ByVal chainID As Integer, ByVal propertyChain_id As DetailPropertyID, ByRef hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+            If deleteDetail(chainID, propertyChain_id) Then
                 Dim sql As String = ""
 
                 sql += "INSERT INTO chainDetails "
@@ -442,8 +527,37 @@ Namespace AreaCommon.DAO
                 sql += "  recordCoordinate, recordHash, "
                 sql += "  hashContent)"
                 sql += " VALUES "
-                sql += " ('" & chainReferement & "'"
+                sql += " (" & chainID
                 sql += "," & propertyChain_id
+                sql += ",'" & transactionChainRecord.registrationTimeStamp & "'"
+                sql += ",'" & transactionChainRecord.coordinate & "'"
+                sql += ",'" & transactionChainRecord.progressiveHash & "'"
+                sql += ",'" & hashContent & "')"
+
+                Return DBGeneric.executeDataTable(sql, String.Format(_DBStateConnectionString, _DBStateFileName))
+            Else
+                Return False
+            End If
+        End Function
+
+        ''' <summary>
+        ''' This method provide to insert a new token into DB
+        ''' </summary>
+        ''' <param name="chainID"></param>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Function addNewToken(ByVal chainID As Integer, ByVal value As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction, ByRef hashContent As String) As Boolean
+            If deleteTokenConfiguration(chainID, value.assetInformation.shortName) Then
+                Dim sql As String = ""
+
+                sql += "INSERT INTO chainTokenConfigurations "
+                sql += " (chain_id, shortName, "
+                sql += "  recordRegistrationTimeStamp, "
+                sql += "  recordCoordinate, recordHash, "
+                sql += "  hashContent)"
+                sql += " VALUES "
+                sql += " (" & chainID
+                sql += ",'" & value.assetInformation.shortName & "'"
                 sql += ",'" & transactionChainRecord.registrationTimeStamp & "'"
                 sql += ",'" & transactionChainRecord.coordinate & "'"
                 sql += ",'" & transactionChainRecord.progressiveHash & "'"
@@ -479,8 +593,11 @@ Namespace AreaCommon.DAO
                 If proceed Then
                     proceed = createChainSetProtocols()
                 End If
+                If proceed Then
+                    proceed = createChainTokenDBTable()
+                End If
 
-                log.track("ChainStateEngine.init", "Complete")
+                log.track("ChainStateEngine.init", "Completed")
 
                 Return True
             Catch ex As Exception

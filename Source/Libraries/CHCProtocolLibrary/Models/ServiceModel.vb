@@ -29,7 +29,7 @@ Namespace AreaCommon.Models.Service
         ''' </summary>
         Public Enum EnumInternalServiceState
 
-            notDefined
+            undefined
             starting
             waitToMaintenance
             started
@@ -38,7 +38,7 @@ Namespace AreaCommon.Models.Service
 
         End Enum
 
-        Public currentStatus As EnumInternalServiceState = EnumInternalServiceState.notDefined
+        Public currentStatus As EnumInternalServiceState = EnumInternalServiceState.undefined
         Public adminPublicAddress As String = ""
         Public chainName As String = ""
         Public platformHost As String = ""

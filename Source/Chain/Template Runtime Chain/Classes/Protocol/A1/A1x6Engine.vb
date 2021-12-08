@@ -1,169 +1,315 @@
-﻿'Option Compare Text
-'Option Explicit On
+﻿Option Compare Text
+Option Explicit On
 
-'Imports CHCCommonLibrary.Support
-'Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
-'Imports CHCCommonLibrary.AreaEngine.Encryption
-
-
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
+Imports CHCCommonLibrary.AreaEngine.Encryption
+Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
 
 
-'Namespace AreaProtocol
-
-'    Public Class A1x6
-
-'        Public Class RequestModel
-
-'            Public Property requestDateTimeStamp As Double = 0
-'            Public Property publicWalletAddressRequester As String = ""
-'            Public Property requestHash As String = ""
-'            Public Property signature As String = ""
-
-'            Public Property chainName As String = ""
-'            Public Property generalConditionsDocument As String = ""
-
-'            Public Overrides Function toString() As String
-'                Dim tmp As String = ""
-
-'                tmp += MyBase.toString()
-'                tmp += chainName
-'                tmp += GeneralConditionsDocument
-
-'                Return tmp
-'            End Function
-
-'            Public Function getHash() As String
-'                Return HashSHA.generateSHA256(Me.toString())
-'            End Function
-
-'        End Class
-
-'        Public Class FileEngine
-
-'            Inherits BaseFile(Of RequestModel)
-
-'        End Class
-
-'        Public Class RecoveryState
-
-'            Public Shared Function fromRequest(ByRef value As RequestModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
-'                With AreaCommon.state.runtimeState.getDataChain(value.chainName).generalCondition
-'                    .coordinate = transactionChainRecord.coordinate
-'                    .hash = transactionChainRecord.hash
-'                    .value = value.generalConditionsDocument
-'                End With
-
-'                Return True
-'            End Function
-
-'            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByVal chainName As String, ByRef data As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
-'                Try
-'                    AreaCommon.state.runtimeState.activeChains(chainName).generalCondition.value = TransactionChainLibrary.AreaEngine.Ledger.State.StateEngine.readContentFromFile(statePath, data.detailInformation)
-
-'                    Return True
-'                Catch ex As Exception
-'                    Return False
-'                End Try
-
-'                Return True
-'            End Function
-
-'        End Class
-
-'        Public Class Manager
-
-'            Private data As New RequestModel
-
-'            Public Property log As LogEngine
-'            Public Property currentService As CHCProtocolLibrary.AreaCommon.Models.Administration.ServiceStateResponse
 
 
-'            Private Function writeDataIntoLedger(ByVal contentStatePath As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
-'                Try
-'                    With AreaCommon.state.currentBlockLedger.currentApprovedTransaction
-'                        .actionCode = "a1x6"
-'                        .registrationTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
-'                        .detailInformation = HashSHA.generateSHA256(data.generalConditionsDocument)
-'                        .requesterPublicAddress = data.publicWalletAddressRequester
-'                        .requestHash = data.requestHash
-'                    End With
 
-'                    TransactionChainLibrary.AreaEngine.Ledger.State.StateEngine.writeDataContent(contentStatePath, data.generalConditionsDocument, AreaCommon.state.currentBlockLedger.currentApprovedTransaction.detailInformation)
+Namespace AreaProtocol
 
-'                    'If AreaCommon.state.currentBlockLedger.BlockComplete() Then
-'                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
-'                    'End If
-'                Catch ex As Exception
-'                    currentService.currentAction.setError(Err.Number, ex.Message)
+    ''' <summary>
+    ''' This class contain all element to manage a A1x6 command
+    ''' </summary>
+    Public Class A1x6
 
-'                    log.track("A1x6Manager.init", ex.Message, "fatal")
-'                End Try
+        ''' <summary>
+        ''' This class contain alla member of request model
+        ''' </summary>
+        Public Class RequestModel : Implements IRequestModel
 
-'                Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
-'            End Function
+            Public Property common As New CommonRequest Implements IRequestModel.common
+            Public Property content As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel
+
+            ''' <summary>
+            ''' This method provide to convert into a string the element of the object
+            ''' </summary>
+            ''' <returns></returns>
+            Public Overrides Function toString() As String Implements IRequestModel.toString
+                Dim tmp As String = common.toString()
+
+                tmp += MyBase.ToString()
+
+                Return tmp
+            End Function
+
+            ''' <summary>
+            ''' This methdo provide to get an hash of the object
+            ''' </summary>
+            ''' <returns></returns>
+            Public Function getHash() As String Implements IRequestModel.getHash
+                Return HashSHA.generateSHA256(Me.toString())
+            End Function
+
+        End Class
+
+        ''' <summary>
+        ''' This class contain all element of a request response
+        ''' </summary>
+        Public Class RequestResponseModel
+
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse : Implements IRequestModel
+
+            Private _Base As New RequestModel
+
+            Public Property common As CommonRequest Implements IRequestModel.common
+                Get
+                    Return _Base.common
+                End Get
+                Set(value As CommonRequest)
+                    _Base.common = value
+                End Set
+            End Property
+            Public Property content As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel
+                Get
+                    Return _Base.content
+                End Get
+                Set(value As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel)
+                    _Base.content = value
+                End Set
+            End Property
+            Public Overrides Property signature As String
+                Get
+                    Return MyBase.signature
+                End Get
+                Set(value As String)
+                    MyBase.signature = value
+                End Set
+            End Property
+
+            ''' <summary>
+            ''' This method provide to create a string of an element of this object
+            ''' </summary>
+            ''' <returns></returns>
+            Public Overrides Function toString() As String Implements IRequestModel.toString
+                Return MyBase.ToString() & _Base.toString()
+            End Function
+
+            ''' <summary>
+            ''' This method provide to get the hash of this object
+            ''' </summary>
+            ''' <returns></returns>
+            Public Function getHash() As String Implements IRequestModel.getHash
+                Return _Base.getHash()
+            End Function
+
+        End Class
+
+        ''' <summary>
+        ''' This class contain all static member to recovery state 
+        ''' </summary>
+        Public Class RecoveryState
+
+            ''' <summary>
+            ''' This method provide to update the state from a request
+            ''' </summary>
+            ''' <param name="value"></param>
+            ''' <param name="transactionChainRecord"></param>
+            ''' <returns></returns>
+            Public Shared Function fromRequest(ByRef value As RequestModel, ByVal transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+                Try
+                    Dim proceed As Boolean = True
+                    Dim contentPath As String = AreaCommon.paths.workData.state.contents
+                    Dim hashContent As String = HashSHA.generateSHA256(value.content.toString())
+
+                    AreaCommon.log.track("RecoveryState.fromRequest", "Begin")
+
+                    If proceed Then
+                        proceed = AreaCommon.state.runTimeState.addNewToken(value.common.chainReferement, value.content, hashContent, transactionChainRecord)
+                    End If
+                    If proceed Then
+                        contentPath = IO.Path.Combine(contentPath, hashContent & ".Content")
+
+                        proceed = IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel).save(contentPath, value.content)
+                    End If
+
+                    AreaCommon.log.track("RecoveryState.fromRequest", "Completed")
+
+                    Return proceed
+                Catch ex As Exception
+                    AreaCommon.log.track("RecoveryState.fromRequest", ex.Message, "fatal")
+
+                    Return False
+                End Try
+            End Function
+
+            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
+                ''' TODO: A1x4 RecoveryState.fromTransactionLedger
+            End Function
+
+        End Class
+
+        ''' <summary>
+        ''' This class provides the static method to validate the request
+        ''' </summary>
+        Public Class FormalCheck
+
+            ''' <summary>
+            ''' This method provide to verify a formal request
+            ''' </summary>
+            ''' <param name="requestHash"></param>
+            ''' <returns></returns>
+            Shared Function verify(ByVal requestHash As String) As Nullable(Of Boolean)
+                Try
+                    Dim proceed As Boolean = True
+                    Dim request As RequestModel = AreaCommon.flow.getActiveRequest(requestHash).data
+
+                    AreaCommon.log.track("FormalCheck.verify", "Begin")
+
+                    If proceed Then
+                        proceed = (request.common.netWorkReferement.Length > 0)
+                    End If
+                    If proceed Then
+                        proceed = (request.common.netWorkReferement.CompareTo(AreaCommon.state.runtimeState.activeNetwork.hash) = 0)
+                    End If
+                    If proceed Then
+                        proceed = (request.common.chainReferement.Length > 0)
+                    End If
+                    If proceed Then
+                        proceed = request.common.chainReferement.CompareTo(AreaCommon.state.runtimeState.activeChain.hash) = 0
+                    End If
+                    If proceed Then
+                        proceed = (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
+                    End If
+                    If proceed Then
+                        proceed = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.SingleKeyPair.checkFormatPublicAddress(request.common.publicAddressRequester)
+                    End If
+                    If proceed Then
+                        proceed = AreaSecurity.checkSignature(request.getHash, request.common.signature, request.common.publicAddressRequester)
+                    End If
+
+                    AreaCommon.log.track("FormalCheck.verify", "Completed")
+
+                    Return proceed
+                Catch ex As Exception
+                    AreaCommon.log.track("FormalCheck.verify", ex.Message, "fatal")
+
+                    Return Nothing
+                End Try
+            End Function
+
+            ''' <summary>
+            ''' This method provide to evaluate a request
+            ''' </summary>
+            ''' <param name="value"></param>
+            ''' <returns></returns>
+            Shared Function evaluate(ByRef value As AreaFlow.RequestExtended) As Boolean
+                Try
+                    Dim request As A1x5.RequestModel = value.data
+
+                    AreaCommon.log.track("FormalCheck.evaluate", "Begin")
+
+                    If (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(Now.ToUniversalTime.AddDays(-1))) Then
+                        value.evaluations.rejectedNote = "Request expired"
+                        value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
+
+                        Return True
+                    End If
+
+                    value.position.verify = AreaFlow.EnumOperationPosition.completeWithPositiveResult
+
+                    AreaCommon.log.track("FormalCheck.evaluate", "Completed")
+
+                    Return True
+                Catch ex As Exception
+                    AreaCommon.log.track("FormalCheck.evaluate", ex.Message, "fatal")
+
+                    Return False
+                End Try
+            End Function
+
+        End Class
+
+        ''' <summary>
+        ''' This static class provides to static method to manage a request
+        ''' </summary>
+        Public Class Manager
+
+            Shared Property firstRequestCloseBlock As New FirstRequestData
 
 
-'            Public Function init(ByRef paths As CHCProtocolLibrary.AreaSystem.VirtualPathEngine, ByVal generalConditionParameter As String, ByVal publicWalletIdAddress As String, ByVal privateKeyRAW As String) As Boolean
-'                Try
-'                    Dim requestFileEngine As New FileEngine
-'                    Dim ledgerCoordinate As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+            ''' <summary>
+            ''' This method provide to write request into ledger
+            ''' </summary>
+            ''' <returns></returns>
+            Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal value As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+                Try
+                    Dim contentPath As String = AreaCommon.state.currentBlockLedger.proposeNewTransaction.pathData.contents
+                    Dim hash As String = value.getHash()
 
-'                    log.track("A1x6Manager.init", "Begin")
+                    AreaCommon.log.track("A1x6.Manager.addIntoLedger", "Begin")
 
-'                    currentService.currentAction.setAction("3x0005", "BuildManager - A1x6 - A1x6Manager")
+                    contentPath = IO.Path.Combine(contentPath, hash & ".Content")
 
-'                    If currentService.requestCancelCurrentRunCommand Then Return False
+                    If IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel).save(contentPath, value) Then
 
-'                    data.generalConditionsDocument = generalConditionParameter
-'                    data.publicWalletAddressRequester = publicWalletIdAddress
-'                    data.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timestampFromDateTime()
-'                    data.requestHash = data.getHash
-'                    data.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, data.requestHash)
+                        With AreaCommon.state.currentBlockLedger.proposeNewTransaction
+                            .type = "a1x6"
+                            .approverPublicAddress = approverPublicAddress
+                            .consensusHash = consensusHash
+                            .detailInformation = ""
+                            .registrationTimeStamp = registrationTimeStamp
+                            .requesterPublicAddress = requesterPublicAddress
+                            .requestHash = requestHash
+                            .currentHash = .getHash
+                        End With
 
-'                    requestFileEngine.data = data
+                        Return AreaCommon.state.currentBlockLedger.saveAndClean()
+                    Else
+                        Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+                    End If
 
-'                    requestFileEngine.fileName = IO.Path.Combine(AreaCommon.paths.workData.currentVolume.requests, data.requestHash & ".request")
+                Catch ex As Exception
+                    AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
 
-'                    If requestFileEngine.save() Then
-'                        log.track("A1x6Manager.init", "request - Saved")
+                    AreaCommon.log.track("A1x6.Manager.addIntoLedger", ex.Message, "fatal")
 
-'                        ledgerCoordinate = writeDataIntoLedger(paths.workData.state.contents)
+                    Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+                Finally
+                    AreaCommon.log.track("A1x6.Manager.addIntoLedger", "Completed")
+                End Try
+            End Function
 
-'                        If (ledgerCoordinate.coordinate.Length = 0) Then
-'                            currentService.currentAction.setError("-1", "Error during update ledger")
-'                            currentService.currentAction.reset()
+            ''' <summary>
+            ''' This method provide to save a request into temporally position
+            ''' </summary>
+            ''' <param name="value"></param>
+            ''' <returns></returns>
+            Shared Function saveTemporallyRequest(ByRef value As RequestModel) As Boolean
+                Try
+                    Return IOFast(Of RequestModel).save(IO.Path.Combine(AreaCommon.paths.workData.requestData.received, value.getHash & ".Request"), value)
+                Catch ex As Exception
+                    Return False
+                End Try
+            End Function
 
-'                            log.track("A1x6Manager.init", "Error: Error during update ledger", "fatal")
+            ''' <summary>
+            ''' This method provide to load a request from a repository
+            ''' </summary>
+            ''' <param name="hash"></param>
+            ''' <returns></returns>
+            Shared Function loadRequest(ByVal completePath As String, ByVal hash As String) As RequestModel
+                Try
+                    Return IOFast(Of RequestModel).read(IO.Path.Combine(completePath, hash & ".Request"))
+                Catch ex As Exception
+                    Return New RequestModel
+                End Try
+            End Function
 
-'                            Return False
-'                        End If
+            ''' <summary>
+            ''' This method provide to save a request into temporally position from RequestResponseModel
+            ''' </summary>
+            ''' <param name="value"></param>
+            ''' <returns></returns>
+            Shared Function saveTemporallyRequest(ByRef value As RequestResponseModel) As Boolean
+                Return saveTemporallyRequest(value)
+            End Function
 
-'                        log.track("A1x6Manager.init", "Ledger updated")
+        End Class
 
-'                        If Not RecoveryState.fromRequest(data, ledgerCoordinate) Then
-'                            currentService.currentAction.setError("-1", "Error create state")
-'                            currentService.currentAction.reset()
+    End Class
 
-'                            log.track("A1x6Manager.init", "Error: Error during update State", "fatal")
-
-'                            Return False
-'                        End If
-
-'                        log.track("A1x6Manager.init", "State updated")
-
-'                        Return True
-'                    End If
-'                Catch ex As Exception
-'                    currentService.currentAction.setError(Err.Number, ex.Message)
-
-'                    log.track("A1x6Manager.init", ex.Message, "fatal")
-'                End Try
-
-'                Return False
-'            End Function
-
-'        End Class
-
-'    End Class
-
-'End Namespace
+End Namespace

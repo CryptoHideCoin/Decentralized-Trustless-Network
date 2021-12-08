@@ -25,6 +25,7 @@ Namespace AreaCommon.Models.Chain
     ''' </summary>
     Public Class ChainMinimalData
 
+        Public Property name As String = ""
         Public Property privateChain As Boolean = False
         Public Property description As String = ""
 
@@ -35,6 +36,7 @@ Namespace AreaCommon.Models.Chain
         Public Overrides Function toString() As String
             Dim result As String = ""
 
+            result += name
             If privateChain Then
                 result += "1"
             Else
@@ -58,6 +60,56 @@ Namespace AreaCommon.Models.Chain
         <DebuggerHiddenAttribute()> Public Sub deCodeSymbol()
             description.decodeSymbol()
         End Sub
+
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overridable Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain the element of parameter configuration of a chain
+    ''' </summary>
+    Public Class ChainParameterModel
+
+        Public Property blockSizeFrequency As String = "24h"
+        Public Property numberBlockInVolume As Short = 365
+        Public Property maxTimeOutNotRespondNode As String = "120sec"
+        Public Property maxTimeOutNotEvaluateNode As String = "180sec"
+        Public Property initialCoinReleasePerBlock As Decimal = "200000"
+        Public Property ruleFutureRelease As String = ""
+        Public Property minimalMaintainRequest As String = "3years"
+        Public Property minimalMaintainConsensus As String = "2years"
+        Public Property minimalMaintainBulletines As String = "1years"
+        Public Property minimalMaintainRejected As String = "14days"
+        Public Property minimalMaintainTrashed As String = "7days"
+        Public Property minimalMaintainInternalRegistry As String = "5days"
+
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
+            Dim tmp As String = ""
+
+            tmp += blockSizeFrequency
+            tmp += numberBlockInVolume.ToString()
+            tmp += maxTimeOutNotRespondNode
+            tmp += initialCoinReleasePerBlock.ToString()
+            tmp += ruleFutureRelease
+            tmp += minimalMaintainRequest
+            tmp += minimalMaintainConsensus
+            tmp += minimalMaintainBulletines
+            tmp += minimalMaintainRejected
+            tmp += minimalMaintainTrashed
+            tmp += minimalMaintainInternalRegistry
+
+            Return tmp
+        End Function
 
         ''' <summary>
         ''' This method provide to get hash value from a string of a class

@@ -49,7 +49,7 @@ Namespace AreaConsensus
                     Threading.Thread.Sleep(AreaCommon.support.timeSleep)
                 Loop
 
-                AreaCommon.log.track("ConsensusEngine.unlockUpdateBulletin", "Complete")
+                AreaCommon.log.track("ConsensusEngine.unlockUpdateBulletin", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -70,7 +70,7 @@ Namespace AreaConsensus
 
                 _QueueProcessUpdateBulletin.Remove(key)
 
-                AreaCommon.log.track("ConsensusEngine.removeFromQueue", "Complete")
+                AreaCommon.log.track("ConsensusEngine.removeFromQueue", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -105,7 +105,7 @@ Namespace AreaConsensus
                     End With
                 End With
 
-                AreaCommon.log.track("ConsensusEngine.checkAndCreateNewBulletin", "Complete")
+                AreaCommon.log.track("ConsensusEngine.checkAndCreateNewBulletin", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -132,7 +132,7 @@ Namespace AreaConsensus
 
                 result = AreaSecurity.createSignature(result)
 
-                AreaCommon.log.track("ConsensusEngine.createRequest", "Complete")
+                AreaCommon.log.track("ConsensusEngine.createRequest", "Completed")
 
                 Return result
             Catch ex As Exception
@@ -161,7 +161,7 @@ Namespace AreaConsensus
 
                 result = AreaSecurity.createSignature(result)
 
-                AreaCommon.log.track("ConsensusEngine.createReject", "Complete")
+                AreaCommon.log.track("ConsensusEngine.createReject", "Completed")
 
                 Return result
             Catch ex As Exception
@@ -195,7 +195,7 @@ Namespace AreaConsensus
                     End If
                 End If
 
-                AreaCommon.log.track("ConsensusEngine.routeAssessment", "Complete")
+                AreaCommon.log.track("ConsensusEngine.routeAssessment", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.routeAssessment", ex.Message, "fatal")
 
@@ -227,7 +227,7 @@ Namespace AreaConsensus
                     result.proceed = dataRequest.evaluations.rejected.assignAssessment(bulletin.header.bulletinTimeStamp)
                 End If
 
-                AreaCommon.log.track("ConsensusEngine.assignDateAssessment", "Complete")
+                AreaCommon.log.track("ConsensusEngine.assignDateAssessment", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.assignDateAssessment", ex.Message, "fatal")
 
@@ -274,7 +274,7 @@ Namespace AreaConsensus
                     End If
                 End If
 
-                AreaCommon.log.track("ConsensusEngine.manageBulletinEvaluation", "Complete")
+                AreaCommon.log.track("ConsensusEngine.manageBulletinEvaluation", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.manageBulletinEvaluation", ex.Message, "fatal")
 
@@ -308,11 +308,11 @@ Namespace AreaConsensus
 
                     .requestHash = registration.requestHash
 
-                    With .totalVotes
-                        .abstained = request.evaluations.abstained.totalValuePoints
-                        .approved = request.evaluations.approved.totalValuePoints
-                        .notExpressed = request.evaluations.notExpressed.totalValuePoints
-                        .rejected = request.evaluations.rejected.totalValuePoints
+                    With .totalPowers
+                        .abstained = request.evaluations.abstained.totalPower
+                        .approved = request.evaluations.approved.totalPower
+                        .notExpressed = request.evaluations.notExpressed.totalPower
+                        .rejected = request.evaluations.rejected.totalPower
                     End With
                 End With
 
@@ -320,7 +320,7 @@ Namespace AreaConsensus
 
                 result.notifyNetworkForUpdate = True
 
-                AreaCommon.log.track("ConsensusEngine.useNewProposalForApproval", "Complete")
+                AreaCommon.log.track("ConsensusEngine.useNewProposalForApproval", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.useNewProposalForApproval", ex.Message, "fatal")
 
@@ -361,7 +361,7 @@ Namespace AreaConsensus
                     End If
                 End If
 
-                AreaCommon.log.track("ConsensusEngine.useNewproposalUpdateNewTransactionHash", "Complete")
+                AreaCommon.log.track("ConsensusEngine.useNewproposalUpdateNewTransactionHash", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.useNewproposalUpdateNewTransactionHash", ex.Message, "fatal")
 
@@ -398,12 +398,12 @@ Namespace AreaConsensus
                 End If
 
                 If result.proceed Then
-                    If (bulletin.proposalsForApprovalData.totalVotes.notExpressed = 0) Then
+                    If (bulletin.proposalsForApprovalData.totalPowers.notExpressed = 0) Then
                         result = useNewProposalUpdateNewTransactionHash(result)
                     End If
                 End If
 
-                AreaCommon.log.track("ConsensusEngine.manageBulletinForAssessment", "Complete")
+                AreaCommon.log.track("ConsensusEngine.manageBulletinForAssessment", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.manageBulletinForAssessment", ex.Message, "fatal")
 
@@ -434,7 +434,7 @@ Namespace AreaConsensus
                     End If
                 Next
 
-                AreaCommon.log.track("ConsensusEngine.manageNodeAbstain", "Complete")
+                AreaCommon.log.track("ConsensusEngine.manageNodeAbstain", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.manageNodeAbstain", ex.Message, "fatal")
 
@@ -473,7 +473,7 @@ Namespace AreaConsensus
                     Next
                 Loop
 
-                AreaCommon.log.track("ConsensusEngine.manageRequestAbstain", "Complete")
+                AreaCommon.log.track("ConsensusEngine.manageRequestAbstain", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.manageRequestAbstain", ex.Message, "fatal")
 
@@ -504,7 +504,7 @@ Namespace AreaConsensus
                     End If
                 Next
 
-                AreaCommon.log.track("ConsensusEngine.manageNodeRejected", "Complete")
+                AreaCommon.log.track("ConsensusEngine.manageNodeRejected", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.manageNodeRejected", ex.Message, "fatal")
 
@@ -543,7 +543,7 @@ Namespace AreaConsensus
                     Next
                 Loop
 
-                AreaCommon.log.track("ConsensusEngine.manageRequestRejected", "Complete")
+                AreaCommon.log.track("ConsensusEngine.manageRequestRejected", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.manageRequestRejected", ex.Message, "fatal")
 
@@ -575,7 +575,7 @@ Namespace AreaConsensus
                     End If
                 Next
 
-                AreaCommon.log.track("ConsensusEngine.manageRequestAbsent", "Complete")
+                AreaCommon.log.track("ConsensusEngine.manageRequestAbsent", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.manageRequestAbsent", ex.Message, "fatal")
 
@@ -599,13 +599,13 @@ Namespace AreaConsensus
                     bulletin = AreaSecurity.createSignature(bulletin, True)
 
                     If Not bulletin.save() Then
-                        AreaCommon.log.track("saveBulletin with problem", "Complete")
+                        AreaCommon.log.track("saveBulletin with problem", "Completed")
 
                         result.proceed = False
                     End If
                 End If
 
-                AreaCommon.log.track("ConsensusEngine.saveBulletin", "Complete")
+                AreaCommon.log.track("ConsensusEngine.saveBulletin", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("ConsensusEngine.saveBulletin", ex.Message, "fatal")
 
@@ -643,7 +643,7 @@ Namespace AreaConsensus
                     End If
                 Next
 
-                AreaCommon.log.track("ConsensusEngine.loadListSenderIntoRequests", "Complete")
+                AreaCommon.log.track("ConsensusEngine.loadListSenderIntoRequests", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -679,8 +679,8 @@ Namespace AreaConsensus
             Try
                 AreaCommon.log.track("ConsensusEngine.proposalDataApproved", "Begin")
 
-                Dim percApproved As Decimal = bulletin.proposalsForApprovalData.totalVotes.approved / bulletin.proposalsForApprovalData.totalVotes.total * 100
-                Dim percReject As Decimal = bulletin.proposalsForApprovalData.totalVotes.rejected / bulletin.proposalsForApprovalData.totalVotes.total * 100
+                Dim percApproved As Decimal = bulletin.proposalsForApprovalData.totalPowers.approved / bulletin.proposalsForApprovalData.totalPowers.total * 100
+                Dim percReject As Decimal = bulletin.proposalsForApprovalData.totalPowers.rejected / bulletin.proposalsForApprovalData.totalPowers.total * 100
                 Dim dataRequest As AreaFlow.RequestExtended
 
                 dataRequest = AreaCommon.flow.getActiveRequest(bulletin.proposalsForApprovalData.requestHash)
@@ -691,7 +691,7 @@ Namespace AreaConsensus
                     dataRequest.position.process = AreaFlow.EnumOperationPosition.completeWithNegativeResult
                 End If
 
-                AreaCommon.log.track("ConsensusEngine.proposalDataApproved", "Complete")
+                AreaCommon.log.track("ConsensusEngine.proposalDataApproved", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -720,17 +720,23 @@ Namespace AreaConsensus
                     Case "a0x1" : support.newIdentity = AreaProtocol.A0x1.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.whitePaper, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x2" : support.newIdentity = AreaProtocol.A0x2.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.yellowPaper, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x3" : support.newIdentity = AreaProtocol.A0x3.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
-                    Case "a0x4" : support.newIdentity = AreaProtocol.A0x4.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.transactionChainSettings, request.data.common.publicAddressRequester, requestHash)
+                    Case "a0x4" : support.newIdentity = AreaProtocol.A0x4.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x5" : support.newIdentity = AreaProtocol.A0x5.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.privacyPolicy, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x6" : support.newIdentity = AreaProtocol.A0x6.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.generalCondition, request.data.common.publicAddressRequester, requestHash)
-                    Case "a0x7" : support.newIdentity = AreaProtocol.A0x7.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.refundPlan, request.data.common.publicAddressRequester, requestHash)
+                    Case "a0x7" : support.newIdentity = AreaProtocol.A0x7.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
 
-                    Case "a1x0" : support.newIdentity = AreaProtocol.A1x0.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.extractMinimal(), request.data.common.publicAddressRequester, requestHash)
-                    Case "a1x1" : support.newIdentity = AreaProtocol.A1x1.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.extractMinimal(), request.data.common.publicAddressRequester, requestHash)
-                    Case "a1x2" : support.newIdentity = AreaProtocol.A1x2.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.extractMinimal(), request.data.common.publicAddressRequester, requestHash)
-                    Case "a1x3" : support.newIdentity = AreaProtocol.A1x3.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.extractMinimal(), request.data.common.publicAddressRequester, requestHash)
-                    Case "a1x4" : support.newIdentity = AreaProtocol.A1x4.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.extractMinimal(), request.data.common.publicAddressRequester, requestHash)
-                    Case "a1x5" : support.newIdentity = AreaProtocol.A1x5.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x0" : support.newIdentity = AreaProtocol.A1x0.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x1" : support.newIdentity = AreaProtocol.A1x1.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x2" : support.newIdentity = AreaProtocol.A1x2.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x3" : support.newIdentity = AreaProtocol.A1x3.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x4" : support.newIdentity = AreaProtocol.A1x4.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x5" : support.newIdentity = AreaProtocol.A1x5.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x6" : support.newIdentity = AreaProtocol.A1x6.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x7" : support.newIdentity = AreaProtocol.A1x7.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x8" : support.newIdentity = AreaProtocol.A1x8.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x9" : support.newIdentity = AreaProtocol.A1x9.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+
+                    Case "a2x0" : support.newIdentity = AreaProtocol.A2x0.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
 
                         ''' BOOKMARK: Add in this point 1
                 End Select
@@ -738,7 +744,7 @@ Namespace AreaConsensus
                 support.proceed = Not IsNothing(support.newIdentity)
                 support.blockNumber = AreaCommon.state.currentBlockLedger.composeCoordinateTransaction(False, True)
 
-                AreaCommon.log.track("ConsensusEngine.updateLedger", "Complete")
+                AreaCommon.log.track("ConsensusEngine.updateLedger", "Completed")
 
                 Return support
             Catch ex As Exception
@@ -778,11 +784,17 @@ Namespace AreaConsensus
                     Case "a1x3" : support.proceed = AreaProtocol.A1x3.RecoveryState.fromRequest(request.data, support.newIdentity)
                     Case "a1x4" : support.proceed = AreaProtocol.A1x4.RecoveryState.fromRequest(request.data, support.newIdentity)
                     Case "a1x5" : support.proceed = AreaProtocol.A1x5.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a1x6" : support.proceed = AreaProtocol.A1x6.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a1x7" : support.proceed = AreaProtocol.A1x7.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a1x8" : support.proceed = AreaProtocol.A1x8.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a1x9" : support.proceed = AreaProtocol.A1x9.RecoveryState.fromRequest(request.data, support.newIdentity)
+
+                    Case "a2x0" : support.proceed = AreaProtocol.A2x0.RecoveryState.fromRequest(request.data, support.newIdentity)
 
                         ''' BOOKMARK: Add in this point 2
                 End Select
 
-                AreaCommon.log.track("ConsensusEngine.updateState", "Complete")
+                AreaCommon.log.track("ConsensusEngine.updateState", "Completed")
 
                 Return support
             Catch ex As Exception
@@ -817,7 +829,7 @@ Namespace AreaConsensus
 
                 IO.File.Move(fileSource, fileDestination)
 
-                AreaCommon.log.track("ConsensusEngine.moveRequestToCurrentLedger", "Complete")
+                AreaCommon.log.track("ConsensusEngine.moveRequestToCurrentLedger", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -846,7 +858,7 @@ Namespace AreaConsensus
 
                 Return False
             Finally
-                AreaCommon.log.track("ConsensusEngine.removeProposalFromBulletin", "Complete")
+                AreaCommon.log.track("ConsensusEngine.removeProposalFromBulletin", "Completed")
             End Try
         End Function
 
@@ -864,13 +876,20 @@ Namespace AreaConsensus
                 support.proceed = False
 
                 Select Case request.dataCommon.type
-                    Case "a1x5" : support.proceed = AreaProtocol.A1x5.Manager.finalizeBlock(requestHash, support.blockNumber)
+                    Case "a1x0" : support.proceed = AreaProtocol.A1x0.Manager.managePrimaryChain()
+                    Case "a1x7" : support.proceed = AreaProtocol.A1x7.Manager.finalizeBlock(requestHash, support.blockNumber)
+                    Case "a1x9"
+                        AreaProtocol.A1x7.Manager.firstRequestCreateListMasterNode.data = ""
+                        AreaProtocol.A1x7.Manager.firstRequestCreateListMasterNode.minimalRequestClose = 0
+
+                        support.proceed = True
+
                     Case Else : support.proceed = True
 
-                        ''' BOOKMARK: Add in this point 10
+                        ''' BOOKMARK: Add in this point 7
                 End Select
 
-                AreaCommon.log.track("ConsensusEngine.otherOperation", "Complete")
+                AreaCommon.log.track("ConsensusEngine.otherOperation", "Completed")
 
                 Return support
             Catch ex As Exception
@@ -901,7 +920,7 @@ Namespace AreaConsensus
                     response.Add(assessment.requestHash)
                 Next
 
-                AreaCommon.log.track("ConsensusEngine.extractRequestFromBulletin", "Complete")
+                AreaCommon.log.track("ConsensusEngine.extractRequestFromBulletin", "Completed")
 
                 Return response
             Catch ex As Exception
@@ -1014,8 +1033,11 @@ Namespace AreaConsensus
                         support.proceed = removeProposalFromBulletin(dataRequest)
                     End If
                 End If
+                If support.proceed Then
+                    dataRequest.processOperationComplete = True
+                End If
 
-                AreaCommon.log.track("ConsensusEngine.updateBulletin", "Complete")
+                AreaCommon.log.track("ConsensusEngine.updateBulletin", "Completed")
 
                 Return support.proceed
             Catch ex As Exception
@@ -1100,7 +1122,7 @@ Namespace AreaConsensus
 
                 Next
 
-                AreaCommon.log.track("ConsensusEngine.manageLateComers", "Complete")
+                AreaCommon.log.track("ConsensusEngine.manageLateComers", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -1119,9 +1141,9 @@ Namespace AreaConsensus
             Try
                 AreaCommon.log.track("ConsensusEngine.manageProposalData", "Begin")
 
-                If (bulletin.proposalsForApprovalData.totalVotes.notExpressed = 0) Then
-                    Dim percApproved As Decimal = bulletin.proposalsForApprovalData.totalVotes.approved / bulletin.proposalsForApprovalData.totalVotes.total * 100
-                    Dim percReject As Decimal = bulletin.proposalsForApprovalData.totalVotes.rejected / bulletin.proposalsForApprovalData.totalVotes.total * 100
+                If (bulletin.proposalsForApprovalData.totalPowers.notExpressed = 0) Then
+                    Dim percApproved As Decimal = bulletin.proposalsForApprovalData.totalPowers.approved / bulletin.proposalsForApprovalData.totalPowers.total * 100
+                    Dim percReject As Decimal = bulletin.proposalsForApprovalData.totalPowers.rejected / bulletin.proposalsForApprovalData.totalPowers.total * 100
 
                     If (percApproved >= percReject) Then
                         dataRequest.position.process = AreaFlow.EnumOperationPosition.completeWithPositiveResult
@@ -1132,7 +1154,7 @@ Namespace AreaConsensus
                     Return manageLateComers(dataRequest)
                 End If
 
-                AreaCommon.log.track("ConsensusEngine.manageProposalData", "Complete")
+                AreaCommon.log.track("ConsensusEngine.manageProposalData", "Completed")
 
                 Return True
             Catch ex As Exception

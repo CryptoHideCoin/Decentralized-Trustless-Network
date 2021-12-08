@@ -9,14 +9,14 @@ Namespace AreaEngine.KeyPair
         Public Class KeyPair
 
             Public Enum enumWalletType
-                notDefined
+                undefined
                 administration
                 identity
                 warranty
                 refund
             End Enum
 
-            Public Property walletType As enumWalletType = enumWalletType.notDefined
+            Public Property walletType As enumWalletType = enumWalletType.undefined
             Public Property publicAddress As String = ""
             Public Property privateKey As String = ""
 

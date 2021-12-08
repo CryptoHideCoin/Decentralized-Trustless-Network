@@ -107,7 +107,7 @@ Namespace AreaConsensus
 
         Inherits ReceiptOfAssessmentBase
 
-        Public Property voteValue As Double = 0
+        Public Property powerValue As Double = 0
 
         ''' <summary>
         ''' This method provide to create a string of all element of this object
@@ -117,7 +117,7 @@ Namespace AreaConsensus
             Dim result As String = ""
 
             result += MyBase.toString()
-            result += voteValue.ToString()
+            result += powerValue.ToString()
 
             Return result
         End Function
@@ -339,7 +339,7 @@ Namespace AreaConsensus
                 result.hashChain = hashChain
                 result.lastApprovedTransaction = lastApprovedTransaction.clone()
 
-                AreaCommon.log.track("NetSynchronization.clone", "Complete")
+                AreaCommon.log.track("NetSynchronization.clone", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("NetSynchronization.clone", ex.Message, "fatal")
 
@@ -413,9 +413,9 @@ Namespace AreaConsensus
     Public Class ProposalForApproval
 
         ''' <summary>
-        ''' This class provide to collect all single total of expression of vote
+        ''' This class provide to collect all single total of expression of power
         ''' </summary>
-        Public Class VoteTotalizations
+        Public Class PowerTotalizations
 
             Public Property notExpressed As Double = 0
             Public Property approved As Double = 0
@@ -423,7 +423,7 @@ Namespace AreaConsensus
             Public Property abstained As Double = 0
 
             ''' <summary>
-            ''' This property return a total of votes
+            ''' This property return a total of powers
             ''' </summary>
             ''' <returns></returns>
             Public ReadOnly Property total As Double
@@ -433,7 +433,7 @@ Namespace AreaConsensus
             End Property
 
             ''' <summary>
-            ''' This method provide to create a string resultant a votes into data class
+            ''' This method provide to create a string resultant a powers into data class
             ''' </summary>
             ''' <returns></returns>
             Public Overrides Function toString() As String
@@ -444,7 +444,7 @@ Namespace AreaConsensus
             ''' This method provide to clone an object
             ''' </summary>
             ''' <returns></returns>
-            Public Function clone() As VoteTotalizations
+            Public Function clone() As PowerTotalizations
                 Return Me.MemberwiseClone
             End Function
 
@@ -453,7 +453,7 @@ Namespace AreaConsensus
         Public Property requestHash As String = ""
         Public Property registerBulletinAssessmentTimeStamp As Double = 0
         Public Property registerMasternodeAddress As String = ""
-        Public Property totalVotes As New VoteTotalizations
+        Public Property totalPowers As New PowerTotalizations
 
         ''' <summary>
         ''' This method provide to create a string resultant of a Proposal for Approval
@@ -465,7 +465,7 @@ Namespace AreaConsensus
             tmp += requestHash
             tmp += registerBulletinAssessmentTimeStamp.ToString
             tmp += registerMasternodeAddress
-            tmp += totalVotes.toString()
+            tmp += totalPowers.toString()
 
             Return tmp
         End Function
@@ -489,7 +489,7 @@ Namespace AreaConsensus
             result.registerBulletinAssessmentTimeStamp = registerBulletinAssessmentTimeStamp
             result.registerMasternodeAddress = registerMasternodeAddress
 
-            result.totalVotes = totalVotes.clone()
+            result.totalPowers = totalPowers.clone()
 
             Return result
         End Function
@@ -639,7 +639,7 @@ Namespace AreaConsensus
                     End If
                 Next
 
-                AreaCommon.log.track("ConsensusEngine.removeAcceptOrAbstainRequestList", "Complete")
+                AreaCommon.log.track("ConsensusEngine.removeAcceptOrAbstainRequestList", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -667,7 +667,7 @@ Namespace AreaConsensus
                     End If
                 Next
 
-                AreaCommon.log.track("ConsensusEngine.removeRejectRequestData", "Complete")
+                AreaCommon.log.track("ConsensusEngine.removeRejectRequestData", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -721,8 +721,8 @@ Namespace AreaConsensus
 
         Public Property nodeElements As New List(Of ReceiptOfConsensusAssessmentComplete)
 
-        Public Property voteValueApproved As Double = 0
-        Public Property voteValueRejected As Double = 0
+        Public Property powerApproved As Double = 0
+        Public Property powerRejected As Double = 0
 
         Public Property hash As String = ""
         Public Property signature As String = ""
@@ -746,8 +746,8 @@ Namespace AreaConsensus
                     tmp += item.hash
                 Next
 
-                tmp += voteValueApproved.ToString()
-                tmp += voteValueRejected.ToString()
+                tmp += powerApproved.ToString()
+                tmp += powerRejected.ToString()
 
                 Return tmp
             Catch ex As Exception
@@ -765,7 +765,7 @@ Namespace AreaConsensus
 
                 nodeElements.Clear()
 
-                AreaCommon.log.track("ConsensusNetwork.clear", "Complete")
+                AreaCommon.log.track("ConsensusNetwork.clear", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -809,7 +809,7 @@ Namespace AreaConsensus
 
                 nodeElements = newList
 
-                AreaCommon.log.track("ConsensusNetwork.reorderElement", "Complete")
+                AreaCommon.log.track("ConsensusNetwork.reorderElement", "Completed")
 
                 Return True
             Catch ex As Exception
@@ -825,10 +825,10 @@ Namespace AreaConsensus
         ''' <param name="assessmentTimeStamp"></param>
         ''' <param name="hash"></param>
         ''' <param name="signature"></param>
-        ''' <param name="voteValue"></param>
+        ''' <param name="powerValue"></param>
         ''' <param name="publicAddress"></param>
         ''' <returns></returns>
-        Public Function addNewAssessment(ByVal model As EnumModel, ByVal assessmentTimeStamp As Double, ByVal hash As String, ByVal signature As String, Optional ByVal voteValue As Double = 0, Optional ByVal publicAddress As String = "") As Boolean
+        Public Function addNewAssessment(ByVal model As EnumModel, ByVal assessmentTimeStamp As Double, ByVal hash As String, ByVal signature As String, Optional ByVal powerValue As Double = 0, Optional ByVal publicAddress As String = "") As Boolean
             Try
                 Dim item As New ReceiptOfConsensusAssessmentComplete
 
@@ -839,19 +839,19 @@ Namespace AreaConsensus
                 If (publicAddress.Length = 0) Then
                     publicAddress = AreaCommon.state.network.publicAddressIdentity
                 End If
-                If (voteValue = 0) Then
-                    voteValue = AreaCommon.state.network.coinWarranty
+                If (powerValue = 0) Then
+                    powerValue = AreaCommon.state.network.coinWarranty
                 End If
 
                 item.publicAddress = publicAddress
                 item.model = model
-                item.voteValue = voteValue
+                item.powerValue = powerValue
                 item.hash = hash
                 item.signature = signature
 
                 nodeElements.Add(item)
 
-                AreaCommon.log.track("ConsensusNetwork.addNewAbsent", "Complete")
+                AreaCommon.log.track("ConsensusNetwork.addNewAbsent", "Completed")
 
                 Return True
             Catch ex As Exception

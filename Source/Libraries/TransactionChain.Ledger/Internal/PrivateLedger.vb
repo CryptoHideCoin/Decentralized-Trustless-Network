@@ -18,7 +18,7 @@ Namespace AreaEngine.Ledger
     Namespace QoS
 
         Public Enum enumAction
-            notDefined
+            undefined
             genesis
             linkBlock
             requestNewTicket
@@ -28,30 +28,30 @@ Namespace AreaEngine.Ledger
         End Enum
 
         Public Enum enumCurrentLocalPositionAction
-            notDefined
+            undefined
             inQueue
             inEvaluation
             ProcessComplete
         End Enum
 
         Public Enum enumCurrentNetworkPositionAction
-            notDefined
+            undefined
             notForwarded
             inEvaluation
             ProcessComplete
         End Enum
 
         Public Enum enumCurrentLedgerPositionAction
-            notDefined
+            undefined
             actionNotYetStarted
             actionInProgress
             actionComplete
         End Enum
 
         Public Class ResponseWorkRequest
-            Public localStatus As enumCurrentLocalPositionAction = enumCurrentLocalPositionAction.notDefined
-            Public networkStatus As enumCurrentNetworkPositionAction = enumCurrentNetworkPositionAction.notDefined
-            Public updateLedgerStatus As enumCurrentLedgerPositionAction = enumCurrentLedgerPositionAction.notDefined
+            Public localStatus As enumCurrentLocalPositionAction = enumCurrentLocalPositionAction.undefined
+            Public networkStatus As enumCurrentNetworkPositionAction = enumCurrentNetworkPositionAction.undefined
+            Public updateLedgerStatus As enumCurrentLedgerPositionAction = enumCurrentLedgerPositionAction.undefined
 
             Public ReadOnly Property workComplete As Boolean
                 Get
@@ -85,7 +85,7 @@ Namespace AreaEngine.Ledger
 
             Public transactionID As String = ""
             Public moment As Double = 0
-            Public action As enumAction = enumAction.notDefined
+            Public action As enumAction = enumAction.undefined
             Public ticketValue As String = ""
             Public requestID As String = ""
             Public runningTime As Decimal = 0

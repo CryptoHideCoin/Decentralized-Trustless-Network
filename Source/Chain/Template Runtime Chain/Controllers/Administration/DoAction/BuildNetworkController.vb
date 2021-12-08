@@ -77,7 +77,7 @@ Namespace Controllers
                     End If
                 End If
 
-                AreaCommon.log.track("BuildNetworkController.putValue", "Complete")
+                AreaCommon.log.track("BuildNetworkController.putValue", "Completed")
             Catch ex As Exception
                 result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"

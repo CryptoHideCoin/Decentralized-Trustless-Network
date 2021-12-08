@@ -35,7 +35,7 @@ Namespace AreaWorker
 
                 remote = Nothing
 
-                AreaCommon.log.track("Sender.sendToMasterNode", "Complete")
+                AreaCommon.log.track("Sender.sendToMasterNode", "Completed")
 
                 Return False
             Catch ex As Exception
@@ -76,7 +76,7 @@ Namespace AreaWorker
 
                 remote = Nothing
 
-                AreaCommon.log.track("Sender.sendToMasterNodeRequestToEvaluate", "Complete")
+                AreaCommon.log.track("Sender.sendToMasterNodeRequestToEvaluate", "Completed")
 
                 Return False
             Catch ex As Exception
@@ -109,7 +109,7 @@ Namespace AreaWorker
 
                 remote = Nothing
 
-                AreaCommon.log.track("Sender.sendToMasterNodeBulletin", "Complete")
+                AreaCommon.log.track("Sender.sendToMasterNodeBulletin", "Completed")
 
                 Return False
             Catch ex As Exception
@@ -158,7 +158,7 @@ Namespace AreaWorker
                     masterNode = deliveryList.getFirst()
                 Loop
 
-                AreaCommon.log.track("Sender.sendInBroadCast", "Complete")
+                AreaCommon.log.track("Sender.sendInBroadCast", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("Sender.sendInBroadCast", ex.Message, "fatal")
             End Try
@@ -202,7 +202,7 @@ Namespace AreaWorker
                     masterNode = deliveryList.getFirst()
                 Loop
 
-                AreaCommon.log.track("Sender.sendBulletinInBroadCast", "Complete")
+                AreaCommon.log.track("Sender.sendBulletinInBroadCast", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("Sender.sendBulletinInBroadCast", ex.Message, "fatal")
             End Try
@@ -230,7 +230,7 @@ Namespace AreaWorker
                     newDeliveryList.add(masterNode)
                 End If
 
-                AreaCommon.log.track("Sender.sendRequestEvaluation", "Complete")
+                AreaCommon.log.track("Sender.sendRequestEvaluation", "Completed")
             Catch ex As Exception
                 AreaCommon.log.track("Sender.sendRequestEvaluation", ex.Message, "fatal")
             End Try
@@ -278,7 +278,7 @@ Namespace AreaWorker
 
                 workerOn = False
 
-                AreaCommon.log.track("Sender.work", "Complete")
+                AreaCommon.log.track("Sender.work", "Completed")
 
                 Return True
             Catch ex As Exception

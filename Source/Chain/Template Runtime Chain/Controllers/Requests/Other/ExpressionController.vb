@@ -29,7 +29,7 @@ Namespace Controllers
         Public Function getValue(<FromBody()> ByVal value As AreaCommon.Models.Network.RequestExpressionModel) As RemoteResponse
             Dim result As New RemoteResponse
             Dim proceed As Boolean = True
-            Dim dataNode As AreaState.ChainStateEngine.DataMasternode
+            Dim dataNode As AreaState.ChainStateEngine.PublicChainNodeInformation
             Dim dataBulletin As New AreaConsensus.BulletinInformation
             Try
                 AreaCommon.log.track("ExpressionController.getValue", "Begin")
@@ -52,7 +52,7 @@ Namespace Controllers
                     result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                 End If
                 If proceed Then
-                    dataNode = AreaCommon.state.runtimeState.getDataNode(value.publicAddressRequester)
+                    dataNode = AreaCommon.state.runTimeState.getDataNode(value.publicAddressRequester)
 
                     If (dataNode.identityPublicAddress.Length = 0) Then
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.missingAuthorization
@@ -79,7 +79,7 @@ Namespace Controllers
                     End If
                 End If
 
-                AreaCommon.log.track("ExpressionController.getValue", "Complete")
+                AreaCommon.log.track("ExpressionController.getValue", "Completed")
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
@@ -115,7 +115,7 @@ Namespace Controllers
                     result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
                 End If
 
-                AreaCommon.log.track("A0x0Controller.putValue", "Complete")
+                AreaCommon.log.track("A0x0Controller.putValue", "Completed")
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
