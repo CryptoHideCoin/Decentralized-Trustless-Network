@@ -230,7 +230,7 @@ Public Class Main
                         walletAddressText.Text = remote.data.adminPublicAddress
 
                         Select Case remote.data.currentStatus
-                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.notDefined : currentStatusText.Text = "Not defined"
+                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.undefined : currentStatusText.Text = "Not defined"
                             Case Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown : currentStatusText.Text = "Shutdown"
                             Case Models.Service.InformationResponseModel.EnumInternalServiceState.started : currentStatusText.Text = "Started"
                             Case Models.Service.InformationResponseModel.EnumInternalServiceState.starting : currentStatusText.Text = "Starting"
@@ -543,7 +543,7 @@ Public Class Main
                             Case Models.Administration.EnumActionAdministration.synchroNetwork : currentOperationText.Text = "Synchronize network"
                             Case Models.Administration.EnumActionAdministration.verifyData : currentOperationText.Text = "Verify data"
                             Case Models.Administration.EnumActionAdministration.requestNetworkDisconnect : currentOperationText.Text = "Request network disconnect"
-                            Case Models.Administration.EnumActionAdministration.notDefined : currentOperationText.Text = "Nothing operation run"
+                            Case Models.Administration.EnumActionAdministration.undefined : currentOperationText.Text = "Nothing operation run"
                         End Select
 
                         cancelOperationText.Text = remote.data.requestCancelCurrentRunCommand

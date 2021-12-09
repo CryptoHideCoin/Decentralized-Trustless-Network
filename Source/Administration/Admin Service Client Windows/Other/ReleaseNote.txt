@@ -5,3 +5,4 @@ Release Note
 0.6.0   - 15.11.2021 - Support with new library
 0.7.0   - 28.11.2021 - Review Asset Primary and Transaction Chain
 0.8.0   - 29.11.2021 - Review Transaction Chain Configuration
+0.8.1   - 09.12.2021 - Support to new CHCProtocolLibrary

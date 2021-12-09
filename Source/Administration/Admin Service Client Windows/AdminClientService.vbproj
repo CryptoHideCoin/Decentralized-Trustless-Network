@@ -59,7 +59,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.5.8.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.5.9.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>

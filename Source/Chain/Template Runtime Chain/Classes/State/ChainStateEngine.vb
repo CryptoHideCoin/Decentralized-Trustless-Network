@@ -285,9 +285,9 @@ Namespace AreaState
                 Dim chain As DataChain
                 Dim protocolData As New PrimaryStateModel.ProtocolSetStructure
 
-                If _DBChain.updateProtocol(chainReferement, value, transactionChainRecord) Then
-                    chain = chainByHash(chainReferement)
+                chain = chainByHash(chainReferement)
 
+                If _DBChain.updateProtocol(chain.identity, value, transactionChainRecord) Then
                     For Each item In chain.protocolSets
                         If (item.data.setCode.CompareTo(value.setCode) = 0) Then
                             chain.protocolSets.Remove(item)

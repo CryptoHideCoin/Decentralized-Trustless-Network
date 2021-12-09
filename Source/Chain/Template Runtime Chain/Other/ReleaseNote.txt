@@ -17,6 +17,7 @@ Release Note
 					   Manage Work Load Balance
 0.14.1	- 04.12.2021 - Implements Node List (A1x9)
 					   Bugfix change volume and record
+0.14.2  - 09.12.2021 - Bugfix updateSetProtocol
 
 TO DO
 =====
