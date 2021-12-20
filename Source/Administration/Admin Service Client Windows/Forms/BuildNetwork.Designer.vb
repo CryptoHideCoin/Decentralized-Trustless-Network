@@ -217,6 +217,7 @@ Partial Class BuildNetwork
         Me.whitePaperText.Location = New System.Drawing.Point(6, 6)
         Me.whitePaperText.Multiline = True
         Me.whitePaperText.Name = "whitePaperText"
+        Me.whitePaperText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.whitePaperText.Size = New System.Drawing.Size(700, 343)
         Me.whitePaperText.TabIndex = 0
         '
@@ -235,6 +236,7 @@ Partial Class BuildNetwork
         Me.yellowPaperText.Location = New System.Drawing.Point(6, 6)
         Me.yellowPaperText.Multiline = True
         Me.yellowPaperText.Name = "yellowPaperText"
+        Me.yellowPaperText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.yellowPaperText.Size = New System.Drawing.Size(700, 343)
         Me.yellowPaperText.TabIndex = 0
         '
@@ -975,6 +977,7 @@ Partial Class BuildNetwork
         Me.privacyPolicyText.Location = New System.Drawing.Point(6, 5)
         Me.privacyPolicyText.Multiline = True
         Me.privacyPolicyText.Name = "privacyPolicyText"
+        Me.privacyPolicyText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.privacyPolicyText.Size = New System.Drawing.Size(700, 343)
         Me.privacyPolicyText.TabIndex = 1
         '
@@ -993,6 +996,7 @@ Partial Class BuildNetwork
         Me.generalConditionText.Location = New System.Drawing.Point(6, 5)
         Me.generalConditionText.Multiline = True
         Me.generalConditionText.Name = "generalConditionText"
+        Me.generalConditionText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.generalConditionText.Size = New System.Drawing.Size(700, 343)
         Me.generalConditionText.TabIndex = 0
         '

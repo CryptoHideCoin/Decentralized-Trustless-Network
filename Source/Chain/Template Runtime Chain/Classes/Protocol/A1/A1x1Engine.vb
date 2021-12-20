@@ -80,7 +80,6 @@ Namespace AreaProtocol
             Public Overrides Function toString() As String Implements IRequestModel.toString
                 Dim tmp As String = common.toString()
 
-                tmp += MyBase.toString()
                 tmp += content.toString()
 
                 Return tmp

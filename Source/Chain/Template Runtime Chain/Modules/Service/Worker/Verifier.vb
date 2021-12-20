@@ -29,6 +29,7 @@ Namespace AreaWorker
                     Case "a0x5" : Return AreaProtocol.A0x5.FormalCheck.evaluate(value)
                     Case "a0x6" : Return AreaProtocol.A0x6.FormalCheck.evaluate(value)
                     Case "a0x7" : Return AreaProtocol.A0x7.FormalCheck.evaluate(value)
+                    Case "a0x8" : Return AreaProtocol.A0x8.FormalCheck.evaluate(value)
 
                     Case "a1x0" : Return AreaProtocol.A1x0.FormalCheck.evaluate(value)
                     Case "a1x1" : Return AreaProtocol.A1x1.FormalCheck.evaluate(value)
@@ -40,8 +41,11 @@ Namespace AreaWorker
                     Case "a1x7" : Return AreaProtocol.A1x7.FormalCheck.evaluate(value)
                     Case "a1x8" : Return AreaProtocol.A1x8.FormalCheck.evaluate(value)
                     Case "a1x9" : Return AreaProtocol.A1x9.FormalCheck.evaluate(value)
+                    Case "a1x10" : Return AreaProtocol.A1x10.FormalCheck.evaluate(value)
 
                     Case "a2x0" : Return AreaProtocol.A2x0.FormalCheck.evaluate(value)
+                    Case "a2x1" : Return AreaProtocol.A2x1.FormalCheck.evaluate(value)
+                    Case "a2x2" : Return AreaProtocol.A2x2.FormalCheck.evaluate(value)
 
                         ''' BOOKMARK: Add in this point 6
                 End Select

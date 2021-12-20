@@ -2287,6 +2287,113 @@ CHCPrimaryRuntimeService
  <param name="valueAsset"></param>
  <returns></returns>
 </member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A0x8">
+ <summary>
+ This class contain all element to manage a A0x8 command
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A0x8.RequestModel">
+ <summary>
+ This class contain alla member of request model
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x8.RequestModel.ToString">
+ <summary>
+ This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x8.RequestModel.getHash">
+ <summary>
+ This methdo provide to get an hash of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A0x8.RequestResponseModel">
+ <summary>
+ This class contain all element of a request response
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x8.RequestResponseModel.ToString">
+ <summary>
+ This method provide to create a string of an element of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x8.RequestResponseModel.getHash">
+ <summary>
+ This method provide to get the hash of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A0x8.RecoveryState">
+ <summary>
+ This class contain all static member to recovery state 
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x8.RecoveryState.fromRequest">
+ <summary>
+ This method provide to update the state from a request
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A0x8.FormalCheck">
+ <summary>
+ This class provides the static method to validate the request
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x8.FormalCheck.verify(System.String)">
+ <summary>
+ This method provide to verify a formal request
+ </summary>
+ <param name="requestHash"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x8.FormalCheck.evaluate(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to evaluate a request
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A0x8.Manager">
+ <summary>
+ This static class provides to static method to manage a request
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x8.Manager.addIntoLedger(System.String,System.String,System.String,System.String,System.String)">
+ <summary>
+ This method provide to write request into ledger
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x8.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A0x8.RequestModel@)">
+ <summary>
+ This method provide to save a request into temporally position
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x8.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A0x8.RequestResponseModel@)">
+ <summary>
+ This method provide to save a request into temporally position from RequestResponseModel
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x8.Manager.loadRequest(System.String,System.String)">
+ <summary>
+ This method provide to load a request from a repository
+ </summary>
+ <param name="hash"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x8.Manager.createInternalRequest">
+ <summary>
+ This method provide to create a initial procedure A0x3
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:CHCPrimaryRuntimeService.AreaProtocol.A1x0">
  <summary>
  This class contain all element to manage a A1x0 command
@@ -2401,6 +2508,143 @@ CHCPrimaryRuntimeService
 <member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x0.Manager.managePrimaryChain">
  <summary>
  This method provide to manage the initial phase of genesis Primary Chain
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.NodeComplete">
+ <summary>
+ This class contain the masternode element data
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.EssentialA1x10">
+ <summary>
+ This class contain the minimal data essential A1x10
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.EssentialA1x10.reorderList">
+ <summary>
+ This method provide to reorder the list of the masternode
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.EssentialA1x10.ToString">
+ <summary>
+ This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.EssentialA1x10.getHash">
+ <summary>
+ This methdo provide to get an hash of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A1x10">
+ <summary>
+ This class contain all element to manage a A1x10 command
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A1x10.RequestModel">
+ <summary>
+ This class contain alla member of request model
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.RequestModel.ToString">
+ <summary>
+ This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.RequestModel.getHash">
+ <summary>
+ This methdo provide to get an hash of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A1x10.RequestResponseModel">
+ <summary>
+ This class contain all element of a request response
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.RequestResponseModel.ToString">
+ <summary>
+ This method provide to create a string of an element of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.RequestResponseModel.getHash">
+ <summary>
+ This method provide to get the hash of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A1x10.RecoveryState">
+ <summary>
+ This class contain all static member to recovery state 
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.RecoveryState.fromRequest(CHCPrimaryRuntimeService.AreaProtocol.A1x10.RequestModel@,CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction)">
+ <summary>
+ This method provide to update the state from a request
+ </summary>
+ <param name="value"></param>
+ <param name="transactionChainRecord"></param>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A1x10.FormalCheck">
+ <summary>
+ This class provides the static method to validate the request
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.FormalCheck.verify(System.String)">
+ <summary>
+ This method provide to verify a formal request
+ </summary>
+ <param name="requestHash"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.FormalCheck.evaluate(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to evaluate a request
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A1x10.Manager">
+ <summary>
+ This static class provides to static method to manage a request
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.Manager.addIntoLedger(System.String,System.String,System.String,CHCPrimaryRuntimeService.AreaProtocol.EssentialA1x10,System.String,System.String)">
+ <summary>
+ This method provide to write request into ledger
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A1x10.RequestModel@)">
+ <summary>
+ This method provide to save a request into temporally position
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.Manager.loadRequest(System.String,System.String)">
+ <summary>
+ This method provide to load a request from a repository
+ </summary>
+ <param name="hash"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A1x10.RequestResponseModel@)">
+ <summary>
+ This method provide to save a request into temporally position from RequestResponseModel
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.Manager.createInternalRequest">
+ <summary>
+ This method provide to create a initial procedure A1x9
  </summary>
  <returns></returns>
 </member>
@@ -3369,34 +3613,6 @@ CHCPrimaryRuntimeService
  <param name="value"></param>
  <returns></returns>
 </member>
-<member name="T:CHCPrimaryRuntimeService.AreaProtocol.NodeComplete">
- <summary>
- This class contain the masternode element data
- </summary>
-</member>
-<member name="T:CHCPrimaryRuntimeService.AreaProtocol.EssentialA1x9">
- <summary>
- This class contain the minimal data essential A1x9 
- </summary>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.EssentialA1x9.reorderList">
- <summary>
- This method provide to reorder the list of the masternode
- </summary>
- <returns></returns>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.EssentialA1x9.ToString">
- <summary>
- This method provide to convert into a string the element of the object
- </summary>
- <returns></returns>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.EssentialA1x9.getHash">
- <summary>
- This methdo provide to get an hash of the object
- </summary>
- <returns></returns>
-</member>
 <member name="T:CHCPrimaryRuntimeService.AreaProtocol.A1x9">
  <summary>
  This class contain all element to manage a A1x8 command
@@ -3473,7 +3689,7 @@ CHCPrimaryRuntimeService
  This static class provides to static method to manage a request
  </summary>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x9.Manager.addIntoLedger(System.String,System.String,System.String,CHCPrimaryRuntimeService.AreaProtocol.EssentialA1x9,System.String,System.String)">
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x9.Manager.addIntoLedger(System.String,System.String,System.String,System.String,System.String)">
  <summary>
  This method provide to write request into ledger
  </summary>
@@ -3694,11 +3910,93 @@ CHCPrimaryRuntimeService
  </summary>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.Manager.extractToRequest(CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestResponseModel@)">
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A2x1">
  <summary>
- This method provide to return an RequestModel from RequestResponseModel
+ This class contain all element to manage a A2x1 command
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A2x1.EssentialA2x1">
+ <summary>
+ This class contain the information reguard the missing 
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.EssentialA2x1.ToString">
+ <summary>
+ This method provide to convert to string the contain of this class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.EssentialA2x1.getHash">
+ <summary>
+ This methdo provide to get an hash of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestModel">
+ <summary>
+ This class contain all member of request model
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestModel.ToString">
+ <summary>
+ This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestModel.getHash">
+ <summary>
+ This methdo provide to get an hash of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestResponseModel">
+ <summary>
+ This class contain all element of a request response
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestResponseModel.ToString">
+ <summary>
+ This method provide to create a string of an element of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestResponseModel.getHash">
+ <summary>
+ This method provide to get the hash of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.RecoveryState.fromRequest(CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestModel@,CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction@)">
+ <summary>
+ This method provide to update the state from a request
  </summary>
  <param name="value"></param>
+ <param name="transactionChainRecord"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.FormalCheck.verify(System.String)">
+ <summary>
+ This method provide to verify a formal request
+ </summary>
+ <param name="requestHash"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.FormalCheck.evaluate(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to evaluate a request
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A2x1.Manager">
+ <summary>
+ This static class provides to static method to manage a request
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.Manager.addIntoLedger(System.String,System.String,System.String,CHCPrimaryRuntimeService.AreaProtocol.A2x1.EssentialA2x1,System.String,System.String)">
+ <summary>
+ This method provide to write request into ledger
+ </summary>
  <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestModel@)">
@@ -3708,6 +4006,13 @@ CHCPrimaryRuntimeService
  <param name="value"></param>
  <returns></returns>
 </member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.Manager.loadRequest(System.String,System.String)">
+ <summary>
+ This method provide to load a request from a repository
+ </summary>
+ <param name="hash"></param>
+ <returns></returns>
+</member>
 <member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A2x1.RequestResponseModel@)">
  <summary>
  This method provide to save a request into temporally position from RequestResponseModel
@@ -3715,11 +4020,126 @@ CHCPrimaryRuntimeService
  <param name="value"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.Manager.createRequest(System.String)">
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x1.Manager.createInternalRequest(System.String,System.String)">
  <summary>
- This method provide to create a initial procedure A0x0
+ This method provide to create a initial procedure A2x1
  </summary>
- <param name="publicAddressAbsent"></param>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A2x2">
+ <summary>
+ This class contain all element to manage a A2x2 command
+ </summary>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A2x2.EssentialA2x2">
+ <summary>
+ This class contain the information reguard the missing 
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.EssentialA2x2.ToString">
+ <summary>
+ This method provide to convert to string the contain of this class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.EssentialA2x2.getHash">
+ <summary>
+ This methdo provide to get an hash of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A2x2.RequestModel">
+ <summary>
+ This class contain all member of request model
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.RequestModel.ToString">
+ <summary>
+ This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.RequestModel.getHash">
+ <summary>
+ This methdo provide to get an hash of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A2x2.RequestResponseModel">
+ <summary>
+ This class contain all element of a request response
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.RequestResponseModel.ToString">
+ <summary>
+ This method provide to create a string of an element of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.RequestResponseModel.getHash">
+ <summary>
+ This method provide to get the hash of this object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.RecoveryState.fromRequest(CHCPrimaryRuntimeService.AreaProtocol.A2x2.RequestModel@,CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction@)">
+ <summary>
+ This method provide to update the state from a request
+ </summary>
+ <param name="value"></param>
+ <param name="transactionChainRecord"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.FormalCheck.verify(System.String)">
+ <summary>
+ This method provide to verify a formal request
+ </summary>
+ <param name="requestHash"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.FormalCheck.evaluate(CHCPrimaryRuntimeService.AreaFlow.RequestExtended@)">
+ <summary>
+ This method provide to evaluate a request
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="T:CHCPrimaryRuntimeService.AreaProtocol.A2x2.Manager">
+ <summary>
+ This static class provides to static method to manage a request
+ </summary>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.Manager.addIntoLedger(System.String,System.String,System.String,CHCPrimaryRuntimeService.AreaProtocol.A2x2.EssentialA2x2,System.String,System.String)">
+ <summary>
+ This method provide to write request into ledger
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A2x2.RequestModel@)">
+ <summary>
+ This method provide to save a request into temporally position
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.Manager.loadRequest(System.String,System.String)">
+ <summary>
+ This method provide to load a request from a repository
+ </summary>
+ <param name="hash"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.Manager.saveTemporallyRequest(CHCPrimaryRuntimeService.AreaProtocol.A2x2.RequestResponseModel@)">
+ <summary>
+ This method provide to save a request into temporally position from RequestResponseModel
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x2.Manager.createInternalRequest(System.String,System.String)">
+ <summary>
+ This method provide to create a initial procedure A2x1
+ </summary>
  <returns></returns>
 </member>
 <member name="T:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.ChainNodeInformation">
@@ -3812,6 +4232,15 @@ CHCPrimaryRuntimeService
  This method provide to add a new node to chain
  </summary>
  <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.removeNodeFromChain(System.String,System.String,CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction)">
+ <summary>
+ This method provide to remove a node from a chain
+ </summary>
+ <param name="publicAddress"></param>
+ <param name="chainName"></param>
+ <param name="transactionChainRecord"></param>
  <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.getDataNode(System.String,System.String)">
@@ -3941,6 +4370,30 @@ CHCPrimaryRuntimeService
  This method provide to get a service state position
  </summary>
  <param name="signature"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.primaryAssetController.GetValue">
+ <summary>
+ This method provide to get a value of Primary Asset
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.generalConditionsController.GetValue">
+ <summary>
+ This method provide to return a general condition element
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.informationBaseController.GetValue">
+ <summary>
+ This method provide to get a value of Info Network Base
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.whitePaperController.GetValue">
+ <summary>
+ This method provide to get a value a Document Model
+ </summary>
  <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.Controllers.BulletinController.PutValue(CHCPrimaryRuntimeService.AreaConsensus.BulletinInformation)">
@@ -4417,6 +4870,42 @@ CHCPrimaryRuntimeService
 <member name="M:CHCPrimaryRuntimeService.AreaWorker.Downloader.getRequestA2x0(System.String,System.String,System.Boolean)">
  <summary>
  This method provide to get a request with code A2X0
+ </summary>
+ <param name="addressValue"></param>
+ <param name="value"></param>
+ <param name="dontRetry"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Downloader.getRequestA2x1(System.String,System.String,System.Boolean)">
+ <summary>
+ This method provide to get a request with code A2X1
+ </summary>
+ <param name="addressValue"></param>
+ <param name="value"></param>
+ <param name="dontRetry"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Downloader.getRequestA2x2(System.String,System.String,System.Boolean)">
+ <summary>
+ This method provide to get a request with code A2X2
+ </summary>
+ <param name="addressValue"></param>
+ <param name="value"></param>
+ <param name="dontRetry"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Downloader.getRequestA1x10(System.String,System.String,System.Boolean)">
+ <summary>
+ This method provide to get a request with code A1X10
+ </summary>
+ <param name="addressValue"></param>
+ <param name="value"></param>
+ <param name="dontRetry"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaWorker.Downloader.getRequestA0x8(System.String,System.String,System.Boolean)">
+ <summary>
+ This method provide to get a request with code A0X8
  </summary>
  <param name="addressValue"></param>
  <param name="value"></param>

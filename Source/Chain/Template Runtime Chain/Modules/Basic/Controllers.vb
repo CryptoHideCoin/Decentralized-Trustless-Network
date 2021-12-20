@@ -38,6 +38,7 @@ Namespace AreaCommon
                     httpConfig.Routes.MapHttpRoute(name:="AdministrationApi", routeTemplate:="api/" & settings.data.serviceId & "/administration/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="AdministrationDoActionApi", routeTemplate:="api/" & settings.data.serviceId & "/administration/doAction/{controller}")
                 Else
+                    httpConfig.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & settings.data.serviceId & "/service/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="QoSTicketApi", routeTemplate:="api/" & settings.data.serviceId & "/qos/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="SystemApi", routeTemplate:="api/v1.0/System/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="NetworkApi", routeTemplate:="api/" & settings.data.serviceId & "/network/{controller}")

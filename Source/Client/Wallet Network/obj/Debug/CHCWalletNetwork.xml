@@ -1,0 +1,116 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CHCWalletNetwork
+</name>
+</assembly>
+<members>
+<member name="T:CHCWalletNetwork.My.Resources.Resources">
+<summary>
+  Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
+</summary>
+</member>
+<member name="P:CHCWalletNetwork.My.Resources.Resources.ResourceManager">
+<summary>
+  Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
+</summary>
+</member>
+<member name="P:CHCWalletNetwork.My.Resources.Resources.Culture">
+<summary>
+  Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
+  ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
+</summary>
+</member>
+<member name="P:CHCWalletNetwork.My.Resources.Resources.BigBanner">
+<summary>
+  Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="M:CHCWalletNetwork.GenericInformation.readNetworkInformation">
+ <summary>
+ This method provide to read a data information
+ </summary>
+</member>
+<member name="M:CHCWalletNetwork.GenericInformation.readContent(System.String)">
+ <summary>
+ This method provide to get and display a Privacy Policy information
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.GenericInformation.readAssetInformation(System.Boolean)">
+ <summary>
+ This method provide to read an asset information
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.GenericInformation.readTransactionChainParameters">
+ <summary>
+ This method provide to read a transaction chain parameters
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.GenericInformation.readRefundPlan">
+ <summary>
+ This method provide to read a Refund Plan information
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCWalletNetwork.GenericInformation.type">
+ <summary>
+ This property get / let the type of interrogation
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.RefundPlanInformation.loadDataIntoGrid(CHCProtocolLibrary.AreaCommon.Models.Network.RefundItem)">
+ <summary>
+ This method provide to load a Symbol
+ </summary>
+ <param name="data"></param>
+ <returns></returns>
+</member>
+<member name="T:CHCWalletNetwork.ConfigurationManager.SingleConfiguration">
+ <summary>
+ This class contain a tuple of a single configuration
+ </summary>
+</member>
+<member name="T:CHCWalletNetwork.ConfigurationManager.SingleConfigurationDB">
+ <summary>
+ This class contain a tuple of a single configuration DB
+ </summary>
+</member>
+<member name="T:CHCWalletNetwork.ConfigurationManager.ConfigurationData">
+ <summary>
+ This class provide to manage a configuration data
+ </summary>
+</member>
+<member name="M:CHCWalletNetwork.ConfigurationManager.loadData(CHCWalletNetwork.AppSettings.SettingsData@)">
+ <summary>
+ This method load all information in the relative field
+ </summary>
+ <param name="data"></param>
+</member>
+<member name="M:CHCWalletNetwork.ConfigurationManager.loadDataFromUI(CHCWalletNetwork.AppSettings.SettingsData@)">
+ <summary>
+ This method provide to load data from UI
+ </summary>
+ <param name="data"></param>
+</member>
+<member name="M:CHCWalletNetwork.ConfigurationManager.showSettings(System.Boolean)">
+ <summary>
+ This method provide to show the setting in a form field
+ </summary>
+</member>
+<member name="M:CHCWalletNetwork.AreaCommon.StartUp.startApplication">
+ <summary>
+ This method provide to start an application
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.AreaCommon.StartUp.Main">
+ <summary>
+ This method provide to prepare to start the application
+ </summary>
+</member>
+</members>
+</doc>

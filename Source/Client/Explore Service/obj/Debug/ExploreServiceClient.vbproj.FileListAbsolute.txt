@@ -19,3 +19,4 @@ E:\CryptoHideCoinDTN\Source\Client\Explore Service\obj\Debug\ExploreServiceClien
 E:\CryptoHideCoinDTN\Source\Client\Explore Service\obj\Debug\CHCExploreClientService.exe
 E:\CryptoHideCoinDTN\Source\Client\Explore Service\obj\Debug\CHCExploreClientService.xml
 E:\CryptoHideCoinDTN\Source\Client\Explore Service\obj\Debug\CHCExploreClientService.pdb
+E:\CryptoHideCoinDTN\Source\Client\Explore Service\obj\Debug\CHCExploreClientService.exe.config

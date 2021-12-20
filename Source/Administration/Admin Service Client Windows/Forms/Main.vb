@@ -816,4 +816,16 @@ Public Class Main
     Private Sub abortCurrentCommandButton_Click(sender As Object, e As EventArgs) Handles abortCurrentCommandButton.Click
 
     End Sub
+
+    Private Sub serviceUrlProtocol_Load(sender As Object, e As EventArgs) Handles serviceUrlProtocol.Load
+
+    End Sub
+
+    Private Sub serviceCertificate_Load(sender As Object, e As EventArgs) Handles serviceCertificate.Load
+
+    End Sub
+
+    Private Sub adminWalletAddress_Load(sender As Object, e As EventArgs) Handles adminWalletAddress.Load
+
+    End Sub
 End Class

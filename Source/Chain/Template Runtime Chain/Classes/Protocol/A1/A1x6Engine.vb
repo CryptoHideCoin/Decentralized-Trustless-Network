@@ -31,7 +31,7 @@ Namespace AreaProtocol
             Public Overrides Function toString() As String Implements IRequestModel.toString
                 Dim tmp As String = common.toString()
 
-                tmp += MyBase.ToString()
+                tmp += content.ToString()
 
                 Return tmp
             End Function
@@ -227,9 +227,6 @@ Namespace AreaProtocol
         ''' This static class provides to static method to manage a request
         ''' </summary>
         Public Class Manager
-
-            Shared Property firstRequestCloseBlock As New FirstRequestData
-
 
             ''' <summary>
             ''' This method provide to write request into ledger

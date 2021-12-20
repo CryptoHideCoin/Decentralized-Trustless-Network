@@ -17,7 +17,10 @@ Namespace Controllers
 
         Inherits ApiController
 
-
+        ''' <summary>
+        ''' This method provide to get a value a Document Model
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetValue() As Models.Network.DocumentModel
             Dim result As New Models.Network.DocumentModel
             Dim privateKeyRAW As String
@@ -32,7 +35,9 @@ Namespace Controllers
 
                         result.masterNodePublicAddress = AreaCommon.state.network.publicAddressIdentity
                         result.integrityTransactionChain.coordinate = AreaCommon.state.runtimeState.activeNetwork.whitePaper.coordinate
-                        result.integrityTransactionChain.hash = AreaCommon.state.runtimeState.activeNetwork.whitePaper.hash
+                        result.integrityTransactionChain.hash = AreaCommon.state.runTimeState.activeNetwork.whitePaper.hash
+                        result.integrityTransactionChain.progressiveHash = AreaCommon.state.runTimeState.activeNetwork.whitePaper.progressiveHash
+                        result.integrityTransactionChain.registrationTimeStamp = AreaCommon.state.runTimeState.activeNetwork.whitePaper.registrationTimeStamp
                         result.value = AreaCommon.state.runtimeState.activeNetwork.whitePaper.value
 
                         result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, result.getHash())

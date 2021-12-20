@@ -18,6 +18,8 @@ Release Note
 0.14.1	- 04.12.2021 - Implements Node List (A1x9)
 					   Bugfix change volume and record
 0.14.2  - 09.12.2021 - Bugfix updateSetProtocol
+0.15.0  - 10.12.2021 - Implement A0x8 command
+0.15.1  - 20.12.2021 - Revision controller response
 
 TO DO
 =====

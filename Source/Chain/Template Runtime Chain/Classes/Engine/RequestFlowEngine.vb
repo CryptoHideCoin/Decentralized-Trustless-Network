@@ -592,6 +592,7 @@ Namespace AreaFlow
                                 Case "a0x5" : result.data = AreaProtocol.A0x5.Manager.loadRequest(requestPath, hash)
                                 Case "a0x6" : result.data = AreaProtocol.A0x6.Manager.loadRequest(requestPath, hash)
                                 Case "a0x7" : result.data = AreaProtocol.A0x7.Manager.loadRequest(requestPath, hash)
+                                Case "a0x8" : result.data = AreaProtocol.A0x8.Manager.loadRequest(requestPath, hash)
 
                                 Case "a1x0" : result.data = AreaProtocol.A1x0.Manager.loadRequest(requestPath, hash)
                                 Case "a1x1" : result.data = AreaProtocol.A1x1.Manager.loadRequest(requestPath, hash)
@@ -603,8 +604,11 @@ Namespace AreaFlow
                                 Case "a1x7" : result.data = AreaProtocol.A1x7.Manager.loadRequest(requestPath, hash)
                                 Case "a1x8" : result.data = AreaProtocol.A1x8.Manager.loadRequest(requestPath, hash)
                                 Case "a1x9" : result.data = AreaProtocol.A1x9.Manager.loadRequest(requestPath, hash)
+                                Case "a1x10" : result.data = AreaProtocol.A1x10.Manager.loadRequest(requestPath, hash)
 
                                 Case "a2x0" : result.data = AreaProtocol.A2x0.Manager.loadRequest(requestPath, hash)
+                                Case "a2x1" : result.data = AreaProtocol.A2x1.Manager.loadRequest(requestPath, hash)
+                                Case "a2x1" : result.data = AreaProtocol.A2x2.Manager.loadRequest(requestPath, hash)
 
                                     ''' BOOKMARK: Add in this point 3
                                     ''' 
@@ -905,8 +909,8 @@ Namespace AreaFlow
         ''' <returns></returns>
         Public Function repositionDownload(ByVal requestHash As String, ByVal publicAddress As String) As Boolean
             Try
-                Dim key As New AreaFlow.RequestDownloadKey
-                Dim request As AreaFlow.RequestExtended
+                Dim key As New RequestDownloadKey
+                Dim request As RequestExtended
 
                 key.requestHash = requestHash
                 key.publicAddress = publicAddress
@@ -920,7 +924,7 @@ Namespace AreaFlow
                     End If
 
                     If ((CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime - request.source.firstErrorDuringDownload) > 300) Then
-                        Return AreaProtocol.A2x1.Manager.createRequest(publicAddress)
+                        Return AreaProtocol.A2x1.Manager.createInternalRequest(publicAddress, AreaCommon.state.runTimeState.activeChain.name.value)
                     Else
                         request.source.notifyTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                     End If

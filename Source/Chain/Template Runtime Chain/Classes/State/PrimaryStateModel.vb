@@ -62,7 +62,7 @@ Namespace AreaState.PrimaryStateModel
         Public Property primaryAssetData As New AssetStructure
         Public Property transactionChainSettings As New NetworkTransactionStructure
         Public Property privacyPolicy As New ItemIdentityStructure
-        Public Property generalCondition As New ItemIdentityStructure
+        Public Property generalConditions As New ItemIdentityStructure
 
         Public Property refundPlan As New NetworkRefundItemListStructure
 

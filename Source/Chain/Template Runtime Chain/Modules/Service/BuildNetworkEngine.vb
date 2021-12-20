@@ -196,8 +196,10 @@ Namespace AreaData
                 If proceed Then proceed = (AreaProtocol.A0x6.Manager.createInternalRequest(dataNetwork.generalCondition.content).Length > 0)
                 If proceed Then proceed = (AreaProtocol.A0x7.Manager.createInternalRequest(dataNetwork.refundPlan).Length > 0)
 
+                If proceed Then proceed = (AreaProtocol.A1x2.Manager.createInternalRequest("BaseOne", "First base of Primary Chain", "a0x0, a0x1, a0x2, a0x3, a0x4, a0x5, a0x6, a0x7, a1x0, a1x1, a1x2, a1x3, a1x4, a1x5, a1x6, a2x0, a2x1, a2x2, a2x3, a2x4").Length > 0)
+
                 If proceed Then
-                    lastHash = AreaProtocol.A1x2.Manager.createInternalRequest("BaseOne", "First base of Primary Chain", "a0x0, a0x1, a0x2, a0x3, a0x4, a0x5, a0x6, a0x7, a1x0, a1x1, a1x2, a1x3, a1x4, a1x5, a1x6, a2x0, a2x1, a2x2, a2x3, a2x4")
+                    lastHash = AreaProtocol.A0x8.Manager.createInternalRequest()
 
                     proceed = (lastHash.Length > 0)
                 End If

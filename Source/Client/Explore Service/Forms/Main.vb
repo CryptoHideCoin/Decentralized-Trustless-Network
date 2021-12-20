@@ -281,7 +281,7 @@ Public Class Main
                 If Not IsNothing(configurationNameCombo.SelectedItem) Then
                     Dim configuration As New AppSettings
 
-                    configuration.fileName = IO.Path.Combine(AreaCommon.paths.pathSettings, configurationNameCombo.SelectedItem.value & ".settings")
+                    configuration.fileName = IO.Path.Combine(localPathDataText.Text, "Settings", configurationNameCombo.SelectedItem.value & ".settings")
 
                     configuration.read()
 
@@ -438,30 +438,30 @@ Public Class Main
 
             If (remote.getData() = "") Then
                 If (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete) Then
-                    primaryAssetNameText.Text = remote.data.value.name
-                    primaryAssetShortNameText.Text = remote.data.value.shortName
-                    primaryAssetSymbolText.Text = remote.data.value.symbol
-                    primaryAssetQtaTotalText.Text = remote.data.value.qtaTotal
-                    primaryAssetDigitText.Text = remote.data.value.digit
+                    'primaryAssetNameText.Text = remote.data.value.name
+                    'primaryAssetShortNameText.Text = remote.data.value.shortName
+                    'primaryAssetSymbolText.Text = remote.data.value.symbol
+                    'primaryAssetQtaTotalText.Text = remote.data.value.qtaTotal
+                    'primaryAssetDigitText.Text = remote.data.value.digit
 
-                    If remote.data.value.stakeable Then
-                        primaryAssetStakableText.Text = "Yes"
-                    Else
-                        primaryAssetStakableText.Text = "No"
-                    End If
-                    If remote.data.value.prestake Then
-                        primaryAssetPreStakeText.Text = "Yes"
-                    Else
-                        primaryAssetPreStakeText.Text = "No"
-                    End If
-                    If remote.data.value.burnable Then
-                        primaryAssetBurnableText.Text = "Yes"
-                    Else
-                        primaryAssetBurnableText.Text = "No"
-                    End If
+                    'If remote.data.value.stakeable Then
+                    '    primaryAssetStakableText.Text = "Yes"
+                    'Else
+                    '    primaryAssetStakableText.Text = "No"
+                    'End If
+                    'If remote.data.value.prestake Then
+                    '    primaryAssetPreStakeText.Text = "Yes"
+                    'Else
+                    '    primaryAssetPreStakeText.Text = "No"
+                    'End If
+                    'If remote.data.value.burnable Then
+                    '    primaryAssetBurnableText.Text = "Yes"
+                    'Else
+                    '    primaryAssetBurnableText.Text = "No"
+                    'End If
 
-                    primaryAssetUnitNameText.Text = remote.data.value.nameUnit
-                    primaryAssetQtaInitialStakeText.Text = remote.data.value.qtaInitialStake
+                    'primaryAssetUnitNameText.Text = remote.data.value.nameUnit
+                    'primaryAssetQtaInitialStakeText.Text = remote.data.value.qtaInitialStake
                 Else
                     MessageBox.Show("Connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
@@ -532,7 +532,7 @@ Public Class Main
 
                     blockChainSizeFrequencyText.Text = remote.data.value.blockSizeFrequency
                     numberBlockInVolumeText.Text = remote.data.value.numberBlockInVolume
-                    initialMaxComputeTransactionText.Text = remote.data.value.initialMaxComputeTransaction
+                    'initialMaxComputeTransactionText.Text = remote.data.value.initialMaxComputeTransaction
                     ruleFutureReleaseText.Text = remote.data.value.ruleFutureRelease
                     reviewReleaseAlgorithmText.Text = remote.data.value.reviewReleaseAlgorithm
                     consensusMethodText.Text = remote.data.value.consensusMethod

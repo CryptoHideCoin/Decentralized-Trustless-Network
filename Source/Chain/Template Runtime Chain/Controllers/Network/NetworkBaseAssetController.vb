@@ -18,6 +18,10 @@ Namespace Controllers
         Inherits ApiController
 
 
+        ''' <summary>
+        ''' This method provide to get a value of Primary Asset
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetValue() As Models.Network.InfoAssetModel
             Dim result As New Models.Network.InfoAssetModel
             Dim privateKeyRAW As String
@@ -31,9 +35,11 @@ Namespace Controllers
                         privateKeyRAW = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
 
                         result.masterNodePublicAddress = AreaCommon.state.network.publicAddressIdentity
-                        result.integrityTransactionChain.coordinate = AreaCommon.state.runtimeState.activeNetwork.primaryAssetData.coordinate
-                        result.integrityTransactionChain.hash = AreaCommon.state.runtimeState.activeNetwork.primaryAssetData.hash
-                        result.value = AreaCommon.state.runtimeState.activeNetwork.primaryAssetData.value
+                        result.integrityTransactionChain.coordinate = AreaCommon.state.runTimeState.activeNetwork.primaryAssetData.coordinate
+                        result.integrityTransactionChain.hash = AreaCommon.state.runTimeState.activeNetwork.primaryAssetData.hash
+                        result.integrityTransactionChain.progressiveHash = AreaCommon.state.runTimeState.activeNetwork.primaryAssetData.progressiveHash
+                        result.integrityTransactionChain.registrationTimeStamp = AreaCommon.state.runTimeState.activeNetwork.primaryAssetData.registrationTimeStamp
+                        result.value = AreaCommon.state.runTimeState.activeNetwork.primaryAssetData.value
 
                         result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, result.getHash())
                     Else

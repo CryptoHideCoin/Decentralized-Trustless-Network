@@ -128,43 +128,52 @@ Namespace AreaState
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.networkName
                             activeNetwork.networkName.value = value
                             activeNetwork.networkName.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.networkName.hash = transactionChainRecord.hash
                             activeNetwork.networkName.progressiveHash = transactionChainRecord.progressiveHash
                             activeNetwork.networkName.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.specialEnvironment
                             activeNetwork.envinronment.value = value
                             activeNetwork.envinronment.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.envinronment.hash = transactionChainRecord.hash
                             activeNetwork.envinronment.progressiveHash = transactionChainRecord.progressiveHash
                             activeNetwork.envinronment.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.whitePaper
                             activeNetwork.whitePaper.value = value
                             activeNetwork.whitePaper.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.whitePaper.hash = transactionChainRecord.hash
                             activeNetwork.whitePaper.progressiveHash = transactionChainRecord.progressiveHash
                             activeNetwork.whitePaper.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.yellowPaper
                             activeNetwork.yellowPaper.value = value
                             activeNetwork.yellowPaper.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.yellowPaper.hash = transactionChainRecord.hash
                             activeNetwork.yellowPaper.progressiveHash = transactionChainRecord.progressiveHash
                             activeNetwork.yellowPaper.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.assetData
                             activeNetwork.primaryAssetData.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.primaryAssetData.hash = transactionChainRecord.hash
                             activeNetwork.primaryAssetData.progressiveHash = transactionChainRecord.progressiveHash
                             activeNetwork.primaryAssetData.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.generalCondition
-                            activeNetwork.generalCondition.value = value
-                            activeNetwork.generalCondition.coordinate = transactionChainRecord.coordinate
-                            activeNetwork.generalCondition.progressiveHash = transactionChainRecord.progressiveHash
-                            activeNetwork.generalCondition.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                            activeNetwork.generalConditions.value = value
+                            activeNetwork.generalConditions.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.generalConditions.hash = transactionChainRecord.hash
+                            activeNetwork.generalConditions.progressiveHash = transactionChainRecord.progressiveHash
+                            activeNetwork.generalConditions.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.privacyPolicy
                             activeNetwork.privacyPolicy.value = value
                             activeNetwork.privacyPolicy.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.privacyPolicy.hash = transactionChainRecord.hash
                             activeNetwork.privacyPolicy.progressiveHash = transactionChainRecord.progressiveHash
                             activeNetwork.privacyPolicy.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.refundPlan
                             activeNetwork.refundPlan.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.refundPlan.hash = transactionChainRecord.hash
                             activeNetwork.refundPlan.progressiveHash = transactionChainRecord.progressiveHash
                             activeNetwork.refundPlan.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.transactionChainConfiguration
                             activeNetwork.transactionChainSettings.coordinate = transactionChainRecord.coordinate
+                            activeNetwork.transactionChainSettings.hash = transactionChainRecord.hash
                             activeNetwork.transactionChainSettings.progressiveHash = transactionChainRecord.progressiveHash
                             activeNetwork.transactionChainSettings.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                     End Select
@@ -530,6 +539,35 @@ Namespace AreaState
                 Return True
             Catch ex As Exception
                 AreaCommon.log.track("ChainStateEngine.addNewNodeToChain", ex.Message, "fatal")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to remove a node from a chain
+        ''' </summary>
+        ''' <param name="publicAddress"></param>
+        ''' <param name="chainName"></param>
+        ''' <param name="transactionChainRecord"></param>
+        ''' <returns></returns>
+        Public Function removeNodeFromChain(ByVal publicAddress As String, ByVal chainName As String, Optional ByVal transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction = Nothing) As Boolean
+            Try
+                Dim chain As DataChain
+
+                AreaCommon.log.track("ChainStateEngine.removeNodeFromChain", "Begin")
+
+                chain = chainByName(chainName)
+
+                chain.internalNodeList.Remove(publicAddress)
+                chain.serviceNodeList.Remove(publicAddress)
+                chain.originalNodeList.Remove(publicAddress)
+
+                AreaCommon.log.track("ChainStateEngine.removeNodeFromChain", "Completed")
+
+                Return True
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.removeNodeFromChain", ex.Message, "fatal")
 
                 Return False
             End Try

@@ -17,7 +17,10 @@ Namespace Controllers
 
         Inherits ApiController
 
-
+        ''' <summary>
+        ''' This method provide to get a value of Info Network Base
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetValue() As Models.Network.InfoNetworkBaseModel
             Dim result As New Models.Network.InfoNetworkBaseModel
             Dim privateKeyRAW As String
@@ -32,10 +35,13 @@ Namespace Controllers
 
                         result.masterNodePublicAddress = AreaCommon.state.network.publicAddressIdentity
                         result.networkCreationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimestamp(AreaCommon.state.runtimeState.activeNetwork.networkCreationDate).ToUniversalTime)
-                        result.name = AreaCommon.state.runtimeState.activeNetwork.networkName.value
+                        result.name = AreaCommon.state.runTimeState.activeNetwork.networkName.value
+                        result.specialEnvironment = AreaCommon.state.runTimeState.activeNetwork.envinronment.value
                         result.genesisPublicAddress = AreaCommon.state.runtimeState.activeNetwork.genesisPublicAddress
-                        result.integrityTransactionChain.coordinate = AreaCommon.state.runtimeState.activeNetwork.networkName.coordinate
-                        result.integrityTransactionChain.hash = AreaCommon.state.runtimeState.activeNetwork.networkName.hash
+                        result.integrityTransactionChain.coordinate = AreaCommon.state.runTimeState.activeNetwork.networkName.coordinate
+                        result.integrityTransactionChain.progressiveHash = AreaCommon.state.runTimeState.activeNetwork.networkName.progressiveHash
+                        result.integrityTransactionChain.hash = AreaCommon.state.runTimeState.activeNetwork.networkName.hash
+                        result.integrityTransactionChain.registrationTimeStamp = AreaCommon.state.runTimeState.activeNetwork.networkName.registrationTimeStamp
 
                         result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, result.getHash())
                     Else

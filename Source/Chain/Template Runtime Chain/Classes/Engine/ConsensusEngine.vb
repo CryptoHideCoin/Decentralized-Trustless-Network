@@ -724,6 +724,7 @@ Namespace AreaConsensus
                     Case "a0x5" : support.newIdentity = AreaProtocol.A0x5.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.privacyPolicy, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x6" : support.newIdentity = AreaProtocol.A0x6.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.generalCondition, request.data.common.publicAddressRequester, requestHash)
                     Case "a0x7" : support.newIdentity = AreaProtocol.A0x7.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+                    Case "a0x8" : support.newIdentity = AreaProtocol.A0x8.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.common.publicAddressRequester, requestHash)
 
                     Case "a1x0" : support.newIdentity = AreaProtocol.A1x0.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
                     Case "a1x1" : support.newIdentity = AreaProtocol.A1x1.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
@@ -734,9 +735,12 @@ Namespace AreaConsensus
                     Case "a1x6" : support.newIdentity = AreaProtocol.A1x6.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
                     Case "a1x7" : support.newIdentity = AreaProtocol.A1x7.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.common.publicAddressRequester, requestHash)
                     Case "a1x8" : support.newIdentity = AreaProtocol.A1x8.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
-                    Case "a1x9" : support.newIdentity = AreaProtocol.A1x9.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+                    Case "a1x9" : support.newIdentity = AreaProtocol.A1x9.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester)
+                    Case "a1x10" : support.newIdentity = AreaProtocol.A1x10.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
 
                     Case "a2x0" : support.newIdentity = AreaProtocol.A2x0.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+                    Case "a2x1" : support.newIdentity = AreaProtocol.A2x1.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
+                    Case "a2x2" : support.newIdentity = AreaProtocol.A2x2.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
 
                         ''' BOOKMARK: Add in this point 1
                 End Select
@@ -777,6 +781,7 @@ Namespace AreaConsensus
                     Case "a0x5" : support.proceed = AreaProtocol.A0x5.RecoveryState.fromRequest(request.data, support.newIdentity)
                     Case "a0x6" : support.proceed = AreaProtocol.A0x6.RecoveryState.fromRequest(request.data, support.newIdentity)
                     Case "a0x7" : support.proceed = AreaProtocol.A0x7.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a0x8" : support.proceed = AreaProtocol.A0x8.RecoveryState.fromRequest()
 
                     Case "a1x0" : support.proceed = AreaProtocol.A1x0.RecoveryState.fromRequest(request.data, support.newIdentity)
                     Case "a1x1" : support.proceed = AreaProtocol.A1x1.RecoveryState.fromRequest(request.data, support.newIdentity)
@@ -788,8 +793,11 @@ Namespace AreaConsensus
                     Case "a1x7" : support.proceed = AreaProtocol.A1x7.RecoveryState.fromRequest(request.data, support.newIdentity)
                     Case "a1x8" : support.proceed = AreaProtocol.A1x8.RecoveryState.fromRequest(request.data, support.newIdentity)
                     Case "a1x9" : support.proceed = AreaProtocol.A1x9.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a1x10" : support.proceed = AreaProtocol.A1x9.RecoveryState.fromRequest(request.data, support.newIdentity)
 
                     Case "a2x0" : support.proceed = AreaProtocol.A2x0.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a2x1" : support.proceed = AreaProtocol.A2x1.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a2x2" : support.proceed = AreaProtocol.A2x2.RecoveryState.fromRequest(request.data, support.newIdentity)
 
                         ''' BOOKMARK: Add in this point 2
                 End Select
@@ -883,6 +891,18 @@ Namespace AreaConsensus
                         AreaProtocol.A1x7.Manager.firstRequestCreateListMasterNode.minimalRequestClose = 0
 
                         support.proceed = True
+                    Case "a2x0"
+
+                        ''' BOOKMARK: Call command to lock fund
+                        ''' BOOKMARK: Call command to pay the fee to add a node
+                        support.proceed = True
+
+                    Case "a2x1"
+                        AreaProtocol.A2x1.Manager.firstRequestCreateListMasterNode.data = ""
+                        AreaProtocol.A2x1.Manager.firstRequestCreateListMasterNode.minimalRequestClose = 0
+
+                        ''' BOOKMARK: Call command to unlock fund
+                        ''' BOOKMARK: Call command to pay the fee to remove a node
 
                     Case Else : support.proceed = True
 

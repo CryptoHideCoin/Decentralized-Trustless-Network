@@ -11,13 +11,16 @@ Imports CHCProtocolLibrary.AreaCommon
 
 Namespace Controllers
 
-    ' GET: api/{GUID service}/network/generalConditionController
+    ' GET: api/{GUID service}/network/generalConditionsController
     <Route("NetworkApi")>
-    Public Class generalConditionController
+    Public Class generalConditionsController
 
         Inherits ApiController
 
-
+        ''' <summary>
+        ''' This method provide to return a general condition element
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetValue() As Models.Network.DocumentModel
             Dim result As New Models.Network.DocumentModel
             Dim privateKeyRAW As String
@@ -31,9 +34,11 @@ Namespace Controllers
                         privateKeyRAW = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
 
                         result.masterNodePublicAddress = AreaCommon.state.network.publicAddressIdentity
-                        result.integrityTransactionChain.coordinate = AreaCommon.state.runtimeState.activeNetwork.generalCondition.coordinate
-                        result.integrityTransactionChain.hash = AreaCommon.state.runtimeState.activeNetwork.generalCondition.hash
-                        result.value = AreaCommon.state.runtimeState.activeNetwork.generalCondition.value
+                        result.integrityTransactionChain.coordinate = AreaCommon.state.runTimeState.activeNetwork.generalConditions.coordinate
+                        result.integrityTransactionChain.hash = AreaCommon.state.runTimeState.activeNetwork.generalConditions.hash
+                        result.integrityTransactionChain.progressiveHash = AreaCommon.state.runTimeState.activeNetwork.generalConditions.progressiveHash
+                        result.integrityTransactionChain.registrationTimeStamp = AreaCommon.state.runTimeState.activeNetwork.generalConditions.registrationTimeStamp
+                        result.value = AreaCommon.state.runTimeState.activeNetwork.generalConditions.value
 
                         result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, result.getHash())
                     Else

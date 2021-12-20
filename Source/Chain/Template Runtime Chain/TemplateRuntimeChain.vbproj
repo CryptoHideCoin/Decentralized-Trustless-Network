@@ -59,7 +59,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.5.9.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
@@ -130,7 +130,9 @@
     <Compile Include="Classes\Protocol\A0\A0x5Engine.vb" />
     <Compile Include="Classes\Protocol\A0\A0x6Engine.vb" />
     <Compile Include="Classes\Protocol\A0\A0x7Engine.vb" />
+    <Compile Include="Classes\Protocol\A0\A0x8Engine.vb" />
     <Compile Include="Classes\Protocol\A1\A1x0Engine.vb" />
+    <Compile Include="Classes\Protocol\A1\A1X10Engine.vb" />
     <Compile Include="Classes\Protocol\A1\A1x1Engine.vb" />
     <Compile Include="Classes\Protocol\A1\A1x2Engine.vb" />
     <Compile Include="Classes\Protocol\A1\A1x3Engine.vb" />
@@ -142,6 +144,7 @@
     <Compile Include="Classes\Protocol\A1\A1X9Engine.vb" />
     <Compile Include="Classes\Protocol\A2\A2x0Engine.vb" />
     <Compile Include="Classes\Protocol\A2\A2x1Engine.vb" />
+    <Compile Include="Classes\Protocol\A2\A2x2Engine.vb" />
     <Compile Include="Classes\State\ChainStateEngine.vb" />
     <Compile Include="Classes\State\DAO\DAOChainMain.vb" />
     <Compile Include="Classes\State\PrimaryStateModel.vb" />

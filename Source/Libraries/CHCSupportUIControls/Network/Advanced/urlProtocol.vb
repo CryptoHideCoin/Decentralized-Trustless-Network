@@ -137,7 +137,7 @@ Public Class UrlProtocol
                 RaiseEvent RunCommand()
             Else
                 Try
-                    Dim handShakeEngine As New ProxyWS(Of CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse)
+                    Dim handShakeEngine As New ProxyWS(Of General.RemoteResponse)
 
                     If (protocolCombo.SelectedIndex = 0) Then
                         handShakeEngine.url = "http://"
@@ -162,7 +162,7 @@ Public Class UrlProtocol
                     End If
 
                 Catch ex As Exception
-                    MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("Test connection failed - " & ex.Message, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
 
                 RaiseEvent UnLockScreen()
