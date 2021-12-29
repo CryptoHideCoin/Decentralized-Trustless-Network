@@ -678,6 +678,10 @@ Public Class Main
                 Dim rt As DateTime = Now
 
                 data.primaryAsset.assetInformation.codeSymbol()
+                data.whitePaper.codeSymbol()
+                data.yellowPaper.codeSymbol()
+                data.generalCondition.codeSymbol()
+                data.privacyPolicy.codeSymbol()
 
                 remote.data = data
 

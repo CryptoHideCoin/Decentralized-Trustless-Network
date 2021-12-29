@@ -544,19 +544,19 @@ Namespace AreaFlow
         ''' <summary>
         ''' This method provide to get a request
         ''' </summary>
-        ''' <param name="requestHash"></param>
+        ''' <param name="hash"></param>
         ''' <returns></returns>
         Public Function getActiveRequest(ByVal hash As String) As RequestExtended
             Try
-                AreaCommon.log.track("RequestFlowEngine.getRequest", "Begin")
+                AreaCommon.log.track("RequestFlowEngine.getActiveRequest", "Begin")
 
                 If _Requests.ContainsKey(hash) Then
                     Return _Requests(hash)
                 End If
 
-                AreaCommon.log.track("RequestFlowEngine.getRequest", "Completed")
+                AreaCommon.log.track("RequestFlowEngine.getActiveRequest", "Completed")
             Catch ex As Exception
-                AreaCommon.log.track("RequestFlowEngine.getRequest", ex.Message, "fatal")
+                AreaCommon.log.track("RequestFlowEngine.getActiveRequest", ex.Message, "fatal")
             End Try
 
             Return New RequestExtended

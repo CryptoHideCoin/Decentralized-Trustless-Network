@@ -80,8 +80,6 @@ Namespace AreaCommon.Models.Chain
         Public Property numberBlockInVolume As Short = 365
         Public Property maxTimeOutNotRespondNode As String = "120sec"
         Public Property maxTimeOutNotEvaluateNode As String = "180sec"
-        Public Property initialCoinReleasePerBlock As Decimal = "200000"
-        Public Property ruleFutureRelease As String = ""
         Public Property minimalMaintainRequest As String = "3years"
         Public Property minimalMaintainConsensus As String = "2years"
         Public Property minimalMaintainBulletines As String = "1years"
@@ -99,8 +97,6 @@ Namespace AreaCommon.Models.Chain
             tmp += blockSizeFrequency
             tmp += numberBlockInVolume.ToString()
             tmp += maxTimeOutNotRespondNode
-            tmp += initialCoinReleasePerBlock.ToString()
-            tmp += ruleFutureRelease
             tmp += minimalMaintainRequest
             tmp += minimalMaintainConsensus
             tmp += minimalMaintainBulletines

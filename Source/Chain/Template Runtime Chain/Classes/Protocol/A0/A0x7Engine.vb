@@ -171,7 +171,7 @@ Namespace AreaProtocol
                         proceed = (request.common.netWorkReferement.CompareTo(AreaCommon.state.runtimeState.activeNetwork.hash) = 0)
                     End If
                     If proceed Then
-                        proceed = (request.common.chainReferement.CompareTo(AreaCommon.state.runTimeState.activeChain.hash) = 0)
+                        proceed = (request.common.chainReferement.CompareTo(AreaCommon.state.internalInformation.chainName) = 0)
                     End If
                     If proceed Then
                         proceed = (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
@@ -332,7 +332,7 @@ Namespace AreaProtocol
                     With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                         data.content = valueAsset
                         data.common.netWorkReferement = AreaCommon.state.runtimeState.activeNetwork.hash
-                        data.common.chainReferement = AreaCommon.state.runTimeState.activeChain.hash
+                        data.common.chainReferement = AreaCommon.state.internalInformation.chainName
                         data.common.type = "a0x7"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()

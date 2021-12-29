@@ -25,7 +25,7 @@ Partial Class Informations
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.releaseLabel = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.PixBay = New System.Windows.Forms.LinkLabel()
         Me.Close = New System.Windows.Forms.Button()
@@ -59,15 +59,15 @@ Partial Class Informations
         Me.Label3.TabIndex = 2
         Me.Label3.Text = "Release:"
         '
-        'Label4
+        'releaseLabel
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(200, 51)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(27, 13)
-        Me.Label4.TabIndex = 3
-        Me.Label4.Text = "0.1"
+        Me.releaseLabel.AutoSize = True
+        Me.releaseLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.releaseLabel.Location = New System.Drawing.Point(200, 51)
+        Me.releaseLabel.Name = "releaseLabel"
+        Me.releaseLabel.Size = New System.Drawing.Size(27, 13)
+        Me.releaseLabel.TabIndex = 3
+        Me.releaseLabel.Text = "0.1"
         '
         'Label5
         '
@@ -106,7 +106,7 @@ Partial Class Informations
         Me.Controls.Add(Me.Close)
         Me.Controls.Add(Me.PixBay)
         Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.releaseLabel)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
@@ -124,7 +124,7 @@ Partial Class Informations
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents Label4 As Label
+    Friend WithEvents releaseLabel As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents PixBay As LinkLabel
     Friend WithEvents Close As Button

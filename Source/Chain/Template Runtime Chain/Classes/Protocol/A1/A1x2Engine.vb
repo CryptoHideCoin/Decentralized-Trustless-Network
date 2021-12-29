@@ -214,7 +214,7 @@ Namespace AreaProtocol
                             proceed = (.common.chainReferement.length > 0)
                         End If
                         If proceed Then
-                            proceed = (.common.chainReferement.CompareTo(AreaCommon.state.runTimeState.activeChain.hash) = 0)
+                            proceed = (.common.chainReferement.CompareTo(AreaCommon.state.internalInformation.chainName) = 0)
                         End If
                         If proceed Then
                             proceed = (.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
@@ -254,7 +254,7 @@ Namespace AreaProtocol
 
                         Return True
                     End If
-                    If Not AreaCommon.state.runtimeState.chainByHash.ContainsKey(request.common.chainReferement) Then
+                    If Not AreaCommon.state.runTimeState.chainByName.ContainsKey(request.common.chainReferement) Then
                         value.evaluations.rejectedNote = "Chain not exist"
                         value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
 
@@ -358,7 +358,6 @@ Namespace AreaProtocol
             ''' <summary>
             ''' This method provide to create a initial procedure A1x1
             ''' </summary>
-            ''' <param name="chainReferementParameter"></param>
             ''' <param name="setCode"></param>
             ''' <param name="protocol"></param>
             ''' <param name="documentation"></param>
@@ -378,7 +377,7 @@ Namespace AreaProtocol
                         data.content.protocol = protocol
                         data.content.documentation = documentation
                         data.common.netWorkReferement = AreaCommon.state.runTimeState.activeNetwork.hash
-                        data.common.chainReferement = AreaCommon.state.runTimeState.activeChain.hash
+                        data.common.chainReferement = AreaCommon.state.internalInformation.chainName
                         data.common.type = "a1x2"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = AreaCommon.state.runTimeState.activeNetwork.networkCreationDate

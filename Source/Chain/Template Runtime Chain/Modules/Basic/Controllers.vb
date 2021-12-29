@@ -41,6 +41,7 @@ Namespace AreaCommon
                     httpConfig.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & settings.data.serviceId & "/service/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="QoSTicketApi", routeTemplate:="api/" & settings.data.serviceId & "/qos/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="SystemApi", routeTemplate:="api/v1.0/System/{controller}")
+                    httpConfig.Routes.MapHttpRoute(name:="ChainApi", routeTemplate:="api/" & settings.data.serviceId & "/chain/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="NetworkApi", routeTemplate:="api/" & settings.data.serviceId & "/network/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="RequestApi", routeTemplate:="api/" & settings.data.serviceId & "/request/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="NotifyRequestApi", routeTemplate:="api/" & settings.data.serviceId & "/notify/{controller}")

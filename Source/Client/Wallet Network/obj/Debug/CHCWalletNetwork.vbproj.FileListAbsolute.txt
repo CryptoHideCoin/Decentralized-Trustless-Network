@@ -56,3 +56,12 @@ E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.exe
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.AssetInformation.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.TransactionChainInformation.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.RefundPlanInformation.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.Chains.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.ChainList.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.ChainDetail.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.MainChain.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.LastBlockChain.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.ParameterChain.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.ProtocolChain.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.ProtocolsChain.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.PriceListChain.resources

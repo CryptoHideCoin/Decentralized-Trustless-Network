@@ -194,11 +194,9 @@ Public Class GenericInformation
                 progressiveHash.Text = remote.data.integrityTransactionChain.progressiveHash
                 responseTime.Text = Int(CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - CDec(startTime)) & " ms."
             End If
-
             If proceed And onlySymbol Then
                 _Symbol = remote.data.value.assetInformation.symbol
             End If
-
             If Not proceed Then
                 MessageBox.Show("Error during connection", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
@@ -430,7 +428,4 @@ Public Class GenericInformation
         End Try
     End Sub
 
-    Private Sub GenericInformation_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
 End Class

@@ -69,6 +69,178 @@ CHCWalletNetwork
  <param name="data"></param>
  <returns></returns>
 </member>
+<member name="M:CHCWalletNetwork.Chains.buildURL(System.String)">
+ <summary>
+ This method provide to build a URL
+ </summary>
+ <param name="api"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.Chains.readNumberOfChain">
+ <summary>
+ This method provide to read a number of chain
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.Chains.readChainList(System.String)">
+ <summary>
+ This method provide to read and print a chain list information
+ </summary>
+</member>
+<member name="M:CHCWalletNetwork.Chains.loadChainProtocol">
+ <summary>
+ This method provide to load a chain protocol
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.Chains.activeChain(System.String)">
+ <summary>
+ This method provide to return if active chain or not
+ </summary>
+ <param name="chainName"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.Chains.readChainLastBlock">
+ <summary>
+ This method provide to read chain last block data
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCWalletNetwork.Chains.type">
+ <summary>
+ This property get / let the type of interrogation
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCWalletNetwork.ChainDetail.ChainSectionType">
+ <summary>
+ This enumeration contain the type of chain
+ </summary>
+</member>
+<member name="P:CHCWalletNetwork.ChainDetail.type">
+ <summary>
+ This property set/get the type of chain section
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainDetail.buildURL(System.String)">
+ <summary>
+ This method provide to build a URL
+ </summary>
+ <param name="api"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainDetail.loadDataIntegration(CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction,System.Double)">
+ <summary>
+ This method provide to load a data integration into UI
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainDetail.loadData(System.String)">
+ <summary>
+ This method provide to load a main data of a chain
+ </summary>
+ <param name="name"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainDetail.loadChainLastBlock(CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainDataLastBlockModel@,System.Boolean)">
+ <summary>
+ This method provide to show a chain last block in the field
+ </summary>
+ <param name="data"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainDetail.loadChainParameter(System.String)">
+ <summary>
+ This method provide to load a chain parameter into field
+ </summary>
+ <param name="name"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainDetail.loadSetProtocol(CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.SingleSetProtocol@)">
+ <summary>
+ This method provide to load a set protocol
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainDetail.loadPriceList(System.String)">
+ <summary>
+ This method provide to load a price list
+ </summary>
+ <param name="chainName"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainDetail.loadPrivacyContent(System.String)">
+ <summary>
+ This method provide to load a Privacy Content
+ </summary>
+ <param name="chainName"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainDetail.loadTermsAndConditions(System.String)">
+ <summary>
+ This method provide to load Terms and Conditions
+ </summary>
+ <param name="chainName"></param>
+ <returns></returns>
+</member>
+<member name="P:CHCWalletNetwork.ChainList.numChains">
+ <summary>
+ This property manage the num chains of list
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainList.resetGrid">
+ <summary>
+ This method provide to reset a grid
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainList.loadDataIntoGrid(CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData)">
+ <summary>
+ This method provide to load a data into grid
+ </summary>
+ <param name="data"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.PriceListChain.loadSingleRowDataIntoGrid(CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableModel)">
+ <summary>
+ This method provide to load a data into grid
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.PriceListChain.resetGrid">
+ <summary>
+ This method provide to reset a grid
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.PriceListChain.loadEntireData(CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel)">
+ <summary>
+ This method provide to load all data into scenario
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ProtocolsChain.loadSingleRowDataIntoGrid(CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData)">
+ <summary>
+ This method provide to load a data into grid
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ProtocolsChain.resetGrid">
+ <summary>
+ This method provide to reset a grid
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ProtocolsChain.loadDataIntoGrid">
+ <summary>
+ This method provide to load data into grid
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:CHCWalletNetwork.ConfigurationManager.SingleConfiguration">
  <summary>
  This class contain a tuple of a single configuration

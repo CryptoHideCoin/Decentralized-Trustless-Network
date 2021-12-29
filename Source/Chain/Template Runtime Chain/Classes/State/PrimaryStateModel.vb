@@ -87,16 +87,6 @@ Namespace AreaState.PrimaryStateModel
     End Class
 
     ''' <summary>
-    ''' This class contain the element of a protocol set
-    ''' </summary>
-    Public Class ProtocolSetStructure
-
-        Public Property data As New CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData
-        Public Property integrity As New ItemIdentityStructure
-
-    End Class
-
-    ''' <summary>
     ''' This class contain the element of node list chain
     ''' </summary>
     Public Class NodeListChainStructure

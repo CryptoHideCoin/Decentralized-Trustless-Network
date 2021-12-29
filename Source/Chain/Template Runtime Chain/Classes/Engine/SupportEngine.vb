@@ -58,6 +58,8 @@ Namespace AreaCommon.Engine
         ''' <returns></returns>
         Public Function checkLastTime() As Boolean
             Try
+                AreaCommon.log.track("SupportEngine.checkLastTime", "Begin")
+
                 Dim currentTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
                 If (_LastActionOccurs = 0) Then

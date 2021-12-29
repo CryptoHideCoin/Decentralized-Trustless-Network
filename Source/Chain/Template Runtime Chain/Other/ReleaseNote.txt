@@ -20,6 +20,8 @@ Release Note
 0.14.2  - 09.12.2021 - Bugfix updateSetProtocol
 0.15.0  - 10.12.2021 - Implement A0x8 command
 0.15.1  - 20.12.2021 - Revision controller response
+0.16.0  - 21.12.2021 - Implement Chain Controller's
+0.17.0  - 30.12.2021 - Implement Query Controller's
 
 TO DO
 =====

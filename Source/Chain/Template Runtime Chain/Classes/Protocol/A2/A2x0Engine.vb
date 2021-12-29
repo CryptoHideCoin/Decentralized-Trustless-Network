@@ -434,7 +434,7 @@ Namespace AreaProtocol
                         proceed = (request.common.chainReferement.Length > 0)
                     End If
                     If proceed Then
-                        proceed = request.common.chainReferement.CompareTo(AreaCommon.state.runTimeState.activeChain.hash) = 0
+                        proceed = (request.common.chainReferement.CompareTo(AreaCommon.state.internalInformation.chainName) = 0)
                     End If
                     If proceed Then
                         proceed = (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
@@ -522,7 +522,7 @@ Namespace AreaProtocol
 
                         Return True
                     End If
-                    If Not AreaCommon.state.runTimeState.chainByHash.ContainsKey(request.common.chainReferement) Then
+                    If (AreaCommon.state.internalInformation.chainName.CompareTo(request.common.chainReferement) <> 0) Then
                         value.evaluations.rejectedNote = "Chain not exist"
                         value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
 
@@ -673,7 +673,7 @@ Namespace AreaProtocol
                         data.content.chainName = "Primary"
 
                         data.common.netWorkReferement = AreaCommon.state.runTimeState.activeNetwork.hash
-                        data.common.chainReferement = AreaCommon.state.runTimeState.activeChain.hash
+                        data.common.chainReferement = data.content.chainName
                         data.common.type = "a2x0"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()

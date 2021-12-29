@@ -403,7 +403,6 @@ Namespace AreaProtocol
 
                         AreaCommon.state.runTimeState.chainByName.Remove("Genesis")
                         AreaCommon.state.runTimeState.chainByID.Remove(0)
-                        AreaCommon.state.runTimeState.chainByHash.Remove("000-000")
                     End If
 
                     AreaCommon.log.track("A1x0Manager.createInternalRequest", "Completed")

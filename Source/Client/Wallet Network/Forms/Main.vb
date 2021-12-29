@@ -6,6 +6,8 @@ Public Class Main
 
     Private Sub ConfigurationManagerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConfigurationManagerToolStripMenuItem.Click
         Try
+            CurrentChainToolStripMenuItem.Enabled = False
+
             ConfigurationManager.ShowDialog()
         Catch ex As Exception
             MessageBox.Show("Error", "Problem with load a configuration manager", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -20,6 +22,7 @@ Public Class Main
     Private Sub hideAllPanels()
         mainBackGround.Visible = False
         dataNetworkContainer.Visible = False
+        dataChainContainer.Visible = False
     End Sub
 
     Private Function showMainBackground() As Boolean
@@ -40,6 +43,7 @@ Public Class Main
     Private Function showDataNetwork(ByVal elementType As GenericInformation.ManageType) As Boolean
         Try
             hideAllPanels()
+            CurrentChainToolStripMenuItem.Enabled = False
 
             dataNetworkContainer.Visible = True
 
@@ -47,6 +51,59 @@ Public Class Main
             dataNetworkContainer.Dock = DockStyle.Fill
 
             dataNetworkContainer.type = elementType
+
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    Private Function showChainPanel(ByVal elementType As Chains.ManageType) As Boolean
+        Try
+            hideAllPanels()
+
+            dataChainContainer.Visible = True
+
+            dataChainContainer.Location = New Point(0, 0)
+            dataChainContainer.Dock = DockStyle.Fill
+
+            dataChainContainer.type = elementType
+
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    Private Function showChainContainer() As Boolean
+        Try
+            hideAllPanels()
+            ExplorerToolStripMenuItem.HideDropDown()
+            CurrentChainToolStripMenuItem.Enabled = False
+
+            dataChainContainer.Visible = True
+
+            dataChainContainer.Location = New Point(0, 0)
+            dataChainContainer.Dock = DockStyle.Fill
+
+            dataChainContainer.type = Chains.ManageType.list
+
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    Private Function showChainLastBlock() As Boolean
+        Try
+            hideAllPanels()
+
+            dataChainContainer.Visible = True
+
+            dataChainContainer.Location = New Point(0, 0)
+            dataChainContainer.Dock = DockStyle.Fill
+
+            dataChainContainer.type = Chains.ManageType.lastBlock
 
             Return True
         Catch ex As Exception
@@ -95,6 +152,8 @@ Public Class Main
         ConfigurationManager.ShowDialog()
 
         dataNetworkContainer.Visible = False
+        CurrentChainToolStripMenuItem.Enabled = False
+
         showMainBackground()
     End Sub
 
@@ -111,6 +170,51 @@ Public Class Main
     End Sub
 
     Private Sub ChainToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChainToolStripMenuItem.Click
+        showChainContainer()
+    End Sub
+
+    Private Sub dataChainContainer_Load(sender As Object, e As EventArgs) Handles dataChainContainer.Load
 
     End Sub
+
+    Private Sub dataChainContainer_OpenConfiguration() Handles dataChainContainer.OpenConfiguration
+        ConfigurationManager.ShowDialog()
+
+        dataChainContainer.Visible = False
+        showMainBackground()
+        CurrentChainToolStripMenuItem.Enabled = False
+    End Sub
+
+    Private Sub dataChainContainer_OpenChainDetails() Handles dataChainContainer.OpenChainDetails
+        CurrentChainToolStripMenuItem.Enabled = True
+    End Sub
+
+    Private Sub LastBlockInformationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LastBlockInformationToolStripMenuItem.Click
+        showChainPanel(Chains.ManageType.lastBlock)
+    End Sub
+
+    Private Sub CurrentChainToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CurrentChainToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub chainParametersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles chainParametersToolStripMenuItem.Click
+        showChainPanel(Chains.ManageType.parameters)
+    End Sub
+
+    Private Sub SetProtocolsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SetProtocolsToolStripMenuItem.Click
+        showChainPanel(Chains.ManageType.setProtocol)
+    End Sub
+
+    Private Sub PriceListToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PriceListToolStripMenuItem.Click
+        showChainPanel(Chains.ManageType.priceList)
+    End Sub
+
+    Private Sub privacyPolicyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles privacyPolicyToolStripMenuItem.Click
+        showChainPanel(Chains.ManageType.privacyPolicy)
+    End Sub
+
+    Private Sub TermsAndConditionsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TermsAndConditionsToolStripMenuItem.Click
+        showChainPanel(Chains.ManageType.termsAndConditions)
+    End Sub
+
 End Class

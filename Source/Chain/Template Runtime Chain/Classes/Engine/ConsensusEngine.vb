@@ -294,6 +294,7 @@ Namespace AreaConsensus
                 Dim request As AreaFlow.RequestExtended
 
                 AreaCommon.log.track("ConsensusEngine.useNewProposalForApproval", "Begin")
+                AreaCommon.log.track("ConsensusEngine.useNewProposalForApproval", "Model = " & registration.model & " - Registration = " & registration.hash)
 
                 request = AreaCommon.flow.getActiveRequest(registration.requestHash)
 

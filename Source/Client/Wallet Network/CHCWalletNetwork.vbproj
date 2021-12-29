@@ -55,7 +55,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.7.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
@@ -114,10 +114,10 @@
     <Compile Include="Controls\Network\NetworkInformation.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Network\ContentInformation.Designer.vb">
+    <Compile Include="Controls\ContentInformation.Designer.vb">
       <DependentUpon>ContentInformation.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Network\ContentInformation.vb">
+    <Compile Include="Controls\ContentInformation.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\Network\RefundPlanInformation.Designer.vb">
@@ -130,6 +130,60 @@
       <DependentUpon>TransactionChainInformation.vb</DependentUpon>
     </Compile>
     <Compile Include="Controls\Network\TransactionChainInformation.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Chains.Designer.vb">
+      <DependentUpon>Chains.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Chains.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Sidechains\ChainDetail.Designer.vb">
+      <DependentUpon>ChainDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Sidechains\ChainDetail.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Sidechains\ChainList.Designer.vb">
+      <DependentUpon>ChainList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Sidechains\ChainList.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Sidechains\LastBlockChain.Designer.vb">
+      <DependentUpon>LastBlockChain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Sidechains\LastBlockChain.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Sidechains\MainChain.Designer.vb">
+      <DependentUpon>MainChain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Sidechains\MainChain.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Sidechains\ParameterChain.Designer.vb">
+      <DependentUpon>ParameterChain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Sidechains\ParameterChain.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Sidechains\PriceListChain.Designer.vb">
+      <DependentUpon>PriceListChain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Sidechains\PriceListChain.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Sidechains\ProtocolChain.Designer.vb">
+      <DependentUpon>ProtocolChain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Sidechains\ProtocolChain.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Sidechains\ProtocolsChain.Designer.vb">
+      <DependentUpon>ProtocolsChain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Sidechains\ProtocolsChain.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\ConfigurationManager.Designer.vb">
@@ -182,7 +236,7 @@
     <EmbeddedResource Include="Controls\Network\NetworkInformation.resx">
       <DependentUpon>NetworkInformation.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Network\ContentInformation.resx">
+    <EmbeddedResource Include="Controls\ContentInformation.resx">
       <DependentUpon>ContentInformation.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Network\RefundPlanInformation.resx">
@@ -190,6 +244,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Network\TransactionChainInformation.resx">
       <DependentUpon>TransactionChainInformation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Chains.resx">
+      <DependentUpon>Chains.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Sidechains\ChainDetail.resx">
+      <DependentUpon>ChainDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Sidechains\ChainList.resx">
+      <DependentUpon>ChainList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Sidechains\LastBlockChain.resx">
+      <DependentUpon>LastBlockChain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Sidechains\MainChain.resx">
+      <DependentUpon>MainChain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Sidechains\ParameterChain.resx">
+      <DependentUpon>ParameterChain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Sidechains\PriceListChain.resx">
+      <DependentUpon>PriceListChain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Sidechains\ProtocolChain.resx">
+      <DependentUpon>ProtocolChain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Sidechains\ProtocolsChain.resx">
+      <DependentUpon>ProtocolsChain.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConfigurationManager.resx">
       <DependentUpon>ConfigurationManager.vb</DependentUpon>

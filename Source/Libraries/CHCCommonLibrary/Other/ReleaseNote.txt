@@ -1,6 +1,8 @@
 Release Note
 ============
 
+1.12.4  - 30.12.2021 - Format GMT string
+1.12.3  - 22.12.2021 - decode symbol
 1.12.2  - 15.10.2021 - Supporto Newton.Json 6
 1.12.1  - 09.10.2021 - Add an Error type in track log and manage timeStamp with universal datetime
 1.12.0  - 02.10.2021 - Refactor all Library

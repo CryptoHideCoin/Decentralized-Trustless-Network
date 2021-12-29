@@ -36,6 +36,16 @@ Namespace Controllers
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If proceed Then
+                    If IsNothing(value) Then
+                        AreaCommon.log.track("BuildNetworkController.putValue", "Request nothing", "fatal")
+
+                        result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
+                        result.errorDescription = "parameter nothing"
+
+                        proceed = False
+                    End If
+                End If
+                If proceed Then
                     If (AreaCommon.state.service <> Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
                         result.responseStatus = General.RemoteResponse.EnumResponseStatus.systemOffline
 

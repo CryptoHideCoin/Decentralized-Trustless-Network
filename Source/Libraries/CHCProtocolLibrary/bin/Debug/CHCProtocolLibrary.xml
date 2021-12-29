@@ -556,6 +556,16 @@ CHCProtocolLibrary
  This class contain the generic class relative a document
  </summary>
 </member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Document.DocumentModel.codeSymbol">
+ <summary>
+ This method provide to code symbol to trasmit with a webservice
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Document.DocumentModel.deCodeSymbol">
+ <summary>
+ This method provide to decoce symbol when receive a data with a webservice
+ </summary>
+</member>
 <member name="M:CHCProtocolLibrary.AreaCommon.Models.Document.DocumentModel.ToString">
  <summary>
  This method provide to create a string summary of the member of a class
@@ -639,6 +649,198 @@ CHCProtocolLibrary
  </summary>
 </member>
 <member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainCountModel">
+ <summary>
+ This class contain the chain count information
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainCountModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainCountModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainDataModel">
+ <summary>
+ This class contain the chain data information
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainDataModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainDataModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainDataLastBlockModel">
+ <summary>
+ This class contain the chain data last block
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainDataLastBlockModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainDataLastBlockModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainDataPageModel">
+ <summary>
+ This class contain the element of data page model
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainDataPageModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainListDataPageModel">
+ <summary>
+ This class contain the element of list data page
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainListDataPageModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainListDataPageModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainParameterDataModel">
+ <summary>
+ This class contain the element of parameter of a chain
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainParameterDataModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainParameterDataModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.SingleSetProtocol">
+ <summary>
+ This class contain the element of a protocol set
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.SingleSetProtocol.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainProtocolDataModel">
+ <summary>
+ This class contain the element of protocol data of a chain
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainProtocolDataModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainProtocolDataModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainPriceListDataModel">
+ <summary>
+ This class contain the element of a price list of a chain
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainPriceListDataModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainPriceListDataModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainPrivacyPolicyModel">
+ <summary>
+ This class contain the element of a Policy Privacy of a chain
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainPrivacyPolicyModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainPrivacyPolicyModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainTermsAndConditionsModel">
+ <summary>
+ This class contain the element of a Terms and Conditions of a chain
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainTermsAndConditionsModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainTermsAndConditionsModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainActiveModel">
+ <summary>
+ This class contain the element of an Active Chain
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainActiveModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainActiveModel.getHash">
  <summary>
  This method provide to get hash value from a string of a class
  </summary>

@@ -10,6 +10,7 @@ Option Explicit On
 
 
 Imports CHCCommonLibrary.AreaEngine.Encryption
+Imports CHCCommonLibrary.AreaEngine.Base.CHCStringExtensions
 
 
 
@@ -21,6 +22,21 @@ Namespace AreaCommon.Models.Document
     Public Class DocumentModel
 
         Public Property content As String = ""
+
+
+        ''' <summary>
+        ''' This method provide to code symbol to trasmit with a webservice
+        ''' </summary>
+        <DebuggerHiddenAttribute()> Public Sub codeSymbol()
+            content.codeSymbol()
+        End Sub
+
+        ''' <summary>
+        ''' This method provide to decoce symbol when receive a data with a webservice
+        ''' </summary>
+        <DebuggerHiddenAttribute()> Public Sub deCodeSymbol()
+            content.decodeSymbol()
+        End Sub
 
 
         ''' <summary>

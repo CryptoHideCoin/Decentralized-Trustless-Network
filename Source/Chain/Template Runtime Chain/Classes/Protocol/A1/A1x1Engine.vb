@@ -46,8 +46,6 @@ Namespace AreaProtocol
             result.numberBlockInVolume = MyBase.numberBlockInVolume
             result.maxTimeOutNotEvaluateNode = MyBase.maxTimeOutNotEvaluateNode
             result.maxTimeOutNotRespondNode = MyBase.maxTimeOutNotRespondNode
-            result.initialCoinReleasePerBlock = MyBase.initialCoinReleasePerBlock
-            result.ruleFutureRelease = MyBase.ruleFutureRelease
             result.minimalMaintainBulletines = MyBase.minimalMaintainBulletines
             result.minimalMaintainConsensus = MyBase.minimalMaintainConsensus
             result.minimalMaintainInternalRegistry = MyBase.minimalMaintainInternalRegistry
@@ -257,14 +255,8 @@ Namespace AreaProtocol
 
                     AreaCommon.log.track("FormalCheck.evaluate", "Begin")
 
-                    If Not AreaCommon.state.runTimeState.chainByHash.ContainsKey(request.common.chainReferement) Then
+                    If Not AreaCommon.state.runTimeState.chainByName.ContainsKey(request.common.chainReferement) Then
                         value.evaluations.rejectedNote = "Chain not exist"
-                        value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
-
-                        Return True
-                    End If
-                    If (AreaCommon.state.runTimeState.chainByHash(request.common.chainReferement).parameters.coordinate.Length > 0) Then
-                        value.evaluations.rejectedNote = "Parameter exist"
                         value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
 
                         Return True

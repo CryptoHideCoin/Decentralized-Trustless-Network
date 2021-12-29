@@ -1208,7 +1208,7 @@ CHCPrimaryRuntimeService
  <summary>
  This method provide to get a request
  </summary>
- <param name="requestHash"></param>
+ <param name="hash"></param>
  <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaFlow.FlowEngine.getRequest(System.String)">
@@ -2892,7 +2892,6 @@ CHCPrimaryRuntimeService
  <summary>
  This method provide to create a initial procedure A1x1
  </summary>
- <param name="chainReferementParameter"></param>
  <param name="setCode"></param>
  <param name="protocol"></param>
  <param name="documentation"></param>
@@ -4157,6 +4156,18 @@ CHCPrimaryRuntimeService
  This enumeration contain all field (with additional information) of data chain
  </summary>
 </member>
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.DataChain.extractMinimalData">
+ <summary>
+ This method provide to extract the minimal data from the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.DataChain.isActive">
+ <summary>
+ This method provide to check if a chain is active or not
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.addNetworkProperty(CHCPrimaryRuntimeService.AreaCommon.DAO.DBNetwork.MainPropertyID,System.String,CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction@,System.String,System.Boolean)">
  <summary>
  This method provide to add a network property
@@ -4189,7 +4200,7 @@ CHCPrimaryRuntimeService
  This method provide to update a new protocol
  </summary>
  <param name="chainReferement"></param>
- <param name="hashContent"></param>
+ <param name="value"></param>
  <param name="transactionChainRecord"></param>
  <returns></returns>
 </member>
@@ -4265,6 +4276,13 @@ CHCPrimaryRuntimeService
  </summary>
  <returns></returns>
 </member>
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.getDataPageChainByNumber(System.Int32)">
+ <summary>
+ This method provide to get a data page from a page number
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
 <member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.manageAbstained(System.String,System.String,System.String)">
  <summary>
  This method provide to manage a node abstained
@@ -4333,11 +4351,6 @@ CHCPrimaryRuntimeService
  This class contain the Price List elements
  </summary>
 </member>
-<member name="T:CHCPrimaryRuntimeService.AreaState.PrimaryStateModel.ProtocolSetStructure">
- <summary>
- This class contain the element of a protocol set
- </summary>
-</member>
 <member name="T:CHCPrimaryRuntimeService.AreaState.PrimaryStateModel.NodeListChainStructure">
  <summary>
  This class contain the element of node list chain
@@ -4370,6 +4383,66 @@ CHCPrimaryRuntimeService
  This method provide to get a service state position
  </summary>
  <param name="signature"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainActiveController.GetValue(System.String)">
+ <summary>
+ This method provide to get an Active Chain
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainCountController.GetValue">
+ <summary>
+ This method provide to get a value of Primary Asset
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainDataController.GetValue(System.String)">
+ <summary>
+ This method provide to get a main data of chain
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainDataLastBlockController.GetValue(System.String)">
+ <summary>
+ This method provide to get a data last block
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainPageDataController.GetValue(System.Int32)">
+ <summary>
+ This method provide to get a page of a chain
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainParameterController.GetValue(System.String)">
+ <summary>
+ This method provide to get a parameter chain
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainPriceListController.GetValue(System.String)">
+ <summary>
+ This method provide to get a price list of a chain
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainPrivacyPolicyController.GetValue(System.String)">
+ <summary>
+ This method provide to get a policy privacy chain
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainProtocolController.GetValue(System.String)">
+ <summary>
+ This method provide to get a protocol chain
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainTermsAndConditionsController.GetValue(System.String)">
+ <summary>
+ This method provide to get a Terms and Conditions chain
+ </summary>
  <returns></returns>
 </member>
 <member name="M:CHCPrimaryRuntimeService.Controllers.primaryAssetController.GetValue">

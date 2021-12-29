@@ -54,13 +54,13 @@ Namespace AreaState
 
             Public Property identity As Integer = 0
 
-            Public Property name As New PrimaryStateModel.ItemIdentityStructure
+            Public Property [name] As New PrimaryStateModel.ItemIdentityStructure
             Public Property isPrivate As New PrimaryStateModel.ItemIdentityStructure
             Public Property description As New PrimaryStateModel.ItemIdentityStructure
 
             Public Property parameters As New PrimaryStateModel.ParameterIdentityStructure
 
-            Public Property protocolSets As New List(Of PrimaryStateModel.ProtocolSetStructure)
+            Public Property protocolSets As New List(Of CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.SingleSetProtocol)
             Public Property priceList As New PrimaryStateModel.ChainPriceListStructure
             Public Property tokens As New List(Of PrimaryStateModel.AssetStructure)
             Public Property privacyPolicy As New PrimaryStateModel.ItemIdentityStructure
@@ -83,17 +83,49 @@ Namespace AreaState
                 End Get
             End Property
 
+            ''' <summary>
+            ''' This method provide to extract the minimal data from the object
+            ''' </summary>
+            ''' <returns></returns>
+            Public Function extractMinimalData() As CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData
+                Dim item As New CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData
+                Try
+                    item.name = name.value
+                    item.privateChain = (isPrivate.value = "1")
+                    item.description = description.value
+                Catch ex As Exception
+                End Try
+
+                Return item
+            End Function
+
+            ''' <summary>
+            ''' This method provide to check if a chain is active or not
+            ''' </summary>
+            ''' <returns></returns>
+            Public Function isActive() As Boolean
+                Try
+                    If (serviceNodeList.Count = 0) Then
+                        Return False
+                    Else
+                        Return (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - lastCloseBlock.value) < (24 * 60 * 60 * 1000)
+                    End If
+                Catch ex As Exception
+                    Return False
+                End Try
+            End Function
+
         End Class
 
-        Private _DBNetwork As New AreaCommon.DAO.DBNetwork
-        Private _DBChain As New AreaCommon.DAO.DBChain
+        Private Property _DBNetwork As New AreaCommon.DAO.DBNetwork
+        Private Property _DBChain As New AreaCommon.DAO.DBChain
+        Private Property chains As New List(Of DataChain)
 
 
         Public Property activeNetwork As New PrimaryStateModel.DataNetwork
         Public Property activeChain As New DataChain
 
         Public Property chainByName As New Dictionary(Of String, DataChain)
-        Public Property chainByHash As New Dictionary(Of String, DataChain)
         Public Property chainByID As New Dictionary(Of Integer, DataChain)
 
 
@@ -213,22 +245,26 @@ Namespace AreaState
                     newValue.name.value = name
                     newValue.name.coordinate = transactionChainRecord.coordinate
                     newValue.name.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                    newValue.name.hash = transactionChainRecord.hash
                     newValue.name.progressiveHash = transactionChainRecord.progressiveHash
 
                     newValue.isPrivate.value = privateChain
                     newValue.isPrivate.coordinate = transactionChainRecord.coordinate
                     newValue.isPrivate.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                    newValue.isPrivate.hash = transactionChainRecord.hash
                     newValue.isPrivate.progressiveHash = transactionChainRecord.progressiveHash
 
                     newValue.description.value = description
                     newValue.description.coordinate = transactionChainRecord.coordinate
                     newValue.description.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+                    newValue.description.hash = transactionChainRecord.hash
                     newValue.description.progressiveHash = transactionChainRecord.progressiveHash
 
                     newValue.lastCloseBlock.value = transactionChainRecord.registrationTimeStamp.ToString()
                     newValue.lastCloseBlock.coordinate = transactionChainRecord.coordinate
                     newValue.lastCloseBlock.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
                     newValue.lastCloseBlock.progressiveHash = transactionChainRecord.progressiveHash
+                    newValue.lastCloseBlock.hash = transactionChainRecord.hash
 
                     If (newValue.name.value.CompareTo(AreaCommon.state.internalInformation.chainName) = 0) Then
                         AreaCommon.log.track("ChainStateEngine.addNewChain", "Set activeChain")
@@ -236,9 +272,9 @@ Namespace AreaState
                         activeChain = newValue
                     End If
 
-                    chainByHash.Add(transactionChainRecord.progressiveHash, newValue)
                     chainByName.Add(name, newValue)
                     chainByID.Add(id, newValue)
+                    chains.Add(newValue)
                 End If
 
                 AreaCommon.log.track("ChainStateEngine.addNewChain", "Completed")
@@ -259,22 +295,22 @@ Namespace AreaState
             Try
                 Dim newValue As New DataChain
 
-                AreaCommon.log.track("ChainStateEngine.addNewChain", "Begin")
+                AreaCommon.log.track("ChainStateEngine.addGenesisChain", "Begin")
 
                 newValue.description.value = "Genesis"
                 newValue.identity = 0
                 newValue.isPrivate.value = True
                 newValue.name.value = "Genesis"
 
-                chainByHash.Add("000-000", newValue)
                 chainByName.Add("Genesis", newValue)
                 chainByID.Add(0, newValue)
+                chains.Add(newValue)
 
-                AreaCommon.log.track("ChainStateEngine.addNewChain", "Completed")
+                AreaCommon.log.track("ChainStateEngine.addGenesisChain", "Completed")
 
                 Return True
             Catch ex As Exception
-                AreaCommon.log.track("ChainStateEngine.addNewChain", ex.Message, "fatal")
+                AreaCommon.log.track("ChainStateEngine.addGenesisChain", ex.Message, "fatal")
 
                 Return False
             End Try
@@ -284,7 +320,7 @@ Namespace AreaState
         ''' This method provide to update a new protocol
         ''' </summary>
         ''' <param name="chainReferement"></param>
-        ''' <param name="hashContent"></param>
+        ''' <param name="value"></param>
         ''' <param name="transactionChainRecord"></param>
         ''' <returns></returns>
         Public Function updateNewProtocol(ByVal chainReferement As String, ByRef value As CHCProtocolLibrary.AreaCommon.Models.Chain.ProtocolMinimalData, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
@@ -292,9 +328,9 @@ Namespace AreaState
                 AreaCommon.log.track("ChainStateEngine.updateNewProtocol", "Begin")
 
                 Dim chain As DataChain
-                Dim protocolData As New PrimaryStateModel.ProtocolSetStructure
+                Dim protocolData As New CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.SingleSetProtocol
 
-                chain = chainByHash(chainReferement)
+                chain = chainByName(chainReferement)
 
                 If _DBChain.updateProtocol(chain.identity, value, transactionChainRecord) Then
                     For Each item In chain.protocolSets
@@ -310,6 +346,7 @@ Namespace AreaState
                     protocolData.data.documentation = value.documentation
 
                     protocolData.integrity.coordinate = transactionChainRecord.coordinate
+                    protocolData.integrity.hash = transactionChainRecord.hash
                     protocolData.integrity.progressiveHash = transactionChainRecord.progressiveHash
                     protocolData.integrity.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
 
@@ -340,7 +377,7 @@ Namespace AreaState
 
                 AreaCommon.log.track("ChainStateEngine.addNewToken", "Begin")
 
-                chain = chainByHash(chainReferement)
+                chain = chainByName(chainReferement)
 
                 If _DBChain.addNewToken(chain.identity, value, transactionChainRecord, hashContent) Then
                     For Each token In chain.tokens
@@ -361,6 +398,8 @@ Namespace AreaState
 
                     Return True
                 End If
+
+                Return False
             Catch ex As Exception
                 AreaCommon.log.track("ChainStateEngine.addNewToken", ex.Message, "fatal")
 
@@ -389,7 +428,7 @@ Namespace AreaState
                     proceed = _DBChain.updateDetail(chainReferement, AreaCommon.DAO.DBChain.DetailPropertyID.priceList, value.getHash(), transactionChainRecord)
                 End If
                 If proceed Then
-                    chain = chainByHash(chainReferement)
+                    chain = chainByName(chainReferement)
 
                     chain.priceList.coordinate = transactionChainRecord.coordinate
                     chain.priceList.hash = transactionChainRecord.hash
@@ -428,7 +467,7 @@ Namespace AreaState
                 Dim dataObject As Object
 
                 If proceed Then
-                    chain = chainByHash(chainReferement)
+                    chain = chainByName(chainReferement)
 
                     proceed = _DBChain.updateDetail(chain.identity, propertyID, hashContent, transactionChainRecord)
                 End If
@@ -594,11 +633,11 @@ Namespace AreaState
                 Return chain.serviceNodeList(publicAddress)
             Catch ex As Exception
                 AreaCommon.log.track("ChainStateEngine.getDataPeer", ex.Message, "fatal")
+
+                Return New PublicChainNodeInformation
             Finally
                 AreaCommon.log.track("ChainStateEngine.getDataPeer", "Completed")
             End Try
-
-            Return New PublicChainNodeInformation
         End Function
 
         ''' <summary>
@@ -660,6 +699,42 @@ Namespace AreaState
                 AreaCommon.log.track("ChainStateEngine.getNodeListAbleToConsensus", ex.Message, "fatal")
 
                 Return New List(Of ChainNodeInformation)
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get a data page from a page number
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        Public Function getDataPageChainByNumber(ByVal value As Integer) As List(Of CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData)
+            Try
+                Dim result As New List(Of CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData)
+                Dim index As Integer = 0
+
+                AreaCommon.log.track("ChainStateEngine.getDataPageChainByNumber", "Begin")
+
+                If (chains.Count > ((value - 1) * 10)) Then
+                    For i As Integer = 1 To 10
+                        index = i + (value - 1) * 10
+
+                        If (index <= chains.Count - 1) Then
+                            result.Add(chains.ElementAt(index).extractMinimalData())
+                        Else
+                            Exit For
+                        End If
+                    Next
+                Else
+
+                End If
+
+                AreaCommon.log.track("ChainStateEngine.getDataPageChainByNumber", "Completed")
+
+                Return result
+            Catch ex As Exception
+                AreaCommon.log.track("ChainStateEngine.getDataPageChainByNumber", ex.Message, "fatal")
+
+                Return New List(Of CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData)
             End Try
         End Function
 

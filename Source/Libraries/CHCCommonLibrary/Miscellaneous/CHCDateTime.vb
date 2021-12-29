@@ -45,6 +45,15 @@ Namespace AreaEngine.Miscellaneous
         End Function
 
         ''' <summary>
+        ''' This method provide to compose a Time structure String to GMT format
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Function formatDateTimeGMT(ByVal value As String) As String
+            Return value.Replace("/", "-").Replace(" ", "T") & "Z"
+        End Function
+
+        ''' <summary>
         ''' This method provides to compose a time structure with a current time into GMT format
         ''' </summary>
         ''' <returns></returns>

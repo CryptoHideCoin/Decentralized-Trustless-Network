@@ -203,11 +203,12 @@ Partial Class TransactionChainInformation
         'initialCoinReleaseBlock
         '
         Me.initialCoinReleaseBlock.currentFormat = "0,000"
+        Me.initialCoinReleaseBlock.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.initialCoinReleaseBlock.Location = New System.Drawing.Point(206, 69)
         Me.initialCoinReleaseBlock.locationCode = "it-IT"
         Me.initialCoinReleaseBlock.Name = "initialCoinReleaseBlock"
         Me.initialCoinReleaseBlock.ReadOnly = True
-        Me.initialCoinReleaseBlock.Size = New System.Drawing.Size(75, 20)
+        Me.initialCoinReleaseBlock.Size = New System.Drawing.Size(75, 21)
         Me.initialCoinReleaseBlock.TabIndex = 61
         Me.initialCoinReleaseBlock.Text = "0.000"
         Me.initialCoinReleaseBlock.TextAlign = System.Windows.Forms.HorizontalAlignment.Right

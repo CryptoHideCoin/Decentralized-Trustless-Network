@@ -28,6 +28,7 @@ Namespace AreaEngine.Base
         ''' <param name="baseString"></param>
         <Extension()> Public Sub codeSymbol(ByRef baseString As String)
             baseString = baseString.Replace("§", "\0167")
+            baseString = baseString.Replace(Chr(150), "-")
         End Sub
 
         ''' <summary>

@@ -11,3 +11,6 @@ Release Note
 1.5.9   - 29.11.2021 - Complete Transaction Chain Settings Parameters
 1.6.0   - 08.12.2021 - Implement new structure to BuildNetwork
 1.6.1   - 17.12.2021 - Bugfix toString InformationBaseModel and upgrade model
+1.7.0   - 21.12.2021 - Chain Model
+1.7.1   - 22.12.2021 - Add code manage serialize text
+1.7.2   - 29.12.2021 - Add a query chain

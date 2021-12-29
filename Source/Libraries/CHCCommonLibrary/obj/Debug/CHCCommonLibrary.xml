@@ -305,6 +305,13 @@ CHCCommonLibrary
  <param name="value"></param>
  <returns></returns>
 </member>
+<member name="M:CHCCommonLibrary.AreaEngine.Miscellaneous.SupportDate.formatDateTimeGMT(System.String)">
+ <summary>
+ This method provide to compose a Time structure String to GMT format
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
 <member name="M:CHCCommonLibrary.AreaEngine.Miscellaneous.SupportDate.atMomentGMT">
  <summary>
  This method provides to compose a time structure with a current time into GMT format

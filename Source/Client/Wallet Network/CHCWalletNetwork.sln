@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CHCWalletNetwork", "CHCWalletNetwork.vbproj", "{A3F66559-C0C3-4795-9C34-9CBD32397296}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CHCSupportUIControls", "..\..\Libraries\CHCSupportUIControls\CHCSupportUIControls.vbproj", "{2B477A78-3139-4570-BB5E-3FC09475C316}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{A3F66559-C0C3-4795-9C34-9CBD32397296}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3F66559-C0C3-4795-9C34-9CBD32397296}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3F66559-C0C3-4795-9C34-9CBD32397296}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B477A78-3139-4570-BB5E-3FC09475C316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B477A78-3139-4570-BB5E-3FC09475C316}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B477A78-3139-4570-BB5E-3FC09475C316}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B477A78-3139-4570-BB5E-3FC09475C316}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
