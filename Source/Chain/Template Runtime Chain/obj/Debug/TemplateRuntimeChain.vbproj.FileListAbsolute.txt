@@ -32,3 +32,5 @@ E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Debug\CHCPrimaryRun
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Debug\CHCPrimaryRuntimeService.xml
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Debug\CHCPrimaryRuntimeService.pdb
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Debug\TemplateRuntimeChain.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\bin\Debug\CHCProtocolLibrary.xml

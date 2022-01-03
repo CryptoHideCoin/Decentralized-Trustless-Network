@@ -47,6 +47,7 @@ Partial Class Settings
         Me.logGroup = New System.Windows.Forms.GroupBox()
         Me.logConfiguration = New CHCSupportUIControls.LogControl()
         Me.useEventRegistry = New System.Windows.Forms.CheckBox()
+        Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.tabMain.SuspendLayout()
         Me.tabControl.SuspendLayout()
         Me.tabInternal.SuspendLayout()
@@ -140,11 +141,14 @@ Partial Class Settings
         '
         Me.certificateClient.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.certificateClient.dataPath = ""
         Me.certificateClient.Location = New System.Drawing.Point(81, 179)
         Me.certificateClient.Name = "certificateClient"
         Me.certificateClient.noChange = True
+        Me.certificateClient.serviceId = ""
         Me.certificateClient.Size = New System.Drawing.Size(597, 30)
         Me.certificateClient.TabIndex = 30
+        Me.certificateClient.urlService = ""
         Me.certificateClient.value = ""
         '
         'adminWalletAddress
@@ -295,10 +299,15 @@ Partial Class Settings
         '
         'logConfiguration
         '
+        Me.logConfiguration.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.logConfiguration.Location = New System.Drawing.Point(6, 20)
         Me.logConfiguration.Name = "logConfiguration"
         Me.logConfiguration.Size = New System.Drawing.Size(669, 105)
         Me.logConfiguration.TabIndex = 11
+        Me.logConfiguration.trackConfiguration = CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver
+        Me.logConfiguration.trackRotateFrequency = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
+        Me.logConfiguration.trackRotateKeepFile = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
+        Me.logConfiguration.trackRotateKeepLast = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
         Me.logConfiguration.useTrackRotate = False
         '
         'useEventRegistry
@@ -362,4 +371,5 @@ Partial Class Settings
     Friend WithEvents logConfiguration As CHCSupportUIControls.LogControl
     Friend WithEvents serviceIDText As TextBox
     Friend WithEvents serviceUUID As Label
+    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
 End Class

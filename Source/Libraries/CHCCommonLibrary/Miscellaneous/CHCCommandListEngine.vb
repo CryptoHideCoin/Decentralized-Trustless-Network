@@ -82,7 +82,7 @@ Namespace AreaEngine.Miscellaneous
         ''' </summary>
         ''' <param name="CommandToken"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function GetValue(ByVal CommandToken As String) As String
+        <DebuggerHiddenAttribute()> Public Function getValue(ByVal CommandToken As String) As String
             If _Parameter.ContainsKey(CommandToken) Then
                 Return _Parameter(CommandToken).value
             Else

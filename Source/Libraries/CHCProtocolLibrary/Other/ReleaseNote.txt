@@ -14,3 +14,4 @@ Release Note
 1.7.0   - 21.12.2021 - Chain Model
 1.7.1   - 22.12.2021 - Add code manage serialize text
 1.7.2   - 29.12.2021 - Add a query chain
+1.7.3   - 02.01.2022 - Complete a new query model chain

@@ -794,7 +794,7 @@ Namespace AreaConsensus
                     Case "a1x7" : support.proceed = AreaProtocol.A1x7.RecoveryState.fromRequest(request.data, support.newIdentity)
                     Case "a1x8" : support.proceed = AreaProtocol.A1x8.RecoveryState.fromRequest(request.data, support.newIdentity)
                     Case "a1x9" : support.proceed = AreaProtocol.A1x9.RecoveryState.fromRequest(request.data, support.newIdentity)
-                    Case "a1x10" : support.proceed = AreaProtocol.A1x9.RecoveryState.fromRequest(request.data, support.newIdentity)
+                    Case "a1x10" : support.proceed = AreaProtocol.A1x10.RecoveryState.fromRequest(request.data, support.newIdentity)
 
                     Case "a2x0" : support.proceed = AreaProtocol.A2x0.RecoveryState.fromRequest(request.data, support.newIdentity)
                     Case "a2x1" : support.proceed = AreaProtocol.A2x1.RecoveryState.fromRequest(request.data, support.newIdentity)

@@ -217,4 +217,16 @@ Public Class Main
         showChainPanel(Chains.ManageType.termsAndConditions)
     End Sub
 
+    Private Sub TokensToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TokensToolStripMenuItem.Click
+        showChainPanel(Chains.ManageType.tokens)
+    End Sub
+
+    Private Sub MasternodesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MasternodesToolStripMenuItem.Click
+        showChainPanel(Chains.ManageType.masterNodes)
+    End Sub
+
+    Private Sub dataChainContainer_CloseMe() Handles dataChainContainer.CloseMe
+        showMainBackground()
+    End Sub
+
 End Class

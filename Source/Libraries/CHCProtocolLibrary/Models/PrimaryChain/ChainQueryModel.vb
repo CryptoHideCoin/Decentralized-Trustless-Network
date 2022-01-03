@@ -56,6 +56,42 @@ Namespace AreaCommon.Models.Chain.Queries
     End Class
 
     ''' <summary>
+    ''' This class contain the chain masternode count information
+    ''' </summary>
+    Public Class ChainMasterNodeCountModel
+
+        Inherits General.RemoteResponse
+
+        Public Property value As Integer = 0
+
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
+            Dim tmp As String = value.ToString()
+
+            With MyBase.integrityTransactionChain
+                tmp += .coordinate
+                tmp += .hash
+                tmp += .progressiveHash
+                tmp += .registrationTimeStamp.ToString
+            End With
+
+            Return tmp
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
+
+    End Class
+
+    ''' <summary>
     ''' This class contain the chain data information
     ''' </summary>
     Public Class ChainDataModel
@@ -440,5 +476,80 @@ Namespace AreaCommon.Models.Chain.Queries
         End Function
 
     End Class
+
+    ''' <summary>
+    ''' This class contain all element to response Chain Token List Model
+    ''' </summary>
+    Public Class ChainTokenListModel
+
+        Inherits General.RemoteResponse
+
+        Public Property value As New List(Of AssetStructure)
+
+
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
+            Dim tmp As String = ""
+
+            For Each item In value
+                tmp += item.toString()
+            Next
+
+            Return tmp
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain all member of collection of MasterNode
+    ''' </summary>
+    Public Class ChainMasterNodeModel
+
+        Inherits General.RemoteResponse
+
+        Public Property value As New List(Of NodeComplete)
+
+
+        ''' <summary>
+        ''' This method provide to create a string summary of the member of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
+            Dim tmp As String = ""
+
+            For Each item In value
+                tmp += item.toString()
+            Next
+            With MyBase.integrityTransactionChain
+                tmp += .coordinate
+                tmp += .hash
+                tmp += .progressiveHash
+                tmp += .registrationTimeStamp.ToString
+            End With
+
+            Return tmp
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get hash value from a string of a class
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
+
+    End Class
+
 End Namespace
 

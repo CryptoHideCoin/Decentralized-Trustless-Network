@@ -1,6 +1,8 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCProtocolLibrary.AreaCommon.Models.Chain
+
 
 
 
@@ -99,7 +101,7 @@ Namespace AreaData
         ''' <returns></returns>
         Private Function createVirtualNodeList() As Boolean
             Try
-                Dim singleNode As New AreaProtocol.NodeComplete
+                Dim singleNode As New NodeComplete
 
                 AreaCommon.log.track("BuildNetwork.createVirtualNodeList", "Begin")
 
@@ -108,7 +110,7 @@ Namespace AreaData
                 singleNode.addNewAddressIP(AreaCommon.state.internalInformation.addressIP, True)
 
                 singleNode.startConnectionTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                singleNode.role = AreaProtocol.RoleMasterNode.fullStack
+                singleNode.role = RoleMasterNode.fullStack
                 singleNode.chainName = "Genesis"
 
                 AreaCommon.state.runTimeState.addNewNodeToChain(AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).publicAddress, singleNode)

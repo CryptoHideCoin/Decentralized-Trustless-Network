@@ -410,7 +410,7 @@ CHCPrimaryRuntimeService
  <param name="transactionChainRecord"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaCommon.DAO.DBChain.addNewToken(System.Int32,CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel,CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction@,System.String@)">
+<member name="M:CHCPrimaryRuntimeService.AreaCommon.DAO.DBChain.addNewToken(System.Int32,CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel,CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction@,System.String@)">
  <summary>
  This method provide to insert a new token into DB
  </summary>
@@ -1813,7 +1813,7 @@ CHCPrimaryRuntimeService
  This static class provides to static method to manage a request
  </summary>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x3.Manager.addIntoLedger(System.String,System.String,System.String,CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel,System.String,System.String)">
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x3.Manager.addIntoLedger(System.String,System.String,System.String,CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel,System.String,System.String)">
  <summary>
  This method provide to write request into ledger
  </summary>
@@ -1840,7 +1840,7 @@ CHCPrimaryRuntimeService
  <param name="hash"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x3.Manager.createInternalRequest(CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel)">
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A0x3.Manager.createInternalRequest(CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel)">
  <summary>
  This method provide to create a initial procedure A0x3
  </summary>
@@ -2511,11 +2511,6 @@ CHCPrimaryRuntimeService
  </summary>
  <returns></returns>
 </member>
-<member name="T:CHCPrimaryRuntimeService.AreaProtocol.NodeComplete">
- <summary>
- This class contain the masternode element data
- </summary>
-</member>
 <member name="T:CHCPrimaryRuntimeService.AreaProtocol.EssentialA1x10">
  <summary>
  This class contain the minimal data essential A1x10
@@ -2644,7 +2639,7 @@ CHCPrimaryRuntimeService
 </member>
 <member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x10.Manager.createInternalRequest">
  <summary>
- This method provide to create a initial procedure A1x9
+ This method provide to create a initial procedure A1x10
  </summary>
  <returns></returns>
 </member>
@@ -3333,7 +3328,7 @@ CHCPrimaryRuntimeService
  This static class provides to static method to manage a request
  </summary>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x6.Manager.addIntoLedger(System.String,System.String,System.String,CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel,System.String,System.String)">
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A1x6.Manager.addIntoLedger(System.String,System.String,System.String,CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel,System.String,System.String)">
  <summary>
  This method provide to write request into ledger
  </summary>
@@ -3721,77 +3716,6 @@ CHCPrimaryRuntimeService
  </summary>
  <returns></returns>
 </member>
-<member name="T:CHCPrimaryRuntimeService.AreaProtocol.RoleMasterNode">
- <summary>
- This enumeration contain the RoleMasterNode enumeration
- </summary>
-</member>
-<member name="T:CHCPrimaryRuntimeService.AreaProtocol.DelegateGuarantee">
- <summary>
- This class contain the document of a delegate information
- </summary>
-</member>
-<member name="T:CHCPrimaryRuntimeService.AreaProtocol.RequestAddNewNode">
- <summary>
- This class contain the masternode element data
- </summary>
-</member>
-<member name="T:CHCPrimaryRuntimeService.AreaProtocol.RequestAddNewNode.AddressConfiguration">
- <summary>
- This class contain the element to identify the address configuration
- </summary>
-</member>
-<member name="T:CHCPrimaryRuntimeService.AreaProtocol.RequestAddNewNode.GuaranteeInformation">
- <summary>
- This class contain the information relative of a guarantee
- </summary>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.RequestAddNewNode.ToString">
- <summary>
- This method provide to convert to string the contain of this class
- </summary>
- <returns></returns>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.RequestAddNewNode.getHash">
- <summary>
- This methdo provide to get an hash of the object
- </summary>
- <returns></returns>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.RequestAddNewNode.getPrimaryAddress">
- <summary>
- This method provide to get a primary address IP
- </summary>
- <returns></returns>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.RequestAddNewNode.getPower">
- <summary>
- This method provide to get a complessive power
- </summary>
- <returns></returns>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.RequestAddNewNode.addNewAddressIP(System.String,System.Boolean)">
- <summary>
- This method provide to add a new address IP into list
- </summary>
- <param name="address"></param>
- <param name="main"></param>
- <returns></returns>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.RequestAddNewNode.addNewGuarantee(System.String,System.Decimal)">
- <summary>
- This method provide to add a new guarantee into list
- </summary>
- <param name="publicAddress"></param>
- <param name="power"></param>
- <returns></returns>
-</member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.RequestAddNewNode.clone">
- <summary>
- This method provide to clone an object
- </summary>
- <returns></returns>
-</member>
 <member name="T:CHCPrimaryRuntimeService.AreaProtocol.A2x0">
  <summary>
  This class contain all element to manage a A2x0 command
@@ -3876,7 +3800,7 @@ CHCPrimaryRuntimeService
  This static class provides to static method to manage a request
  </summary>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x0.Manager.addIntoLedger(System.String,System.String,System.String,CHCPrimaryRuntimeService.AreaProtocol.RequestAddNewNode,System.String,System.String)">
+<member name="M:CHCPrimaryRuntimeService.AreaProtocol.A2x0.Manager.addIntoLedger(System.String,System.String,System.String,CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode,System.String,System.String)">
  <summary>
  This method provide to write request into ledger
  </summary>
@@ -4204,7 +4128,7 @@ CHCPrimaryRuntimeService
  <param name="transactionChainRecord"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.addNewToken(System.String,CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel@,System.String,CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction@)">
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.addNewToken(System.String,CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel@,System.String,CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction@)">
  <summary>
  This method provide to add a new token
  </summary>
@@ -4238,7 +4162,7 @@ CHCPrimaryRuntimeService
  <param name="name"></param>
  <returns></returns>
 </member>
-<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.addNewNodeToChain(System.String,CHCPrimaryRuntimeService.AreaProtocol.RequestAddNewNode,CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction)">
+<member name="M:CHCPrimaryRuntimeService.AreaState.ChainStateEngine.addNewNodeToChain(System.String,CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode,CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction)">
  <summary>
  This method provide to add a new node to chain
  </summary>
@@ -4326,11 +4250,6 @@ CHCPrimaryRuntimeService
  This class contain the last identity of last transaction and a value
  </summary>
 </member>
-<member name="T:CHCPrimaryRuntimeService.AreaState.PrimaryStateModel.AssetStructure">
- <summary>
- This class contain all information reguard of complete asset information
- </summary>
-</member>
 <member name="T:CHCPrimaryRuntimeService.AreaState.PrimaryStateModel.NetworkTransactionStructure">
  <summary>
  This class contain the complete information of a network transaction structure
@@ -4349,11 +4268,6 @@ CHCPrimaryRuntimeService
 <member name="T:CHCPrimaryRuntimeService.AreaState.PrimaryStateModel.ChainPriceListStructure">
  <summary>
  This class contain the Price List elements
- </summary>
-</member>
-<member name="T:CHCPrimaryRuntimeService.AreaState.PrimaryStateModel.NodeListChainStructure">
- <summary>
- This class contain the element of node list chain
  </summary>
 </member>
 <member name="M:CHCPrimaryRuntimeService.Controllers.BuildNetworkController.putValue(System.String,CHCProtocolLibrary.AreaCommon.Models.Network.BuildNetworkModel)">
@@ -4409,6 +4323,26 @@ CHCPrimaryRuntimeService
  </summary>
  <returns></returns>
 </member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainMasternodesController.getPageMasterNode(System.Collections.Generic.List{CHCProtocolLibrary.AreaCommon.Models.Chain.NodeComplete}@,System.Int32)">
+ <summary>
+ This method provide to get a page MasterNode
+ </summary>
+ <param name="value"></param>
+ <param name="pageIndex"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainMasternodesController.GetValue(System.Int32,System.String)">
+ <summary>
+ This method provide to get a Tokens Configuration chain
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainMasternodesCountController.GetValue(System.String)">
+ <summary>
+ This method provide to get a count of a Masternode
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:CHCPrimaryRuntimeService.Controllers.ChainPageDataController.GetValue(System.Int32)">
  <summary>
  This method provide to get a page of a chain
@@ -4442,6 +4376,12 @@ CHCPrimaryRuntimeService
 <member name="M:CHCPrimaryRuntimeService.Controllers.ChainTermsAndConditionsController.GetValue(System.String)">
  <summary>
  This method provide to get a Terms and Conditions chain
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCPrimaryRuntimeService.Controllers.ChainTokenConfigurationController.GetValue(System.String)">
+ <summary>
+ This method provide to get a Tokens Configuration chain
  </summary>
  <returns></returns>
 </member>

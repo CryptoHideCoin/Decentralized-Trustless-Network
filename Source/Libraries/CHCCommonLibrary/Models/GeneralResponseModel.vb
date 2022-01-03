@@ -49,6 +49,7 @@ Namespace AreaCommon.Models.General
                 Return blockChainId & "-" & volumeId & "-" & blockId
             End If
         End Function
+
         ''' <summary>
         ''' This method provide to create a string cumulative of the important class member
         ''' </summary>

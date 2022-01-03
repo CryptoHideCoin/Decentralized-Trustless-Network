@@ -85,6 +85,7 @@
     <Compile Include="Models\GeneralSettingsModel.vb" />
     <Compile Include="Models\PrimaryChain\ChainModel.vb" />
     <Compile Include="Models\PrimaryChain\ChainQueryModel.vb" />
+    <Compile Include="Models\PrimaryChain\CommonModel.vb" />
     <Compile Include="Models\PrimaryChain\InfoNetworkBaseModel.vb" />
     <Compile Include="Models\SecurityModel.vb" />
     <Compile Include="Models\ServiceModel.vb" />

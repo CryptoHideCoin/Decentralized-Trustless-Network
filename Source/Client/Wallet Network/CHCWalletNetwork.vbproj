@@ -55,7 +55,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.7.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
@@ -138,58 +138,82 @@
     <Compile Include="Controls\Chains.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Sidechains\ChainDetail.Designer.vb">
+    <Compile Include="Controls\PrimaryChain\ChainDetail.Designer.vb">
       <DependentUpon>ChainDetail.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Sidechains\ChainDetail.vb">
+    <Compile Include="Controls\PrimaryChain\ChainDetail.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Sidechains\ChainList.Designer.vb">
+    <Compile Include="Controls\PrimaryChain\ChainList.Designer.vb">
       <DependentUpon>ChainList.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Sidechains\ChainList.vb">
+    <Compile Include="Controls\PrimaryChain\ChainList.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Sidechains\LastBlockChain.Designer.vb">
+    <Compile Include="Controls\PrimaryChain\LastBlockChain.Designer.vb">
       <DependentUpon>LastBlockChain.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Sidechains\LastBlockChain.vb">
+    <Compile Include="Controls\PrimaryChain\LastBlockChain.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Sidechains\MainChain.Designer.vb">
+    <Compile Include="Controls\PrimaryChain\MainChain.Designer.vb">
       <DependentUpon>MainChain.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Sidechains\MainChain.vb">
+    <Compile Include="Controls\PrimaryChain\MainChain.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Sidechains\ParameterChain.Designer.vb">
+    <Compile Include="Controls\PrimaryChain\MasternodeDetail.Designer.vb">
+      <DependentUpon>MasternodeDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PrimaryChain\MasternodeDetail.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PrimaryChain\Masternodes.Designer.vb">
+      <DependentUpon>Masternodes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PrimaryChain\Masternodes.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PrimaryChain\ParameterChain.Designer.vb">
       <DependentUpon>ParameterChain.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Sidechains\ParameterChain.vb">
+    <Compile Include="Controls\PrimaryChain\ParameterChain.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Sidechains\PriceListChain.Designer.vb">
+    <Compile Include="Controls\PrimaryChain\PriceListChain.Designer.vb">
       <DependentUpon>PriceListChain.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Sidechains\PriceListChain.vb">
+    <Compile Include="Controls\PrimaryChain\PriceListChain.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Sidechains\ProtocolChain.Designer.vb">
+    <Compile Include="Controls\PrimaryChain\ProtocolChain.Designer.vb">
       <DependentUpon>ProtocolChain.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Sidechains\ProtocolChain.vb">
+    <Compile Include="Controls\PrimaryChain\ProtocolChain.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Sidechains\ProtocolsChain.Designer.vb">
+    <Compile Include="Controls\PrimaryChain\ProtocolsChain.Designer.vb">
       <DependentUpon>ProtocolsChain.vb</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Sidechains\ProtocolsChain.vb">
+    <Compile Include="Controls\PrimaryChain\ProtocolsChain.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PrimaryChain\TokensChain.Designer.vb">
+      <DependentUpon>TokensChain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PrimaryChain\TokensChain.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\ConfigurationManager.Designer.vb">
       <DependentUpon>ConfigurationManager.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\ConfigurationManager.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Guarantors.Designer.vb">
+      <DependentUpon>Guarantors.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Guarantors.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Informations.Designer.vb">
@@ -248,32 +272,44 @@
     <EmbeddedResource Include="Controls\Chains.resx">
       <DependentUpon>Chains.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Sidechains\ChainDetail.resx">
+    <EmbeddedResource Include="Controls\PrimaryChain\ChainDetail.resx">
       <DependentUpon>ChainDetail.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Sidechains\ChainList.resx">
+    <EmbeddedResource Include="Controls\PrimaryChain\ChainList.resx">
       <DependentUpon>ChainList.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Sidechains\LastBlockChain.resx">
+    <EmbeddedResource Include="Controls\PrimaryChain\LastBlockChain.resx">
       <DependentUpon>LastBlockChain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Sidechains\MainChain.resx">
+    <EmbeddedResource Include="Controls\PrimaryChain\MainChain.resx">
       <DependentUpon>MainChain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Sidechains\ParameterChain.resx">
+    <EmbeddedResource Include="Controls\PrimaryChain\MasternodeDetail.resx">
+      <DependentUpon>MasternodeDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PrimaryChain\Masternodes.resx">
+      <DependentUpon>Masternodes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PrimaryChain\ParameterChain.resx">
       <DependentUpon>ParameterChain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Sidechains\PriceListChain.resx">
+    <EmbeddedResource Include="Controls\PrimaryChain\PriceListChain.resx">
       <DependentUpon>PriceListChain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Sidechains\ProtocolChain.resx">
+    <EmbeddedResource Include="Controls\PrimaryChain\ProtocolChain.resx">
       <DependentUpon>ProtocolChain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Sidechains\ProtocolsChain.resx">
+    <EmbeddedResource Include="Controls\PrimaryChain\ProtocolsChain.resx">
       <DependentUpon>ProtocolsChain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PrimaryChain\TokensChain.resx">
+      <DependentUpon>TokensChain.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConfigurationManager.resx">
       <DependentUpon>ConfigurationManager.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Guarantors.resx">
+      <DependentUpon>Guarantors.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Informations.resx">
       <DependentUpon>Informations.vb</DependentUpon>

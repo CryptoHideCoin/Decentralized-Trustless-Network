@@ -11,6 +11,7 @@ Option Explicit On
 
 Imports CHCCommonLibrary.AreaCommon.Models
 Imports CHCCommonLibrary.AreaEngine.Encryption
+Imports CHCCommonLibrary.AreaEngine.Base.CHCStringExtensions
 
 
 
@@ -106,7 +107,7 @@ Namespace AreaCommon.Models.Network
 
         Inherits General.RemoteResponse
 
-        Public Property value As AssetConfigurationModel
+        Public Property value As PrimaryChain.AssetConfigurationModel
 
         ''' <summary>
         ''' This method provide to create a string summary of the member of a class

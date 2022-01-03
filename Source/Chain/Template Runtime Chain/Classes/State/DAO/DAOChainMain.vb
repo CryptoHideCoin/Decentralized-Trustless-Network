@@ -546,7 +546,7 @@ Namespace AreaCommon.DAO
         ''' <param name="chainID"></param>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function addNewToken(ByVal chainID As Integer, ByVal value As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction, ByRef hashContent As String) As Boolean
+        Public Function addNewToken(ByVal chainID As Integer, ByVal value As CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction, ByRef hashContent As String) As Boolean
             If deleteTokenConfiguration(chainID, value.assetInformation.shortName) Then
                 Dim sql As String = ""
 

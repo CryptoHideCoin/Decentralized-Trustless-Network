@@ -17,55 +17,35 @@ Public Class Chains
         priceList
         privacyPolicy
         termsAndConditions
+        tokens
+        masterNodes
     End Enum
 
     Private Property _Type As ManageType = ManageType.undefined
-    Private Property chainName As String = ""
+    Private Property _Symbol As String = ""
+    Private Property _ChainName As String = ""
 
     Public Event OpenConfiguration()
     Public Event OpenChainDetails()
+    Public Event CloseMe()
 
 
     Private Sub Chains_Resize(sender As Object, e As EventArgs) Handles Me.Resize
         Try
             mainList.Width = Me.Width
             dataDetail.Width = Me.Width - 20
+            chainSetProtocol.Width = Me.Width
+            tokensDataChain.Width = Me.Width
         Catch ex As Exception
         End Try
         Try
             mainList.Height = Me.Height - 40
             dataDetail.Height = Me.Height - 78
+            chainSetProtocol.Height = Me.Height - 40
+            tokensDataChain.Height = Me.Height - 40
         Catch ex As Exception
         End Try
     End Sub
-
-    ''' <summary>
-    ''' This method provide to build a URL
-    ''' </summary>
-    ''' <param name="api"></param>
-    ''' <returns></returns>
-    Private Function buildURL(ByVal api As String) As String
-        Dim url As String = ""
-        Try
-            Dim proceed As Boolean = True
-
-            If proceed Then
-                proceed = (AreaCommon.settings.data.urlPublic.Length > 0)
-            End If
-            If proceed Then
-                If AreaCommon.settings.data.useServiceSecureProtocol Then
-                    url = "https://"
-                Else
-                    url = "http://"
-                End If
-
-                url += AreaCommon.settings.data.urlPublic & "/api/" & AreaCommon.settings.data.serviceId & api
-            End If
-        Catch ex As Exception
-        End Try
-
-        Return url
-    End Function
 
     ''' <summary>
     ''' This method provide to read a number of chain
@@ -78,7 +58,7 @@ Public Class Chains
             Dim proceed As Boolean = True
 
             If proceed Then
-                remote.url = buildURL("/chain/chainCount/")
+                remote.url = AreaCommon.buildURL("/chain/chainCount/")
             End If
             If proceed Then
                 proceed = (remote.getData() = "")
@@ -115,7 +95,7 @@ Public Class Chains
             Dim proceed As Boolean = True
 
             If proceed Then
-                remote.url = buildURL("/chain/chainPageData/?pageNumber=" & pageNumber)
+                remote.url = AreaCommon.buildURL("/chain/chainPageData/?pageNumber=" & pageNumber)
             End If
             If proceed Then
                 proceed = (remote.getData() = "")
@@ -157,7 +137,7 @@ Public Class Chains
             Dim proceed As Boolean = True
 
             If proceed Then
-                remote.url = buildURL("/chain/chainProtocol/?name=" & chainName)
+                remote.url = AreaCommon.buildURL("/chain/chainProtocol/?name=" & _ChainName)
             End If
             If proceed Then
                 proceed = (remote.getData() = "")
@@ -199,7 +179,7 @@ Public Class Chains
             Dim proceed As Boolean = True
 
             If proceed Then
-                remote.url = buildURL("/chain/chainActive/?name=" & chainName)
+                remote.url = AreaCommon.buildURL("/chain/chainActive/?name=" & chainName)
             End If
             If proceed Then
                 proceed = (remote.getData() = "")
@@ -238,7 +218,7 @@ Public Class Chains
             Dim proceed As Boolean = True
 
             If proceed Then
-                remote.url = buildURL("/chain/chainDataLastBlock/?name=" & chainName)
+                remote.url = AreaCommon.buildURL("/chain/chainDataLastBlock/?name=" & _ChainName)
             End If
             If proceed Then
                 proceed = (remote.getData() = "")
@@ -256,7 +236,7 @@ Public Class Chains
                 Return False
             End If
             If proceed Then
-                Return dataDetail.loadChainLastBlock(remote.data, activeChain(chainName))
+                Return dataDetail.loadChainLastBlock(remote.data, activeChain(_ChainName))
             Else
                 Return False
             End If
@@ -282,6 +262,7 @@ Public Class Chains
             mainList.Visible = False
             dataDetail.Visible = False
             chainSetProtocol.Visible = False
+            tokensDataChain.Visible = False
 
             Select Case _Type
                 Case ManageType.list
@@ -297,7 +278,7 @@ Public Class Chains
 
                     readChainList(mainList.pageNumber.Text)
                 Case ManageType.lastBlock
-                    titleControl.Text = "Data last block - Chain: " & chainName
+                    titleControl.Text = "Data last block - Chain: " & _ChainName
 
                     controlObject = dataDetail
 
@@ -305,43 +286,57 @@ Public Class Chains
 
                     readChainLastBlock()
                 Case ManageType.parameters
-                    titleControl.Text = "Parameters - Chain: " & chainName
+                    titleControl.Text = "Parameters - Chain: " & _ChainName
 
                     controlObject = dataDetail
 
                     dataDetail.type = ChainDetail.ChainSectionType.parameters
 
-                    dataDetail.loadChainParameter(chainName)
+                    dataDetail.loadChainParameter(_ChainName)
                 Case ManageType.setProtocol
-                    titleControl.Text = "Protocols - Chain: " & chainName
+                    titleControl.Text = "Protocols - Chain: " & _ChainName
 
                     controlObject = chainSetProtocol
 
                     loadChainProtocol()
                 Case ManageType.priceList
-                    titleControl.Text = "Price List - Chain: " & chainName
+                    titleControl.Text = "Price List - Chain: " & _ChainName
 
                     controlObject = dataDetail
 
                     dataDetail.type = ChainDetail.ChainSectionType.priceList
 
-                    dataDetail.loadPriceList(chainName)
+                    dataDetail.loadPriceList(_ChainName)
                 Case ManageType.privacyPolicy
-                    titleControl.Text = "Privacy Policy - Chain: " & chainName
+                    titleControl.Text = "Privacy Policy - Chain: " & _ChainName
 
                     controlObject = dataDetail
 
                     dataDetail.type = ChainDetail.ChainSectionType.policyPrivacy
 
-                    dataDetail.loadPrivacyContent(chainName)
+                    dataDetail.loadPrivacyContent(_ChainName)
                 Case ManageType.termsAndConditions
-                    titleControl.Text = "Terms and Conditions - Chain: " & chainName
+                    titleControl.Text = "Terms and Conditions - Chain: " & _ChainName
 
                     controlObject = dataDetail
 
-                    dataDetail.type = ChainDetail.ChainSectionType.TermsAndCondition
+                    dataDetail.type = ChainDetail.ChainSectionType.termsAndCondition
 
-                    dataDetail.loadTermsAndConditions(chainName)
+                    dataDetail.loadTermsAndConditions(_ChainName)
+                Case ManageType.tokens
+                    titleControl.Text = "Tokens - Chain: " & _ChainName
+
+                    controlObject = tokensDataChain
+
+                    loadTokens(_ChainName)
+                Case ManageType.masterNodes
+                    titleControl.Text = "Masternodes - Chain: " & _ChainName
+
+                    controlObject = dataDetail
+
+                    dataDetail.type = ChainDetail.ChainSectionType.masterNodes
+
+                    dataDetail.loadMasterNodes(_ChainName)
                 Case Else
                     Return
             End Select
@@ -354,7 +349,7 @@ Public Class Chains
     End Property
 
     Private Sub mainList_OpenChain(name As String) Handles mainList.OpenChain
-        chainName = name
+        _ChainName = name
 
         titleControl.Text = "Chain: " & name
 
@@ -372,19 +367,113 @@ Public Class Chains
         dataDetail.Left = 10
     End Sub
 
-    Private Sub mainList_Load(sender As Object, e As EventArgs) Handles mainList.Load
 
-    End Sub
+    ''' <summary>
+    ''' This method provide to load a tokens into grid
+    ''' </summary>
+    ''' <param name="chainName"></param>
+    ''' <returns></returns>
+    Public Function loadTokens(ByVal chainName As String) As Boolean
+        Try
+            Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+            Dim remote As New ProxyWS(Of ChainTokenListModel)
+            Dim proceed As Boolean = True
+
+            If proceed Then
+                remote.url = AreaCommon.buildURL("/chain/chainTokenConfiguration/?name=" & chainName)
+            End If
+            If proceed Then
+                proceed = (remote.getData() = "")
+            End If
+            If proceed Then
+                proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+            End If
+            If Not proceed Then
+                MessageBox.Show("Error during connection", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                Return False
+            End If
+            If proceed Then
+                If (remote.data.value.Count > 0) Then
+                    tokensDataChain.tokensData = remote.data.value
+
+                    tokensDataChain.loadDataIntoGrid()
+                End If
+            End If
+
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
 
     Private Sub chainSetProtocol_OpenProtocolChain(ByRef value As SingleSetProtocol) Handles chainSetProtocol.OpenProtocolChain
         dataDetail.Visible = True
         chainSetProtocol.Visible = False
 
-        titleControl.Text = "Set Protocol - Chain: " & chainName
+        titleControl.Text = "Set Protocol - Chain: " & _ChainName
 
         dataDetail.type = ChainDetail.ChainSectionType.protocol
 
         dataDetail.loadSetProtocol(value)
+    End Sub
+
+
+    ''' <summary>
+    ''' This method provide to read an asset information
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function readAssetInformation() As Boolean
+        Try
+            Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+            Dim remote As New ProxyWS(Of Models.Network.InfoAssetModel)
+            Dim proceed As Boolean = True
+
+            If proceed Then
+                remote.url = AreaCommon.buildURL("/network/primaryAsset/")
+            End If
+            If proceed Then
+                proceed = (remote.getData() = "")
+            End If
+            If proceed Then
+                proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+            End If
+            If proceed Then
+                proceed = (remote.data.value.assetInformation.name.Length > 0)
+            End If
+            If proceed Then
+                _Symbol = remote.data.value.assetInformation.symbol
+            End If
+            If Not proceed Then
+                MessageBox.Show("Error during connection", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                RaiseEvent OpenConfiguration()
+            End If
+
+            remote = Nothing
+
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    Private Sub dataDetail_GetSymbol(ByRef value As String) Handles dataDetail.GetSymbol
+        If (_Symbol.Length = 0) Then
+            If Not readAssetInformation() Then
+                Return
+            End If
+        End If
+
+        value = _Symbol
+    End Sub
+
+    Private Sub dataDetail_Load(sender As Object, e As EventArgs) Handles dataDetail.Load
+
+    End Sub
+
+    Private Sub dataDetail_CloseMe() Handles dataDetail.CloseMe
+        RaiseEvent CloseMe()
     End Sub
 
 End Class

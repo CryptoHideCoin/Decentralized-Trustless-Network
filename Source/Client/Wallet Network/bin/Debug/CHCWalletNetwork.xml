@@ -69,13 +69,6 @@ CHCWalletNetwork
  <param name="data"></param>
  <returns></returns>
 </member>
-<member name="M:CHCWalletNetwork.Chains.buildURL(System.String)">
- <summary>
- This method provide to build a URL
- </summary>
- <param name="api"></param>
- <returns></returns>
-</member>
 <member name="M:CHCWalletNetwork.Chains.readNumberOfChain">
  <summary>
  This method provide to read a number of chain
@@ -112,6 +105,19 @@ CHCWalletNetwork
  </summary>
  <returns></returns>
 </member>
+<member name="M:CHCWalletNetwork.Chains.loadTokens(System.String)">
+ <summary>
+ This method provide to load a tokens into grid
+ </summary>
+ <param name="chainName"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.Chains.readAssetInformation">
+ <summary>
+ This method provide to read an asset information
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:CHCWalletNetwork.ChainDetail.ChainSectionType">
  <summary>
  This enumeration contain the type of chain
@@ -121,13 +127,6 @@ CHCWalletNetwork
  <summary>
  This property set/get the type of chain section
  </summary>
- <returns></returns>
-</member>
-<member name="M:CHCWalletNetwork.ChainDetail.buildURL(System.String)">
- <summary>
- This method provide to build a URL
- </summary>
- <param name="api"></param>
  <returns></returns>
 </member>
 <member name="M:CHCWalletNetwork.ChainDetail.loadDataIntegration(CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction,System.Double)">
@@ -185,6 +184,13 @@ CHCWalletNetwork
  <param name="chainName"></param>
  <returns></returns>
 </member>
+<member name="M:CHCWalletNetwork.ChainDetail.loadMasterNodes(System.String)">
+ <summary>
+ This method provide to load a masternode list
+ </summary>
+ <param name="chainName"></param>
+ <returns></returns>
+</member>
 <member name="P:CHCWalletNetwork.ChainList.numChains">
  <summary>
  This property manage the num chains of list
@@ -202,6 +208,36 @@ CHCWalletNetwork
  This method provide to load a data into grid
  </summary>
  <param name="data"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.MasternodeDetail.loadData(CHCProtocolLibrary.AreaCommon.Models.Chain.NodeComplete@)">
+ <summary>
+ This method provide to load a data into panels
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainMasternodes.loadMasterNodesPage">
+ <summary>
+ This method provide to load a masternode list
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainMasternodes.loadSingleRowDataIntoGrid(CHCProtocolLibrary.AreaCommon.Models.Chain.NodeComplete)">
+ <summary>
+ This method provide to load a data into grid
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:CHCWalletNetwork.ChainMasternodes.numMasterNodes">
+ <summary>
+ This property get / let a masternodes number
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.ChainMasternodes.resetGrid">
+ <summary>
+ This method provide to reset a grid
+ </summary>
  <returns></returns>
 </member>
 <member name="M:CHCWalletNetwork.PriceListChain.loadSingleRowDataIntoGrid(CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableModel)">
@@ -241,6 +277,24 @@ CHCWalletNetwork
  </summary>
  <returns></returns>
 </member>
+<member name="M:CHCWalletNetwork.TokensChain.loadSingleRowDataIntoGrid(CHCProtocolLibrary.AreaCommon.Models.Chain.AssetStructure)">
+ <summary>
+ This method provide to load a data into grid
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.TokensChain.resetGrid">
+ <summary>
+ This method provide to reset a grid
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.TokensChain.loadDataIntoGrid">
+ <summary>
+ This method provide to load data into grid
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:CHCWalletNetwork.ConfigurationManager.SingleConfiguration">
  <summary>
  This class contain a tuple of a single configuration
@@ -272,6 +326,22 @@ CHCWalletNetwork
  <summary>
  This method provide to show the setting in a form field
  </summary>
+</member>
+<member name="M:CHCWalletNetwork.Guarantors.loadData(System.Double,System.String,System.Collections.Generic.List{CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode.GuaranteeInformation}@)">
+ <summary>
+ This method provide to load a data into grid
+ </summary>
+ <param name="totalPowerValue"></param>
+ <param name="symbol"></param>
+ <param name="data"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCWalletNetwork.AreaCommon.moduleMain.buildURL(System.String)">
+ <summary>
+ This method provide to build a URL
+ </summary>
+ <param name="api"></param>
+ <returns></returns>
 </member>
 <member name="M:CHCWalletNetwork.AreaCommon.StartUp.startApplication">
  <summary>

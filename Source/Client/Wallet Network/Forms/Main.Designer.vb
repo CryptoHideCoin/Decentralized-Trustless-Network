@@ -46,6 +46,7 @@ Partial Class Main
         Me.PriceListToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.privacyPolicyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TermsAndConditionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TokensToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.SupplyToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.CommandsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -61,6 +62,7 @@ Partial Class Main
         Me.dataChainContainer = New CHCWalletNetwork.Chains()
         Me.dataNetworkContainer = New CHCWalletNetwork.GenericInformation()
         Me.mainBackGround = New CHCWalletNetwork.Background()
+        Me.MasternodesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InfoMenuStrip.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -70,6 +72,7 @@ Partial Class Main
         Me.InfoMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfigurationToolStripMenuItem, Me.ExplorerToolStripMenuItem, Me.CommandsToolStripMenuItem, Me.ToolStripMenuItem1, Me.BlockchainToolStripMenuItem})
         Me.InfoMenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.InfoMenuStrip.Name = "InfoMenuStrip"
+        Me.InfoMenuStrip.Padding = New System.Windows.Forms.Padding(7, 2, 0, 2)
         Me.InfoMenuStrip.Size = New System.Drawing.Size(800, 24)
         Me.InfoMenuStrip.TabIndex = 0
         Me.InfoMenuStrip.Text = "MenuStrip1"
@@ -169,7 +172,7 @@ Partial Class Main
         '
         'CurrentChainToolStripMenuItem
         '
-        Me.CurrentChainToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LastBlockInformationToolStripMenuItem, Me.chainParametersToolStripMenuItem, Me.SetProtocolsToolStripMenuItem, Me.PriceListToolStripMenuItem, Me.privacyPolicyToolStripMenuItem, Me.TermsAndConditionsToolStripMenuItem})
+        Me.CurrentChainToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LastBlockInformationToolStripMenuItem, Me.chainParametersToolStripMenuItem, Me.SetProtocolsToolStripMenuItem, Me.PriceListToolStripMenuItem, Me.privacyPolicyToolStripMenuItem, Me.TermsAndConditionsToolStripMenuItem, Me.TokensToolStripMenuItem, Me.MasternodesToolStripMenuItem})
         Me.CurrentChainToolStripMenuItem.Enabled = False
         Me.CurrentChainToolStripMenuItem.Name = "CurrentChainToolStripMenuItem"
         Me.CurrentChainToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
@@ -210,6 +213,12 @@ Partial Class Main
         Me.TermsAndConditionsToolStripMenuItem.Name = "TermsAndConditionsToolStripMenuItem"
         Me.TermsAndConditionsToolStripMenuItem.Size = New System.Drawing.Size(237, 22)
         Me.TermsAndConditionsToolStripMenuItem.Text = "Terms and conditions"
+        '
+        'TokensToolStripMenuItem
+        '
+        Me.TokensToolStripMenuItem.Name = "TokensToolStripMenuItem"
+        Me.TokensToolStripMenuItem.Size = New System.Drawing.Size(237, 22)
+        Me.TokensToolStripMenuItem.Text = "Tokens"
         '
         'ToolStripSeparator4
         '
@@ -293,9 +302,9 @@ Partial Class Main
         '
         Me.dataChainContainer.BackColor = System.Drawing.Color.White
         Me.dataChainContainer.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dataChainContainer.Location = New System.Drawing.Point(538, 28)
+        Me.dataChainContainer.Location = New System.Drawing.Point(355, 152)
         Me.dataChainContainer.Name = "dataChainContainer"
-        Me.dataChainContainer.Size = New System.Drawing.Size(245, 118)
+        Me.dataChainContainer.Size = New System.Drawing.Size(286, 118)
         Me.dataChainContainer.TabIndex = 3
         Me.dataChainContainer.type = CHCWalletNetwork.Chains.ManageType.undefined
         '
@@ -303,30 +312,37 @@ Partial Class Main
         '
         Me.dataNetworkContainer.BackColor = System.Drawing.Color.White
         Me.dataNetworkContainer.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dataNetworkContainer.Location = New System.Drawing.Point(253, 28)
+        Me.dataNetworkContainer.Location = New System.Drawing.Point(12, 152)
         Me.dataNetworkContainer.Name = "dataNetworkContainer"
-        Me.dataNetworkContainer.Size = New System.Drawing.Size(279, 118)
+        Me.dataNetworkContainer.Size = New System.Drawing.Size(325, 118)
         Me.dataNetworkContainer.TabIndex = 2
         Me.dataNetworkContainer.type = CHCWalletNetwork.GenericInformation.ManageType.undefined
         Me.dataNetworkContainer.Visible = False
         '
         'mainBackGround
         '
-        Me.mainBackGround.Location = New System.Drawing.Point(12, 27)
+        Me.mainBackGround.Location = New System.Drawing.Point(14, 27)
         Me.mainBackGround.Name = "mainBackGround"
-        Me.mainBackGround.Size = New System.Drawing.Size(232, 119)
+        Me.mainBackGround.Size = New System.Drawing.Size(271, 119)
         Me.mainBackGround.TabIndex = 1
         Me.mainBackGround.Visible = False
         '
+        'MasternodesToolStripMenuItem
+        '
+        Me.MasternodesToolStripMenuItem.Name = "MasternodesToolStripMenuItem"
+        Me.MasternodesToolStripMenuItem.Size = New System.Drawing.Size(237, 22)
+        Me.MasternodesToolStripMenuItem.Text = "Masternodes"
+        '
         'Main
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 466)
         Me.Controls.Add(Me.dataChainContainer)
         Me.Controls.Add(Me.dataNetworkContainer)
         Me.Controls.Add(Me.mainBackGround)
         Me.Controls.Add(Me.InfoMenuStrip)
+        Me.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.InfoMenuStrip
         Me.MinimumSize = New System.Drawing.Size(816, 505)
@@ -379,4 +395,6 @@ Partial Class Main
     Friend WithEvents PriceListToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents privacyPolicyToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TermsAndConditionsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TokensToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MasternodesToolStripMenuItem As ToolStripMenuItem
 End Class

@@ -106,6 +106,9 @@ Namespace AreaProtocol
                     If proceed Then
                         AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.onLine
                     End If
+                    If proceed Then
+                        proceed = (A1x10.Manager.createInternalRequest().Length > 0)
+                    End If
 
                     AreaCommon.log.track("RecoveryState.fromRequest", "Completed")
 

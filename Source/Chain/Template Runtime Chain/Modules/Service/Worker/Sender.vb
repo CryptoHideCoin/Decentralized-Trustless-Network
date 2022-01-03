@@ -260,7 +260,7 @@ Namespace AreaWorker
 
                         Select Case item.sendType
                             Case AreaFlow.EnumEntityToSend.bulletin : newDeliveryList = sendBulletinInBroadCast(item.dataObject, item.deliveryList)
-                            Case AreaFlow.EnumEntityToSend.request : newDeliveryList = sendInBroadCast(item.type, item.dataObject.requestHash, item.deliveryList)
+                            Case AreaFlow.EnumEntityToSend.request : newDeliveryList = sendInBroadCast(item.type, item.dataObject.dataCommon.hash, item.deliveryList)
                             Case AreaFlow.EnumEntityToSend.requestResponse : newDeliveryList = sendRequestEvaluation(item.requestHash, item.deliveryList)
                         End Select
 
@@ -268,7 +268,7 @@ Namespace AreaWorker
 
                         If (newDeliveryList.count > 0) Then
                             If (item.tryNumber < 3) Then
-                                AreaCommon.flow.addNewRequestToSend(item.type, item.requestHash, newDeliveryList, item.dataObject, item.tryNumber + 1)
+                                AreaCommon.flow.addNewRequestToSend(item.type, item.dataObject.dataCommon.hash, newDeliveryList, item.dataObject, item.tryNumber + 1)
                             End If
                         End If
                     End If

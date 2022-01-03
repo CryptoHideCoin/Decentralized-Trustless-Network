@@ -11,7 +11,7 @@ using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
 
 
-namespace CHCBasicCryptographyLibrary.AreaEngine.Encryption
+namespace AreaEngine.Encryption
 {
 
     /*
@@ -33,7 +33,7 @@ namespace CHCBasicCryptographyLibrary.AreaEngine.Encryption
         {
             byte[] result = ArrayHelpers.subArray(data, 0, data.Length - checkSumSizeInBytes);
             byte[] givenCheckSum = ArrayHelpers.subArray(data, data.Length - checkSumSizeInBytes);
-            byte[] correctCheckSum = GetCheckSum(result);
+            byte[] correctCheckSum = getCheckSum(result);
             if (givenCheckSum.SequenceEqual(correctCheckSum))
                 return result;
             else
@@ -45,7 +45,7 @@ namespace CHCBasicCryptographyLibrary.AreaEngine.Encryption
         public static string encode(byte[] data)
         {
             // Decode byte[] to BigInteger
-            System.Numerics.BigInteger intData = 0;
+            BigInteger intData = 0;
             for (int i = 0; i < data.Length; i++)
             {
                 intData = intData * 256 + data[i];
@@ -98,7 +98,7 @@ namespace CHCBasicCryptographyLibrary.AreaEngine.Encryption
         }
 
         // Throws `FormatException` if s is not a valid Base58 string, or the checksum is invalid
-        public static byte[] DecodeWithCheckSum(string s)
+        public static byte[] decodeWithCheckSum(string s)
         {
             var dataWithCheckSum = decode(s);
             var dataWithoutCheckSum = verifyAndRemoveCheckSum(dataWithCheckSum);
@@ -107,7 +107,7 @@ namespace CHCBasicCryptographyLibrary.AreaEngine.Encryption
             return dataWithoutCheckSum;
         }
 
-        private static byte[] GetCheckSum(byte[] data)
+        private static byte[] getCheckSum(byte[] data)
         {
             SHA256 sha256 = new SHA256Managed();
             byte[] hash1 = sha256.ComputeHash(data);

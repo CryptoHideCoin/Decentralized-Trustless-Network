@@ -58,7 +58,7 @@ Partial Class Background
         Me.releaseApplication.BackColor = System.Drawing.Color.White
         Me.releaseApplication.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.releaseApplication.ForeColor = System.Drawing.SystemColors.ButtonShadow
-        Me.releaseApplication.Location = New System.Drawing.Point(650, 434)
+        Me.releaseApplication.Location = New System.Drawing.Point(600, 434)
         Me.releaseApplication.Name = "releaseApplication"
         Me.releaseApplication.Size = New System.Drawing.Size(65, 13)
         Me.releaseApplication.TabIndex = 4

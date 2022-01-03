@@ -1,8 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.AreaEngine.Encryption
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
+Imports CHCProtocolLibrary.AreaCommon.Models.Chain
 
 
 
@@ -21,7 +20,7 @@ Namespace AreaState
             Public Property identityPublicAddress As String = ""
             Public Property ipAddress As String = ""
             Public Property power As Decimal = 0
-            Public Property role As AreaProtocol.RoleMasterNode = AreaProtocol.RoleMasterNode.undefined
+            Public Property role As RoleMasterNode = RoleMasterNode.undefined
             Public Property startConnectionTimeStamp As Double = 0
             Public Property dayConnection As Short = 0
             Public Property lastConnectionTimeStamp As Double = 0
@@ -39,7 +38,7 @@ Namespace AreaState
 
             Public Property identityPublicAddress As String = ""
             Public Property ipAddress As String = ""
-            Public Property role As AreaProtocol.RoleMasterNode = AreaProtocol.RoleMasterNode.undefined
+            Public Property role As RoleMasterNode = RoleMasterNode.undefined
             Public Property startConnectionTimeStamp As Double = 0
             Public Property dayConnection As Short = 0
 
@@ -62,13 +61,13 @@ Namespace AreaState
 
             Public Property protocolSets As New List(Of CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.SingleSetProtocol)
             Public Property priceList As New PrimaryStateModel.ChainPriceListStructure
-            Public Property tokens As New List(Of PrimaryStateModel.AssetStructure)
+            Public Property tokens As New List(Of CHCProtocolLibrary.AreaCommon.Models.Chain.AssetStructure)
             Public Property privacyPolicy As New PrimaryStateModel.ItemIdentityStructure
             Public Property termsAndConditions As New PrimaryStateModel.ItemIdentityStructure
             Public Property lastCloseBlock As New PrimaryStateModel.ItemIdentityStructure
 
-            Public Property storedNodeList As New PrimaryStateModel.NodeListChainStructure
-            Public Property originalNodeList As New Dictionary(Of String, AreaProtocol.NodeComplete)
+            Public Property storedNodeList As New NodeListChainStructure
+            Public Property originalNodeList As New Dictionary(Of String, NodeComplete)
             Public Property internalNodeList As New Dictionary(Of String, ChainNodeInformation)
             Public Property serviceNodeList As New Dictionary(Of String, PublicChainNodeInformation)
 
@@ -370,10 +369,10 @@ Namespace AreaState
         ''' </summary>
         ''' <param name="chainReferement"></param>
         ''' <returns></returns>
-        Public Function addNewToken(ByVal chainReferement As String, ByRef value As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel, ByVal hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
+        Public Function addNewToken(ByVal chainReferement As String, ByRef value As CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel, ByVal hashContent As String, ByRef transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction) As Boolean
             Try
                 Dim chain As DataChain
-                Dim newToken As New PrimaryStateModel.AssetStructure
+                Dim newToken As New CHCProtocolLibrary.AreaCommon.Models.Chain.AssetStructure
 
                 AreaCommon.log.track("ChainStateEngine.addNewToken", "Begin")
 
@@ -517,12 +516,12 @@ Namespace AreaState
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function addNewNodeToChain(ByVal publicAddress As String, ByVal value As AreaProtocol.RequestAddNewNode, Optional ByVal transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction = Nothing) As Boolean
+        Public Function addNewNodeToChain(ByVal publicAddress As String, ByVal value As RequestAddNewNode, Optional ByVal transactionChainRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction = Nothing) As Boolean
             Try
                 Dim chain As DataChain
                 Dim internalElement As New ChainNodeInformation
                 Dim publicElement As New PublicChainNodeInformation
-                Dim originalElement As AreaProtocol.NodeComplete
+                Dim originalElement As NodeComplete
 
                 AreaCommon.log.track("ChainStateEngine.addNewNodeToChain", "Begin")
 
@@ -686,8 +685,8 @@ Namespace AreaState
                 End If
 
                 For Each singleNode In chain.internalNodeList.Values
-                    If (singleNode.role = AreaProtocol.RoleMasterNode.consensus) Or
-                       (singleNode.role = AreaProtocol.RoleMasterNode.fullStack) Then
+                    If (singleNode.role = RoleMasterNode.validator) Or
+                       (singleNode.role = RoleMasterNode.fullStack) Then
                         result.Add(singleNode)
                     End If
                 Next

@@ -24,15 +24,6 @@ Namespace AreaState.PrimaryStateModel
     End Class
 
     ''' <summary>
-    ''' This class contain all information reguard of complete asset information
-    ''' </summary>
-    Public Class AssetStructure
-        Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
-
-        Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel
-    End Class
-
-    ''' <summary>
     ''' This class contain the complete information of a network transaction structure
     ''' </summary>
     Public Class NetworkTransactionStructure
@@ -59,7 +50,7 @@ Namespace AreaState.PrimaryStateModel
         Public Property envinronment As New ItemIdentityStructure
         Public Property whitePaper As New ItemIdentityStructure
         Public Property yellowPaper As New ItemIdentityStructure
-        Public Property primaryAssetData As New AssetStructure
+        Public Property primaryAssetData As New CHCProtocolLibrary.AreaCommon.Models.Chain.AssetStructure
         Public Property transactionChainSettings As New NetworkTransactionStructure
         Public Property privacyPolicy As New ItemIdentityStructure
         Public Property generalConditions As New ItemIdentityStructure
@@ -84,16 +75,6 @@ Namespace AreaState.PrimaryStateModel
         Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
 
         Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Network.ItemPriceTableListModel
-    End Class
-
-    ''' <summary>
-    ''' This class contain the element of node list chain
-    ''' </summary>
-    Public Class NodeListChainStructure
-        Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
-
-        Public Property value As New List(Of AreaProtocol.NodeComplete)
-
     End Class
 
 End Namespace

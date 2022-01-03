@@ -43,7 +43,6 @@ Namespace AreaCommon.Models.Payments
             Return Me.MemberwiseClone
         End Function
 
-
     End Class
 
 End Namespace

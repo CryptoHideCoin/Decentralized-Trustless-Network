@@ -23,7 +23,7 @@ Namespace AreaBase
         ''' This method provide to get the package release from file
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property ApplicationRelease As String
+        Public Shared ReadOnly Property applicationRelease As String
             Get
                 Try
                     Dim completeFileName As String = IO.Path.Combine(Application.ExecutablePath, "Package.release")
@@ -47,7 +47,7 @@ Namespace AreaBase
                 Return "0.2"
             End Get
         End Property
-        Public Shared ReadOnly Property ProtocolRelease As String = "0.2"
+        Public Shared ReadOnly Property protocolRelease As String = "0.2"
 
     End Class
 

@@ -27,7 +27,7 @@ CHCProtocolLibrary
  This static class contain the function utils to create a package for install/upgrade
  </summary>
 </member>
-<member name="P:CHCProtocolLibrary.AreaBase.InfoSystem.ApplicationRelease">
+<member name="P:CHCProtocolLibrary.AreaBase.InfoSystem.applicationRelease">
  <summary>
  This method provide to get the package release from file
  </summary>
@@ -254,67 +254,6 @@ CHCProtocolLibrary
 <member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.BaseNetworkModel.getHash">
  <summary>
  This methdo provide to get an hash of the object
- </summary>
- <returns></returns>
-</member>
-<member name="T:CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel">
- <summary>
- This class contain all member relative an element of Asset type
- </summary>
-</member>
-<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel.codeSymbol">
- <summary>
- This method provide to code symbol to trasmit with a webservice
- </summary>
-</member>
-<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel.deCodeSymbol">
- <summary>
- This method provide to decoce symbol when receive a data with a webservice
- </summary>
-</member>
-<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel.ToString">
- <summary>
- This method provide to create a string summary of the member of a class
- </summary>
- <returns></returns>
-</member>
-<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel.getHash">
- <summary>
- This method provide to get hash value from a string of a class
- </summary>
- <returns></returns>
-</member>
-<member name="T:CHCProtocolLibrary.AreaCommon.Models.Network.AssetPolicyModel">
- <summary>
- This class contain all information reguard the minting information
- </summary>
-</member>
-<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.AssetPolicyModel.ToString">
- <summary>
- This method provide to create a string summary of the member of a class
- </summary>
- <returns></returns>
-</member>
-<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.AssetPolicyModel.getHash">
- <summary>
- This method provide to get hash value from a string of a class
- </summary>
- <returns></returns>
-</member>
-<member name="T:CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel">
- <summary>
- This class contain the information complete of the asset (data and mint)
- </summary>
-</member>
-<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel.ToString">
- <summary>
- This method provide to create a string summary of the member of a class
- </summary>
- <returns></returns>
-</member>
-<member name="M:CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel.getHash">
- <summary>
- This method provide to get hash value from a string of a class
  </summary>
  <returns></returns>
 </member>
@@ -583,6 +522,11 @@ CHCProtocolLibrary
  This enumeration contain the value of position of the service
  </summary>
 </member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.RoleMasterNode">
+ <summary>
+ This enumeration contain the RoleMasterNode enumeration
+ </summary>
+</member>
 <member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.ChainMinimalData">
  <summary>
  This class contain the minimal element of definion of chain
@@ -654,6 +598,93 @@ CHCProtocolLibrary
  </summary>
  <returns></returns>
 </member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.AssetStructure">
+ <summary>
+ This class contain all information reguard of complete asset information
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.AssetStructure.ToString">
+ <summary>
+ This method provide to convert into a string the element of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.DelegateGuarantee">
+ <summary>
+ This class contain the document of a delegate information
+ </summary>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode">
+ <summary>
+ This class contain the masternode element data
+ </summary>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode.AddressConfiguration">
+ <summary>
+ This class contain the element to identify the address configuration
+ </summary>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode.GuaranteeInformation">
+ <summary>
+ This class contain the information relative of a guarantee
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode.ToString">
+ <summary>
+ This method provide to convert to string the contain of this class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode.getHash">
+ <summary>
+ This methdo provide to get an hash of the object
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode.getPrimaryAddress">
+ <summary>
+ This method provide to get a primary address IP
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode.getPower">
+ <summary>
+ This method provide to get a complessive power
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode.addNewAddressIP(System.String,System.Boolean)">
+ <summary>
+ This method provide to add a new address IP into list
+ </summary>
+ <param name="address"></param>
+ <param name="main"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode.addNewGuarantee(System.String,System.Decimal)">
+ <summary>
+ This method provide to add a new guarantee into list
+ </summary>
+ <param name="publicAddress"></param>
+ <param name="power"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.RequestAddNewNode.clone">
+ <summary>
+ This method provide to clone an object
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.NodeComplete">
+ <summary>
+ This class contain the masternode element data
+ </summary>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.NodeListChainStructure">
+ <summary>
+ This class contain the element of node list chain
+ </summary>
+</member>
 <member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainCountModel">
  <summary>
  This class contain the chain count information
@@ -666,6 +697,23 @@ CHCProtocolLibrary
  <returns></returns>
 </member>
 <member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainCountModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainMasterNodeCountModel">
+ <summary>
+ This class contain the chain masternode count information
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainMasterNodeCountModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainMasterNodeCountModel.getHash">
  <summary>
  This method provide to get hash value from a string of a class
  </summary>
@@ -841,6 +889,101 @@ CHCProtocolLibrary
  <returns></returns>
 </member>
 <member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainActiveModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainTokenListModel">
+ <summary>
+ This class contain all element to response Chain Token List Model
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainTokenListModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainTokenListModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainMasterNodeModel">
+ <summary>
+ This class contain all member of collection of MasterNode
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainMasterNodeModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.ChainMasterNodeModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetModel">
+ <summary>
+ This class contain all member relative an element of Asset type
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetModel.codeSymbol">
+ <summary>
+ This method provide to code symbol to trasmit with a webservice
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetModel.deCodeSymbol">
+ <summary>
+ This method provide to decoce symbol when receive a data with a webservice
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetPolicyModel">
+ <summary>
+ This class contain all information reguard the minting information
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetPolicyModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetPolicyModel.getHash">
+ <summary>
+ This method provide to get hash value from a string of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel">
+ <summary>
+ This class contain the information complete of the asset (data and mint)
+ </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel.ToString">
+ <summary>
+ This method provide to create a string summary of the member of a class
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel.getHash">
  <summary>
  This method provide to get hash value from a string of a class
  </summary>

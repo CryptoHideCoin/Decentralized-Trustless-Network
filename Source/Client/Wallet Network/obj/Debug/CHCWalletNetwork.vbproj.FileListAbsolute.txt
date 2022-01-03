@@ -65,3 +65,7 @@ E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.Par
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.ProtocolChain.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.ProtocolsChain.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.PriceListChain.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.TokensChain.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.ChainMasternodes.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.MasternodeDetail.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.Guarantors.resources

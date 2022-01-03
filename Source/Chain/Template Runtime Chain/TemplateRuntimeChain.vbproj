@@ -59,7 +59,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.7.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
@@ -156,12 +156,15 @@
     <Compile Include="Controllers\Chain\ChainBaseCountController.vb" />
     <Compile Include="Controllers\Chain\ChainBaseDataController.vb" />
     <Compile Include="Controllers\Chain\ChainDateLastBlockController.vb" />
+    <Compile Include="Controllers\Chain\ChainMasternodesController.vb" />
+    <Compile Include="Controllers\Chain\ChainMasternodesCoundController.vb" />
     <Compile Include="Controllers\Chain\ChainPageDataController.vb" />
     <Compile Include="Controllers\Chain\ChainParameterController.vb" />
     <Compile Include="Controllers\Chain\ChainPriceListController.vb" />
     <Compile Include="Controllers\Chain\ChainPrivacyController.vb" />
     <Compile Include="Controllers\Chain\ChainProtocolController.vb" />
     <Compile Include="Controllers\Chain\ChainTermsController.vb" />
+    <Compile Include="Controllers\Chain\ChainTokenConfigurationController.vb" />
     <Compile Include="Controllers\Network\NetworkBaseAssetController.vb" />
     <Compile Include="Controllers\Network\NetworkBaseGeneralConditionController.vb" />
     <Compile Include="Controllers\Network\NetworkBaseInformationController.vb" />

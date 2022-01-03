@@ -22,6 +22,11 @@ Namespace AreaCommon
             log.trackIntoConsole("System bootstrap " & atMomentGMT() & " (gmt)")
             log.trackIntoConsole()
 
+#If DEBUG Then
+            log.trackIntoConsole("Debug mode on")
+            log.trackIntoConsole()
+#End If
+
             state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.starting
         End Sub
 

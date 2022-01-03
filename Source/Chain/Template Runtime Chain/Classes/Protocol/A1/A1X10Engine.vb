@@ -4,23 +4,12 @@ Option Explicit On
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
+Imports CHCProtocolLibrary.AreaCommon.Models.Chain
 
 
 
 
 Namespace AreaProtocol
-
-    ''' <summary>
-    ''' This class contain the masternode element data
-    ''' </summary>
-    Public Class NodeComplete
-
-        Inherits RequestAddNewNode
-
-        Public Property identityPublicAddress As String = ""
-        Public Property startConnectionTimeStamp As Double = 0
-
-    End Class
 
     ''' <summary>
     ''' This class contain the minimal data essential A1x10
@@ -411,7 +400,7 @@ Namespace AreaProtocol
             End Function
 
             ''' <summary>
-            ''' This method provide to create a initial procedure A1x9
+            ''' This method provide to create a initial procedure A1x10
             ''' </summary>
             ''' <returns></returns>
             Shared Function createInternalRequest() As String

@@ -23,6 +23,7 @@ Partial Class Chains
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.titleControl = New System.Windows.Forms.Label()
+        Me.tokensDataChain = New CHCWalletNetwork.TokensChain()
         Me.chainSetProtocol = New CHCWalletNetwork.ProtocolsChain()
         Me.dataDetail = New CHCWalletNetwork.ChainDetail()
         Me.mainList = New CHCWalletNetwork.ChainList()
@@ -38,11 +39,22 @@ Partial Class Chains
         Me.titleControl.TabIndex = 12
         Me.titleControl.Text = "Title"
         '
+        'tokensDataChain
+        '
+        Me.tokensDataChain.BackColor = System.Drawing.Color.White
+        Me.tokensDataChain.Font = New System.Drawing.Font("Verdana", 8.25!)
+        Me.tokensDataChain.Location = New System.Drawing.Point(9, 220)
+        Me.tokensDataChain.Name = "tokensDataChain"
+        Me.tokensDataChain.Size = New System.Drawing.Size(335, 205)
+        Me.tokensDataChain.TabIndex = 16
+        Me.tokensDataChain.tokensData = Nothing
+        Me.tokensDataChain.Visible = False
+        '
         'chainSetProtocol
         '
         Me.chainSetProtocol.BackColor = System.Drawing.Color.White
         Me.chainSetProtocol.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chainSetProtocol.Location = New System.Drawing.Point(3, 199)
+        Me.chainSetProtocol.Location = New System.Drawing.Point(487, 4)
         Me.chainSetProtocol.Name = "chainSetProtocol"
         Me.chainSetProtocol.protocolData = Nothing
         Me.chainSetProtocol.Size = New System.Drawing.Size(269, 208)
@@ -54,7 +66,7 @@ Partial Class Chains
         Me.dataDetail.BackColor = System.Drawing.Color.White
         Me.dataDetail.Location = New System.Drawing.Point(278, 0)
         Me.dataDetail.Name = "dataDetail"
-        Me.dataDetail.Size = New System.Drawing.Size(464, 193)
+        Me.dataDetail.Size = New System.Drawing.Size(203, 170)
         Me.dataDetail.TabIndex = 14
         Me.dataDetail.type = CHCWalletNetwork.ChainDetail.ChainSectionType.notDefined
         Me.dataDetail.Visible = False
@@ -74,6 +86,7 @@ Partial Class Chains
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
+        Me.Controls.Add(Me.tokensDataChain)
         Me.Controls.Add(Me.chainSetProtocol)
         Me.Controls.Add(Me.dataDetail)
         Me.Controls.Add(Me.mainList)
@@ -90,4 +103,5 @@ Partial Class Chains
     Friend WithEvents mainList As ChainList
     Friend WithEvents dataDetail As ChainDetail
     Friend WithEvents chainSetProtocol As ProtocolsChain
+    Friend WithEvents tokensDataChain As TokensChain
 End Class

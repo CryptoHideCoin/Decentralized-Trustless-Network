@@ -37,18 +37,8 @@ Public Class GenericInformation
             Dim proceed As Boolean = True
 
             If proceed Then
-                proceed = (AreaCommon.settings.data.urlPublic.Length > 0)
+                remote.url += AreaCommon.buildURL("/network/informationBase/")
             End If
-            If proceed Then
-                If AreaCommon.settings.data.useServiceSecureProtocol Then
-                    remote.url = "https://"
-                Else
-                    remote.url = "http://"
-                End If
-
-                remote.url += AreaCommon.settings.data.urlPublic & "/api/" & AreaCommon.settings.data.serviceId & "/network/informationBase/"
-            End If
-
             If proceed Then
                 proceed = (remote.getData() = "")
             End If
@@ -95,16 +85,7 @@ Public Class GenericInformation
             Dim proceed As Boolean = True
 
             If proceed Then
-                proceed = (AreaCommon.settings.data.urlPublic.Length > 0)
-            End If
-            If proceed Then
-                If AreaCommon.settings.data.useServiceSecureProtocol Then
-                    remote.url = "https://"
-                Else
-                    remote.url = "http://"
-                End If
-
-                remote.url += AreaCommon.settings.data.urlPublic & "/api/" & AreaCommon.settings.data.serviceId & "/network/" & controllerName & "/"
+                remote.url = AreaCommon.buildURL("/network/" & controllerName & "/")
             End If
             If proceed Then
                 proceed = (remote.getData() = "")
@@ -148,16 +129,7 @@ Public Class GenericInformation
             Dim proceed As Boolean = True
 
             If proceed Then
-                proceed = (AreaCommon.settings.data.urlPublic.Length > 0)
-            End If
-            If proceed Then
-                If AreaCommon.settings.data.useServiceSecureProtocol Then
-                    remote.url = "https://"
-                Else
-                    remote.url = "http://"
-                End If
-
-                remote.url += AreaCommon.settings.data.urlPublic & "/api/" & AreaCommon.settings.data.serviceId & "/network/primaryAsset/"
+                remote.url = AreaCommon.buildURL("/network/primaryAsset/")
             End If
             If proceed Then
                 proceed = (remote.getData() = "")
@@ -175,7 +147,7 @@ Public Class GenericInformation
                 assetContent.digit.Text = remote.data.value.assetInformation.digit
                 assetContent.nameUnit.Text = remote.data.value.assetInformation.nameUnit
 
-                If remote.data.value.assetInformation.type = Models.Network.AssetModel.AssetTypeEnum.coin Then
+                If remote.data.value.assetInformation.type = Models.PrimaryChain.AssetModel.AssetTypeEnum.coin Then
                     assetContent.typeAsset.Text = "Coin"
                 Else
                     assetContent.typeAsset.Text = "Token"
@@ -222,16 +194,7 @@ Public Class GenericInformation
             Dim proceed As Boolean = True
 
             If proceed Then
-                proceed = (AreaCommon.settings.data.urlPublic.Length > 0)
-            End If
-            If proceed Then
-                If AreaCommon.settings.data.useServiceSecureProtocol Then
-                    remote.url = "https://"
-                Else
-                    remote.url = "http://"
-                End If
-
-                remote.url += AreaCommon.settings.data.urlPublic & "/api/" & AreaCommon.settings.data.serviceId & "/network/transactionChainSettings/"
+                remote.url = AreaCommon.buildURL("/network/transactionChainSettings/")
             End If
             If proceed Then
                 proceed = (remote.getData() = "")
@@ -288,16 +251,7 @@ Public Class GenericInformation
             Dim proceed As Boolean = True
 
             If proceed Then
-                proceed = (AreaCommon.settings.data.urlPublic.Length > 0)
-            End If
-            If proceed Then
-                If AreaCommon.settings.data.useServiceSecureProtocol Then
-                    remote.url = "https://"
-                Else
-                    remote.url = "http://"
-                End If
-
-                remote.url += AreaCommon.settings.data.urlPublic & "/api/" & AreaCommon.settings.data.serviceId & "/network/refundPlan/"
+                remote.url = AreaCommon.buildURL("/network/refundPlan/")
             End If
             If proceed Then
                 proceed = (remote.getData() = "")

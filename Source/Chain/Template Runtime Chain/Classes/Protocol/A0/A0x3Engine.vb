@@ -22,7 +22,7 @@ Namespace AreaProtocol
         Public Class RequestModel : Implements IRequestModel
 
             Public Property common As New CommonRequest Implements IRequestModel.common
-            Public Property content As New CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel
+            Public Property content As New CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel
 
             ''' <summary>
             ''' This method provide to convert into a string the element of the object
@@ -65,11 +65,11 @@ Namespace AreaProtocol
                 End Set
             End Property
 
-            Public Property content As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel
+            Public Property content As CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel
                 Get
                     Return _Base.content
                 End Get
-                Set(value As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel)
+                Set(value As CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel)
                     _Base.content = value
                 End Set
             End Property
@@ -129,7 +129,7 @@ Namespace AreaProtocol
                     If proceed Then
                         contentPath = IO.Path.Combine(contentPath, hashContent & ".Content")
 
-                        Return IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel).save(contentPath, value.content)
+                        Return IOFast(Of CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel).save(contentPath, value.content)
                     End If
 
                     AreaCommon.log.track("RecoveryState.fromRequest", "Completed")
@@ -246,7 +246,7 @@ Namespace AreaProtocol
             ''' This method provide to write request into ledger
             ''' </summary>
             ''' <returns></returns>
-            Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal value As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+            Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal value As CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
                     Dim contentPath As String = AreaCommon.state.currentBlockLedger.proposeNewTransaction.pathData.contents
                     Dim hash As String = value.getHash()
@@ -255,7 +255,7 @@ Namespace AreaProtocol
 
                     contentPath = IO.Path.Combine(contentPath, hash & ".Content")
 
-                    If IOFast(Of CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel).save(contentPath, value) Then
+                    If IOFast(Of CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel).save(contentPath, value) Then
                         With AreaCommon.state.currentBlockLedger.proposeNewTransaction
                             .type = "a0x3"
                             .approverPublicAddress = approverPublicAddress
@@ -322,7 +322,7 @@ Namespace AreaProtocol
             ''' </summary>
             ''' <param name="valueAsset"></param>
             ''' <returns></returns>
-            Public Shared Function createInternalRequest(ByVal valueAsset As CHCProtocolLibrary.AreaCommon.Models.Network.AssetConfigurationModel) As String
+            Public Shared Function createInternalRequest(ByVal valueAsset As CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetConfigurationModel) As String
                 Try
                     Dim data As New RequestModel
 
@@ -334,7 +334,7 @@ Namespace AreaProtocol
 
                     With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                         data.content = valueAsset
-                        data.common.netWorkReferement = AreaCommon.state.runtimeState.activeNetwork.hash
+                        data.common.netWorkReferement = AreaCommon.state.runTimeState.activeNetwork.hash
                         data.common.chainReferement = AreaCommon.state.internalInformation.chainName
                         data.common.type = "a0x3"
                         data.common.publicAddressRequester = .publicAddress
