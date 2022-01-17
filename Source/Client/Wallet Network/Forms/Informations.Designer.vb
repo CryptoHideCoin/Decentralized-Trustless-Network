@@ -29,6 +29,7 @@ Partial Class Informations
         Me.Label5 = New System.Windows.Forms.Label()
         Me.PixBay = New System.Windows.Forms.LinkLabel()
         Me.Close = New System.Windows.Forms.Button()
+        Me.IconsLinkLabel = New System.Windows.Forms.LinkLabel()
         Me.SuspendLayout()
         '
         'Label1
@@ -97,12 +98,23 @@ Partial Class Informations
         Me.Close.Text = "Close"
         Me.Close.UseVisualStyleBackColor = True
         '
+        'IconsLinkLabel
+        '
+        Me.IconsLinkLabel.AutoSize = True
+        Me.IconsLinkLabel.Location = New System.Drawing.Point(200, 96)
+        Me.IconsLinkLabel.Name = "IconsLinkLabel"
+        Me.IconsLinkLabel.Size = New System.Drawing.Size(73, 13)
+        Me.IconsLinkLabel.TabIndex = 7
+        Me.IconsLinkLabel.TabStop = True
+        Me.IconsLinkLabel.Text = "Icon's Back"
+        '
         'Informations
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(417, 167)
         Me.ControlBox = False
+        Me.Controls.Add(Me.IconsLinkLabel)
         Me.Controls.Add(Me.Close)
         Me.Controls.Add(Me.PixBay)
         Me.Controls.Add(Me.Label5)
@@ -128,4 +140,5 @@ Partial Class Informations
     Friend WithEvents Label5 As Label
     Friend WithEvents PixBay As LinkLabel
     Friend WithEvents Close As Button
+    Friend WithEvents IconsLinkLabel As LinkLabel
 End Class

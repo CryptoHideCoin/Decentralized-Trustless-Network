@@ -4,6 +4,7 @@ Option Explicit On
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
+Imports CHCProtocolLibrary.AreaCommon.Models.Ledger
 
 
 
@@ -120,7 +121,7 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
+            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As SingleTransactionLedger) As Boolean
                 ''' TODO: A0x1 RecoveryState.fromTransactionLedger
             End Function
 
@@ -225,7 +226,7 @@ Namespace AreaProtocol
                 Try
                     AreaCommon.log.track("A0x8.Manager.addIntoLedger", "Begin")
 
-                    With AreaCommon.state.currentBlockLedger.proposeNewTransaction
+                    With AreaCommon.state.ledger.proposeNewTransaction
                         .type = "a0x8"
                         .approverPublicAddress = approverPublicAddress
                         .consensusHash = consensusHash
@@ -236,7 +237,7 @@ Namespace AreaProtocol
                         .currentHash = .getHash
                     End With
 
-                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
+                    Return AreaCommon.state.ledger.saveAndClean()
                 Catch ex As Exception
                     AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
 

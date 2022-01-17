@@ -23,8 +23,8 @@ Namespace Controllers
         ''' This method provide to get an Active Chain
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue(ByVal name As String) As Models.Chain.Queries.ChainActiveModel
-            Dim result As New Models.Chain.Queries.ChainActiveModel
+        Public Function GetValue(ByVal name As String) As Models.Chain.Response.ChainActiveModel
+            Dim result As New Models.Chain.Response.ChainActiveModel
             Dim privateKeyRAW As String
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
@@ -37,14 +37,7 @@ Namespace Controllers
 
                         result.masterNodePublicAddress = AreaCommon.state.network.publicAddressIdentity
 
-                        With AreaCommon.state.runTimeState.chainByName(name)
-                            result.value = .isActive()
-
-                            result.integrityTransactionChain.coordinate = "(not set)"
-                            result.integrityTransactionChain.hash = "(not set)"
-                            result.integrityTransactionChain.progressiveHash = "(not set)"
-                            result.integrityTransactionChain.registrationTimeStamp = 0
-                        End With
+                        result.value = AreaCommon.state.runTimeState.chainByName(name).isActive()
 
                         result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, result.getHash())
                     Else

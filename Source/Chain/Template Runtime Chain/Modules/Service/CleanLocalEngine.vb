@@ -54,7 +54,7 @@ Namespace AreaData
 
                 AreaCommon.log.track("service.CleanLocalData", "Completed")
 
-                AreaCommon.log.trackIntoConsole("Clean Local Data Completed")
+                AreaCommon.log.trackIntoConsole("Clean Local Data completed")
 
                 Return proceed
             Catch ex As Exception

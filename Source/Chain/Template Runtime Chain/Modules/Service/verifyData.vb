@@ -154,7 +154,7 @@ Namespace AreaData
                 checkNodeList()
                 rebuildCommandList()
 
-                AreaCommon.log.trackIntoConsole("Analize internal state Completed")
+                AreaCommon.log.trackIntoConsole("Analize internal state completed")
 
                 Return True
             Catch ex As Exception

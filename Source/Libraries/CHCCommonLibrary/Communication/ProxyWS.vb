@@ -36,8 +36,7 @@ Namespace AreaEngine.Communication
         ''' This method provides to get a remote data
         ''' </summary>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()>
-        Public Function getData() As String
+        <DebuggerHiddenAttribute()> Public Function getData() As String
             Try
                 Dim request As WebRequest = WebRequest.Create(url)
                 Dim response As WebResponse = request.GetResponse()

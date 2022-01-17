@@ -17,4 +17,8 @@ Public Class Informations
         releaseLabel.Text = Application.ProductVersion
     End Sub
 
+    Private Sub IconsLinkLabel_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles IconsLinkLabel.LinkClicked
+        Process.Start("https://icons8.it/icon/1DQ3UxqezXN2/indietro")
+    End Sub
+
 End Class

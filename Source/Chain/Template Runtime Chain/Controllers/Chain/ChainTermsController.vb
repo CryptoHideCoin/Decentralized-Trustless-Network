@@ -24,8 +24,8 @@ Namespace Controllers
         ''' This method provide to get a Terms and Conditions chain
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue(ByVal name As String) As Models.Chain.Queries.ChainTermsAndConditionsModel
-            Dim result As New Models.Chain.Queries.ChainTermsAndConditionsModel
+        Public Function GetValue(ByVal name As String) As Models.Chain.Response.ChainTermsAndConditionsModel
+            Dim result As New Models.Chain.Response.ChainTermsAndConditionsModel
             Dim privateKeyRAW As String
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()

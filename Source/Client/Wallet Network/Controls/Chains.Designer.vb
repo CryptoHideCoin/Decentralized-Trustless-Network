@@ -35,9 +35,9 @@ Partial Class Chains
         Me.titleControl.Font = New System.Drawing.Font("Verdana", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.titleControl.Location = New System.Drawing.Point(4, 4)
         Me.titleControl.Name = "titleControl"
-        Me.titleControl.Size = New System.Drawing.Size(64, 25)
+        Me.titleControl.Size = New System.Drawing.Size(78, 25)
         Me.titleControl.TabIndex = 12
-        Me.titleControl.Text = "Title"
+        Me.titleControl.Text = "Chain"
         '
         'tokensDataChain
         '

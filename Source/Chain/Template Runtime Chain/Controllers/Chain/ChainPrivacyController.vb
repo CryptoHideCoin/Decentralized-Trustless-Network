@@ -24,8 +24,8 @@ Namespace Controllers
         ''' This method provide to get a policy privacy chain
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue(ByVal name As String) As Models.Chain.Queries.ChainPrivacyPolicyModel
-            Dim result As New Models.Chain.Queries.ChainPrivacyPolicyModel
+        Public Function GetValue(ByVal name As String) As Models.Chain.Response.ChainPrivacyPolicyModel
+            Dim result As New Models.Chain.Response.ChainPrivacyPolicyModel
             Dim privateKeyRAW As String
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()

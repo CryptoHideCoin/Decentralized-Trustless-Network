@@ -4,6 +4,7 @@ Option Explicit On
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
+Imports CHCProtocolLibrary.AreaCommon.Models.Ledger
 
 
 
@@ -140,7 +141,7 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
+            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As SingleTransactionLedger) As Boolean
                 ''' TODO: A0x1 RecoveryState.fromTransactionLedger
             End Function
 
@@ -243,7 +244,7 @@ Namespace AreaProtocol
             ''' <returns></returns>
             Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal detailInformation As String, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
-                    Dim contentPath As String = AreaCommon.state.currentBlockLedger.proposeNewTransaction.pathData.contents
+                    Dim contentPath As String = AreaCommon.state.ledger.proposeNewTransaction.pathData.contents
                     Dim hashContent As String = HashSHA.generateSHA256(detailInformation)
 
                     AreaCommon.log.track("A0x1.Manager.addIntoLedger", "Begin")
@@ -252,7 +253,7 @@ Namespace AreaProtocol
 
                     My.Computer.FileSystem.WriteAllText(contentPath, detailInformation, False)
 
-                    With AreaCommon.state.currentBlockLedger.proposeNewTransaction
+                    With AreaCommon.state.ledger.proposeNewTransaction
                         .type = "a0x1"
                         .approverPublicAddress = approverPublicAddress
                         .consensusHash = consensusHash
@@ -263,7 +264,7 @@ Namespace AreaProtocol
                         .currentHash = .getHash
                     End With
 
-                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
+                    Return AreaCommon.state.ledger.saveAndClean()
 
                 Catch ex As Exception
                     AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
@@ -328,7 +329,7 @@ Namespace AreaProtocol
 
                     With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                         data.whitePaper = whitePaperParameter
-                        data.common.netWorkReferement = AreaCommon.state.runtimeState.activeNetwork.hash
+                        data.common.netWorkReferement = AreaCommon.state.runTimeState.activeNetwork.hash
                         data.common.chainReferement = AreaCommon.state.internalInformation.chainName
                         data.common.type = "a0x1"
                         data.common.publicAddressRequester = .publicAddress

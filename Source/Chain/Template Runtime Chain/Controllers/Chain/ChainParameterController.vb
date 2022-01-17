@@ -22,8 +22,8 @@ Namespace Controllers
         ''' This method provide to get a parameter chain
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue(ByVal name As String) As Models.Chain.Queries.ChainParameterDataModel
-            Dim result As New Models.Chain.Queries.ChainParameterDataModel
+        Public Function GetValue(ByVal name As String) As Models.Chain.Response.ChainParameterDataModel
+            Dim result As New Models.Chain.Response.ChainParameterDataModel
             Dim privateKeyRAW As String
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()

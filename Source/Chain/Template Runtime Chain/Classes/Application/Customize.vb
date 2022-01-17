@@ -8,11 +8,14 @@ Option Explicit On
 
 
 Namespace AreaCommon
+
     Public Class Customize
 
         Public Const chainName As String = "Primary"
         Public Const chainDescription As String = "This chain provides to manage the network, chain and stakeholders"
         Public Const chainProtocolDocument As String = "Protocol Description text"
+
+        Public Const identityBlockChainDefault As String = "A0"
 
         Public Const oneSecond2Milliseconds As Long = 1000
 
@@ -50,4 +53,5 @@ Namespace AreaCommon
         Public Const defaultMinimalMantainInternalRegistryBlock As Long = 5 * oneDay2Milliseconds
 
     End Class
+
 End Namespace

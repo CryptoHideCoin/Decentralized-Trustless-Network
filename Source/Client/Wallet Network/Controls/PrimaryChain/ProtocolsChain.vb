@@ -4,9 +4,9 @@ Option Explicit On
 
 Public Class ProtocolsChain
 
-    Public Event OpenProtocolChain(ByRef data As CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.SingleSetProtocol)
+    Public Event OpenProtocolChain(ByRef data As CHCProtocolLibrary.AreaCommon.Models.Chain.Response.SingleSetProtocol)
 
-    Public Property protocolData As List(Of CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.SingleSetProtocol)
+    Public Property protocolData As List(Of CHCProtocolLibrary.AreaCommon.Models.Chain.Response.SingleSetProtocol)
 
     ''' <summary>
     ''' This method provide to load a data into grid

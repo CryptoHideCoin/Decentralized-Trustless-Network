@@ -18,11 +18,12 @@ Public Class Main
         Informations.ShowDialog()
     End Sub
 
-
     Private Sub hideAllPanels()
         mainBackGround.Visible = False
         dataNetworkContainer.Visible = False
         dataChainContainer.Visible = False
+        dataSupplyContainer.Visible = False
+        dataLedgerContainer.Visible = False
     End Sub
 
     Private Function showMainBackground() As Boolean
@@ -104,6 +105,55 @@ Public Class Main
             dataChainContainer.Dock = DockStyle.Fill
 
             dataChainContainer.type = Chains.ManageType.lastBlock
+
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    Private Function showSupplyPanel() As Boolean
+        Try
+            hideAllPanels()
+
+            dataSupplyContainer.Visible = True
+
+            dataSupplyContainer.Location = New Point(0, 0)
+            dataSupplyContainer.Dock = DockStyle.Fill
+
+            Return dataSupplyContainer.run()
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    Private Function showLedgerSummaryPanel() As Boolean
+        Try
+            hideAllPanels()
+
+            dataLedgerContainer.Visible = True
+
+            dataLedgerContainer.Location = New Point(0, 0)
+            dataLedgerContainer.Dock = DockStyle.Fill
+
+            dataLedgerContainer.type = ledgerPanel.ManageType.summary
+
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    Private Function showLedgerPagePanel() As Boolean
+        Try
+            hideAllPanels()
+
+            dataLedgerContainer.Visible = True
+
+            dataLedgerContainer.Location = New Point(0, 0)
+            dataLedgerContainer.Dock = DockStyle.Fill
+
+            dataLedgerContainer.type = ledgerPanel.ManageType.ledger
 
             Return True
         Catch ex As Exception
@@ -229,4 +279,28 @@ Public Class Main
         showMainBackground()
     End Sub
 
+    Private Sub SupplyToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles supplyToolStripMenuItem.Click
+        showSupplyPanel()
+    End Sub
+
+    Private Sub generalInformationsBlockChainToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles generalInformationsBlockChainToolStripMenuItem.Click
+        showLedgerSummaryPanel()
+    End Sub
+
+    Private Sub monitorLedgerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles monitorLedgerToolStripMenuItem.Click
+        showLedgerPagePanel()
+    End Sub
+
+    Private Sub dataLedgerContainer_Load(sender As Object, e As EventArgs) Handles dataLedgerContainer.Load
+
+    End Sub
+
+    Private Sub dataLedgerContainer_OpenConfiguration() Handles dataLedgerContainer.OpenConfiguration
+        ConfigurationManager.ShowDialog()
+
+        dataLedgerContainer.Visible = False
+        CurrentChainToolStripMenuItem.Enabled = False
+
+        showMainBackground()
+    End Sub
 End Class

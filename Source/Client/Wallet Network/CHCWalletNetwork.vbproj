@@ -31,7 +31,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\Masternode\Applications\Windows\Explorer Client\OXEANIX\</OutputPath>
     <DocumentationFile>CHCWalletNetwork.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -55,7 +55,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.7.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.7.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
@@ -96,10 +96,34 @@
     <Compile Include="Controls\Background.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\BlockChainInformation.Designer.vb">
+      <DependentUpon>BlockChainInformation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BlockChainInformation.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\GenericInformation.Designer.vb">
       <DependentUpon>GenericInformation.vb</DependentUpon>
     </Compile>
     <Compile Include="Controls\GenericInformation.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LedgerExplorer\LedgerPage.Designer.vb">
+      <DependentUpon>LedgerPage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LedgerExplorer\LedgerPage.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LedgerExplorer\SummaryLedgerPanel.Designer.vb">
+      <DependentUpon>SummaryLedgerPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LedgerExplorer\SummaryLedgerPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LedgerExplorer\TransactionDetail.Designer.vb">
+      <DependentUpon>TransactionDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LedgerExplorer\TransactionDetail.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\Network\AssetInformation.Designer.vb">
@@ -204,6 +228,24 @@
     <Compile Include="Controls\PrimaryChain\TokensChain.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\SupplyPanel.Designer.vb">
+      <DependentUpon>SupplyPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SupplyPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Supply\SupplyDetail.Designer.vb">
+      <DependentUpon>SupplyDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Supply\SupplyDetail.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Supply\SupplyInformations.Designer.vb">
+      <DependentUpon>SupplyInformations.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Supply\SupplyInformations.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Forms\ConfigurationManager.Designer.vb">
       <DependentUpon>ConfigurationManager.vb</DependentUpon>
     </Compile>
@@ -251,8 +293,20 @@
     <EmbeddedResource Include="Controls\Background.resx">
       <DependentUpon>Background.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\BlockChainInformation.resx">
+      <DependentUpon>BlockChainInformation.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\GenericInformation.resx">
       <DependentUpon>GenericInformation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LedgerExplorer\LedgerPage.resx">
+      <DependentUpon>LedgerPage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LedgerExplorer\SummaryLedgerPanel.resx">
+      <DependentUpon>SummaryLedgerPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LedgerExplorer\TransactionDetail.resx">
+      <DependentUpon>TransactionDetail.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Network\AssetInformation.resx">
       <DependentUpon>AssetInformation.vb</DependentUpon>
@@ -305,6 +359,15 @@
     <EmbeddedResource Include="Controls\PrimaryChain\TokensChain.resx">
       <DependentUpon>TokensChain.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SupplyPanel.resx">
+      <DependentUpon>SupplyPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Supply\SupplyDetail.resx">
+      <DependentUpon>SupplyDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Supply\SupplyInformations.resx">
+      <DependentUpon>SupplyInformations.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConfigurationManager.resx">
       <DependentUpon>ConfigurationManager.vb</DependentUpon>
     </EmbeddedResource>
@@ -342,6 +405,7 @@
   <ItemGroup>
     <Content Include="Resources\64.ico" />
     <Content Include="Resources\BigBanner.jpg" />
+    <Content Include="Resources\icons8-indietro-24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

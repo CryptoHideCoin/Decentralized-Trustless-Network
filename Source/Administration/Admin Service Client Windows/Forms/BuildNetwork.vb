@@ -58,7 +58,7 @@ Public Class BuildNetwork
                     .symbol = symbolText.Text
                     .digit = digitText.Value
                     .nameUnit = nameUnitText.Text
-                    .type = CHCProtocolLibrary.AreaCommon.Models.Network.AssetModel.AssetTypeEnum.coin
+                    .type = CHCProtocolLibrary.AreaCommon.Models.PrimaryChain.AssetModel.AssetTypeEnum.coin
                     .netWorkReferement = ""
                 End With
                 With .primaryAsset.assetPolicyInformation

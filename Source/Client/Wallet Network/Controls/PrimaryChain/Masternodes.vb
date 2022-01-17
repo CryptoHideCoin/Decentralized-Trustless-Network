@@ -24,7 +24,7 @@ Public Class ChainMasternodes
     Private Function loadMasterNodesPage() As Boolean
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            Dim remote As New ProxyWS(Of Models.Chain.Queries.ChainMasterNodeModel)
+            Dim remote As New ProxyWS(Of Models.Chain.Response.ChainMasterNodeModel)
             Dim proceed As Boolean = True
 
             If proceed Then

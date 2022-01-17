@@ -53,8 +53,8 @@ Namespace Controllers
         ''' This method provide to get a Tokens Configuration chain
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue(ByVal pageIndex As Integer, ByVal name As String) As Models.Chain.Queries.ChainMasterNodeModel
-            Dim result As New Models.Chain.Queries.ChainMasterNodeModel
+        Public Function GetValue(ByVal pageIndex As Integer, ByVal name As String) As Models.Chain.Response.ChainMasterNodeModel
+            Dim result As New Models.Chain.Response.ChainMasterNodeModel
             Dim privateKeyRAW As String
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()

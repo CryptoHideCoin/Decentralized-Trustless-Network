@@ -2,7 +2,7 @@
 Option Explicit On
 
 Imports System.Data.SQLite
-Imports TransactionChainLibrary.AreaCommon.DAO
+Imports CHCLedgerLibrary.AreaDataAccess.Generic
 
 
 

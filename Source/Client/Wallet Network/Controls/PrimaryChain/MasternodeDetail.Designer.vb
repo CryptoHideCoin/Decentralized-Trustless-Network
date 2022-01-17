@@ -22,8 +22,8 @@ Partial Class MasternodeDetail
     'Non modificarla mediante l'editor del codice.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.identityPublicAddress = New System.Windows.Forms.TextBox()
         Me.identityPublicAddressLabel = New System.Windows.Forms.Label()
         Me.startConnectionTimeStamp = New System.Windows.Forms.TextBox()
@@ -213,14 +213,14 @@ Partial Class MasternodeDetail
         Me.addressIPDataGrid.AllowUserToAddRows = False
         Me.addressIPDataGrid.AllowUserToDeleteRows = False
         Me.addressIPDataGrid.AllowUserToResizeColumns = False
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.addressIPDataGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.addressIPDataGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.addressIPDataGrid.ColumnHeadersHeight = 24
         Me.addressIPDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.addressIPDataGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.publicAddressIP, Me.main})
@@ -244,8 +244,8 @@ Partial Class MasternodeDetail
         '
         'main
         '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.main.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.main.DefaultCellStyle = DataGridViewCellStyle2
         Me.main.HeaderText = "Main"
         Me.main.Name = "main"
         Me.main.ReadOnly = True
@@ -253,7 +253,7 @@ Partial Class MasternodeDetail
         'power
         '
         Me.power.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.power.currentFormat = ""
+        Me.power.currentFormat = "#,##0.00"
         Me.power.Location = New System.Drawing.Point(580, 215)
         Me.power.locationCode = "it-IT"
         Me.power.Name = "power"

@@ -4,13 +4,12 @@ Option Explicit On
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
+Imports CHCProtocolLibrary.AreaCommon.Models.Ledger
 
 
 
 
 Namespace AreaProtocol
-
-
 
     ''' <summary>
     ''' This class contain all element to manage a A2x2 command
@@ -158,7 +157,7 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Public Shared Function fromTransactionLedger(ByRef value As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
+            Public Shared Function fromTransactionLedger(ByRef value As SingleTransactionLedger) As Boolean
                 ''' TODO: A2x1 RecoveryState.fromTransactionLedger
             End Function
 
@@ -263,7 +262,7 @@ Namespace AreaProtocol
             ''' <returns></returns>
             Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal value As EssentialA2x2, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
-                    Dim contentPath As String = AreaCommon.state.currentBlockLedger.proposeNewTransaction.pathData.contents
+                    Dim contentPath As String = AreaCommon.state.ledger.proposeNewTransaction.pathData.contents
                     Dim hash As String = value.getHash()
 
                     AreaCommon.log.track("A2x2.Manager.addIntoLedger", "Begin")
@@ -271,7 +270,7 @@ Namespace AreaProtocol
                     contentPath = IO.Path.Combine(contentPath, hash & ".Content")
 
                     If IOFast(Of EssentialA2x2).save(contentPath, value) Then
-                        With AreaCommon.state.currentBlockLedger.proposeNewTransaction
+                        With AreaCommon.state.ledger.proposeNewTransaction
                             .type = "a2x2"
                             .approverPublicAddress = approverPublicAddress
                             .consensusHash = consensusHash
@@ -282,7 +281,7 @@ Namespace AreaProtocol
                             .currentHash = .getHash
                         End With
 
-                        Return AreaCommon.state.currentBlockLedger.saveAndClean()
+                        Return AreaCommon.state.ledger.saveAndClean()
                     Else
                         Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                     End If

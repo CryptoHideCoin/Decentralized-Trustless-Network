@@ -121,7 +121,9 @@ Namespace AreaService
 
                 AreaCommon.log.track("ServiceParameterEngine.addNetworkProperty", "Begin")
 
+                ''' BOOKMARK: To close in 2 min.
                 result.blockSizeFrequency = decodeValue(data.blockSizeFrequency)
+                'result.blockSizeFrequency = 120000
                 result.maxTimeOutNotEvaluateNode = decodeValue(data.maxTimeOutNotEvaluateNode)
                 result.maxTimeOutNotRespondNode = decodeValue(data.maxTimeOutNotRespondNode)
                 result.minimalMaintainBulletines = decodeValue(data.minimalMaintainBulletines)

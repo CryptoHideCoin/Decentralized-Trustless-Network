@@ -49,13 +49,21 @@ Public Class AppState
     Public Property network As New CHCRuntimeChainLibrary.AreaRuntime.AppState.ConnectionNetwork
     Public Property component As New ComponentElement
     Public Property runTimeState As New AreaState.ChainStateEngine
-    Public Property currentBlockLedger As New TransactionChainLibrary.AreaLedger.LedgerEngine
-    Public Property ledgerMap As New TransactionChainLibrary.AreaLedger.LedgerMapEngine
+
+    Public Property ledger As New CHCLedgerLibrary.AreaLedger.LedgerEngine
+
     Public Property serviceParameters As New AreaService.ServiceParameters
 
     Public Property noConsoleMessage As Boolean = False
 
     Public Property publicIpAddress As String = ""
     Public Property localIpAddress As String = ""
+
+
+    Public Sub New()
+
+        ledger.header.identifyLedger = AreaCommon.Customize.identityBlockChainDefault
+
+    End Sub
 
 End Class

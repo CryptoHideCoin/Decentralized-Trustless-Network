@@ -88,10 +88,7 @@ Namespace AreaCommon.Models.General
 
     End Class
 
-    ''' <summary>
-    ''' This base class contain the information reguard the response remote of a communication with the webservice
-    ''' </summary>
-    Public Class RemoteResponse
+    Public Class BaseRemoteResponse
 
         Public Enum EnumResponseStatus
             responseComplete
@@ -102,7 +99,6 @@ Namespace AreaCommon.Models.General
             inError
         End Enum
 
-        Public Property integrityTransactionChain As New IdentifyLastTransaction
         Public Property responseStatus As EnumResponseStatus = EnumResponseStatus.responseComplete
         Public Property errorDescription As String = ""
         Public Property requestTime As String = ""
@@ -110,6 +106,40 @@ Namespace AreaCommon.Models.General
         Public Property masterNodePublicAddress As String = ""
 
         Public Overridable Property signature As String = ""
+
+        ''' <summary>
+        ''' This method provide to extend the method ToString 
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Overrides Function toString() As String
+            Dim result As String = ""
+
+            result += masterNodePublicAddress
+            result += requestTime
+
+            Select Case responseStatus
+                Case EnumResponseStatus.responseComplete : result += "1"
+                Case EnumResponseStatus.commandNotAllowed : result += "2"
+                Case EnumResponseStatus.missingAuthorization : result += "3"
+                Case EnumResponseStatus.systemOffline : result += "4"
+                Case EnumResponseStatus.inError : result += "5"
+            End Select
+
+            result += responseTime
+
+            Return result
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' This base class contain the information reguard the response remote of a communication with the webservice
+    ''' </summary>
+    Public Class RemoteResponse
+
+        Inherits BaseRemoteResponse
+
+        Public Property integrityTransactionChain As New IdentifyLastTransaction
 
         ''' <summary>
         ''' This method provide to extend the method ToString 

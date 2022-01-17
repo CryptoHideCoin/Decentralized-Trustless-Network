@@ -15,3 +15,5 @@ Release Note
 1.7.1   - 22.12.2021 - Add code manage serialize text
 1.7.2   - 29.12.2021 - Add a query chain
 1.7.3   - 02.01.2022 - Complete a new query model chain
+1.7.4	- 04.01.2022 - Support to Supply Information of Primary Chain
+1.7.5   - 10.01.2022 - Class querty blockchain

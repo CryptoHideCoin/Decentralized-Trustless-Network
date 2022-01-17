@@ -22,8 +22,8 @@ Namespace Controllers
         ''' This method provide to get a protocol chain
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue(ByVal name As String) As Models.Chain.Queries.ChainProtocolDataModel
-            Dim result As New Models.Chain.Queries.ChainProtocolDataModel
+        Public Function GetValue(ByVal name As String) As Models.Chain.Response.ChainProtocolDataModel
+            Dim result As New Models.Chain.Response.ChainProtocolDataModel
             Dim privateKeyRAW As String
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
@@ -39,11 +39,6 @@ Namespace Controllers
                         For Each item In AreaCommon.state.runTimeState.chainByName(name).protocolSets
                             result.value.Add(item)
                         Next
-
-                        result.integrityTransactionChain.coordinate = "(single value)"
-                        result.integrityTransactionChain.hash = "(single value)"
-                        result.integrityTransactionChain.progressiveHash = "(single value)"
-                        result.integrityTransactionChain.registrationTimeStamp = 0
 
                         result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, result.getHash())
                     Else

@@ -69,3 +69,12 @@ E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.Tok
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.ChainMasternodes.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.MasternodeDetail.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.Guarantors.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.SupplyDetail.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.SupplyInformations.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.SupplyPanel.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.SummaryLedgerPanel.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.ledgerPanel.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCProtocolLibrary.xml
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.LedgerPage.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.TransactionDetail.resources

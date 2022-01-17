@@ -4,6 +4,7 @@ Option Explicit On
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
+Imports CHCProtocolLibrary.AreaCommon.Models.Ledger
 
 
 
@@ -141,7 +142,7 @@ Namespace AreaProtocol
             End Function
 
 
-            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
+            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As SingleTransactionLedger) As Boolean
                 ''' TODO: A0x2 RecoveryState.fromTransactionLedger
             End Function
 
@@ -244,7 +245,7 @@ Namespace AreaProtocol
             ''' <returns></returns>
             Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal detailInformation As String, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
-                    Dim contentPath As String = AreaCommon.state.currentBlockLedger.proposeNewTransaction.pathData.contents
+                    Dim contentPath As String = AreaCommon.state.ledger.proposeNewTransaction.pathData.contents
                     Dim hashContent As String = HashSHA.generateSHA256(detailInformation)
 
                     AreaCommon.log.track("A0x2.Manager.addIntoLedger", "Begin")
@@ -253,7 +254,7 @@ Namespace AreaProtocol
 
                     My.Computer.FileSystem.WriteAllText(contentPath, detailInformation, False)
 
-                    With AreaCommon.state.currentBlockLedger.proposeNewTransaction
+                    With AreaCommon.state.ledger.proposeNewTransaction
                         .type = "a0x2"
                         .approverPublicAddress = approverPublicAddress
                         .consensusHash = consensusHash
@@ -264,7 +265,7 @@ Namespace AreaProtocol
                         .currentHash = .getHash
                     End With
 
-                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
+                    Return AreaCommon.state.ledger.saveAndClean()
 
                 Catch ex As Exception
                     AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)

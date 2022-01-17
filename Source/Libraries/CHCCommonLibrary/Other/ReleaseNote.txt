@@ -1,6 +1,7 @@
 Release Note
 ============
 
+1.12.5	- 10.01.2022 - Add BaseResponse
 1.12.4  - 30.12.2021 - Format GMT string
 1.12.3  - 22.12.2021 - decode symbol
 1.12.2  - 15.10.2021 - Supporto Newton.Json 6

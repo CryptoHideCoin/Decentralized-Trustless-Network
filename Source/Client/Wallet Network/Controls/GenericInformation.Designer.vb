@@ -52,9 +52,9 @@ Partial Class GenericInformation
         Me.titlePage.Font = New System.Drawing.Font("Verdana", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.titlePage.Location = New System.Drawing.Point(4, 4)
         Me.titlePage.Name = "titlePage"
-        Me.titlePage.Size = New System.Drawing.Size(64, 25)
+        Me.titlePage.Size = New System.Drawing.Size(113, 25)
         Me.titlePage.TabIndex = 0
-        Me.titlePage.Text = "Title"
+        Me.titlePage.Text = "Network"
         '
         'mainTab
         '
@@ -87,6 +87,7 @@ Partial Class GenericInformation
         Me.refundPlanContent.Location = New System.Drawing.Point(361, 6)
         Me.refundPlanContent.Name = "refundPlanContent"
         Me.refundPlanContent.Size = New System.Drawing.Size(348, 135)
+        Me.refundPlanContent.symbolCurrency = ""
         Me.refundPlanContent.TabIndex = 4
         '
         'transactionChainContent

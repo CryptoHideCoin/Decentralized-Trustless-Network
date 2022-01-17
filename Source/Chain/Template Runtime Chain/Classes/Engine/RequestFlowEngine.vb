@@ -25,7 +25,7 @@ Namespace AreaFlow
 
         Private _RemoteBulletin As New List(Of AreaConsensus.BulletinInformation)
 
-        Private _RequestManager As New TransactionChainLibrary.AreaEngine.Requests.RequestManager
+        Private _RequestManager As New CHCLedgerLibrary.AreaEngine.Requests.RequestManager
 
         Public Enum EnumPhases
             toSelect
@@ -417,9 +417,9 @@ Namespace AreaFlow
                 _RequestProcessed.Add(item.dataCommon.hash, item)
 
                 If rejected Or (item.position.process <> EnumOperationPosition.completeWithPositiveResult) Then
-                    _RequestManager.completedRequest(item.dataCommon.hash, TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.rejected, block)
+                    _RequestManager.completedRequest(item.dataCommon.hash, CHCLedgerLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.rejected, block)
                 Else
-                    _RequestManager.completedRequest(item.dataCommon.hash, TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.stored, block)
+                    _RequestManager.completedRequest(item.dataCommon.hash, CHCLedgerLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.stored, block)
                 End If
 
                 AreaCommon.log.track("RequestFlowEngine.setRequestProcessed", "Completed")
@@ -570,7 +570,7 @@ Namespace AreaFlow
         Public Function getRequest(ByVal hash As String) As RequestExtended
             Try
                 Dim result As RequestExtended
-                Dim request As TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData
+                Dim request As CHCLedgerLibrary.AreaEngine.Requests.RequestManager.RequestData
 
                 AreaCommon.log.track("RequestFlowEngine.getRequest", "Begin")
 
@@ -580,7 +580,7 @@ Namespace AreaFlow
                     request = _RequestManager.getRequest(hash)
 
                     If (request.hash.Length > 0) Then
-                        Dim requestPath As String = AreaCommon.state.ledgerMap.getRequestPath(request.block)
+                        Dim requestPath As String = AreaCommon.state.ledger.getRequestPath(request.block)
 
                         If (requestPath.Length > 0) Then
                             Select Case request.type
@@ -887,7 +887,7 @@ Namespace AreaFlow
         ''' <param name="minimalMaintenanceRejectFile"></param>
         ''' <param name="state"></param>
         ''' <returns></returns>
-        Public Function getFileList(ByVal minimalMaintenanceRejectFile As Double, ByVal state As TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest) As List(Of String)
+        Public Function getFileList(ByVal minimalMaintenanceRejectFile As Double, ByVal state As CHCLedgerLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest) As List(Of String)
             Try
                 AreaCommon.log.track("RequestFlowEngine.getFileList", "Begin")
 

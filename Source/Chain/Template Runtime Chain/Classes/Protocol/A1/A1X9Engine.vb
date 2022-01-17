@@ -4,6 +4,7 @@ Option Explicit On
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
+Imports CHCProtocolLibrary.AreaCommon.Models.Ledger
 
 
 
@@ -11,7 +12,7 @@ Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
 Namespace AreaProtocol
 
     ''' <summary>
-    ''' This class contain all element to manage a A1x8 command
+    ''' This class contain all element to manage a A1x9 command
     ''' </summary>
     Public Class A1x9
 
@@ -119,7 +120,7 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
+            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As SingleTransactionLedger) As Boolean
                 ''' TODO: A1x9 RecoveryState.fromTransactionLedger
             End Function
 
@@ -225,7 +226,7 @@ Namespace AreaProtocol
                 Try
                     AreaCommon.log.track("A1x9.Manager.addIntoLedger", "Begin")
 
-                    With AreaCommon.state.currentBlockLedger.proposeNewTransaction
+                    With AreaCommon.state.ledger.proposeNewTransaction
                         .type = "a1x9"
                         .approverPublicAddress = approverPublicAddress
                         .consensusHash = consensusHash
@@ -236,15 +237,15 @@ Namespace AreaProtocol
                         .currentHash = .getHash
                     End With
 
-                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
+                    Return AreaCommon.state.ledger.saveAndClean()
                 Catch ex As Exception
                     AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
 
-                    AreaCommon.log.track("A1x10.Manager.addIntoLedger", ex.Message, "fatal")
+                    AreaCommon.log.track("A1x9.Manager.addIntoLedger", ex.Message, "fatal")
 
                     Return New CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Finally
-                    AreaCommon.log.track("A1x10.Manager.addIntoLedger", "Completed")
+                    AreaCommon.log.track("A1x9.Manager.addIntoLedger", "Completed")
                 End Try
             End Function
 
@@ -291,14 +292,14 @@ Namespace AreaProtocol
                 Try
                     Dim data As New RequestModel
 
-                    AreaCommon.log.track("A1x10Manager.createInternalRequest", "Begin")
+                    AreaCommon.log.track("A1x9Manager.createInternalRequest", "Begin")
 
                     If AreaCommon.state.currentService.requestCancelCurrentRunCommand Then Return False
 
                     With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                         data.common.netWorkReferement = AreaCommon.state.runTimeState.activeNetwork.hash
                         data.common.chainReferement = AreaCommon.state.internalInformation.chainName
-                        data.common.type = "a1x10"
+                        data.common.type = "a1x9"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                         data.common.hash = data.getHash()
@@ -306,7 +307,7 @@ Namespace AreaProtocol
                     End With
 
                     If saveTemporallyRequest(data) Then
-                        AreaCommon.log.track("A1x10Manager.createInternalRequest", "request - Saved")
+                        AreaCommon.log.track("A1x9Manager.createInternalRequest", "request - Saved")
 
                         If AreaCommon.flow.addNewRequestDirect(data) Then
                             Return data.common.hash
@@ -317,9 +318,9 @@ Namespace AreaProtocol
                 Catch ex As Exception
                     AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
 
-                    AreaCommon.log.track("A1x10Manager.createInternalRequest", ex.Message, "fatal")
+                    AreaCommon.log.track("A1x9Manager.createInternalRequest", ex.Message, "fatal")
                 Finally
-                    AreaCommon.log.track("A1x10Manager.createInternalRequest", "Completed")
+                    AreaCommon.log.track("A1x9Manager.createInternalRequest", "Completed")
                 End Try
 
                 Return ""

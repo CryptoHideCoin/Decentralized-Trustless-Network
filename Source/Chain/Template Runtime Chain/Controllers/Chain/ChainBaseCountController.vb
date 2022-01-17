@@ -22,8 +22,8 @@ Namespace Controllers
         ''' This method provide to get a value of Primary Asset
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue() As Models.Chain.Queries.ChainCountModel
-            Dim result As New Models.Chain.Queries.ChainCountModel
+        Public Function GetValue() As Models.Chain.Response.ChainCountModel
+            Dim result As New Models.Chain.Response.ChainCountModel
             Dim privateKeyRAW As String
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
@@ -35,10 +35,7 @@ Namespace Controllers
                         privateKeyRAW = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).privateKey
 
                         result.masterNodePublicAddress = AreaCommon.state.network.publicAddressIdentity
-                        result.integrityTransactionChain.coordinate = "---"
-                        result.integrityTransactionChain.hash = "---"
-                        result.integrityTransactionChain.progressiveHash = "---"
-                        result.integrityTransactionChain.registrationTimeStamp = 0
+
                         result.value = AreaCommon.state.runTimeState.chainByName.Count
 
                         result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, result.getHash())

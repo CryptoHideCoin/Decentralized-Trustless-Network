@@ -49,3 +49,8 @@ E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportU
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.ConfigurePath.resources
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.DialogChangeCertificate.resources
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.PrivateKey.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\CHCProtocolLibrary.xml
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\CHCCommonLibrary.xml
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\Newtonsoft.Json.xml

@@ -22,8 +22,8 @@ Namespace Controllers
         ''' This method provide to get a price list of a chain
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue(ByVal name As String) As Models.Chain.Queries.ChainPriceListDataModel
-            Dim result As New Models.Chain.Queries.ChainPriceListDataModel
+        Public Function GetValue(ByVal name As String) As Models.Chain.Response.ChainPriceListDataModel
+            Dim result As New Models.Chain.Response.ChainPriceListDataModel
             Dim privateKeyRAW As String
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()

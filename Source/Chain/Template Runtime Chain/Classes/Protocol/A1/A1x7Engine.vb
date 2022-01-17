@@ -4,6 +4,7 @@ Option Explicit On
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Json
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCPrimaryRuntimeService.AreaCommon.Models.Network.Request
+Imports CHCProtocolLibrary.AreaCommon.Models.Ledger
 
 
 
@@ -132,7 +133,7 @@ Namespace AreaProtocol
                 End Try
             End Function
 
-            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As TransactionChainLibrary.AreaLedger.SingleTransactionLedger) As Boolean
+            Public Shared Function fromTransactionLedger(ByVal statePath As String, ByRef data As SingleTransactionLedger) As Boolean
                 ''' TODO: A1x7 RecoveryState.fromTransactionLedger
             End Function
 
@@ -234,11 +235,11 @@ Namespace AreaProtocol
             ''' <returns></returns>
             Shared Function addIntoLedger(ByVal approverPublicAddress As String, ByVal consensusHash As String, ByVal registrationTimeStamp As String, ByVal requesterPublicAddress As String, ByVal requestHash As String) As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
                 Try
-                    Dim contentPath As String = AreaCommon.state.currentBlockLedger.proposeNewTransaction.pathData.contents
+                    Dim contentPath As String = AreaCommon.state.ledger.proposeNewTransaction.pathData.contents
 
                     AreaCommon.log.track("A1x7.Manager.addIntoLedger", "Begin")
 
-                    With AreaCommon.state.currentBlockLedger.proposeNewTransaction
+                    With AreaCommon.state.ledger.proposeNewTransaction
                         .type = "a1x7"
                         .approverPublicAddress = approverPublicAddress
                         .consensusHash = consensusHash
@@ -249,7 +250,7 @@ Namespace AreaProtocol
                         .currentHash = .getHash
                     End With
 
-                    Return AreaCommon.state.currentBlockLedger.saveAndClean()
+                    Return AreaCommon.state.ledger.saveAndClean()
                 Catch ex As Exception
                     AreaCommon.state.currentService.currentAction.setError(Err.Number, ex.Message)
 
@@ -383,7 +384,7 @@ Namespace AreaProtocol
             ''' <param name="pathBlock"></param>
             Shared Sub postCloseBlock(ByVal pathBlock As CHCProtocolLibrary.AreaSystem.VirtualPathEngine.LedgerBlockPath)
                 Try
-                    Dim finalizeBlockEngine As New TransactionChainLibrary.AreaLedger.LedgerSupportEngine
+                    Dim finalizeBlockEngine As New CHCLedgerLibrary.AreaLedger.LedgerSupportEngine
                     Dim proceed As Boolean = True, haveRejectOrTrash As Boolean = False
                     Dim requestBlockList As List(Of String)
                     Dim consensusBlockList As List(Of String)
@@ -398,9 +399,9 @@ Namespace AreaProtocol
 
                     With finalizeBlockEngine.headerData
 
-                        .blockChainIdentity = AreaCommon.state.currentBlockLedger.identifyBlockChain
-                        .blockIdentity = AreaCommon.state.currentBlockLedger.lastBlockClosed.blockIdentity
-                        .hashBlock = AreaCommon.state.currentBlockLedger.lastBlockClosed.hash
+                        .blockChainIdentity = AreaCommon.state.ledger.header.identifyLedger
+                        .blockIdentity = AreaCommon.state.ledger.lastBlockClosed.blockIdentity
+                        .hashBlock = AreaCommon.state.ledger.lastBlockClosed.hash
                         .chainReferement = AreaCommon.state.internalInformation.chainName
                         .netWorkReferement = AreaCommon.state.runTimeState.activeNetwork.hash
 
@@ -410,7 +411,7 @@ Namespace AreaProtocol
                         proceed = finalizeBlockEngine.init()
                     End If
                     If proceed Then
-                        proceed = AreaCommon.state.ledgerMap.updateBlockPath(AreaCommon.state.currentBlockLedger.lastBlockClosed.blockIdentity, AreaCommon.state.currentBlockLedger.lastBlockClosed.hash)
+                        proceed = AreaCommon.state.ledger.updateBlockPath(AreaCommon.state.ledger.lastBlockClosed.blockIdentity, AreaCommon.state.ledger.lastBlockClosed.hash)
                     End If
                     If proceed Then
                         requestBlockList = AreaCommon.flow.getBlockList(AreaCommon.state.serviceParameters.minimalMaintainRequest)
@@ -440,7 +441,7 @@ Namespace AreaProtocol
                         proceed = AreaCommon.flow.removeOldRequestDB(AreaCommon.state.serviceParameters.minimalMaintainRequest)
                     End If
                     If proceed Then
-                        requestList = AreaCommon.flow.getFileList(AreaCommon.state.serviceParameters.minimalMaintainRejected, TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.rejected)
+                        requestList = AreaCommon.flow.getFileList(AreaCommon.state.serviceParameters.minimalMaintainRejected, CHCLedgerLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.rejected)
 
                         If (requestList.Count > 0) Then
                             haveRejectOrTrash = True
@@ -449,7 +450,7 @@ Namespace AreaProtocol
                         End If
                     End If
                     If proceed Then
-                        requestList = AreaCommon.flow.getFileList(AreaCommon.state.serviceParameters.minimalMaintainTrashed, TransactionChainLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.trashed)
+                        requestList = AreaCommon.flow.getFileList(AreaCommon.state.serviceParameters.minimalMaintainTrashed, CHCLedgerLibrary.AreaEngine.Requests.RequestManager.RequestData.stateRequest.trashed)
 
                         If (requestList.Count > 0) Then
                             haveRejectOrTrash = True
@@ -483,7 +484,7 @@ Namespace AreaProtocol
             Shared Function finalizeBlock(ByVal requestHash As String, ByVal currentBlock As String) As Boolean
                 Try
                     Dim proceed As Boolean = True
-                    Dim currentPath As CHCProtocolLibrary.AreaSystem.VirtualPathEngine.LedgerBlockPath = AreaCommon.state.currentBlockLedger.approvedTransaction.pathData
+                    Dim currentPath As CHCProtocolLibrary.AreaSystem.VirtualPathEngine.LedgerBlockPath = AreaCommon.state.ledger.approvedTransaction.pathData
 
                     AreaCommon.log.track("Manager.finalizeBlock", "Begin")
 
@@ -491,7 +492,7 @@ Namespace AreaProtocol
                         firstRequestCloseBlock.data = ""
                         firstRequestCloseBlock.minimalRequestClose = 0
 
-                        proceed = AreaCommon.state.currentBlockLedger.changeBlock(AreaCommon.state.serviceParameters.numberBlockInVolume)
+                        proceed = AreaCommon.state.ledger.changeBlock(AreaCommon.state.serviceParameters.numberBlockInVolume)
                     End If
                     If proceed Then
                         Dim work1 As New Threading.Thread(Sub() AreaProtocol.A1x7.Manager.postCloseBlock(currentPath))

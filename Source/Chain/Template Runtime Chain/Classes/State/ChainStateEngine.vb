@@ -59,9 +59,9 @@ Namespace AreaState
 
             Public Property parameters As New PrimaryStateModel.ParameterIdentityStructure
 
-            Public Property protocolSets As New List(Of CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.SingleSetProtocol)
+            Public Property protocolSets As New List(Of Response.SingleSetProtocol)
             Public Property priceList As New PrimaryStateModel.ChainPriceListStructure
-            Public Property tokens As New List(Of CHCProtocolLibrary.AreaCommon.Models.Chain.AssetStructure)
+            Public Property tokens As New List(Of AssetStructure)
             Public Property privacyPolicy As New PrimaryStateModel.ItemIdentityStructure
             Public Property termsAndConditions As New PrimaryStateModel.ItemIdentityStructure
             Public Property lastCloseBlock As New PrimaryStateModel.ItemIdentityStructure
@@ -116,9 +116,20 @@ Namespace AreaState
 
         End Class
 
+        ''' <summary>
+        ''' This class contain all element relative a supply of the asset of a network
+        ''' </summary>
+        Public Class DataSupply
+
+            Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+
+            Public Property value As New CHCProtocolLibrary.AreaCommon.Models.Supply.SupplyInformationModel
+
+        End Class
+
         Private Property _DBNetwork As New AreaCommon.DAO.DBNetwork
         Private Property _DBChain As New AreaCommon.DAO.DBChain
-        Private Property chains As New List(Of DataChain)
+        Private Property _Chains As New List(Of DataChain)
 
 
         Public Property activeNetwork As New PrimaryStateModel.DataNetwork
@@ -126,6 +137,8 @@ Namespace AreaState
 
         Public Property chainByName As New Dictionary(Of String, DataChain)
         Public Property chainByID As New Dictionary(Of Integer, DataChain)
+
+        Public Property supply As New DataSupply
 
 
         ''' <summary>
@@ -154,7 +167,9 @@ Namespace AreaState
 
                 If _DBNetwork.updatePropertNetworky(id, value, transactionChainRecord, hashContent, writeValueOnDB) Then
                     Select Case id
-                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.networkCreationDate : activeNetwork.networkCreationDate = value
+                        Case AreaCommon.DAO.DBNetwork.MainPropertyID.networkCreationDate
+                            activeNetwork.networkCreationDate = value
+                            AreaCommon.state.ledger.header.createLedgerTimeStamp = value
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.genesisPublicAddress : activeNetwork.genesisPublicAddress = value
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.networkName
                             activeNetwork.networkName.value = value
@@ -273,7 +288,7 @@ Namespace AreaState
 
                     chainByName.Add(name, newValue)
                     chainByID.Add(id, newValue)
-                    chains.Add(newValue)
+                    _Chains.Add(newValue)
                 End If
 
                 AreaCommon.log.track("ChainStateEngine.addNewChain", "Completed")
@@ -303,7 +318,7 @@ Namespace AreaState
 
                 chainByName.Add("Genesis", newValue)
                 chainByID.Add(0, newValue)
-                chains.Add(newValue)
+                _Chains.Add(newValue)
 
                 AreaCommon.log.track("ChainStateEngine.addGenesisChain", "Completed")
 
@@ -327,7 +342,7 @@ Namespace AreaState
                 AreaCommon.log.track("ChainStateEngine.updateNewProtocol", "Begin")
 
                 Dim chain As DataChain
-                Dim protocolData As New CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.SingleSetProtocol
+                Dim protocolData As New CHCProtocolLibrary.AreaCommon.Models.Chain.Response.SingleSetProtocol
 
                 chain = chainByName(chainReferement)
 
@@ -686,7 +701,7 @@ Namespace AreaState
 
                 For Each singleNode In chain.internalNodeList.Values
                     If (singleNode.role = RoleMasterNode.validator) Or
-                       (singleNode.role = RoleMasterNode.fullStack) Then
+                    (singleNode.role = RoleMasterNode.fullStack) Then
                         result.Add(singleNode)
                     End If
                 Next
@@ -713,12 +728,12 @@ Namespace AreaState
 
                 AreaCommon.log.track("ChainStateEngine.getDataPageChainByNumber", "Begin")
 
-                If (chains.Count > ((value - 1) * 10)) Then
+                If (_Chains.Count > ((value - 1) * 10)) Then
                     For i As Integer = 1 To 10
                         index = i + (value - 1) * 10
 
-                        If (index <= chains.Count - 1) Then
-                            result.Add(chains.ElementAt(index).extractMinimalData())
+                        If (index <= _Chains.Count - 1) Then
+                            result.Add(_Chains.ElementAt(index).extractMinimalData())
                         Else
                             Exit For
                         End If

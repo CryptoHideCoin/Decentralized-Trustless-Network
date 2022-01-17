@@ -22,8 +22,8 @@ Namespace Controllers
         ''' This method provide to get a Tokens Configuration chain
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue(ByVal name As String) As Models.Chain.Queries.ChainTokenListModel
-            Dim result As New Models.Chain.Queries.ChainTokenListModel
+        Public Function GetValue(ByVal name As String) As Models.Chain.Response.ChainTokenListModel
+            Dim result As New Models.Chain.Response.ChainTokenListModel
             Dim privateKeyRAW As String
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
@@ -37,11 +37,6 @@ Namespace Controllers
                         result.masterNodePublicAddress = AreaCommon.state.network.publicAddressIdentity
 
                         result.value = AreaCommon.state.runTimeState.chainByName(name).tokens
-
-                        result.integrityTransactionChain.coordinate = "(not set)"
-                        result.integrityTransactionChain.hash = "(not set)"
-                        result.integrityTransactionChain.progressiveHash = "(not set)"
-                        result.integrityTransactionChain.registrationTimeStamp = 0
 
                         result.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKeyRAW, result.getHash())
                     Else

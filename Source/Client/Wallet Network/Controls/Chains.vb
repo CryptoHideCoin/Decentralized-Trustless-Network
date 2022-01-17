@@ -4,7 +4,7 @@ Option Explicit On
 Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCCommonLibrary.AreaCommon.Models.General
 Imports CHCProtocolLibrary.AreaCommon
-Imports CHCProtocolLibrary.AreaCommon.Models.Chain.Queries
+Imports CHCProtocolLibrary.AreaCommon.Models.Chain.Response
 
 Public Class Chains
 
@@ -54,7 +54,7 @@ Public Class Chains
     Private Function readNumberOfChain() As Integer
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            Dim remote As New ProxyWS(Of Models.Chain.Queries.ChainCountModel)
+            Dim remote As New ProxyWS(Of Models.Chain.Response.ChainCountModel)
             Dim proceed As Boolean = True
 
             If proceed Then
@@ -91,7 +91,7 @@ Public Class Chains
     Private Function readChainList(ByVal pageNumber As String) As Boolean
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            Dim remote As New ProxyWS(Of Models.Chain.Queries.ChainListDataPageModel)
+            Dim remote As New ProxyWS(Of ChainListDataPageModel)
             Dim proceed As Boolean = True
 
             If proceed Then
@@ -133,7 +133,7 @@ Public Class Chains
     Private Function loadChainProtocol() As Boolean
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            Dim remote As New ProxyWS(Of Models.Chain.Queries.ChainProtocolDataModel)
+            Dim remote As New ProxyWS(Of Models.Chain.Response.ChainProtocolDataModel)
             Dim proceed As Boolean = True
 
             If proceed Then
@@ -187,9 +187,7 @@ Public Class Chains
             If proceed Then
                 proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
             End If
-            If proceed Then
-                proceed = (remote.data.integrityTransactionChain.coordinate.Length > 0)
-            Else
+            If Not proceed Then
                 MessageBox.Show("Error during connection", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                 RaiseEvent OpenConfiguration()
@@ -206,7 +204,6 @@ Public Class Chains
         End Try
     End Function
 
-
     ''' <summary>
     ''' This method provide to read chain last block data
     ''' </summary>
@@ -214,7 +211,7 @@ Public Class Chains
     Private Function readChainLastBlock() As Boolean
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            Dim remote As New ProxyWS(Of Models.Chain.Queries.ChainDataLastBlockModel)
+            Dim remote As New ProxyWS(Of ChainDataLastBlockModel)
             Dim proceed As Boolean = True
 
             If proceed Then

@@ -97,10 +97,10 @@ Namespace AreaConsensus
                         .hashChain = AreaCommon.state.runtimeState.activeChain.hash
 
                         With .lastApprovedTransaction
-                            .coordinate = AreaCommon.state.currentBlockLedger.composeCoordinateTransaction()
-                            .registrationTimeStamp = AreaCommon.state.currentBlockLedger.approvedTransaction.registrationTimeStamp
-                            .hash = AreaCommon.state.currentBlockLedger.approvedTransaction.currentHash
-                            .progressiveHash = AreaCommon.state.currentBlockLedger.approvedTransaction.progressiveHash
+                            .coordinate = AreaCommon.state.ledger.composeCoordinateTransaction()
+                            .registrationTimeStamp = AreaCommon.state.ledger.approvedTransaction.registrationTimeStamp
+                            .hash = AreaCommon.state.ledger.approvedTransaction.currentHash
+                            .progressiveHash = AreaCommon.state.ledger.approvedTransaction.progressiveHash
                         End With
                     End With
                 End With
@@ -354,7 +354,7 @@ Namespace AreaConsensus
                         If request.createConsensus(bulletin) Then
                             bulletin.proposalUpdateNewTransactionHash.consensusHash = request.consensus.hash
                             bulletin.proposalUpdateNewTransactionHash.requestHash = bulletin.proposalsForApprovalData.requestHash
-                            bulletin.proposalUpdateNewTransactionHash.proposalIdentifierTransactionLedger = AreaCommon.state.currentBlockLedger.composeCoordinateTransaction(True)
+                            bulletin.proposalUpdateNewTransactionHash.proposalIdentifierTransactionLedger = AreaCommon.state.ledger.composeCoordinateTransaction(True)
 
                             result.notifyNetworkForUpdate = True
                             result.newProposalReadyToConsolidate = True
@@ -428,7 +428,7 @@ Namespace AreaConsensus
                 For i As Integer = 1 To dataRequest.evaluations.abstained.count
                     node = dataRequest.evaluations.abstained.getItem(i)
 
-                    If Not AreaCommon.state.runtimeState.manageAbstained(AreaCommon.state.network.publicAddressIdentity, dataRequest.dataCommon.hash) Then
+                    If Not AreaCommon.state.runTimeState.manageAbstained(AreaCommon.state.network.publicAddressIdentity, dataRequest.dataCommon.hash) Then
                         result.proceed = False
 
                         Exit For
@@ -498,7 +498,7 @@ Namespace AreaConsensus
                 For i As Integer = 1 To dataRequest.evaluations.rejected.count
                     node = dataRequest.evaluations.abstained.getItem(i)
 
-                    If Not AreaCommon.state.runtimeState.manageRejected(AreaCommon.state.network.publicAddressIdentity, dataRequest.dataCommon.hash) Then
+                    If Not AreaCommon.state.runTimeState.manageRejected(AreaCommon.state.network.publicAddressIdentity, dataRequest.dataCommon.hash) Then
                         result.proceed = False
 
                         Exit For
@@ -569,7 +569,7 @@ Namespace AreaConsensus
                 For i As Integer = 1 To dataRequest.evaluations.absents.count
                     node = dataRequest.evaluations.abstained.getItem(i)
 
-                    If Not AreaCommon.state.runtimeState.manageAbsent(node.publicAddress, dataRequest.dataCommon.hash) Then
+                    If Not AreaCommon.state.runTimeState.manageAbsent(node.publicAddress, dataRequest.dataCommon.hash) Then
                         result.proceed = False
 
                         Exit For
@@ -736,7 +736,7 @@ Namespace AreaConsensus
                     Case "a1x6" : support.newIdentity = AreaProtocol.A1x6.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
                     Case "a1x7" : support.newIdentity = AreaProtocol.A1x7.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.common.publicAddressRequester, requestHash)
                     Case "a1x8" : support.newIdentity = AreaProtocol.A1x8.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
-                    Case "a1x9" : support.newIdentity = AreaProtocol.A1x9.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester)
+                    Case "a1x9" : support.newIdentity = AreaProtocol.A1x9.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.common.publicAddressRequester, requestHash)
                     Case "a1x10" : support.newIdentity = AreaProtocol.A1x10.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
 
                     Case "a2x0" : support.newIdentity = AreaProtocol.A2x0.Manager.addIntoLedger(registrant, consensusHash, registrationTimeStamp, request.data.content, request.data.common.publicAddressRequester, requestHash)
@@ -747,7 +747,7 @@ Namespace AreaConsensus
                 End Select
 
                 support.proceed = Not IsNothing(support.newIdentity)
-                support.blockNumber = AreaCommon.state.currentBlockLedger.composeCoordinateTransaction(False, True)
+                support.blockNumber = AreaCommon.state.ledger.composeCoordinateTransaction(False, True)
 
                 AreaCommon.log.track("ConsensusEngine.updateLedger", "Completed")
 
@@ -824,17 +824,17 @@ Namespace AreaConsensus
                 AreaCommon.log.track("ConsensusEngine.moveRequestToCurrentLedger", "Begin")
 
                 Dim fileSource As String = IO.Path.Combine(AreaCommon.paths.workData.requestData.received, request.dataCommon.hash & ".Request")
-                Dim fileDestination As String = IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.requests, request.dataCommon.hash & ".Request")
+                Dim fileDestination As String = IO.Path.Combine(AreaCommon.state.ledger.approvedTransaction.pathData.requests, request.dataCommon.hash & ".Request")
 
                 IO.File.Move(fileSource, fileDestination)
 
                 fileSource = IO.Path.Combine(AreaCommon.paths.workData.temp, request.dataCommon.hash & ".Bulletin")
-                fileDestination = IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.bulletines, request.dataCommon.hash & ".Bulletin")
+                fileDestination = IO.Path.Combine(AreaCommon.state.ledger.approvedTransaction.pathData.bulletines, request.dataCommon.hash & ".Bulletin")
 
                 IO.File.Move(fileSource, fileDestination)
 
                 fileSource = IO.Path.Combine(AreaCommon.paths.workData.temp, request.dataCommon.hash & ".Consent")
-                fileDestination = IO.Path.Combine(AreaCommon.state.currentBlockLedger.approvedTransaction.pathData.consensus, request.dataCommon.hash & ".Consent")
+                fileDestination = IO.Path.Combine(AreaCommon.state.ledger.approvedTransaction.pathData.consensus, request.dataCommon.hash & ".Consent")
 
                 IO.File.Move(fileSource, fileDestination)
 
@@ -885,6 +885,7 @@ Namespace AreaConsensus
                 support.proceed = False
 
                 Select Case request.dataCommon.type
+                    Case "a0x3" : support.proceed = AreaProtocol.A0x3.Manager.createSupply()
                     Case "a1x0" : support.proceed = AreaProtocol.A1x0.Manager.managePrimaryChain()
                     Case "a1x7" : support.proceed = AreaProtocol.A1x7.Manager.finalizeBlock(requestHash, support.blockNumber)
                     Case "a1x9"
@@ -1002,7 +1003,7 @@ Namespace AreaConsensus
                     support = saveBulletin(dataRequest, support)
                 End If
                 If support.proceed Then
-                    support.currentPath = AreaCommon.state.currentBlockLedger.approvedTransaction.pathData
+                    support.currentPath = AreaCommon.state.ledger.approvedTransaction.pathData
 
                     cloneBulletin = bulletin.clone()
 

@@ -32,6 +32,9 @@ Namespace AreaCommon
 
                 log.track("Controllers.StartWebService", "New Configuration Port " & _portNumber)
 
+                'httpConfig.MaxBufferSize = 1048576
+                'httpConfig.MaxReceivedMessageSize = httpConfig.MaxBufferSize
+
                 If _servicePort Then
                     httpConfig.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & settings.data.serviceId & "/service/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="SecurityApi", routeTemplate:="api/" & settings.data.serviceId & "/security/{controller}")
@@ -41,7 +44,9 @@ Namespace AreaCommon
                     httpConfig.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & settings.data.serviceId & "/service/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="QoSTicketApi", routeTemplate:="api/" & settings.data.serviceId & "/qos/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="SystemApi", routeTemplate:="api/v1.0/System/{controller}")
+                    httpConfig.Routes.MapHttpRoute(name:="LedgerApi", routeTemplate:="api/" & settings.data.serviceId & "/ledger/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="ChainApi", routeTemplate:="api/" & settings.data.serviceId & "/chain/{controller}")
+                    httpConfig.Routes.MapHttpRoute(name:="SupplyApi", routeTemplate:="api/" & settings.data.serviceId & "/supply/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="NetworkApi", routeTemplate:="api/" & settings.data.serviceId & "/network/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="RequestApi", routeTemplate:="api/" & settings.data.serviceId & "/request/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="NotifyRequestApi", routeTemplate:="api/" & settings.data.serviceId & "/notify/{controller}")

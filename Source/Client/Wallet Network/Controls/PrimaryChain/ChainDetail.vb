@@ -99,7 +99,7 @@ Public Class ChainDetail
     Public Function loadData(ByVal name As String) As Boolean
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            Dim remote As New ProxyWS(Of Models.Chain.Queries.ChainDataModel)
+            Dim remote As New ProxyWS(Of Response.ChainDataModel)
             Dim proceed As Boolean = True
 
             If proceed Then
@@ -143,7 +143,7 @@ Public Class ChainDetail
     ''' </summary>
     ''' <param name="data"></param>
     ''' <returns></returns>
-    Public Function loadChainLastBlock(ByRef data As Models.Chain.Queries.ChainDataLastBlockModel, ByVal activeChain As Boolean) As Boolean
+    Public Function loadChainLastBlock(ByRef data As Models.Chain.Response.ChainDataLastBlockModel, ByVal activeChain As Boolean) As Boolean
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
@@ -170,7 +170,7 @@ Public Class ChainDetail
     Public Function loadChainParameter(ByVal name As String) As Boolean
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            Dim remote As New ProxyWS(Of Models.Chain.Queries.ChainParameterDataModel)
+            Dim remote As New ProxyWS(Of Response.ChainParameterDataModel)
             Dim proceed As Boolean = True
 
             If proceed Then
@@ -218,7 +218,7 @@ Public Class ChainDetail
     ''' </summary>
     ''' <param name="value"></param>
     ''' <returns></returns>
-    Public Function loadSetProtocol(ByRef value As CHCProtocolLibrary.AreaCommon.Models.Chain.Queries.SingleSetProtocol) As Boolean
+    Public Function loadSetProtocol(ByRef value As Response.SingleSetProtocol) As Boolean
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
@@ -242,7 +242,7 @@ Public Class ChainDetail
     Public Function loadPriceList(ByVal chainName As String) As Boolean
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            Dim remote As New ProxyWS(Of Models.Chain.Queries.ChainPriceListDataModel)
+            Dim remote As New ProxyWS(Of Response.ChainPriceListDataModel)
             Dim proceed As Boolean = True
 
             If proceed Then
@@ -281,7 +281,7 @@ Public Class ChainDetail
     Public Function loadPrivacyContent(ByVal chainName As String) As Boolean
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            Dim remote As New ProxyWS(Of Models.Chain.Queries.ChainPrivacyPolicyModel)
+            Dim remote As New ProxyWS(Of Response.ChainPrivacyPolicyModel)
             Dim proceed As Boolean = True
 
             If proceed Then
@@ -324,7 +324,7 @@ Public Class ChainDetail
     Public Function loadTermsAndConditions(ByVal chainName As String) As Boolean
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            Dim remote As New ProxyWS(Of Models.Chain.Queries.ChainTermsAndConditionsModel)
+            Dim remote As New ProxyWS(Of Response.ChainTermsAndConditionsModel)
             Dim proceed As Boolean = True
 
             If proceed Then
@@ -367,7 +367,7 @@ Public Class ChainDetail
     Public Function loadMasterNodes(ByVal chainName As String) As Boolean
         Try
             Dim startTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            Dim remote As New ProxyWS(Of Queries.ChainMasterNodeCountModel)
+            Dim remote As New ProxyWS(Of Response.ChainMasterNodeCountModel)
             Dim proceed As Boolean = True
 
             If proceed Then

@@ -22,8 +22,8 @@ Namespace Controllers
         ''' This method provide to get a count of a Masternode
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue(ByVal name As String) As Models.Chain.Queries.ChainMasterNodeCountModel
-            Dim result As New Models.Chain.Queries.ChainMasterNodeCountModel
+        Public Function GetValue(ByVal name As String) As Models.Chain.Response.ChainMasterNodeCountModel
+            Dim result As New Models.Chain.Response.ChainMasterNodeCountModel
             Dim privateKeyRAW As String
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()

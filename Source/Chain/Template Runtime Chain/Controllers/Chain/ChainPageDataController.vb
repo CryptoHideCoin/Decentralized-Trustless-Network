@@ -22,8 +22,8 @@ Namespace Controllers
         ''' This method provide to get a page of a chain
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue(ByVal pageNumber As Integer) As Models.Chain.Queries.ChainListDataPageModel
-            Dim result As New Models.Chain.Queries.ChainListDataPageModel
+        Public Function GetValue(ByVal pageNumber As Integer) As Models.Chain.Response.ChainListDataPageModel
+            Dim result As New Models.Chain.Response.ChainListDataPageModel
             Dim privateKeyRAW As String
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()

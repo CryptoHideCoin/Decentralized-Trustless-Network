@@ -21,8 +21,8 @@ Namespace Controllers
         ''' This method provide to get a data last block
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue(ByVal name As String) As Models.Chain.Queries.ChainDataLastBlockModel
-            Dim result As New Models.Chain.Queries.ChainDataLastBlockModel
+        Public Function GetValue(ByVal name As String) As Models.Chain.Response.ChainDataLastBlockModel
+            Dim result As New Models.Chain.Response.ChainDataLastBlockModel
             Dim privateKeyRAW As String
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()

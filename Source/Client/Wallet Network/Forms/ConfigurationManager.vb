@@ -96,6 +96,8 @@ Public Class ConfigurationManager
 
             _NoWorkList = True
 
+            configurationNameCombo.Items.Clear()
+
             For Each item In _Configurations.data
                 configurationNameCombo.Items.Add(New SingleConfiguration(item.name, item.uuid))
             Next

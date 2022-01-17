@@ -67,23 +67,19 @@ Namespace AreaData
 
                 With AreaCommon.state
                     .runTimeState.activeNetwork.networkCreationDate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                    .currentBlockLedger.log = AreaCommon.log
-                    .currentBlockLedger.identifyBlockChain = "A0"
 
-                    .ledgerMap.log = AreaCommon.log
+                    .ledger.log = AreaCommon.log
 
-                    If .currentBlockLedger.init(AreaCommon.paths.workData.ledger, AreaCommon.state.runTimeState.activeNetwork.networkCreationDate) Then
-                        .ledgerMap.init(AreaCommon.paths.workData.ledger)
-                    End If
+                    Return .ledger.init(AreaCommon.paths.workData.ledger, AreaCommon.state.runTimeState.activeNetwork.networkCreationDate)
                 End With
 
-                AreaCommon.log.track("BuildNetwork.createLedger", "Completed")
-
-                Return True
+                Return False
             Catch ex As Exception
                 AreaCommon.log.track("BuildNetwork.createLedger", ex.Message, "fatal")
 
                 Return False
+            Finally
+                AreaCommon.log.track("BuildNetwork.createLedger", "Completed")
             End Try
         End Function
 
@@ -211,7 +207,7 @@ Namespace AreaData
                         Threading.Thread.Sleep(AreaCommon.support.timeSleep)
                     Loop
 
-                    AreaCommon.log.trackIntoConsole("Build Network Completed")
+                    AreaCommon.log.trackIntoConsole("Build Network completed")
                     AreaCommon.log.trackIntoConsole("")
 
                     If (AreaCommon.state.runTimeState.activeNetwork.envinronment.value.Trim.Length > 0) Then

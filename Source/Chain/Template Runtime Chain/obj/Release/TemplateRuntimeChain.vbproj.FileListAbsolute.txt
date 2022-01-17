@@ -30,5 +30,7 @@ E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Release\CHCPrimaryR
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Release\TemplateRuntimeChain.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Release\TemplateRuntimeChain.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Release\CHCPrimaryRuntimeService.exe
-E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Release\CHCPrimaryRuntimeService.xml
 E:\CryptoHideCoinDTN\Source\Chain\Template Runtime Chain\obj\Release\CHCPrimaryRuntimeService.pdb
+E:\CryptoHideCoinDTN\Masternode\Applications\Windows\Masternode Runtime\Bin\CHCPrimaryRuntimeService.exe.config
+E:\CryptoHideCoinDTN\Masternode\Applications\Windows\Masternode Runtime\Bin\CHCPrimaryRuntimeService.exe
+E:\CryptoHideCoinDTN\Masternode\Applications\Windows\Masternode Runtime\Bin\CHCPrimaryRuntimeService.pdb
