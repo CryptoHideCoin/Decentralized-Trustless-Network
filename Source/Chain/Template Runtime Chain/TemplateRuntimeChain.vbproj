@@ -56,27 +56,23 @@
   <ItemGroup>
     <Reference Include="CHCBasicCryptographyLibrary, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.12.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
+      <HintPath>..\..\packages\Internal\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCLedgerLibrary, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCLedgerLibrary\CHCLedgerLibrary.dll</HintPath>
+      <HintPath>..\..\packages\Internal\CHCLedgerLibrary\CHCLedgerLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.7.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
+      <HintPath>..\..\packages\Internal\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCRuntimeChainLibrary, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\CHCRuntimeChainLibrary\CHCRuntimeChainLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCSupportUIControls, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCSupportUIControls, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCSupportUIControls\CHCSupportUIControls.dll</HintPath>
+      <HintPath>..\..\packages\Internal\CHCSupportUILibrary\CHCSupportUIControls.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -302,6 +298,12 @@
   <ItemGroup>
     <Content Include="64.ico" />
     <Content Include="Other\ReleaseNote.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\CHCCommonLibrary\CHCCommonLibrary.vbproj">
+      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
+      <Name>CHCCommonLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

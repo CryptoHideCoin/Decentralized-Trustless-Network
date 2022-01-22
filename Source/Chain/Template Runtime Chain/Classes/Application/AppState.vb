@@ -12,21 +12,6 @@ Imports CHCProtocolLibrary.AreaCommon
 Public Class AppState
 
     ''' <summary>
-    ''' This class provides to expone the public information of this chain
-    ''' </summary>
-    Public Class InternalServiceInformation
-
-        Public Property networkName As String = ""
-        Public Property chainName As String = AreaCommon.Customize.chainName
-        Public Property adminPublicAddress As String = ""
-        Public Property intranetMode As Boolean = False
-        Public Property addressIP As String = ""
-        Public Property platformHost As String = ""
-        Public Property softwareRelease As String = ""
-
-    End Class
-
-    ''' <summary>
     ''' This class contain an internal component element
     ''' </summary>
     Public Class ComponentElement
@@ -39,8 +24,7 @@ Public Class AppState
 
     End Class
 
-    Public Property service As Models.Service.InformationResponseModel.EnumInternalServiceState = Models.Service.InformationResponseModel.EnumInternalServiceState.undefined
-    Public Property internalInformation As New InternalServiceInformation
+    Public Property serviceInformation As New Models.Service.InternalServiceInformation
     Public Property keys As New TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine
 
     Public Property queues As New TransactionChainLibrary.AreaEngine.Requests.QueueEngine

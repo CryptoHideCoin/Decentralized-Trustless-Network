@@ -28,7 +28,7 @@ Namespace Controllers
             result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Try
-                If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
+                If (AreaCommon.state.serviceInformation.currentStatus = Models.Service.InternalServiceInformation.EnumInternalServiceState.started) Then
                     If AreaSecurity.checkSignature(value.signature) Then
                         If AreaSecurity.changeCertificate(value) Then
                             result.responseStatus = General.RemoteResponse.EnumResponseStatus.responseComplete

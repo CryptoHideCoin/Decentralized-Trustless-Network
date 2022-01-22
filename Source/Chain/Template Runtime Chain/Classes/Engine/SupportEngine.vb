@@ -58,7 +58,7 @@ Namespace AreaCommon.Engine
         ''' <returns></returns>
         Public Function checkLastTime() As Boolean
             Try
-                AreaCommon.log.track("SupportEngine.checkLastTime", "Begin")
+                log.track("SupportEngine.checkLastTime", "Begin")
 
                 Dim currentTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
@@ -66,7 +66,7 @@ Namespace AreaCommon.Engine
                     _LastActionOccurs = currentTimeStamp
 
                     Return True
-                ElseIf ((_LastActionOccurs + 2000) > currentTimeStamp) Then
+                ElseIf ((_LastActionOccurs + 5000) > currentTimeStamp) Then
                     _LastActionOccurs = currentTimeStamp
 
                     Return True

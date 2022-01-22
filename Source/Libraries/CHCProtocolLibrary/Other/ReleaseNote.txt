@@ -17,3 +17,5 @@ Release Note
 1.7.3   - 02.01.2022 - Complete a new query model chain
 1.7.4	- 04.01.2022 - Support to Supply Information of Primary Chain
 1.7.5   - 10.01.2022 - Class querty blockchain
+1.8.0   - 18.01.2022 - Add Internal Information Class
+1.9.0   - 20.01.2022 - Refactor CHCCommonLibrary

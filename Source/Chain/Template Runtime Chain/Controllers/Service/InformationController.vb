@@ -26,18 +26,20 @@ Namespace Controllers
             Try
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
-                If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
+                If (AreaCommon.state.serviceInformation.currentStatus = Models.Service.InternalServiceInformation.EnumInternalServiceState.started) Then
                     If AreaSecurity.checkSignature(signature) Then
-                        result.adminPublicAddress = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).publicAddress
-                        result.currentStatus = AreaCommon.state.service
-                        result.chainName = AreaCommon.state.internalInformation.chainName
-                        result.platformHost = AreaCommon.state.internalInformation.platformHost
-                        result.softwareRelease = AreaCommon.state.internalInformation.softwareRelease
-                        If AreaCommon.settings.data.intranetMode Then
-                            result.addressIP = AreaCommon.state.localIpAddress
-                        Else
-                            result.addressIP = AreaCommon.state.publicIpAddress
-                        End If
+                        result.value = AreaCommon.state.serviceInformation
+
+                        'result.adminPublicAddress = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.administration).publicAddress
+                        'result.currentStatus = AreaCommon.state.serviceInformation.currentStatus
+                        'result.chainName = AreaCommon.state.serviceInformation.currentStatusInformation.chainName
+                        'result.platformHost = AreaCommon.state.serviceInformation.currentStatusInformation.platformHost
+                        'result.softwareRelease = AreaCommon.state.serviceInformation.currentStatusInformation.softwareRelease
+                        'If AreaCommon.settings.data.intranetMode Then
+                        '    result.addressIP = AreaCommon.state.localIpAddress
+                        'Else
+                        '    result.addressIP = AreaCommon.state.publicIpAddress
+                        'End If
                     Else
                         result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
                     End If

@@ -322,7 +322,7 @@ Namespace AreaProtocol
 
                     If AreaCommon.state.currentService.requestCancelCurrentRunCommand Then Return False
 
-                    If (inputData.netName.CompareTo(AreaCommon.state.internalInformation.networkName) <> 0) Then
+                    If (inputData.netName.CompareTo(AreaCommon.state.serviceInformation.netWorkName) <> 0) Then
                         AreaCommon.state.currentService.currentAction.setError("-1", "Network not compatible")
                         AreaCommon.state.currentService.currentAction.reset()
 
@@ -336,7 +336,7 @@ Namespace AreaProtocol
                         request.content.specialEnvironment = inputData.specialEnvironment
 
                         request.common.netWorkReferement = inputData.netName
-                        request.common.chainReferement = AreaCommon.state.internalInformation.chainName
+                        request.common.chainReferement = AreaCommon.state.serviceInformation.chainName
                         request.common.type = "a0x0"
                         request.common.publicAddressRequester = .publicAddress
                         request.common.requestDateTimeStamp = AreaCommon.state.runtimeState.activeNetwork.networkCreationDate

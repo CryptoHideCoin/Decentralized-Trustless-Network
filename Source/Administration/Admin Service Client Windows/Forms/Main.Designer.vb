@@ -50,21 +50,26 @@ Partial Class Main
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.infoGroup = New System.Windows.Forms.GroupBox()
-        Me.chainNameText = New System.Windows.Forms.TextBox()
+        Me.unitMeasureLabel = New System.Windows.Forms.Label()
+        Me.addressIP = New System.Windows.Forms.TextBox()
+        Me.addressIPLabel = New System.Windows.Forms.Label()
+        Me.netWorkRefement = New System.Windows.Forms.TextBox()
+        Me.netWorkReferementLabel = New System.Windows.Forms.Label()
+        Me.netWorkName = New System.Windows.Forms.TextBox()
+        Me.netWorkNameLabel = New System.Windows.Forms.Label()
+        Me.chainName = New System.Windows.Forms.TextBox()
         Me.chainNameLabel = New System.Windows.Forms.Label()
-        Me.addressText = New System.Windows.Forms.TextBox()
-        Me.addressLabel = New System.Windows.Forms.Label()
-        Me.responseTimeText = New System.Windows.Forms.TextBox()
+        Me.publicCompleteAddress = New System.Windows.Forms.TextBox()
+        Me.completeAddressLabel = New System.Windows.Forms.Label()
+        Me.responseTime = New System.Windows.Forms.TextBox()
         Me.responseTimeLabel = New System.Windows.Forms.Label()
-        Me.requestTimeText = New System.Windows.Forms.TextBox()
-        Me.requestTimeLabel = New System.Windows.Forms.Label()
-        Me.softwareReleaseText = New System.Windows.Forms.TextBox()
+        Me.softwareRelease = New System.Windows.Forms.TextBox()
         Me.softwareReleaseLabel = New System.Windows.Forms.Label()
-        Me.platformHostText = New System.Windows.Forms.TextBox()
+        Me.platformHost = New System.Windows.Forms.TextBox()
         Me.platformHostLabel = New System.Windows.Forms.Label()
-        Me.walletAddressText = New System.Windows.Forms.TextBox()
+        Me.identityWalletAddress = New System.Windows.Forms.TextBox()
         Me.publicWalletAddressLabel = New System.Windows.Forms.Label()
-        Me.currentStatusText = New System.Windows.Forms.TextBox()
+        Me.currentStatus = New System.Windows.Forms.TextBox()
         Me.currentStatusLabel = New System.Windows.Forms.Label()
         Me.refreshInformationlButton = New System.Windows.Forms.Button()
         Me.supportedProtocolsTab = New System.Windows.Forms.TabPage()
@@ -460,190 +465,249 @@ Partial Class Main
         Me.infoGroup.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.infoGroup.Controls.Add(Me.chainNameText)
+        Me.infoGroup.Controls.Add(Me.unitMeasureLabel)
+        Me.infoGroup.Controls.Add(Me.addressIP)
+        Me.infoGroup.Controls.Add(Me.addressIPLabel)
+        Me.infoGroup.Controls.Add(Me.netWorkRefement)
+        Me.infoGroup.Controls.Add(Me.netWorkReferementLabel)
+        Me.infoGroup.Controls.Add(Me.netWorkName)
+        Me.infoGroup.Controls.Add(Me.netWorkNameLabel)
+        Me.infoGroup.Controls.Add(Me.chainName)
         Me.infoGroup.Controls.Add(Me.chainNameLabel)
-        Me.infoGroup.Controls.Add(Me.addressText)
-        Me.infoGroup.Controls.Add(Me.addressLabel)
-        Me.infoGroup.Controls.Add(Me.responseTimeText)
+        Me.infoGroup.Controls.Add(Me.publicCompleteAddress)
+        Me.infoGroup.Controls.Add(Me.completeAddressLabel)
+        Me.infoGroup.Controls.Add(Me.responseTime)
         Me.infoGroup.Controls.Add(Me.responseTimeLabel)
-        Me.infoGroup.Controls.Add(Me.requestTimeText)
-        Me.infoGroup.Controls.Add(Me.requestTimeLabel)
-        Me.infoGroup.Controls.Add(Me.softwareReleaseText)
+        Me.infoGroup.Controls.Add(Me.softwareRelease)
         Me.infoGroup.Controls.Add(Me.softwareReleaseLabel)
-        Me.infoGroup.Controls.Add(Me.platformHostText)
+        Me.infoGroup.Controls.Add(Me.platformHost)
         Me.infoGroup.Controls.Add(Me.platformHostLabel)
-        Me.infoGroup.Controls.Add(Me.walletAddressText)
+        Me.infoGroup.Controls.Add(Me.identityWalletAddress)
         Me.infoGroup.Controls.Add(Me.publicWalletAddressLabel)
-        Me.infoGroup.Controls.Add(Me.currentStatusText)
+        Me.infoGroup.Controls.Add(Me.currentStatus)
         Me.infoGroup.Controls.Add(Me.currentStatusLabel)
-        Me.infoGroup.Location = New System.Drawing.Point(7, 48)
+        Me.infoGroup.Location = New System.Drawing.Point(7, 43)
         Me.infoGroup.Name = "infoGroup"
-        Me.infoGroup.Size = New System.Drawing.Size(673, 304)
+        Me.infoGroup.Size = New System.Drawing.Size(673, 309)
         Me.infoGroup.TabIndex = 1
         Me.infoGroup.TabStop = False
         Me.infoGroup.Text = "Info Peer"
         '
-        'chainNameText
+        'unitMeasureLabel
         '
-        Me.chainNameText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.unitMeasureLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.unitMeasureLabel.AutoSize = True
+        Me.unitMeasureLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.unitMeasureLabel.Location = New System.Drawing.Point(278, 286)
+        Me.unitMeasureLabel.Name = "unitMeasureLabel"
+        Me.unitMeasureLabel.Size = New System.Drawing.Size(38, 13)
+        Me.unitMeasureLabel.TabIndex = 31
+        Me.unitMeasureLabel.Text = "(ms.)"
+        '
+        'addressIP
+        '
+        Me.addressIP.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.chainNameText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chainNameText.Location = New System.Drawing.Point(165, 73)
-        Me.chainNameText.Name = "chainNameText"
-        Me.chainNameText.ReadOnly = True
-        Me.chainNameText.Size = New System.Drawing.Size(482, 21)
-        Me.chainNameText.TabIndex = 23
+        Me.addressIP.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.addressIP.Location = New System.Drawing.Point(165, 226)
+        Me.addressIP.Name = "addressIP"
+        Me.addressIP.ReadOnly = True
+        Me.addressIP.Size = New System.Drawing.Size(482, 21)
+        Me.addressIP.TabIndex = 29
+        '
+        'addressIPLabel
+        '
+        Me.addressIPLabel.AutoSize = True
+        Me.addressIPLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.addressIPLabel.Location = New System.Drawing.Point(90, 230)
+        Me.addressIPLabel.Name = "addressIPLabel"
+        Me.addressIPLabel.Size = New System.Drawing.Size(69, 13)
+        Me.addressIPLabel.TabIndex = 30
+        Me.addressIPLabel.Text = "Address IP"
+        '
+        'netWorkRefement
+        '
+        Me.netWorkRefement.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.netWorkRefement.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.netWorkRefement.Location = New System.Drawing.Point(165, 91)
+        Me.netWorkRefement.Name = "netWorkRefement"
+        Me.netWorkRefement.ReadOnly = True
+        Me.netWorkRefement.Size = New System.Drawing.Size(482, 21)
+        Me.netWorkRefement.TabIndex = 27
+        '
+        'netWorkReferementLabel
+        '
+        Me.netWorkReferementLabel.AutoSize = True
+        Me.netWorkReferementLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.netWorkReferementLabel.Location = New System.Drawing.Point(34, 94)
+        Me.netWorkReferementLabel.Name = "netWorkReferementLabel"
+        Me.netWorkReferementLabel.Size = New System.Drawing.Size(125, 13)
+        Me.netWorkReferementLabel.TabIndex = 28
+        Me.netWorkReferementLabel.Text = "Network Referement"
+        '
+        'netWorkName
+        '
+        Me.netWorkName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.netWorkName.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.netWorkName.Location = New System.Drawing.Point(165, 64)
+        Me.netWorkName.Name = "netWorkName"
+        Me.netWorkName.ReadOnly = True
+        Me.netWorkName.Size = New System.Drawing.Size(482, 21)
+        Me.netWorkName.TabIndex = 25
+        '
+        'netWorkNameLabel
+        '
+        Me.netWorkNameLabel.AutoSize = True
+        Me.netWorkNameLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.netWorkNameLabel.Location = New System.Drawing.Point(68, 67)
+        Me.netWorkNameLabel.Name = "netWorkNameLabel"
+        Me.netWorkNameLabel.Size = New System.Drawing.Size(91, 13)
+        Me.netWorkNameLabel.TabIndex = 26
+        Me.netWorkNameLabel.Text = "Network Name"
+        '
+        'chainName
+        '
+        Me.chainName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chainName.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chainName.Location = New System.Drawing.Point(165, 145)
+        Me.chainName.Name = "chainName"
+        Me.chainName.ReadOnly = True
+        Me.chainName.Size = New System.Drawing.Size(482, 21)
+        Me.chainName.TabIndex = 23
         '
         'chainNameLabel
         '
         Me.chainNameLabel.AutoSize = True
         Me.chainNameLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chainNameLabel.Location = New System.Drawing.Point(82, 77)
+        Me.chainNameLabel.Location = New System.Drawing.Point(82, 149)
         Me.chainNameLabel.Name = "chainNameLabel"
         Me.chainNameLabel.Size = New System.Drawing.Size(77, 13)
         Me.chainNameLabel.TabIndex = 24
         Me.chainNameLabel.Text = "Chain Name"
         '
-        'addressText
+        'publicCompleteAddress
         '
-        Me.addressText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.publicCompleteAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.addressText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.addressText.Location = New System.Drawing.Point(165, 154)
-        Me.addressText.Name = "addressText"
-        Me.addressText.ReadOnly = True
-        Me.addressText.Size = New System.Drawing.Size(482, 21)
-        Me.addressText.TabIndex = 21
+        Me.publicCompleteAddress.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.publicCompleteAddress.Location = New System.Drawing.Point(165, 253)
+        Me.publicCompleteAddress.Name = "publicCompleteAddress"
+        Me.publicCompleteAddress.ReadOnly = True
+        Me.publicCompleteAddress.Size = New System.Drawing.Size(482, 21)
+        Me.publicCompleteAddress.TabIndex = 21
         '
-        'addressLabel
+        'completeAddressLabel
         '
-        Me.addressLabel.AutoSize = True
-        Me.addressLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.addressLabel.Location = New System.Drawing.Point(106, 158)
-        Me.addressLabel.Name = "addressLabel"
-        Me.addressLabel.Size = New System.Drawing.Size(53, 13)
-        Me.addressLabel.TabIndex = 22
-        Me.addressLabel.Text = "Address"
+        Me.completeAddressLabel.AutoSize = True
+        Me.completeAddressLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.completeAddressLabel.Location = New System.Drawing.Point(106, 257)
+        Me.completeAddressLabel.Name = "completeAddressLabel"
+        Me.completeAddressLabel.Size = New System.Drawing.Size(53, 13)
+        Me.completeAddressLabel.TabIndex = 22
+        Me.completeAddressLabel.Text = "Address"
         '
-        'responseTimeText
+        'responseTime
         '
-        Me.responseTimeText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.responseTime.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.responseTimeText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.responseTimeText.Location = New System.Drawing.Point(165, 208)
-        Me.responseTimeText.Name = "responseTimeText"
-        Me.responseTimeText.ReadOnly = True
-        Me.responseTimeText.Size = New System.Drawing.Size(482, 21)
-        Me.responseTimeText.TabIndex = 10
+        Me.responseTime.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.responseTime.Location = New System.Drawing.Point(165, 282)
+        Me.responseTime.Name = "responseTime"
+        Me.responseTime.ReadOnly = True
+        Me.responseTime.Size = New System.Drawing.Size(107, 21)
+        Me.responseTime.TabIndex = 10
         '
         'responseTimeLabel
         '
         Me.responseTimeLabel.AutoSize = True
         Me.responseTimeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.responseTimeLabel.Location = New System.Drawing.Point(65, 212)
+        Me.responseTimeLabel.Location = New System.Drawing.Point(65, 286)
         Me.responseTimeLabel.Name = "responseTimeLabel"
         Me.responseTimeLabel.Size = New System.Drawing.Size(94, 13)
         Me.responseTimeLabel.TabIndex = 20
         Me.responseTimeLabel.Text = "Response Time"
         '
-        'requestTimeText
+        'softwareRelease
         '
-        Me.requestTimeText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.softwareRelease.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.requestTimeText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.requestTimeText.Location = New System.Drawing.Point(165, 181)
-        Me.requestTimeText.Name = "requestTimeText"
-        Me.requestTimeText.ReadOnly = True
-        Me.requestTimeText.Size = New System.Drawing.Size(482, 21)
-        Me.requestTimeText.TabIndex = 9
-        '
-        'requestTimeLabel
-        '
-        Me.requestTimeLabel.AutoSize = True
-        Me.requestTimeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.requestTimeLabel.Location = New System.Drawing.Point(74, 185)
-        Me.requestTimeLabel.Name = "requestTimeLabel"
-        Me.requestTimeLabel.Size = New System.Drawing.Size(85, 13)
-        Me.requestTimeLabel.TabIndex = 18
-        Me.requestTimeLabel.Text = "Request Time"
-        '
-        'softwareReleaseText
-        '
-        Me.softwareReleaseText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.softwareReleaseText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.softwareReleaseText.Location = New System.Drawing.Point(165, 127)
-        Me.softwareReleaseText.Name = "softwareReleaseText"
-        Me.softwareReleaseText.ReadOnly = True
-        Me.softwareReleaseText.Size = New System.Drawing.Size(482, 21)
-        Me.softwareReleaseText.TabIndex = 7
+        Me.softwareRelease.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.softwareRelease.Location = New System.Drawing.Point(165, 199)
+        Me.softwareRelease.Name = "softwareRelease"
+        Me.softwareRelease.ReadOnly = True
+        Me.softwareRelease.Size = New System.Drawing.Size(482, 21)
+        Me.softwareRelease.TabIndex = 7
         '
         'softwareReleaseLabel
         '
         Me.softwareReleaseLabel.AutoSize = True
         Me.softwareReleaseLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.softwareReleaseLabel.Location = New System.Drawing.Point(55, 131)
+        Me.softwareReleaseLabel.Location = New System.Drawing.Point(55, 203)
         Me.softwareReleaseLabel.Name = "softwareReleaseLabel"
         Me.softwareReleaseLabel.Size = New System.Drawing.Size(104, 13)
         Me.softwareReleaseLabel.TabIndex = 14
         Me.softwareReleaseLabel.Text = "Software release"
         '
-        'platformHostText
+        'platformHost
         '
-        Me.platformHostText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.platformHost.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.platformHostText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.platformHostText.Location = New System.Drawing.Point(165, 100)
-        Me.platformHostText.Name = "platformHostText"
-        Me.platformHostText.ReadOnly = True
-        Me.platformHostText.Size = New System.Drawing.Size(482, 21)
-        Me.platformHostText.TabIndex = 6
+        Me.platformHost.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.platformHost.Location = New System.Drawing.Point(165, 172)
+        Me.platformHost.Name = "platformHost"
+        Me.platformHost.ReadOnly = True
+        Me.platformHost.Size = New System.Drawing.Size(482, 21)
+        Me.platformHost.TabIndex = 6
         '
         'platformHostLabel
         '
         Me.platformHostLabel.AutoSize = True
         Me.platformHostLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.platformHostLabel.Location = New System.Drawing.Point(76, 104)
+        Me.platformHostLabel.Location = New System.Drawing.Point(76, 176)
         Me.platformHostLabel.Name = "platformHostLabel"
         Me.platformHostLabel.Size = New System.Drawing.Size(83, 13)
         Me.platformHostLabel.TabIndex = 12
         Me.platformHostLabel.Text = "Platform host"
         '
-        'walletAddressText
+        'identityWalletAddress
         '
-        Me.walletAddressText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.identityWalletAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.walletAddressText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.walletAddressText.Location = New System.Drawing.Point(165, 19)
-        Me.walletAddressText.Name = "walletAddressText"
-        Me.walletAddressText.ReadOnly = True
-        Me.walletAddressText.Size = New System.Drawing.Size(482, 21)
-        Me.walletAddressText.TabIndex = 4
+        Me.identityWalletAddress.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.identityWalletAddress.Location = New System.Drawing.Point(165, 19)
+        Me.identityWalletAddress.Multiline = True
+        Me.identityWalletAddress.Name = "identityWalletAddress"
+        Me.identityWalletAddress.ReadOnly = True
+        Me.identityWalletAddress.Size = New System.Drawing.Size(482, 39)
+        Me.identityWalletAddress.TabIndex = 4
         '
         'publicWalletAddressLabel
         '
         Me.publicWalletAddressLabel.AutoSize = True
         Me.publicWalletAddressLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.publicWalletAddressLabel.Location = New System.Drawing.Point(28, 23)
+        Me.publicWalletAddressLabel.Location = New System.Drawing.Point(20, 23)
         Me.publicWalletAddressLabel.Name = "publicWalletAddressLabel"
-        Me.publicWalletAddressLabel.Size = New System.Drawing.Size(131, 13)
+        Me.publicWalletAddressLabel.Size = New System.Drawing.Size(139, 13)
         Me.publicWalletAddressLabel.TabIndex = 8
-        Me.publicWalletAddressLabel.Text = "Admin Wallet Address"
+        Me.publicWalletAddressLabel.Text = "Identity Wallet Address"
         '
-        'currentStatusText
+        'currentStatus
         '
-        Me.currentStatusText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.currentStatus.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.currentStatusText.Location = New System.Drawing.Point(165, 46)
-        Me.currentStatusText.Name = "currentStatusText"
-        Me.currentStatusText.ReadOnly = True
-        Me.currentStatusText.Size = New System.Drawing.Size(482, 21)
-        Me.currentStatusText.TabIndex = 0
+        Me.currentStatus.Location = New System.Drawing.Point(165, 118)
+        Me.currentStatus.Name = "currentStatus"
+        Me.currentStatus.ReadOnly = True
+        Me.currentStatus.Size = New System.Drawing.Size(482, 21)
+        Me.currentStatus.TabIndex = 0
         '
         'currentStatusLabel
         '
         Me.currentStatusLabel.AutoSize = True
-        Me.currentStatusLabel.Location = New System.Drawing.Point(68, 51)
+        Me.currentStatusLabel.Location = New System.Drawing.Point(68, 123)
         Me.currentStatusLabel.Name = "currentStatusLabel"
         Me.currentStatusLabel.Size = New System.Drawing.Size(91, 13)
         Me.currentStatusLabel.TabIndex = 0
@@ -848,7 +912,7 @@ Partial Class Main
         Me.responseMonitorTimeText.Location = New System.Drawing.Point(126, 148)
         Me.responseMonitorTimeText.Name = "responseMonitorTimeText"
         Me.responseMonitorTimeText.ReadOnly = True
-        Me.responseMonitorTimeText.Size = New System.Drawing.Size(201, 21)
+        Me.responseMonitorTimeText.Size = New System.Drawing.Size(203, 21)
         Me.responseMonitorTimeText.TabIndex = 26
         '
         'responseMonitorTimeLabel
@@ -869,7 +933,7 @@ Partial Class Main
         Me.requestMonitorTimeText.Location = New System.Drawing.Point(126, 121)
         Me.requestMonitorTimeText.Name = "requestMonitorTimeText"
         Me.requestMonitorTimeText.ReadOnly = True
-        Me.requestMonitorTimeText.Size = New System.Drawing.Size(201, 21)
+        Me.requestMonitorTimeText.Size = New System.Drawing.Size(203, 21)
         Me.requestMonitorTimeText.TabIndex = 25
         '
         'requestMonitorTimeLabel
@@ -925,7 +989,7 @@ Partial Class Main
         Me.codeErrorText.Location = New System.Drawing.Point(127, 69)
         Me.codeErrorText.Name = "codeErrorText"
         Me.codeErrorText.ReadOnly = True
-        Me.codeErrorText.Size = New System.Drawing.Size(250, 21)
+        Me.codeErrorText.Size = New System.Drawing.Size(252, 21)
         Me.codeErrorText.TabIndex = 31
         '
         'codeErrorLabel
@@ -946,7 +1010,7 @@ Partial Class Main
         Me.descriptionErrorText.Location = New System.Drawing.Point(127, 96)
         Me.descriptionErrorText.Name = "descriptionErrorText"
         Me.descriptionErrorText.ReadOnly = True
-        Me.descriptionErrorText.Size = New System.Drawing.Size(250, 21)
+        Me.descriptionErrorText.Size = New System.Drawing.Size(252, 21)
         Me.descriptionErrorText.TabIndex = 28
         '
         'descriptionErrorLabel
@@ -967,7 +1031,7 @@ Partial Class Main
         Me.codeActionText.Location = New System.Drawing.Point(127, 15)
         Me.codeActionText.Name = "codeActionText"
         Me.codeActionText.ReadOnly = True
-        Me.codeActionText.Size = New System.Drawing.Size(250, 21)
+        Me.codeActionText.Size = New System.Drawing.Size(252, 21)
         Me.codeActionText.TabIndex = 27
         '
         'codeActionLabel
@@ -987,7 +1051,7 @@ Partial Class Main
         Me.descriptionActionText.Location = New System.Drawing.Point(127, 42)
         Me.descriptionActionText.Name = "descriptionActionText"
         Me.descriptionActionText.ReadOnly = True
-        Me.descriptionActionText.Size = New System.Drawing.Size(250, 21)
+        Me.descriptionActionText.Size = New System.Drawing.Size(252, 21)
         Me.descriptionActionText.TabIndex = 25
         '
         'descriptionActionLabel
@@ -1026,7 +1090,7 @@ Partial Class Main
         Me.nodeListText.Location = New System.Drawing.Point(127, 125)
         Me.nodeListText.Name = "nodeListText"
         Me.nodeListText.ReadOnly = True
-        Me.nodeListText.Size = New System.Drawing.Size(250, 21)
+        Me.nodeListText.Size = New System.Drawing.Size(252, 21)
         Me.nodeListText.TabIndex = 34
         '
         'nodeListLabel
@@ -1047,7 +1111,7 @@ Partial Class Main
         Me.currentWorkText.Location = New System.Drawing.Point(127, 71)
         Me.currentWorkText.Name = "currentWorkText"
         Me.currentWorkText.ReadOnly = True
-        Me.currentWorkText.Size = New System.Drawing.Size(250, 21)
+        Me.currentWorkText.Size = New System.Drawing.Size(252, 21)
         Me.currentWorkText.TabIndex = 31
         '
         'currentWorkLabel
@@ -1068,7 +1132,7 @@ Partial Class Main
         Me.stateText.Location = New System.Drawing.Point(127, 98)
         Me.stateText.Name = "stateText"
         Me.stateText.ReadOnly = True
-        Me.stateText.Size = New System.Drawing.Size(250, 21)
+        Me.stateText.Size = New System.Drawing.Size(252, 21)
         Me.stateText.TabIndex = 28
         '
         'stateLabel
@@ -1089,7 +1153,7 @@ Partial Class Main
         Me.storageText.Location = New System.Drawing.Point(127, 15)
         Me.storageText.Name = "storageText"
         Me.storageText.ReadOnly = True
-        Me.storageText.Size = New System.Drawing.Size(250, 21)
+        Me.storageText.Size = New System.Drawing.Size(252, 21)
         Me.storageText.TabIndex = 27
         '
         'storageLabel
@@ -1109,7 +1173,7 @@ Partial Class Main
         Me.previousVolumeText.Location = New System.Drawing.Point(127, 42)
         Me.previousVolumeText.Name = "previousVolumeText"
         Me.previousVolumeText.ReadOnly = True
-        Me.previousVolumeText.Size = New System.Drawing.Size(250, 21)
+        Me.previousVolumeText.Size = New System.Drawing.Size(252, 21)
         Me.previousVolumeText.TabIndex = 25
         '
         'previousVolumeLabel
@@ -1332,24 +1396,22 @@ Partial Class Main
     Friend WithEvents Button2 As Button
     Friend WithEvents Button1 As Button
     Friend WithEvents infoGroup As GroupBox
-    Friend WithEvents walletAddressText As TextBox
+    Friend WithEvents identityWalletAddress As TextBox
     Friend WithEvents publicWalletAddressLabel As Label
-    Friend WithEvents currentStatusText As TextBox
+    Friend WithEvents currentStatus As TextBox
     Friend WithEvents currentStatusLabel As Label
     Friend WithEvents refreshInformationlButton As Button
     Friend WithEvents supportedProtocolsTab As TabPage
-    Friend WithEvents softwareReleaseText As TextBox
+    Friend WithEvents softwareRelease As TextBox
     Friend WithEvents softwareReleaseLabel As Label
-    Friend WithEvents platformHostText As TextBox
+    Friend WithEvents platformHost As TextBox
     Friend WithEvents platformHostLabel As Label
     Friend WithEvents folderBrowserDialog As FolderBrowserDialog
     Friend WithEvents openFileDialog As OpenFileDialog
-    Friend WithEvents responseTimeText As TextBox
+    Friend WithEvents responseTime As TextBox
     Friend WithEvents responseTimeLabel As Label
-    Friend WithEvents requestTimeText As TextBox
-    Friend WithEvents requestTimeLabel As Label
-    Friend WithEvents addressText As TextBox
-    Friend WithEvents addressLabel As Label
+    Friend WithEvents publicCompleteAddress As TextBox
+    Friend WithEvents completeAddressLabel As Label
     Friend WithEvents infoStatusNetwork As GroupBox
     Friend WithEvents protocolList As TextBox
     Friend WithEvents refreshSupportedProtocols As Button
@@ -1364,7 +1426,7 @@ Partial Class Main
     Friend WithEvents connectServiceButton As Button
     Friend WithEvents serviceIDText As TextBox
     Friend WithEvents serviceUUID As Label
-    Friend WithEvents chainNameText As TextBox
+    Friend WithEvents chainName As TextBox
     Friend WithEvents chainNameLabel As Label
     Friend WithEvents monitorTab As TabPage
     Friend WithEvents refreshDataMonitor As Button
@@ -1418,4 +1480,11 @@ Partial Class Main
     Friend WithEvents currentOperationText As TextBox
     Friend WithEvents currentOperationLabel As Label
     Friend WithEvents requestNetworkDisconnect As Button
+    Friend WithEvents netWorkName As TextBox
+    Friend WithEvents netWorkNameLabel As Label
+    Friend WithEvents netWorkRefement As TextBox
+    Friend WithEvents netWorkReferementLabel As Label
+    Friend WithEvents addressIP As TextBox
+    Friend WithEvents addressIPLabel As Label
+    Friend WithEvents unitMeasureLabel As Label
 End Class

@@ -13,12 +13,12 @@ Public Class Settings
         Try
             With AreaCommon.settings.data
                 If (.networkName.Trim().Length = 0) Then
-                    networkName.Text = AreaCommon.state.internalInformation.networkName
+                    networkName.Text = AreaCommon.state.serviceInformation.netWorkName
                 Else
                     networkName.Text = .networkName
                 End If
 
-                chainName.Text = AreaCommon.state.internalInformation.chainName
+                chainName.Text = AreaCommon.state.serviceInformation.chainName
 
                 intranetMode.Checked = .intranetMode
                 noUpdateSystemDate.Checked = .noUpdateSystemDate
@@ -33,7 +33,11 @@ Public Class Settings
 
                 certificateClient.value = .clientCertificate
 
+                logConfiguration.trackConfiguration = .trackConfiguration
                 logConfiguration.useTrackRotate = .useTrackRotate
+                logConfiguration.trackRotateFrequency = .trackRotateConfig.frequency
+                logConfiguration.trackRotateKeepFile = .trackRotateConfig.keepFile
+                logConfiguration.trackRotateKeepLast = .trackRotateConfig.keepLast
 
                 useEventRegistry.Checked = .useEventRegistry
             End With
@@ -61,7 +65,11 @@ Public Class Settings
 
                 .clientCertificate = certificateClient.value
 
+                .trackConfiguration = logConfiguration.trackConfiguration
                 .useTrackRotate = logConfiguration.useTrackRotate
+                .trackRotateConfig.frequency = logConfiguration.trackRotateFrequency
+                .trackRotateConfig.keepFile = logConfiguration.trackRotateKeepFile
+                .trackRotateConfig.keepLast = logConfiguration.trackRotateKeepLast
 
                 .useEventRegistry = useEventRegistry.Checked
             End With

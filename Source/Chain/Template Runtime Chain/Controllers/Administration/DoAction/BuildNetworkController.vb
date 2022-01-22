@@ -46,8 +46,8 @@ Namespace Controllers
                     End If
                 End If
                 If proceed Then
-                    If (AreaCommon.state.service <> Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
-                        result.responseStatus = General.RemoteResponse.EnumResponseStatus.systemOffline
+                    If (AreaCommon.state.serviceInformation.currentStatus <> Models.Service.InternalServiceInformation.EnumInternalServiceState.started) Then
+                        result.responseStatus = General.BaseRemoteResponse.EnumResponseStatus.systemOffline
 
                         proceed = False
                     End If

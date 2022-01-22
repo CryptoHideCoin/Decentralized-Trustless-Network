@@ -154,7 +154,7 @@ Namespace AreaProtocol
                         proceed = (request.common.chainReferement.Length > 0)
                     End If
                     If proceed Then
-                        proceed = (request.common.chainReferement.CompareTo(AreaCommon.state.internalInformation.chainName) = 0)
+                        proceed = (request.common.chainReferement.CompareTo(AreaCommon.state.serviceInformation.chainName) = 0)
                     End If
                     If proceed Then
                         proceed = (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
@@ -285,7 +285,7 @@ Namespace AreaProtocol
             End Function
 
             ''' <summary>
-            ''' This method provide to create a initial procedure A0x3
+            ''' This method provide to create a initial procedure A0x8
             ''' </summary>
             ''' <returns></returns>
             Public Shared Function createInternalRequest() As String
@@ -300,7 +300,7 @@ Namespace AreaProtocol
 
                     With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                         data.common.netWorkReferement = AreaCommon.state.runTimeState.activeNetwork.hash
-                        data.common.chainReferement = AreaCommon.state.internalInformation.chainName
+                        data.common.chainReferement = AreaCommon.state.serviceInformation.chainName
                         data.common.type = "a0x8"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()

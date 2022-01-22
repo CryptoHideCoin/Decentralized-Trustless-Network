@@ -4,3 +4,4 @@ E:\CryptoHideCoinDTN\Source\Libraries\CHCLedgerLibrary\obj\Release\CHCLedgerLibr
 E:\CryptoHideCoinDTN\Source\Libraries\CHCLedgerLibrary\obj\Release\CHCLedgerLibrary.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Libraries\CHCLedgerLibrary\obj\Release\CHCLedgerLibrary.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Libraries\CHCLedgerLibrary\obj\Release\CHCLedgerLibrary.dll
+E:\CryptoHideCoinDTN\Source\packages\Internal\CHCLedgerLibrary\CHCLedgerLibrary.dll

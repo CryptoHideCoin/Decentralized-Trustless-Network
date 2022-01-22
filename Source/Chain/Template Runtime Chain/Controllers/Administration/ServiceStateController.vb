@@ -32,7 +32,7 @@ Namespace Controllers
 
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
-                If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
+                If (AreaCommon.state.serviceInformation.currentStatus = Models.Service.InternalServiceInformation.EnumInternalServiceState.started) Then
                     If Not AreaSecurity.checkSignature(signature) Then
                         result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
                     Else

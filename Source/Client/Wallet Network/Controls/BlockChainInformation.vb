@@ -307,10 +307,9 @@ Public Class ledgerPanel
             Dim lastPageNumber As Integer
 
             If proceed Then
-                _CurrentBlockNumber = extractCurrentBlockData()
-
-                ledgerPageData.blockNumber.Text = "Block address: " & _CurrentBlockNumber.blockNumber
-                ledgerPageData.numTransactionInBlock.Text = "Num transaction into block: " & _CurrentBlockNumber.transactionNumber
+                If IsNothing(_CurrentBlockNumber) Then
+                    _CurrentBlockNumber = extractCurrentBlockData()
+                End If
 
                 lastPageNumber = (_CurrentBlockNumber.transactionNumber \ 20) + 1
 
@@ -335,10 +334,21 @@ Public Class ledgerPanel
                 Return False
             End If
             If proceed Then
-                ledgerPageData.countLabel.Text = "Count: " & lastPageNumber.ToString()
-                ledgerPageData.pageNumber.Text = lastPageNumber.ToString()
+                If (remote.data.value.transactions.Count = 0) Then
+                    MessageBox.Show("Block missing", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+                    Return False
+                End If
 
                 _Data = remote.data.value.transactions
+
+                ledgerPageData.blockNumber.Text = "Block address: " & _CurrentBlockNumber.blockNumber
+                ledgerPageData.numTransactionInBlock.Text = "Num transaction into block: " & _CurrentBlockNumber.transactionNumber
+
+                ledgerPageData.initBlock(_CurrentBlockNumber.blockNumber)
+
+                ledgerPageData.countLabel.Text = "Count: " & lastPageNumber.ToString()
+                ledgerPageData.pageNumber.Text = lastPageNumber.ToString()
 
                 loadDataIntoGrid()
             End If
@@ -430,6 +440,12 @@ Public Class ledgerPanel
         backButton.Enabled = True
 
         loadConsensus(orderHash)
+    End Sub
+
+    Private Sub ledgerPageData_ChangeBlock(value As String) Handles ledgerPageData.ChangeBlock
+        _CurrentBlockNumber.blockNumber = value
+
+        readLedgerPage()
     End Sub
 
 End Class

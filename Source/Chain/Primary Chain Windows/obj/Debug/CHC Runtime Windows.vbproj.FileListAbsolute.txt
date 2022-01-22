@@ -1,3 +1,0 @@
-E:\CryptoHideCoinDTN\Source\Runtime Windows\obj\Debug\CHC Runtime Windows.vbprojAssemblyReference.cache
-E:\CryptoHideCoinDTN\Source\Runtime Windows\obj\Debug\CHC_Runtime_Windows.Resources.resources
-E:\CryptoHideCoinDTN\Source\Runtime Windows\obj\Debug\CHC Runtime Windows.vbproj.GenerateResource.cache

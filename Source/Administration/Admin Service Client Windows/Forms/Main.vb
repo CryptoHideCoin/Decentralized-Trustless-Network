@@ -223,27 +223,31 @@ Public Class Main
 
                 remote.url = serviceUrlProtocol.baseUrlComplete & "/api/" & serviceIDText.Text & "/service/information/?signature=" & signature
 
-                Dim rt As DateTime = Now
+                Dim startRequest As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
                 If (remote.getData() = "") Then
                     If (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete) Then
-                        walletAddressText.Text = remote.data.adminPublicAddress
 
-                        Select Case remote.data.currentStatus
-                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.undefined : currentStatusText.Text = "Not defined"
-                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown : currentStatusText.Text = "Shutdown"
-                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.started : currentStatusText.Text = "Started"
-                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.starting : currentStatusText.Text = "Starting"
-                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.swithOff : currentStatusText.Text = "Switch off"
-                            Case Models.Service.InformationResponseModel.EnumInternalServiceState.waitToMaintenance : currentStatusText.Text = "Wait to maintenance"
+                        identityWalletAddress.Text = remote.data.value.identityPublicAddress
+                        netWorkName.Text = remote.data.value.netWorkName
+                        netWorkRefement.Text = remote.data.value.netWorkReferement
+
+                        Select Case remote.data.value.currentStatus
+                            Case Models.Service.InternalServiceInformation.EnumInternalServiceState.undefined : currentStatus.Text = "Not defined"
+                            Case Models.Service.InternalServiceInformation.EnumInternalServiceState.shutDown : currentStatus.Text = "Shutdown"
+                            Case Models.Service.InternalServiceInformation.EnumInternalServiceState.started : currentStatus.Text = "Started"
+                            Case Models.Service.InternalServiceInformation.EnumInternalServiceState.starting : currentStatus.Text = "Starting"
+                            Case Models.Service.InternalServiceInformation.EnumInternalServiceState.swithOff : currentStatus.Text = "Switch off"
+                            Case Models.Service.InternalServiceInformation.EnumInternalServiceState.waitToMaintenance : currentStatus.Text = "Wait to maintenance"
                         End Select
 
-                        chainNameText.Text = remote.data.chainName
-                        platformHostText.Text = remote.data.platformHost
-                        softwareReleaseText.Text = remote.data.softwareRelease
-                        addressText.Text = remote.data.addressIP
-                        requestTimeText.Text = rt.ToString()
-                        responseTimeText.Text = remote.data.responseTime
+                        chainName.Text = remote.data.value.chainName
+                        platformHost.Text = remote.data.value.platformHost
+                        softwareRelease.Text = remote.data.value.softwareRelease
+                        addressIP.Text = remote.data.value.addressIP
+                        publicCompleteAddress.Text = remote.data.value.completeAddress
+
+                        responseTime.Text = (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - startRequest) \ 1000
                     ElseIf (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.systemOffline) Then
                         MessageBox.Show("Peer is offline", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     ElseIf (remote.data.responseStatus = CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.missingAuthorization) Then

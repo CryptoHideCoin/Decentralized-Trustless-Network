@@ -33,3 +33,5 @@ E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSuppor
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.pdb
 E:\CryptoHideCoinDTN\Source\packages\CHCSupportUIControls\CHCSupportUIControls.dll
 E:\CryptoHideCoinDTN\Source\packages\CHCSupportUIControls\CHCSupportUIControls.pdb
+E:\CryptoHideCoinDTN\Source\packages\Internal\CHCSupportUILibrary\CHCSupportUIControls.dll
+E:\CryptoHideCoinDTN\Source\packages\Internal\CHCSupportUILibrary\CHCSupportUIControls.pdb

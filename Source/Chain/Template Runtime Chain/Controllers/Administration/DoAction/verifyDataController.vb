@@ -33,7 +33,7 @@ Namespace Controllers
 
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
-                If (AreaCommon.state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
+                If (AreaCommon.state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.started) Then
                     If AreaSecurity.checkSignature(signature) Then
                         For Each item In AreaCommon.state.currentService.listAvailableCommand
                             If (item = CHCProtocolLibrary.AreaCommon.Models.Administration.EnumActionAdministration.verifyData) Then

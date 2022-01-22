@@ -142,8 +142,8 @@ Namespace AreaData
 
                 AreaCommon.log.track("Verify.analyzeInternalState", "Begin")
 
-                _DataCommon.chainName = AreaCommon.state.internalInformation.chainName
-                _DataCommon.networkName = AreaCommon.state.internalInformation.networkName
+                _DataCommon.chainName = AreaCommon.state.serviceInformation.chainName
+                _DataCommon.networkName = AreaCommon.state.serviceInformation.netWorkName
 
                 AreaCommon.log.track("Verify.analyzeInternalState", "Main data set")
 

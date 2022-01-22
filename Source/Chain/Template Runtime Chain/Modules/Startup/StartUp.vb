@@ -27,7 +27,7 @@ Namespace AreaCommon
             log.trackIntoConsole()
 #End If
 
-            state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.starting
+            state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.starting
         End Sub
 
         ''' <summary>
@@ -39,9 +39,9 @@ Namespace AreaCommon
             Try
                 log.track("startUp.loadDataInformation", "Begin")
 
-                With state.internalInformation
+                With state.serviceInformation
                     .chainName = Customize.chainName
-                    .adminPublicAddress = settings.data.walletAddress
+                    .identityPublicAddress = state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).publicAddress
 
                     If settings.data.intranetMode Then
                         .addressIP = state.localIpAddress
@@ -50,9 +50,20 @@ Namespace AreaCommon
                     End If
 
                     .intranetMode = settings.data.intranetMode
-                    .networkName = settings.data.networkName
+                    .netWorkName = settings.data.networkName
+                    .netWorkReferement = state.runTimeState.activeNetwork.hash
                     .platformHost = "Microsoft Windows Standalone service"
-                    .softwareRelease = "0.2"
+                    .softwareRelease = "0.3"
+
+                    'If settings.data.useServiceSecureProtocol Then
+                    '    url = "https://"
+                    'Else
+                    '    url = "http://"
+                    'End If
+
+                    .completeAddress += .addressIP & "/api/" & settings.data.serviceId
+
+                    .currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.undefined
                 End With
             Catch ex As Exception
                 log.track("StartUp.loadDataInformation", "Error during Load data information:" & ex.Message, "fatal", True)
@@ -209,7 +220,7 @@ Namespace AreaCommon
             log.track("startUp.runApplication", "Begin")
 
             Try
-                state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.started
+                state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.started
 
                 state.currentService.init()
 
@@ -218,7 +229,7 @@ Namespace AreaCommon
                 Do
                     Application.DoEvents()
                     Threading.Thread.Sleep(AreaCommon.support.timeSleep)
-                Loop While (state.service <> CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown)
+                Loop While (state.serviceInformation.currentStatus <> CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.shutDown)
             Catch ex As Exception
                 log.track("startUp.runApplication", ex.Message, "fatal")
 
@@ -352,7 +363,7 @@ Namespace AreaCommon
 
                 log.track("startUp.[Stop]", "Begin")
 
-                state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown
+                state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.shutDown
 
                 log.track("startUp.[Stop]", "Completed")
 

@@ -215,7 +215,7 @@ Namespace AreaProtocol
                             proceed = (.common.chainReferement.length > 0)
                         End If
                         If proceed Then
-                            proceed = (.common.chainReferement.CompareTo(AreaCommon.state.internalInformation.chainName) = 0)
+                            proceed = (.common.chainReferement.CompareTo(AreaCommon.state.serviceInformation.chainName) = 0)
                         End If
                         If proceed Then
                             proceed = (.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
@@ -378,7 +378,7 @@ Namespace AreaProtocol
                         data.content.protocol = protocol
                         data.content.documentation = documentation
                         data.common.netWorkReferement = AreaCommon.state.runTimeState.activeNetwork.hash
-                        data.common.chainReferement = AreaCommon.state.internalInformation.chainName
+                        data.common.chainReferement = AreaCommon.state.serviceInformation.chainName
                         data.common.type = "a1x2"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = AreaCommon.state.runTimeState.activeNetwork.networkCreationDate

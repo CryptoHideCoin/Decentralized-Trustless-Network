@@ -28,13 +28,9 @@ E:\CryptoHideCoinDTN\Source\Client\Wallet Network\CHCWalletNetwork\obj\Debug\CHC
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCWalletNetwork.exe.config
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCWalletNetwork.exe
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCWalletNetwork.pdb
-E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCWalletNetwork.xml
-E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\Newtonsoft.Json.dll
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCBasicCryptographyLibrary.dll
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\zxing.dll
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\BouncyCastle.Crypto.dll
-E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCSupportUIControls.pdb
-E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCSupportUIControls.xml
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.Background.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.GenericInformation.resources
@@ -46,13 +42,11 @@ E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.Res
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.exe
-E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.xml
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.pdb
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.ContentInformation.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCCommonLibrary.dll
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCProtocolLibrary.dll
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCSupportUIControls.dll
-E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.exe.config
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.AssetInformation.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.TransactionChainInformation.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.RefundPlanInformation.resources
@@ -74,7 +68,6 @@ E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.Sup
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.SupplyPanel.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.SummaryLedgerPanel.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.ledgerPanel.resources
-E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCProtocolLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCProtocolLibrary.xml
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.LedgerPage.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.TransactionDetail.resources
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\Newtonsoft.Json.dll

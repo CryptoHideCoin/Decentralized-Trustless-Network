@@ -37,7 +37,7 @@ Namespace Controllers
                 result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
                 If proceed Then
-                    proceed = (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started)
+                    proceed = (AreaCommon.state.serviceInformation.currentStatus = Models.Service.InternalServiceInformation.EnumInternalServiceState.started)
                 End If
                 If proceed Then
                     proceed = (AreaCommon.state.network.position = CHCRuntimeChainLibrary.AreaRuntime.AppState.EnumConnectionState.onLine)

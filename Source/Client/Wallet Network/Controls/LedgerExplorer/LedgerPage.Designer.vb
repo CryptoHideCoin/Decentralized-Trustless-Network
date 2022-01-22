@@ -22,10 +22,10 @@ Partial Class LedgerPage
     'Non modificarla mediante l'editor del codice.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.groupPages = New System.Windows.Forms.GroupBox()
         Me.countLabel = New System.Windows.Forms.Label()
         Me.pageNumber = New System.Windows.Forms.TextBox()
@@ -39,10 +39,20 @@ Partial Class LedgerPage
         Me.Validator = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.hash = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.cumulativeHash = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.blockNumber = New System.Windows.Forms.Label()
+        Me.blockGroup = New System.Windows.Forms.GroupBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.ledgerInitial = New System.Windows.Forms.TextBox()
+        Me.blockValue = New System.Windows.Forms.TextBox()
+        Me.changeBlockButton = New System.Windows.Forms.Button()
+        Me.volumeValue = New System.Windows.Forms.TextBox()
+        Me.informationsGroups = New System.Windows.Forms.GroupBox()
         Me.numTransactionInBlock = New System.Windows.Forms.Label()
+        Me.blockNumber = New System.Windows.Forms.Label()
         Me.groupPages.SuspendLayout()
         CType(Me.pageDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.blockGroup.SuspendLayout()
+        Me.informationsGroups.SuspendLayout()
         Me.SuspendLayout()
         '
         'groupPages
@@ -51,7 +61,7 @@ Partial Class LedgerPage
         Me.groupPages.Controls.Add(Me.pageNumber)
         Me.groupPages.Controls.Add(Me.pagePreviousButton)
         Me.groupPages.Controls.Add(Me.pageNextButton)
-        Me.groupPages.Location = New System.Drawing.Point(9, 7)
+        Me.groupPages.Location = New System.Drawing.Point(251, 7)
         Me.groupPages.Name = "groupPages"
         Me.groupPages.Size = New System.Drawing.Size(173, 71)
         Me.groupPages.TabIndex = 14
@@ -100,14 +110,14 @@ Partial Class LedgerPage
         Me.pageDataGrid.AllowUserToResizeColumns = False
         Me.pageDataGrid.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.pageDataGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.pageDataGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         Me.pageDataGrid.ColumnHeadersHeight = 42
         Me.pageDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.pageDataGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id, Me.registrationTimeStamp, Me.classColumn, Me.orderer, Me.Validator, Me.hash, Me.cumulativeHash})
@@ -123,8 +133,8 @@ Partial Class LedgerPage
         '
         'id
         '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.id.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.id.DefaultCellStyle = DataGridViewCellStyle6
         Me.id.HeaderText = "ID"
         Me.id.Name = "id"
         Me.id.ReadOnly = True
@@ -133,9 +143,9 @@ Partial Class LedgerPage
         '
         'registrationTimeStamp
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.registrationTimeStamp.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.registrationTimeStamp.DefaultCellStyle = DataGridViewCellStyle7
         Me.registrationTimeStamp.HeaderText = "Registration Timestamp"
         Me.registrationTimeStamp.Name = "registrationTimeStamp"
         Me.registrationTimeStamp.ReadOnly = True
@@ -145,8 +155,8 @@ Partial Class LedgerPage
         '
         'classColumn
         '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.classColumn.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.classColumn.DefaultCellStyle = DataGridViewCellStyle8
         Me.classColumn.HeaderText = "Class"
         Me.classColumn.Name = "classColumn"
         Me.classColumn.ReadOnly = True
@@ -189,31 +199,112 @@ Partial Class LedgerPage
         Me.cumulativeHash.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
         Me.cumulativeHash.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         '
-        'blockNumber
+        'blockGroup
         '
-        Me.blockNumber.AutoSize = True
-        Me.blockNumber.Location = New System.Drawing.Point(192, 26)
-        Me.blockNumber.Name = "blockNumber"
-        Me.blockNumber.Size = New System.Drawing.Size(28, 13)
-        Me.blockNumber.TabIndex = 16
-        Me.blockNumber.Text = "xxx"
+        Me.blockGroup.Controls.Add(Me.Label2)
+        Me.blockGroup.Controls.Add(Me.Label1)
+        Me.blockGroup.Controls.Add(Me.ledgerInitial)
+        Me.blockGroup.Controls.Add(Me.blockValue)
+        Me.blockGroup.Controls.Add(Me.changeBlockButton)
+        Me.blockGroup.Controls.Add(Me.volumeValue)
+        Me.blockGroup.Location = New System.Drawing.Point(3, 7)
+        Me.blockGroup.Name = "blockGroup"
+        Me.blockGroup.Size = New System.Drawing.Size(242, 71)
+        Me.blockGroup.TabIndex = 21
+        Me.blockGroup.TabStop = False
+        Me.blockGroup.Text = "Change block"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(40, 32)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(12, 13)
+        Me.Label2.TabIndex = 30
+        Me.Label2.Text = "-"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(86, 33)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(12, 13)
+        Me.Label1.TabIndex = 29
+        Me.Label1.Text = "-"
+        '
+        'ledgerInitial
+        '
+        Me.ledgerInitial.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ledgerInitial.Location = New System.Drawing.Point(6, 30)
+        Me.ledgerInitial.Name = "ledgerInitial"
+        Me.ledgerInitial.ReadOnly = True
+        Me.ledgerInitial.Size = New System.Drawing.Size(34, 22)
+        Me.ledgerInitial.TabIndex = 28
+        Me.ledgerInitial.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'blockValue
+        '
+        Me.blockValue.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.blockValue.Location = New System.Drawing.Point(98, 30)
+        Me.blockValue.Name = "blockValue"
+        Me.blockValue.Size = New System.Drawing.Size(67, 22)
+        Me.blockValue.TabIndex = 27
+        Me.blockValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'changeBlockButton
+        '
+        Me.changeBlockButton.Location = New System.Drawing.Point(173, 24)
+        Me.changeBlockButton.Name = "changeBlockButton"
+        Me.changeBlockButton.Size = New System.Drawing.Size(63, 34)
+        Me.changeBlockButton.TabIndex = 26
+        Me.changeBlockButton.Text = "Change"
+        Me.changeBlockButton.UseVisualStyleBackColor = True
+        '
+        'volumeValue
+        '
+        Me.volumeValue.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.volumeValue.Location = New System.Drawing.Point(52, 30)
+        Me.volumeValue.Name = "volumeValue"
+        Me.volumeValue.Size = New System.Drawing.Size(34, 22)
+        Me.volumeValue.TabIndex = 25
+        Me.volumeValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'informationsGroups
+        '
+        Me.informationsGroups.Controls.Add(Me.numTransactionInBlock)
+        Me.informationsGroups.Controls.Add(Me.blockNumber)
+        Me.informationsGroups.Location = New System.Drawing.Point(430, 7)
+        Me.informationsGroups.Name = "informationsGroups"
+        Me.informationsGroups.Size = New System.Drawing.Size(200, 71)
+        Me.informationsGroups.TabIndex = 22
+        Me.informationsGroups.TabStop = False
+        Me.informationsGroups.Text = "Informations"
         '
         'numTransactionInBlock
         '
         Me.numTransactionInBlock.AutoSize = True
-        Me.numTransactionInBlock.Location = New System.Drawing.Point(192, 49)
+        Me.numTransactionInBlock.Location = New System.Drawing.Point(6, 53)
         Me.numTransactionInBlock.Name = "numTransactionInBlock"
         Me.numTransactionInBlock.Size = New System.Drawing.Size(28, 13)
-        Me.numTransactionInBlock.TabIndex = 17
+        Me.numTransactionInBlock.TabIndex = 19
         Me.numTransactionInBlock.Text = "xxx"
+        '
+        'blockNumber
+        '
+        Me.blockNumber.AutoSize = True
+        Me.blockNumber.Location = New System.Drawing.Point(6, 30)
+        Me.blockNumber.Name = "blockNumber"
+        Me.blockNumber.Size = New System.Drawing.Size(28, 13)
+        Me.blockNumber.TabIndex = 18
+        Me.blockNumber.Text = "xxx"
         '
         'LedgerPage
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.Controls.Add(Me.numTransactionInBlock)
-        Me.Controls.Add(Me.blockNumber)
+        Me.Controls.Add(Me.informationsGroups)
+        Me.Controls.Add(Me.blockGroup)
         Me.Controls.Add(Me.pageDataGrid)
         Me.Controls.Add(Me.groupPages)
         Me.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -222,8 +313,11 @@ Partial Class LedgerPage
         Me.groupPages.ResumeLayout(False)
         Me.groupPages.PerformLayout()
         CType(Me.pageDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.blockGroup.ResumeLayout(False)
+        Me.blockGroup.PerformLayout()
+        Me.informationsGroups.ResumeLayout(False)
+        Me.informationsGroups.PerformLayout()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
@@ -240,6 +334,14 @@ Partial Class LedgerPage
     Friend WithEvents Validator As DataGridViewTextBoxColumn
     Friend WithEvents hash As DataGridViewTextBoxColumn
     Friend WithEvents cumulativeHash As DataGridViewTextBoxColumn
-    Friend WithEvents blockNumber As Label
+    Friend WithEvents blockGroup As GroupBox
+    Friend WithEvents changeBlockButton As Button
+    Friend WithEvents volumeValue As TextBox
+    Friend WithEvents informationsGroups As GroupBox
     Friend WithEvents numTransactionInBlock As Label
+    Friend WithEvents blockNumber As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents Label1 As Label
+    Friend WithEvents ledgerInitial As TextBox
+    Friend WithEvents blockValue As TextBox
 End Class

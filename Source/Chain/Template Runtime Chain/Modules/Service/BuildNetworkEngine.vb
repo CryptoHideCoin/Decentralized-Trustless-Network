@@ -103,7 +103,7 @@ Namespace AreaData
 
                 AreaCommon.state.runTimeState.addGenesisChain()
 
-                singleNode.addNewAddressIP(AreaCommon.state.internalInformation.addressIP, True)
+                singleNode.addNewAddressIP(AreaCommon.state.serviceInformation.addressIP, True)
 
                 singleNode.startConnectionTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                 singleNode.role = RoleMasterNode.fullStack

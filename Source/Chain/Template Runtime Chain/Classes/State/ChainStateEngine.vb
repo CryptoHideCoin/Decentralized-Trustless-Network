@@ -177,6 +177,9 @@ Namespace AreaState
                             activeNetwork.networkName.hash = transactionChainRecord.hash
                             activeNetwork.networkName.progressiveHash = transactionChainRecord.progressiveHash
                             activeNetwork.networkName.registrationTimeStamp = transactionChainRecord.registrationTimeStamp
+
+                            AreaCommon.state.serviceInformation.netWorkName = value
+                            AreaCommon.state.serviceInformation.netWorkReferement = transactionChainRecord.hash
                         Case AreaCommon.DAO.DBNetwork.MainPropertyID.specialEnvironment
                             activeNetwork.envinronment.value = value
                             activeNetwork.envinronment.coordinate = transactionChainRecord.coordinate
@@ -280,7 +283,7 @@ Namespace AreaState
                     newValue.lastCloseBlock.progressiveHash = transactionChainRecord.progressiveHash
                     newValue.lastCloseBlock.hash = transactionChainRecord.hash
 
-                    If (newValue.name.value.CompareTo(AreaCommon.state.internalInformation.chainName) = 0) Then
+                    If (newValue.name.value.CompareTo(AreaCommon.state.serviceInformation.chainName) = 0) Then
                         AreaCommon.log.track("ChainStateEngine.addNewChain", "Set activeChain")
 
                         activeChain = newValue
@@ -549,7 +552,7 @@ Namespace AreaState
 
                 internalElement.identityPublicAddress = publicAddress
                 internalElement.ipAddress = value.getPrimaryAddress()
-                internalElement.itsMe = (internalElement.ipAddress = AreaCommon.state.internalInformation.addressIP)
+                internalElement.itsMe = (internalElement.ipAddress = AreaCommon.state.serviceInformation.addressIP)
                 internalElement.lastConnectionTimeStamp = originalElement.startConnectionTimeStamp
 
                 If Not IsNothing(transactionChainRecord) Then
@@ -639,7 +642,7 @@ Namespace AreaState
                 AreaCommon.log.track("ChainStateEngine.getDataPeer", "Begin")
 
                 If (chainName.Length = 0) Then
-                    chainName = AreaCommon.state.internalInformation.chainName
+                    chainName = AreaCommon.state.serviceInformation.chainName
                 End If
 
                 chain = chainByName(chainName)
@@ -667,7 +670,7 @@ Namespace AreaState
                 AreaCommon.log.track("ChainStateEngine.getDataPeer", "Begin")
 
                 If (chainName.Length = 0) Then
-                    chainName = AreaCommon.state.internalInformation.chainName
+                    chainName = AreaCommon.state.serviceInformation.chainName
                 End If
 
                 chain = chainByName(chainName)
@@ -765,7 +768,7 @@ Namespace AreaState
                 AreaCommon.log.track("ChainStateEngine.manageAbstained", "Begin")
 
                 If (chainName.Length = 0) Then
-                    chainName = AreaCommon.state.internalInformation.chainName
+                    chainName = AreaCommon.state.serviceInformation.chainName
                 End If
 
                 chain = chainByName(chainName)
@@ -802,7 +805,7 @@ Namespace AreaState
                 AreaCommon.log.track("ChainStateEngine.manageRejected", "Begin")
 
                 If (chainName.Length = 0) Then
-                    chainName = AreaCommon.state.internalInformation.chainName
+                    chainName = AreaCommon.state.serviceInformation.chainName
                 End If
 
                 ''' UNDONE: manage Rejected node
@@ -833,7 +836,7 @@ Namespace AreaState
                 AreaCommon.log.track("ChainStateEngine.manageAbsent", "Begin")
 
                 If (chainName.Length = 0) Then
-                    chainName = AreaCommon.state.internalInformation.chainName
+                    chainName = AreaCommon.state.serviceInformation.chainName
                 End If
 
                 ''' UNDONE: manage Rejected node

@@ -153,7 +153,7 @@ Namespace AreaProtocol
                         proceed = (request.common.chainReferement.Length > 0)
                     End If
                     If proceed Then
-                        proceed = request.common.chainReferement.CompareTo(AreaCommon.state.internalInformation.chainName) = 0
+                        proceed = request.common.chainReferement.CompareTo(AreaCommon.state.serviceInformation.chainName) = 0
                     End If
                     If proceed Then
                         proceed = (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
@@ -298,7 +298,7 @@ Namespace AreaProtocol
 
                     With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                         data.common.netWorkReferement = AreaCommon.state.runTimeState.activeNetwork.hash
-                        data.common.chainReferement = AreaCommon.state.internalInformation.chainName
+                        data.common.chainReferement = AreaCommon.state.serviceInformation.chainName
                         data.common.type = "a1x9"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()

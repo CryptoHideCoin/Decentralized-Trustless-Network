@@ -166,7 +166,7 @@ Namespace AreaProtocol
                         proceed = (request.common.chainReferement.Length > 0)
                     End If
                     If proceed Then
-                        proceed = request.common.chainReferement.CompareTo(AreaCommon.state.internalInformation.chainName) = 0
+                        proceed = request.common.chainReferement.CompareTo(AreaCommon.state.serviceInformation.chainName) = 0
                     End If
                     If proceed Then
                         proceed = (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
@@ -311,7 +311,7 @@ Namespace AreaProtocol
 
                     With AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity)
                         data.common.netWorkReferement = AreaCommon.state.runTimeState.activeNetwork.hash
-                        data.common.chainReferement = AreaCommon.state.internalInformation.chainName
+                        data.common.chainReferement = AreaCommon.state.serviceInformation.chainName
                         data.common.type = "a1x7"
                         data.common.publicAddressRequester = .publicAddress
                         data.common.requestDateTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
@@ -365,7 +365,7 @@ Namespace AreaProtocol
                         proceed = (firstRequestCreateListMasterNode.data.Length = 0)
                     End If
                     If proceed Then
-                        firstRequestCreateListMasterNode.data = A1x9.Manager.createInternalRequest()
+                        firstRequestCreateListMasterNode.data = A1x10.Manager.createInternalRequest()
                     End If
 
                     AreaCommon.log.track("A1x7Manager.manageCloseBlock", "Completed")
@@ -402,7 +402,7 @@ Namespace AreaProtocol
                         .blockChainIdentity = AreaCommon.state.ledger.header.identifyLedger
                         .blockIdentity = AreaCommon.state.ledger.lastBlockClosed.blockIdentity
                         .hashBlock = AreaCommon.state.ledger.lastBlockClosed.hash
-                        .chainReferement = AreaCommon.state.internalInformation.chainName
+                        .chainReferement = AreaCommon.state.serviceInformation.chainName
                         .netWorkReferement = AreaCommon.state.runTimeState.activeNetwork.hash
 
                     End With

@@ -52,6 +52,7 @@ Namespace Support
         Private _called As Boolean = False
         Private _registry As RegistryEngine
         Private _CurrentPage As String = ""
+        Private _FileName As String = ""
 
         Public Property saveMode As TrackRuntimeModeEnum = TrackRuntimeModeEnum.dontTrackEver
         Public Property inBootStrapAction As Boolean = False
@@ -114,6 +115,17 @@ Namespace Support
             End Try
         End Sub
 
+        ''' <summary>
+        ''' This method provide to compose a file name of log
+        ''' </summary>
+        Private Sub composeFileName()
+            If _FileName = "main" Then _FileName += "-" & Now.ToUniversalTime().ToString("yyyy-MM-dd") & ".track"
+
+            If Not IsNothing(_path) Then
+                completeFileName = IO.Path.Combine(_path, _FileName)
+            End If
+        End Sub
+
 
         ''' <summary>
         ''' This method provide to initialize the log component
@@ -126,10 +138,11 @@ Namespace Support
             Try
                 _registry = registryPointer
 
-                If fileName = "main" Then fileName += "-" & Now.ToUniversalTime().ToString("yyyy-MM-dd") & ".track"
-
                 _path = basePath
-                completeFileName = IO.Path.Combine(basePath, fileName)
+
+                _FileName = fileName
+
+                composeFileName()
 
                 If Not IO.Directory.Exists(_path) Then IO.Directory.CreateDirectory(_path)
 
@@ -154,10 +167,13 @@ Namespace Support
         ''' Type_Error = Write an information on log file ever if is in action
         ''' Type_Fatal = Write an information on log file and into console
         ''' </param>
-        <DebuggerHiddenAttribute()> Public Sub track(ByVal position As String, ByVal content As String, Optional ByVal messageType As String = "info", Optional ByVal printIntoConsole As Boolean = False)
+        '<DebuggerHiddenAttribute()>
+        Public Sub track(ByVal position As String, ByVal content As String, Optional ByVal messageType As String = "info", Optional ByVal printIntoConsole As Boolean = False)
             Try
                 Dim fatalError As Boolean = (messageType.CompareTo("fatal") = 0)
                 Dim normalError As Boolean = (messageType.CompareTo("error") = 0)
+
+                composeFileName()
 
                 _lastInfoTrack = timeStampFromDateTime() & "|" & atMomentGMT() & "|" & messageType & "|" & position & "|" & content
 

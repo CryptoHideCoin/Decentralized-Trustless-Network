@@ -26,24 +26,26 @@ Namespace Controllers
             result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
 
             Try
-                If (AreaCommon.state.service = Models.Service.InformationResponseModel.EnumInternalServiceState.started) Then
+                If (AreaCommon.state.serviceInformation.currentStatus = Models.Service.InternalServiceInformation.EnumInternalServiceState.started) Then
                     If AreaSecurity.checkSignature(signature) Then
                         If AreaSecurity.setIdentityKeyPair(value) Then
                             AreaCommon.log.trackIntoConsole("Set Identity KeyPair")
 
-                            result.responseStatus = General.RemoteResponse.EnumResponseStatus.responseComplete
+                            AreaCommon.state.serviceInformation.identityPublicAddress = AreaCommon.state.keys.key(TransactionChainLibrary.AreaEngine.KeyPair.KeysEngine.KeyPair.enumWalletType.identity).publicAddress
+
+                            result.responseStatus = General.BaseRemoteResponse.EnumResponseStatus.responseComplete
                         Else
-                            result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
+                            result.responseStatus = General.BaseRemoteResponse.EnumResponseStatus.inError
                             result.errorDescription = "Service Error"
                         End If
                     Else
-                        result.responseStatus = General.RemoteResponse.EnumResponseStatus.missingAuthorization
+                        result.responseStatus = General.BaseRemoteResponse.EnumResponseStatus.missingAuthorization
                     End If
                 Else
-                    result.responseStatus = General.RemoteResponse.EnumResponseStatus.systemOffline
+                    result.responseStatus = General.BaseRemoteResponse.EnumResponseStatus.systemOffline
                 End If
             Catch ex As Exception
-                result.responseStatus = General.RemoteResponse.EnumResponseStatus.inError
+                result.responseStatus = General.BaseRemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
             End Try
 

@@ -73,7 +73,7 @@ Namespace AreaCommon
                     Do
                         Application.DoEvents()
                         Threading.Thread.Sleep(AreaCommon.support.timeSleep)
-                    Loop Until (state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.shutDown)
+                    Loop Until (state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.shutDown)
 
                     server.CloseAsync().Wait()
                     server.Dispose()
@@ -84,7 +84,7 @@ Namespace AreaCommon
 
                 registry.addNew(CHCCommonLibrary.Support.RegistryEngine.RegistryData.TypeEvent.applicationShutdown)
 
-                state.service = CHCProtocolLibrary.AreaCommon.Models.Service.InformationResponseModel.EnumInternalServiceState.starting
+                state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.starting
             Catch ex As Exception
                 log.track("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion - Error:" & ex.Message, "fatal")
 

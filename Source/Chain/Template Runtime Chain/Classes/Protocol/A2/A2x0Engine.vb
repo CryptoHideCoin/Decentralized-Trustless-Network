@@ -218,7 +218,7 @@ Namespace AreaProtocol
                         proceed = (request.common.chainReferement.Length > 0)
                     End If
                     If proceed Then
-                        proceed = (request.common.chainReferement.CompareTo(AreaCommon.state.internalInformation.chainName) = 0)
+                        proceed = (request.common.chainReferement.CompareTo(AreaCommon.state.serviceInformation.chainName) = 0)
                     End If
                     If proceed Then
                         proceed = (request.common.requestDateTimeStamp <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
@@ -306,7 +306,7 @@ Namespace AreaProtocol
 
                         Return True
                     End If
-                    If (AreaCommon.state.internalInformation.chainName.CompareTo(request.common.chainReferement) <> 0) Then
+                    If (AreaCommon.state.serviceInformation.chainName.CompareTo(request.common.chainReferement) <> 0) Then
                         value.evaluations.rejectedNote = "Chain not exist"
                         value.position.verify = AreaFlow.EnumOperationPosition.completeWithNegativeResult
 
@@ -449,8 +449,8 @@ Namespace AreaProtocol
 
                         data.content.autoDisconnectTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime + (14 * 24 * 60 * 60 * 1000)
 
-                        data.content.addNewAddressIP("http://" & AreaCommon.state.internalInformation.addressIP & ":" & AreaCommon.settings.data.publicPort & "/api/" & AreaCommon.settings.data.serviceId, True)
-                        'data.content.addNewAddressIP(AreaCommon.state.internalInformation.addressIP, True)
+                        data.content.addNewAddressIP("http://" & AreaCommon.state.serviceInformation.addressIP & ":" & AreaCommon.settings.data.publicPort & "/api/" & AreaCommon.settings.data.serviceId, True)
+                        'data.content.addNewAddressIP(AreaCommon.state.serviceInformation.addressIP, True)
                         data.content.addNewGuarantee(.publicAddress, 1)
 
                         data.content.role = RoleMasterNode.fullStack

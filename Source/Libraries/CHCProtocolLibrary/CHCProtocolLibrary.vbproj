@@ -28,7 +28,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\packages\CHCProtocolLibrary\</OutputPath>
+    <OutputPath>..\..\packages\Internal\CHCProtocolLibrary\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -48,11 +48,11 @@
   <ItemGroup>
     <Reference Include="CHCBasicCryptographyLibrary, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
+      <HintPath>..\..\packages\Internal\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCCommonLibrary, Version=1.12.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
+      <HintPath>..\..\packages\Internal\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -80,7 +80,7 @@
     <Compile Include="General\InfoSystem.vb" />
     <Compile Include="General\Package.vb" />
     <Compile Include="General\VirtualPath.vb" />
-    <Compile Include="Models\AdministrationModel.vb" />
+    <Compile Include="Models\Admin\AdministrationModel.vb" />
     <Compile Include="Models\AuthorizationModel.vb" />
     <Compile Include="Models\Ledger\BlockInformationModel.vb" />
     <Compile Include="Models\Ledger\ContentTransactionModel.vb" />
@@ -98,7 +98,7 @@
     <Compile Include="Models\PrimaryChain\Supply\SupplyModel.vb" />
     <Compile Include="Models\PrimaryChain\Supply\SupplyResponseModel.vb" />
     <Compile Include="Models\SecurityModel.vb" />
-    <Compile Include="Models\ServiceModel.vb" />
+    <Compile Include="Models\Admin\ServiceModel.vb" />
     <Compile Include="Models\SetIdentityKeyPairModel.vb" />
     <Compile Include="Models\SideChain\NotifyModel.vb" />
     <Compile Include="Models\PaymentModel.vb" />
@@ -144,5 +144,6 @@
   <ItemGroup>
     <Content Include="Other\ReleaseNote.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

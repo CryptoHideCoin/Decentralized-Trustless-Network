@@ -22,7 +22,9 @@ Release Note
 0.15.1  - 20.12.2021 - Revision controller response
 0.16.0  - 21.12.2021 - Implement Chain Controller's
 0.17.0  - 30.12.2021 - Implement Query Controller's
-0.
+0.17.1	- 18.01.2022 - Bugfix to up checkLastTime
+0.18.0  - 18.01.2022 - Support to ServiceInternal information
+0.18.1	- 19.01.2022 - fix bug Create List on new block created
 
 TO DO
 =====
