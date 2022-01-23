@@ -1,0 +1,13 @@
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\bin\Debug\CHCCli.exe.config
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\bin\Debug\CHCCli.exe
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Debug\CHCCli.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Debug\CHCCli.Resources.resources
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Debug\CHCCli.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Debug\CHCCli.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Debug\CHCCli.exe
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\bin\Debug\CHCCli.pdb
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Debug\CHCCli.pdb

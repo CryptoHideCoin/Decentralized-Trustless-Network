@@ -71,3 +71,5 @@ E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.led
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.LedgerPage.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\obj\Debug\CHCWalletNetwork.TransactionDetail.resources
 E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Client\Wallet Network\bin\Debug\Newtonsoft.Json.xml
