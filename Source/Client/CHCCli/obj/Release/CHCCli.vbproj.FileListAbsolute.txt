@@ -4,3 +4,4 @@ E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Release\CHCCli.Resources.resources
 E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Release\CHCCli.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Release\CHCCli.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Release\CHCCli.exe
+E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Release\CHCCli.vbprojAssemblyReference.cache

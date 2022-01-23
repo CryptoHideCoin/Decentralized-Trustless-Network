@@ -159,6 +159,10 @@ Namespace AreaCommon
                         End If
                     End If
                 Next
+
+                If (result.code = CommandEnumeration.undefined) And (elements.Count > 0) Then
+                    CloseApplication("Command not recognized")
+                End If
             Catch ex As Exception
                 CloseApplication(ex.Message)
             End Try
