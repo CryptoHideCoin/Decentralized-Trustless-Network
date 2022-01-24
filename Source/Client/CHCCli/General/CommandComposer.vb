@@ -12,6 +12,9 @@ Namespace AreaCommon
     ''' </summary>
     Public Class CommandArguments
 
+        ''' <summary>
+        ''' This class contain the element of a argument
+        ''' </summary>
         Public Class SingleArgument
 
             Public Property key As String = ""
@@ -65,7 +68,9 @@ Namespace AreaCommon
                 End If
 
                 If (separated.Count > 0) Then
-                    newParameter.value = value.Substring(newParameter.key.Length + 1)
+                    If (newParameter.key.Length + 1 < value.Length) Then
+                        newParameter.value = value.Substring(newParameter.key.Length + 1)
+                    End If
                 End If
 
                 parameters.Add(newParameter.key, newParameter)
@@ -95,6 +100,18 @@ Namespace AreaCommon
                 End If
 
                 Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to check if exist the pause parameter 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function havePauseParameter() As Boolean
+            Try
+                Return parameters.ContainsKey("pause")
             Catch ex As Exception
                 Return False
             End Try

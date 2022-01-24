@@ -66,7 +66,7 @@ Namespace AreaCommon.Engine
                     _LastActionOccurs = currentTimeStamp
 
                     Return True
-                ElseIf ((_LastActionOccurs + 5000) > currentTimeStamp) Then
+                ElseIf ((_LastActionOccurs + 6000) > currentTimeStamp) Then
                     _LastActionOccurs = currentTimeStamp
 
                     Return True

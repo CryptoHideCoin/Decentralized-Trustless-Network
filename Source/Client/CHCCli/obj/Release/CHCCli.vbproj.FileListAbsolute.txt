@@ -5,3 +5,5 @@ E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Release\CHCCli.vbproj.GenerateReso
 E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Release\CHCCli.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Release\CHCCli.exe
 E:\CryptoHideCoinDTN\Source\Client\CHCCli\obj\Release\CHCCli.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Binary\Applications\Windows\CHC Cli\CHCCli.exe.config
+E:\CryptoHideCoinDTN\Binary\Applications\Windows\CHC Cli\CHCCli.exe

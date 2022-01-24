@@ -13,6 +13,7 @@ Namespace AreaCommon
         help
         release
         updateSystemDate
+        currentTime
     End Enum
 
     Public Class CommandProcessor
@@ -34,11 +35,12 @@ Namespace AreaCommon
         ''' </summary>
         ''' <returns></returns>
         Private Function executeInfo() As Boolean
-            Console.WriteLine("Crypto Hide Coin Decentralized Trustless Network - Console Client")
+            Console.WriteLine("Crypto Hide Coin Decentralized Trustless Network - CLI - Client Console")
             Console.WriteLine("Free open source software")
             Console.WriteLine("(2022) Crypto Technology Alliances")
+            Console.WriteLine("Release " & My.Application.Info.Version.ToString())
 
-            Return "Rel. " & executeRelease()
+            Return True
         End Function
 
         ''' <summary>
@@ -53,7 +55,7 @@ Namespace AreaCommon
             Console.WriteLine("-info                Show an info of this application")
             Console.WriteLine("-release             Show a relase of this application")
             Console.WriteLine("-updateSystemDate    Show this list")
-            Console.WriteLine()
+            Console.WriteLine("-currentTime         Show the current time")
 
             Return True
         End Function
@@ -73,6 +75,22 @@ Namespace AreaCommon
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to execute a current time
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function executeCurrentTime() As Boolean
+            Try
+                Console.WriteLine("Local time = " & Now.ToString())
+                Console.WriteLine("GMT time   = " & CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT)
+                Console.WriteLine("Timestamp  = " & CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime)
+
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
 
         ''' <summary>
         ''' This method provide to decode into command enumeration
@@ -85,6 +103,7 @@ Namespace AreaCommon
                 Case "info" : Return CommandEnumeration.info
                 Case "help" : Return CommandEnumeration.help
                 Case "updatesystemdate" : Return CommandEnumeration.updateSystemDate
+                Case "currentTime" : Return CommandEnumeration.currentTime
                 Case Else : Return CommandEnumeration.undefined
             End Select
         End Function
@@ -94,15 +113,26 @@ Namespace AreaCommon
         ''' </summary>
         ''' <returns></returns>
         Public Function execute() As Boolean
+            Dim response As Boolean = False
+
             Select Case command.code
                 Case CommandEnumeration.undefined : Console.WriteLine()
-                Case CommandEnumeration.info : Return executeInfo()
-                Case CommandEnumeration.help : Return executeHelp()
-                Case CommandEnumeration.release : Return executeRelease()
-                Case CommandEnumeration.updateSystemDate : Return executeUpdateSystemDate()
+                Case CommandEnumeration.info : response = executeInfo()
+                Case CommandEnumeration.help : response = executeHelp()
+                Case CommandEnumeration.release : response = executeRelease()
+                Case CommandEnumeration.updateSystemDate : response = executeUpdateSystemDate()
+                Case CommandEnumeration.currentTime : response = executeCurrentTime()
             End Select
 
-            Return True
+            If response Then
+                If command.havePauseParameter() Then
+                    Console.WriteLine("")
+                    Console.WriteLine("Press a key to continue")
+                    Console.ReadKey()
+                End If
+            End If
+
+            Return response
         End Function
 
     End Class
