@@ -9,8 +9,9 @@ Namespace AreaCommon
 
     Public Enum CommandEnumeration
         undefined
-        release
+        info
         help
+        release
         updateSystemDate
     End Enum
 
@@ -29,6 +30,18 @@ Namespace AreaCommon
         End Function
 
         ''' <summary>
+        ''' This method provide to execute an info of this application
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function executeInfo() As Boolean
+            Console.WriteLine("Crypto Hide Coin Decentralized Trustless Network - Console Client")
+            Console.WriteLine("Free open source software")
+            Console.WriteLine("(2022) Crypto Technology Alliances")
+
+            Return "Rel. " & executeRelease()
+        End Function
+
+        ''' <summary>
         ''' This method provide to execute a help command
         ''' </summary>
         ''' <returns></returns>
@@ -37,6 +50,7 @@ Namespace AreaCommon
             Console.WriteLine("=================")
             Console.WriteLine()
             Console.WriteLine("-help                Show this list")
+            Console.WriteLine("-info                Show an info of this application")
             Console.WriteLine("-release             Show a relase of this application")
             Console.WriteLine("-updateSystemDate    Show this list")
             Console.WriteLine()
@@ -68,6 +82,7 @@ Namespace AreaCommon
         Public Shared Function getCommandCode(ByVal key As String) As CommandEnumeration
             Select Case key.Trim()
                 Case "release" : Return CommandEnumeration.release
+                Case "info" : Return CommandEnumeration.info
                 Case "help" : Return CommandEnumeration.help
                 Case "updatesystemdate" : Return CommandEnumeration.updateSystemDate
                 Case Else : Return CommandEnumeration.undefined
@@ -81,8 +96,9 @@ Namespace AreaCommon
         Public Function execute() As Boolean
             Select Case command.code
                 Case CommandEnumeration.undefined : Console.WriteLine()
-                Case CommandEnumeration.release : Return executeRelease()
+                Case CommandEnumeration.info : Return executeInfo()
                 Case CommandEnumeration.help : Return executeHelp()
+                Case CommandEnumeration.release : Return executeRelease()
                 Case CommandEnumeration.updateSystemDate : Return executeUpdateSystemDate()
             End Select
 

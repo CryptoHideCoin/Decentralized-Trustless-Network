@@ -1,0 +1,42 @@
+1643032644047,22|2022-01-24T12:57:24|info|moduleMain.run|Begin
+1643032644047,22|2022-01-24T12:57:24|info|moduleMain.run|Commandline process execute is CHCAdminService.exe /NoConsoleMessage /RecallStarter /MasternodeStartURL:localhost:1123 /MasternodeStartCertificate:0231fds3gf1sgf31vgd3s1gs3d1gd3f1 /UseLastSettings
+1643032644047,22|2022-01-24T12:57:24|info|moduleMain.run|DataPath is E:\CryptoHideCoinDTN\Masternode\Applications\0.1.0 - First Edition
+1643032644047,22|2022-01-24T12:57:24|info|moduleMain.run|User Interface visible = false
+1643032644063,3|2022-01-24T12:57:24|info|moduleMain.run|System Registry is running
+1643032644063,3|2022-01-24T12:57:24|info|moduleMain.run|Log engine is running
+1643032644078,35|2022-01-24T12:57:24|info|LogRotate.run|Begin
+1643032644078,35|2022-01-24T12:57:24|info|LogRotate.run|It's now
+1643032644078,35|2022-01-24T12:57:24|info|LogRotate.runWork|Begin
+1643032644078,35|2022-01-24T12:57:24|info|LogRotate.runExecuteWork|Begin
+1643032644078,35|2022-01-24T12:57:24|info|LogRotate.run|Complete
+1643032644078,35|2022-01-24T12:57:24|info|moduleMain.run|Trackrotate is running
+1643032644078,35|2022-01-24T12:57:24|info|LogRotate.runExecuteWork|Complete
+1643032644094,22|2022-01-24T12:57:24|info|moduleMain.run|Counter is running
+1643032644094,22|2022-01-24T12:57:24|info|moduleMain.run|Log.noSave = False
+1643032644094,22|2022-01-24T12:57:24|info|Controllers.WebserviceThread|Begin
+1643032644109,54|2022-01-24T12:57:24|info|Controllers.StartWebService|Begin
+1643032644156,47|2022-01-24T12:57:24|info|Controllers.StartWebService|New Configuration Port 1122
+1643032644172,02|2022-01-24T12:57:24|info|Controllers.StartWebService|Map route
+1643032644172,02|2022-01-24T12:57:24|info|Controllers.StartWebService|Enter in the using
+1643032644234,54|2022-01-24T12:57:24|fatal|Controllers.StartWebService|Enable start a webservice; check admin authorizathion - Error:Si sono verificati uno o più errori.
+1643032679260,45|2022-01-24T12:57:59|info|moduleMain.run|Begin
+1643032679260,45|2022-01-24T12:57:59|info|moduleMain.run|Commandline process execute is "E:\CryptoHideCoinDTN\Executables\0.1.0 - First Edition\CHCAdminService.exe" 
+1643032679260,45|2022-01-24T12:57:59|info|moduleMain.run|DataPath is E:\CryptoHideCoinDTN\Masternode\Applications\0.1.0 - First Edition
+1643032679260,45|2022-01-24T12:57:59|info|moduleMain.run|User Interface visible = false
+1643032679275,77|2022-01-24T12:57:59|info|moduleMain.run|System Registry is running
+1643032679290,94|2022-01-24T12:57:59|info|moduleMain.run|Log engine is running
+1643032679290,94|2022-01-24T12:57:59|info|LogRotate.run|Begin
+1643032679290,94|2022-01-24T12:57:59|info|LogRotate.run|It's now
+1643032679290,94|2022-01-24T12:57:59|info|LogRotate.runWork|Begin
+1643032679290,94|2022-01-24T12:57:59|info|LogRotate.runExecuteWork|Begin
+1643032679290,94|2022-01-24T12:57:59|info|LogRotate.runExecuteWork|Complete
+1643032679290,94|2022-01-24T12:57:59|info|LogRotate.run|Complete
+1643032679290,94|2022-01-24T12:57:59|info|moduleMain.run|Trackrotate is running
+1643032679307,18|2022-01-24T12:57:59|info|moduleMain.run|Counter is running
+1643032679307,18|2022-01-24T12:57:59|info|moduleMain.run|Log.noSave = False
+1643032679307,18|2022-01-24T12:57:59|info|Controllers.WebserviceThread|Begin
+1643032679322,55|2022-01-24T12:57:59|info|Controllers.StartWebService|Begin
+1643032679353,39|2022-01-24T12:57:59|info|Controllers.StartWebService|New Configuration Port 1122
+1643032679369,04|2022-01-24T12:57:59|info|Controllers.StartWebService|Map route
+1643032679369,04|2022-01-24T12:57:59|info|Controllers.StartWebService|Enter in the using
+1643032679447,12|2022-01-24T12:57:59|fatal|Controllers.StartWebService|Enable start a webservice; check admin authorizathion - Error:Si sono verificati uno o più errori.

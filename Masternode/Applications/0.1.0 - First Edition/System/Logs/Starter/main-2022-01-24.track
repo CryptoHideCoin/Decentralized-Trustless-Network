@@ -1,0 +1,23 @@
+1643032643719,43|2022-01-24T12:57:23|info|startUp.run|Begin
+1643032643719,43|2022-01-24T12:57:23|info|startUp.run|Commandline process execute is "E:\CryptoHideCoinDTN\Executables\0.1.0 - First Edition\CHCStarterService.exe" 
+1643032643719,43|2022-01-24T12:57:23|info|startUp.run|DataPath is E:\CryptoHideCoinDTN\Masternode\Applications\0.1.0 - First Edition
+1643032643719,43|2022-01-24T12:57:23|info|startUp.run|User Interface visible = false
+1643032643750,18|2022-01-24T12:57:23|info|startUp.run|System Registry is running
+1643032643750,18|2022-01-24T12:57:23|info|startUp.run|Log engine is running
+1643032643750,18|2022-01-24T12:57:23|info|LogRotate.run|Begin
+1643032643750,18|2022-01-24T12:57:23|info|LogRotate.run|It's now
+1643032643750,18|2022-01-24T12:57:23|info|LogRotate.runWork|Begin
+1643032643750,18|2022-01-24T12:57:23|info|LogRotate.run|Complete
+1643032643750,18|2022-01-24T12:57:23|info|startUp.run|Trackrotate is running
+1643032643750,18|2022-01-24T12:57:23|info|LogRotate.runExecuteWork|Begin
+1643032643750,18|2022-01-24T12:57:23|info|LogRotate.runExecuteWork|Complete
+1643032643765,8|2022-01-24T12:57:23|info|startUp.run|Counter is running
+1643032643765,8|2022-01-24T12:57:23|info|startUp.run|Log.noSave = False
+1643032643765,8|2022-01-24T12:57:23|info|Controllers.WebserviceThread|Begin
+1643032643765,8|2022-01-24T12:57:23|info|startUp.runApplication|Begin
+1643032643765,8|2022-01-24T12:57:23|info|startUp.runAdminService|Begin
+1643032643797,11|2022-01-24T12:57:23|info|Controllers.StartWebService|Begin
+1643032643875,52|2022-01-24T12:57:23|info|Controllers.StartWebService|New Configuration Port 1123
+1643032643890,82|2022-01-24T12:57:23|info|Controllers.StartWebService|Map route
+1643032643890,82|2022-01-24T12:57:23|info|Controllers.StartWebService|Enter in the using
+1643032644218,9|2022-01-24T12:57:24|fatal|Controllers.StartWebService|Enable start a webservice; check admin authorizathion - Error:Si sono verificati uno o più errori.
