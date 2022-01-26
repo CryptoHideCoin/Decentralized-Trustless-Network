@@ -97,6 +97,7 @@ Public Class NumericText
         Set(ByVal value As String)
             Try
                 MyBase.Text = Decimal.Parse(value, NumberStyles.Currency, _NumberFormat).ToString(_CurrentFormat, _NumberFormat)
+                'MyBase.Text = value
             Catch ex As Exception
                 MyBase.Text = "0"
             End Try

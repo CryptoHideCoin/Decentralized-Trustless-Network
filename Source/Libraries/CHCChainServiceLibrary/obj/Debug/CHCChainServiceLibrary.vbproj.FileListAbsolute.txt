@@ -1,0 +1,12 @@
+E:\CryptoHideCoinDTN\Source\Libraries\CHCChainServiceLibrary\bin\Debug\CHCChainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHCChainServiceLibrary\bin\Debug\CHCChainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHCChainServiceLibrary\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHCChainServiceLibrary\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHCChainServiceLibrary\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHCChainServiceLibrary\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Libraries\CHCChainServiceLibrary\obj\Debug\CHCChainServiceLibrary.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\CHCChainServiceLibrary\obj\Debug\CHCChainServiceLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCChainServiceLibrary\obj\Debug\CHCChainServiceLibrary.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\CHCChainServiceLibrary\obj\Debug\CHCChainServiceLibrary.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\CHCChainServiceLibrary\obj\Debug\CHCChainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHCChainServiceLibrary\obj\Debug\CHCChainServiceLibrary.pdb

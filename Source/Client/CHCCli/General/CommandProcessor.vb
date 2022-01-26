@@ -14,6 +14,7 @@ Namespace AreaCommon
         release
         updateSystemDate
         currentTime
+        chainSettings
     End Enum
 
     Public Class CommandProcessor
@@ -56,6 +57,7 @@ Namespace AreaCommon
             Console.WriteLine("-release             Show a relase of this application")
             Console.WriteLine("-updateSystemDate    Show this list")
             Console.WriteLine("-currentTime         Show the current time")
+            Console.WriteLine("-chainSettings       Open a Chain Settings Editor")
 
             Return True
         End Function
@@ -91,6 +93,36 @@ Namespace AreaCommon
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to execute a chain settings
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function executeChainSettings() As Boolean
+            Try
+                Dim path As String = ""
+
+                path = Environment.CurrentDirectory
+                path = IO.Directory.GetParent(path).FullName
+                path = IO.Path.Combine(path, "Chain Settings")
+
+                If IO.Directory.Exists(path) Then
+                    path = IO.Path.Combine(path, "CHCChainSettings.exe")
+
+                    If Not IO.File.Exists(path) Then
+                        Console.WriteLine("Error: the application '" & path & "' is not exist")
+                    Else
+                        Process.Start(path, "-force --chain:" & command.parameters("chain").value & " --dataPath:" & command.parameters("dataPath").value)
+                    End If
+                Else
+                    Console.WriteLine("Error: the directory '" & path & "' is not exist")
+                End If
+
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
 
         ''' <summary>
         ''' This method provide to decode into command enumeration
@@ -104,6 +136,7 @@ Namespace AreaCommon
                 Case "help" : Return CommandEnumeration.help
                 Case "updatesystemdate" : Return CommandEnumeration.updateSystemDate
                 Case "currentTime" : Return CommandEnumeration.currentTime
+                Case "chainSettings" : Return CommandEnumeration.chainSettings
                 Case Else : Return CommandEnumeration.undefined
             End Select
         End Function
@@ -122,6 +155,7 @@ Namespace AreaCommon
                 Case CommandEnumeration.release : response = executeRelease()
                 Case CommandEnumeration.updateSystemDate : response = executeUpdateSystemDate()
                 Case CommandEnumeration.currentTime : response = executeCurrentTime()
+                Case CommandEnumeration.chainSettings : response = executeChainSettings()
             End Select
 
             If response Then

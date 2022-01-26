@@ -31,6 +31,11 @@ Partial Class LogControl
         Me.autoCleanOptionCheck = New System.Windows.Forms.CheckBox()
         Me.trackConfigurationCombo = New System.Windows.Forms.ComboBox()
         Me.trackConfigurationLabel = New System.Windows.Forms.Label()
+        Me.changeFileEvery = New System.Windows.Forms.Label()
+        Me.maxHourMaintain = New CHCSupportUIControls.NumericText()
+        Me.hourLabel = New System.Windows.Forms.Label()
+        Me.numberRegistrations = New System.Windows.Forms.Label()
+        Me.maxRegistrationNumbers = New CHCSupportUIControls.NumericText()
         Me.SuspendLayout()
         '
         'keepFileTypeLabel
@@ -38,7 +43,7 @@ Partial Class LogControl
         Me.keepFileTypeLabel.AutoSize = True
         Me.keepFileTypeLabel.Enabled = False
         Me.keepFileTypeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.keepFileTypeLabel.Location = New System.Drawing.Point(505, 66)
+        Me.keepFileTypeLabel.Location = New System.Drawing.Point(507, 92)
         Me.keepFileTypeLabel.Name = "keepFileTypeLabel"
         Me.keepFileTypeLabel.Size = New System.Drawing.Size(86, 13)
         Me.keepFileTypeLabel.TabIndex = 30
@@ -50,7 +55,7 @@ Partial Class LogControl
         Me.keepFileTypeValueCombo.Enabled = False
         Me.keepFileTypeValueCombo.FormattingEnabled = True
         Me.keepFileTypeValueCombo.Items.AddRange(New Object() {"Nothing exclude", "Keep only main log"})
-        Me.keepFileTypeValueCombo.Location = New System.Drawing.Point(510, 82)
+        Me.keepFileTypeValueCombo.Location = New System.Drawing.Point(510, 108)
         Me.keepFileTypeValueCombo.Name = "keepFileTypeValueCombo"
         Me.keepFileTypeValueCombo.Size = New System.Drawing.Size(150, 21)
         Me.keepFileTypeValueCombo.TabIndex = 26
@@ -60,7 +65,7 @@ Partial Class LogControl
         Me.keepOnlyRecentFileLabel.AutoSize = True
         Me.keepOnlyRecentFileLabel.Enabled = False
         Me.keepOnlyRecentFileLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.keepOnlyRecentFileLabel.Location = New System.Drawing.Point(251, 66)
+        Me.keepOnlyRecentFileLabel.Location = New System.Drawing.Point(252, 92)
         Me.keepOnlyRecentFileLabel.Name = "keepOnlyRecentFileLabel"
         Me.keepOnlyRecentFileLabel.Size = New System.Drawing.Size(125, 13)
         Me.keepOnlyRecentFileLabel.TabIndex = 29
@@ -72,7 +77,7 @@ Partial Class LogControl
         Me.keepOnlyRecentFileValueCombo.Enabled = False
         Me.keepOnlyRecentFileValueCombo.FormattingEnabled = True
         Me.keepOnlyRecentFileValueCombo.Items.AddRange(New Object() {"last day", "last week", "last month", "last year"})
-        Me.keepOnlyRecentFileValueCombo.Location = New System.Drawing.Point(255, 82)
+        Me.keepOnlyRecentFileValueCombo.Location = New System.Drawing.Point(255, 108)
         Me.keepOnlyRecentFileValueCombo.Name = "keepOnlyRecentFileValueCombo"
         Me.keepOnlyRecentFileValueCombo.Size = New System.Drawing.Size(207, 21)
         Me.keepOnlyRecentFileValueCombo.TabIndex = 25
@@ -82,7 +87,7 @@ Partial Class LogControl
         Me.startCleanEveryLabel.AutoSize = True
         Me.startCleanEveryLabel.Enabled = False
         Me.startCleanEveryLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.startCleanEveryLabel.Location = New System.Drawing.Point(8, 66)
+        Me.startCleanEveryLabel.Location = New System.Drawing.Point(10, 92)
         Me.startCleanEveryLabel.Name = "startCleanEveryLabel"
         Me.startCleanEveryLabel.Size = New System.Drawing.Size(100, 13)
         Me.startCleanEveryLabel.TabIndex = 28
@@ -94,7 +99,7 @@ Partial Class LogControl
         Me.startCleanEveryValueCombo.Enabled = False
         Me.startCleanEveryValueCombo.FormattingEnabled = True
         Me.startCleanEveryValueCombo.Items.AddRange(New Object() {"12 hours", "1 day"})
-        Me.startCleanEveryValueCombo.Location = New System.Drawing.Point(13, 82)
+        Me.startCleanEveryValueCombo.Location = New System.Drawing.Point(13, 108)
         Me.startCleanEveryValueCombo.Name = "startCleanEveryValueCombo"
         Me.startCleanEveryValueCombo.Size = New System.Drawing.Size(207, 21)
         Me.startCleanEveryValueCombo.TabIndex = 24
@@ -104,7 +109,7 @@ Partial Class LogControl
         Me.autoCleanOptionCheck.AutoSize = True
         Me.autoCleanOptionCheck.BackColor = System.Drawing.Color.Transparent
         Me.autoCleanOptionCheck.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.autoCleanOptionCheck.Location = New System.Drawing.Point(13, 37)
+        Me.autoCleanOptionCheck.Location = New System.Drawing.Point(13, 63)
         Me.autoCleanOptionCheck.Name = "autoCleanOptionCheck"
         Me.autoCleanOptionCheck.Size = New System.Drawing.Size(84, 17)
         Me.autoCleanOptionCheck.TabIndex = 23
@@ -131,10 +136,67 @@ Partial Class LogControl
         Me.trackConfigurationLabel.TabIndex = 27
         Me.trackConfigurationLabel.Text = "Track configuration"
         '
+        'changeFileEvery
+        '
+        Me.changeFileEvery.AutoSize = True
+        Me.changeFileEvery.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.changeFileEvery.Location = New System.Drawing.Point(10, 33)
+        Me.changeFileEvery.Name = "changeFileEvery"
+        Me.changeFileEvery.Size = New System.Drawing.Size(111, 13)
+        Me.changeFileEvery.TabIndex = 31
+        Me.changeFileEvery.Text = "Change File Every"
+        '
+        'maxHourMaintain
+        '
+        Me.maxHourMaintain.currentFormat = ""
+        Me.maxHourMaintain.Location = New System.Drawing.Point(175, 30)
+        Me.maxHourMaintain.locationCode = "it-IT"
+        Me.maxHourMaintain.Name = "maxHourMaintain"
+        Me.maxHourMaintain.Size = New System.Drawing.Size(68, 21)
+        Me.maxHourMaintain.TabIndex = 32
+        Me.maxHourMaintain.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.maxHourMaintain.useDecimal = False
+        '
+        'hourLabel
+        '
+        Me.hourLabel.AutoSize = True
+        Me.hourLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.hourLabel.Location = New System.Drawing.Point(247, 34)
+        Me.hourLabel.Name = "hourLabel"
+        Me.hourLabel.Size = New System.Drawing.Size(44, 13)
+        Me.hourLabel.TabIndex = 33
+        Me.hourLabel.Text = "hour/s"
+        '
+        'numberRegistrations
+        '
+        Me.numberRegistrations.AutoSize = True
+        Me.numberRegistrations.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.numberRegistrations.Location = New System.Drawing.Point(430, 33)
+        Me.numberRegistrations.Name = "numberRegistrations"
+        Me.numberRegistrations.Size = New System.Drawing.Size(156, 13)
+        Me.numberRegistrations.TabIndex = 34
+        Me.numberRegistrations.Text = "OR   Number registrations"
+        '
+        'maxRegistrationNumbers
+        '
+        Me.maxRegistrationNumbers.currentFormat = ""
+        Me.maxRegistrationNumbers.Location = New System.Drawing.Point(592, 30)
+        Me.maxRegistrationNumbers.locationCode = "it-IT"
+        Me.maxRegistrationNumbers.Name = "maxRegistrationNumbers"
+        Me.maxRegistrationNumbers.Size = New System.Drawing.Size(68, 21)
+        Me.maxRegistrationNumbers.TabIndex = 35
+        Me.maxRegistrationNumbers.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.maxRegistrationNumbers.useDecimal = False
+        '
         'LogControl
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.maxRegistrationNumbers)
+        Me.Controls.Add(Me.numberRegistrations)
+        Me.Controls.Add(Me.hourLabel)
+        Me.Controls.Add(Me.maxHourMaintain)
+        Me.Controls.Add(Me.changeFileEvery)
         Me.Controls.Add(Me.keepFileTypeLabel)
         Me.Controls.Add(Me.keepFileTypeValueCombo)
         Me.Controls.Add(Me.keepOnlyRecentFileLabel)
@@ -146,7 +208,7 @@ Partial Class LogControl
         Me.Controls.Add(Me.trackConfigurationLabel)
         Me.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Name = "LogControl"
-        Me.Size = New System.Drawing.Size(671, 108)
+        Me.Size = New System.Drawing.Size(671, 143)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -161,4 +223,9 @@ Partial Class LogControl
     Friend WithEvents autoCleanOptionCheck As CheckBox
     Friend WithEvents trackConfigurationCombo As ComboBox
     Friend WithEvents trackConfigurationLabel As Label
+    Friend WithEvents changeFileEvery As Label
+    Friend WithEvents maxHourMaintain As NumericText
+    Friend WithEvents hourLabel As Label
+    Friend WithEvents numberRegistrations As Label
+    Friend WithEvents maxRegistrationNumbers As NumericText
 End Class

@@ -29,7 +29,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\packages\Internal\CHCSupportUILibrary\</OutputPath>
+    <OutputPath>..\..\..\Binary\Libraries\Internal\CHC Support UI Library\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
     <DefineConstants>_MYFORMS=True</DefineConstants>
@@ -51,8 +51,9 @@
     <Reference Include="CHCBasicCryptographyLibrary">
       <HintPath>..\..\packages\Internal\CHCBasicCryptographyLibrary\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary">
-      <HintPath>..\..\packages\Internal\CHCCommonLibrary\CHCCommonLibrary.dll</HintPath>
+    <Reference Include="CHCCommonLibrary, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common Library\CHCCommonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCProtocolLibrary">
       <HintPath>..\..\packages\Internal\CHCProtocolLibrary\CHCProtocolLibrary.dll</HintPath>

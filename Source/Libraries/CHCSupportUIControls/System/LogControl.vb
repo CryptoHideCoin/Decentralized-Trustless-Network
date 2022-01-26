@@ -39,6 +39,41 @@ Public Class LogControl
             End Select
         End Set
     End Property
+
+    ''' <summary>
+    ''' This property provide to get / set the max number of hours to maintain the file (frequency)
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property maxNumHours As Integer
+        Get
+            If IsNumeric(maxHourMaintain.text) Then
+                Return maxHourMaintain.text
+            Else
+                Return 0
+            End If
+        End Get
+        Set(value As Integer)
+            maxHourMaintain.text = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' This property provide to get / set the max number of registrations in the file (frequency)
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property maxNumberOfRegistrations() As Integer
+        Get
+            If IsNumeric(maxRegistrationNumbers.text) Then
+                Return maxRegistrationNumbers.text
+            Else
+                Return 0
+            End If
+        End Get
+        Set(value As Integer)
+            maxRegistrationNumbers.text = value
+        End Set
+    End Property
+
     ''' <summary>
     ''' This property get/let the Use Track Rotate
     ''' </summary>
@@ -51,6 +86,7 @@ Public Class LogControl
             autoCleanOptionCheck.Checked = value
         End Set
     End Property
+
     ''' <summary>
     ''' This property get/let the Track Rotate Frequency value
     ''' </summary>
@@ -70,6 +106,7 @@ Public Class LogControl
             End Select
         End Set
     End Property
+
     ''' <summary>
     ''' This property get/let the Track Rotate Keep Last value
     ''' </summary>
@@ -94,6 +131,7 @@ Public Class LogControl
             End Select
         End Set
     End Property
+
     ''' <summary>
     ''' This property get/let the Track Rotate Keep File value
     ''' </summary>
@@ -114,6 +152,7 @@ Public Class LogControl
             End Select
         End Set
     End Property
+
     ''' <summary>
     ''' This property get/let the CheckChanged on AutoCleanOptionCheck
     ''' </summary>

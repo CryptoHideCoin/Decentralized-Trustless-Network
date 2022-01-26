@@ -11,10 +11,9 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-currentTime --pause</StartArguments>
+    <StartArguments>-chainSettings --chain:Primary --dataPath:c:\data</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <StartArguments>
-    </StartArguments>
+    <StartArguments>-chainSettings --chain:Primary --dataPath:c:\data</StartArguments>
   </PropertyGroup>
 </Project>

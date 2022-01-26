@@ -17,3 +17,6 @@ E:\CryptoHideCoinDTN\Source\Chain\Windows\CHCChainSettings\bin\Debug\Newtonsoft.
 E:\CryptoHideCoinDTN\Source\Chain\Windows\CHCChainSettings\obj\Debug\CHCChainSettings.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Chain\Windows\CHCChainSettings\obj\Debug\CHCChainSettings.exe
 E:\CryptoHideCoinDTN\Source\Chain\Windows\CHCChainSettings\obj\Debug\CHCChainSettings.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Windows\CHCChainSettings\bin\Debug\CHCSupportUIControls.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Windows\CHCChainSettings\bin\Debug\CHCChainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\CHCChainSettings\bin\Debug\CHCChainServiceLibrary.pdb

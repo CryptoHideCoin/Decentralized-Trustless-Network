@@ -25,27 +25,30 @@ Partial Class Settings
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Settings))
         Me.tabControl = New System.Windows.Forms.TabControl()
         Me.tabMain = New System.Windows.Forms.TabPage()
-        Me.serviceIDText = New System.Windows.Forms.TextBox()
+        Me.adminPublicAddress = New CHCSupportUIControls.WalletAddress()
+        Me.secureChannel = New System.Windows.Forms.CheckBox()
+        Me.serviceID = New System.Windows.Forms.TextBox()
         Me.serviceUUID = New System.Windows.Forms.Label()
         Me.selectServicePort = New CHCSupportUIControls.SelectPort()
         Me.selectPublicPort = New CHCSupportUIControls.SelectPort()
         Me.certificateClient = New CHCSupportUIControls.Certificate()
-        Me.adminWalletAddress = New CHCSupportUIControls.WalletAddress()
         Me.networkName = New System.Windows.Forms.TextBox()
         Me.networkNameLabel = New System.Windows.Forms.Label()
         Me.intranetMode = New System.Windows.Forms.CheckBox()
         Me.tabInternal = New System.Windows.Forms.TabPage()
+        Me.useCounter = New System.Windows.Forms.CheckBox()
         Me.logGroup = New System.Windows.Forms.GroupBox()
-        Me.logConfiguration = New CHCSupportUIControls.LogControl()
+        Me.logInformations = New CHCSupportUIControls.LogControl()
         Me.useEventRegistry = New System.Windows.Forms.CheckBox()
         Me.generalFrame = New System.Windows.Forms.GroupBox()
-        Me.loadSettingButton = New System.Windows.Forms.Button()
-        Me.chainServiceName = New System.Windows.Forms.ComboBox()
-        Me.chainSettingLabel = New System.Windows.Forms.Label()
         Me.localDataLabel = New System.Windows.Forms.Label()
         Me.browseLocalPath = New System.Windows.Forms.Button()
         Me.dataPath = New System.Windows.Forms.TextBox()
+        Me.loadSettingButton = New System.Windows.Forms.Button()
+        Me.chainServiceName = New System.Windows.Forms.ComboBox()
+        Me.chainSettingLabel = New System.Windows.Forms.Label()
         Me.saveButton = New System.Windows.Forms.Button()
+        Me.folderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.tabControl.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.tabInternal.SuspendLayout()
@@ -59,44 +62,73 @@ Partial Class Settings
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tabControl.Controls.Add(Me.tabMain)
         Me.tabControl.Controls.Add(Me.tabInternal)
+        Me.tabControl.Enabled = False
         Me.tabControl.Location = New System.Drawing.Point(16, 127)
         Me.tabControl.Name = "tabControl"
         Me.tabControl.SelectedIndex = 0
-        Me.tabControl.Size = New System.Drawing.Size(709, 286)
+        Me.tabControl.Size = New System.Drawing.Size(709, 306)
         Me.tabControl.TabIndex = 1
         '
         'tabMain
         '
-        Me.tabMain.Controls.Add(Me.serviceIDText)
+        Me.tabMain.Controls.Add(Me.adminPublicAddress)
+        Me.tabMain.Controls.Add(Me.secureChannel)
+        Me.tabMain.Controls.Add(Me.serviceID)
         Me.tabMain.Controls.Add(Me.serviceUUID)
         Me.tabMain.Controls.Add(Me.selectServicePort)
         Me.tabMain.Controls.Add(Me.selectPublicPort)
         Me.tabMain.Controls.Add(Me.certificateClient)
-        Me.tabMain.Controls.Add(Me.adminWalletAddress)
         Me.tabMain.Controls.Add(Me.networkName)
         Me.tabMain.Controls.Add(Me.networkNameLabel)
         Me.tabMain.Controls.Add(Me.intranetMode)
         Me.tabMain.Location = New System.Drawing.Point(4, 22)
         Me.tabMain.Name = "tabMain"
         Me.tabMain.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabMain.Size = New System.Drawing.Size(701, 260)
+        Me.tabMain.Size = New System.Drawing.Size(701, 280)
         Me.tabMain.TabIndex = 0
         Me.tabMain.Text = "Main"
         Me.tabMain.UseVisualStyleBackColor = True
         '
-        'serviceIDText
+        'adminPublicAddress
         '
-        Me.serviceIDText.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.adminPublicAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.serviceIDText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.serviceIDText.Location = New System.Drawing.Point(156, 52)
-        Me.serviceIDText.Name = "serviceIDText"
-        Me.serviceIDText.Size = New System.Drawing.Size(520, 21)
-        Me.serviceIDText.TabIndex = 1
+        Me.adminPublicAddress.caption = "Admin wallet address"
+        Me.adminPublicAddress.dataPath = ""
+        Me.adminPublicAddress.Location = New System.Drawing.Point(17, 79)
+        Me.adminPublicAddress.Name = "adminPublicAddress"
+        Me.adminPublicAddress.Size = New System.Drawing.Size(659, 51)
+        Me.adminPublicAddress.TabIndex = 36
+        Me.adminPublicAddress.value = ""
+        '
+        'secureChannel
+        '
+        Me.secureChannel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.secureChannel.AutoSize = True
+        Me.secureChannel.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.secureChannel.Enabled = False
+        Me.secureChannel.Location = New System.Drawing.Point(562, 257)
+        Me.secureChannel.Name = "secureChannel"
+        Me.secureChannel.Size = New System.Drawing.Size(114, 17)
+        Me.secureChannel.TabIndex = 35
+        Me.secureChannel.Text = "Secure channel"
+        Me.secureChannel.UseVisualStyleBackColor = True
+        '
+        'serviceID
+        '
+        Me.serviceID.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.serviceID.Enabled = False
+        Me.serviceID.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.serviceID.Location = New System.Drawing.Point(156, 52)
+        Me.serviceID.Name = "serviceID"
+        Me.serviceID.Size = New System.Drawing.Size(520, 21)
+        Me.serviceID.TabIndex = 1
         '
         'serviceUUID
         '
         Me.serviceUUID.AutoSize = True
+        Me.serviceUUID.Enabled = False
         Me.serviceUUID.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.serviceUUID.Location = New System.Drawing.Point(82, 55)
         Me.serviceUUID.Name = "serviceUUID"
@@ -107,9 +139,10 @@ Partial Class Settings
         'selectServicePort
         '
         Me.selectServicePort.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.selectServicePort.Enabled = False
         Me.selectServicePort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.selectServicePort.label = "Service port number (0..65535)"
-        Me.selectServicePort.Location = New System.Drawing.Point(396, 201)
+        Me.selectServicePort.Location = New System.Drawing.Point(397, 201)
         Me.selectServicePort.Name = "selectServicePort"
         Me.selectServicePort.Size = New System.Drawing.Size(282, 23)
         Me.selectServicePort.TabIndex = 5
@@ -118,9 +151,10 @@ Partial Class Settings
         'selectPublicPort
         '
         Me.selectPublicPort.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.selectPublicPort.Enabled = False
         Me.selectPublicPort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.selectPublicPort.label = "Public port number (0..65535)"
-        Me.selectPublicPort.Location = New System.Drawing.Point(396, 172)
+        Me.selectPublicPort.Location = New System.Drawing.Point(397, 172)
         Me.selectPublicPort.Name = "selectPublicPort"
         Me.selectPublicPort.Size = New System.Drawing.Size(282, 23)
         Me.selectPublicPort.TabIndex = 4
@@ -131,6 +165,7 @@ Partial Class Settings
         Me.certificateClient.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.certificateClient.dataPath = ""
+        Me.certificateClient.Enabled = False
         Me.certificateClient.Location = New System.Drawing.Point(81, 136)
         Me.certificateClient.Name = "certificateClient"
         Me.certificateClient.noChange = True
@@ -140,22 +175,11 @@ Partial Class Settings
         Me.certificateClient.urlService = ""
         Me.certificateClient.value = ""
         '
-        'adminWalletAddress
-        '
-        Me.adminWalletAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.adminWalletAddress.caption = "Admin wallet address"
-        Me.adminWalletAddress.dataPath = ""
-        Me.adminWalletAddress.Location = New System.Drawing.Point(17, 79)
-        Me.adminWalletAddress.Name = "adminWalletAddress"
-        Me.adminWalletAddress.Size = New System.Drawing.Size(662, 51)
-        Me.adminWalletAddress.TabIndex = 2
-        Me.adminWalletAddress.value = ""
-        '
         'networkName
         '
         Me.networkName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.networkName.Enabled = False
         Me.networkName.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.networkName.Location = New System.Drawing.Point(156, 25)
         Me.networkName.Name = "networkName"
@@ -165,20 +189,20 @@ Partial Class Settings
         'networkNameLabel
         '
         Me.networkNameLabel.AutoSize = True
+        Me.networkNameLabel.Enabled = False
         Me.networkNameLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.networkNameLabel.Location = New System.Drawing.Point(60, 28)
+        Me.networkNameLabel.Location = New System.Drawing.Point(28, 28)
         Me.networkNameLabel.Name = "networkNameLabel"
-        Me.networkNameLabel.Size = New System.Drawing.Size(90, 13)
+        Me.networkNameLabel.Size = New System.Drawing.Size(122, 13)
         Me.networkNameLabel.TabIndex = 27
-        Me.networkNameLabel.Text = "Network name"
+        Me.networkNameLabel.Text = "Network referement"
         '
         'intranetMode
         '
         Me.intranetMode.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.intranetMode.AutoSize = True
         Me.intranetMode.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.intranetMode.Checked = True
-        Me.intranetMode.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.intranetMode.Enabled = False
         Me.intranetMode.Location = New System.Drawing.Point(568, 234)
         Me.intranetMode.Name = "intranetMode"
         Me.intranetMode.Size = New System.Drawing.Size(108, 17)
@@ -188,44 +212,55 @@ Partial Class Settings
         '
         'tabInternal
         '
+        Me.tabInternal.Controls.Add(Me.useCounter)
         Me.tabInternal.Controls.Add(Me.logGroup)
         Me.tabInternal.Controls.Add(Me.useEventRegistry)
         Me.tabInternal.Location = New System.Drawing.Point(4, 22)
         Me.tabInternal.Name = "tabInternal"
-        Me.tabInternal.Size = New System.Drawing.Size(701, 260)
+        Me.tabInternal.Size = New System.Drawing.Size(701, 280)
         Me.tabInternal.TabIndex = 2
         Me.tabInternal.Text = "Internal"
         Me.tabInternal.UseVisualStyleBackColor = True
         '
+        'useCounter
+        '
+        Me.useCounter.AutoSize = True
+        Me.useCounter.Location = New System.Drawing.Point(174, 191)
+        Me.useCounter.Name = "useCounter"
+        Me.useCounter.Size = New System.Drawing.Size(147, 17)
+        Me.useCounter.TabIndex = 2
+        Me.useCounter.Text = "Use Request Counter"
+        Me.useCounter.UseVisualStyleBackColor = True
+        '
         'logGroup
         '
-        Me.logGroup.Controls.Add(Me.logConfiguration)
+        Me.logGroup.Controls.Add(Me.logInformations)
         Me.logGroup.Location = New System.Drawing.Point(13, 15)
         Me.logGroup.Name = "logGroup"
-        Me.logGroup.Size = New System.Drawing.Size(675, 142)
+        Me.logGroup.Size = New System.Drawing.Size(675, 170)
         Me.logGroup.TabIndex = 0
         Me.logGroup.TabStop = False
         Me.logGroup.Text = "Log"
         '
-        'logConfiguration
+        'logInformations
         '
-        Me.logConfiguration.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.logConfiguration.Location = New System.Drawing.Point(6, 20)
-        Me.logConfiguration.Name = "logConfiguration"
-        Me.logConfiguration.Size = New System.Drawing.Size(669, 105)
-        Me.logConfiguration.TabIndex = 11
-        Me.logConfiguration.trackConfiguration = CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver
-        Me.logConfiguration.trackRotateFrequency = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
-        Me.logConfiguration.trackRotateKeepFile = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
-        Me.logConfiguration.trackRotateKeepLast = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
-        Me.logConfiguration.useTrackRotate = False
+        Me.logInformations.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.logInformations.Location = New System.Drawing.Point(4, 20)
+        Me.logInformations.maxNumberOfRegistrations = 0
+        Me.logInformations.maxNumHours = 0
+        Me.logInformations.Name = "logInformations"
+        Me.logInformations.Size = New System.Drawing.Size(671, 143)
+        Me.logInformations.TabIndex = 0
+        Me.logInformations.trackConfiguration = CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver
+        Me.logInformations.trackRotateFrequency = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
+        Me.logInformations.trackRotateKeepFile = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
+        Me.logInformations.trackRotateKeepLast = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
+        Me.logInformations.useTrackRotate = False
         '
         'useEventRegistry
         '
         Me.useEventRegistry.AutoSize = True
-        Me.useEventRegistry.Checked = True
-        Me.useEventRegistry.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.useEventRegistry.Location = New System.Drawing.Point(13, 173)
+        Me.useEventRegistry.Location = New System.Drawing.Point(13, 191)
         Me.useEventRegistry.Name = "useEventRegistry"
         Me.useEventRegistry.Size = New System.Drawing.Size(134, 17)
         Me.useEventRegistry.TabIndex = 1
@@ -234,6 +269,8 @@ Partial Class Settings
         '
         'generalFrame
         '
+        Me.generalFrame.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.generalFrame.Controls.Add(Me.localDataLabel)
         Me.generalFrame.Controls.Add(Me.browseLocalPath)
         Me.generalFrame.Controls.Add(Me.dataPath)
@@ -245,33 +282,6 @@ Partial Class Settings
         Me.generalFrame.Size = New System.Drawing.Size(705, 108)
         Me.generalFrame.TabIndex = 0
         Me.generalFrame.TabStop = False
-        '
-        'loadSettingButton
-        '
-        Me.loadSettingButton.Location = New System.Drawing.Point(624, 74)
-        Me.loadSettingButton.Name = "loadSettingButton"
-        Me.loadSettingButton.Size = New System.Drawing.Size(75, 23)
-        Me.loadSettingButton.TabIndex = 3
-        Me.loadSettingButton.Text = "Load"
-        Me.loadSettingButton.UseVisualStyleBackColor = True
-        '
-        'chainServiceName
-        '
-        Me.chainServiceName.FormattingEnabled = True
-        Me.chainServiceName.Items.AddRange(New Object() {"Primary"})
-        Me.chainServiceName.Location = New System.Drawing.Point(75, 20)
-        Me.chainServiceName.Name = "chainServiceName"
-        Me.chainServiceName.Size = New System.Drawing.Size(583, 21)
-        Me.chainServiceName.TabIndex = 0
-        '
-        'chainSettingLabel
-        '
-        Me.chainSettingLabel.AutoSize = True
-        Me.chainSettingLabel.Location = New System.Drawing.Point(29, 23)
-        Me.chainSettingLabel.Name = "chainSettingLabel"
-        Me.chainSettingLabel.Size = New System.Drawing.Size(40, 13)
-        Me.chainSettingLabel.TabIndex = 3
-        Me.chainSettingLabel.Text = "Chain"
         '
         'localDataLabel
         '
@@ -303,9 +313,40 @@ Partial Class Settings
         Me.dataPath.Size = New System.Drawing.Size(583, 21)
         Me.dataPath.TabIndex = 1
         '
+        'loadSettingButton
+        '
+        Me.loadSettingButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.loadSettingButton.Location = New System.Drawing.Point(594, 74)
+        Me.loadSettingButton.Name = "loadSettingButton"
+        Me.loadSettingButton.Size = New System.Drawing.Size(105, 23)
+        Me.loadSettingButton.TabIndex = 3
+        Me.loadSettingButton.Text = "Load / New"
+        Me.loadSettingButton.UseVisualStyleBackColor = True
+        '
+        'chainServiceName
+        '
+        Me.chainServiceName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chainServiceName.FormattingEnabled = True
+        Me.chainServiceName.Items.AddRange(New Object() {"Primary"})
+        Me.chainServiceName.Location = New System.Drawing.Point(75, 20)
+        Me.chainServiceName.Name = "chainServiceName"
+        Me.chainServiceName.Size = New System.Drawing.Size(583, 21)
+        Me.chainServiceName.TabIndex = 0
+        '
+        'chainSettingLabel
+        '
+        Me.chainSettingLabel.AutoSize = True
+        Me.chainSettingLabel.Location = New System.Drawing.Point(29, 23)
+        Me.chainSettingLabel.Name = "chainSettingLabel"
+        Me.chainSettingLabel.Size = New System.Drawing.Size(40, 13)
+        Me.chainSettingLabel.TabIndex = 3
+        Me.chainSettingLabel.Text = "Chain"
+        '
         'saveButton
         '
         Me.saveButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.saveButton.Enabled = False
         Me.saveButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.saveButton.Location = New System.Drawing.Point(732, 19)
         Me.saveButton.Name = "saveButton"
@@ -319,7 +360,7 @@ Partial Class Settings
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(850, 424)
+        Me.ClientSize = New System.Drawing.Size(850, 445)
         Me.Controls.Add(Me.saveButton)
         Me.Controls.Add(Me.generalFrame)
         Me.Controls.Add(Me.tabControl)
@@ -342,18 +383,16 @@ Partial Class Settings
 
     Friend WithEvents tabControl As TabControl
     Friend WithEvents tabMain As TabPage
-    Friend WithEvents serviceIDText As TextBox
+    Friend WithEvents serviceID As TextBox
     Friend WithEvents serviceUUID As Label
     Friend WithEvents selectServicePort As CHCSupportUIControls.SelectPort
     Friend WithEvents selectPublicPort As CHCSupportUIControls.SelectPort
     Friend WithEvents certificateClient As CHCSupportUIControls.Certificate
-    Friend WithEvents adminWalletAddress As CHCSupportUIControls.WalletAddress
     Friend WithEvents networkName As TextBox
     Friend WithEvents networkNameLabel As Label
     Friend WithEvents intranetMode As CheckBox
     Friend WithEvents tabInternal As TabPage
     Friend WithEvents logGroup As GroupBox
-    Friend WithEvents logConfiguration As CHCSupportUIControls.LogControl
     Friend WithEvents useEventRegistry As CheckBox
     Friend WithEvents generalFrame As GroupBox
     Friend WithEvents localDataLabel As Label
@@ -363,4 +402,9 @@ Partial Class Settings
     Friend WithEvents chainServiceName As ComboBox
     Friend WithEvents chainSettingLabel As Label
     Friend WithEvents saveButton As Button
+    Friend WithEvents secureChannel As CheckBox
+    Friend WithEvents useCounter As CheckBox
+    Friend WithEvents logInformations As CHCSupportUIControls.LogControl
+    Friend WithEvents adminPublicAddress As CHCSupportUIControls.WalletAddress
+    Friend WithEvents folderBrowserDialog As FolderBrowserDialog
 End Class
