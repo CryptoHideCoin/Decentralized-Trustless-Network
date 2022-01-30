@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.CHCChainSettings.Settings
+            Me.MainForm = Global.CHCChainServiceSettings.Settings
         End Sub
     End Class
 End Namespace

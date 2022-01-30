@@ -11,10 +11,11 @@ Namespace AreaChain.Runtime.Models
     ''' <summary>
     ''' This class contain all properties of settings chain runtime
     ''' </summary>
-    Public Class SettingsChainRuntime
+    Public Class SettingsChainService
 
         Public Property chainName As String = ""
 
+        Public Property internalName As String = ""
         Public Property networkReferement As String = ""
         Public Property serviceID As String = ""
         Public Property publicAddress As String = ""

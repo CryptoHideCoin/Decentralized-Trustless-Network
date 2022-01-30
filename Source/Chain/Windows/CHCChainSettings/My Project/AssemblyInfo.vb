@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("CHCChainSettings")>
-<Assembly: AssemblyDescription("Masternode Runtime Settings Application")>
+<Assembly: AssemblyTitle("CHCChainServiceSettings")>
+<Assembly: AssemblyDescription("Masternode Runtime Settings Service Application")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CHC Chain Settings")>
+<Assembly: AssemblyProduct("CHC Chain Service Settings")>
 <Assembly: AssemblyCopyright("Copyright ©  2022")>
 <Assembly: AssemblyTrademark("")>
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' usando l'asterisco '*' come illustrato di seguito:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("0.1.0.0")>
-<Assembly: AssemblyFileVersion("0.1.0.0")>
+<Assembly: AssemblyVersion("0.3.0.0")>
+<Assembly: AssemblyFileVersion("0.3.0.0")>

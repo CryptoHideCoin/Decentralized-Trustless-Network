@@ -1,12 +1,13 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
 
 
 Public Class Settings
 
     Private _ParameterExist As Boolean = False
+    Private _Password As String = ""
 
 
     ''' <summary>
@@ -21,11 +22,12 @@ Public Class Settings
 
             If commandManager.execute() Then
 
-                Select Case commandManager.command.parameterValue("chain")
+                Select Case commandManager.command.parameterValue("service")
                     Case "primary" : chainServiceName.SelectedIndex = 0
                 End Select
 
                 dataPath.Text = commandManager.command.parameterValue("dataPath")
+                _Password = commandManager.command.parameterValue("password")
 
                 _ParameterExist = True
 
@@ -52,6 +54,8 @@ Public Class Settings
     ''' This method provide to enable all field of the form
     ''' </summary>
     Private Sub enableForm()
+        internalNameLabel.Enabled = True
+        internalName.Enabled = True
         tabControl.Enabled = True
         networkNameLabel.Enabled = True
         networkName.Enabled = True
@@ -71,19 +75,77 @@ Public Class Settings
     End Sub
 
     ''' <summary>
+    ''' This method provide to get a data and request 
+    ''' </summary>
+    ''' <param name="engineFile"></param>
+    ''' <returns></returns>
+    Private Function getDataFromFile(ByRef engineFile As BaseFile(Of CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService)) As CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService
+        Dim result As CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService
+        Try
+            Dim decodeData As Boolean = False
+            Dim errorReading As Boolean = False
+
+            Do While Not decodeData And Not errorReading
+                If engineFile.read() Then
+                    result = engineFile.data
+
+                    decodeData = True
+                Else
+                    _Password = getPassword()
+
+                    If (_Password.CompareTo("(cancelMe)") = 0) Then
+                        errorReading = True
+                    Else
+                        engineFile.cryptoKEY = _Password
+
+                        engineFile.noCrypt = False
+                    End If
+                End If
+            Loop
+        Catch ex As Exception
+            result = New CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService
+        End Try
+
+#Disable Warning BC42104
+        Return result
+#Enable Warning BC42104
+    End Function
+
+    ''' <summary>
     ''' This method provide to load data from a data path
     ''' </summary>
     ''' <returns></returns>
     Private Function loadData() As Boolean
         Try
             Dim completeFileName As String = ""
+            Dim data As CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService
+            Dim engineFile As New BaseFile(Of CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService)
 
             completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
             completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text & ".Settings")
 
             If Not IO.File.Exists(completeFileName) Then Return False
 
-            With IOFast(Of CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainRuntime).read(completeFileName)
+            openAsFileButton.Enabled = True
+
+            If (_Password.Length > 0) Then
+                engineFile.cryptoKEY = _Password
+            Else
+                engineFile.noCrypt = True
+            End If
+
+            engineFile.fileName = completeFileName
+
+            data = getDataFromFile(engineFile)
+
+            If IsNothing(data) Then
+                MessageBox.Show("Error during read file e/o parameter", "Error notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                End
+            End If
+
+            With data
+                internalName.Text = .internalName
                 networkName.Text = .networkReferement
                 serviceID.Text = .serviceID
                 adminPublicAddress.value = .publicAddress
@@ -117,13 +179,33 @@ Public Class Settings
     End Function
 
     ''' <summary>
+    ''' This method provide to acquire the password 
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function getPassword() As String
+        Dim formPassword As New RequestPassword
+        Try
+            If (formPassword.ShowDialog() = DialogResult.OK) Then
+                Return formPassword.passwordValue.Text
+            Else
+                Return "(cancelMe)"
+            End If
+        Catch ex As Exception
+            Return "(cancelMe)"
+        Finally
+            formPassword = Nothing
+        End Try
+    End Function
+
+    ''' <summary>
     ''' This method provide to save a data
     ''' </summary>
     ''' <returns></returns>
     Private Function saveData() As Boolean
         Try
             Dim completeFileName As String = ""
-            Dim data As New CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainRuntime
+            Dim data As New CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService
+            Dim engineFile As New BaseFile(Of CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService)
 
             completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
             completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text & ".Settings")
@@ -133,6 +215,7 @@ Public Class Settings
                     Case 0 : .chainName = "Primary"
                 End Select
 
+                .internalName = internalName.Text
                 .networkReferement = networkName.Text
                 .serviceID = serviceID.Text
                 .publicAddress = adminPublicAddress.value
@@ -157,7 +240,22 @@ Public Class Settings
                 .useRequestCounter = useCounter.Checked
             End With
 
-            Return IOFast(Of CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainRuntime).save(completeFileName, data)
+            _Password = getPassword()
+
+            If (_Password.CompareTo("(cancelMe)") = 0) Then
+                Return False
+            End If
+
+            engineFile.fileName = completeFileName
+            engineFile.data = data
+
+            If (_Password.Length = 0) Then
+                engineFile.noCrypt = True
+            Else
+                engineFile.cryptoKEY = _Password
+            End If
+
+            Return engineFile.save()
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
@@ -198,6 +296,7 @@ Public Class Settings
             enableForm()
 
             If Not loadData() Then
+                internalName.Text = ""
                 networkName.Text = ""
                 serviceID.Text = ""
                 adminPublicAddress.value = ""
@@ -218,11 +317,15 @@ Public Class Settings
 
                 useEventRegistry.Checked = False
                 useCounter.Checked = False
+            Else
+                If Not _ParameterExist Then
+                    paths.updateRootPath(dataPath.Text)
+                End If
             End If
 
             adminPublicAddress.dataPath = paths.pathKeystore
 
-            networkName.Select()
+            internalName.Select()
 
             Return True
         Catch ex As Exception
@@ -322,6 +425,23 @@ Public Class Settings
         Catch ex As Exception
             MessageBox.Show("An error occurrent during browseLocalPath_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+    End Sub
+
+    Private Sub openAsFileButton_Click(sender As Object, e As EventArgs) Handles openAsFileButton.Click
+        Try
+            Dim completeFileName As String = ""
+
+            completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
+            completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text & ".Settings")
+
+            Shell("notepad.exe " & completeFileName, AppWinStyle.NormalFocus)
+        Catch ex As Exception
+            MessageBox.Show("An error occurrent during openAsFileButton_Click " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub infoButton_Click(sender As Object, e As EventArgs) Handles infoButton.Click
+        informations.ShowDialog()
     End Sub
 
 End Class

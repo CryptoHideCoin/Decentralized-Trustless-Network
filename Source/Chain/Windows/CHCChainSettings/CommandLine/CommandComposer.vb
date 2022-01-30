@@ -124,7 +124,11 @@ Namespace AreaCommon
         ''' <returns></returns>
         Public Function parameterValue(ByVal key As String) As String
             Try
-                Return parameters(key).value
+                If parameters.ContainsKey(key) Then
+                    Return parameters(key).value
+                Else
+                    Return ""
+                End If
             Catch ex As Exception
                 Return ""
             End Try

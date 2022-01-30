@@ -8,3 +8,4 @@ E:\CryptoHideCoinDTN\Source\Chain\Windows\CHCChainSettings\obj\Release\CHCChainS
 E:\CryptoHideCoinDTN\Source\Chain\Windows\CHCChainSettings\obj\Release\CHCChainSettings.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Chain\Windows\CHCChainSettings\obj\Release\CHCChainSettings.exe
 E:\CryptoHideCoinDTN\Source\Chain\Windows\CHCChainSettings\obj\Release\CHCChainSettings.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Windows\CHCChainSettings\obj\Release\CHCChainSettings.Informations.resources

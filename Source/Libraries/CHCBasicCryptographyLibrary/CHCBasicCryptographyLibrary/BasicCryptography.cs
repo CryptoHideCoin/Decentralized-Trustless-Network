@@ -23,7 +23,7 @@ namespace AreaEngine.Encryption
 
         public static byte[] addCheckSum(byte[] data)
         {
-            byte[] checkSum = GetCheckSum(data);
+            byte[] checkSum = getCheckSum(data);
             byte[] dataWithCheckSum = ArrayHelpers.concatArrays(data, checkSum);
             return dataWithCheckSum;
         }

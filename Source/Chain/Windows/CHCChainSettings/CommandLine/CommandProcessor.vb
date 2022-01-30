@@ -7,22 +7,32 @@ Option Explicit On
 
 Namespace AreaCommon
 
+    ''' <summary>
+    ''' This enumeration contain the command managed of this application
+    ''' </summary>
     Public Enum CommandEnumeration
         undefined
         force
     End Enum
 
+    ''' <summary>
+    ''' This class contain the information of a command line
+    ''' </summary>
     Public Class CommandLineResponse
 
         Public Property haveParameter As Boolean = False
-        Public Property chain As String = ""
+        Public Property serviceChain As String = ""
         Public Property dataPath As String = ""
+        Public Property password As String = ""
 
     End Class
 
-        Public Class CommandProcessor
+    ''' <summary>
+    ''' This class contain the processor of a command line
+    ''' </summary>
+    Public Class CommandProcessor
 
-        Public command As New CommandArguments
+        Public Property command As New CommandArguments
 
 
         ''' <summary>
