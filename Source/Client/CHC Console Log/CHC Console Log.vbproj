@@ -72,7 +72,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Basic\Common.vb" />
+    <Compile Include="Base\Common.vb" />
+    <Compile Include="CommandLine\CommandComposer.vb" />
+    <Compile Include="CommandLine\CommandLineDecoder.vb" />
+    <Compile Include="CommandLine\CommandProcessor.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

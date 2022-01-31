@@ -26,7 +26,18 @@ Namespace AreaCommon
         ''' This method provide to run a application
         ''' </summary>
         Sub Main()
+            Dim commandManager As New CommandProcessor
 
+            commandManager.command = (New CommandLineDecoder).run()
+
+            If commandManager.execute() Then
+                Select Case commandManager.command.code
+                    Case CommandEnumeration.force
+
+                    Case CommandEnumeration.undefined
+                        Console.WriteLine("Command not recognized")
+                End Select
+            End If
         End Sub
 
     End Module

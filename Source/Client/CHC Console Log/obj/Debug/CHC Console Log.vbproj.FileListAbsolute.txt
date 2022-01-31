@@ -1,0 +1,10 @@
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\bin\Debug\CHCConsoleLog.exe.config
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\bin\Debug\CHCConsoleLog.exe
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\bin\Debug\CHCConsoleLog.pdb
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\bin\Debug\CHCConsoleLog.xml
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\obj\Debug\CHC Console Log.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\obj\Debug\CHCConsoleLog.Resources.resources
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\obj\Debug\CHC Console Log.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\obj\Debug\CHCConsoleLog.exe
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\obj\Debug\CHCConsoleLog.xml
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\obj\Debug\CHCConsoleLog.pdb
