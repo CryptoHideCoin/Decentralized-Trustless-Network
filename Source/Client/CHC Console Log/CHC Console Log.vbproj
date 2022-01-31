@@ -51,6 +51,13 @@
     <ApplicationIcon>64.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CHCChainServiceLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Chain Service Library\CHCChainServiceLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCCommonLibrary, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common Library\CHCCommonLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -76,6 +83,7 @@
     <Compile Include="CommandLine\CommandComposer.vb" />
     <Compile Include="CommandLine\CommandLineDecoder.vb" />
     <Compile Include="CommandLine\CommandProcessor.vb" />
+    <Compile Include="Engine\ConsoleEngine.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -101,6 +109,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

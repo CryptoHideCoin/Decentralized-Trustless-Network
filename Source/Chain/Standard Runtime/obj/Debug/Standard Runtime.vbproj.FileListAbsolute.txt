@@ -1,0 +1,8 @@
+E:\CryptoHideCoinDTN\Source\Chain\Standard Runtime\bin\Debug\CHCStandardRuntime.exe.config
+E:\CryptoHideCoinDTN\Source\Chain\Standard Runtime\bin\Debug\CHCStandardRuntime.exe
+E:\CryptoHideCoinDTN\Source\Chain\Standard Runtime\bin\Debug\CHCStandardRuntime.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Standard Runtime\obj\Debug\Standard Runtime.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Chain\Standard Runtime\obj\Debug\CHCStandardRuntime.Resources.resources
+E:\CryptoHideCoinDTN\Source\Chain\Standard Runtime\obj\Debug\Standard Runtime.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Chain\Standard Runtime\obj\Debug\CHCStandardRuntime.exe
+E:\CryptoHideCoinDTN\Source\Chain\Standard Runtime\obj\Debug\CHCStandardRuntime.pdb

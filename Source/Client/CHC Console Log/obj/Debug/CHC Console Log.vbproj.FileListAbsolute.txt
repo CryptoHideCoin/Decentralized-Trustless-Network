@@ -8,3 +8,7 @@ E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\obj\Debug\CHC Console Log.vbp
 E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\obj\Debug\CHCConsoleLog.exe
 E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\obj\Debug\CHCConsoleLog.xml
 E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\obj\Debug\CHCConsoleLog.pdb
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\bin\Debug\CHCChainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Client\CHC Console Log\obj\Debug\CHC Console Log.vbproj.CopyComplete

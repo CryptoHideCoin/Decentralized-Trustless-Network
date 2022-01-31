@@ -33,7 +33,9 @@ Namespace AreaCommon
             If commandManager.execute() Then
                 Select Case commandManager.command.code
                     Case CommandEnumeration.force
+                        Dim engine As New ConsoleEngine
 
+                        engine.execute(commandManager.command)
                     Case CommandEnumeration.undefined
                         Console.WriteLine("Command not recognized")
                 End Select

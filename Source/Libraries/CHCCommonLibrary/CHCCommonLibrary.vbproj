@@ -79,7 +79,7 @@
     <Compile Include="Log\CHCModule.vb" />
     <Compile Include="Log\CHCRegistry.vb" />
     <Compile Include="Miscellaneous\CHCCheckSum.vb" />
-    <Compile Include="Miscellaneous\CHCCommandListEngine.vb" />
+    <Compile Include="CommandLine\CHCCommandListEngine.vb" />
     <Compile Include="FileManager\CHCBaseFileDB.vb" />
     <Compile Include="FileManager\CHCBaseFileJson.vb" />
     <Compile Include="Encryption\ModuleEncryption.vb" />

@@ -146,5 +146,37 @@ CHCConsoleLog
  </summary>
  <returns></returns>
 </member>
+<member name="T:CHCConsoleLog.AreaCommon.ConsoleEngine">
+ <summary>
+ This static class run the application
+ </summary>
+</member>
+<member name="M:CHCConsoleLog.AreaCommon.ConsoleEngine.readSettings(CHCConsoleLog.AreaCommon.CommandArguments)">
+ <summary>
+ This method provide to read a settings
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCConsoleLog.AreaCommon.ConsoleEngine.testSettings(CHCConsoleLog.AreaCommon.CommandArguments@)">
+ <summary>
+ This method provide to test a settings
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:CHCConsoleLog.AreaCommon.ConsoleEngine.readLogFile">
+ <summary>
+ This method provide to read a remote log file
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCConsoleLog.AreaCommon.ConsoleEngine.execute(CHCConsoleLog.AreaCommon.CommandArguments@)">
+ <summary>
+ This method provide to execute the code
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
 </members>
 </doc>

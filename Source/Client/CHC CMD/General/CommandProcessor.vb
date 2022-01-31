@@ -139,10 +139,10 @@ Namespace AreaCommon
 
                 path = Environment.CurrentDirectory
                 path = IO.Directory.GetParent(path).FullName
-                path = IO.Path.Combine(path, "Chain Settings")
+                path = IO.Path.Combine(path, "Chain Service Settings")
 
                 If IO.Directory.Exists(path) Then
-                    path = IO.Path.Combine(path, "CHCChainSettings.exe")
+                    path = IO.Path.Combine(path, "CHCChainServiceSettings.exe")
 
                     If Not IO.File.Exists(path) Then
                         Console.WriteLine("Error: the application '" & path & "' is not exist")
