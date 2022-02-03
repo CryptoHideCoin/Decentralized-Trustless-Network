@@ -21,7 +21,6 @@ E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\CHCSupportU
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\CHCSupportUIControls.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\CHCCommonLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\CHCBasicCryptographyLibrary.dll
-E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\Newtonsoft.Json.dll
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\BouncyCastle.Crypto.dll
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.KeyPair.resources
@@ -48,4 +47,3 @@ E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportU
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.DialogChangeCertificate.resources
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Debug\CHCSupportUIControls.PrivateKey.resources
 E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\CHCCommonLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\bin\Debug\Newtonsoft.Json.xml

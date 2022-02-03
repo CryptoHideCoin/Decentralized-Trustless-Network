@@ -67,19 +67,19 @@ Partial Class Certificate
         '
         Me.valueText.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.valueText.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.valueText.Location = New System.Drawing.Point(75, 6)
+        Me.valueText.Location = New System.Drawing.Point(85, 6)
         Me.valueText.Name = "valueText"
-        Me.valueText.Size = New System.Drawing.Size(334, 21)
+        Me.valueText.Size = New System.Drawing.Size(325, 21)
         Me.valueText.TabIndex = 0
         '
         'valueLabel
         '
         Me.valueLabel.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.valueLabel.AutoSize = True
-        Me.valueLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.valueLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.valueLabel.Location = New System.Drawing.Point(3, 9)
         Me.valueLabel.Name = "valueLabel"
-        Me.valueLabel.Size = New System.Drawing.Size(66, 13)
+        Me.valueLabel.Size = New System.Drawing.Size(75, 13)
         Me.valueLabel.TabIndex = 28
         Me.valueLabel.Text = "Certificate"
         '

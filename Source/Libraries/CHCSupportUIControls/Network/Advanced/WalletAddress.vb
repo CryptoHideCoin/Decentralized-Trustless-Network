@@ -114,6 +114,24 @@ Public Class WalletAddress
             End If
         End Get
     End Property
+
+    ''' <summary>
+    ''' This property set or let the Font Bold value    
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property useFontBold() As Boolean
+        Get
+            Return addressLabel.Font.Bold
+        End Get
+        Set(value As Boolean)
+            If value Then
+                addressLabel.Font = New Font(addressLabel.Font, FontStyle.Bold)
+            Else
+                addressLabel.Font = New Font(addressLabel.Font, FontStyle.Regular)
+            End If
+        End Set
+    End Property
+
     ''' <summary>
     ''' This property get a keyPair structure RAW
     ''' </summary>

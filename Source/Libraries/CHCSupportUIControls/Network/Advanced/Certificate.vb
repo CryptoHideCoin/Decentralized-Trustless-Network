@@ -109,18 +109,18 @@ Public Class Certificate
         Try
             valueLabel.Left = 3
             valueLabel.Width = 66
-            valueText.Left = 75
+            valueText.Left = 79
             createButton.Width = 49
             browserButton.Width = 31
             changeButton.Width = 65
 
             If _NoChange Then
-                valueText.Width = Width - 170
+                valueText.Width = Width - 174
                 createButton.Left = Width - 89
                 browserButton.Left = Width - 34
                 changeButton.Visible = False
             Else
-                valueText.Width = Width - 243
+                valueText.Width = Width - 400
                 createButton.Left = Width - 162
                 browserButton.Left = Width - 107
                 changeButton.Left = Width - 70

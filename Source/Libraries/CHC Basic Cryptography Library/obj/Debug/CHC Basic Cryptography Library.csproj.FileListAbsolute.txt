@@ -1,0 +1,6 @@
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Basic Cryptography Library\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Basic Cryptography Library\bin\Debug\CHCBasicCryptographyLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Basic Cryptography Library\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Basic Cryptography Library\obj\Debug\CHC Basic Cryptography Library.csproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Basic Cryptography Library\obj\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Basic Cryptography Library\obj\Debug\CHCBasicCryptographyLibrary.pdb

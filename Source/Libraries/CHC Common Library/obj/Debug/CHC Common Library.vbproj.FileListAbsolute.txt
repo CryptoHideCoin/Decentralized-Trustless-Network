@@ -1,0 +1,10 @@
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Common Library\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Common Library\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Common Library\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Common Library\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Common Library\obj\Debug\CHC Common Library.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Common Library\obj\Debug\CHCCommonLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Common Library\obj\Debug\CHC Common Library.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Common Library\obj\Debug\CHC Common Library.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Common Library\obj\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Common Library\obj\Debug\CHCCommonLibrary.pdb

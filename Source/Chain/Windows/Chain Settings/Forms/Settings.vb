@@ -2,8 +2,14 @@
 Option Explicit On
 
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
+Imports CHCCommonLibrary.AreaEngine.CommandLine
 
 
+
+
+''' <summary>
+''' This class manage the settings form
+''' </summary>
 Public Class Settings
 
     Private _ParameterExist As Boolean = False
@@ -16,28 +22,27 @@ Public Class Settings
     ''' <returns></returns>
     Private Function haveParameters() As Boolean
         Try
-            Dim commandManager As New AreaCommon.CommandProcessor
+            Dim command As New CommandStructure
+            Dim engine As New CommandBuilder
 
-            commandManager.command = (New AreaCommon.CommandLineDecoder).run()
+            Command = engine.run()
 
-            If commandManager.execute() Then
-
-                Select Case commandManager.command.parameterValue("service")
+            If (command.code.ToLower.CompareTo("force") = 0) Then
+                Select Case command.parameterValue("service")
                     Case "primary" : chainServiceName.SelectedIndex = 0
                 End Select
 
-                dataPath.Text = commandManager.command.parameterValue("dataPath")
-                _Password = commandManager.command.parameterValue("password")
+                dataPath.Text = command.parameterValue("dataPath")
+                _Password = command.parameterValue("password")
 
                 _ParameterExist = True
 
                 Return True
-            Else
-                Return False
             End If
         Catch ex As Exception
-            Return False
         End Try
+
+        Return False
     End Function
 
     Private Sub Settings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -54,23 +59,24 @@ Public Class Settings
     ''' This method provide to enable all field of the form
     ''' </summary>
     Private Sub enableForm()
+        tabControl.Enabled = True
         internalNameLabel.Enabled = True
         internalName.Enabled = True
-        tabControl.Enabled = True
         networkNameLabel.Enabled = True
         networkName.Enabled = True
+        intranetMode.Enabled = True
+        secureChannel.Enabled = True
         serviceID.Enabled = True
         serviceUUID.Enabled = True
         adminPublicAddress.Enabled = True
         certificateClient.Enabled = True
         selectPublicPort.Enabled = True
         selectServicePort.Enabled = True
-        intranetMode.Enabled = True
-        secureChannel.Enabled = True
+        selectLocalWorkMachinePort.Enabled = True
         logInformations.Enabled = True
         useEventRegistry.Enabled = True
         useCounter.Enabled = True
-
+        useMessageService.Enabled = True
         saveButton.Enabled = True
     End Sub
 
@@ -147,27 +153,31 @@ Public Class Settings
             With data
                 internalName.Text = .internalName
                 networkName.Text = .networkReferement
+                intranetMode.Checked = .intranetMode
+                secureChannel.Checked = .secureChannel
                 serviceID.Text = .serviceID
                 adminPublicAddress.value = .publicAddress
                 certificateClient.value = .clientCertificate
                 selectPublicPort.value = .publicPort
                 selectServicePort.value = .servicePort
-                intranetMode.Checked = .intranetMode
-                secureChannel.Checked = .secureChannel
+                selectLocalWorkMachinePort.value = .localWorkMachinePort
+                useAutoMaintenance.Checked = .useAutoMaintanance
+
+                If .useAutoMaintanance Then
+                    frequencyAutoMaintenance.Text = .autoMaintenanceFrequencyHours
+
+                    startCleanEveryValueCombo.SelectedIndex = .trackRotateConfig.frequency
+                    keepOnlyRecentFileValueCombo.SelectedIndex = .trackRotateConfig.keepLast
+                    keepFileTypeValueCombo.SelectedIndex = .trackRotateConfig.keepFile
+                End If
 
                 logInformations.trackConfiguration = .trackConfiguration
-                logInformations.maxNumHours = .logFileMaxNumHours
-                logInformations.maxNumberOfRegistrations = .logFileNumRegistrations
-                logInformations.useTrackRotate = .useTrackRotate
-
-                If .useTrackRotate Then
-                    logInformations.trackRotateFrequency = .trackRotateConfig.frequency
-                    logInformations.trackRotateKeepFile = .trackRotateConfig.keepFile
-                    logInformations.trackRotateKeepLast = .trackRotateConfig.keepLast
-                End If
+                logInformations.maxNumHours = .changeLogFileMaxNumHours
+                logInformations.maxNumberOfRegistrations = .changeLogFileNumRegistrations
 
                 useEventRegistry.Checked = .useEventRegistry
                 useCounter.Checked = .useRequestCounter
+                useMessageService.Checked = .useAdminMessage
             End With
 
             Return True
@@ -217,27 +227,29 @@ Public Class Settings
 
                 .internalName = internalName.Text
                 .networkReferement = networkName.Text
+                .intranetMode = intranetMode.Checked
+                .secureChannel = secureChannel.Checked
                 .serviceID = serviceID.Text
                 .publicAddress = adminPublicAddress.value
                 .clientCertificate = certificateClient.value
                 .publicPort = selectPublicPort.value
                 .servicePort = selectServicePort.value
-                .intranetMode = intranetMode.Checked
-                .secureChannel = secureChannel.Checked
+                .localWorkMachinePort = selectLocalWorkMachinePort.value
+                .useAutoMaintanance = useAutoMaintenance.Checked
 
-                .trackConfiguration = logInformations.trackConfiguration
-                .logFileMaxNumHours = logInformations.maxNumHours
-                .logFileNumRegistrations = logInformations.maxNumberOfRegistrations
-                .useTrackRotate = logInformations.useTrackRotate
-
-                If logInformations.useTrackRotate Then
-                    .trackRotateConfig.frequency = logInformations.trackRotateFrequency
-                    .trackRotateConfig.keepFile = logInformations.trackRotateKeepFile
-                    .trackRotateConfig.keepLast = logInformations.trackRotateKeepLast
+                If useAutoMaintenance.Checked Then
+                    .autoMaintenanceFrequencyHours = frequencyAutoMaintenance.Value
+                    .trackRotateConfig.frequency = startCleanEveryValueCombo.SelectedIndex
+                    .trackRotateConfig.keepLast = keepOnlyRecentFileValueCombo.SelectedIndex
+                    .trackRotateConfig.keepFile = keepFileTypeValueCombo.SelectedIndex
                 End If
 
+                .trackConfiguration = logInformations.trackConfiguration
+                .changeLogFileMaxNumHours = logInformations.maxNumHours
+                .changeLogFileNumRegistrations = logInformations.maxNumberOfRegistrations
                 .useEventRegistry = useEventRegistry.Checked
                 .useRequestCounter = useCounter.Checked
+                .useAdminMessage = useMessageService.Checked
             End With
 
             _Password = getPassword()

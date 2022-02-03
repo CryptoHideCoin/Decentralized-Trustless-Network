@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Numerics;
 using System.Security.Cryptography;
 using System.Globalization;
@@ -11,7 +10,7 @@ using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
 
 
-namespace AreaEngine.Encryption
+namespace CHCBasicCryptographyLibrary.AreaEngine.Encryption
 {
 
     /*

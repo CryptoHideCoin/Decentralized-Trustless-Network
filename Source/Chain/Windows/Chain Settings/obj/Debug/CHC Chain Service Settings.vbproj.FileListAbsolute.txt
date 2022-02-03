@@ -1,0 +1,24 @@
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\CHCChainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\CHCSupportUIControls.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\zxing.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\CHCChainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\CHCSupportUIControls.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Debug\CHC Chain Service Settings.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Debug\CHCChainServiceSettings.informations.resources
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Debug\CHCChainServiceSettings.RequestPassword.resources
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Debug\CHCChainServiceSettings.Settings.resources
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Debug\CHCChainServiceSettings.Resources.resources
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Debug\CHC Chain Service Settings.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Debug\CHCChainServiceSettings.exe
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Debug\CHCChainServiceSettings.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\CHCChainServiceSettings.exe.config
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\CHCChainServiceSettings.exe
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\bin\Debug\CHCChainServiceSettings.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Debug\CHC Chain Service Settings.vbproj.CopyComplete

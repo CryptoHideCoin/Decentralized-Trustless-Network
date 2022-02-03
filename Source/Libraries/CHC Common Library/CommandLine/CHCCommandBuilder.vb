@@ -107,6 +107,23 @@ Namespace AreaEngine.CommandLine
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method get a parameter value
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        Public Function parameterValue(ByVal key As String) As String
+            Try
+                If parameters.ContainsKey(key) Then
+                    Return parameters(key).value
+                Else
+                    Return ""
+                End If
+            Catch ex As Exception
+                Return ""
+            End Try
+        End Function
+
     End Class
 
     ''' <summary>
@@ -147,22 +164,15 @@ Namespace AreaEngine.CommandLine
         ''' This method provide to run a split of a Commandline
         ''' </summary>
         ''' <param name="commandLine"></param>
-        <DebuggerHiddenAttribute()> Public Function run(ByVal command As String) As CommandStructure
+        <DebuggerHiddenAttribute()> Public Function run() As CommandStructure
             Dim result As New CommandStructure
-            Dim words()
-            Dim elements As New List(Of String)
-
             Try
-                If (command.Count <> 0) Then
-                    words = command.Split(" ")
-
-                    For Each item In words
-                        If (item.ToString.Trim().Length > 0) Then
-                            elements.Add(item.ToString.Trim())
-                        End If
-                    Next
-
-                    For Each item In elements
+                For Each item In Environment.GetCommandLineArgs
+                    If (item = IO.Path.Combine(My.Application.Info.DirectoryPath, My.Application.Info.AssemblyName & ".exe")) Or
+                       (item = My.Application.Info.AssemblyName & ".exe") Or
+                       (item = My.Application.Info.AssemblyName) Then
+                        Continue For
+                    Else
                         If isCommand(item) Then
                             If (result.code.Length > 0) Then
                                 lastErrorDescription = "To more command"
@@ -178,8 +188,8 @@ Namespace AreaEngine.CommandLine
                                 result.addToLastParameter(item)
                             End If
                         End If
-                    Next
-                End If
+                    End If
+                Next
             Catch ex As Exception
                 lastErrorDescription = ex.Message
             End Try

@@ -29,7 +29,7 @@ Partial Class SelectPort
         'portNumber
         '
         Me.portNumber.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.portNumber.Location = New System.Drawing.Point(192, 1)
+        Me.portNumber.Location = New System.Drawing.Point(216, 1)
         Me.portNumber.Name = "portNumber"
         Me.portNumber.Size = New System.Drawing.Size(59, 21)
         Me.portNumber.TabIndex = 20
@@ -38,10 +38,10 @@ Partial Class SelectPort
         '
         'portNumberLabel
         '
-        Me.portNumberLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.portNumberLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.portNumberLabel.Location = New System.Drawing.Point(3, 4)
         Me.portNumberLabel.Name = "portNumberLabel"
-        Me.portNumberLabel.Size = New System.Drawing.Size(183, 13)
+        Me.portNumberLabel.Size = New System.Drawing.Size(207, 13)
         Me.portNumberLabel.TabIndex = 19
         Me.portNumberLabel.Text = "Public port number (0..65535)"
         Me.portNumberLabel.TextAlign = System.Drawing.ContentAlignment.TopRight
@@ -54,7 +54,7 @@ Partial Class SelectPort
         Me.Controls.Add(Me.portNumberLabel)
         Me.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Name = "SelectPort"
-        Me.Size = New System.Drawing.Size(255, 23)
+        Me.Size = New System.Drawing.Size(280, 23)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

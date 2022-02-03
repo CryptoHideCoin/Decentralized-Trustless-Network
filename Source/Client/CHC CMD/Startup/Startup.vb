@@ -28,7 +28,7 @@ Namespace AreaCommon
         Sub Main()
             Dim commandManager As New CommandProcessor
 
-            commandManager.run(Environment.CommandLine)
+            commandManager.run()
         End Sub
 
     End Module

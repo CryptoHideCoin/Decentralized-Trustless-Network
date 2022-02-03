@@ -1,0 +1,12 @@
+E:\CryptoHideCoinDTN\Binary\Applications\Windows\Chain Service Settings\CHCChainServiceSettings.exe.config
+E:\CryptoHideCoinDTN\Binary\Applications\Windows\Chain Service Settings\CHCChainServiceSettings.exe
+E:\CryptoHideCoinDTN\Binary\Applications\Windows\Chain Service Settings\CHCChainServiceSettings.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Release\CHC Chain Service Settings.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Release\CHCChainServiceSettings.informations.resources
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Release\CHCChainServiceSettings.RequestPassword.resources
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Release\CHCChainServiceSettings.Settings.resources
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Release\CHCChainServiceSettings.Resources.resources
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Release\CHC Chain Service Settings.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Release\CHC Chain Service Settings.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Release\CHCChainServiceSettings.exe
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Settings\obj\Release\CHCChainServiceSettings.pdb
