@@ -14,6 +14,7 @@ Public Class Settings
 
     Private _ParameterExist As Boolean = False
     Private _Password As String = ""
+    Private _PortList = New List(Of String) From {1, 5, 7, 9, 11, 13, 17, 18, 19, 20, 21, 22, 23, 25, 37, 39, 42, 43, 49, 50, 53, 67, 68, 69, 70, 71, 79, 80, 81, 82, 88, 101, 102, 105, 107, 109, 110, 111, 113, 115, 117, 119, 123, 137, 138, 139, 143, 161, 162, 177, 179, 194, 199, 201, 209, 210, 213, 220, 369, 370, 389, 427, 443, 444, 445, 464, 500, 512, 513, 514, 515, 517, 518, 520, 521, 525, 530, 531, 532, 533, 540, 543, 544, 546, 547, 548, 554, 556, 563, 587, 631, 636, 674, 694, 749, 750, 873, 992, 993, 995, 1080, 1433, 1434, 1494, 1512, 1524, 1701, 1719, 1720, 1812, 1813, 1985, 2008, 2010, 2049, 2102, 2103, 2104, 2401, 2809, 3306, 4321, 5999, 6000, 11371, 13720, 13721, 13724, 13782, 13783, 22273, 23399, 25565, 26000, 27017, 33434}
 
 
     ''' <summary>
@@ -367,7 +368,7 @@ Public Class Settings
         If (adminPublicAddress.value.Trim.Length = 0) Then
             MessageBox.Show("The Admin wallet address is missing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-            tabControl.SelectedIndex = 0
+            tabControl.SelectedIndex = 1
             adminPublicAddress.Select()
 
             Return False
@@ -375,7 +376,7 @@ Public Class Settings
         If (certificateClient.value.Trim.Length = 0) Then
             MessageBox.Show("The Certificate is missing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-            tabControl.SelectedIndex = 0
+            tabControl.SelectedIndex = 1
             certificateClient.Select()
 
             Return False
@@ -383,7 +384,7 @@ Public Class Settings
         If (selectPublicPort.value = 0) Then
             MessageBox.Show("The Public port is missing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-            tabControl.SelectedIndex = 0
+            tabControl.SelectedIndex = 1
             selectPublicPort.Select()
 
             Return False
@@ -391,11 +392,36 @@ Public Class Settings
         If (selectServicePort.value = 0) Then
             MessageBox.Show("The Service port is missing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-            tabControl.SelectedIndex = 0
+            tabControl.SelectedIndex = 1
             selectServicePort.Select()
 
             Return False
         End If
+        If (selectServicePort.value = selectPublicPort.value) Then
+            MessageBox.Show("The service port and public is same", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            tabControl.SelectedIndex = 1
+            selectServicePort.Select()
+
+            Return False
+        End If
+        If _PortList.ToString.Contains(selectServicePort.value) Then
+            MessageBox.Show("The service port is used to the system", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            tabControl.SelectedIndex = 1
+            selectServicePort.Select()
+
+            Return False
+        End If
+        If _PortList.ToString.Contains(selectPublicPort.value) Then
+            MessageBox.Show("The public port is used to the system", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            tabControl.SelectedIndex = 1
+            selectServicePort.Select()
+
+            Return False
+        End If
+
         Return True
     End Function
 
@@ -454,6 +480,32 @@ Public Class Settings
 
     Private Sub infoButton_Click(sender As Object, e As EventArgs) Handles infoButton.Click
         informations.ShowDialog()
+    End Sub
+
+    Private Function enableAutoMaintenance(ByVal value As Boolean) As Boolean
+        Try
+            frequencyLabel.Enabled = value
+            frequencyAutoMaintenance.Enabled = value
+            unitMeasureFrequencyLabel.Enabled = value
+            startCleanEveryLabel.Enabled = value
+            startCleanEveryValueCombo.Enabled = value
+            keepOnlyRecentFileLabel.Enabled = value
+            keepOnlyRecentFileValueCombo.Enabled = value
+            keepFileTypeLabel.Enabled = value
+            keepFileTypeValueCombo.Enabled = value
+
+            If Not value Then
+                frequencyAutoMaintenance.Text = "0"
+                startCleanEveryValueCombo.SelectedIndex = -1
+                keepOnlyRecentFileValueCombo.SelectedIndex = -1
+                keepFileTypeValueCombo.SelectedIndex = -1
+            End If
+        Catch ex As Exception
+        End Try
+    End Function
+
+    Private Sub useAutoMaintenance_CheckedChanged(sender As Object, e As EventArgs) Handles useAutoMaintenance.CheckedChanged
+        enableAutoMaintenance(useAutoMaintenance.Checked)
     End Sub
 
 End Class

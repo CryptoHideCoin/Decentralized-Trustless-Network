@@ -32,23 +32,30 @@ Partial Class Settings
         Me.networkNameLabel = New System.Windows.Forms.Label()
         Me.intranetMode = New System.Windows.Forms.CheckBox()
         Me.tabInternal = New System.Windows.Forms.TabPage()
+        Me.certificateClient = New CHCSupportUIControls.Certificate()
+        Me.selectLocalWorkMachinePort = New CHCSupportUIControls.SelectPort()
+        Me.adminPublicAddress = New CHCSupportUIControls.WalletAddress()
         Me.serviceID = New System.Windows.Forms.TextBox()
         Me.serviceUUID = New System.Windows.Forms.Label()
+        Me.selectServicePort = New CHCSupportUIControls.SelectPort()
+        Me.selectPublicPort = New CHCSupportUIControls.SelectPort()
         Me.tabMaintenance = New System.Windows.Forms.TabPage()
         Me.autoMaintenanceGroup = New System.Windows.Forms.GroupBox()
+        Me.frequencyAutoMaintenance = New CHCSupportUIControls.NumericText()
         Me.keepFileTypeLabel = New System.Windows.Forms.Label()
         Me.keepFileTypeValueCombo = New System.Windows.Forms.ComboBox()
         Me.keepOnlyRecentFileLabel = New System.Windows.Forms.Label()
         Me.keepOnlyRecentFileValueCombo = New System.Windows.Forms.ComboBox()
         Me.startCleanEveryLabel = New System.Windows.Forms.Label()
         Me.startCleanEveryValueCombo = New System.Windows.Forms.ComboBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.unitMeasureFrequencyLabel = New System.Windows.Forms.Label()
+        Me.frequencyLabel = New System.Windows.Forms.Label()
         Me.useAutoMaintenance = New System.Windows.Forms.CheckBox()
         Me.tabComponents = New System.Windows.Forms.TabPage()
         Me.useMessageService = New System.Windows.Forms.CheckBox()
         Me.useCounter = New System.Windows.Forms.CheckBox()
         Me.logGroup = New System.Windows.Forms.GroupBox()
+        Me.logInformations = New CHCSupportUIControls.LogControl()
         Me.useEventRegistry = New System.Windows.Forms.CheckBox()
         Me.generalFrame = New System.Windows.Forms.GroupBox()
         Me.localDataLabel = New System.Windows.Forms.Label()
@@ -61,13 +68,6 @@ Partial Class Settings
         Me.folderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.openAsFileButton = New System.Windows.Forms.Button()
         Me.infoButton = New System.Windows.Forms.Button()
-        Me.certificateClient = New CHCSupportUIControls.Certificate()
-        Me.selectLocalWorkMachinePort = New CHCSupportUIControls.SelectPort()
-        Me.adminPublicAddress = New CHCSupportUIControls.WalletAddress()
-        Me.selectServicePort = New CHCSupportUIControls.SelectPort()
-        Me.selectPublicPort = New CHCSupportUIControls.SelectPort()
-        Me.frequencyAutoMaintenance = New CHCSupportUIControls.NumericText()
-        Me.logInformations = New CHCSupportUIControls.LogControl()
         Me.tabControl.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.tabInternal.SuspendLayout()
@@ -195,6 +195,46 @@ Partial Class Settings
         Me.tabInternal.Text = "Internal"
         Me.tabInternal.UseVisualStyleBackColor = True
         '
+        'certificateClient
+        '
+        Me.certificateClient.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.certificateClient.dataPath = ""
+        Me.certificateClient.Enabled = False
+        Me.certificateClient.Location = New System.Drawing.Point(70, 93)
+        Me.certificateClient.Name = "certificateClient"
+        Me.certificateClient.noChange = True
+        Me.certificateClient.serviceId = ""
+        Me.certificateClient.Size = New System.Drawing.Size(592, 30)
+        Me.certificateClient.TabIndex = 2
+        Me.certificateClient.urlService = ""
+        Me.certificateClient.value = ""
+        '
+        'selectLocalWorkMachinePort
+        '
+        Me.selectLocalWorkMachinePort.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.selectLocalWorkMachinePort.Enabled = False
+        Me.selectLocalWorkMachinePort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.selectLocalWorkMachinePort.label = "Local work machine port number (0..65535)"
+        Me.selectLocalWorkMachinePort.Location = New System.Drawing.Point(89, 196)
+        Me.selectLocalWorkMachinePort.Name = "selectLocalWorkMachinePort"
+        Me.selectLocalWorkMachinePort.Size = New System.Drawing.Size(487, 23)
+        Me.selectLocalWorkMachinePort.TabIndex = 5
+        Me.selectLocalWorkMachinePort.value = 0
+        '
+        'adminPublicAddress
+        '
+        Me.adminPublicAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.adminPublicAddress.caption = "Public admin key"
+        Me.adminPublicAddress.dataPath = ""
+        Me.adminPublicAddress.Location = New System.Drawing.Point(10, 45)
+        Me.adminPublicAddress.Name = "adminPublicAddress"
+        Me.adminPublicAddress.Size = New System.Drawing.Size(656, 51)
+        Me.adminPublicAddress.TabIndex = 1
+        Me.adminPublicAddress.useFontBold = True
+        Me.adminPublicAddress.value = ""
+        '
         'serviceID
         '
         Me.serviceID.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -217,6 +257,30 @@ Partial Class Settings
         Me.serviceUUID.TabIndex = 45
         Me.serviceUUID.Text = "&Service ID"
         '
+        'selectServicePort
+        '
+        Me.selectServicePort.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.selectServicePort.Enabled = False
+        Me.selectServicePort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.selectServicePort.label = "Service port number (0..65535)"
+        Me.selectServicePort.Location = New System.Drawing.Point(294, 167)
+        Me.selectServicePort.Name = "selectServicePort"
+        Me.selectServicePort.Size = New System.Drawing.Size(282, 23)
+        Me.selectServicePort.TabIndex = 4
+        Me.selectServicePort.value = 0
+        '
+        'selectPublicPort
+        '
+        Me.selectPublicPort.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.selectPublicPort.Enabled = False
+        Me.selectPublicPort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.selectPublicPort.label = "Public port number (0..65535)"
+        Me.selectPublicPort.Location = New System.Drawing.Point(294, 138)
+        Me.selectPublicPort.Name = "selectPublicPort"
+        Me.selectPublicPort.Size = New System.Drawing.Size(282, 23)
+        Me.selectPublicPort.TabIndex = 3
+        Me.selectPublicPort.value = 0
+        '
         'tabMaintenance
         '
         Me.tabMaintenance.Controls.Add(Me.autoMaintenanceGroup)
@@ -236,8 +300,8 @@ Partial Class Settings
         Me.autoMaintenanceGroup.Controls.Add(Me.keepOnlyRecentFileValueCombo)
         Me.autoMaintenanceGroup.Controls.Add(Me.startCleanEveryLabel)
         Me.autoMaintenanceGroup.Controls.Add(Me.startCleanEveryValueCombo)
-        Me.autoMaintenanceGroup.Controls.Add(Me.Label2)
-        Me.autoMaintenanceGroup.Controls.Add(Me.Label1)
+        Me.autoMaintenanceGroup.Controls.Add(Me.unitMeasureFrequencyLabel)
+        Me.autoMaintenanceGroup.Controls.Add(Me.frequencyLabel)
         Me.autoMaintenanceGroup.Controls.Add(Me.useAutoMaintenance)
         Me.autoMaintenanceGroup.Location = New System.Drawing.Point(20, 14)
         Me.autoMaintenanceGroup.Name = "autoMaintenanceGroup"
@@ -245,6 +309,18 @@ Partial Class Settings
         Me.autoMaintenanceGroup.TabIndex = 4
         Me.autoMaintenanceGroup.TabStop = False
         Me.autoMaintenanceGroup.Text = "Automatic Maintenance"
+        '
+        'frequencyAutoMaintenance
+        '
+        Me.frequencyAutoMaintenance.currentFormat = ""
+        Me.frequencyAutoMaintenance.Location = New System.Drawing.Point(198, 66)
+        Me.frequencyAutoMaintenance.locationCode = "it-IT"
+        Me.frequencyAutoMaintenance.Name = "frequencyAutoMaintenance"
+        Me.frequencyAutoMaintenance.Size = New System.Drawing.Size(100, 21)
+        Me.frequencyAutoMaintenance.TabIndex = 1
+        Me.frequencyAutoMaintenance.Text = "0"
+        Me.frequencyAutoMaintenance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.frequencyAutoMaintenance.useDecimal = False
         '
         'keepFileTypeLabel
         '
@@ -312,26 +388,26 @@ Partial Class Settings
         Me.startCleanEveryValueCombo.Size = New System.Drawing.Size(207, 21)
         Me.startCleanEveryValueCombo.TabIndex = 2
         '
-        'Label2
+        'unitMeasureFrequencyLabel
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Enabled = False
-        Me.Label2.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(304, 69)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(45, 13)
-        Me.Label2.TabIndex = 3
-        Me.Label2.Text = "Hour/s"
+        Me.unitMeasureFrequencyLabel.AutoSize = True
+        Me.unitMeasureFrequencyLabel.Enabled = False
+        Me.unitMeasureFrequencyLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.unitMeasureFrequencyLabel.Location = New System.Drawing.Point(304, 69)
+        Me.unitMeasureFrequencyLabel.Name = "unitMeasureFrequencyLabel"
+        Me.unitMeasureFrequencyLabel.Size = New System.Drawing.Size(45, 13)
+        Me.unitMeasureFrequencyLabel.TabIndex = 3
+        Me.unitMeasureFrequencyLabel.Text = "Hour/s"
         '
-        'Label1
+        'frequencyLabel
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Enabled = False
-        Me.Label1.Location = New System.Drawing.Point(126, 69)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(66, 13)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Frequency"
+        Me.frequencyLabel.AutoSize = True
+        Me.frequencyLabel.Enabled = False
+        Me.frequencyLabel.Location = New System.Drawing.Point(126, 69)
+        Me.frequencyLabel.Name = "frequencyLabel"
+        Me.frequencyLabel.Size = New System.Drawing.Size(66, 13)
+        Me.frequencyLabel.TabIndex = 1
+        Me.frequencyLabel.Text = "Frequency"
         '
         'useAutoMaintenance
         '
@@ -385,6 +461,22 @@ Partial Class Settings
         Me.logGroup.TabIndex = 0
         Me.logGroup.TabStop = False
         Me.logGroup.Text = "Log"
+        '
+        'logInformations
+        '
+        Me.logInformations.Enabled = False
+        Me.logInformations.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.logInformations.Location = New System.Drawing.Point(4, 20)
+        Me.logInformations.maxNumberOfRegistrations = 0
+        Me.logInformations.maxNumHours = 0
+        Me.logInformations.Name = "logInformations"
+        Me.logInformations.Size = New System.Drawing.Size(671, 63)
+        Me.logInformations.TabIndex = 0
+        Me.logInformations.trackConfiguration = CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver
+        Me.logInformations.trackRotateFrequency = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
+        Me.logInformations.trackRotateKeepFile = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
+        Me.logInformations.trackRotateKeepLast = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
+        Me.logInformations.useTrackRotate = False
         '
         'useEventRegistry
         '
@@ -509,97 +601,6 @@ Partial Class Settings
         Me.infoButton.Text = "Info"
         Me.infoButton.UseVisualStyleBackColor = True
         '
-        'certificateClient
-        '
-        Me.certificateClient.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.certificateClient.dataPath = ""
-        Me.certificateClient.Enabled = False
-        Me.certificateClient.Location = New System.Drawing.Point(70, 93)
-        Me.certificateClient.Name = "certificateClient"
-        Me.certificateClient.noChange = True
-        Me.certificateClient.serviceId = ""
-        Me.certificateClient.Size = New System.Drawing.Size(592, 30)
-        Me.certificateClient.TabIndex = 2
-        Me.certificateClient.urlService = ""
-        Me.certificateClient.value = ""
-        '
-        'selectLocalWorkMachinePort
-        '
-        Me.selectLocalWorkMachinePort.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.selectLocalWorkMachinePort.Enabled = False
-        Me.selectLocalWorkMachinePort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.selectLocalWorkMachinePort.label = "Local work machine port number (0..65535)"
-        Me.selectLocalWorkMachinePort.Location = New System.Drawing.Point(89, 196)
-        Me.selectLocalWorkMachinePort.Name = "selectLocalWorkMachinePort"
-        Me.selectLocalWorkMachinePort.Size = New System.Drawing.Size(487, 23)
-        Me.selectLocalWorkMachinePort.TabIndex = 5
-        Me.selectLocalWorkMachinePort.value = 0
-        '
-        'adminPublicAddress
-        '
-        Me.adminPublicAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.adminPublicAddress.caption = "Public admin key"
-        Me.adminPublicAddress.dataPath = ""
-        Me.adminPublicAddress.Location = New System.Drawing.Point(10, 45)
-        Me.adminPublicAddress.Name = "adminPublicAddress"
-        Me.adminPublicAddress.Size = New System.Drawing.Size(656, 51)
-        Me.adminPublicAddress.TabIndex = 1
-        Me.adminPublicAddress.useFontBold = True
-        Me.adminPublicAddress.value = ""
-        '
-        'selectServicePort
-        '
-        Me.selectServicePort.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.selectServicePort.Enabled = False
-        Me.selectServicePort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.selectServicePort.label = "Service port number (0..65535)"
-        Me.selectServicePort.Location = New System.Drawing.Point(294, 167)
-        Me.selectServicePort.Name = "selectServicePort"
-        Me.selectServicePort.Size = New System.Drawing.Size(282, 23)
-        Me.selectServicePort.TabIndex = 4
-        Me.selectServicePort.value = 0
-        '
-        'selectPublicPort
-        '
-        Me.selectPublicPort.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.selectPublicPort.Enabled = False
-        Me.selectPublicPort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.selectPublicPort.label = "Public port number (0..65535)"
-        Me.selectPublicPort.Location = New System.Drawing.Point(294, 138)
-        Me.selectPublicPort.Name = "selectPublicPort"
-        Me.selectPublicPort.Size = New System.Drawing.Size(282, 23)
-        Me.selectPublicPort.TabIndex = 3
-        Me.selectPublicPort.value = 0
-        '
-        'frequencyAutoMaintenance
-        '
-        Me.frequencyAutoMaintenance.currentFormat = ""
-        Me.frequencyAutoMaintenance.Location = New System.Drawing.Point(198, 66)
-        Me.frequencyAutoMaintenance.locationCode = "it-IT"
-        Me.frequencyAutoMaintenance.Name = "frequencyAutoMaintenance"
-        Me.frequencyAutoMaintenance.Size = New System.Drawing.Size(100, 21)
-        Me.frequencyAutoMaintenance.TabIndex = 1
-        Me.frequencyAutoMaintenance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.frequencyAutoMaintenance.useDecimal = False
-        '
-        'logInformations
-        '
-        Me.logInformations.Enabled = False
-        Me.logInformations.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.logInformations.Location = New System.Drawing.Point(4, 20)
-        Me.logInformations.maxNumberOfRegistrations = 0
-        Me.logInformations.maxNumHours = 0
-        Me.logInformations.Name = "logInformations"
-        Me.logInformations.Size = New System.Drawing.Size(671, 63)
-        Me.logInformations.TabIndex = 0
-        Me.logInformations.trackConfiguration = CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver
-        Me.logInformations.trackRotateFrequency = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
-        Me.logInformations.trackRotateKeepFile = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
-        Me.logInformations.trackRotateKeepLast = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
-        Me.logInformations.useTrackRotate = False
-        '
         'Settings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -613,6 +614,7 @@ Partial Class Settings
         Me.Controls.Add(Me.tabControl)
         Me.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
         Me.Name = "Settings"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Chain Service Settings - Crypto Hide Coin DTN"
@@ -661,8 +663,8 @@ Partial Class Settings
     Friend WithEvents selectPublicPort As CHCSupportUIControls.SelectPort
     Friend WithEvents tabMaintenance As TabPage
     Friend WithEvents autoMaintenanceGroup As GroupBox
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Label1 As Label
+    Friend WithEvents unitMeasureFrequencyLabel As Label
+    Friend WithEvents frequencyLabel As Label
     Friend WithEvents useAutoMaintenance As CheckBox
     Friend WithEvents tabComponents As TabPage
     Friend WithEvents useMessageService As CheckBox
