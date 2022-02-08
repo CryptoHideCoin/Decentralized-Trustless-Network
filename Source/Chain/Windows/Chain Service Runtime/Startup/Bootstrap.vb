@@ -1,6 +1,10 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.AreaEngine.CommandLine
+Imports CHCCommonLibrary.AreaEngine.Miscellaneous
+Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
+Imports CHCSidechainServiceLibrary.AreaCommon.Main
 
 
 
@@ -11,56 +15,55 @@ Namespace AreaCommon.Startup
     ''' </summary>
     Module Bootstrap
 
-        Private Property _DataPath As String = ""
-        Private Property _Password As String = ""
-        Private Property _ParameterExist As Boolean = False
+        Private Property _Bootstrap As New CHCSidechainServiceLibrary.AreaCommon.Startup.Bootstrap
+
+
 
         ''' <summary>
-        ''' This method provide to read a command line parameters
+        ''' This method provide to acquire the service information
         ''' </summary>
         ''' <returns></returns>
-        Private Function readCommandLine() As Boolean
+        Private Function acquireServiceInformation() As Boolean
+            environment.log.trackIntoConsole("Load service information")
+
             Try
-                Dim commandManager As New CommandLine.CommandProcessor
+                environment.log.trackEnter("startUp.acquireServiceInformation")
 
-                commandManager.command = (New CommandLine.CommandLineDecoder).run()
+                With state.serviceInformation
+                    .chainName = CUSTOM_ChainServiceName
 
-                If commandManager.execute() Then
-                    _DataPath = commandManager.command.parameterValue("dataPath")
-                    _Password = commandManager.command.parameterValue("password")
+                    If environment.settings.intranetMode Then
+                        .addressIP = environment.ipAddress.local
+                    Else
+                        .addressIP = environment.ipAddress.public
+                    End If
 
-                    _ParameterExist = True
+                    .intranetMode = environment.settings.intranetMode
+                    .netWorkName = environment.settings.networkReferement
+                    .platformHost = "Microsoft Windows Desktop Application service"
+                    .softwareRelease = My.Application.Info.Version.ToString()
 
-                    Return True
-                Else
-                    Return False
-                End If
+                    If environment.settings.secureChannel Then
+                        .completeAddress = "https://"
+                    Else
+                        .completeAddress = "http://"
+                    End If
+
+                    .completeAddress += .addressIP & "/api/" & environment.settings.serviceID
+
+                    .currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.starting
+                End With
+
+                Return True
             Catch ex As Exception
-                MessageBox.Show("An error occurrent during moduleMain.bootstrap.readCommandLine " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                environment.log.trackException("StartUp.loadDataInformation", "Error during Load data information:" & ex.Message)
 
                 Return False
+            Finally
+                environment.log.trackExit("startUp.loadDataInformation")
             End Try
         End Function
 
-        ''' <summary>
-        ''' This method provide to print a welcome message into console
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function printWelcome() As Boolean
-            Log.trackIntoConsole("=== Welcome into ====")
-            Log.trackIntoConsole("Crypto Hide Coin Decentralized Trustless Network")
-            Log.trackIntoConsole("Template Chain Engine Service")
-            Log.trackIntoConsole("Rel." & My.Application.Info.Version.ToString())
-            Log.trackIntoConsole("System bootstrap " & atMomentGMT() & " (gmt)")
-            Log.trackIntoConsole()
-
-#If DEBUG Then
-            Log.trackIntoConsole("Debug mode on")
-            Log.trackIntoConsole()
-#End If
-
-            state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.starting
-        End Function
 
 
         ''' <summary>
@@ -69,22 +72,53 @@ Namespace AreaCommon.Startup
         ''' <returns></returns>
         Public Function run() As Boolean
             Try
+                Dim problemDescription As String
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    proceed = readCommandLine()
+                    If Not _Bootstrap.readParameters() Then
+                        MessageBox.Show("Problem during read a parameters", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                        proceed = False
+                    End If
                 End If
                 If proceed Then
-                    proceed = printWelcome()
+                    If Not _Bootstrap.printWelcome(CUSTOM_ChainServiceName, My.Application.Info.Version.ToString()) Then
+                        MessageBox.Show("Problem during print a welcome", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                        proceed = False
+                    End If
                 End If
+                If proceed Then
+                    If Not _Bootstrap.managePath(problemDescription) Then
+                        MessageBox.Show(problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-                ' Print welcome
+                        proceed = False
+                    End If
+                End If
+                If proceed Then
+                    If Not _Bootstrap.readSettings(CUSTOM_ChainServiceName, problemDescription) Then
+                        MessageBox.Show(problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-                ' Read the settings
+                        proceed = False
+                    End If
+                End If
+                If proceed Then
+                    If Not _Bootstrap.trackRuntimeStart(problemDescription) Then
+                        MessageBox.Show(problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-                ' Build Path application
-
-                ' Read a keyStore
+                        proceed = False
+                    End If
+                End If
+                If proceed Then
+                    proceed = _Bootstrap.acquireIPAddress()
+                End If
+                If proceed Then
+                    proceed = acquireServiceInformation()
+                End If
+                If proceed Then
+                    proceed = _Bootstrap.readAdminKeyStore()
+                End If
 
                 Return proceed
             Catch ex As Exception

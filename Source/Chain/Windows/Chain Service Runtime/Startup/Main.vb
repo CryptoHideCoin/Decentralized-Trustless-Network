@@ -18,9 +18,9 @@ Namespace AreaCommon.Startup
             Try
                 Dim proceed As Boolean = True
 
-                If proceed Then proceed = run()
-                If proceed Then proceed = Maintenance.runService()
-                If proceed Then proceed = Service.runService()
+                If proceed Then proceed = Bootstrap.run()
+                If proceed Then proceed = Maintenance.run()
+                If proceed Then proceed = Service.run()
 
             Catch ex As Exception
                 MessageBox.Show("An error occurrent during moduleMain.startup " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)

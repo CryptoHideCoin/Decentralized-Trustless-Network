@@ -75,6 +75,10 @@
     <Compile Include="Encryption\SHAInterface.vb" />
     <Compile Include="FileManager\CHCBaseEncryption.vb" />
     <Compile Include="FileManager\CHCFile.vb" />
+    <Compile Include="LogTracker\CHCLogCache.vb" />
+    <Compile Include="LogTracker\CHCLogEngine.vb" />
+    <Compile Include="LogTracker\CHCLogIO.vb" />
+    <Compile Include="LogTracker\CHCLogStructures.vb" />
     <Compile Include="Log\CHCLog.vb" />
     <Compile Include="Log\CHCLogRotate.vb" />
     <Compile Include="Log\CHCModule.vb" />
@@ -128,5 +132,6 @@
   <ItemGroup>
     <Content Include="Other\ReleaseNote.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

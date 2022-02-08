@@ -1,0 +1,15 @@
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\bin\Debug\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\bin\Debug\CHCSidechainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\obj\Debug\CHC Sidechain Service Library.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\obj\Debug\CHCSidechainServiceLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\obj\Debug\CHC Sidechain Service Library.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\obj\Debug\CHC Sidechain Service Library.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\obj\Debug\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Chain Service Library\obj\Debug\CHCSidechainServiceLibrary.pdb

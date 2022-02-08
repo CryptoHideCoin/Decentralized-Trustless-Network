@@ -21,12 +21,12 @@ Public Class Settings
     ''' This method provide to test if the user indicate the parameter in the command line
     ''' </summary>
     ''' <returns></returns>
-    Private Function haveParameters() As Boolean
+    Private Function readParameters() As Boolean
         Try
             Dim command As New CommandStructure
             Dim engine As New CommandBuilder
 
-            Command = engine.run()
+            command = engine.run()
 
             If (command.code.ToLower.CompareTo("force") = 0) Then
                 Select Case command.parameterValue("service")
@@ -47,7 +47,7 @@ Public Class Settings
     End Function
 
     Private Sub Settings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        If haveParameters() Then
+        If readParameters() Then
             entireLoad(True)
         Else
             Dim paths As New AreaSystem.Paths
@@ -434,7 +434,7 @@ Public Class Settings
                     paths.updateRootPath(dataPath.Text)
                 End If
 
-                MessageBox.Show("Configuration saved", "Information")
+                MessageBox.Show("Configuration saved", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 End
             End If

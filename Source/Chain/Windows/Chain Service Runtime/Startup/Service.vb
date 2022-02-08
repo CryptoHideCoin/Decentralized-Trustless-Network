@@ -11,7 +11,7 @@ Namespace AreaCommon.Startup
     ''' </summary>
     Module Service
 
-        Public Function runService() As Boolean
+        Public Function run() As Boolean
 
         End Function
 

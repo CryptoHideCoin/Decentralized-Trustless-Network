@@ -8,7 +8,7 @@ Namespace AreaCommon.Startup
 
     Module Maintenance
 
-        Public Function runService() As Boolean
+        Public Function run() As Boolean
 
         End Function
 

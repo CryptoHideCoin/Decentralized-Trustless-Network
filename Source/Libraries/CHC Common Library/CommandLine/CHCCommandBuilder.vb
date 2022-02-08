@@ -24,10 +24,8 @@ Namespace AreaEngine.CommandLine
         ''' This class contain the element of a argument
         ''' </summary>
         Public Class SingleArgument
-
             Public Property key As String = ""
             Public Property value As String = ""
-
         End Class
 
         Private Property _CurrentParameter As SingleArgument
@@ -46,11 +44,8 @@ Namespace AreaEngine.CommandLine
                 Dim newParameter As New SingleArgument
 
                 _CurrentParameter = newParameter
-
                 value = value.Substring(2)
-
                 separated = value.Split(":")
-
                 newParameter.key = separated(0)
 
                 If parameters.ContainsKey(newParameter.key) Then

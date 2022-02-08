@@ -1,0 +1,18 @@
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\CHCChainServiceRuntime.exe.config
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\CHCChainServiceRuntime.exe
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\CHCChainServiceRuntime.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\CHCChainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\CHCChainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\obj\Debug\Chain Service Runtime.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\obj\Debug\CHCChainServiceRuntime.Resources.resources
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\obj\Debug\Chain Service Runtime.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\obj\Debug\Chain Service Runtime.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\obj\Debug\CHCChainServiceRuntime.exe
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\obj\Debug\CHCChainServiceRuntime.pdb

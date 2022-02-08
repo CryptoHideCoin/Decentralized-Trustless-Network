@@ -105,9 +105,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\Paths.vb" />
-    <Compile Include="CommandLine\CommandComposer.vb" />
-    <Compile Include="CommandLine\CommandLineDecoder.vb" />
-    <Compile Include="CommandLine\CommandProcessor.vb" />
     <Compile Include="Forms\Informations.Designer.vb">
       <DependentUpon>Informations.vb</DependentUpon>
     </Compile>

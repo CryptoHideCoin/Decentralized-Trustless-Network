@@ -84,8 +84,8 @@ Partial Class Settings
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tabControl.Controls.Add(Me.tabMain)
         Me.tabControl.Controls.Add(Me.tabInternal)
-        Me.tabControl.Controls.Add(Me.tabMaintenance)
         Me.tabControl.Controls.Add(Me.tabComponents)
+        Me.tabControl.Controls.Add(Me.tabMaintenance)
         Me.tabControl.Enabled = False
         Me.tabControl.Location = New System.Drawing.Point(16, 126)
         Me.tabControl.Name = "tabControl"

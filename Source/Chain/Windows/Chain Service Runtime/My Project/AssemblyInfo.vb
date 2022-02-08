@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("CHCChainServiceRuntime")>
-<Assembly: AssemblyDescription("Crypto Hide Coin Chain Service Runtime")>
+<Assembly: AssemblyTitle("CHCSidechainServiceRuntime")>
+<Assembly: AssemblyDescription("Crypto Hide Coin Sidechain Service Runtime")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CHC Chain Service Runtime")>
+<Assembly: AssemblyProduct("CHC Sidechain Service Runtime")>
 <Assembly: AssemblyCopyright("Copyright ©  2022")>
 <Assembly: AssemblyTrademark("")>
 
