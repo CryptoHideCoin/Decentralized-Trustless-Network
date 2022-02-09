@@ -1,0 +1,48 @@
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Support UI Library\CHCSupportUIControls.dll
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Support UI Library\CHCSupportUIControls.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHC Support UI Controls.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.ConfigurePath.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.KeyStoreManager.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.KeyPairDetail.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.PrivateKey.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.SelectPort.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.Certificate.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.ChangeCertificate.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.UrlProtocol.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.WalletAddress.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.WalletKeyPrivate.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.DialogChangeCertificate.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.RequestPassword.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.LogControl.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.CustomizeWalletAddress.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.KeyPair.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.WalletAddressList.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHC Support UI Controls.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHC Support UI Controls.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHCSupportUIControls\obj\Release\CHCSupportUIControls.pdb
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Support UI\CHCSupportUIControls.dll
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Support UI\CHCSupportUIControls.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHC Support UI Controls.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.ConfigurePath.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.KeyStoreManager.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.KeyPairDetail.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.PrivateKey.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.SelectPort.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.Certificate.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.ChangeCertificate.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.UrlProtocol.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.WalletAddress.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.WalletKeyPrivate.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.DialogChangeCertificate.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.RequestPassword.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.LogControl.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.CustomizeWalletAddress.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.KeyPair.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.WalletAddressList.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHC Support UI Controls.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHC Support UI Controls.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Support UI Controls\obj\Release\CHCSupportUIControls.pdb

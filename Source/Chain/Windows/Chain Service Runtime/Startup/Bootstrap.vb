@@ -1,9 +1,6 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.AreaEngine.CommandLine
-Imports CHCCommonLibrary.AreaEngine.Miscellaneous
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
 Imports CHCSidechainServiceLibrary.AreaCommon.Main
 
 
@@ -118,6 +115,10 @@ Namespace AreaCommon.Startup
                 End If
                 If proceed Then
                     proceed = _Bootstrap.readAdminKeyStore()
+                End If
+                If proceed Then
+                    environment.log.trackIntoConsole("Root paths set " & environment.paths.directoryData)
+                    environment.log.trackIntoConsole("Service GUID = " & environment.settings.serviceID)
                 End If
 
                 Return proceed

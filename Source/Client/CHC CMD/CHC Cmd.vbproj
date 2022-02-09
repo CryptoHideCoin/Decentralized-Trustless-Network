@@ -68,6 +68,13 @@
     <ApplicationIcon>64.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CHCCommonLibrary, Version=1.14.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\CHCCommonLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCSidechainServiceLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\CHCSidechainServiceLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -95,6 +102,7 @@
     <Compile Include="Command\CommandCurrentTime.vb" />
     <Compile Include="Command\CommandHelp.vb" />
     <Compile Include="Command\CommandInfo.vb" />
+    <Compile Include="Command\CommandIPAddress.vb" />
     <Compile Include="Command\CommandRelease.vb" />
     <Compile Include="Command\CommandUpdateSystemDate.vb" />
     <Compile Include="Application\CommandProcessor.vb" />
@@ -155,12 +163,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="General\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\CHC Common Library\CHC Common Library.vbproj">
-      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
-      <Name>CHC Common Library</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

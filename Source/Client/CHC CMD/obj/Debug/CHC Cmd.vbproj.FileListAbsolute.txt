@@ -9,5 +9,7 @@ E:\CryptoHideCoinDTN\Source\Client\CHC CMD\obj\Debug\CHC Cmd.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\obj\Debug\CHCCmd.exe
 E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\obj\Debug\CHCCmd.pdb
 E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\obj\Debug\CHC Cmd.vbprojAssemblyReference.cache
-E:\CryptoHideCoinDTN\Source\Client\CHC CMD\bin\Debug\CHCCommonLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Client\CHC CMD\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\bin\Debug\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\bin\Debug\BouncyCastle.Crypto.dll

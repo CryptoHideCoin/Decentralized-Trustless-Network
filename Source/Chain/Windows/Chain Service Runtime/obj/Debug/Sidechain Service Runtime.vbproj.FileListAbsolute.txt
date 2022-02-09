@@ -17,3 +17,11 @@ E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\obj\Debug\CHCSid
 E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\CHCPrimarySidechainLibrary.dll
 E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\CHCPrimarySidechainLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\obj\Debug\CHCSidechainServiceRuntime.exe.config
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\System.Web.Http.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\System.Web.Http.SelfHost.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\System.Web.Http.xml
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\System.Web.Http.SelfHost.xml
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\System.Net.Http.Formatting.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\System.Net.Http.Formatting.xml
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Chain\Windows\Chain Service Runtime\bin\Debug\Newtonsoft.Json.xml
