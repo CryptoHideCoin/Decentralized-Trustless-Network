@@ -33,7 +33,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\Binary\Chain\Chain Service Runtime\</OutputPath>
+    <OutputPath>..\..\..\..\Binary\Sidechains\CHC Sidechain Service Runtime\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -55,26 +55,30 @@
     <ApplicationIcon>64.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CHCProtocolLibrary, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Protocol Library\CHCProtocolLibrary.dll</HintPath>
+    <Reference Include="CHCCommonLibrary">
+      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Common\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Package\Third parts\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="CHCPrimarySidechainLibrary">
+      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Primary Sidechain\CHCPrimarySidechainLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCProtocolLibrary">
+      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Protocol\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCSidechainServiceLibrary">
+      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting">
-      <HintPath>..\..\..\..\Package\Third parts\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <HintPath>..\..\..\..\Binary\Libraries\ThirdParts\System.Web.Http.Formatting\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http">
-      <HintPath>..\..\..\..\Package\Third parts\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+      <HintPath>..\..\..\..\Binary\Libraries\ThirdParts\System.Web.http\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.SelfHost">
-      <HintPath>..\..\..\..\Package\Third parts\Microsoft.AspNet.WebApi.SelfHost.5.2.7\lib\net45\System.Web.Http.SelfHost.dll</HintPath>
+      <HintPath>..\..\..\..\Binary\Libraries\ThirdParts\SelfHost\System.Web.Http.SelfHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -143,20 +147,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="64.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\CHC Chain Service Library\CHC Sidechain Service Library.vbproj">
-      <Project>{f586744f-8890-4341-8ae8-2583d5a4d084}</Project>
-      <Name>CHC Sidechain Service Library</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Libraries\CHC Common Library\CHC Common Library.vbproj">
-      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
-      <Name>CHC Common Library</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Libraries\SideChain.CHC Primary Library\CHC Sidechain Primary Library.vbproj">
-      <Project>{04eb282c-1224-4900-8aa7-443ccb439e68}</Project>
-      <Name>CHC Sidechain Primary Library</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

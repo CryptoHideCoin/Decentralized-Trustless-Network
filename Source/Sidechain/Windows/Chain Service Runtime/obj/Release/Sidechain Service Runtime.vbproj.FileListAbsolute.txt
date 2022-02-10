@@ -1,0 +1,3 @@
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Chain Service Runtime\obj\Release\Sidechain Service Runtime.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Chain Service Runtime\obj\Release\CHCSidechainServiceRuntime.Resources.resources
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Chain Service Runtime\obj\Release\Sidechain Service Runtime.vbproj.GenerateResource.cache

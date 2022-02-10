@@ -57,10 +57,10 @@ Namespace AreaCommon.Command
 
                 path = Environment.CurrentDirectory
                 path = IO.Directory.GetParent(path).FullName
-                path = IO.Path.Combine(path, "Chain Service Settings")
+                path = IO.Path.Combine(path, "CHC Sidechain Service Settings")
 
                 If IO.Directory.Exists(path) Then
-                    path = IO.Path.Combine(path, "CHCChainServiceSettings.exe")
+                    path = IO.Path.Combine(path, "CHCSidechainServiceSettings.exe")
 
                     If Not IO.File.Exists(path) Then
                         Console.WriteLine("Error: the application '" & path & "' is not exist")
