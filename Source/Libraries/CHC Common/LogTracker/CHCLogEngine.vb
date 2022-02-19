@@ -52,7 +52,7 @@ Namespace AreaEngine.Log
         ''' </summary>
         ''' <param name="message"></param>
         ''' <returns></returns>
-        Public Function trackIntoConsole(Optional ByVal message As String = "") As Boolean
+        <DebuggerHiddenAttribute()> Public Function trackIntoConsole(Optional ByVal message As String = "") As Boolean
             Return addNewDataCache(ActionEnumeration.printIntoConsole, message)
         End Function
 
@@ -62,7 +62,7 @@ Namespace AreaEngine.Log
         ''' <param name="completeName"></param>
         ''' <param name="addictionalInformation"></param>
         ''' <returns></returns>
-        Public Function trackEnter(ByVal completeName As String, Optional ByVal addictionalInformation As String = "") As Boolean
+        <DebuggerHiddenAttribute()> Public Function trackEnter(ByVal completeName As String, Optional ByVal addictionalInformation As String = "") As Boolean
             Return addNewDataCache(ActionEnumeration.enterIntoMethod, addictionalInformation, completeName)
         End Function
 
@@ -72,7 +72,7 @@ Namespace AreaEngine.Log
         ''' <param name="completeName"></param>
         ''' <param name="addictionalInformation"></param>
         ''' <returns></returns>
-        Public Function trackExit(ByVal completeName As String, Optional ByVal addictionalInformation As String = "") As Boolean
+        <DebuggerHiddenAttribute()> Public Function trackExit(ByVal completeName As String, Optional ByVal addictionalInformation As String = "") As Boolean
             Return addNewDataCache(ActionEnumeration.exitIntoMethod, addictionalInformation, completeName)
         End Function
 
@@ -82,7 +82,7 @@ Namespace AreaEngine.Log
         ''' <param name="completeName"></param>
         ''' <param name="errorMessage"></param>
         ''' <returns></returns>
-        Public Function trackException(ByVal completeName As String, ByVal errorMessage As String) As Boolean
+        <DebuggerHiddenAttribute()> Public Function trackException(ByVal completeName As String, ByVal errorMessage As String) As Boolean
             Return addNewDataCache(ActionEnumeration.exception, errorMessage, completeName)
         End Function
 
@@ -92,7 +92,7 @@ Namespace AreaEngine.Log
         ''' <param name="completeName"></param>
         ''' <param name="addictionalInformation"></param>
         ''' <returns></returns>
-        Public Function track(ByVal completeName As String, Optional ByVal addictionalInformation As String = "") As Boolean
+        <DebuggerHiddenAttribute()> Public Function track(ByVal completeName As String, Optional ByVal addictionalInformation As String = "") As Boolean
             Return addNewDataCache(ActionEnumeration.genericTrack, addictionalInformation, completeName)
         End Function
 
@@ -100,7 +100,7 @@ Namespace AreaEngine.Log
         ''' This method provide to change in bootstrap set a complete 
         ''' </summary>
         ''' <returns></returns>
-        Public Function changeInBootStrapComplete() As Boolean
+        <DebuggerHiddenAttribute()> Public Function changeInBootStrapComplete() As Boolean
             _BootstrapMode = False
 
             Return _Cache.changeInBootStrapComplete()
@@ -112,7 +112,7 @@ Namespace AreaEngine.Log
         ''' <param name="fromTime"></param>
         ''' <param name="consoleMode"></param>
         ''' <returns></returns>
-        Public Function getDataNewer(ByVal fromTime As Double, ByVal consoleMode As Boolean) As List(Of SingleActionApplication)
+        <DebuggerHiddenAttribute()> Public Function getDataNewer(ByVal fromTime As Double, ByVal consoleMode As Boolean) As List(Of SingleActionApplication)
             Return _Cache.getDataFrom(consoleMode, fromTime)
         End Function
 
@@ -120,9 +120,10 @@ Namespace AreaEngine.Log
         ''' This method provide to force a write a file 
         ''' </summary>
         ''' <returns></returns>
-        Public Function writeCacheToLogFile() As Boolean
+        <DebuggerHiddenAttribute()> Public Function writeCacheToLogFile() As Boolean
             Return _Cache.writeCacheToLogFile()
         End Function
+
 
         Private Sub settings_ChangeValue() Handles settings.ChangeValue
             _Cache.changeSettings(settings)

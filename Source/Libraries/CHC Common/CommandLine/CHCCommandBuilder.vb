@@ -38,7 +38,7 @@ Namespace AreaEngine.CommandLine
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function addNewParameter(ByVal value As String) As Boolean
+        <DebuggerHiddenAttribute()> Public Function addNewParameter(ByVal value As String) As Boolean
             Try
                 Dim separated() As String
                 Dim newParameter As New SingleArgument
@@ -71,7 +71,7 @@ Namespace AreaEngine.CommandLine
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function addToLastParameter(ByVal value As String) As Boolean
+        <DebuggerHiddenAttribute()> Public Function addToLastParameter(ByVal value As String) As Boolean
             Try
                 If IsNothing(_CurrentParameter) Then
                     Dim newParameter As New SingleArgument
@@ -94,7 +94,7 @@ Namespace AreaEngine.CommandLine
         ''' This method provide to check if exist the pause parameter 
         ''' </summary>
         ''' <returns></returns>
-        Public Function haveParameter(ByVal name As String) As Boolean
+        <DebuggerHiddenAttribute()> Public Function haveParameter(ByVal name As String) As Boolean
             Try
                 Return parameters.ContainsKey(name)
             Catch ex As Exception
@@ -107,7 +107,7 @@ Namespace AreaEngine.CommandLine
         ''' </summary>
         ''' <param name="key"></param>
         ''' <returns></returns>
-        Public Function parameterValue(ByVal key As String) As String
+        <DebuggerHiddenAttribute()> Public Function parameterValue(ByVal key As String) As String
             Try
                 If parameters.ContainsKey(key) Then
                     Return parameters(key).value

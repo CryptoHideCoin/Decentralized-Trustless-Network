@@ -19,3 +19,4 @@ Release Note
 1.7.5   - 10.01.2022 - Class querty blockchain
 1.8.0   - 18.01.2022 - Add Internal Information Class
 1.9.0   - 20.01.2022 - Refactor CHCCommonLibrary
+1.9.1   - 19.02.2022 - Add LogStream Model

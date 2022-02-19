@@ -6,3 +6,5 @@ E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Primary Sidechain Library\CHC
 E:\CryptoHideCoinDTN\Source\Libraries\Sidechain.CHC Primary Library\obj\Release\CHC SideChain Primary Library.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Libraries\Sidechain.CHC Primary Library\obj\Release\CHCPrimarySidechainLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\Sidechain.CHC Primary Library\obj\Release\CHCPrimarySidechainLibrary.pdb
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Primary Sidechain\CHCPrimarySidechainLibrary.dll
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Primary Sidechain\CHCPrimarySidechainLibrary.pdb

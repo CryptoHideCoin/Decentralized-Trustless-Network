@@ -86,8 +86,8 @@ Public Class Settings
     ''' </summary>
     ''' <param name="engineFile"></param>
     ''' <returns></returns>
-    Private Function getDataFromFile(ByRef engineFile As BaseFile(Of CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService)) As CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService
-        Dim result As CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService
+    Private Function getDataFromFile(ByRef engineFile As BaseFile(Of CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService)) As CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
+        Dim result As CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
         Try
             Dim decodeData As Boolean = False
             Dim errorReading As Boolean = False
@@ -110,7 +110,7 @@ Public Class Settings
                 End If
             Loop
         Catch ex As Exception
-            result = New CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService
+            result = New CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
         End Try
 
 #Disable Warning BC42104
@@ -125,8 +125,8 @@ Public Class Settings
     Private Function loadData() As Boolean
         Try
             Dim completeFileName As String = ""
-            Dim data As CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService
-            Dim engineFile As New BaseFile(Of CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService)
+            Dim data As CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
+            Dim engineFile As New BaseFile(Of CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService)
 
             completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
             completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text & ".Settings")
@@ -215,15 +215,15 @@ Public Class Settings
     Private Function saveData() As Boolean
         Try
             Dim completeFileName As String = ""
-            Dim data As New CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService
-            Dim engineFile As New BaseFile(Of CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService)
+            Dim data As New CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
+            Dim engineFile As New BaseFile(Of CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService)
 
             completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
             completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text & ".Settings")
 
             With data
                 Select Case chainServiceName.SelectedIndex
-                    Case 0 : .chainName = "Primary"
+                    Case 0 : .sideChainName = "Primary"
                 End Select
 
                 .internalName = internalName.Text
