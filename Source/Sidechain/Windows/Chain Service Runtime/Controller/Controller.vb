@@ -122,6 +122,10 @@ Namespace AreaCommon
                     Application.DoEvents()
                 Loop
 
+                If _controllerComplete Then
+                    state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.started
+                End If
+
                 environment.log.trackExit("Controllers.WebserviceThread")
 
                 Return True

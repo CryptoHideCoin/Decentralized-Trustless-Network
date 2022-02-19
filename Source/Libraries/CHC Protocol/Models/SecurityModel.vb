@@ -1,6 +1,8 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.AreaCommon.Models
+
 ' ****************************************
 ' File: Notify Model
 ' Release Engine: 1.0 
@@ -17,25 +19,35 @@ Option Explicit On
 Namespace AreaCommon.Models.Security
 
     ''' <summary>
-    ''' This enumeration contain the component of transaction chain or client
-    ''' </summary>
-    Public Enum enumOfService
-        administration
-        loader
-        runTime
-        maintenance
-        client
-    End Enum
-
-    ''' <summary>
     ''' This class contain all information relative to the change certificate
     ''' </summary>
     Public Class changeCertificate
 
-        Public Property typeCommunication As enumOfService
         Public Property currentCertificate As String = ""
         Public Property newCertificate As String = ""
         Public Property signature As String = ""
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain all information of request admin token
+    ''' </summary>
+    Public Class RequestAdminSecurityTokenModel
+
+        Inherits General.RemoteResponse
+
+        Public Property tokenValue As String = ""
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain all information of request access key
+    ''' </summary>
+    Public Class RequestAccessKeyModel
+
+        Inherits General.RemoteResponse
+
+        Public Property accessKey As String = ""
 
     End Class
 

@@ -21,3 +21,4 @@ E:\CryptoHideCoinDTN\Source\Administration\Admin Service Client Windows\obj\Debu
 E:\CryptoHideCoinDTN\Source\Administration\Admin Service Client Windows\obj\Debug\CHCAdminClientService.RefundPlanDetail.resources
 E:\CryptoHideCoinDTN\Source\Administration\Admin Service Client Windows\bin\Debug\CHCCommonLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Administration\Admin Service Client Windows\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Administration\Admin Service Client Windows\bin\Debug\CHCSupportUIControls.pdb

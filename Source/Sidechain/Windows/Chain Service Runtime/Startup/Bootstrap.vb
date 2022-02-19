@@ -51,6 +51,12 @@ Namespace AreaCommon.Startup
                     .currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.starting
                 End With
 
+                serviceInformation = state.serviceInformation
+
+                environment.log.trackIntoConsole("Acquire service information")
+
+                environment.log.trackExit("startUp.acquireServiceInformation")
+
                 Return True
             Catch ex As Exception
                 environment.log.trackException("StartUp.loadDataInformation", "Error during Load data information:" & ex.Message)
@@ -60,7 +66,6 @@ Namespace AreaCommon.Startup
                 environment.log.trackExit("startUp.loadDataInformation")
             End Try
         End Function
-
 
 
         ''' <summary>
@@ -94,11 +99,15 @@ Namespace AreaCommon.Startup
                     End If
                 End If
                 If proceed Then
-                    If Not _Bootstrap.readSettings(CUSTOM_ChainServiceName, problemDescription) Then
-                        MessageBox.Show(problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    With environment.readSettings(CUSTOM_ChainServiceName)
+                        proceed = .successful
 
-                        proceed = False
-                    End If
+                        If Not proceed Then
+                            MessageBox.Show(problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                            proceed = False
+                        End If
+                    End With
                 End If
                 If proceed Then
                     If Not _Bootstrap.trackRuntimeStart(problemDescription) Then

@@ -6,7 +6,7 @@ Option Explicit On
 
 Namespace AreaCommon.Startup
 
-    Module Maintenance
+    Module Scheduler
 
         ''' <summary>
         ''' This method provide to start all maintenance service

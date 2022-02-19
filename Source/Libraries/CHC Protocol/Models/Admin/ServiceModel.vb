@@ -69,7 +69,7 @@ Namespace AreaCommon.Models.Service
 
         Inherits General.RemoteResponse
 
-        Public protocols As New List(Of String)
+        Public Property protocols As New List(Of String)
 
     End Class
 

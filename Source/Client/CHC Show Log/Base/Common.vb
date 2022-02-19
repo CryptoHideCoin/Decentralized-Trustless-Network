@@ -1,6 +1,8 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.AreaEngine.CommandLine
+
 
 
 
@@ -13,33 +15,25 @@ Namespace AreaCommon
     Module Common
 
         ''' <summary>
-        ''' This method provide to close this application
-        ''' </summary>
-        ''' <param name="message"></param>
-        Sub CloseApplication(ByVal message As String)
-            Console.WriteLine("Error: " & message)
-
-            End
-        End Sub
-
-        ''' <summary>
         ''' This method provide to run a application
         ''' </summary>
         Sub Main()
-            Dim commandManager As New CommandProcessor
+            Try
+                Dim command As New CommandStructure
+                Dim engine As New CommandBuilder
 
-            commandManager.command = (New CommandLineDecoder).run()
+                command = engine.run()
 
-            If commandManager.execute() Then
-                Select Case commandManager.command.code
-                    Case CommandEnumeration.force
-                        Dim engine As New ConsoleEngine
+                If (command.code.ToLower.CompareTo("force") = 0) Then
+                    Dim console As New ConsoleEngine
 
-                        engine.execute(commandManager.command)
-                    Case CommandEnumeration.undefined
-                        Console.WriteLine("Command not recognized")
-                End Select
-            End If
+                    console.execute(command)
+                Else
+                    Console.WriteLine("Command not recognized")
+                End If
+            Catch ex As Exception
+                Console.WriteLine("Error during sub main")
+            End Try
         End Sub
 
     End Module

@@ -25,24 +25,35 @@ Namespace AreaEngine.Log
 
 
         ''' <summary>
-        ''' This method provide to add an message into cache data for the console
+        ''' This method provide to manage a data into cache
         ''' </summary>
-        ''' <param name="message"></param>
         ''' <returns></returns>
-        Public Function trackIntoConsole(Optional ByVal message As String = "") As Boolean
+        Private Function addNewDataCache(ByVal action As ActionEnumeration, ByVal message As String, Optional ByVal position As String = "") As Boolean
             Try
                 Dim item As New SingleActionApplication
 
                 With item
                     .instant = Miscellaneous.timeStampFromDateTime()
-                    .action = ActionEnumeration.printIntoConsole
+                    .action = action
                     .message = message
+                    .position = position
+                    .duringBootstrap = _BootstrapMode
                 End With
 
                 Return _Cache.addNewDataCache(item)
             Catch ex As Exception
                 Return False
             End Try
+        End Function
+
+
+        ''' <summary>
+        ''' This method provide to add an message into cache data for the console
+        ''' </summary>
+        ''' <param name="message"></param>
+        ''' <returns></returns>
+        Public Function trackIntoConsole(Optional ByVal message As String = "") As Boolean
+            Return addNewDataCache(ActionEnumeration.printIntoConsole, message)
         End Function
 
         ''' <summary>
@@ -52,20 +63,7 @@ Namespace AreaEngine.Log
         ''' <param name="addictionalInformation"></param>
         ''' <returns></returns>
         Public Function trackEnter(ByVal completeName As String, Optional ByVal addictionalInformation As String = "") As Boolean
-            Try
-                Dim item As New SingleActionApplication
-
-                With item
-                    .instant = Miscellaneous.timeStampFromDateTime()
-                    .action = ActionEnumeration.enterIntoMethod
-                    .position = completeName
-                    .message = addictionalInformation
-                End With
-
-                Return _Cache.addNewDataCache(item)
-            Catch ex As Exception
-                Return False
-            End Try
+            Return addNewDataCache(ActionEnumeration.enterIntoMethod, addictionalInformation, completeName)
         End Function
 
         ''' <summary>
@@ -75,20 +73,7 @@ Namespace AreaEngine.Log
         ''' <param name="addictionalInformation"></param>
         ''' <returns></returns>
         Public Function trackExit(ByVal completeName As String, Optional ByVal addictionalInformation As String = "") As Boolean
-            Try
-                Dim item As New SingleActionApplication
-
-                With item
-                    .instant = Miscellaneous.timeStampFromDateTime()
-                    .action = ActionEnumeration.exitIntoMethod
-                    .position = completeName
-                    .message = addictionalInformation
-                End With
-
-                Return _Cache.addNewDataCache(item)
-            Catch ex As Exception
-                Return False
-            End Try
+            Return addNewDataCache(ActionEnumeration.exitIntoMethod, addictionalInformation, completeName)
         End Function
 
         ''' <summary>
@@ -98,20 +83,7 @@ Namespace AreaEngine.Log
         ''' <param name="errorMessage"></param>
         ''' <returns></returns>
         Public Function trackException(ByVal completeName As String, ByVal errorMessage As String) As Boolean
-            Try
-                Dim item As New SingleActionApplication
-
-                With item
-                    .instant = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                    .action = ActionEnumeration.exception
-                    .position = completeName
-                    .message = errorMessage
-                End With
-
-                Return _Cache.addNewDataCache(item)
-            Catch ex As Exception
-                Return False
-            End Try
+            Return addNewDataCache(ActionEnumeration.exception, errorMessage, completeName)
         End Function
 
         ''' <summary>
@@ -121,20 +93,7 @@ Namespace AreaEngine.Log
         ''' <param name="addictionalInformation"></param>
         ''' <returns></returns>
         Public Function track(ByVal completeName As String, Optional ByVal addictionalInformation As String = "") As Boolean
-            Try
-                Dim item As New SingleActionApplication
-
-                With item
-                    .instant = Miscellaneous.timeStampFromDateTime()
-                    .action = ActionEnumeration.genericTrack
-                    .position = completeName
-                    .message = addictionalInformation
-                End With
-
-                Return _Cache.addNewDataCache(item)
-            Catch ex As Exception
-                Return False
-            End Try
+            Return addNewDataCache(ActionEnumeration.genericTrack, addictionalInformation, completeName)
         End Function
 
         ''' <summary>
@@ -154,12 +113,21 @@ Namespace AreaEngine.Log
         ''' <param name="consoleMode"></param>
         ''' <returns></returns>
         Public Function getDataNewer(ByVal fromTime As Double, ByVal consoleMode As Boolean) As List(Of SingleActionApplication)
-            Return _Cache.getDataFrom(fromTime, consoleMode)
+            Return _Cache.getDataFrom(consoleMode, fromTime)
+        End Function
+
+        ''' <summary>
+        ''' This method provide to force a write a file 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function writeCacheToLogFile() As Boolean
+            Return _Cache.writeCacheToLogFile()
         End Function
 
         Private Sub settings_ChangeValue() Handles settings.ChangeValue
             _Cache.changeSettings(settings)
         End Sub
+
     End Class
 
 End Namespace

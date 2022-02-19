@@ -19,7 +19,7 @@ Namespace AreaCommon.Startup
                 Dim proceed As Boolean = True
 
                 If proceed Then proceed = Bootstrap.run()
-                If proceed Then proceed = Maintenance.run()
+                If proceed Then proceed = Scheduler.run()
                 If proceed Then proceed = Service.run()
 
             Catch ex As Exception

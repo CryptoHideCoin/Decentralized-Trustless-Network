@@ -56,7 +56,7 @@ Public Class DialogChangeCertificate
 
             changeData.currentCertificate = _Certificate
             changeData.newCertificate = certificateChange.certificate
-            changeData.typeCommunication = CHCProtocolLibrary.AreaCommon.Models.Security.enumOfService.client
+            'changeData.typeCommunication = CHCProtocolLibrary.AreaCommon.Models.Security.enumOfService.client
 
             changeData.signature = CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createSignature(privateKey, _Certificate)
 

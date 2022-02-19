@@ -3,7 +3,6 @@ Option Explicit On
 
 Imports CHCCommonLibrary.AreaEngine.CommandLine
 Imports CHCCommonLibrary.AreaEngine.Miscellaneous
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
 Imports CHCSidechainServiceLibrary.AreaCommon.Main
 
 
@@ -16,7 +15,6 @@ Namespace AreaCommon.Startup
     Public Class Bootstrap
 
         Private Property _DataPath As String = ""
-        Private Property _Password As String = ""
         Private Property _SecurityKey As String = ""
 
 
@@ -70,7 +68,7 @@ Namespace AreaCommon.Startup
 
                 If (command.code.ToLower.CompareTo("force") = 0) Then
                     _DataPath = command.parameterValue("dataPath")
-                    _Password = command.parameterValue("password")
+                    Main.settingsPassword = command.parameterValue("password")
                     _SecurityKey = command.parameterValue("securityKey")
 
                     Return True
@@ -134,52 +132,6 @@ Namespace AreaCommon.Startup
         End Function
 
         ''' <summary>
-        ''' This method provide to read a settings
-        ''' </summary>
-        ''' <param name="chainServiceName"></param>
-        ''' <param name="problemDescription"></param>
-        ''' <returns></returns>
-        Public Function readSettings(ByVal chainServiceName As String, ByRef problemDescription As String) As Boolean
-            Try
-                Dim completeFileName As String = ""
-                Dim engineFile As New BaseFile(Of AreaChain.Runtime.Models.SettingsChainService)
-
-                completeFileName = IO.Path.Combine(_DataPath, "Settings")
-                completeFileName = IO.Path.Combine(completeFileName, chainServiceName & ".Settings")
-
-                If Not IO.File.Exists(completeFileName) Then
-                    problemDescription = completeFileName & " not found." & Err.Description
-
-                    Return False
-                End If
-
-                If (_Password.Length > 0) Then
-                    engineFile.cryptoKEY = _Password
-                Else
-                    engineFile.noCrypt = True
-                End If
-
-                engineFile.fileName = completeFileName
-
-                If engineFile.read() Then
-                    environment.settings = engineFile.data
-
-                    environment.log.trackIntoConsole("Settings data read")
-
-                    Return True
-                Else
-                    problemDescription = "Problem during read a settings"
-
-                    Return False
-                End If
-            Catch ex As Exception
-                problemDescription = "An error occurrent during Bootstrap.readSettings " & Err.Description
-
-                Return False
-            End Try
-        End Function
-
-        ''' <summary>
         ''' This method provide to start a runtime track
         ''' </summary>
         ''' <param name="problemDescription"></param>
@@ -212,6 +164,9 @@ Namespace AreaCommon.Startup
 
                 environment.ipAddress.local = AreaNetwork.Address.acquireLocalIP(environment.settings.intranetMode, environment.log)
                 environment.ipAddress.public = AreaNetwork.Address.acquirePublicIP(environment.log)
+
+                environment.log.trackIntoConsole("Public IP Address = " & environment.ipAddress.public)
+                environment.log.trackIntoConsole("Local IP Address = " & environment.ipAddress.local)
 
                 environment.log.trackExit("CHCSidechainServiceLibrary.AreaCommon.startUp.acquireIPAddress")
 
@@ -261,13 +216,15 @@ Namespace AreaCommon.Startup
 
                 environment.keys.administration.public = environment.settings.publicAddress
 
-                environment.log.trackIntoConsole("KeyStore read successfully")
-
                 Return True
             Catch ex As Exception
                 environment.log.trackException("CHCSidechainServiceLibrary.AreaCommon.StartUp.loadDataInformation", "Error during Load data information:" & ex.Message)
 
                 Return False
+            Finally
+                environment.log.trackExit("CHCSidechainServiceLibrary.AreaCommon.startUp.acquireServiceInformation")
+
+                environment.log.trackIntoConsole("KeyStore read successfully")
             End Try
         End Function
 

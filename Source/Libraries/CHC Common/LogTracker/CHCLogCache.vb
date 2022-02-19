@@ -20,22 +20,25 @@ Namespace AreaEngine.Log
         Private Property _DataCache As New List(Of SingleActionApplication)
         Private Property _InQueue As New List(Of SingleActionApplication)
         Private Property _IO As New TrackIOEngine
+        Private Property _SaveMode As TrackRuntimeModeEnum
         Private Property _ToProcessDataCache As Boolean = False
         Private Property _ToProcessInQueue As Boolean = False
         Private Property _ToFlushCache As Boolean = False
+        Private Property _InBootstrapMode As Boolean = True
 
-        Public Property timeInCache As Double = 2000
+        Public Property timeInCache As Double = 6000
 
 
         ''' <summary>
         ''' This method provide to transfer this information to engine to write data
         ''' </summary>
         ''' <returns></returns>
-        Private Function flushCache() As Boolean
+        Private Function flushCache(Optional ByVal forceClean As Boolean = False) As Boolean
             Try
-                Dim limit As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - timeInCache
+                Dim limit As Double = Miscellaneous.timeStampFromDateTime() - timeInCache
                 Dim i As Integer
                 Dim item As SingleActionApplication
+                Dim itemToWrite As Boolean = False
 
                 _ToFlushCache = True
 
@@ -44,12 +47,23 @@ Namespace AreaEngine.Log
                 Do While (i <= _DataCache.Count - 1)
                     item = _DataCache(i)
 
-                    If (item.instant < limit) Then
-                        If _IO.addNewAction(item) Then
-                            _DataCache.RemoveAt(i)
+                    If (item.instant < limit) Or forceClean Then
+
+                        If (item.action = ActionEnumeration.printIntoConsole) Then
+                            itemToWrite = False
                         Else
-                            Return False
+                            Select Case _SaveMode
+                                Case TrackRuntimeModeEnum.neverTrace : itemToWrite = False
+                                Case TrackRuntimeModeEnum.trackAll : itemToWrite = True
+                                Case TrackRuntimeModeEnum.trackOnlyBootstrapAndError : itemToWrite = (item.action = ActionEnumeration.exception) Or item.duringBootstrap
+                            End Select
                         End If
+
+                        If itemToWrite Then
+                            _IO.addNewAction(item)
+                        End If
+
+                        _DataCache.RemoveAt(i)
                     Else
                         i += 1
                     End If
@@ -100,7 +114,7 @@ Namespace AreaEngine.Log
 
                 Do While _ToFlushCache : Threading.Thread.Sleep(1) : Loop
 
-                For Each item In _InQueue
+                For Each item In _DataCache
                     If (item.instant >= start) Then
                         If consoleMode Then
                             returnList = (item.action = ActionEnumeration.exception) Or (item.action = ActionEnumeration.printIntoConsole)
@@ -114,6 +128,10 @@ Namespace AreaEngine.Log
                     End If
                 Next
 
+                _ToFlushCache = True
+
+                flushCache(True)
+
                 _ToProcessInQueue = True
 
                 Do While _ToFlushCache : Threading.Thread.Sleep(1) : Loop
@@ -124,9 +142,10 @@ Namespace AreaEngine.Log
                     _InQueue.RemoveAt(0)
                 Loop
 
+            Catch ex As Exception
+            Finally
                 _ToProcessInQueue = False
                 _ToProcessDataCache = False
-            Catch ex As Exception
             End Try
 
             Return newList
@@ -138,6 +157,8 @@ Namespace AreaEngine.Log
         ''' <param name="value"></param>
         ''' <returns></returns>
         Public Function changeSettings(ByVal value As TrackConfiguration) As Boolean
+            _SaveMode = value.saveMode
+
             Return _IO.changeSettings(value)
         End Function
 
@@ -146,8 +167,23 @@ Namespace AreaEngine.Log
         ''' </summary>
         ''' <returns></returns>
         Public Function changeInBootStrapComplete() As Boolean
+            _InBootstrapMode = False
+
             Return _IO.changeInBootStrapComplete()
         End Function
+
+        ''' <summary>
+        ''' This method provide to force a write file
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function writeCacheToLogFile() As Boolean
+            If flushCache(True) Then
+                Return _IO.writeCacheToLogFile()
+            End If
+
+            Return False
+        End Function
+
 
     End Class
 

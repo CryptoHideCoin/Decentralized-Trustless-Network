@@ -7,3 +7,4 @@ E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Chain Service Runtime\obj\Release\
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Chain Service Runtime\obj\Release\CHC Sidechain Service Runtime.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Chain Service Runtime\obj\Release\CHCSidechainServiceRuntime.exe
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Chain Service Runtime\obj\Release\CHCSidechainServiceRuntime.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Chain Service Runtime\obj\Release\CHCSidechainServiceRuntime.exe.config

@@ -18,7 +18,7 @@ Namespace AreaCommon.Startup
         ''' </summary>
         ''' <returns></returns>
         Public Function run() As Boolean
-            environment.log.trackIntoConsole("Run maintenance services")
+            environment.log.trackIntoConsole("Start Services")
 
             Try
                 Dim proceed As Boolean = True
@@ -36,6 +36,8 @@ Namespace AreaCommon.Startup
                     proceed = environment.registry.init(environment.paths.system.events)
                 End If
                 If proceed Then
+                    environment.log.trackIntoConsole("Registry Service Start")
+
                     proceed = environment.registry.addNew(CHCCommonLibrary.Support.RegistryEngine.RegistryData.TypeEvent.applicationStartUp)
                 End If
                 If proceed Then
@@ -44,9 +46,14 @@ Namespace AreaCommon.Startup
                     environment.counter.init(environment.paths.system.counters)
                 End If
                 If proceed Then
+                    environment.log.trackIntoConsole("Counter Service Start")
                     environment.log.track("startUp.Service.runService", "Counter is running")
 
                     proceed = webServiceThread(True)
+                End If
+                If proceed Then
+                    environment.log.trackIntoConsole("Admin port (" & environment.settings.servicePort & ") service in listen")
+                    environment.log.changeInBootStrapComplete()
                 End If
 
                 Return True

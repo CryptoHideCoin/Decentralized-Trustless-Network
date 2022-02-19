@@ -1,8 +1,12 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCCommonLibrary.AreaEngine.CommandLine
 Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
+Imports CHCCommonLibrary.AreaCommon.Models.General
+Imports CHCProtocolLibrary.AreaCommon
+Imports CHCProtocolLibrary.AreaWallet.Support
 
 
 
@@ -18,10 +22,15 @@ Namespace AreaCommon
         Private Property _DataPath As String = ""
         Private Property _Service As String = ""
         Private Property _Password As String = ""
+        Private Property _SecurityKey As String = ""
         Private Property _Address As String = ""
+        Private Property _AccessKey As String = ""
+        Private Property _SecurityToken As String = ""
         Private Property _Mode As String = "console"
+        Private Property _Pause As Boolean = False
+        Private Property _Keys As New CHCSidechainServiceLibrary.AreaEngine.Keys.KeysEngine
 
-        Private Property _DataSettings As CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService
+        Private Property _DataSettings As CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
 
 
         ''' <summary>
@@ -29,16 +38,20 @@ Namespace AreaCommon
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Private Function readSettings(ByVal value As CommandArguments) As Boolean
+        Private Function readSettings() As Boolean
             Try
                 Dim completeFileName As String = ""
 
-                Dim engineFile As New BaseFile(Of CHCChainServiceLibrary.AreaChain.Runtime.Models.SettingsChainService)
+                Dim engineFile As New BaseFile(Of CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService)
 
                 completeFileName = IO.Path.Combine(_DataPath, "Settings")
                 completeFileName = IO.Path.Combine(completeFileName, _Service & ".Settings")
 
-                If Not IO.File.Exists(completeFileName) Then Return False
+                If Not IO.File.Exists(completeFileName) Then
+                    Console.WriteLine(completeFileName & " not found.")
+
+                    Return False
+                End If
 
                 If (_Password.Length > 0) Then
                     engineFile.cryptoKEY = _Password
@@ -69,7 +82,7 @@ Namespace AreaCommon
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Private Function testSettings(ByRef value As CommandArguments) As Boolean
+        Private Function manageParameters(ByRef value As CommandStructure) As Boolean
             Try
                 If value.haveParameter("dataPath") Then
                     _DataPath = value.parameters("dataPath").value
@@ -83,6 +96,13 @@ Namespace AreaCommon
                 If value.haveParameter("mode") Then
                     _Mode = value.parameters("mode").value
                 End If
+                If value.haveParameter("securityKey") Then
+                    _SecurityKey = value.parameters("securityKey").value
+                End If
+                If value.haveParameter("address") Then
+                    _Address = value.parameters("address").value
+                End If
+                _Pause = (value.haveParameter("pause"))
 
                 Return (_DataPath.Length > 0) And (_Service.Length > 0)
             Catch ex As Exception
@@ -103,7 +123,26 @@ Namespace AreaCommon
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    url = _Address & "/api/" & _DataSettings.serviceID & api
+                    If _DataSettings.secureChannel Then
+                        url += "https"
+                    Else
+                        url += "http"
+                    End If
+                End If
+                If proceed Then
+                    If (_Address.Length = 0) Then
+                        _Address += "localhost:" & _DataSettings.servicePort
+                    End If
+                End If
+                If proceed Then
+                    url += "://" & _Address & "/api/"
+                End If
+                If proceed Then
+                    If (_DataSettings.serviceID.Length > 0) Then
+                        url += _DataSettings.serviceID & api
+                    Else
+                        url += "api" & api
+                    End If
                 End If
             Catch ex As Exception
             End Try
@@ -112,33 +151,240 @@ Namespace AreaCommon
         End Function
 
         ''' <summary>
+        ''' This method provide to get a service
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function serviceFound() As Boolean
+            Try
+                Dim remote As New ProxyWS(Of RemoteResponse)
+                Dim proceed As Boolean = True
+
+                If proceed Then
+                    remote.url = buildURL("/service/test/")
+                End If
+                If proceed Then
+                    proceed = (remote.getData() = "")
+                End If
+                If proceed Then
+                    Return (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+                End If
+
+                Return proceed
+            Catch ex As Exception
+                Console.WriteLine("Error during serviceFound - " & ex.Message)
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide a read a wallet address from file
+        ''' </summary>
+        ''' <param name="uuid"></param>
+        ''' <returns></returns>
+        Private Function readWalletAddress(ByVal uuid As String, ByVal pathKeyStore As String) As CHCSidechainServiceLibrary.AreaEngine.Keys.KeysEngine.KeyPair
+            Try
+                Dim engine As New WalletAddressDataEngine
+                Dim dataLoaded As Boolean = False
+                Dim securityValue As String = ""
+                Dim result As New CHCSidechainServiceLibrary.AreaEngine.Keys.KeysEngine.KeyPair
+
+                engine.fileName = IO.Path.Combine(pathKeyStore, uuid, "walletAddress.private")
+
+                If (_SecurityKey.Length > 0) Then
+                    engine.securityKey = _SecurityKey
+                End If
+
+                If Not engine.load() Then
+                    Console.WriteLine("Error during load wallet")
+
+                    Return New CHCSidechainServiceLibrary.AreaEngine.Keys.KeysEngine.KeyPair
+                Else
+                    With WalletAddressEngine.createNew(engine.data.privateRAWKey, True).raw
+                        result.public = .publicKey
+                        result.private = .privateKey
+                    End With
+
+                    Return result
+                End If
+            Catch ex As Exception
+                Console.WriteLine("Error during read wallet address:" & ex.Message)
+
+                Return New CHCSidechainServiceLibrary.AreaEngine.Keys.KeysEngine.KeyPair
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to Read Admin Keystore
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function readAdminKeyStore() As Boolean
+            Try
+                Dim uuidWallet As String = ""
+                Dim pathKeyStore As String = IO.Path.Combine(_DataPath, "Keystore")
+
+                If (_DataSettings.publicAddress.Length >= 11) Then
+                    If _DataSettings.publicAddress.StartsWith("keystoreid:") Then
+                        Try
+                            Dim keyStoreManager = New KeyStoreEngine
+
+                            uuidWallet = _DataSettings.publicAddress.Substring(11)
+
+                            keyStoreManager.fileName = IO.Path.Combine(pathKeyStore, "keyAddress.list")
+
+                            If keyStoreManager.read() Then
+                                For Each item In keyStoreManager.data
+                                    If (item.uuid.CompareTo(uuidWallet) = 0) Then
+                                        _Keys.administration = readWalletAddress(item.uuid, pathKeyStore)
+
+                                        Return (_Keys.administration.public.Length > 0)
+                                    End If
+                                Next
+                            End If
+                        Catch ex As Exception
+                            Console.WriteLine("Error during Load data keyStore :" & ex.Message)
+
+                            Return False
+                        End Try
+                    End If
+                End If
+
+                Console.WriteLine("Keypair not found")
+
+                Return True
+            Catch ex As Exception
+                Console.WriteLine("Error during Load data information:" & ex.Message)
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method sign a certificate with private key
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function signCertificate() As String
+            Try
+                Dim privateKey As String = _Keys.administration.private
+                Dim certificate As String = _DataSettings.clientCertificate
+
+                Return WalletAddressEngine.createSignature(_Keys.administration.private, certificate)
+            Catch ex As Exception
+                Console.WriteLine("Error during signCertificate:" & ex.Message)
+
+                Return ""
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method sign an access key
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function signAccessKey() As String
+            Try
+                Dim privateKey As String = _Keys.administration.private
+
+                Return WalletAddressEngine.createSignature(_Keys.administration.private, _AccessKey)
+            Catch ex As Exception
+                Console.WriteLine("Error during signAccessKey:" & ex.Message)
+
+                Return ""
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get an access key
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function getAccessKey() As Boolean
+            Try
+                Dim remote As New ProxyWS(Of Models.Security.RequestAccessKeyModel)
+                Dim proceed As Boolean = True
+
+                If proceed Then
+                    remote.url = buildURL("/security/requestAccessKey/?signature=" & signCertificate())
+                End If
+                If proceed Then
+                    proceed = (remote.getData() = "")
+                End If
+                If proceed Then
+                    proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+                End If
+                If proceed Then
+                    _AccessKey = remote.data.accessKey
+
+                    proceed = True
+                End If
+
+                Return proceed
+            Catch ex As Exception
+                Console.WriteLine("Error during getAccessKey - " & ex.Message)
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get a security token
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function getSecurityToken() As Boolean
+            Try
+                Dim remote As New ProxyWS(Of Models.Security.RequestAdminSecurityTokenModel)
+                Dim proceed As Boolean = True
+
+                If proceed Then
+                    remote.url = buildURL("/security/requestAdminSecurityToken/?signature=" & signAccessKey())
+                End If
+                If proceed Then
+                    proceed = (remote.getData() = "")
+                End If
+                If proceed Then
+                    proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+                End If
+                If proceed Then
+                    _SecurityToken = remote.data.tokenValue
+
+                    proceed = True
+                End If
+
+                Return proceed
+            Catch ex As Exception
+                Console.WriteLine("Error during serviceFound - " & ex.Message)
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
         ''' This method provide to read a remote log file
         ''' </summary>
         ''' <returns></returns>
         Private Function readLogFile() As Boolean
             Try
-                'Dim remote As New ProxyWS(Of Models.Network.InfoAssetModel)
+                Dim remote As New ProxyWS(Of Models.Administration.LogStreamResponseModel)
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    'remote.url = buildURL("/system/currentLogStream/")
+                    remote.url = buildURL("/service/logStream/?securityToken=" & _SecurityToken & "&mode=" & IIf(_Mode.ToLower() = "console", "console", "full"))
                 End If
-                If proceed Then
-                    'proceed = (remote.getData() = "")
-                End If
-                If proceed Then
-                    'proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
-                End If
-                If proceed Then
-                    'proceed = (remote.data.value.assetInformation.name.Length > 0)
-                End If
-                If Not proceed Then
-                    Return False
-                Else
-
-                End If
-
-                'remote = Nothing
+                Do While proceed
+                    If proceed Then
+                        proceed = (remote.getData() = "")
+                    End If
+                    If proceed Then
+                        proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+                    End If
+                    If proceed Then
+                        For Each item In remote.data.value
+                            If (_Mode.ToLower() = "console") Then
+                                Console.WriteLine(item.message)
+                            Else
+                                Console.WriteLine(item.ToString(True))
+                            End If
+                        Next
+                    End If
+                Loop
 
                 Return True
             Catch ex As Exception
@@ -154,19 +400,45 @@ Namespace AreaCommon
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function execute(ByRef value As CommandArguments) As Boolean
+        Public Function execute(ByRef value As CommandStructure) As Boolean
             Dim proceed As Boolean = True
 
             If proceed Then
-                proceed = testSettings(value)
+                proceed = manageParameters(value)
             End If
             If proceed Then
-                proceed = readSettings(value)
+                proceed = readSettings()
             End If
             If proceed Then
-                Do While True
-                    readLogFile()
+                proceed = readAdminKeyStore()
+            End If
+            If proceed Then
+                Do While Not serviceFound()
+                    Console.Clear()
+                    Console.WriteLine(CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT() & " - wait to start service " & _Service & "...")
+
+                    Threading.Thread.Sleep(100)
                 Loop
+            End If
+            If proceed Then
+                Console.WriteLine("")
+                Console.WriteLine("In connections...")
+
+                proceed = getAccessKey()
+            End If
+            If proceed Then
+                proceed = getSecurityToken()
+            End If
+            If proceed Then
+                Console.Clear()
+
+                readLogFile()
+
+                If _Pause Then
+                    Console.WriteLine("")
+                    Console.WriteLine("Press a key to continue...")
+                    Console.ReadKey()
+                End If
 
                 Return True
             Else

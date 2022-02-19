@@ -18,12 +18,12 @@ Namespace AreaEngine.Log
     Friend Class TrackIOEngine
 
         Private Property _CurrentFileName As String = ""
-        Private Property _InBootStrapMode As Boolean = True
         Private Property _ToWrite As New Concurrent.ConcurrentQueue(Of SingleActionApplication)
         Private Property _Settings As New TrackConfiguration
 
         Private Property _ChangeInBeginWrite As Boolean = False
         Private Property _ChangeInNormalMode As Boolean = False
+        Private Property _ForceWriteFile As Boolean = False
         Private Property _StartWriteFile As Double = 0
         Private Property _NumRegistrationOnFile As Integer = 0
 
@@ -34,16 +34,9 @@ Namespace AreaEngine.Log
         ''' <returns></returns>
         Public Function addNewAction(ByVal item As SingleActionApplication) As Boolean
             Try
-                If (_Settings.saveMode = TrackRuntimeModeEnum.trackAll) Then
-                    _ToWrite.Enqueue(item)
+                _ToWrite.Enqueue(item)
 
-                    Return True
-                End If
-                If (_Settings.saveMode = TrackRuntimeModeEnum.trackOnlyBootstrapAndError) And (_InBootStrapMode Or (item.action = ActionEnumeration.exception)) Then
-                    _ToWrite.Enqueue(item)
-
-                    Return True
-                End If
+                Return True
             Catch ex As Exception
             End Try
 
@@ -57,7 +50,9 @@ Namespace AreaEngine.Log
         Private Function setFileName() As Boolean
             Dim setFile As Boolean = False
 
-            If _ChangeInBeginWrite Then
+            If _ForceWriteFile Then
+                Return True
+            ElseIf _ChangeInBeginWrite Then
                 IO.Directory.CreateDirectory(_Settings.pathFileLog)
 
                 _CurrentFileName = IO.Path.Combine(_Settings.pathFileLog, "main.log")
@@ -104,9 +99,9 @@ Namespace AreaEngine.Log
 
                 Using fileData As IO.StreamWriter = IO.File.AppendText(_CurrentFileName)
                     Do While (_ToWrite.Count > 0)
-#Disable Warning BC42030 ' La variabile è stata passata per riferimento prima dell'assegnazione di un valore
+#Disable Warning BC42030
                         If _ToWrite.TryDequeue(item) Then
-#Enable Warning BC42030 ' La variabile è stata passata per riferimento prima dell'assegnazione di un valore
+#Enable Warning BC42030
                             fileData.WriteLine(item.toString())
                         End If
                     Loop
@@ -144,10 +139,29 @@ Namespace AreaEngine.Log
         ''' </summary>
         ''' <returns></returns>
         Public Function changeInBootStrapComplete() As Boolean
-            _InBootStrapMode = False
             _ChangeInNormalMode = True
 
-            Return False
+            If setFileName() Then
+                _ForceWriteFile = True
+
+                writeToFile()
+            End If
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' This method provide to force a write file
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function writeCacheToLogFile() As Boolean
+            _ForceWriteFile = True
+
+            writeToFile()
+
+            _ForceWriteFile = True
+
+            Return True
         End Function
 
     End Class

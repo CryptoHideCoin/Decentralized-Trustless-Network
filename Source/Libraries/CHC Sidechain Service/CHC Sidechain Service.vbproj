@@ -50,16 +50,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Basic Cryptography\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.15.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\CHCCommonLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCProtocolLibrary, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\CHCProtocolLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\..\..\Binary\Libraries\ThirdParts\System.Web.http\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -79,8 +78,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Common.vb" />
+    <Compile Include="Controllers\Admin\RequestAccessKey.vb" />
+    <Compile Include="Controllers\Admin\RequestAdminToken.vb" />
+    <Compile Include="Controllers\LogStream\LogStreamController.vb" />
+    <Compile Include="Controllers\Service\InformationController.vb" />
+    <Compile Include="Controllers\Service\SupportedProtocols.vb" />
+    <Compile Include="Controllers\Service\TestController.vb" />
+    <Compile Include="Engines\AdminTokenEngine.vb" />
     <Compile Include="Engines\KeysEngine.vb" />
     <Compile Include="Engines\NetworkEngine.vb" />
+    <Compile Include="Engines\SecurityEngine.vb" />
     <Compile Include="Engines\SupportEngine.vb" />
     <Compile Include="Models\EnvironmentModel.vb" />
     <Compile Include="Models\SettingsModel.vb" />
@@ -120,6 +127,12 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CHC Common\CHC Common.vbproj">
+      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
+      <Name>CHC Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

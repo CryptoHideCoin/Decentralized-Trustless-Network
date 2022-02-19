@@ -45,6 +45,7 @@ Namespace AreaEngine.Log
         Public Property action As ActionEnumeration = ActionEnumeration.notDefined
         Public Property position As String = ""
         Public Property message As String = ""
+        Public Property duringBootstrap As Boolean = False
 
         ''' <summary>
         ''' This method provide to create a string resultant
@@ -52,6 +53,30 @@ Namespace AreaEngine.Log
         ''' <returns></returns>
         Public Overrides Function toString() As String
             Return instant.ToString() & "|" & action & "|" & position & "|" & message
+        End Function
+
+        Public Overloads Function toString(ByVal dataComplete As Boolean) As String
+            Dim tmp As String = ""
+
+            tmp += Miscellaneous.dateTimeFromTimeStamp(instant) & "|"
+            tmp += instant & "|"
+
+            Select Case action
+                Case ActionEnumeration.enterIntoMethod : tmp += "Enter into method|"
+                Case ActionEnumeration.exception : tmp += "Exception|"
+                Case ActionEnumeration.exitIntoMethod : tmp += "Exit into method|"
+                Case ActionEnumeration.genericTrack : tmp += "Generic Track|"
+                Case ActionEnumeration.printIntoConsole : tmp += "Print into console|"
+            End Select
+
+            tmp += position & "|"
+            tmp += message
+
+            If duringBootstrap Then
+                tmp += "|During bootstrap"
+            End If
+
+            Return tmp
         End Function
     End Class
 
