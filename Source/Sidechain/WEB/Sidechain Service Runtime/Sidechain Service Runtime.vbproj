@@ -171,6 +171,8 @@
     <Compile Include="App_Start\FilterConfig.vb" />
     <Compile Include="App_Start\RouteConfig.vb" />
     <Compile Include="App_Start\WebApiConfig.vb" />
+    <Compile Include="Base\Common.vb" />
+    <Compile Include="Base\Customized.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -191,6 +193,10 @@
     </Compile>
     <Compile Include="Controllers\HomeController.vb" />
     <Compile Include="Controllers\ValuesController.vb" />
+    <Compile Include="Startup\Bootstrap.vb" />
+    <Compile Include="Startup\Main.vb" />
+    <Compile Include="Startup\Scheduler.vb" />
+    <Compile Include="Startup\Service.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

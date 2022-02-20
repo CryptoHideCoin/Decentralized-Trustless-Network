@@ -10,5 +10,7 @@ Public Class WebApiApplication
         FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters)
         RouteConfig.RegisterRoutes(RouteTable.Routes)
         BundleConfig.RegisterBundles(BundleTable.Bundles)
+
+        AreaCommon.Startup.Main.Run()
     End Sub
 End Class
