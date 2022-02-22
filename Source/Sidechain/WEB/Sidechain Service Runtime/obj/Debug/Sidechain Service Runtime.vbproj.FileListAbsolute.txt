@@ -97,3 +97,6 @@ E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\obj\Debug\Si
 E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\obj\Debug\Sidechain Service Runtime.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\obj\Debug\CHCSidechainServiceRuntime.dll
 E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\obj\Debug\CHCSidechainServiceRuntime.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\bin\CHCSidechainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\bin\WebActivator.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\bin\WebActivator.pdb

@@ -4,9 +4,9 @@ Option Explicit On
 Imports CHCCommonLibrary.AreaEngine.CommandLine
 Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
-Imports CHCCommonLibrary.AreaCommon.Models.General
 Imports CHCProtocolLibrary.AreaCommon
 Imports CHCProtocolLibrary.AreaWallet.Support
+Imports CHCModels.AreaModel.Network.Response
 
 
 
@@ -135,13 +135,13 @@ Namespace AreaCommon
                     End If
                 End If
                 If proceed Then
-                    url += "://" & _Address & "/api/"
+                    url += "://" & _Address & "/api"
                 End If
                 If proceed Then
                     If (_DataSettings.serviceID.Length > 0) Then
-                        url += _DataSettings.serviceID & api
+                        url += "/" & _DataSettings.serviceID & api
                     Else
-                        url += "api" & api
+                        url += api
                     End If
                 End If
             Catch ex As Exception

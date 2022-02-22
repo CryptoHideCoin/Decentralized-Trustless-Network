@@ -59,7 +59,7 @@ Namespace AreaCommon.Startup
         ''' This method provide to read a command line parameters
         ''' </summary>
         ''' <returns></returns>
-        Public Function readParameters() As Boolean
+        Public Function readParameters(Optional ByVal dataPath As String = "", Optional ByVal password As String = "", Optional ByVal securityKey As String = "") As Boolean
             Try
                 Dim command As New CommandStructure
                 Dim engine As New CommandBuilder
@@ -70,9 +70,13 @@ Namespace AreaCommon.Startup
                     _DataPath = command.parameterValue("dataPath")
                     Main.settingsPassword = command.parameterValue("password")
                     _SecurityKey = command.parameterValue("securityKey")
-
-                    Return True
+                Else
+                    _DataPath = dataPath
+                    Main.settingsPassword = password
+                    _SecurityKey = securityKey
                 End If
+
+                Return True
             Catch ex As Exception
             End Try
 

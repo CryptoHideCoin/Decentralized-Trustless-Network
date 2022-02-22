@@ -54,6 +54,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\CHCCommonLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCModels">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\CHCModels.dll</HintPath>
+    </Reference>
     <Reference Include="CHCProtocolLibrary, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\CHCProtocolLibrary.dll</HintPath>
@@ -85,6 +88,7 @@
     <Compile Include="Controllers\Admin\RequestAccessKey.vb" />
     <Compile Include="Controllers\Admin\RequestAdminToken.vb" />
     <Compile Include="Controllers\LogStream\LogStreamController.vb" />
+    <Compile Include="Controllers\Maintenance\CleanLog.vb" />
     <Compile Include="Controllers\Service\InformationController.vb" />
     <Compile Include="Controllers\Service\SupportedProtocols.vb" />
     <Compile Include="Controllers\Service\TestController.vb" />

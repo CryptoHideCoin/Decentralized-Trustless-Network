@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfRegistryData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <RegistryData>
+    <istant>2022-02-20T23:02:24.5681747+01:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+  <RegistryData>
+    <istant>2022-02-20T23:02:56.6239028+01:00</istant>
+    <type>applicationStartUp</type>
+    <description />
+    <fileDetail />
+  </RegistryData>
+</ArrayOfRegistryData>

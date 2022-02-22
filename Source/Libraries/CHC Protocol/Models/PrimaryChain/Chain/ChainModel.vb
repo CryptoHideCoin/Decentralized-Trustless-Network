@@ -11,6 +11,7 @@ Option Compare Text
 
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCCommonLibrary.AreaEngine.Base.CHCStringExtensions
+Imports CHCModels.AreaModel.Ledger
 
 
 
@@ -184,7 +185,7 @@ Namespace AreaCommon.Models.Chain
     ''' This class contain all information reguard of complete asset information
     ''' </summary>
     Public Class AssetStructure
-        Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+        Inherits IdentifyLastTransaction
 
         Public Property value As New PrimaryChain.AssetConfigurationModel
 
@@ -431,7 +432,7 @@ Namespace AreaCommon.Models.Chain
     ''' </summary>
     Public Class NodeListChainStructure
 
-        Inherits CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+        Inherits IdentifyLastTransaction
 
         Public Property value As New List(Of NodeComplete)
 

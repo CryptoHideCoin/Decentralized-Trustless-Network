@@ -2,6 +2,7 @@
 Option Compare Text
 
 Imports CHCCommonLibrary.AreaEngine.Communication
+Imports CHCModels.AreaModel.Network.Response
 
 ' ****************************************
 ' File: Dialog Change Certificate
@@ -65,24 +66,24 @@ Public Class DialogChangeCertificate
 
             If (webSender.sendData("PUT").Length = 0) Then
 
-                Dim response As CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse = webSender.remoteResponse
+                Dim response As RemoteResponse = webSender.remoteResponse
 
                 Select Case response.responseStatus
-                    Case CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.responseComplete
+                    Case RemoteResponse.EnumResponseStatus.responseComplete
                         MessageBox.Show("Certificate Upgrade", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                         _Certificate = certificateChange.certificate
 
                         DialogResult = DialogResult.OK
-                    Case CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.systemOffline
+                    Case RemoteResponse.EnumResponseStatus.systemOffline
                         MessageBox.Show("System Offline", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                         DialogResult = DialogResult.Cancel
-                    Case CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.missingAuthorization
+                    Case RemoteResponse.EnumResponseStatus.missingAuthorization
                         MessageBox.Show("Missing Authorization", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                         DialogResult = DialogResult.Cancel
-                    Case CHCCommonLibrary.AreaCommon.Models.General.RemoteResponse.EnumResponseStatus.inError
+                    Case RemoteResponse.EnumResponseStatus.inError
                         MessageBox.Show("Server Error: " & response.errorDescription, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                         DialogResult = DialogResult.Cancel

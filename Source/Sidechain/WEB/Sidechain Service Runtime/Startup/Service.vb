@@ -44,10 +44,13 @@ Namespace AreaCommon.Startup
                     environment.log.track("startUp.Service.run", "System Registry is running")
 
                     environment.counter.init(environment.paths.system.counters)
+
+                    environment.log.trackIntoConsole("Counter Service Start")
                 End If
                 If proceed Then
-                    environment.log.trackIntoConsole("Counter Service Start")
                     environment.log.track("startUp.Service.runService", "Counter is running")
+
+                    state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.started
                 End If
                 If proceed Then
                     environment.log.trackIntoConsole("Admin port (" & environment.settings.servicePort & ") service in listen")

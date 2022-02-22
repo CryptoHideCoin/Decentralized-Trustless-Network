@@ -1,7 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.AreaCommon.Models
+Imports CHCModels.AreaModel.Network.Response
 
 ' ****************************************
 ' File: Notify Model
@@ -34,7 +34,7 @@ Namespace AreaCommon.Models.Security
     ''' </summary>
     Public Class RequestAdminSecurityTokenModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property tokenValue As String = ""
 
@@ -45,7 +45,7 @@ Namespace AreaCommon.Models.Security
     ''' </summary>
     Public Class RequestAccessKeyModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property accessKey As String = ""
 

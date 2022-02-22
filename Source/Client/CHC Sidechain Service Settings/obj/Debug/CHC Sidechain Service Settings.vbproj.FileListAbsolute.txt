@@ -18,3 +18,5 @@ E:\CryptoHideCoinDTN\Source\Client\CHC Sidechain Service Settings\obj\Debug\CHC 
 E:\CryptoHideCoinDTN\Source\Client\CHC Sidechain Service Settings\obj\Debug\CHC Sidechain Service Settings.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Client\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.exe
 E:\CryptoHideCoinDTN\Source\Client\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.pdb
+E:\CryptoHideCoinDTN\Source\Client\CHC Sidechain Service Settings\bin\Debug\System.Web.Http.dll
+E:\CryptoHideCoinDTN\Source\Client\CHC Sidechain Service Settings\bin\Debug\CHCModels.dll

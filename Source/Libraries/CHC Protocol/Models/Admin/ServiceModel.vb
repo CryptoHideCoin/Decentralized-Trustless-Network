@@ -9,7 +9,7 @@ Option Explicit On
 ' ****************************************
 
 
-Imports CHCCommonLibrary.AreaCommon.Models
+Imports CHCModels.AreaModel.Network.Response
 
 
 
@@ -56,7 +56,7 @@ Namespace AreaCommon.Models.Service
     ''' </summary>
     Public Class InformationResponseModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property value As New InternalServiceInformation
 
@@ -67,7 +67,7 @@ Namespace AreaCommon.Models.Service
     ''' </summary>
     Public Class SupportedProtocolsResponseModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property protocols As New List(Of String)
 

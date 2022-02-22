@@ -21,7 +21,6 @@ Namespace AreaCommon.Startup
                 If proceed Then proceed = Bootstrap.run()
                 If proceed Then proceed = Scheduler.run()
                 If proceed Then proceed = Service.run()
-
             Catch ex As Exception
                 MessageBox.Show("An error occurrent during moduleMain.startup " & Err.Description, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try

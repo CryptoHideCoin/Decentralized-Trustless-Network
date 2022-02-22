@@ -2,7 +2,7 @@
 Option Explicit On
 
 Imports System.Web.Http
-Imports CHCCommonLibrary.AreaCommon.Models.General
+Imports CHCModels.AreaModel.Network.Response
 
 
 
@@ -11,7 +11,7 @@ Imports CHCCommonLibrary.AreaCommon.Models.General
 Namespace Controllers
 
     ' GET: api/{GUID service}/service/testController
-    <Route("ServiceApi")>
+    <RoutePrefix("ServiceApi")>
     Public Class testController
 
         Inherits ApiController
@@ -26,8 +26,7 @@ Namespace Controllers
             Dim result As New RemoteResponse
 
             Try
-                result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
-                result.responseTime = result.requestTime
+                result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"

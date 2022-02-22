@@ -1,7 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.AreaCommon.Models
+Imports CHCModels.AreaModel.Network.Response
 Imports CHCCommonLibrary.AreaEngine.Encryption
 
 
@@ -45,7 +45,7 @@ Namespace AreaCommon.Models.Ledger
     ''' </summary>
     Public Class CurrentBlockInformationResponseModel
 
-        Inherits General.BaseRemoteResponse
+        Inherits BaseRemoteResponse
 
         Public Property value As New CurrentBlockInformationModel
 

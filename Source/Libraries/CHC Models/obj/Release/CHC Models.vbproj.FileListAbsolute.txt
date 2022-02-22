@@ -1,0 +1,7 @@
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Models\CHCModels.dll
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Models\CHCModels.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Model\CHC Model\obj\Release\CHC Models.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Model\CHC Model\obj\Release\CHCModels.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Model\CHC Model\obj\Release\CHC Models.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Model\CHC Model\obj\Release\CHCModels.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Model\CHC Model\obj\Release\CHCModels.pdb

@@ -46,6 +46,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CHCModels">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\CHCModels.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\ThirdParts\Newtonsoft.Json.6.0\Newtonsoft.Json.dll</HintPath>
@@ -78,7 +81,6 @@
     <Compile Include="LogTracker\CHCLogCache.vb" />
     <Compile Include="LogTracker\CHCLogEngine.vb" />
     <Compile Include="LogTracker\CHCLogIO.vb" />
-    <Compile Include="LogTracker\CHCLogStructures.vb" />
     <Compile Include="Log\CHCLog.vb" />
     <Compile Include="Log\CHCLogRotate.vb" />
     <Compile Include="Log\CHCModule.vb" />

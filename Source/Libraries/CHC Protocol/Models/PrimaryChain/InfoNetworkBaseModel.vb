@@ -12,6 +12,7 @@ Option Explicit On
 Imports CHCCommonLibrary.AreaCommon.Models
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCCommonLibrary.AreaEngine.Base.CHCStringExtensions
+Imports CHCModels.AreaModel.Network.Response
 
 
 
@@ -22,7 +23,7 @@ Namespace AreaCommon.Models.Network
     ''' </summary>
     Public Class InfoNetworkBaseModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property name As String = ""
         Public Property specialEnvironment As String = ""
@@ -67,7 +68,7 @@ Namespace AreaCommon.Models.Network
     ''' </summary>
     Public Class DocumentModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public value As String = ""
 
@@ -105,7 +106,7 @@ Namespace AreaCommon.Models.Network
     ''' </summary>
     Public Class InfoAssetModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property value As PrimaryChain.AssetConfigurationModel
 
@@ -141,7 +142,7 @@ Namespace AreaCommon.Models.Network
     ''' </summary>
     Public Class InfoTransactionChainSettingsModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property value As TransactionChainModel
 
@@ -177,7 +178,7 @@ Namespace AreaCommon.Models.Network
     ''' </summary>
     Public Class InfoRefundPlanModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property value As RefundItemList
 

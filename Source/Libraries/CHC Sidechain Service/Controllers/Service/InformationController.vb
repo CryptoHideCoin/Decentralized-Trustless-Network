@@ -3,7 +3,7 @@ Option Explicit On
 
 Imports System.Web.Http
 
-Imports CHCCommonLibrary.AreaCommon.Models.General
+Imports CHCModels.AreaModel.Network.Response
 Imports CHCProtocolLibrary.AreaCommon
 
 
@@ -13,7 +13,7 @@ Namespace Controllers
 
 
     ' GET: api/{GUID service}/service/informationController
-    <Route("ServiceApi")>
+    <RoutePrefix("ServiceApi")>
     Public Class informationController
 
         Inherits ApiController
@@ -29,8 +29,6 @@ Namespace Controllers
             Dim result As New Models.Service.InformationResponseModel
             Dim response As String = ""
             Try
-                result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
-
                 If (AreaCommon.Main.serviceInformation.currentStatus = Models.Service.InternalServiceInformation.EnumInternalServiceState.started) Then
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
                     If (response.Length = 0) Then

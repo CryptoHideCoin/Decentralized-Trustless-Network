@@ -10,6 +10,7 @@ Option Compare Text
 
 
 Imports CHCCommonLibrary.AreaEngine.Encryption
+Imports CHCModels.AreaModel.Ledger
 
 
 
@@ -279,7 +280,7 @@ Namespace AreaCommon.Models.Network
     Public Class CloseBlockOrIntegrityConfiguration
 
         Public Property closeBlock As Boolean = True
-        Public Property dataLastRecord As CHCCommonLibrary.AreaCommon.Models.General.IdentifyLastTransaction
+        Public Property dataLastRecord As IdentifyLastTransaction
 
         ''' <summary>
         ''' This method provide to convert into string a data class

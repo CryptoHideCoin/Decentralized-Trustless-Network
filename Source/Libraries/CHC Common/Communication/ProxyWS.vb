@@ -12,6 +12,7 @@ Option Compare Text
 Imports System.Net
 Imports Newtonsoft.Json
 Imports System.Text
+Imports CHCModels.AreaModel.Network.Response
 
 
 
@@ -28,7 +29,7 @@ Namespace AreaEngine.Communication
     Public Class ProxyWS(Of ClassType As {New})
 
         Public data As New ClassType
-        Public remoteResponse As AreaCommon.Models.General.RemoteResponse
+        Public remoteResponse As RemoteResponse
         Public url As String
 
 
@@ -94,7 +95,7 @@ Namespace AreaEngine.Communication
                 Dim reader As New IO.StreamReader(dataStream)
                 Dim responseFromServer As String = reader.ReadToEnd()
 
-                remoteResponse = JsonConvert.DeserializeObject(Of AreaCommon.Models.General.RemoteResponse)(responseFromServer)
+                remoteResponse = JsonConvert.DeserializeObject(Of RemoteResponse)(responseFromServer)
 
                 reader.Close()
                 dataStream.Close()

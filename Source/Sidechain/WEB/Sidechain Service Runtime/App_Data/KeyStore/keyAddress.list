@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfKeyStoreItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <KeyStoreItem>
+    <name>Administration Service Chain Primary</name>
+    <uuid>3b557407-b499-4ba0-b5ae-53d0ced8b939</uuid>
+  </KeyStoreItem>
+  <KeyStoreItem>
+    <name>User Client Wallet</name>
+    <uuid>690f3367-0baf-4e8e-9b77-d3e878152776</uuid>
+  </KeyStoreItem>
+</ArrayOfKeyStoreItem>

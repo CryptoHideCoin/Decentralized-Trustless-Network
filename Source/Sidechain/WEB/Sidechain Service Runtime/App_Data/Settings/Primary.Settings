@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SettingsSidechainService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <sideChainName>Primary</sideChainName>
+  <internalName>Ambrogio2022</internalName>
+  <networkReferement>Chain Network Alfa</networkReferement>
+  <serviceID>a232c1bd-87bd-4074-bf26-0a6909a78f1d</serviceID>
+  <publicAddress>keystoreid:3b557407-b499-4ba0-b5ae-53d0ced8b939</publicAddress>
+  <clientCertificate>dddJgYrzvw7uyrsEgqJzEjsujDpkIoubgJJlD8JSpzgjE0wVwcRZ7kRtkiZTi6g62</clientCertificate>
+  <publicPort>12541</publicPort>
+  <servicePort>1125</servicePort>
+  <localWorkMachinePort>0</localWorkMachinePort>
+  <intranetMode>true</intranetMode>
+  <secureChannel>false</secureChannel>
+  <trackConfiguration>trackOnlyBootstrapAndError</trackConfiguration>
+  <changeLogFileMaxNumHours>2</changeLogFileMaxNumHours>
+  <changeLogFileNumRegistrations>1000</changeLogFileNumRegistrations>
+  <useAutoMaintanance>false</useAutoMaintanance>
+  <autoMaintenanceFrequencyHours>0</autoMaintenanceFrequencyHours>
+  <trackRotateConfig>
+    <frequency>every12h</frequency>
+    <keepLast>lastWeek</keepLast>
+    <keepFile>nothingFiles</keepFile>
+  </trackRotateConfig>
+  <useEventRegistry>true</useEventRegistry>
+  <useRequestCounter>true</useRequestCounter>
+  <useAdminMessage>true</useAdminMessage>
+</SettingsSidechainService>

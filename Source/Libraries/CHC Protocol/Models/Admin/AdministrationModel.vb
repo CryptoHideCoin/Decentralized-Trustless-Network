@@ -9,7 +9,8 @@ Option Explicit On
 ' ****************************************
 
 
-Imports CHCCommonLibrary.AreaCommon.Models
+Imports CHCModels.AreaModel.Network.Response
+Imports CHCModels.AreaModel.Log
 
 
 
@@ -108,7 +109,7 @@ Namespace AreaCommon.Models.Administration
     ''' </summary>
     Public Class ServiceStateResponse
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property componentPosition As New List(Of ComponentElementPosition)
         Public Property listAvailableCommand As New List(Of EnumActionAdministration)
@@ -163,9 +164,9 @@ Namespace AreaCommon.Models.Administration
     ''' This class contain the log stream response
     ''' </summary>
     Public Class LogStreamResponseModel
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
-        Public Property value As New List(Of CHCCommonLibrary.AreaEngine.Log.SingleActionApplication)
+        Public Property value As New List(Of SingleActionApplication)
     End Class
 
 End Namespace

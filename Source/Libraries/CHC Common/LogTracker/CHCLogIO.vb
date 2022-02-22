@@ -8,6 +8,8 @@ Option Explicit On
 ' Date last successfully test: 05/02/2022
 ' ****************************************
 
+Imports CHCModels.AreaModel.Log
+
 
 
 Namespace AreaEngine.Log

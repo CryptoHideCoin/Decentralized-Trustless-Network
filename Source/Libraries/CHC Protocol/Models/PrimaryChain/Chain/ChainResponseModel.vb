@@ -10,7 +10,8 @@ Option Compare Text
 
 
 Imports CHCCommonLibrary.AreaEngine.Encryption
-Imports CHCCommonLibrary.AreaCommon.Models
+Imports CHCModels.AreaModel.Network.Response
+Imports CHCModels.AreaModel.Ledger
 
 
 
@@ -23,7 +24,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainCountModel
 
-        Inherits General.BaseRemoteResponse
+        Inherits BaseRemoteResponse
 
         Public Property value As Integer = 0
 
@@ -52,7 +53,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainMasterNodeCountModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property value As Integer = 0
 
@@ -88,7 +89,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainDataModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property information As New ChainMinimalData
 
@@ -124,7 +125,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainDataLastBlockModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         ''' <summary>
         ''' This method provide to create a string summary of the member of a class
@@ -184,7 +185,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainListDataPageModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property value As New ChainDataPageModel
 
@@ -221,7 +222,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainParameterDataModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property value As New ChainParameterModel
 
@@ -259,7 +260,7 @@ Namespace AreaCommon.Models.Chain.Response
     Public Class SingleSetProtocol
 
         Public Property data As New ProtocolMinimalData
-        Public Property integrity As New General.IdentifyLastTransaction
+        Public Property integrity As New IdentifyLastTransaction
 
         ''' <summary>
         ''' This method provide to create a string summary of the member of a class
@@ -287,7 +288,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainProtocolDataModel
 
-        Inherits General.BaseRemoteResponse
+        Inherits BaseRemoteResponse
 
         Public Property value As New List(Of SingleSetProtocol)
 
@@ -321,7 +322,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainPriceListDataModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property value As New Network.ItemPriceTableListModel
 
@@ -358,7 +359,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainPrivacyPolicyModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property value As New Document.DocumentModel
 
@@ -395,7 +396,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainTermsAndConditionsModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property value As New Document.DocumentModel
 
@@ -432,7 +433,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainActiveModel
 
-        Inherits General.BaseRemoteResponse
+        Inherits BaseRemoteResponse
 
         Public Property value As Boolean = False
 
@@ -468,7 +469,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainTokenListModel
 
-        Inherits General.BaseRemoteResponse
+        Inherits BaseRemoteResponse
 
         Public Property value As New List(Of AssetStructure)
 
@@ -502,7 +503,7 @@ Namespace AreaCommon.Models.Chain.Response
     ''' </summary>
     Public Class ChainMasterNodeModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property value As New List(Of NodeComplete)
 

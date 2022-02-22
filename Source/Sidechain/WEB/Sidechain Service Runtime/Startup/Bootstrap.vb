@@ -78,7 +78,8 @@ Namespace AreaCommon.Startup
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    If Not _Bootstrap.readParameters() Then
+                    'If Not _Bootstrap.readParameters(HttpContext.Current.Server.MapPath("~/App_Data/"), "", "") Then
+                    If Not _Bootstrap.readParameters("e:\data", "", "") Then
                         Console.WriteLine("Problem during read a parameters")
 
                         proceed = False

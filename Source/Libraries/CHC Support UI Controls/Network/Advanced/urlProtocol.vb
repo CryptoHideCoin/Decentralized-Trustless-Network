@@ -10,7 +10,7 @@ Option Explicit On
 
 
 Imports CHCCommonLibrary.AreaEngine.Communication
-Imports CHCCommonLibrary.AreaCommon.Models
+Imports CHCModels.AreaModel.Network.Response
 
 
 
@@ -96,7 +96,7 @@ Public Class UrlProtocol
     <DebuggerHiddenAttribute()> Public Function testServiceResponse() As Boolean
         If (serviceAdminUrlText.Text.ToString.Trim.Length > 0) Then
             Try
-                Dim handShakeEngine As New ProxyWS(Of General.RemoteResponse)
+                Dim handShakeEngine As New ProxyWS(Of RemoteResponse)
 
                 If (protocolCombo.SelectedIndex = 0) Then
                     handShakeEngine.url = "http://"
@@ -110,7 +110,7 @@ Public Class UrlProtocol
 
                 If (handShakeEngine.getData() = "") Then
 
-                    If (handShakeEngine.data.responseStatus = General.RemoteResponse.EnumResponseStatus.systemOffline) Then
+                    If (handShakeEngine.data.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline) Then
                         Return False
                     Else
                         Return True
@@ -137,7 +137,7 @@ Public Class UrlProtocol
                 RaiseEvent RunCommand()
             Else
                 Try
-                    Dim handShakeEngine As New ProxyWS(Of General.RemoteResponse)
+                    Dim handShakeEngine As New ProxyWS(Of RemoteResponse)
 
                     If (protocolCombo.SelectedIndex = 0) Then
                         handShakeEngine.url = "http://"
@@ -151,7 +151,7 @@ Public Class UrlProtocol
 
                     If (handShakeEngine.getData() = "") Then
 
-                        If (handShakeEngine.data.responseStatus = General.RemoteResponse.EnumResponseStatus.systemOffline) Then
+                        If (handShakeEngine.data.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline) Then
                             MessageBox.Show("Test connection failed", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
                         Else
                             MessageBox.Show("Test connection succesful", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)

@@ -436,7 +436,7 @@ Public Class Settings
 
                 MessageBox.Show("Configuration saved", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                End
+                Close()
             End If
         End If
     End Sub

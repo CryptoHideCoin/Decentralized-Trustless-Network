@@ -3,7 +3,7 @@ Option Explicit On
 
 Imports System.Web.Http
 
-Imports CHCCommonLibrary.AreaCommon.Models.General
+Imports CHCModels.AreaModel.Network.Response
 Imports CHCProtocolLibrary.AreaCommon
 
 
@@ -13,7 +13,7 @@ Namespace Controllers
 
 
     ' GET: api/{GUID service}/security/requestAdminSecurityTokenController
-    <Route("SecurityApi")>
+    <RoutePrefix("SecurityApi")>
     Public Class RequestAdminSecurityTokenController
 
         Inherits ApiController
@@ -28,8 +28,6 @@ Namespace Controllers
         Public Function GetValue(ByVal signature As String) As Models.Security.RequestAdminSecurityTokenModel
             Dim result As New Models.Security.RequestAdminSecurityTokenModel
             Try
-                result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
-
                 If (AreaCommon.Main.serviceInformation.currentStatus = Models.Service.InternalServiceInformation.EnumInternalServiceState.started) Then
                     If AreaSecurity.checkSignature(signature, AreaCommon.Main.environment.adminToken.getCurrentAccessKey()) Then
                         result.tokenValue = AreaCommon.Main.environment.adminToken.create()

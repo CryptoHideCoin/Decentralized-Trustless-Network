@@ -3,7 +3,7 @@ Option Explicit On
 
 
 Imports System.Web.Http
-Imports CHCCommonLibrary.AreaCommon.Models.General
+Imports CHCModels.AreaModel.Network.Response
 Imports CHCProtocolLibrary.AreaCommon
 
 
@@ -13,7 +13,7 @@ Imports CHCProtocolLibrary.AreaCommon
 Namespace Controllers
 
     ' GET: api/{GUID service}/service/supportedProtocolsController
-    <Route("ServiceApi")>
+    <RoutePrefix("ServiceApi")>
     Public Class supportedProtocolsController
 
         Inherits ApiController
@@ -28,8 +28,6 @@ Namespace Controllers
             Dim result As New Models.Service.SupportedProtocolsResponseModel
 
             Try
-                result.requestTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
-
                 result.protocols.Add("SuperminimalAdmin")
 
                 result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()

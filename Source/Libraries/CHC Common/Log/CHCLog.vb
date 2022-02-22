@@ -46,13 +46,13 @@ Namespace Support
             Public content As String
         End Class
 
-        Private _cache As New List(Of String)
-        Private _path As String
-        Private _lastInfoTrack As String
-        Private _called As Boolean = False
-        Private _registry As RegistryEngine
-        Private _CurrentPage As String = ""
-        Private _FileName As String = ""
+        Private Property _cache As New List(Of String)
+        Private Property _path As String
+        Private Property _lastInfoTrack As String
+        Private Property _called As Boolean = False
+        Private Property _registry As RegistryEngine
+        Private Property _CurrentPage As String = ""
+        Private Property _FileName As String = ""
 
         Public Property saveMode As TrackRuntimeModeEnum = TrackRuntimeModeEnum.dontTrackEver
         Public Property inBootStrapAction As Boolean = False

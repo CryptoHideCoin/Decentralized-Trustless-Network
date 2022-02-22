@@ -5,12 +5,10 @@ Public Class WebApiApplication
     Inherits System.Web.HttpApplication
 
     Protected Sub Application_Start()
+        AreaCommon.Startup.Main.run()
+
         AreaRegistration.RegisterAllAreas()
         GlobalConfiguration.Configure(AddressOf WebApiConfig.Register)
         FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters)
-        RouteConfig.RegisterRoutes(RouteTable.Routes)
-        BundleConfig.RegisterBundles(BundleTable.Bundles)
-
-        AreaCommon.Startup.Main.Run()
     End Sub
 End Class

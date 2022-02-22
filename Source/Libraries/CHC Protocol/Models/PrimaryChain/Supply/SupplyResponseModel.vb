@@ -9,7 +9,7 @@ Option Explicit On
 ' ****************************************
 
 
-Imports CHCCommonLibrary.AreaCommon.Models
+Imports CHCModels.AreaModel.Network.Response
 Imports CHCCommonLibrary.AreaEngine.Encryption
 
 
@@ -21,7 +21,7 @@ Namespace AreaCommon.Models.Supply.Response
     ''' </summary>
     Public Class SupplyResponseModel
 
-        Inherits General.RemoteResponse
+        Inherits RemoteResponse
 
         Public Property value As New SupplyInformationModel
 

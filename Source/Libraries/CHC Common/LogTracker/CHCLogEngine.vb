@@ -5,8 +5,10 @@ Option Explicit On
 ' Engine: Log Engine
 ' Release Engine: 1.0 
 ' 
-' Date last successfully test: 02/10/2021
+' Date last successfully test: 02/02/2022
 ' ****************************************
+
+Imports CHCModels.AreaModel.Log
 
 
 
