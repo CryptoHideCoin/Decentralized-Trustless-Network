@@ -3,7 +3,7 @@ Option Explicit On
 
 Imports CHCBasicCryptographyLibrary.AreaEngine
 Imports CHCProtocolLibrary.AreaWallet.Support
-Imports CHCCommonLibrary.AreaCommon.Models.General
+Imports CHCProtocolLibrary.AreaEngine.Keys.KeysEngine
 Imports CHCCommonLibrary.AreaEngine.Encryption
 
 
@@ -105,7 +105,7 @@ Namespace AreaSecurity
         ''' <param name="value"></param>
         ''' <param name="walletType"></param>
         ''' <returns></returns>
-        Public Function checkSignature(ByVal resultant As String, ByVal value As String, ByVal walletType As AreaEngine.Keys.KeysEngine.KeyPair) As Boolean
+        Public Function checkSignature(ByVal resultant As String, ByVal value As String, ByVal walletType As KeyPair) As Boolean
             Try
                 Dim publicAddress As String = walletType.public
 
@@ -219,7 +219,7 @@ Namespace AreaSecurity
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function setIdentityKeyPair(ByVal value As AreaEngine.Keys.KeysEngine.KeyPair) As Boolean
+        Public Function setIdentityKeyPair(ByVal value As KeyPair) As Boolean
             Try
                 AreaCommon.Main.environment.keys.identity.private = value.private
                 AreaCommon.Main.environment.keys.identity.public = value.public

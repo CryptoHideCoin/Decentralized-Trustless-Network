@@ -326,7 +326,7 @@ Public Class Settings
 
                 logInformations.trackRotateFrequency = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
                 logInformations.trackRotateKeepFile = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
-                logInformations.trackRotateKeepLast = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
+                logInformations.trackRotateKeepLast = CHCModels.AreaModel.Log.KeepEnum.lastDay
 
                 useEventRegistry.Checked = False
                 useCounter.Checked = False

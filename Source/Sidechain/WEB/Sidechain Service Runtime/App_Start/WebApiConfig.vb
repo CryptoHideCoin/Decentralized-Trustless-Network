@@ -14,7 +14,8 @@ Public Module WebApiConfig
         End If
 
         config.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & serviceID & "service/{controller}")
-        config.Routes.MapHttpRoute(name:="SecurityApi", routeTemplate:="api/" & serviceID & "security/{controller}")
+        config.Routes.MapHttpRoute(name:="SecurityApi", routeTemplate:="api/" & serviceID & "administration/security/{controller}")
+        config.Routes.MapHttpRoute(name:="MaintenanceApi", routeTemplate:="api/" & serviceID & "administration/maintenance/{controller}")
         config.Routes.MapHttpRoute(name:="AdministrationApi", routeTemplate:="api/" & serviceID & "administration/{controller}")
         config.Routes.MapHttpRoute(name:="AdministrationDoActionApi", routeTemplate:="api/" & serviceID & "administration/doAction/{controller}")
 

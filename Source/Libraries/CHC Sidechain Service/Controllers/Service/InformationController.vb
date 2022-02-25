@@ -28,9 +28,14 @@ Namespace Controllers
         Public Function GetValue(ByVal securityToken As String) As Models.Service.InformationResponseModel
             Dim result As New Models.Service.InformationResponseModel
             Dim response As String = ""
+            Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = Models.Service.InternalServiceInformation.EnumInternalServiceState.started) Then
+                    AreaCommon.Main.environment.log.trackEnter("information.GetValue",, True)
+
+                    enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
+
                     If (response.Length = 0) Then
                         result.value = AreaCommon.Main.serviceInformation
                     Else
@@ -43,9 +48,15 @@ Namespace Controllers
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
+
+                AreaCommon.Main.environment.log.trackException("information.GetValue", ex.Message)
+            Finally
+                If enter Then
+                    AreaCommon.Main.environment.log.trackExit("information.GetValue",, True)
+                End If
             End Try
 
-            result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
+            result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
             Return result
         End Function

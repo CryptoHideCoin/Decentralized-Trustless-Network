@@ -29,26 +29,26 @@ Namespace AreaCommon.Models.Security
 
     End Class
 
-    ''' <summary>
-    ''' This class contain all information of request admin token
-    ''' </summary>
-    Public Class RequestAdminSecurityTokenModel
+    '''' <summary>
+    '''' This class contain all information of request admin token
+    '''' </summary>
+    'Public Class RequestAdminSecurityTokenModel
 
-        Inherits RemoteResponse
+    '    Inherits RemoteResponse
 
-        Public Property tokenValue As String = ""
+    '    Public Property tokenValue As String = ""
 
-    End Class
+    'End Class
 
-    ''' <summary>
-    ''' This class contain all information of request access key
-    ''' </summary>
-    Public Class RequestAccessKeyModel
+    '''' <summary>
+    '''' This class contain all information of request access key
+    '''' </summary>
+    'Public Class RequestAccessKeyModel
 
-        Inherits RemoteResponse
+    '    Inherits RemoteResponse
 
-        Public Property accessKey As String = ""
+    '    Public Property accessKey As String = ""
 
-    End Class
+    'End Class
 
 End Namespace

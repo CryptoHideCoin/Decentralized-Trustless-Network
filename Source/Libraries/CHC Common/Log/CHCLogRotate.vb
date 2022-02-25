@@ -10,6 +10,7 @@ Option Compare Text
 
 
 Imports System.Threading
+Imports CHCModels.AreaModel.Log
 
 
 
@@ -29,13 +30,6 @@ Namespace Support
             Public Enum FrequencyEnum
                 every12h
                 everyDay
-            End Enum
-
-            Public Enum KeepEnum
-                lastDay
-                lastWeek
-                lastMonth
-                lastYear
             End Enum
 
             Public Enum KeepFileEnum
@@ -144,9 +138,9 @@ Namespace Support
 
                         Select Case configuration.keepLast
 
-                            Case LogRotateConfig.KeepEnum.lastDay : toEliminate = (diff >= 1)
-                            Case LogRotateConfig.KeepEnum.lastMonth : toEliminate = (diff >= 30)
-                            Case LogRotateConfig.KeepEnum.lastWeek : toEliminate = (diff >= 7)
+                            Case KeepEnum.lastDay : toEliminate = (diff >= 1)
+                            Case KeepEnum.lastMonth : toEliminate = (diff >= 30)
+                            Case KeepEnum.lastWeek : toEliminate = (diff >= 7)
                             Case Else : toEliminate = (diff >= 365)
 
                         End Select

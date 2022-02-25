@@ -8,6 +8,8 @@ Option Explicit On
 ' Date last successfully test: 21/02/2022
 ' ****************************************
 
+Imports CHCModels.AreaModel.Network.Response
+
 
 
 Namespace AreaModel.Log
@@ -38,6 +40,17 @@ Namespace AreaModel.Log
     End Enum
 
     ''' <summary>
+    ''' This enum contain the log file that we want to mantain
+    ''' </summary>
+    Public Enum KeepEnum
+        lastDay
+        lastWeek
+        lastMonth
+        lastYear
+    End Enum
+
+
+    ''' <summary>
     ''' This class contain the element of a single action of application
     ''' </summary>
     Public Class SingleActionApplication
@@ -55,6 +68,11 @@ Namespace AreaModel.Log
             Return instant.ToString() & "|" & action & "|" & position & "|" & message
         End Function
 
+        ''' <summary>
+        ''' This method provide to create a string from a data of this class
+        ''' </summary>
+        ''' <param name="dataComplete"></param>
+        ''' <returns></returns>
         Public Overloads Function toString(ByVal dataComplete As Boolean) As String
             Dim tmp As String = ""
 
@@ -85,7 +103,7 @@ Namespace AreaModel.Log
     ''' </summary>
     Public Class TrackConfiguration
         Private Property _SaveModeLocal As TrackRuntimeModeEnum = TrackRuntimeModeEnum.trackAll
-        Private Property _IstanceIDLocal As String = ""
+        Private Property _InstanceIDLocal As String = ""
         Private Property _PathFileLocal As String = ""
         Private Property _ChangeFileEveryLocal As Integer = 0
         Private Property _ChangeNumberOfRegistrationsLocal As Integer = 0
@@ -105,15 +123,15 @@ Namespace AreaModel.Log
             End Set
         End Property
 
-        Public Property istanceID As String
+        Public Property instanceID As String
             Get
-                Return _IstanceIDLocal
+                Return _InstanceIDLocal
             End Get
             Set(value As String)
-                _IstanceIDLocal = value
+                _InstanceIDLocal = value
 
-                If (_PathFileLocal.Length > 0) And (_IstanceIDLocal.Length > 0) Then
-                    pathFileLog = IO.Path.Combine(_PathFileLocal, _IstanceIDLocal)
+                If (_PathFileLocal.Length > 0) And (_InstanceIDLocal.Length > 0) Then
+                    pathFileLog = IO.Path.Combine(_PathFileLocal, _InstanceIDLocal)
                 End If
 
                 RaiseEvent ChangeValue()
@@ -127,8 +145,8 @@ Namespace AreaModel.Log
             Set(value As String)
                 _PathFileLocal = value
 
-                If (_PathFileLocal.Length > 0) And (_IstanceIDLocal.Length > 0) Then
-                    pathFileLog = IO.Path.Combine(_PathFileLocal, _IstanceIDLocal)
+                If (_PathFileLocal.Length > 0) And (_InstanceIDLocal.Length > 0) Then
+                    pathFileLog = IO.Path.Combine(_PathFileLocal, _InstanceIDLocal)
                 End If
 
                 RaiseEvent ChangeValue()
@@ -154,6 +172,15 @@ Namespace AreaModel.Log
                 RaiseEvent ChangeValue()
             End Set
         End Property
+    End Class
+
+    ''' <summary>
+    ''' This class contain the log stream response
+    ''' </summary>
+    Public Class LogStreamResponseModel
+        Inherits BaseRemoteResponse
+
+        Public Property value As New List(Of SingleActionApplication)
     End Class
 
 End Namespace

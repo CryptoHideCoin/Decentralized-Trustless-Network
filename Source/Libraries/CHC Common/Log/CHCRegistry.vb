@@ -33,9 +33,9 @@ Namespace Support
                 applicationStartUp
                 applicationShutdown
                 applicationError
+                adminTokenReleased
                 other
             End Enum
-
 
             Public istant As DateTime
             Public type As TypeEvent

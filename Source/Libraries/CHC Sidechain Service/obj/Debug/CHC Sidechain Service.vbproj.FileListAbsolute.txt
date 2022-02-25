@@ -12,3 +12,6 @@ E:\CryptoHideCoinDTN\Source\Libraries\CHC Sidechain Service\obj\Debug\CHC Sidech
 E:\CryptoHideCoinDTN\Source\Libraries\CHC Sidechain Service\obj\Debug\CHCSidechainServiceLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\CHC Sidechain Service\obj\Debug\CHCSidechainServiceLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\CHC Sidechain Service\bin\Debug\System.Web.Http.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Sidechain Service\bin\Debug\CHCModels.dll
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Sidechain Service\bin\Debug\CHCModels.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Sidechain Service\bin\Debug\CHCProtocolLibrary.pdb

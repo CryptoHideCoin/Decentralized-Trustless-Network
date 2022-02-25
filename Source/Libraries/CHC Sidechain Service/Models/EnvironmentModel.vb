@@ -2,6 +2,8 @@
 Option Explicit On
 
 Imports CHCProtocolLibrary.AreaSystem
+Imports CHCProtocolLibrary.AreaEngine.Keys
+Imports CHCProtocolLibrary.AreaEngine.Security
 Imports CHCCommonLibrary.AreaEngine.Log
 Imports CHCCommonLibrary.Support
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
@@ -38,9 +40,9 @@ Namespace AreaChain.Runtime.Models
         Public registry As New RegistryEngine
         Public settings As New SettingsSidechainService
         Public ipAddress As New IPAddressConfiguration
-        Public keys As New AreaEngine.Keys.KeysEngine
+        Public keys As New KeysEngine
         Public support As New AreaCommon.Engine.SupportEngine
-        Public adminToken As New AreaEngine.AdminTokenEngine
+        Public adminToken As New AdminTokenEngine
 
         ''' TODO: Complete this class
 

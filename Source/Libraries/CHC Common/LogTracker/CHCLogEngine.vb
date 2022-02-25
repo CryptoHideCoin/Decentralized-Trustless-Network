@@ -64,7 +64,7 @@ Namespace AreaEngine.Log
         ''' <param name="completeName"></param>
         ''' <param name="addictionalInformation"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function trackEnter(ByVal completeName As String, Optional ByVal addictionalInformation As String = "") As Boolean
+        <DebuggerHiddenAttribute()> Public Function trackEnter(ByVal completeName As String, Optional ByVal addictionalInformation As String = "", Optional ByVal count As Boolean = False) As Boolean
             Return addNewDataCache(ActionEnumeration.enterIntoMethod, addictionalInformation, completeName)
         End Function
 
@@ -74,7 +74,7 @@ Namespace AreaEngine.Log
         ''' <param name="completeName"></param>
         ''' <param name="addictionalInformation"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function trackExit(ByVal completeName As String, Optional ByVal addictionalInformation As String = "") As Boolean
+        <DebuggerHiddenAttribute()> Public Function trackExit(ByVal completeName As String, Optional ByVal addictionalInformation As String = "", Optional ByVal count As Boolean = False) As Boolean
             Return addNewDataCache(ActionEnumeration.exitIntoMethod, addictionalInformation, completeName)
         End Function
 
@@ -125,7 +125,6 @@ Namespace AreaEngine.Log
         <DebuggerHiddenAttribute()> Public Function writeCacheToLogFile() As Boolean
             Return _Cache.writeCacheToLogFile()
         End Function
-
 
         Private Sub settings_ChangeValue() Handles settings.ChangeValue
             _Cache.changeSettings(settings)

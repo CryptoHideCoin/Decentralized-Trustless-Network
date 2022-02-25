@@ -475,7 +475,7 @@ Partial Class Settings
         Me.logInformations.trackConfiguration = CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver
         Me.logInformations.trackRotateFrequency = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
         Me.logInformations.trackRotateKeepFile = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
-        Me.logInformations.trackRotateKeepLast = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
+        Me.logInformations.trackRotateKeepLast = CHCModels.AreaModel.Log.KeepEnum.lastDay
         Me.logInformations.useTrackRotate = False
         '
         'useEventRegistry

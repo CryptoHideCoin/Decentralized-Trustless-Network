@@ -147,7 +147,7 @@ Namespace AreaCommon.Startup
                     .changeFileEvery = environment.settings.changeLogFileMaxNumHours
                     .changeNumberOfRegistrations = environment.settings.changeLogFileNumRegistrations
                     .pathFile = environment.paths.system.logs
-                    .istanceID = Guid.NewGuid.ToString
+                    .instanceID = Guid.NewGuid.ToString
                 End With
 
                 Return True

@@ -44,7 +44,8 @@ Namespace AreaCommon
 
                 If _servicePort Then
                     httpConfig.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & serviceID & "service/{controller}")
-                    httpConfig.Routes.MapHttpRoute(name:="SecurityApi", routeTemplate:="api/" & serviceID & "security/{controller}")
+                    httpConfig.Routes.MapHttpRoute(name:="SecurityApi", routeTemplate:="api/" & serviceID & "administration/security/{controller}")
+                    httpConfig.Routes.MapHttpRoute(name:="MaintenanceApi", routeTemplate:="api/" & serviceID & "administration/maintenance/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="AdministrationApi", routeTemplate:="api/" & serviceID & "administration/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="AdministrationDoActionApi", routeTemplate:="api/" & serviceID & "administration/doAction/{controller}")
                 Else

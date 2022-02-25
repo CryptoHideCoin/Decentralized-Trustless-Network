@@ -124,7 +124,7 @@ Namespace AreaEngine.Log
             Try
                 _Settings = value
 
-                If (value.istanceID.Length > 0) And (value.pathFile.Length > 0) And Not _ChangeInBeginWrite Then
+                If (value.instanceID.Length > 0) And (value.pathFile.Length > 0) And Not _ChangeInBeginWrite Then
                     _ChangeInBeginWrite = True
 
                     writeToFile()

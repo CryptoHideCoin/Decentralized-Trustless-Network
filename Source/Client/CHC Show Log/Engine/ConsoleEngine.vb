@@ -6,7 +6,10 @@ Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
 Imports CHCProtocolLibrary.AreaCommon
 Imports CHCProtocolLibrary.AreaWallet.Support
+Imports CHCProtocolLibrary.AreaEngine.Keys
+Imports CHCModels.AreaModel.Administration.Security
 Imports CHCModels.AreaModel.Network.Response
+Imports CHCModels.AreaModel.Log
 
 
 
@@ -28,7 +31,7 @@ Namespace AreaCommon
         Private Property _SecurityToken As String = ""
         Private Property _Mode As String = "console"
         Private Property _Pause As Boolean = False
-        Private Property _Keys As New CHCSidechainServiceLibrary.AreaEngine.Keys.KeysEngine
+        Private Property _Keys As New KeysEngine
 
         Private Property _DataSettings As CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
 
@@ -182,12 +185,12 @@ Namespace AreaCommon
         ''' </summary>
         ''' <param name="uuid"></param>
         ''' <returns></returns>
-        Private Function readWalletAddress(ByVal uuid As String, ByVal pathKeyStore As String) As CHCSidechainServiceLibrary.AreaEngine.Keys.KeysEngine.KeyPair
+        Private Function readWalletAddress(ByVal uuid As String, ByVal pathKeyStore As String) As KeysEngine.KeyPair
             Try
                 Dim engine As New WalletAddressDataEngine
                 Dim dataLoaded As Boolean = False
                 Dim securityValue As String = ""
-                Dim result As New CHCSidechainServiceLibrary.AreaEngine.Keys.KeysEngine.KeyPair
+                Dim result As New KeysEngine.KeyPair
 
                 engine.fileName = IO.Path.Combine(pathKeyStore, uuid, "walletAddress.private")
 
@@ -198,7 +201,7 @@ Namespace AreaCommon
                 If Not engine.load() Then
                     Console.WriteLine("Error during load wallet")
 
-                    Return New CHCSidechainServiceLibrary.AreaEngine.Keys.KeysEngine.KeyPair
+                    Return New KeysEngine.KeyPair
                 Else
                     With WalletAddressEngine.createNew(engine.data.privateRAWKey, True).raw
                         result.public = .publicKey
@@ -210,7 +213,7 @@ Namespace AreaCommon
             Catch ex As Exception
                 Console.WriteLine("Error during read wallet address:" & ex.Message)
 
-                Return New CHCSidechainServiceLibrary.AreaEngine.Keys.KeysEngine.KeyPair
+                Return New KeysEngine.KeyPair
             End Try
         End Function
 
@@ -298,11 +301,11 @@ Namespace AreaCommon
         ''' <returns></returns>
         Private Function getAccessKey() As Boolean
             Try
-                Dim remote As New ProxyWS(Of Models.Security.RequestAccessKeyModel)
+                Dim remote As New ProxyWS(Of RequestAccessKeyModel)
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    remote.url = buildURL("/security/requestAccessKey/?signature=" & signCertificate())
+                    remote.url = buildURL("/administration/security/requestAccessKey/?signature=" & signCertificate())
                 End If
                 If proceed Then
                     proceed = (remote.getData() = "")
@@ -330,11 +333,11 @@ Namespace AreaCommon
         ''' <returns></returns>
         Private Function getSecurityToken() As Boolean
             Try
-                Dim remote As New ProxyWS(Of Models.Security.RequestAdminSecurityTokenModel)
+                Dim remote As New ProxyWS(Of RequestAdminSecurityTokenModel)
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    remote.url = buildURL("/security/requestAdminSecurityToken/?signature=" & signAccessKey())
+                    remote.url = buildURL("/administration/security/requestAdminSecurityToken/?signature=" & signAccessKey())
                 End If
                 If proceed Then
                     proceed = (remote.getData() = "")
@@ -362,11 +365,11 @@ Namespace AreaCommon
         ''' <returns></returns>
         Private Function readLogFile() As Boolean
             Try
-                Dim remote As New ProxyWS(Of Models.Administration.LogStreamResponseModel)
+                Dim remote As New ProxyWS(Of LogStreamResponseModel)
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    remote.url = buildURL("/service/logStream/?securityToken=" & _SecurityToken & "&mode=" & IIf(_Mode.ToLower() = "console", "console", "full"))
+                    remote.url = buildURL("/administration/logStream/?securityToken=" & _SecurityToken & "&mode=" & IIf(_Mode.ToLower() = "console", "console", "full"))
                 End If
                 Do While proceed
                     If proceed Then

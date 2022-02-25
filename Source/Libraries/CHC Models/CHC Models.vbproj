@@ -28,7 +28,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\Binary\Libraries\Internal\CHC Models\</OutputPath>
+    <OutputPath>..\..\..\Binary\Libraries\Internal\CHC Models\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -66,6 +66,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\SecurityModel.vb" />
     <Compile Include="Classes\ResponseModel.vb" />
     <Compile Include="Classes\CommunicationServiceInformationModel.vb" />
     <Compile Include="Classes\LogStructuresModel.vb" />

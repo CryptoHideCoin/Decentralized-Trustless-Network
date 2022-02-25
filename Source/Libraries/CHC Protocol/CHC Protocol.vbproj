@@ -80,6 +80,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AdminToken.vb" />
     <Compile Include="General\InfoSystem.vb" />
     <Compile Include="General\Package.vb" />
     <Compile Include="General\VirtualPath.vb" />
@@ -120,6 +121,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Security\KeyPairEngine.vb" />
     <Compile Include="Utility\CertificateEngine.vb" />
     <Compile Include="Wallet\KeyStoreEngine.vb" />
     <Compile Include="Wallet\WalletAddressEngine.vb" />

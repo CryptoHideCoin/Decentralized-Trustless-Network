@@ -111,23 +111,23 @@ Public Class LogControl
     ''' This property get/let the Track Rotate Keep Last value
     ''' </summary>
     ''' <returns></returns>
-    Public Property trackRotateKeepLast() As CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum
+    Public Property trackRotateKeepLast() As CHCModels.AreaModel.Log.KeepEnum
         Get
             Select Case keepOnlyRecentFileValueCombo.SelectedIndex
-                Case 0 : Return CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
-                Case 1 : Return CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastMonth
-                Case 2 : Return CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastWeek
-                Case 3 : Return CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastYear
+                Case 0 : Return CHCModels.AreaModel.Log.KeepEnum.lastDay
+                Case 1 : Return CHCModels.AreaModel.Log.KeepEnum.lastMonth
+                Case 2 : Return CHCModels.AreaModel.Log.KeepEnum.lastWeek
+                Case 3 : Return CHCModels.AreaModel.Log.KeepEnum.lastYear
             End Select
 
-            Return CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay
+            Return CHCModels.AreaModel.Log.KeepEnum.lastDay
         End Get
-        Set(value As CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum)
+        Set(value As CHCModels.AreaModel.Log.KeepEnum)
             Select Case value
-                Case CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastDay : keepOnlyRecentFileValueCombo.SelectedIndex = 0
-                Case CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastMonth : keepOnlyRecentFileValueCombo.SelectedIndex = 1
-                Case CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastWeek : keepOnlyRecentFileValueCombo.SelectedIndex = 2
-                Case CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepEnum.lastYear : keepOnlyRecentFileValueCombo.SelectedIndex = 3
+                Case CHCModels.AreaModel.Log.KeepEnum.lastDay : keepOnlyRecentFileValueCombo.SelectedIndex = 0
+                Case CHCModels.AreaModel.Log.KeepEnum.lastMonth : keepOnlyRecentFileValueCombo.SelectedIndex = 1
+                Case CHCModels.AreaModel.Log.KeepEnum.lastWeek : keepOnlyRecentFileValueCombo.SelectedIndex = 2
+                Case CHCModels.AreaModel.Log.KeepEnum.lastYear : keepOnlyRecentFileValueCombo.SelectedIndex = 3
             End Select
         End Set
     End Property

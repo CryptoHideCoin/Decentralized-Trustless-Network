@@ -100,3 +100,5 @@ E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\obj\Debug\CH
 E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\bin\CHCSidechainServiceLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\bin\WebActivator.dll
 E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\bin\WebActivator.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\bin\CHCModels.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\WEB\Sidechain Service Runtime\bin\CHCProtocolLibrary.pdb

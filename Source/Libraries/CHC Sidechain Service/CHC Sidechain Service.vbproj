@@ -50,14 +50,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Basic Cryptography\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.16.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels">
+    <Reference Include="CHCModels, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\CHCModels.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\CHCProtocolLibrary.dll</HintPath>
     </Reference>
@@ -85,15 +86,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Common.vb" />
-    <Compile Include="Controllers\Admin\RequestAccessKey.vb" />
-    <Compile Include="Controllers\Admin\RequestAdminToken.vb" />
-    <Compile Include="Controllers\LogStream\LogStreamController.vb" />
-    <Compile Include="Controllers\Maintenance\CleanLog.vb" />
+    <Compile Include="Common\Internal.vb" />
+    <Compile Include="Controllers\Admin\Authorization\RequestAccessKeyController.vb" />
+    <Compile Include="Controllers\Admin\Authorization\RequestAdminTokenController.vb" />
+    <Compile Include="Controllers\Admin\Settings\AcquireSettingController.vb" />
+    <Compile Include="Controllers\Admin\LogStream\LogStreamController.vb" />
+    <Compile Include="Controllers\Admin\Maintenance\CleanLogController.vb" />
     <Compile Include="Controllers\Service\InformationController.vb" />
     <Compile Include="Controllers\Service\SupportedProtocols.vb" />
     <Compile Include="Controllers\Service\TestController.vb" />
-    <Compile Include="Engines\AdminTokenEngine.vb" />
-    <Compile Include="Engines\KeysEngine.vb" />
+    <Compile Include="Engines\CleanLogEngine.vb" />
     <Compile Include="Engines\NetworkEngine.vb" />
     <Compile Include="Engines\SecurityEngine.vb" />
     <Compile Include="Engines\SupportEngine.vb" />

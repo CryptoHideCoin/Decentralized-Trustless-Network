@@ -13,3 +13,5 @@ E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\bin\Debug\CHCSidechainServiceLibrary.
 E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\bin\Debug\CHCProtocolLibrary.dll
 E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\bin\Debug\CHCBasicCryptographyLibrary.dll
 E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\bin\Debug\CHCModels.dll
+E:\CryptoHideCoinDTN\Source\Client\CHC Cmd\bin\Debug\System.Web.Http.dll

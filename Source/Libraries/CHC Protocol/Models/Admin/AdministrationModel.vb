@@ -160,13 +160,4 @@ Namespace AreaCommon.Models.Administration
 
     End Class
 
-    ''' <summary>
-    ''' This class contain the log stream response
-    ''' </summary>
-    Public Class LogStreamResponseModel
-        Inherits RemoteResponse
-
-        Public Property value As New List(Of SingleActionApplication)
-    End Class
-
 End Namespace

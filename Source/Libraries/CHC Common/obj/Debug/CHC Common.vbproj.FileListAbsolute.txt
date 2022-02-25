@@ -8,3 +8,4 @@ E:\CryptoHideCoinDTN\Source\Libraries\CHC Common\obj\Debug\CHC Common.vbproj.Gen
 E:\CryptoHideCoinDTN\Source\Libraries\CHC Common\obj\Debug\CHC Common.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Libraries\CHC Common\obj\Debug\CHCCommonLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\CHC Common\obj\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\CHC Common\bin\Debug\CHCModels.dll

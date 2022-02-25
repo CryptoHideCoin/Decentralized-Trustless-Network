@@ -186,7 +186,6 @@ Namespace AreaEngine.Log
             Return False
         End Function
 
-
     End Class
 
 End Namespace

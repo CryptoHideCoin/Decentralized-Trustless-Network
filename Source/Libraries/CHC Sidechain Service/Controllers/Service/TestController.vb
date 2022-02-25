@@ -24,12 +24,22 @@ Namespace Controllers
         ''' <returns></returns>
         Public Function GetValue() As RemoteResponse
             Dim result As New RemoteResponse
-
+            Dim enter As Boolean = False
             Try
-                result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT()
+                AreaCommon.Main.environment.log.trackEnter("test.GetValue",, True)
+
+                enter = True
+
+                result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
             Catch ex As Exception
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
+
+                AreaCommon.Main.environment.log.trackException("test.GetValue", ex.Message)
+            Finally
+                If enter Then
+                    AreaCommon.Main.environment.log.trackExit("test.GetValue",, True)
+                End If
             End Try
 
             Return result
