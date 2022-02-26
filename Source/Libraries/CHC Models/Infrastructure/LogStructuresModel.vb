@@ -175,6 +175,27 @@ Namespace AreaModel.Log
     End Class
 
     ''' <summary>
+    ''' This class contain a configuration of a Log Rotate
+    ''' </summary>
+    Public Class LogRotateConfig
+
+        Public Enum FrequencyEnum
+            every12h
+            everyDay
+        End Enum
+
+        Public Enum KeepFileEnum
+            nothingFiles
+            onlyMainTracks
+        End Enum
+
+        Public frequency As FrequencyEnum
+        Public keepLast As KeepEnum = KeepEnum.lastWeek
+        Public keepFile As KeepFileEnum = KeepFileEnum.nothingFiles
+
+    End Class
+
+    ''' <summary>
     ''' This class contain the log stream response
     ''' </summary>
     Public Class LogStreamResponseModel

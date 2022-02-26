@@ -4,10 +4,10 @@ Option Explicit On
 Imports CHCCommonLibrary.AreaEngine.CommandLine
 Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
-Imports CHCProtocolLibrary.AreaCommon
 Imports CHCProtocolLibrary.AreaWallet.Support
 Imports CHCProtocolLibrary.AreaEngine.Keys
 Imports CHCModels.AreaModel.Administration.Security
+Imports CHCModels.AreaModel.Administration.Settings
 Imports CHCModels.AreaModel.Network.Response
 Imports CHCModels.AreaModel.Log
 
@@ -33,19 +33,18 @@ Namespace AreaCommon
         Private Property _Pause As Boolean = False
         Private Property _Keys As New KeysEngine
 
-        Private Property _DataSettings As CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
+        Private Property _DataSettings As SettingsSidechainService
 
 
         ''' <summary>
         ''' This method provide to read a settings
         ''' </summary>
-        ''' <param name="value"></param>
         ''' <returns></returns>
         Private Function readSettings() As Boolean
             Try
                 Dim completeFileName As String = ""
 
-                Dim engineFile As New BaseFile(Of CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService)
+                Dim engineFile As New BaseFile(Of SettingsSidechainService)
 
                 completeFileName = IO.Path.Combine(_DataPath, "Settings")
                 completeFileName = IO.Path.Combine(completeFileName, _Service & ".Settings")

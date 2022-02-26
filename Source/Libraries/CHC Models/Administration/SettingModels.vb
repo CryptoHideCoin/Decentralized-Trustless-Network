@@ -1,12 +1,16 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCCommonLibrary.Support
+' ****************************************
+' Engine: Security Model
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 21/02/2022
+' ****************************************
 
 
 
-
-Namespace AreaChain.Runtime.Models
+Namespace AreaModel.Administration.Settings
 
     ''' <summary>
     ''' This class contain all properties of settings chain runtime
@@ -28,18 +32,30 @@ Namespace AreaChain.Runtime.Models
         Public Property intranetMode As Boolean = False
         Public Property secureChannel As Boolean = False
 
-        Public Property trackConfiguration As LogEngine.TrackRuntimeModeEnum = LogEngine.TrackRuntimeModeEnum.trackAll
+        Public Property trackConfiguration As AreaModel.Log.TrackRuntimeModeEnum = AreaModel.Log.TrackRuntimeModeEnum.trackAll
         Public Property changeLogFileMaxNumHours As Integer = 0
         Public Property changeLogFileNumRegistrations As Integer = 0
 
         Public Property useAutoMaintanance As Boolean = False
         Public Property autoMaintenanceFrequencyHours As Integer = 0
 
-        Public Property trackRotateConfig As New LogRotateEngine.LogRotateConfig
+        Public Property trackRotateConfig As New AreaModel.Log.LogRotateConfig
 
         Public Property useEventRegistry As Boolean = False
         Public Property useRequestCounter As Boolean = False
         Public Property useAdminMessage As Boolean = False
+
+    End Class
+
+
+    ''' <summary>
+    ''' This class contain all information of request update settings
+    ''' </summary>
+    Public Class ResponseUpdateSettingsModel
+
+        Inherits Network.Response.BaseRemoteResponse
+
+        Public Property value As SettingsSidechainService
 
     End Class
 

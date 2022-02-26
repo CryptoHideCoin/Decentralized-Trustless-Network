@@ -41,7 +41,6 @@ CHCShowLog
  <summary>
  This method provide to read a settings
  </summary>
- <param name="value"></param>
  <returns></returns>
 </member>
 <member name="M:CHCShowLog.AreaCommon.ConsoleEngine.manageParameters(CHCCommonLibrary.AreaEngine.CommandLine.CommandStructure@)">

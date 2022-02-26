@@ -46,7 +46,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CHCModels, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCModels, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\CHCModels.dll</HintPath>
     </Reference>

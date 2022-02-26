@@ -1,6 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCModels.AreaModel.Administration.Settings
 Imports CHCProtocolLibrary.AreaSystem
 Imports CHCProtocolLibrary.AreaEngine.Keys
 Imports CHCProtocolLibrary.AreaEngine.Security
@@ -129,9 +130,9 @@ Namespace AreaChain.Runtime.Models
 
                 engineFile.fileName = completeFileName
 
-                If engineFile.save() Then
-                    AreaCommon.Main.environment.settings = engineFile.data
+                engineFile.data = AreaCommon.Main.environment.settings
 
+                If engineFile.save() Then
                     Return True
                 Else
                     AreaCommon.Main.environment.log.trackException("AreaChain.Runtime.Models.EnvironmentModel.saveSettings", "Problem during read a settings")

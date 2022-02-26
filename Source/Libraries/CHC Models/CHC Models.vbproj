@@ -66,10 +66,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\SecurityModel.vb" />
-    <Compile Include="Classes\ResponseModel.vb" />
-    <Compile Include="Classes\CommunicationServiceInformationModel.vb" />
-    <Compile Include="Classes\LogStructuresModel.vb" />
+    <Compile Include="Administration\SecurityModel.vb" />
+    <Compile Include="Administration\SettingModels.vb" />
+    <Compile Include="Infrastructure\ResponseModel.vb" />
+    <Compile Include="Infrastructure\CommunicationServiceInformationModel.vb" />
+    <Compile Include="Infrastructure\LogStructuresModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -85,7 +86,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Classes\TransactionChainModel.vb" />
+    <Compile Include="Infrastructure\TransactionChainModel.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

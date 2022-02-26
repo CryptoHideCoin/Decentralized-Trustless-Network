@@ -39,6 +39,12 @@ Partial Class Settings
         Me.serviceUUID = New System.Windows.Forms.Label()
         Me.selectServicePort = New CHCSupportUIControls.SelectPort()
         Me.selectPublicPort = New CHCSupportUIControls.SelectPort()
+        Me.tabComponents = New System.Windows.Forms.TabPage()
+        Me.useMessageService = New System.Windows.Forms.CheckBox()
+        Me.useCounter = New System.Windows.Forms.CheckBox()
+        Me.logGroup = New System.Windows.Forms.GroupBox()
+        Me.logInformations = New CHCSupportUIControls.LogControl()
+        Me.useEventRegistry = New System.Windows.Forms.CheckBox()
         Me.tabMaintenance = New System.Windows.Forms.TabPage()
         Me.autoMaintenanceGroup = New System.Windows.Forms.GroupBox()
         Me.frequencyAutoMaintenance = New CHCSupportUIControls.NumericText()
@@ -51,12 +57,6 @@ Partial Class Settings
         Me.unitMeasureFrequencyLabel = New System.Windows.Forms.Label()
         Me.frequencyLabel = New System.Windows.Forms.Label()
         Me.useAutoMaintenance = New System.Windows.Forms.CheckBox()
-        Me.tabComponents = New System.Windows.Forms.TabPage()
-        Me.useMessageService = New System.Windows.Forms.CheckBox()
-        Me.useCounter = New System.Windows.Forms.CheckBox()
-        Me.logGroup = New System.Windows.Forms.GroupBox()
-        Me.logInformations = New CHCSupportUIControls.LogControl()
-        Me.useEventRegistry = New System.Windows.Forms.CheckBox()
         Me.generalFrame = New System.Windows.Forms.GroupBox()
         Me.localDataLabel = New System.Windows.Forms.Label()
         Me.browseLocalPath = New System.Windows.Forms.Button()
@@ -68,13 +68,15 @@ Partial Class Settings
         Me.folderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.openAsFileButton = New System.Windows.Forms.Button()
         Me.infoButton = New System.Windows.Forms.Button()
+        Me.fromRemoteButton = New System.Windows.Forms.Button()
+        Me.toRemoteButton = New System.Windows.Forms.Button()
         Me.tabControl.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.tabInternal.SuspendLayout()
-        Me.tabMaintenance.SuspendLayout()
-        Me.autoMaintenanceGroup.SuspendLayout()
         Me.tabComponents.SuspendLayout()
         Me.logGroup.SuspendLayout()
+        Me.tabMaintenance.SuspendLayout()
+        Me.autoMaintenanceGroup.SuspendLayout()
         Me.generalFrame.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -263,9 +265,9 @@ Partial Class Settings
         Me.selectServicePort.Enabled = False
         Me.selectServicePort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.selectServicePort.label = "Service port number (0..65535)"
-        Me.selectServicePort.Location = New System.Drawing.Point(294, 167)
+        Me.selectServicePort.Location = New System.Drawing.Point(237, 167)
         Me.selectServicePort.Name = "selectServicePort"
-        Me.selectServicePort.Size = New System.Drawing.Size(282, 23)
+        Me.selectServicePort.Size = New System.Drawing.Size(339, 23)
         Me.selectServicePort.TabIndex = 4
         Me.selectServicePort.value = 0
         '
@@ -280,6 +282,75 @@ Partial Class Settings
         Me.selectPublicPort.Size = New System.Drawing.Size(282, 23)
         Me.selectPublicPort.TabIndex = 3
         Me.selectPublicPort.value = 0
+        '
+        'tabComponents
+        '
+        Me.tabComponents.Controls.Add(Me.useMessageService)
+        Me.tabComponents.Controls.Add(Me.useCounter)
+        Me.tabComponents.Controls.Add(Me.logGroup)
+        Me.tabComponents.Controls.Add(Me.useEventRegistry)
+        Me.tabComponents.Location = New System.Drawing.Point(4, 22)
+        Me.tabComponents.Name = "tabComponents"
+        Me.tabComponents.Size = New System.Drawing.Size(701, 281)
+        Me.tabComponents.TabIndex = 4
+        Me.tabComponents.Text = "Components"
+        Me.tabComponents.UseVisualStyleBackColor = True
+        '
+        'useMessageService
+        '
+        Me.useMessageService.AutoSize = True
+        Me.useMessageService.Location = New System.Drawing.Point(12, 177)
+        Me.useMessageService.Name = "useMessageService"
+        Me.useMessageService.Size = New System.Drawing.Size(147, 17)
+        Me.useMessageService.TabIndex = 3
+        Me.useMessageService.Text = "Use Message Service"
+        Me.useMessageService.UseVisualStyleBackColor = True
+        '
+        'useCounter
+        '
+        Me.useCounter.AutoSize = True
+        Me.useCounter.Location = New System.Drawing.Point(12, 154)
+        Me.useCounter.Name = "useCounter"
+        Me.useCounter.Size = New System.Drawing.Size(147, 17)
+        Me.useCounter.TabIndex = 2
+        Me.useCounter.Text = "Use Request Counter"
+        Me.useCounter.UseVisualStyleBackColor = True
+        '
+        'logGroup
+        '
+        Me.logGroup.Controls.Add(Me.logInformations)
+        Me.logGroup.Location = New System.Drawing.Point(12, 17)
+        Me.logGroup.Name = "logGroup"
+        Me.logGroup.Size = New System.Drawing.Size(675, 98)
+        Me.logGroup.TabIndex = 0
+        Me.logGroup.TabStop = False
+        Me.logGroup.Text = "Log"
+        '
+        'logInformations
+        '
+        Me.logInformations.Enabled = False
+        Me.logInformations.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.logInformations.Location = New System.Drawing.Point(4, 20)
+        Me.logInformations.maxNumberOfRegistrations = 0
+        Me.logInformations.maxNumHours = 0
+        Me.logInformations.Name = "logInformations"
+        Me.logInformations.Size = New System.Drawing.Size(671, 63)
+        Me.logInformations.TabIndex = 0
+        Me.logInformations.trackConfiguration = CHCModels.AreaModel.Log.TrackRuntimeModeEnum.neverTrace
+        Me.logInformations.trackRotateFrequency = CHCModels.AreaModel.Log.LogRotateConfig.FrequencyEnum.every12h
+        Me.logInformations.trackRotateKeepFile = CHCModels.AreaModel.Log.LogRotateConfig.KeepFileEnum.nothingFiles
+        Me.logInformations.trackRotateKeepLast = CHCModels.AreaModel.Log.KeepEnum.lastDay
+        Me.logInformations.useTrackRotate = False
+        '
+        'useEventRegistry
+        '
+        Me.useEventRegistry.AutoSize = True
+        Me.useEventRegistry.Location = New System.Drawing.Point(12, 131)
+        Me.useEventRegistry.Name = "useEventRegistry"
+        Me.useEventRegistry.Size = New System.Drawing.Size(134, 17)
+        Me.useEventRegistry.TabIndex = 1
+        Me.useEventRegistry.Text = "Use Event Registry"
+        Me.useEventRegistry.UseVisualStyleBackColor = True
         '
         'tabMaintenance
         '
@@ -419,75 +490,6 @@ Partial Class Settings
         Me.useAutoMaintenance.Text = "Use automatic maintenance"
         Me.useAutoMaintenance.UseVisualStyleBackColor = True
         '
-        'tabComponents
-        '
-        Me.tabComponents.Controls.Add(Me.useMessageService)
-        Me.tabComponents.Controls.Add(Me.useCounter)
-        Me.tabComponents.Controls.Add(Me.logGroup)
-        Me.tabComponents.Controls.Add(Me.useEventRegistry)
-        Me.tabComponents.Location = New System.Drawing.Point(4, 22)
-        Me.tabComponents.Name = "tabComponents"
-        Me.tabComponents.Size = New System.Drawing.Size(701, 281)
-        Me.tabComponents.TabIndex = 4
-        Me.tabComponents.Text = "Components"
-        Me.tabComponents.UseVisualStyleBackColor = True
-        '
-        'useMessageService
-        '
-        Me.useMessageService.AutoSize = True
-        Me.useMessageService.Location = New System.Drawing.Point(12, 177)
-        Me.useMessageService.Name = "useMessageService"
-        Me.useMessageService.Size = New System.Drawing.Size(147, 17)
-        Me.useMessageService.TabIndex = 3
-        Me.useMessageService.Text = "Use Message Service"
-        Me.useMessageService.UseVisualStyleBackColor = True
-        '
-        'useCounter
-        '
-        Me.useCounter.AutoSize = True
-        Me.useCounter.Location = New System.Drawing.Point(12, 154)
-        Me.useCounter.Name = "useCounter"
-        Me.useCounter.Size = New System.Drawing.Size(147, 17)
-        Me.useCounter.TabIndex = 2
-        Me.useCounter.Text = "Use Request Counter"
-        Me.useCounter.UseVisualStyleBackColor = True
-        '
-        'logGroup
-        '
-        Me.logGroup.Controls.Add(Me.logInformations)
-        Me.logGroup.Location = New System.Drawing.Point(12, 17)
-        Me.logGroup.Name = "logGroup"
-        Me.logGroup.Size = New System.Drawing.Size(675, 98)
-        Me.logGroup.TabIndex = 0
-        Me.logGroup.TabStop = False
-        Me.logGroup.Text = "Log"
-        '
-        'logInformations
-        '
-        Me.logInformations.Enabled = False
-        Me.logInformations.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.logInformations.Location = New System.Drawing.Point(4, 20)
-        Me.logInformations.maxNumberOfRegistrations = 0
-        Me.logInformations.maxNumHours = 0
-        Me.logInformations.Name = "logInformations"
-        Me.logInformations.Size = New System.Drawing.Size(671, 63)
-        Me.logInformations.TabIndex = 0
-        Me.logInformations.trackConfiguration = CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver
-        Me.logInformations.trackRotateFrequency = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
-        Me.logInformations.trackRotateKeepFile = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
-        Me.logInformations.trackRotateKeepLast = CHCModels.AreaModel.Log.KeepEnum.lastDay
-        Me.logInformations.useTrackRotate = False
-        '
-        'useEventRegistry
-        '
-        Me.useEventRegistry.AutoSize = True
-        Me.useEventRegistry.Location = New System.Drawing.Point(12, 131)
-        Me.useEventRegistry.Name = "useEventRegistry"
-        Me.useEventRegistry.Size = New System.Drawing.Size(134, 17)
-        Me.useEventRegistry.TabIndex = 1
-        Me.useEventRegistry.Text = "Use Event Registry"
-        Me.useEventRegistry.UseVisualStyleBackColor = True
-        '
         'generalFrame
         '
         Me.generalFrame.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -601,12 +603,38 @@ Partial Class Settings
         Me.infoButton.Text = "Info"
         Me.infoButton.UseVisualStyleBackColor = True
         '
+        'fromRemoteButton
+        '
+        Me.fromRemoteButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.fromRemoteButton.Enabled = False
+        Me.fromRemoteButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.fromRemoteButton.Location = New System.Drawing.Point(732, 373)
+        Me.fromRemoteButton.Name = "fromRemoteButton"
+        Me.fromRemoteButton.Size = New System.Drawing.Size(106, 27)
+        Me.fromRemoteButton.TabIndex = 8
+        Me.fromRemoteButton.Text = "From remote"
+        Me.fromRemoteButton.UseVisualStyleBackColor = True
+        '
+        'toRemoteButton
+        '
+        Me.toRemoteButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.toRemoteButton.Enabled = False
+        Me.toRemoteButton.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.toRemoteButton.Location = New System.Drawing.Point(731, 406)
+        Me.toRemoteButton.Name = "toRemoteButton"
+        Me.toRemoteButton.Size = New System.Drawing.Size(106, 27)
+        Me.toRemoteButton.TabIndex = 9
+        Me.toRemoteButton.Text = "To remote"
+        Me.toRemoteButton.UseVisualStyleBackColor = True
+        '
         'Settings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(850, 445)
+        Me.Controls.Add(Me.toRemoteButton)
+        Me.Controls.Add(Me.fromRemoteButton)
         Me.Controls.Add(Me.infoButton)
         Me.Controls.Add(Me.openAsFileButton)
         Me.Controls.Add(Me.saveButton)
@@ -623,12 +651,12 @@ Partial Class Settings
         Me.tabMain.PerformLayout()
         Me.tabInternal.ResumeLayout(False)
         Me.tabInternal.PerformLayout()
-        Me.tabMaintenance.ResumeLayout(False)
-        Me.autoMaintenanceGroup.ResumeLayout(False)
-        Me.autoMaintenanceGroup.PerformLayout()
         Me.tabComponents.ResumeLayout(False)
         Me.tabComponents.PerformLayout()
         Me.logGroup.ResumeLayout(False)
+        Me.tabMaintenance.ResumeLayout(False)
+        Me.autoMaintenanceGroup.ResumeLayout(False)
+        Me.autoMaintenanceGroup.PerformLayout()
         Me.generalFrame.ResumeLayout(False)
         Me.generalFrame.PerformLayout()
         Me.ResumeLayout(False)
@@ -680,4 +708,6 @@ Partial Class Settings
     Friend WithEvents startCleanEveryValueCombo As ComboBox
     Friend WithEvents frequencyAutoMaintenance As CHCSupportUIControls.NumericText
     Friend WithEvents certificateClient As CHCSupportUIControls.Certificate
+    Friend WithEvents fromRemoteButton As Button
+    Friend WithEvents toRemoteButton As Button
 End Class

@@ -22,27 +22,6 @@ Namespace Support
     ''' </summary>
     Public Class LogRotateEngine
 
-        ''' <summary>
-        ''' This class contain a configuration of a Log Rotate
-        ''' </summary>
-        Public Class LogRotateConfig
-
-            Public Enum FrequencyEnum
-                every12h
-                everyDay
-            End Enum
-
-            Public Enum KeepFileEnum
-                nothingFiles
-                onlyMainTracks
-            End Enum
-
-            Public frequency As FrequencyEnum
-            Public keepLast As KeepEnum = KeepEnum.lastWeek
-            Public keepFile As KeepFileEnum = KeepFileEnum.nothingFiles
-
-        End Class
-
         Public Property lastClean As DateTime
         Public Property configuration As New LogRotateConfig
         Public Property path As String

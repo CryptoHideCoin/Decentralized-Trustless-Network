@@ -8,6 +8,9 @@ Option Explicit On
 ' Date last successfully test: 06/10/2021
 ' ****************************************
 
+Imports CHCModels.AreaModel.Log
+Imports CHCModels.AreaModel.Log.LogRotateConfig
+
 
 
 
@@ -22,20 +25,20 @@ Public Class LogControl
     ''' This property get/let the Track Configuration value
     ''' </summary>
     ''' <returns></returns>
-    Public Property trackConfiguration() As CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum
+    Public Property trackConfiguration() As TrackRuntimeModeEnum
         Get
             Select Case trackConfigurationCombo.SelectedIndex
-                Case 0 : Return CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver
-                Case 1 : Return CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackAll
-                Case 2 : Return CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackOnlyBootstrapAndError
+                Case 0 : Return TrackRuntimeModeEnum.neverTrace
+                Case 1 : Return TrackRuntimeModeEnum.trackAll
+                Case 2 : Return TrackRuntimeModeEnum.trackOnlyBootstrapAndError
             End Select
-            Return CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver
+            Return TrackRuntimeModeEnum.neverTrace
         End Get
-        Set(value As CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum)
+        Set(value As TrackRuntimeModeEnum)
             Select Case value
-                Case CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver : trackConfigurationCombo.SelectedIndex = 0
-                Case CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackAll : trackConfigurationCombo.SelectedIndex = 1
-                Case CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.trackOnlyBootstrapAndError : trackConfigurationCombo.SelectedIndex = 2
+                Case TrackRuntimeModeEnum.neverTrace : trackConfigurationCombo.SelectedIndex = 0
+                Case TrackRuntimeModeEnum.trackAll : trackConfigurationCombo.SelectedIndex = 1
+                Case TrackRuntimeModeEnum.trackOnlyBootstrapAndError : trackConfigurationCombo.SelectedIndex = 2
             End Select
         End Set
     End Property
@@ -91,18 +94,18 @@ Public Class LogControl
     ''' This property get/let the Track Rotate Frequency value
     ''' </summary>
     ''' <returns></returns>
-    Public Property trackRotateFrequency() As CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum
+    Public Property trackRotateFrequency() As FrequencyEnum
         Get
             Select Case startCleanEveryValueCombo.SelectedIndex
-                Case 0 : Return CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
-                Case 1 : Return CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.everyDay
+                Case 0 : Return FrequencyEnum.every12h
+                Case 1 : Return FrequencyEnum.everyDay
             End Select
-            Return CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
+            Return FrequencyEnum.every12h
         End Get
-        Set(value As CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum)
+        Set(value As FrequencyEnum)
             Select Case value
-                Case CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h : startCleanEveryValueCombo.SelectedIndex = 0
-                Case CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.everyDay : startCleanEveryValueCombo.SelectedIndex = 1
+                Case FrequencyEnum.every12h : startCleanEveryValueCombo.SelectedIndex = 0
+                Case FrequencyEnum.everyDay : startCleanEveryValueCombo.SelectedIndex = 1
             End Select
         End Set
     End Property
@@ -111,23 +114,23 @@ Public Class LogControl
     ''' This property get/let the Track Rotate Keep Last value
     ''' </summary>
     ''' <returns></returns>
-    Public Property trackRotateKeepLast() As CHCModels.AreaModel.Log.KeepEnum
+    Public Property trackRotateKeepLast() As KeepEnum
         Get
             Select Case keepOnlyRecentFileValueCombo.SelectedIndex
-                Case 0 : Return CHCModels.AreaModel.Log.KeepEnum.lastDay
-                Case 1 : Return CHCModels.AreaModel.Log.KeepEnum.lastMonth
-                Case 2 : Return CHCModels.AreaModel.Log.KeepEnum.lastWeek
-                Case 3 : Return CHCModels.AreaModel.Log.KeepEnum.lastYear
+                Case 0 : Return KeepEnum.lastDay
+                Case 1 : Return KeepEnum.lastMonth
+                Case 2 : Return KeepEnum.lastWeek
+                Case 3 : Return KeepEnum.lastYear
             End Select
 
-            Return CHCModels.AreaModel.Log.KeepEnum.lastDay
+            Return KeepEnum.lastDay
         End Get
-        Set(value As CHCModels.AreaModel.Log.KeepEnum)
+        Set(value As KeepEnum)
             Select Case value
-                Case CHCModels.AreaModel.Log.KeepEnum.lastDay : keepOnlyRecentFileValueCombo.SelectedIndex = 0
-                Case CHCModels.AreaModel.Log.KeepEnum.lastMonth : keepOnlyRecentFileValueCombo.SelectedIndex = 1
-                Case CHCModels.AreaModel.Log.KeepEnum.lastWeek : keepOnlyRecentFileValueCombo.SelectedIndex = 2
-                Case CHCModels.AreaModel.Log.KeepEnum.lastYear : keepOnlyRecentFileValueCombo.SelectedIndex = 3
+                Case KeepEnum.lastDay : keepOnlyRecentFileValueCombo.SelectedIndex = 0
+                Case KeepEnum.lastMonth : keepOnlyRecentFileValueCombo.SelectedIndex = 1
+                Case KeepEnum.lastWeek : keepOnlyRecentFileValueCombo.SelectedIndex = 2
+                Case KeepEnum.lastYear : keepOnlyRecentFileValueCombo.SelectedIndex = 3
             End Select
         End Set
     End Property
@@ -136,19 +139,19 @@ Public Class LogControl
     ''' This property get/let the Track Rotate Keep File value
     ''' </summary>
     ''' <returns></returns>
-    Public Property trackRotateKeepFile() As CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum
+    Public Property trackRotateKeepFile() As KeepFileEnum
         Get
             Select Case keepFileTypeValueCombo.SelectedIndex
-                Case 0 : Return CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
-                Case 1 : Return CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.onlyMainTracks
+                Case 0 : Return KeepFileEnum.nothingFiles
+                Case 1 : Return KeepFileEnum.onlyMainTracks
             End Select
 
-            Return CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
+            Return KeepFileEnum.nothingFiles
         End Get
-        Set(value As CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum)
+        Set(value As KeepFileEnum)
             Select Case value
-                Case CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles : keepFileTypeValueCombo.SelectedIndex = 0
-                Case CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.onlyMainTracks : keepFileTypeValueCombo.SelectedIndex = 1
+                Case KeepFileEnum.nothingFiles : keepFileTypeValueCombo.SelectedIndex = 0
+                Case KeepFileEnum.onlyMainTracks : keepFileTypeValueCombo.SelectedIndex = 1
             End Select
         End Set
     End Property

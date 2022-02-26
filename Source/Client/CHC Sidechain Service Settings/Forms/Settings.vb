@@ -1,8 +1,13 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports CHCModels.AreaModel.Administration.Security
+Imports CHCModels.AreaModel.Administration.Settings
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
 Imports CHCCommonLibrary.AreaEngine.CommandLine
+Imports CHCCommonLibrary.AreaEngine.Communication
+Imports CHCModels.AreaModel.Network.Response
+Imports CHCProtocolLibrary.AreaWallet.Support
 
 
 
@@ -86,8 +91,8 @@ Public Class Settings
     ''' </summary>
     ''' <param name="engineFile"></param>
     ''' <returns></returns>
-    Private Function getDataFromFile(ByRef engineFile As BaseFile(Of CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService)) As CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
-        Dim result As CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
+    Private Function getDataFromFile(ByRef engineFile As BaseFile(Of CHCModels.AreaModel.Administration.Settings.SettingsSidechainService)) As CHCModels.AreaModel.Administration.Settings.SettingsSidechainService
+        Dim result As CHCModels.AreaModel.Administration.Settings.SettingsSidechainService
         Try
             Dim decodeData As Boolean = False
             Dim errorReading As Boolean = False
@@ -110,7 +115,7 @@ Public Class Settings
                 End If
             Loop
         Catch ex As Exception
-            result = New CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
+            result = New CHCModels.AreaModel.Administration.Settings.SettingsSidechainService
         End Try
 
 #Disable Warning BC42104
@@ -119,38 +124,12 @@ Public Class Settings
     End Function
 
     ''' <summary>
-    ''' This method provide to load data from a data path
+    ''' This method provide to fill all field
     ''' </summary>
+    ''' <param name="data"></param>
     ''' <returns></returns>
-    Private Function loadData() As Boolean
+    Private Function fillAllField(ByVal data As SettingsSidechainService) As Boolean
         Try
-            Dim completeFileName As String = ""
-            Dim data As CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
-            Dim engineFile As New BaseFile(Of CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService)
-
-            completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
-            completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text & ".Settings")
-
-            If Not IO.File.Exists(completeFileName) Then Return False
-
-            openAsFileButton.Enabled = True
-
-            If (_Password.Length > 0) Then
-                engineFile.cryptoKEY = _Password
-            Else
-                engineFile.noCrypt = True
-            End If
-
-            engineFile.fileName = completeFileName
-
-            data = getDataFromFile(engineFile)
-
-            If IsNothing(data) Then
-                MessageBox.Show("Error during read file e/o parameter", "Error notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-                End
-            End If
-
             With data
                 internalName.Text = .internalName
                 networkName.Text = .networkReferement
@@ -190,6 +169,47 @@ Public Class Settings
     End Function
 
     ''' <summary>
+    ''' This method provide to load data from a data path
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function loadData() As Boolean
+        Try
+            Dim completeFileName As String = ""
+            Dim data As SettingsSidechainService
+            Dim engineFile As New BaseFile(Of SettingsSidechainService)
+
+            completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
+            completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text & ".Settings")
+
+            If Not IO.File.Exists(completeFileName) Then Return False
+
+            openAsFileButton.Enabled = True
+
+            If (_Password.Length > 0) Then
+                engineFile.cryptoKEY = _Password
+            Else
+                engineFile.noCrypt = True
+            End If
+
+            engineFile.fileName = completeFileName
+
+            data = getDataFromFile(engineFile)
+
+            If IsNothing(data) Then
+                MessageBox.Show("Error during read file e/o parameter", "Error notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                End
+            End If
+
+            Return fillAllField(data)
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
     ''' This method provide to acquire the password 
     ''' </summary>
     ''' <returns></returns>
@@ -209,18 +229,12 @@ Public Class Settings
     End Function
 
     ''' <summary>
-    ''' This method provide to save a data
+    ''' This method provide to get the information from the interface
     ''' </summary>
     ''' <returns></returns>
-    Private Function saveData() As Boolean
+    Private Function getDataModel() As SettingsSidechainService
+        Dim data As New SettingsSidechainService
         Try
-            Dim completeFileName As String = ""
-            Dim data As New CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService
-            Dim engineFile As New BaseFile(Of CHCSidechainServiceLibrary.AreaChain.Runtime.Models.SettingsSidechainService)
-
-            completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
-            completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text & ".Settings")
-
             With data
                 Select Case chainServiceName.SelectedIndex
                     Case 0 : .sideChainName = "Primary"
@@ -252,6 +266,26 @@ Public Class Settings
                 .useRequestCounter = useCounter.Checked
                 .useAdminMessage = useMessageService.Checked
             End With
+        Catch ex As Exception
+        End Try
+
+        Return data
+    End Function
+
+    ''' <summary>
+    ''' This method provide to save a data
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function saveData() As Boolean
+        Try
+            Dim completeFileName As String = ""
+            Dim data As New SettingsSidechainService
+            Dim engineFile As New BaseFile(Of SettingsSidechainService)
+
+            completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
+            completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text & ".Settings")
+
+            data = getDataModel()
 
             _Password = getPassword()
 
@@ -274,6 +308,36 @@ Public Class Settings
 
             Return False
         End Try
+    End Function
+
+    ''' <summary>
+    ''' This method provide to reset all field
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function resetAllField() As Boolean
+        internalName.Text = ""
+        networkName.Text = ""
+        serviceID.Text = ""
+        adminPublicAddress.value = ""
+        certificateClient.value = ""
+        selectPublicPort.value = 0
+        selectServicePort.value = 0
+        intranetMode.Checked = False
+        secureChannel.Checked = False
+
+        logInformations.trackConfiguration = CHCModels.AreaModel.Log.TrackRuntimeModeEnum.neverTrace
+        logInformations.maxNumHours = 0
+        logInformations.maxNumberOfRegistrations = 0
+        logInformations.useTrackRotate = False
+
+        logInformations.trackRotateFrequency = CHCModels.AreaModel.Log.LogRotateConfig.FrequencyEnum.every12h
+        logInformations.trackRotateKeepFile = CHCModels.AreaModel.Log.LogRotateConfig.KeepFileEnum.nothingFiles
+        logInformations.trackRotateKeepLast = CHCModels.AreaModel.Log.KeepEnum.lastDay
+
+        useEventRegistry.Checked = False
+        useCounter.Checked = False
+
+        Return True
     End Function
 
     Private Function entireLoad(ByVal silentMode As Boolean) As Boolean
@@ -309,27 +373,7 @@ Public Class Settings
             enableForm()
 
             If Not loadData() Then
-                internalName.Text = ""
-                networkName.Text = ""
-                serviceID.Text = ""
-                adminPublicAddress.value = ""
-                certificateClient.value = ""
-                selectPublicPort.value = 0
-                selectServicePort.value = 0
-                intranetMode.Checked = False
-                secureChannel.Checked = False
-
-                logInformations.trackConfiguration = CHCCommonLibrary.Support.LogEngine.TrackRuntimeModeEnum.dontTrackEver
-                logInformations.maxNumHours = 0
-                logInformations.maxNumberOfRegistrations = 0
-                logInformations.useTrackRotate = False
-
-                logInformations.trackRotateFrequency = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.FrequencyEnum.every12h
-                logInformations.trackRotateKeepFile = CHCCommonLibrary.Support.LogRotateEngine.LogRotateConfig.KeepFileEnum.nothingFiles
-                logInformations.trackRotateKeepLast = CHCModels.AreaModel.Log.KeepEnum.lastDay
-
-                useEventRegistry.Checked = False
-                useCounter.Checked = False
+                resetAllField()
             Else
                 If Not _ParameterExist Then
                     paths.updateRootPath(dataPath.Text)
@@ -350,6 +394,9 @@ Public Class Settings
 
     Private Sub loadSettingButton_Click(sender As Object, e As EventArgs) Handles loadSettingButton.Click
         entireLoad(False)
+
+        fromRemoteButton.Enabled = True
+        toRemoteButton.Enabled = True
     End Sub
 
     ''' <summary>
@@ -502,10 +549,328 @@ Public Class Settings
             End If
         Catch ex As Exception
         End Try
+
+        Return True
     End Function
 
     Private Sub useAutoMaintenance_CheckedChanged(sender As Object, e As EventArgs) Handles useAutoMaintenance.CheckedChanged
         enableAutoMaintenance(useAutoMaintenance.Checked)
+    End Sub
+
+    ''' <summary>
+    ''' This method provide to build a URL
+    ''' </summary>
+    ''' <param name="api"></param>
+    ''' <param name="ipAddress"></param>
+    ''' <returns></returns>
+    Private Function buildURL(ByVal api As String, ByVal ipAddress As String) As String
+        Dim url As String = ""
+        Try
+            Dim proceed As Boolean = True
+
+            If proceed Then
+                If secureChannel.Checked Then
+                    url += "https"
+                Else
+                    url += "http"
+                End If
+            End If
+            If proceed Then
+                If (ipAddress.Length = 0) Then
+                    ipAddress += "localhost:" & selectServicePort.value
+                Else
+                    ipAddress += ":" & selectServicePort.value
+                End If
+            End If
+            If proceed Then
+                url += "://" & ipAddress & "/api"
+            End If
+            If proceed Then
+                If (serviceID.Text.Length > 0) Then
+                    url += "/" & serviceID.Text & api
+                Else
+                    url += api
+                End If
+            End If
+        Catch ex As Exception
+        End Try
+
+        Return url
+    End Function
+
+    ''' <summary>
+    ''' This method provide to get a service
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function serviceFound(ByVal ipAddress As String) As Boolean
+        Try
+            Dim remote As New ProxyWS(Of RemoteResponse)
+            Dim proceed As Boolean = True
+
+            If proceed Then
+                remote.url = buildURL("/service/test/", ipAddress)
+            End If
+            If proceed Then
+                proceed = (remote.getData() = "")
+            End If
+            If proceed Then
+                Return (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+            End If
+
+            Return proceed
+        Catch ex As Exception
+            Console.WriteLine("Error during serviceFound - " & ex.Message)
+
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' This method sign a certificate with private key
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function signCertificate() As String
+        Try
+            Dim privateKey As String = adminPublicAddress.privateKey
+            Dim certificate As String = certificateClient.value
+
+            Return WalletAddressEngine.createSignature(privateKey, certificate)
+        Catch ex As Exception
+            Console.WriteLine("Error during signCertificate:" & ex.Message)
+
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' This method provide to get an access key
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function getAccessKey(ByRef accessKey As String, ByVal ipAddress As String) As Boolean
+        Try
+            Dim remote As New ProxyWS(Of RequestAccessKeyModel)
+            Dim proceed As Boolean = True
+
+            If proceed Then
+                remote.url = buildURL("/administration/security/requestAccessKey/?signature=" & signCertificate(), ipAddress)
+            End If
+            If proceed Then
+                proceed = (remote.getData() = "")
+            End If
+            If proceed Then
+                proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+            End If
+            If proceed Then
+                accessKey = remote.data.accessKey
+
+                proceed = True
+            End If
+
+            Return proceed
+        Catch ex As Exception
+            Console.WriteLine("Error during getAccessKey - " & ex.Message)
+
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' This method sign an access key
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function signAccessKey(ByVal accessKey As String) As String
+        Try
+            Dim privateKey As String = adminPublicAddress.privateKey
+
+            Return WalletAddressEngine.createSignature(privateKey, accessKey)
+        Catch ex As Exception
+            Console.WriteLine("Error during signAccessKey:" & ex.Message)
+
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' This method provide to get a security token
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function getSecurityToken(ByRef securityToken As String, ByVal ipAddress As String, ByVal accessKey As String) As Boolean
+        Try
+            Dim remote As New ProxyWS(Of RequestAdminSecurityTokenModel)
+            Dim proceed As Boolean = True
+
+            If proceed Then
+                remote.url = buildURL("/administration/security/requestAdminSecurityToken/?signature=" & signAccessKey(accessKey), ipAddress)
+            End If
+            If proceed Then
+                proceed = (remote.getData() = "")
+            End If
+            If proceed Then
+                proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+            End If
+            If proceed Then
+                securityToken = remote.data.tokenValue
+
+                proceed = True
+            End If
+
+            Return proceed
+        Catch ex As Exception
+            Console.WriteLine("Error during serviceFound - " & ex.Message)
+
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' This method provide to save a remote config into server
+    ''' </summary>
+    ''' <param name="securityToken"></param>
+    ''' <param name="ipAddress"></param>
+    ''' <returns></returns>
+    Private Function saveRemoteConfig(ByVal securityToken As String, ByVal ipAddress As String) As Boolean
+        Try
+            Dim remote As New ProxyWS(Of SettingsSidechainService)
+            Dim proceed As Boolean = True
+            Dim data As New SettingsSidechainService
+
+            If proceed Then
+                remote.url = buildURL("/administration/settings/?securityToken=" & securityToken, ipAddress)
+            End If
+            If proceed Then
+                remote.data = getDataModel()
+
+                proceed = True
+            End If
+            If proceed Then
+                proceed = (remote.sendData("PUT").Length = 0)
+            End If
+            If proceed Then
+                proceed = (remote.remoteResponse.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+            End If
+
+            Return proceed
+        Catch ex As Exception
+            Console.WriteLine("Error during saveRemoteConfig - " & ex.Message)
+
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' This method provide to read a remote config
+    ''' </summary>
+    ''' <param name="securityToken"></param>
+    ''' <param name="ipAddress"></param>
+    ''' <returns></returns>
+    Private Function readRemoteConfig(ByVal securityToken As String, ByVal ipAddress As String) As Boolean
+        Try
+            Dim remote As New ProxyWS(Of ResponseUpdateSettingsModel)
+            Dim proceed As Boolean = True
+            Dim data As New ResponseUpdateSettingsModel
+
+            If proceed Then
+                remote.url = buildURL("/administration/settings/?securityToken=" & securityToken, ipAddress)
+            End If
+            If proceed Then
+                proceed = (remote.getData().Length = 0)
+            End If
+            If proceed Then
+                proceed = fillAllField(remote.data.value)
+            End If
+
+            Return proceed
+        Catch ex As Exception
+            Console.WriteLine("Error during saveRemoteConfig - " & ex.Message)
+
+            Return False
+        End Try
+    End Function
+
+    Private Sub toRemoteButton_Click(sender As Object, e As EventArgs) Handles toRemoteButton.Click
+        Dim proceed As Boolean = True
+        Dim ipAddress As String = "", accessKey As String = "", securityToken As String = ""
+
+        If proceed Then
+            proceed = testDataInformationSuccessfully()
+        End If
+        If proceed Then
+            ipAddress = InputBox("Insert IP Address of remote server", "Server Address", "localhost")
+        End If
+        If proceed Then
+            If Not serviceFound(ipAddress) Then
+                MessageBox.Show("Problem during test service", "Connection problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                proceed = False
+            End If
+        End If
+        If proceed Then
+            If Not getAccessKey(accessKey, ipAddress) Then
+                MessageBox.Show("Problem during request an access key", "Connection problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                proceed = False
+            End If
+        End If
+        If proceed Then
+            If Not getSecurityToken(securityToken, ipAddress, accessKey) Then
+                MessageBox.Show("Problem during request a security token", "Connection problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                proceed = False
+            End If
+        End If
+        If proceed Then
+            If Not saveRemoteConfig(securityToken, ipAddress) Then
+                MessageBox.Show("Problem during transfer a remote config", "Connection problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                proceed = False
+            End If
+        End If
+        If proceed Then
+            MessageBox.Show("Remote settings update", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
+    Private Sub fromRemoteButton_Click(sender As Object, e As EventArgs) Handles fromRemoteButton.Click
+        Dim proceed As Boolean = True
+        Dim ipAddress As String = "", accessKey As String = "", securityToken As String = ""
+
+        If proceed Then
+            proceed = testDataInformationSuccessfully()
+        End If
+        If proceed Then
+            ipAddress = InputBox("Insert IP Address of remote server", "Server Address", "localhost")
+        End If
+        If proceed Then
+            If Not serviceFound(ipAddress) Then
+                MessageBox.Show("Problem during test service", "Connection problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                proceed = False
+            End If
+        End If
+        If proceed Then
+            If Not getAccessKey(accessKey, ipAddress) Then
+                MessageBox.Show("Problem during request an access key", "Connection problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                proceed = False
+            End If
+        End If
+        If proceed Then
+            If Not getSecurityToken(securityToken, ipAddress, accessKey) Then
+                MessageBox.Show("Problem during request a security token", "Connection problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                proceed = False
+            End If
+        End If
+        If proceed Then
+            If Not readRemoteConfig(securityToken, ipAddress) Then
+                MessageBox.Show("Problem during transfer a remote config", "Connection problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                proceed = False
+            End If
+        End If
+        If proceed Then
+            MessageBox.Show("Remote settings update", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
     End Sub
 
 End Class

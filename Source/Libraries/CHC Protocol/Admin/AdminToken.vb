@@ -44,10 +44,19 @@ Namespace AreaEngine.Security
         ''' <returns></returns>
         Public Function check(ByVal value As String) As String
             Try
+                Dim expirationTime As Double = 0
+
                 If (_CurrentToken.Length = 0) Then
                     Return "Missing token"
                 End If
-                If (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime > _DateLastAccess + (10 * 60 * 1000)) Then
+
+#If DEBUG Then
+                expirationTime = (60 * 60 * 1000)
+#Else
+                expirationTime = (10 * 60 * 1000)
+#End If
+
+                If (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime > _DateLastAccess + expirationTime) Then
                     _CurrentToken = ""
 
                     Return "Token expired"

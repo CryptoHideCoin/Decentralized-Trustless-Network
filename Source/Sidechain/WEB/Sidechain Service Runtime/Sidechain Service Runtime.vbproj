@@ -54,6 +54,10 @@
     <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Common\CHCCommonLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCModels, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Models\CHCModels.dll</HintPath>
+    </Reference>
     <Reference Include="CHCPrimarySidechainLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Primary Sidechain\CHCPrimarySidechainLibrary.dll</HintPath>
     </Reference>

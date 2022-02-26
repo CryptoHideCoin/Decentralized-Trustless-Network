@@ -89,7 +89,7 @@
     <Compile Include="Common\Internal.vb" />
     <Compile Include="Controllers\Admin\Authorization\RequestAccessKeyController.vb" />
     <Compile Include="Controllers\Admin\Authorization\RequestAdminTokenController.vb" />
-    <Compile Include="Controllers\Admin\Settings\AcquireSettingController.vb" />
+    <Compile Include="Controllers\Admin\Settings\SettingController.vb" />
     <Compile Include="Controllers\Admin\LogStream\LogStreamController.vb" />
     <Compile Include="Controllers\Admin\Maintenance\CleanLogController.vb" />
     <Compile Include="Controllers\Service\InformationController.vb" />
@@ -100,7 +100,6 @@
     <Compile Include="Engines\SecurityEngine.vb" />
     <Compile Include="Engines\SupportEngine.vb" />
     <Compile Include="Models\EnvironmentModel.vb" />
-    <Compile Include="Models\SettingsModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

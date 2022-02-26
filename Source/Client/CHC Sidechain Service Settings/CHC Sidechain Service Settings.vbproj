@@ -76,8 +76,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\CHCModels.dll</HintPath>
     </Reference>
-    <Reference Include="CHCSidechainServiceLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\CHCSidechainServiceLibrary.dll</HintPath>
+    <Reference Include="CHCProtocolLibrary, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\CHCProtocolLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCSupportUIControls, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

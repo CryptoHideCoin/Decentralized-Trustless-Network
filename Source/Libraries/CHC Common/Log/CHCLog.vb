@@ -10,6 +10,7 @@ Option Compare Text
 
 
 Imports CHCCommonLibrary.AreaEngine.Miscellaneous
+Imports CHCModels.AreaModel.Log
 
 
 
@@ -22,18 +23,18 @@ Namespace Support
     ''' </summary>
     Public Class LogEngine
 
-        ''' <summary>
-        ''' This enumeration contain the following value:
-        ''' 
-        ''' dontTrackEver - Don't save a log never
-        ''' trackOnlyBootstrapAndError - Track only bootstrap and error
-        ''' trackAll - Track all event
-        ''' </summary>
-        Public Enum TrackRuntimeModeEnum
-            dontTrackEver
-            trackOnlyBootstrapAndError
-            trackAll
-        End Enum
+        '''' <summary>
+        '''' This enumeration contain the following value:
+        '''' 
+        '''' dontTrackEver - Don't save a log never
+        '''' trackOnlyBootstrapAndError - Track only bootstrap and error
+        '''' trackAll - Track all event
+        '''' </summary>
+        'Public Enum TrackRuntimeModeEnum
+        '    dontTrackEver
+        '    trackOnlyBootstrapAndError
+        '    trackAll
+        'End Enum
 
         ''' <summary>
         ''' This class contain the data of a log file
@@ -54,7 +55,7 @@ Namespace Support
         Private Property _CurrentPage As String = ""
         Private Property _FileName As String = ""
 
-        Public Property saveMode As TrackRuntimeModeEnum = TrackRuntimeModeEnum.dontTrackEver
+        Public Property saveMode As TrackRuntimeModeEnum = TrackRuntimeModeEnum.neverTrace
         Public Property inBootStrapAction As Boolean = False
         Public Property noPrintConsole As Boolean = False
         Public Property useCache As Boolean = True
@@ -102,7 +103,7 @@ Namespace Support
         ''' </summary>
         Private Sub flushCache()
             Try
-                If (saveMode <> TrackRuntimeModeEnum.dontTrackEver) Then
+                If (saveMode <> TrackRuntimeModeEnum.neverTrace) Then
                     Using fileData As IO.StreamWriter = IO.File.AppendText(completeFileName)
                         For Each strTmp In _cache
                             fileData.WriteLine(strTmp)
@@ -189,7 +190,7 @@ Namespace Support
 
                     Return
                 End If
-                If (saveMode = TrackRuntimeModeEnum.dontTrackEver) Then
+                If (saveMode = TrackRuntimeModeEnum.neverTrace) Then
                     Return
                 End If
 

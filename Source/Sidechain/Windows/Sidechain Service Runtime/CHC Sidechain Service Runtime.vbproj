@@ -55,18 +55,23 @@
     <ApplicationIcon>64.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CHCCommonLibrary, Version=1.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.16.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Common\CHCCommonLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCModels, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Models\CHCModels.dll</HintPath>
     </Reference>
     <Reference Include="CHCPrimarySidechainLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Primary Sidechain\CHCPrimarySidechainLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Protocol\CHCProtocolLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCSidechainServiceLibrary">
+    <Reference Include="CHCSidechainServiceLibrary, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
