@@ -648,7 +648,7 @@ Public Class Settings
     ''' <returns></returns>
     Private Function getAccessKey(ByRef accessKey As String, ByVal ipAddress As String) As Boolean
         Try
-            Dim remote As New ProxyWS(Of RequestAccessKeyModel)
+            Dim remote As New ProxyWS(Of ResponseRequestAccessKeyModel)
             Dim proceed As Boolean = True
 
             If proceed Then
@@ -696,7 +696,7 @@ Public Class Settings
     ''' <returns></returns>
     Private Function getSecurityToken(ByRef securityToken As String, ByVal ipAddress As String, ByVal accessKey As String) As Boolean
         Try
-            Dim remote As New ProxyWS(Of RequestAdminSecurityTokenModel)
+            Dim remote As New ProxyWS(Of ResponseRequestAdminSecurityTokenModel)
             Dim proceed As Boolean = True
 
             If proceed Then

@@ -4,6 +4,7 @@ Option Explicit On
 Imports System.Web.Http
 Imports System.Web.Http.SelfHost
 Imports CHCSidechainServiceLibrary.AreaCommon.Main
+Imports CHCModels.AreaModel.Information
 
 
 
@@ -79,7 +80,7 @@ Namespace AreaCommon
                     Do
                         Application.DoEvents()
                         Threading.Thread.Sleep(environment.support.timeSleep)
-                    Loop Until (state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.shutDown)
+                    Loop Until (serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.shutDown)
 
                     server.CloseAsync().Wait()
                     server.Dispose()
@@ -90,7 +91,9 @@ Namespace AreaCommon
 
                 environment.registry.addNew(CHCCommonLibrary.Support.RegistryEngine.RegistryData.TypeEvent.applicationShutdown)
 
-                state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.starting
+                serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.swithOff
+
+                environment.log.track("Controllers.StartWebService", "Service Off")
             Catch ex As Exception
                 environment.log.trackException("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion - Error:" & ex.Message)
 
@@ -124,7 +127,7 @@ Namespace AreaCommon
                 Loop
 
                 If _controllerComplete Then
-                    state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.started
+                    serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started
                 End If
 
                 environment.log.trackExit("Controllers.WebserviceThread")

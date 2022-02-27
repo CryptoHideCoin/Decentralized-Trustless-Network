@@ -2,6 +2,8 @@
 Option Explicit On
 
 Imports CHCSidechainServiceLibrary.AreaCommon.Main
+Imports CHCModels.AreaModel.Information
+
 
 
 
@@ -48,7 +50,7 @@ Namespace AreaCommon.Startup
 
                     .completeAddress += .addressIP & "/api/" & environment.settings.serviceID
 
-                    .currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.starting
+                    .currentStatus = InternalServiceInformation.EnumInternalServiceState.starting
                 End With
 
                 serviceInformation = state.serviceInformation

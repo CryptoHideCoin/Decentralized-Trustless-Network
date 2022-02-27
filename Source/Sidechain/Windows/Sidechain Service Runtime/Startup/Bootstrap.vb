@@ -2,6 +2,7 @@
 Option Explicit On
 
 Imports CHCSidechainServiceLibrary.AreaCommon.Main
+Imports CHCModels.AreaModel.Information
 
 
 
@@ -26,7 +27,7 @@ Namespace AreaCommon.Startup
             Try
                 environment.log.trackEnter("startUp.acquireServiceInformation")
 
-                With state.serviceInformation
+                With serviceInformation
                     .chainName = CUSTOM_ChainServiceName
 
                     If environment.settings.intranetMode Then
@@ -48,10 +49,10 @@ Namespace AreaCommon.Startup
 
                     .completeAddress += .addressIP & "/api/" & environment.settings.serviceID
 
-                    .currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.starting
+                    .currentStatus = InternalServiceInformation.EnumInternalServiceState.starting
                 End With
 
-                serviceInformation = state.serviceInformation
+                serviceInformation = serviceInformation
 
                 environment.log.trackIntoConsole("Acquire service information")
 
@@ -59,11 +60,11 @@ Namespace AreaCommon.Startup
 
                 Return True
             Catch ex As Exception
-                environment.log.trackException("StartUp.loadDataInformation", "Error during Load data information:" & ex.Message)
+                environment.log.trackException("StartUp.acquireServiceInformation", "Error: " & ex.Message)
 
                 Return False
             Finally
-                environment.log.trackExit("startUp.loadDataInformation")
+                environment.log.trackExit("startUp.acquireServiceInformation")
             End Try
         End Function
 

@@ -22,3 +22,4 @@ E:\CryptoHideCoinDTN\Source\Client\CHC Show Log\bin\Debug\CHCModels.dll
 E:\CryptoHideCoinDTN\Source\Client\CHC Show Log\bin\Debug\CHCModels.pdb
 E:\CryptoHideCoinDTN\Source\Client\CHC Show Log\bin\Debug\CHCProtocolLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Client\CHC Show Log\bin\Debug\CHCSidechainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Client\CHC Show Log\bin\Debug\CHCCommonLibrary.pdb

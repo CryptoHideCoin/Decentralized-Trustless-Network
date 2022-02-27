@@ -22,21 +22,21 @@ Partial Class informations
     'Non modificarla mediante l'editor del codice.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.Close = New System.Windows.Forms.Button()
+        Me.closeButton = New System.Windows.Forms.Button()
         Me.releaseLabel = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
-        'Close
+        'closeButton
         '
-        Me.Close.Location = New System.Drawing.Point(157, 123)
-        Me.Close.Name = "Close"
-        Me.Close.Size = New System.Drawing.Size(87, 23)
-        Me.Close.TabIndex = 14
-        Me.Close.Text = "Close"
-        Me.Close.UseVisualStyleBackColor = True
+        Me.closeButton.Location = New System.Drawing.Point(157, 123)
+        Me.closeButton.Name = "closeButton"
+        Me.closeButton.Size = New System.Drawing.Size(87, 23)
+        Me.closeButton.TabIndex = 14
+        Me.closeButton.Text = "Close"
+        Me.closeButton.UseVisualStyleBackColor = True
         '
         'releaseLabel
         '
@@ -82,7 +82,7 @@ Partial Class informations
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(417, 167)
         Me.ControlBox = False
-        Me.Controls.Add(Me.Close)
+        Me.Controls.Add(Me.closeButton)
         Me.Controls.Add(Me.releaseLabel)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -99,7 +99,7 @@ Partial Class informations
 
     End Sub
 
-    Friend WithEvents Close As Button
+    Friend WithEvents closeButton As Button
     Friend WithEvents releaseLabel As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label

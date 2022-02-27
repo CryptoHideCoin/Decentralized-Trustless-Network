@@ -68,7 +68,7 @@
     <ApplicationIcon>64.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CHCCommonLibrary, Version=1.14.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.16.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\CHCCommonLibrary.dll</HintPath>
     </Reference>
@@ -104,6 +104,7 @@
     <Compile Include="Command\CommandInfo.vb" />
     <Compile Include="Command\CommandIPAddress.vb" />
     <Compile Include="Command\CommandRelease.vb" />
+    <Compile Include="Command\CommandShowLog.vb" />
     <Compile Include="Command\CommandUpdateSystemDate.vb" />
     <Compile Include="Application\CommandProcessor.vb" />
     <Compile Include="Models\Models.vb" />

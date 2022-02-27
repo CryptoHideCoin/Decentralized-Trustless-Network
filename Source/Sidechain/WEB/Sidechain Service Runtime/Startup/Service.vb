@@ -2,6 +2,7 @@
 Option Explicit On
 
 Imports CHCSidechainServiceLibrary.AreaCommon.Main
+Imports CHCModels.AreaModel.Information
 
 
 
@@ -50,7 +51,7 @@ Namespace AreaCommon.Startup
                 If proceed Then
                     environment.log.track("startUp.Service.runService", "Counter is running")
 
-                    state.serviceInformation.currentStatus = CHCProtocolLibrary.AreaCommon.Models.Service.InternalServiceInformation.EnumInternalServiceState.started
+                    state.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started
                 End If
                 If proceed Then
                     environment.log.trackIntoConsole("Admin port (" & environment.settings.servicePort & ") service in listen")

@@ -9,7 +9,7 @@ Public Class informations
         releaseLabel.Text = Application.ProductVersion
     End Sub
 
-    Private Sub Close_Click(sender As Object, e As EventArgs) Handles Close.Click
+    Private Sub Close_Click(sender As Object, e As EventArgs) Handles closeButton.Click
         Hide()
     End Sub
 

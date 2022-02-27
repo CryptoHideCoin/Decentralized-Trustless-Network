@@ -87,7 +87,7 @@ Namespace AreaCommon
         Private Function manageParameters(ByRef value As CommandStructure) As Boolean
             Try
                 If value.haveParameter("dataPath") Then
-                    _DataPath = value.parameters("dataPath").value
+                    _DataPath = value.parameters("dataPath".ToLower()).value
                 End If
                 If value.haveParameter("service") Then
                     _Service = value.parameters("service").value
@@ -99,7 +99,7 @@ Namespace AreaCommon
                     _Mode = value.parameters("mode").value
                 End If
                 If value.haveParameter("securityKey") Then
-                    _SecurityKey = value.parameters("securityKey").value
+                    _SecurityKey = value.parameters("securityKey".ToLower()).value
                 End If
                 If value.haveParameter("address") Then
                     _Address = value.parameters("address").value
@@ -300,7 +300,7 @@ Namespace AreaCommon
         ''' <returns></returns>
         Private Function getAccessKey() As Boolean
             Try
-                Dim remote As New ProxyWS(Of RequestAccessKeyModel)
+                Dim remote As New ProxyWS(Of ResponseRequestAccessKeyModel)
                 Dim proceed As Boolean = True
 
                 If proceed Then
@@ -332,7 +332,7 @@ Namespace AreaCommon
         ''' <returns></returns>
         Private Function getSecurityToken() As Boolean
             Try
-                Dim remote As New ProxyWS(Of RequestAdminSecurityTokenModel)
+                Dim remote As New ProxyWS(Of ResponseRequestAdminSecurityTokenModel)
                 Dim proceed As Boolean = True
 
                 If proceed Then

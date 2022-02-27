@@ -36,7 +36,7 @@ Namespace AreaCommon.Command
                     parameterService = "--service:" & _Command.parameters("service").value
                 End If
                 If _Command.haveParameter("dataPath") Then
-                    parameterDataPath = "--dataPath:" & _Command.parameters("dataPath").value
+                    parameterDataPath = "--dataPath:" & _Command.parameters("dataPath".ToLower()).value
                 End If
                 If _Command.haveParameter("password") Then
                     parameterPassword = "--password:" & _Command.parameters("password").value
@@ -46,7 +46,7 @@ Namespace AreaCommon.Command
                         Console.WriteLine("Error: insufficient parameters")
                     End If
 
-                    path = IO.Path.Combine(_Command.parameters("dataPath").value, "Settings")
+                    path = IO.Path.Combine(_Command.parameters("dataPath".ToLower()).value, "Settings")
                     path = IO.Path.Combine(path, _Command.parameters("service").value & ".Settings")
 
                     If Not IO.File.Exists(path) Then Return False
@@ -55,7 +55,12 @@ Namespace AreaCommon.Command
                     Return True
                 End If
 
+#If DEBUG Then
+                path = "E:\CryptoHideCoinDTN\Binary\Applications\Windows\CHC Cmd"
+#Else
                 path = Environment.CurrentDirectory
+#End If
+
                 path = IO.Directory.GetParent(path).FullName
                 path = IO.Path.Combine(path, "CHC Sidechain Service Settings")
 
@@ -65,7 +70,7 @@ Namespace AreaCommon.Command
                     If Not IO.File.Exists(path) Then
                         Console.WriteLine("Error: the application '" & path & "' is not exist")
                     Else
-                        Process.Start(path, "-force " & parameterService & " " & parameterDataPath)
+                        Process.Start(path, "-force " & parameterService & " " & parameterDataPath & " " & parameterPassword)
                     End If
                 Else
                     Console.WriteLine("Error: the directory '" & path & "' is not exist")

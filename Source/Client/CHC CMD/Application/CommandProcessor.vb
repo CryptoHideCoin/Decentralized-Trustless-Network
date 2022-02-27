@@ -19,8 +19,9 @@ Namespace AreaCommon
         Private Const _commandHelp As String = "help"
         Private Const _commandUpdateSystemDate As String = "updateSystemDate"
         Private Const _commandCurrentTime As String = "currentTime"
-        Private Const _commandChainServiceSettings As String = "chainServiceSettings"
+        Private Const _commandChainServiceSettings As String = "sideChainServiceSettings"
         Private Const _commandIPAddress As String = "ipAddress"
+        Private Const _commandShowLog As String = "showLog"
 
 
         Public Property command As New CommandStructure
@@ -46,7 +47,8 @@ Namespace AreaCommon
                     Case _commandUpdateSystemDate.ToLower() : classSupport = New Command.CommandUpdateSystemDate
                     Case _commandCurrentTime.ToLower() : classSupport = New Command.CommandCurrentTime
                     Case _commandChainServiceSettings.ToLower() : classSupport = New Command.CommandChainServiceSettings
-                    Case _commandIPAddress.ToLower() : classSupport = New Command.CommandIpAddress
+                    Case _commandIPAddress.ToLower() : classSupport = New Command.CommandIPAddress
+                    Case _commandShowLog.ToLower() : classSupport = New Command.CommandShowLog
                     Case Else
                         If (command.code.Length > 0) Then
                             Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")

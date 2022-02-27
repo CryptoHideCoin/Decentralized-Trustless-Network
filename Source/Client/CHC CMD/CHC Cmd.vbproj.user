@@ -11,9 +11,9 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-ipAddress --pause</StartArguments>
+    <StartArguments>-showLog --service:primary --dataPath:e:\data</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <StartArguments>-ipAddress</StartArguments>
+    <StartArguments>-sideChainServiceSettings --service:primary --dataPath:e:\data</StartArguments>
   </PropertyGroup>
 </Project>
