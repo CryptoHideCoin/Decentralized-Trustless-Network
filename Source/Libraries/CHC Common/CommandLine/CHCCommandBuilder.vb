@@ -46,7 +46,7 @@ Namespace AreaEngine.CommandLine
                 _CurrentParameter = newParameter
                 value = value.Substring(2)
                 separated = value.Split(":")
-                newParameter.key = separated(0)
+                newParameter.key = separated(0).ToLower()
 
                 If parameters.ContainsKey(newParameter.key) Then
                     Return False
@@ -54,7 +54,7 @@ Namespace AreaEngine.CommandLine
 
                 If (separated.Count > 0) Then
                     If (newParameter.key.Length + 1 < value.Length) Then
-                        newParameter.value = value.Substring(newParameter.key.Length + 1)
+                        newParameter.value = value.Substring(newParameter.key.Length + 1).ToLower()
                     End If
                 End If
 
@@ -96,7 +96,7 @@ Namespace AreaEngine.CommandLine
         ''' <returns></returns>
         <DebuggerHiddenAttribute()> Public Function haveParameter(ByVal name As String) As Boolean
             Try
-                Return parameters.ContainsKey(name)
+                Return parameters.ContainsKey(name.ToLower())
             Catch ex As Exception
                 Return False
             End Try
@@ -109,8 +109,8 @@ Namespace AreaEngine.CommandLine
         ''' <returns></returns>
         <DebuggerHiddenAttribute()> Public Function parameterValue(ByVal key As String) As String
             Try
-                If parameters.ContainsKey(key) Then
-                    Return parameters(key).value
+                If parameters.ContainsKey(key.ToLower()) Then
+                    Return parameters(key.ToLower()).value
                 Else
                     Return ""
                 End If

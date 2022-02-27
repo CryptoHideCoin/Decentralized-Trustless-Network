@@ -46,3 +46,5 @@ E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Debu
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Debug\CHCSidechainServiceRuntime.exe
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Debug\CHCSidechainServiceRuntime.pdb
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCModels.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCSidechainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCCommonLibrary.pdb
