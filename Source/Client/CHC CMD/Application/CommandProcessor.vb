@@ -22,6 +22,8 @@ Namespace AreaCommon
         Private Const _commandChainServiceSettings As String = "sideChainServiceSettings"
         Private Const _commandIPAddress As String = "ipAddress"
         Private Const _commandShowLog As String = "showLog"
+        Private Const _commandStopServe As String = "stopServe"
+        Private Const _commandTestServe As String = "testServe"
 
 
         Public Property command As New CommandStructure
@@ -49,6 +51,8 @@ Namespace AreaCommon
                     Case _commandChainServiceSettings.ToLower() : classSupport = New Command.CommandChainServiceSettings
                     Case _commandIPAddress.ToLower() : classSupport = New Command.CommandIPAddress
                     Case _commandShowLog.ToLower() : classSupport = New Command.CommandShowLog
+                    Case _commandStopServe.ToLower() : classSupport = New Command.CommandStopServe
+                    Case _commandTestServe.ToLower() : classSupport = New Command.CommandTestServe
                     Case Else
                         If (command.code.Length > 0) Then
                             Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")
@@ -70,12 +74,10 @@ Namespace AreaCommon
 
                 response = classSupport.run()
 
-                If response Then
-                    If command.haveParameter("pause") Then
-                        Console.WriteLine("")
-                        Console.WriteLine("Press a key to continue")
-                        Console.ReadKey()
-                    End If
+                If command.haveParameter("pause") Or Not response Then
+                    Console.WriteLine("")
+                    Console.WriteLine("Press a key to continue")
+                    Console.ReadKey()
                 End If
 
                 Return response

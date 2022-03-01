@@ -72,6 +72,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\CHCCommonLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCModels, Version=0.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\CHCModels.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCProtocolLibrary, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="CHCSidechainServiceLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
@@ -105,6 +113,8 @@
     <Compile Include="Command\CommandIPAddress.vb" />
     <Compile Include="Command\CommandRelease.vb" />
     <Compile Include="Command\CommandShowLog.vb" />
+    <Compile Include="Command\CommandStopServe.vb" />
+    <Compile Include="Command\CommandTestServe.vb" />
     <Compile Include="Command\CommandUpdateSystemDate.vb" />
     <Compile Include="Application\CommandProcessor.vb" />
     <Compile Include="Models\Models.vb" />

@@ -10,7 +10,7 @@ Imports CHCCommonLibrary.AreaEngine.CommandLine
 Namespace AreaCommon.Command
 
     ''' <summary>
-    ''' This class manage the command release 
+    ''' This class manage the command Show Log 
     ''' </summary>
     Public Class CommandShowLog : Implements CommandModel
 
@@ -74,12 +74,14 @@ Namespace AreaCommon.Command
                         Console.WriteLine("Error: the application '" & path & "' is not exist")
                     Else
                         Process.Start(path, "-force " & parameterService & " " & parameterDataPath & " " & parameterPassword & " " & parameterMode & " " & parameterAddress & " " & parameterSecurityKey)
+
+                        Return True
                     End If
                 Else
                     Console.WriteLine("Error: the directory '" & path & "' is not exist")
                 End If
 
-                Return True
+                Return False
             Catch ex As Exception
                 Return False
             End Try

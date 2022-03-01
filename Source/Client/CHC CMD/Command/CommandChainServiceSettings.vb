@@ -10,7 +10,7 @@ Imports CHCCommonLibrary.AreaEngine.CommandLine
 Namespace AreaCommon.Command
 
     ''' <summary>
-    ''' This class manage the command Current Time 
+    ''' This class manage the command Sidechain Service Settings
     ''' </summary>
     Public Class CommandChainServiceSettings : Implements CommandModel
 
@@ -71,12 +71,14 @@ Namespace AreaCommon.Command
                         Console.WriteLine("Error: the application '" & path & "' is not exist")
                     Else
                         Process.Start(path, "-force " & parameterService & " " & parameterDataPath & " " & parameterPassword)
+
+                        Return True
                     End If
                 Else
                     Console.WriteLine("Error: the directory '" & path & "' is not exist")
                 End If
 
-                Return True
+                Return False
             Catch ex As Exception
                 Return False
             End Try

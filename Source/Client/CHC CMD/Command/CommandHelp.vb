@@ -39,6 +39,11 @@ Namespace AreaCommon.Command
             Console.WriteLine("   --dataPath:               Set a data path")
             Console.WriteLine("   --showAsFile              Show the content in a notepad")
             Console.WriteLine("   --password:               Set a password to decode")
+            Console.WriteLine("-showLog                     Show a log of a service")
+            Console.WriteLine("   --service:                Set a service name")
+            Console.WriteLine("   --dataPath:               Set a data path")
+            Console.WriteLine("   --password:               Set a password to decode settings file")
+            Console.WriteLine("   --securityKey:            Set a password of a security key")
 
             Return True
         End Function
