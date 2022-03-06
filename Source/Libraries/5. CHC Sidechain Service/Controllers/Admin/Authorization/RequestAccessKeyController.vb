@@ -5,7 +5,6 @@ Imports System.Web.Http
 
 Imports CHCModels.AreaModel.Administration.Security
 Imports CHCModels.AreaModel.Network.Response
-Imports CHCProtocolLibrary.AreaCommon
 Imports CHCModels.AreaModel.Information
 
 

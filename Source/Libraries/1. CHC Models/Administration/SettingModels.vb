@@ -27,7 +27,6 @@ Namespace AreaModel.Administration.Settings
 
         Public Property publicPort As Integer = 0
         Public Property servicePort As Integer = 0
-        Public Property localWorkMachinePort As Integer = 0
 
         Public Property intranetMode As Boolean = False
         Public Property secureChannel As Boolean = False

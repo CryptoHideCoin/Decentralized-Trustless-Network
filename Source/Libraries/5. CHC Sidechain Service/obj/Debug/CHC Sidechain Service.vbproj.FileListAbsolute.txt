@@ -30,3 +30,4 @@ E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Debug\CHC Sid
 E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Debug\CHC Sidechain Service.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Debug\CHCSidechainServiceLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Debug\CHCSidechainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\bin\Debug\CHCModels.pdb

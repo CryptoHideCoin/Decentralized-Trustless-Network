@@ -51,7 +51,7 @@ Namespace AreaEngine.Security
                 End If
 
 #If DEBUG Then
-                expirationTime = (60 * 60 * 1000)
+                expirationTime = (24 * 60 * 1000)
 #Else
                 expirationTime = (10 * 60 * 1000)
 #End If

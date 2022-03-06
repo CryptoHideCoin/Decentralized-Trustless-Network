@@ -70,7 +70,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Protocol\CHCProtocolLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCSidechainServiceLibrary, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCSidechainServiceLibrary, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>

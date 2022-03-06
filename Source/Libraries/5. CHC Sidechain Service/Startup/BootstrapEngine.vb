@@ -15,7 +15,6 @@ Namespace AreaCommon.Startup
     Public Class Bootstrap
 
         Private Property _DataPath As String = ""
-        Private Property _SecurityKey As String = ""
 
 
         ''' <summary>
@@ -59,7 +58,7 @@ Namespace AreaCommon.Startup
         ''' This method provide to read a command line parameters
         ''' </summary>
         ''' <returns></returns>
-        Public Function readParameters(Optional ByVal dataPath As String = "", Optional ByVal password As String = "", Optional ByVal securityKey As String = "") As Boolean
+        Public Function readParameters(Optional ByVal dataPathParameter As String = "", Optional ByVal passwordParameter As String = "", Optional ByVal securityKeyParameter As String = "") As Boolean
             Try
                 Dim command As New CommandStructure
                 Dim engine As New CommandBuilder
@@ -69,11 +68,11 @@ Namespace AreaCommon.Startup
                 If (command.code.ToLower.CompareTo("force") = 0) Then
                     _DataPath = command.parameterValue("dataPath")
                     Main.settingsPassword = command.parameterValue("password")
-                    _SecurityKey = command.parameterValue("securityKey")
+                    Main.securityKey = command.parameterValue("securityKey")
                 Else
-                    _DataPath = dataPath
-                    Main.settingsPassword = password
-                    _SecurityKey = securityKey
+                    _DataPath = dataPathParameter
+                    Main.settingsPassword = passwordParameter
+                    Main.securityKey = securityKeyParameter
                 End If
 
                 Return True
@@ -204,7 +203,7 @@ Namespace AreaCommon.Startup
                             If keyStoreManager.read() Then
                                 For Each item In keyStoreManager.data
                                     If (item.uuid.CompareTo(uuidWallet) = 0) Then
-                                        environment.keys.administration.public = readWalletAddress(item.uuid, _SecurityKey)
+                                        environment.keys.administration.public = readWalletAddress(item.uuid, Main.securityKey)
 
                                         Return True
                                     End If

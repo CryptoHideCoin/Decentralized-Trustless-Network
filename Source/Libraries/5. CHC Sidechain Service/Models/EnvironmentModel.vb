@@ -28,6 +28,7 @@ Namespace AreaChain.Runtime.Models
     Public Class ResponseIOOperation
         Public Property successful As Boolean = False
         Public Property problemDescription As String = ""
+        Public Property settings As New SettingsSidechainService
     End Class
 
     ''' <summary>
@@ -35,15 +36,16 @@ Namespace AreaChain.Runtime.Models
     ''' </summary>
     Public Class EnvironmentModel
 
-        Public paths As New VirtualPathEngine
-        Public log As New TrackEngine
-        Public counter As New CounterEngine
-        Public registry As New RegistryEngine
-        Public settings As New SettingsSidechainService
-        Public ipAddress As New IPAddressConfiguration
-        Public keys As New KeysEngine
-        Public support As New AreaCommon.Engine.SupportEngine
-        Public adminToken As New AdminTokenEngine
+        Public Property paths As New VirtualPathEngine
+        Public Property log As New TrackEngine
+        Public Property counter As New CounterEngine
+        Public Property registry As New RegistryEngine
+        Public Property settings As New SettingsSidechainService
+        Public Property localWorkMachineSettings As New SettingsSidechainService
+        Public Property ipAddress As New IPAddressConfiguration
+        Public Property keys As New KeysEngine
+        Public Property support As New AreaCommon.Engine.SupportEngine
+        Public Property adminToken As New AdminTokenEngine
 
         ''' TODO: Complete this class
 
@@ -58,7 +60,7 @@ Namespace AreaChain.Runtime.Models
         ''' </summary>
         ''' <param name="chainServiceName"></param>
         ''' <returns></returns>
-        Public Function readSettings(ByVal chainServiceName As String) As ResponseIOOperation
+        Public Shared Function readSettings(ByVal chainServiceName As String, Optional ByVal noSetEnvironment As Boolean = False) As ResponseIOOperation
             Dim response As New ResponseIOOperation
 
             Try
@@ -82,10 +84,17 @@ Namespace AreaChain.Runtime.Models
                 engineFile.fileName = completeFileName
 
                 If engineFile.read() Then
-                    AreaCommon.Main.environment.settings = engineFile.data
+                    If Not noSetEnvironment Then
+                        If (chainServiceName.ToLower().CompareTo("localworkmachine") = 0) Then
+                            AreaCommon.Main.environment.localWorkMachineSettings = engineFile.data
+                        Else
+                            AreaCommon.Main.environment.settings = engineFile.data
+                        End If
 
-                    AreaCommon.Main.environment.log.trackIntoConsole("Settings data read")
+                        AreaCommon.Main.environment.log.trackIntoConsole("Settings data read")
+                    End If
 
+                    response.settings = engineFile.data
                     response.successful = True
 
                     Return response

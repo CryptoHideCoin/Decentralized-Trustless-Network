@@ -99,6 +99,7 @@
     <Compile Include="Controllers\Service\TestController.vb" />
     <Compile Include="Engines\CleanLogEngine.vb" />
     <Compile Include="Engines\NetworkEngine.vb" />
+    <Compile Include="Engines\SchedulerEngine.vb" />
     <Compile Include="Engines\SecurityEngine.vb" />
     <Compile Include="Engines\SupportEngine.vb" />
     <Compile Include="Models\EnvironmentModel.vb" />

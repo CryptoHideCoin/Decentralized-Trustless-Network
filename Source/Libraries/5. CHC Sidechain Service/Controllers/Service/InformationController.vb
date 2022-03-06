@@ -38,6 +38,8 @@ Namespace Controllers
 
                     If (response.Length = 0) Then
                         result.value = AreaCommon.Main.serviceInformation
+
+                        AreaCommon.Main.updateLastGetServiceInformation = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                     Else
                         result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
                         result.errorDescription = response

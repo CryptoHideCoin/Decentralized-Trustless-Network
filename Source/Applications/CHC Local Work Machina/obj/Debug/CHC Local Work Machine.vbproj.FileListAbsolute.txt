@@ -1,0 +1,23 @@
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\CHCLocalWorkMachine.exe.config
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\CHCLocalWorkMachine.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\CHCLocalWorkMachine.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\obj\Debug\CHC Local Work Machine.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\obj\Debug\CHCLocalWorkMachine.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\obj\Debug\CHC Local Work Machine.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\obj\Debug\CHCLocalWorkMachine.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\obj\Debug\CHCLocalWorkMachine.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\obj\Debug\CHCLocalWorkMachine.ServiceList.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\CHCModels.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\System.Web.Http.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\obj\Debug\CHC Local Work Machine.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\CHCModels.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\CHCSidechainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\System.Net.Http.Formatting.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\System.Web.Http.SelfHost.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\bin\Debug\System.Web.Http.SelfHost.xml

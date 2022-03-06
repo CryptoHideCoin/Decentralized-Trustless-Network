@@ -104,7 +104,9 @@ Namespace AreaCommon.Startup
                     End If
                 End If
                 If proceed Then
+#Disable Warning BC42025
                     With environment.readSettings(CUSTOM_ChainServiceName)
+#Enable Warning BC42025 
                         proceed = .successful
 
                         If Not proceed Then

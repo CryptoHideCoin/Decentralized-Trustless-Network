@@ -13,10 +13,6 @@ Namespace AreaCommon.Startup
     ''' </summary>
     Module Bootstrap
 
-        Private Property _Bootstrap As New CHCSidechainServiceLibrary.AreaCommon.Startup.Bootstrap
-
-
-
         ''' <summary>
         ''' This method provide to acquire the service information
         ''' </summary>
@@ -55,7 +51,6 @@ Namespace AreaCommon.Startup
                 serviceInformation = serviceInformation
 
                 environment.log.trackIntoConsole("Acquire service information")
-
                 environment.log.trackExit("startUp.acquireServiceInformation")
 
                 Return True
@@ -75,25 +70,26 @@ Namespace AreaCommon.Startup
         ''' <returns></returns>
         Public Function run() As Boolean
             Try
+                Dim bootstrap As New CHCSidechainServiceLibrary.AreaCommon.Startup.Bootstrap
                 Dim problemDescription As String
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    If Not _Bootstrap.readParameters() Then
+                    If Not bootstrap.readParameters() Then
                         MessageBox.Show("Problem during read a parameters", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                         proceed = False
                     End If
                 End If
                 If proceed Then
-                    If Not _Bootstrap.printWelcome(CUSTOM_ChainServiceName, My.Application.Info.Version.ToString()) Then
+                    If Not bootstrap.printWelcome(CUSTOM_ChainServiceName, My.Application.Info.Version.ToString()) Then
                         MessageBox.Show("Problem during print a welcome", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                         proceed = False
                     End If
                 End If
                 If proceed Then
-                    If Not _Bootstrap.managePath(problemDescription) Then
+                    If Not bootstrap.managePath(problemDescription) Then
                         MessageBox.Show(problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                         proceed = False
@@ -104,27 +100,34 @@ Namespace AreaCommon.Startup
                         proceed = .successful
 
                         If Not proceed Then
-                            MessageBox.Show(problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                            MessageBox.Show(.problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                             proceed = False
                         End If
                     End With
                 End If
                 If proceed Then
-                    If Not _Bootstrap.trackRuntimeStart(problemDescription) Then
+                    If Not bootstrap.trackRuntimeStart(problemDescription) Then
                         MessageBox.Show(problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                         proceed = False
                     End If
                 End If
                 If proceed Then
-                    proceed = _Bootstrap.acquireIPAddress()
+                    proceed = bootstrap.acquireIPAddress()
                 End If
                 If proceed Then
                     proceed = acquireServiceInformation()
                 End If
                 If proceed Then
-                    proceed = _Bootstrap.readAdminKeyStore()
+                    proceed = bootstrap.readAdminKeyStore()
+                End If
+                If proceed Then
+                    With environment.readSettings("LocalWorkMachine")
+                        If .successful Then
+                            Scheduler.addWorkLocalMachineJob()
+                        End If
+                    End With
                 End If
                 If proceed Then
                     environment.log.trackIntoConsole("Root paths set " & environment.paths.directoryData)

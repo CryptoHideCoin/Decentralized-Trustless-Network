@@ -14,12 +14,15 @@ Imports CHCModels.AreaModel.Information
 
 Namespace AreaCommon
 
-    Public Class Main
+    Partial Public Class Main
 
         Public Shared Property environment As New AreaChain.Runtime.Models.EnvironmentModel
         Public Shared Property serviceInformation As New InternalServiceInformation
         Public Shared Property settingsPassword As String = ""
+        Public Shared Property securityKey As String = ""
         Public Shared Property securityTokenSwitchOnService As String = ""
+
+        Friend Shared Property updateLastGetServiceInformation As Double = 0
 
     End Class
 
