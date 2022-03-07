@@ -27,8 +27,6 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Debug\Newtonsoft.Json.dll
 E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Debug\CHCBasicCryptographyLibrary.dll
 E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Debug\System.Web.Http.dll
 E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Debug\BouncyCastle.Crypto.dll
-E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Debug\CHCModels.pdb
-E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Debug\CHCSidechainServiceLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHC Cmd.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHCCmd.Resources.resources
 E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHC Cmd.vbproj.GenerateResource.cache

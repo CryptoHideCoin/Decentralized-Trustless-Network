@@ -10,9 +10,9 @@ Imports CHCCommonLibrary.AreaEngine.CommandLine
 Namespace AreaCommon.Command
 
     ''' <summary>
-    ''' This class manage the command Show Log 
+    ''' This class manage the command Sidechain Service Settings
     ''' </summary>
-    Public Class CommandShowLog : Implements CommandModel
+    Public Class CommandStartServe : Implements CommandModel
 
         Private Property _Command As CommandStructure
 
@@ -31,9 +31,8 @@ Namespace AreaCommon.Command
                 Dim parameterService As String = ""
                 Dim parameterDataPath As String = ""
                 Dim parameterPassword As String = ""
-                Dim parameterMode As String = ""
-                Dim parameterAddress As String = ""
-                Dim parameterSecurityKey As String = ""
+                Dim directory As String = ""
+                Dim exeFileName As String = ""
 
                 If _Command.haveParameter("service") Then
                     parameterService = "--service:" & _Command.parameterValue("service")
@@ -44,36 +43,29 @@ Namespace AreaCommon.Command
                 If _Command.haveParameter("password") Then
                     parameterPassword = "--password:" & _Command.parameterValue("password")
                 End If
-                If _Command.haveParameter("securityKey") Then
-                    parameterSecurityKey = "--password:" & _Command.parameterValue("securityKey")
-                End If
-                If _Command.haveParameter("mode") Then
-                    parameterMode = "--mode:" & _Command.parameterValue("mode")
-                Else
-                    parameterMode = "--mode:Console"
-                End If
-                If _Command.haveParameter("address") Then
-                    parameterPassword = "--address:" & _Command.parameterValue("address")
-                Else
-                    parameterPassword = "--address:localhost"
-                End If
 
 #If DEBUG Then
-                path = "E:\CryptoHideCoinDTN\Binary\Applications\Windows\CHC Cmd"
+                path = "E:\CryptoHideCoinDTN\Binary\Sidechains\Windows\CHC Sidechain Service Runtime"
 #Else
                 path = Environment.CurrentDirectory
 #End If
 
+                Select Case _Command.parameterValue("service").ToLower()
+                    Case "sidechainservice"
+                        directory = "CHC Sidechain Service Runtime"
+                        exeFileName = "CHCSidechainServiceRuntime.exe"
+                End Select
+
                 path = IO.Directory.GetParent(path).FullName
-                path = IO.Path.Combine(path, "CHC Show Log")
+                path = IO.Path.Combine(path, directory)
 
                 If IO.Directory.Exists(path) Then
-                    path = IO.Path.Combine(path, "CHCShowlog.exe")
+                    path = IO.Path.Combine(path, exeFileName)
 
                     If Not IO.File.Exists(path) Then
                         Console.WriteLine("Error: the application '" & path & "' is not exist")
                     Else
-                        Process.Start(path, "-force " & parameterService & " " & parameterDataPath & " " & parameterPassword & " " & parameterMode & " " & parameterAddress & " " & parameterSecurityKey)
+                        Process.Start(path, "-force " & parameterService & " " & parameterDataPath & " " & parameterPassword)
 
                         Return True
                     End If

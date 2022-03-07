@@ -33,21 +33,21 @@ Namespace AreaCommon.Command
                 Dim parameterPassword As String = ""
 
                 If _Command.haveParameter("service") Then
-                    parameterService = "--service:" & _Command.parameters("service").value
+                    parameterService = "--service:" & _Command.parameterValue("service")
                 End If
                 If _Command.haveParameter("dataPath") Then
-                    parameterDataPath = "--dataPath:" & _Command.parameters("dataPath".ToLower()).value
+                    parameterDataPath = "--dataPath:" & _Command.parameterValue("dataPath")
                 End If
                 If _Command.haveParameter("password") Then
-                    parameterPassword = "--password:" & _Command.parameters("password").value
+                    parameterPassword = "--password:" & _Command.parameterValue("password")
                 End If
                 If _Command.haveParameter("showAsFile") Then
                     If (parameterService.Length = 0) Or (parameterDataPath.Length = 0) Then
                         Console.WriteLine("Error: insufficient parameters")
                     End If
 
-                    path = IO.Path.Combine(_Command.parameters("dataPath".ToLower()).value, "Settings")
-                    path = IO.Path.Combine(path, _Command.parameters("service").value & ".Settings")
+                    path = IO.Path.Combine(_Command.parameterValue("dataPath"), "Settings")
+                    path = IO.Path.Combine(path, _Command.parameterValue("service") & ".Settings")
 
                     If Not IO.File.Exists(path) Then Return False
                     Process.Start("notepad.exe", path)

@@ -47,27 +47,27 @@ Namespace AreaCommon.Command
         Private Function readParameters() As Boolean
             Try
                 If _Command.haveParameter("service") Then
-                    _ParameterService = _Command.parameters("service").value
+                    _ParameterService = _Command.parameterValue("service")
                 Else
                     Console.WriteLine("Service parameter not found!")
 
                     Return False
                 End If
                 If _Command.haveParameter("dataPath") Then
-                    _ParameterDataPath = _Command.parameters("dataPath".ToLower()).value
+                    _ParameterDataPath = _Command.parameterValue("dataPath".ToLower())
                 Else
                     Console.WriteLine("DataPath parameter not found!")
 
                     Return False
                 End If
                 If _Command.haveParameter("password") Then
-                    _ParameterPassword = _Command.parameters("password").value
+                    _ParameterPassword = _Command.parameterValue("password")
                 End If
                 If _Command.haveParameter("securityKey") Then
-                    _ParameterSecurityKey = _Command.parameters("securityKey".ToLower).value
+                    _ParameterSecurityKey = _Command.parameterValue("securityKey".ToLower)
                 End If
                 If _Command.haveParameter("address") Then
-                    _ParameterAddress = _Command.parameters("address").value
+                    _ParameterAddress = _Command.parameterValue("address")
                 Else
                     _ParameterAddress = "localhost"
                 End If

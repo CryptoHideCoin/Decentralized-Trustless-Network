@@ -24,6 +24,7 @@ Namespace AreaCommon
         Private Const _commandShowLog As String = "showLog"
         Private Const _commandStopServe As String = "stopServe"
         Private Const _commandTestServe As String = "testServe"
+        Private Const _commandStartServe As String = "startServe"
 
 
         Public Property command As New CommandStructure
@@ -53,6 +54,7 @@ Namespace AreaCommon
                     Case _commandShowLog.ToLower() : classSupport = New Command.CommandShowLog
                     Case _commandStopServe.ToLower() : classSupport = New Command.CommandStopServe
                     Case _commandTestServe.ToLower() : classSupport = New Command.CommandTestServe
+                    Case _commandStartServe.ToLower() : classSupport = New Command.CommandStartServe
                     Case Else
                         If (command.code.Length > 0) Then
                             Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")
