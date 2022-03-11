@@ -10,9 +10,9 @@ Imports CHCCommonLibrary.AreaEngine.CommandLine
 Namespace AreaCommon.Command
 
     ''' <summary>
-    ''' This class manage the command a create new environment
+    ''' This class manage the command a Get Current Environment
     ''' </summary>
-    Public Class CommandCreateNewEnvironment : Implements CommandModel
+    Public Class CommandGetCurrentEnvironment : Implements CommandModel
 
         Private Property _Command As CommandStructure
 
@@ -27,31 +27,22 @@ Namespace AreaCommon.Command
 
         Private Function CommandModel_run() As Boolean Implements CommandModel.run
             Try
-                If Not _Command.haveParameter("name") Then
-                    Console.WriteLine("Error: name missing")
-
-                    Return False
-                End If
-
-                If Not _Command.haveParameter("dataPath") Then
-                    Console.WriteLine("Error: dataPath parameter missing")
-
-                    Return False
-                End If
-
                 Dim path As String = AreaEngine.EnvironmentRepositoryEngine.searchUserEnvironmentPath()
                 Dim environmentRepositoryPath As String = IO.Path.Combine(path, "environment.path")
-                Dim environmentPath As String = ""
+                Dim environmentSET As String = ""
+                Dim currentEnvironment As String = ""
 
                 If IO.File.Exists(environmentRepositoryPath) Then
-                    environmentPath = IO.File.ReadAllText(environmentRepositoryPath)
+                    environmentSET = IO.File.ReadAllText(environmentRepositoryPath)
 
-                    environmentPath = IO.Path.Combine(environmentPath, "Environments.list")
+                    environmentSET = IO.Path.Combine(environmentSET, "Environments.list")
 
-                    If AreaEngine.EnvironmentsEngine.createNew(environmentPath, _Command.parameterValue("name"), _Command.parameterValue("dataPath")) Then
-                        Console.WriteLine("Environment created successfully")
+                    currentEnvironment = AreaEngine.EnvironmentsEngine.getCurrent(environmentSET)
+
+                    If (currentEnvironment.Length > 0) Then
+                        Console.WriteLine("Environment current = '" & currentEnvironment & "'")
                     Else
-                        Console.WriteLine("Error: Problem during create a new environment")
+                        Console.WriteLine("Error: current environment not found")
                     End If
                 Else
                     Console.WriteLine("Error: Environment Repository not set")

@@ -109,11 +109,15 @@
     <Compile Include="Command\CommandChainServiceSettings.vb" />
     <Compile Include="Command\CommandCreateNewEnvironment.vb" />
     <Compile Include="Command\CommandCurrentTime.vb" />
+    <Compile Include="Command\CommandGetCurrentEnvironment.vb" />
+    <Compile Include="Command\CommandGetEnvironmentList.vb" />
     <Compile Include="Command\CommandGetEnvironmentRepository.vb" />
     <Compile Include="Command\CommandHelp.vb" />
     <Compile Include="Command\CommandInfo.vb" />
     <Compile Include="Command\CommandIPAddress.vb" />
     <Compile Include="Command\CommandRelease.vb" />
+    <Compile Include="Command\CommandRemoveEnvironment.vb" />
+    <Compile Include="Command\CommandSetCurrentEnvironment.vb" />
     <Compile Include="Command\CommandSetEnvironmentRepository.vb" />
     <Compile Include="Command\CommandShowLog.vb" />
     <Compile Include="Command\CommandStartServe.vb" />

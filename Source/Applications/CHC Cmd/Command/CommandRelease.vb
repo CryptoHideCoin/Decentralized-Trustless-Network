@@ -10,7 +10,7 @@ Imports CHCCommonLibrary.AreaEngine.CommandLine
 Namespace AreaCommon.Command
 
     ''' <summary>
-    ''' This class manage the command release 
+    ''' This class manage the command Release 
     ''' </summary>
     Public Class CommandRelease : Implements CommandModel
 

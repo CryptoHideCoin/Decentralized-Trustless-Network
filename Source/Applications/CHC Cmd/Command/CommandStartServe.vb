@@ -10,7 +10,7 @@ Imports CHCCommonLibrary.AreaEngine.CommandLine
 Namespace AreaCommon.Command
 
     ''' <summary>
-    ''' This class manage the command Sidechain Service Settings
+    ''' This class manage the command Start Serve
     ''' </summary>
     Public Class CommandStartServe : Implements CommandModel
 

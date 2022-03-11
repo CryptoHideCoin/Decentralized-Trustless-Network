@@ -28,6 +28,10 @@ Namespace AreaCommon
         Private Const _commandSetEnvironmentRepository As String = "setEnvironmentRepository"
         Private Const _commandGetEnvironmentRepository As String = "getEnvironmentRepository"
         Private Const _commandCreateNewEnvironment As String = "createNewEnvironment"
+        Private Const _commandGetEnvironmentList As String = "getEnvironmentList"
+        Private Const _commandRemoveEnvironment As String = "removeEnvironment"
+        Private Const _commandSetCurrentEnvironment As String = "setCurrentEnvironment"
+        Private Const _commandGetCurrentEnvironment As String = "getCurrentEnvironment"
 
 
         Public Property command As New CommandStructure
@@ -61,6 +65,10 @@ Namespace AreaCommon
                     Case _commandSetEnvironmentRepository.ToLower : classSupport = New Command.CommandSetEnvironmentRepository
                     Case _commandGetEnvironmentRepository.ToLower : classSupport = New Command.CommandGetEnvironmentRepository
                     Case _commandCreateNewEnvironment.ToLower : classSupport = New Command.CommandCreateNewEnvironment
+                    Case _commandGetEnvironmentList.ToLower : classSupport = New Command.CommandGetEnvironmentList
+                    Case _commandRemoveEnvironment.ToLower : classSupport = New Command.CommandRemoveEnvironment
+                    Case _commandSetCurrentEnvironment.ToLower : classSupport = New Command.CommandSetCurrentEnvironment
+                    Case _commandGetCurrentEnvironment.ToLower : classSupport = New Command.CommandGetCurrentEnvironment
                     Case Else
                         If (command.code.Length > 0) Then
                             Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")

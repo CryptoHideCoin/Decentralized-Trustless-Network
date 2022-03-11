@@ -15,7 +15,7 @@ Imports CHCCommonLibrary.AreaEngine.Communication
 Namespace AreaCommon.Command
 
     ''' <summary>
-    ''' This class manage the command Stop Serve 
+    ''' This class manage the command Test Serve 
     ''' </summary>
     Public Class CommandTestServe : Implements CommandModel
 
