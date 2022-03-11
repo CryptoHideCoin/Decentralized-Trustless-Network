@@ -45,6 +45,8 @@ Namespace AreaCommon.Command
 
                 If IO.File.Exists(environmentRepositoryPath) Then
                     environmentPath = IO.File.ReadAllText(environmentRepositoryPath)
+                    
+                    environmentPath = IO.Path.Combine(environmentPath, "environment.list")
 
                     If Not AreaEngine.EnvironmentsEngine.createNewEnvironment(environmentPath, _Command.parameterValue("name"), _Command.parameterValue("dataPath")) Then
                         Console.WriteLine("Error: Problem during create a new environment")
