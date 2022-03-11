@@ -20,7 +20,7 @@ Namespace AreaCommon.Startup
 
                 If proceed Then proceed = Bootstrap.run()
                 If proceed Then proceed = Service.run()
-                If proceed Then proceed = Scheduler.run()
+                'If proceed Then proceed = Scheduler.run()
             Catch ex As Exception
                 Console.WriteLine("An error occurrent during moduleMain.startup " & Err.Description)
             End Try

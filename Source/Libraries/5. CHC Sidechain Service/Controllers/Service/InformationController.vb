@@ -13,7 +13,7 @@ Namespace Controllers
 
 
     ' GET: api/{GUID service}/service/informationController
-    <RoutePrefix("ServiceApi")>
+    <Route("ServiceApi")>
     Public Class informationController
 
         Inherits ApiController

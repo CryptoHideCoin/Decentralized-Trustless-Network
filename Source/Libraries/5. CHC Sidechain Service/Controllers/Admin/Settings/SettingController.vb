@@ -13,7 +13,7 @@ Namespace Controllers
 
 
     ' GET: api/{GUID service}/administration/settings/
-    <RoutePrefix("AdministrationApi")>
+    <Route("AdministrationApi")>
     Public Class SettingsController
 
         Inherits ApiController

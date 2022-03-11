@@ -13,7 +13,7 @@ Imports CHCModels.AreaModel.Information
 Namespace Controllers
 
     ' GET: api/{GUID service}/service/supportedProtocolsController
-    <RoutePrefix("ServiceApi")>
+    <Route("ServiceApi")>
     Public Class supportedProtocolsController
 
         Inherits ApiController

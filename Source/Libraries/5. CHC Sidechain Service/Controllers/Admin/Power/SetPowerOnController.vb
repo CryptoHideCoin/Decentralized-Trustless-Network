@@ -15,7 +15,7 @@ Namespace Controllers
 
 
     ' GET: api/{GUID service}/administration/setPowerOn
-    <RoutePrefix("AdministrationApi")>
+    <Route("AdministrationApi")>
     Public Class setPowerOnController
 
         Inherits ApiController

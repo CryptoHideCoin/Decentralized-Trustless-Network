@@ -59,7 +59,7 @@ Namespace AreaCommon.Command
                 End If
 
 #If DEBUG Then
-                path = "E:\CryptoHideCoinDTN\Binary\Applications\Windows\CHC Cmd"
+                path = "E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Cmd"
 #Else
                 path = Environment.CurrentDirectory
 #End If

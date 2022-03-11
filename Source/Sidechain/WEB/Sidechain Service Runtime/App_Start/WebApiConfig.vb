@@ -13,6 +13,7 @@ Public Module WebApiConfig
             serviceID = CHCSidechainServiceLibrary.AreaCommon.Main.environment.settings.serviceID & "/"
         End If
 
+        config.Routes.MapHttpRoute(name:="default", routeTemplate:="api/{controller}")
         config.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & serviceID & "service/{controller}")
         config.Routes.MapHttpRoute(name:="SecurityApi", routeTemplate:="api/" & serviceID & "administration/security/{controller}")
         config.Routes.MapHttpRoute(name:="MaintenanceApi", routeTemplate:="api/" & serviceID & "administration/maintenance/{controller}")

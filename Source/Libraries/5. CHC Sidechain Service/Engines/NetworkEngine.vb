@@ -105,6 +105,24 @@ Namespace AreaNetwork
             Return ""
         End Function
 
+        ''' <summary>
+        ''' This method provide to exam the address if is local or not
+        ''' </summary>
+        ''' <param name="addressIP"></param>
+        ''' <returns></returns>
+        Public Shared Function isPrivateNetwork(ByVal addressIP As String) As Boolean
+            Try
+                If (addressIP.Length > 3) Then
+                    Dim firstClass As String = addressIP.Substring(0, 3)
+
+                    Return ((firstClass = "10.") Or (firstClass = "172") Or (firstClass = "192"))
+                End If
+            Catch ex As Exception
+            End Try
+
+            Return False
+        End Function
+
     End Class
 
 

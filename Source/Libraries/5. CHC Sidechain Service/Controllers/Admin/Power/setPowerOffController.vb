@@ -12,7 +12,7 @@ Namespace Controllers
 
 
     ' GET: api/{GUID service}/administration/setPowerOff
-    <RoutePrefix("AdministrationApi")>
+    <Route("AdministrationApi")>
     Public Class setPowerOffController
 
         Inherits ApiController

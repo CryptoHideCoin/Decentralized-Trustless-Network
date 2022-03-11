@@ -122,7 +122,9 @@ Namespace AreaCommon
                 objWS.Start()
 
                 Do While Not _controllerComplete And Not _controllerInError
-                    Threading.Thread.Sleep(environment.support.timeSleep)
+                    ' CSR-20
+                    'Threading.Thread.Sleep(environment.support.timeSleep)
+                    Threading.Thread.Sleep(1000)
                     Application.DoEvents()
                 Loop
 

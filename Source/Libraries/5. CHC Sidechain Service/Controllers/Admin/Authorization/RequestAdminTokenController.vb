@@ -14,7 +14,7 @@ Namespace Controllers
 
 
     ' GET: api/{GUID service}/administration/security/requestAdminSecurityToken/
-    <RoutePrefix("SecurityApi")>
+    <Route("SecurityApi")>
     Public Class RequestAdminSecurityTokenController
 
         Inherits ApiController

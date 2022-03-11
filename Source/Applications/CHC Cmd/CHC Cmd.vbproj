@@ -81,7 +81,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\CHCProtocolLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCSidechainServiceLibrary">
+    <Reference Include="CHCSidechainServiceLibrary, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -105,20 +106,23 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\AppSettings.vb" />
-    <Compile Include="Application\AppState.vb" />
     <Compile Include="Command\CommandChainServiceSettings.vb" />
+    <Compile Include="Command\CommandCreateNewEnvironment.vb" />
     <Compile Include="Command\CommandCurrentTime.vb" />
+    <Compile Include="Command\CommandGetEnvironmentRepository.vb" />
     <Compile Include="Command\CommandHelp.vb" />
     <Compile Include="Command\CommandInfo.vb" />
     <Compile Include="Command\CommandIPAddress.vb" />
     <Compile Include="Command\CommandRelease.vb" />
+    <Compile Include="Command\CommandSetEnvironmentRepository.vb" />
     <Compile Include="Command\CommandShowLog.vb" />
     <Compile Include="Command\CommandStartServe.vb" />
     <Compile Include="Command\CommandStopServe.vb" />
     <Compile Include="Command\CommandTestServe.vb" />
     <Compile Include="Command\CommandUpdateSystemDate.vb" />
     <Compile Include="Application\CommandProcessor.vb" />
+    <Compile Include="Engines\EnvironmentRepository.vb" />
+    <Compile Include="Engines\Environments.vb" />
     <Compile Include="Models\Models.vb" />
     <Compile Include="Startup\Startup.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

@@ -13,7 +13,7 @@ Namespace Controllers
 
 
     ' GET: api/{GUID service}/administration/logStream/
-    <RoutePrefix("AdministrationApi")>
+    <Route("AdministrationApi")>
     Public Class LogStreamController
 
         Inherits ApiController

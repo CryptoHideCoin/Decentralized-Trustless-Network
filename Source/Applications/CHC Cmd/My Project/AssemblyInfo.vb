@@ -8,7 +8,7 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("CHCCmd")>
+<Assembly: AssemblyTitle("CHC Cmd")>
 <Assembly: AssemblyDescription("Crypto Hide Coin DTN Command Line Executor")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("CHC DTN CMD")>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' usando l'asterisco '*' come illustrato di seguito:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("0.12.0.0")>
-<Assembly: AssemblyFileVersion("0.12.0.0")>
+<Assembly: AssemblyVersion("0.12.1.0")>
+<Assembly: AssemblyFileVersion("0.12.1.0")>

@@ -14,7 +14,7 @@ Namespace Controllers
 
 
     ' GET: api/{GUID service}/administration/security/requestAccessKey/
-    <RoutePrefix("SecurityApi")>
+    <Route("SecurityApi")>
     Public Class RequestAccessKeyController
 
         Inherits ApiController

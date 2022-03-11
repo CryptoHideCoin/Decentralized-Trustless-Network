@@ -51,7 +51,7 @@ Namespace AreaCommon.Command
 #End If
 
                 Select Case _Command.parameterValue("service").ToLower()
-                    Case "sidechainservice"
+                    Case "sidechainservice", "primary"
                         directory = "CHC Sidechain Service Runtime"
                         exeFileName = "CHCSidechainServiceRuntime.exe"
                 End Select

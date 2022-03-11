@@ -49,16 +49,19 @@ Namespace AreaCommon.Command
             Console.WriteLine("   --service:                Set a service name")
             Console.WriteLine("   --dataPath:               Set a data path")
             Console.WriteLine("   --password:               Set a password to decode settings file")
-            Console.WriteLine("-StopServe                   Stop a service")
+            Console.WriteLine("-stopServe                   Stop a service")
             Console.WriteLine("   --service:                Set a service name")
             Console.WriteLine("   --dataPath:               Set a data path")
             Console.WriteLine("   --password:               Set a password to decode settings file")
             Console.WriteLine("   --securityKey:            Set a password of a security key")
-            Console.WriteLine("-TestServe                   Test a service")
+            Console.WriteLine("-testServe                   Test a service")
             Console.WriteLine("   --service:                Set a service name")
             Console.WriteLine("   --dataPath:               Set a data path")
             Console.WriteLine("   --password:               Set a password to decode settings file")
             Console.WriteLine("   --securityKey:            Set a password of a security key")
+            Console.WriteLine("-setEnvironmentRepository    Set the repository of all environment")
+            Console.WriteLine("   --dataPath:               Set a data path of repository")
+            Console.WriteLine("-getEnvironmentRepository    Get the repository of all environment")
 
             Return True
         End Function

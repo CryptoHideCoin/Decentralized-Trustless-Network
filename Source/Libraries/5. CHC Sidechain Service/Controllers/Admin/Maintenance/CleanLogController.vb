@@ -15,7 +15,7 @@ Namespace Controllers
 
 
     ' GET: api/{GUID service}/administration/maintenance/cleanLog
-    <RoutePrefix("MaintenanceApi")>
+    <Route("MaintenanceApi")>
     Public Class CleanLogController
 
         Inherits ApiController

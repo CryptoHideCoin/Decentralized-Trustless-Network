@@ -25,6 +25,9 @@ Namespace AreaCommon
         Private Const _commandStopServe As String = "stopServe"
         Private Const _commandTestServe As String = "testServe"
         Private Const _commandStartServe As String = "startServe"
+        Private Const _commandSetEnvironmentRepository As String = "setEnvironmentRepository"
+        Private Const _commandGetEnvironmentRepository As String = "getEnvironmentRepository"
+        Private Const _commandCreateNewEnvironment As String = "createNewEnvironment"
 
 
         Public Property command As New CommandStructure
@@ -55,6 +58,9 @@ Namespace AreaCommon
                     Case _commandStopServe.ToLower() : classSupport = New Command.CommandStopServe
                     Case _commandTestServe.ToLower() : classSupport = New Command.CommandTestServe
                     Case _commandStartServe.ToLower() : classSupport = New Command.CommandStartServe
+                    Case _commandSetEnvironmentRepository.ToLower : classSupport = New Command.CommandSetEnvironmentRepository
+                    Case _commandGetEnvironmentRepository.ToLower : classSupport = New Command.CommandGetEnvironmentRepository
+                    Case _commandCreateNewEnvironment.ToLower : classSupport = New Command.CommandCreateNewEnvironment
                     Case Else
                         If (command.code.Length > 0) Then
                             Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")
