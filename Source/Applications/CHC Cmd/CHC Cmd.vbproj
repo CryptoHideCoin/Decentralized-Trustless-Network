@@ -117,6 +117,8 @@
     <Compile Include="Command\CommandHelp.vb" />
     <Compile Include="Command\CommandInfo.vb" />
     <Compile Include="Command\CommandIPAddress.vb" />
+    <Compile Include="Command\CommandSetDefaultParameter.vb" />
+    <Compile Include="Command\CommandWait.vb" />
     <Compile Include="Command\CommandRelease.vb" />
     <Compile Include="Command\CommandRemoveEnvironment.vb" />
     <Compile Include="Command\CommandSetCurrentEnvironment.vb" />
@@ -128,6 +130,7 @@
     <Compile Include="Command\CommandUpdateSystemDate.vb" />
     <Compile Include="Application\CommandProcessor.vb" />
     <Compile Include="Engines\ApplicationPaths.vb" />
+    <Compile Include="Engines\DefaultParameters.vb" />
     <Compile Include="Engines\EnvironmentRepository.vb" />
     <Compile Include="Engines\Environments.vb" />
     <Compile Include="Models\Models.vb" />

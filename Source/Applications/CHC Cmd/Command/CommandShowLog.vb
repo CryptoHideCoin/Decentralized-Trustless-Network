@@ -42,15 +42,23 @@ Namespace AreaCommon.Command
 
                 If _Command.haveParameter("service") Then
                     parameterService = "--service:" & _Command.parameterValue("service")
+                Else
+                    parameterService = "--service:" & ApplicationCommon.defaultParameters.getParameter("service")
                 End If
                 If _Command.haveParameter("dataPath") Then
                     parameterDataPath = "--dataPath:" & _Command.parameterValue("dataPath")
+                Else
+                    parameterDataPath = "--dataPath:" & ApplicationCommon.defaultParameters.getParameter("dataPath")
                 End If
                 If _Command.haveParameter("password") Then
                     parameterPassword = "--password:" & _Command.parameterValue("password")
+                Else
+                    parameterPassword = "--password:" & ApplicationCommon.defaultParameters.getParameter("password")
                 End If
                 If _Command.haveParameter("securityKey") Then
                     parameterSecurityKey = "--password:" & _Command.parameterValue("securityKey")
+                Else
+                    parameterPassword = "--securitykey:" & ApplicationCommon.defaultParameters.getParameter("securityKey")
                 End If
                 If _Command.haveParameter("mode") Then
                     parameterMode = "--mode:" & _Command.parameterValue("mode")
@@ -59,6 +67,8 @@ Namespace AreaCommon.Command
                 End If
                 If _Command.haveParameter("address") Then
                     parameterPassword = "--address:" & _Command.parameterValue("address")
+                ElseIf (ApplicationCommon.defaultParameters.getParameter("address").Length > 0) Then
+                    parameterPassword = "--address:" & ApplicationCommon.defaultParameters.getParameter("address")
                 Else
                     parameterPassword = "--address:localhost"
                 End If

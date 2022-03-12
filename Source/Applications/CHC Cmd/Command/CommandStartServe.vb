@@ -40,12 +40,18 @@ Namespace AreaCommon.Command
 
                 If _Command.haveParameter("service") Then
                     parameterService = "--service:" & _Command.parameterValue("service")
+                Else
+                    parameterService = "--service:" & ApplicationCommon.defaultParameters.getParameter("service")
                 End If
                 If _Command.haveParameter("dataPath") Then
                     parameterDataPath = "--dataPath:" & _Command.parameterValue("dataPath")
+                Else
+                    parameterDataPath = "--dataPath:" & ApplicationCommon.defaultParameters.getParameter("dataPath")
                 End If
                 If _Command.haveParameter("password") Then
                     parameterPassword = "--password:" & _Command.parameterValue("password")
+                Else
+                    parameterPassword = "--password:" & ApplicationCommon.defaultParameters.getParameter("password")
                 End If
 
                 Select Case _Command.parameterValue("service").ToLower()

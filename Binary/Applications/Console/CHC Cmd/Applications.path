@@ -1,0 +1,20 @@
+[
+  {
+    "applicationReferement": 1,
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Windows",
+    "directoryName": "CHC Sidechain Service Settings",
+    "applicationName": "CHCSidechainServiceSettings.exe"
+  },
+  {
+    "applicationReferement": 2,
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console",
+    "directoryName": "CHC SHow Log",
+    "applicationName": "CHCShowLog.exe"
+  },
+  {
+    "applicationReferement": 3,
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console",
+    "directoryName": "{value}",
+    "applicationName": "{value}.exe"
+  }
+]

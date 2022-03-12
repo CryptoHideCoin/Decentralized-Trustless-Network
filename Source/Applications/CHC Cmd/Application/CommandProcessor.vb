@@ -33,6 +33,8 @@ Namespace AreaCommon
         Private Const _commandSetCurrentEnvironment As String = "setCurrentEnvironment"
         Private Const _commandGetCurrentEnvironment As String = "getCurrentEnvironment"
         Private Const _commandGetApplicationsPath As String = "getApplicationsPath"
+        Private Const _commandWait As String = "wait"
+        Private Const _commandSetDefaultParameter As String = "setDefaultParameter"
 
 
         Public Property command As New CommandStructure
@@ -71,6 +73,8 @@ Namespace AreaCommon
                     Case _commandSetCurrentEnvironment.ToLower : classSupport = New Command.CommandSetCurrentEnvironment
                     Case _commandGetCurrentEnvironment.ToLower : classSupport = New Command.CommandGetCurrentEnvironment
                     Case _commandGetApplicationsPath.ToLower : classSupport = New Command.CommandGetApplicationsPath
+                    Case _commandWait : classSupport = New Command.CommandWait
+                    Case _commandSetDefaultParameter : classSupport = New Command.CommandSetDefaultParameter
                     Case Else
                         If (command.code.Length > 0) Then
                             Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")
@@ -96,6 +100,13 @@ Namespace AreaCommon
                     Console.WriteLine("")
                     Console.WriteLine("Press a key to continue")
                     Console.ReadKey()
+                End If
+                If _command.haveParameter("wait") Then
+                    If IsNumeric(_command.parameterValue("wait")) Then
+                        Threading.Thread.Sleep(_command.parameterValue("wait"))
+                    Else
+                        Threading.Thread.Sleep(5000)
+                    End If
                 End If
 
                 Return response

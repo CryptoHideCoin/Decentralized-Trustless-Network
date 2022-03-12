@@ -34,8 +34,10 @@ Public Class Settings
             command = engine.run()
 
             If (command.code.ToLower.CompareTo("force") = 0) Then
-                Select Case command.parameterValue("service")
-                    Case "primary" : chainServiceName.SelectedIndex = 0
+                Select Case command.parameterValue("service").ToLower
+                    Case "localworkmachine" : chainServiceName.SelectedIndex = 0
+                    Case "serviceruntime" : chainServiceName.SelectedIndex = 1
+                    Case "primary" : chainServiceName.SelectedIndex = 2
                 End Select
 
                 dataPath.Text = command.parameterValue("dataPath")

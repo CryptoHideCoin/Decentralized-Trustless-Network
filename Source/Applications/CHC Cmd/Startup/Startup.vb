@@ -28,6 +28,8 @@ Namespace AreaCommon
         Sub Main()
             Dim commandManager As New CommandProcessor
 
+            AreaEngine.ParametersEngine.init()
+
             commandManager.run()
         End Sub
 

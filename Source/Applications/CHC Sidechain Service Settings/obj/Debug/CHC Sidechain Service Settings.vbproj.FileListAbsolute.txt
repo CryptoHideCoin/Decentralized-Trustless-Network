@@ -38,3 +38,4 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debu
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHC Sidechain Service Settings.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.exe
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCModels.pdb
