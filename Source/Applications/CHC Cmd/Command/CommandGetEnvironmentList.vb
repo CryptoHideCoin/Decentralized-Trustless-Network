@@ -29,7 +29,7 @@ Namespace AreaCommon.Command
         Private Function CommandModel_run() As Boolean Implements CommandModel.run
             Try
                 Dim path As String = AreaEngine.EnvironmentRepositoryEngine.searchUserEnvironmentPath()
-                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "environment.path")
+                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environments.path")
                 Dim environmentPath As String = ""
                 Dim collection As List(Of AreaEngine.EnvironmentData)
 
@@ -50,7 +50,7 @@ Namespace AreaCommon.Command
                         Console.WriteLine()
                         Console.WriteLine(collection.Count & " item(s)")
                     Else
-                        Console.WriteLine("No items found")
+                        Console.WriteLine("No item found")
                     End If
                 Else
                     Console.WriteLine("Error: Environment Repository not set")

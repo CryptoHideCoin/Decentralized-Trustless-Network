@@ -7,6 +7,7 @@ Imports CHCCommonLibrary.AreaEngine.CommandLine
 
 
 
+
 Namespace AreaCommon.Command
 
     ''' <summary>
@@ -28,12 +29,16 @@ Namespace AreaCommon.Command
         Private Function CommandModel_run() As Boolean Implements CommandModel.run
             Try
                 Dim path As String = ""
+                Dim applicationInfo As AreaEngine.ApplicationPathData
                 Dim parameterService As String = ""
                 Dim parameterDataPath As String = ""
                 Dim parameterPassword As String = ""
                 Dim parameterMode As String = ""
                 Dim parameterAddress As String = ""
                 Dim parameterSecurityKey As String = ""
+
+                AreaEngine.ApplicationPathEngine.init()
+                applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.showLog)
 
                 If _Command.haveParameter("service") Then
                     parameterService = "--service:" & _Command.parameterValue("service")
@@ -58,17 +63,11 @@ Namespace AreaCommon.Command
                     parameterPassword = "--address:localhost"
                 End If
 
-#If DEBUG Then
-                path = "E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Cmd"
-#Else
-                path = Environment.CurrentDirectory
-#End If
-
-                path = IO.Directory.GetParent(path).FullName
-                path = IO.Path.Combine(path, "CHC Show Log")
+                path = applicationInfo.rootPath
+                path = IO.Path.Combine(path, applicationInfo.directoryName)
 
                 If IO.Directory.Exists(path) Then
-                    path = IO.Path.Combine(path, "CHCShowlog.exe")
+                    path = IO.Path.Combine(path, applicationInfo.applicationName)
 
                     If Not IO.File.Exists(path) Then
                         Console.WriteLine("Error: the application '" & path & "' is not exist")

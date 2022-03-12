@@ -32,6 +32,7 @@ Namespace AreaCommon
         Private Const _commandRemoveEnvironment As String = "removeEnvironment"
         Private Const _commandSetCurrentEnvironment As String = "setCurrentEnvironment"
         Private Const _commandGetCurrentEnvironment As String = "getCurrentEnvironment"
+        Private Const _commandGetApplicationsPath As String = "getApplicationsPath"
 
 
         Public Property command As New CommandStructure
@@ -69,6 +70,7 @@ Namespace AreaCommon
                     Case _commandRemoveEnvironment.ToLower : classSupport = New Command.CommandRemoveEnvironment
                     Case _commandSetCurrentEnvironment.ToLower : classSupport = New Command.CommandSetCurrentEnvironment
                     Case _commandGetCurrentEnvironment.ToLower : classSupport = New Command.CommandGetCurrentEnvironment
+                    Case _commandGetApplicationsPath.ToLower : classSupport = New Command.CommandGetApplicationsPath
                     Case Else
                         If (command.code.Length > 0) Then
                             Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")

@@ -13,7 +13,7 @@ Namespace AreaEngine
         ''' <param name="path"></param>
         ''' <returns></returns>
         Private Shared Function trySearchPath(ByVal path As String) As Boolean
-            path = IO.Path.Combine(path, "environment.path")
+            path = IO.Path.Combine(path, "Environments.path")
 
             Try
                 Return IO.File.Exists(path)

@@ -28,11 +28,15 @@ Namespace AreaCommon.Command
         Private Function CommandModel_run() As Boolean Implements CommandModel.run
             Try
                 Dim path As String = ""
+                Dim applicationInfo As AreaEngine.ApplicationPathData
                 Dim parameterService As String = ""
                 Dim parameterDataPath As String = ""
                 Dim parameterPassword As String = ""
                 Dim directory As String = ""
                 Dim exeFileName As String = ""
+
+                AreaEngine.ApplicationPathEngine.init()
+                applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.showLog)
 
                 If _Command.haveParameter("service") Then
                     parameterService = "--service:" & _Command.parameterValue("service")
@@ -44,19 +48,13 @@ Namespace AreaCommon.Command
                     parameterPassword = "--password:" & _Command.parameterValue("password")
                 End If
 
-#If DEBUG Then
-                path = "E:\CryptoHideCoinDTN\Binary\Sidechains\Windows\CHC Sidechain Service Runtime"
-#Else
-                path = Environment.CurrentDirectory
-#End If
-
                 Select Case _Command.parameterValue("service").ToLower()
                     Case "sidechainservice", "primary"
                         directory = "CHC Sidechain Service Runtime"
                         exeFileName = "CHCSidechainServiceRuntime.exe"
                 End Select
 
-                path = IO.Directory.GetParent(path).FullName
+                path = applicationInfo.rootPath
                 path = IO.Path.Combine(path, directory)
 
                 If IO.Directory.Exists(path) Then

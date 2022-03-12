@@ -40,7 +40,7 @@ Namespace AreaCommon.Command
                 End If
 
                 Dim path As String = AreaEngine.EnvironmentRepositoryEngine.searchUserEnvironmentPath()
-                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "environment.path")
+                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environments.path")
                 Dim environmentPath As String = ""
 
                 If IO.File.Exists(environmentRepositoryPath) Then

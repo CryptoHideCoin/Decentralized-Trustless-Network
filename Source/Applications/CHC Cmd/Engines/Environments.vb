@@ -90,8 +90,9 @@ Namespace AreaEngine
                     End If
                 Next
             Catch ex As Exception
-                Return ""
             End Try
+
+            Return ""
         End Function
 
         ''' <summary>

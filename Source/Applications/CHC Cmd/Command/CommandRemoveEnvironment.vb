@@ -29,7 +29,7 @@ Namespace AreaCommon.Command
         Private Function CommandModel_run() As Boolean Implements CommandModel.run
             Try
                 Dim path As String = AreaEngine.EnvironmentRepositoryEngine.searchUserEnvironmentPath()
-                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "environment.path")
+                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environments.path")
                 Dim environmentPath As String = ""
 
                 If Not _Command.haveParameter("name") Then

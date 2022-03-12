@@ -62,6 +62,14 @@ Namespace AreaCommon.Command
             Console.WriteLine("-setEnvironmentRepository    Set the repository of all environment")
             Console.WriteLine("   --dataPath:               Set a data path of repository")
             Console.WriteLine("-getEnvironmentRepository    Get the repository of all environment")
+            Console.WriteLine("-createNewEnvironment        Add a new environment to the repository")
+            Console.WriteLine("   --name:                   Set a name of environment")
+            Console.WriteLine("   --dataPath:               Set a data path of environment")
+            Console.WriteLine("-removeEnvironment           Remove an environment from the repository")
+            Console.WriteLine("   --name:                   Set a name of environment to remove")
+            Console.WriteLine("-getCurrentEnvironment       Get a current environment")
+            Console.WriteLine("-setCurrentEnvironment       Set a current environment")
+            Console.WriteLine("   --name:                   Specify a name of environment that set as a current")
 
             Return True
         End Function

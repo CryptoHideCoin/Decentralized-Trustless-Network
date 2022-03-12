@@ -23,7 +23,7 @@ Namespace AreaCommon.Command
         ''' <param name="path"></param>
         ''' <returns></returns>
         Private Function tryWritePath(ByVal path As String) As Boolean
-            path = IO.Path.Combine(path, "environment.path")
+            path = IO.Path.Combine(path, "Environments.path")
 
             Try
                 IO.File.WriteAllText(path, "Test")
@@ -106,7 +106,7 @@ Namespace AreaCommon.Command
                 path = searchUserWritablePath()
 
                 Try
-                    IO.File.WriteAllText(IO.Path.Combine(path, "environment.path"), _Command.parameterValue("dataPath"))
+                    IO.File.WriteAllText(IO.Path.Combine(path, "Environments.path"), _Command.parameterValue("dataPath"))
 
                     Console.WriteLine("Environment repository path updated")
 
