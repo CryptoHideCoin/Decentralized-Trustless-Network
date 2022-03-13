@@ -72,10 +72,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels, Version=0.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\CHCModels.dll</HintPath>
-    </Reference>
     <Reference Include="CHCProtocolLibrary, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\CHCProtocolLibrary.dll</HintPath>
@@ -189,6 +185,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\1. CHC Models\CHC Models.vbproj">
+      <Project>{5475fb38-e6b1-4049-8a92-b16607841e96}</Project>
+      <Name>CHC Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

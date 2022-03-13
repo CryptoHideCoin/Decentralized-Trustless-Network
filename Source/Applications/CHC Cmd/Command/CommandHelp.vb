@@ -35,6 +35,8 @@ Namespace AreaCommon.Command
             Console.WriteLine("-updateSystemDate            Update the system date")
             Console.WriteLine("-currentTime                 Show the current time (current/GMT/Timestamp)")
             Console.WriteLine("-ipAddress                   Get the IP Address (public and private)")
+            Console.WriteLine("-pause                       Wait until the user key press occurs")
+            Console.WriteLine("-wait                        Wait a number of millisecond")
             Console.WriteLine("-sideChainServiceSettings    Open a Chain Settings Editor")
             Console.WriteLine("   --service:                Set a service name")
             Console.WriteLine("   --dataPath:               Set a data path")
@@ -80,7 +82,7 @@ Namespace AreaCommon.Command
             Console.WriteLine()
             Console.WriteLine("General switch:")
             Console.WriteLine("   --pause:                  Wait a key press to close a chc command")
-            Console.WriteLine("   --pause:                  Wait a specific interval time (in millisecond) to close a chc command")
+            Console.WriteLine("   --wait:                  Wait a specific interval time (in millisecond) to close a chc command")
             Return True
         End Function
 

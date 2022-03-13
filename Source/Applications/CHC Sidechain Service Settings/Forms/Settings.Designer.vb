@@ -69,6 +69,9 @@ Partial Class Settings
         Me.infoButton = New System.Windows.Forms.Button()
         Me.fromRemoteButton = New System.Windows.Forms.Button()
         Me.toRemoteButton = New System.Windows.Forms.Button()
+        Me.useBufferToWrite = New System.Windows.Forms.CheckBox()
+        Me.useProfile = New System.Windows.Forms.CheckBox()
+        Me.useAlert = New System.Windows.Forms.CheckBox()
         Me.tabControl.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.tabInternal.SuspendLayout()
@@ -271,6 +274,8 @@ Partial Class Settings
         '
         'tabComponents
         '
+        Me.tabComponents.Controls.Add(Me.useAlert)
+        Me.tabComponents.Controls.Add(Me.useProfile)
         Me.tabComponents.Controls.Add(Me.useMessageService)
         Me.tabComponents.Controls.Add(Me.useCounter)
         Me.tabComponents.Controls.Add(Me.logGroup)
@@ -285,7 +290,7 @@ Partial Class Settings
         'useMessageService
         '
         Me.useMessageService.AutoSize = True
-        Me.useMessageService.Location = New System.Drawing.Point(12, 177)
+        Me.useMessageService.Location = New System.Drawing.Point(12, 190)
         Me.useMessageService.Name = "useMessageService"
         Me.useMessageService.Size = New System.Drawing.Size(147, 17)
         Me.useMessageService.TabIndex = 3
@@ -295,7 +300,7 @@ Partial Class Settings
         'useCounter
         '
         Me.useCounter.AutoSize = True
-        Me.useCounter.Location = New System.Drawing.Point(12, 154)
+        Me.useCounter.Location = New System.Drawing.Point(12, 167)
         Me.useCounter.Name = "useCounter"
         Me.useCounter.Size = New System.Drawing.Size(147, 17)
         Me.useCounter.TabIndex = 2
@@ -304,10 +309,11 @@ Partial Class Settings
         '
         'logGroup
         '
+        Me.logGroup.Controls.Add(Me.useBufferToWrite)
         Me.logGroup.Controls.Add(Me.logInformations)
         Me.logGroup.Location = New System.Drawing.Point(12, 17)
         Me.logGroup.Name = "logGroup"
-        Me.logGroup.Size = New System.Drawing.Size(675, 98)
+        Me.logGroup.Size = New System.Drawing.Size(675, 121)
         Me.logGroup.TabIndex = 0
         Me.logGroup.TabStop = False
         Me.logGroup.Text = "Log"
@@ -331,7 +337,7 @@ Partial Class Settings
         'useEventRegistry
         '
         Me.useEventRegistry.AutoSize = True
-        Me.useEventRegistry.Location = New System.Drawing.Point(12, 131)
+        Me.useEventRegistry.Location = New System.Drawing.Point(12, 144)
         Me.useEventRegistry.Name = "useEventRegistry"
         Me.useEventRegistry.Size = New System.Drawing.Size(134, 17)
         Me.useEventRegistry.TabIndex = 1
@@ -613,6 +619,36 @@ Partial Class Settings
         Me.toRemoteButton.Text = "To remote"
         Me.toRemoteButton.UseVisualStyleBackColor = True
         '
+        'useBufferToWrite
+        '
+        Me.useBufferToWrite.AutoSize = True
+        Me.useBufferToWrite.Location = New System.Drawing.Point(179, 80)
+        Me.useBufferToWrite.Name = "useBufferToWrite"
+        Me.useBufferToWrite.Size = New System.Drawing.Size(132, 17)
+        Me.useBufferToWrite.TabIndex = 1
+        Me.useBufferToWrite.Text = "Use buffer to write"
+        Me.useBufferToWrite.UseVisualStyleBackColor = True
+        '
+        'useProfile
+        '
+        Me.useProfile.AutoSize = True
+        Me.useProfile.Location = New System.Drawing.Point(12, 215)
+        Me.useProfile.Name = "useProfile"
+        Me.useProfile.Size = New System.Drawing.Size(87, 17)
+        Me.useProfile.TabIndex = 4
+        Me.useProfile.Text = "Use Profile"
+        Me.useProfile.UseVisualStyleBackColor = True
+        '
+        'useAlert
+        '
+        Me.useAlert.AutoSize = True
+        Me.useAlert.Location = New System.Drawing.Point(12, 238)
+        Me.useAlert.Name = "useAlert"
+        Me.useAlert.Size = New System.Drawing.Size(78, 17)
+        Me.useAlert.TabIndex = 5
+        Me.useAlert.Text = "Use Alert"
+        Me.useAlert.UseVisualStyleBackColor = True
+        '
         'Settings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -640,6 +676,7 @@ Partial Class Settings
         Me.tabComponents.ResumeLayout(False)
         Me.tabComponents.PerformLayout()
         Me.logGroup.ResumeLayout(False)
+        Me.logGroup.PerformLayout()
         Me.tabMaintenance.ResumeLayout(False)
         Me.autoMaintenanceGroup.ResumeLayout(False)
         Me.autoMaintenanceGroup.PerformLayout()
@@ -695,4 +732,7 @@ Partial Class Settings
     Friend WithEvents certificateClient As CHCSupportUIControls.Certificate
     Friend WithEvents fromRemoteButton As Button
     Friend WithEvents toRemoteButton As Button
+    Friend WithEvents useAlert As CheckBox
+    Friend WithEvents useProfile As CheckBox
+    Friend WithEvents useBufferToWrite As CheckBox
 End Class

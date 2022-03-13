@@ -34,6 +34,7 @@ Namespace AreaCommon
         Private Const _commandGetCurrentEnvironment As String = "getCurrentEnvironment"
         Private Const _commandGetApplicationsPath As String = "getApplicationsPath"
         Private Const _commandWait As String = "wait"
+        Private Const _commandPause As String = "pause"
         Private Const _commandSetDefaultParameter As String = "setDefaultParameter"
         Private Const _commandGetDefaultParameters As String = "getDefaultParameters"
 
@@ -77,6 +78,7 @@ Namespace AreaCommon
                     Case _commandWait : classSupport = New Command.CommandWait
                     Case _commandSetDefaultParameter : classSupport = New Command.CommandSetDefaultParameter
                     Case _commandGetDefaultParameters : classSupport = New Command.CommandGetDefaultParameters
+                    Case _commandPause : classSupport = New Command.CommandPause
                     Case Else
                         If (command.code.Length > 0) Then
                             Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")

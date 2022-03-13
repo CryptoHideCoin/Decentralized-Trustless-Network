@@ -46,10 +46,6 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CHCModels, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\CHCModels.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\ThirdParts\Newtonsoft.Json.6.0\Newtonsoft.Json.dll</HintPath>
@@ -135,6 +131,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Other\ReleaseNote.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\1. CHC Models\CHC Models.vbproj">
+      <Project>{5475fb38-e6b1-4049-8a92-b16607841e96}</Project>
+      <Name>CHC Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -100,6 +100,8 @@ Public Class Settings
             useEventRegistry.Enabled = True
             useCounter.Enabled = True
             useMessageService.Enabled = True
+            useProfile.Enabled = True
+            useAlert.Enabled = True
         End If
 
     End Sub
@@ -110,7 +112,7 @@ Public Class Settings
     ''' <param name="engineFile"></param>
     ''' <returns></returns>
     Private Function getDataFromFile(ByRef engineFile As BaseFile(Of CHCModels.AreaModel.Administration.Settings.SettingsSidechainService)) As CHCModels.AreaModel.Administration.Settings.SettingsSidechainService
-        Dim result As CHCModels.AreaModel.Administration.Settings.SettingsSidechainService
+        Dim result As SettingsSidechainService
         Try
             Dim decodeData As Boolean = False
             Dim errorReading As Boolean = False
@@ -171,10 +173,13 @@ Public Class Settings
                 logInformations.trackConfiguration = .trackConfiguration
                 logInformations.maxNumHours = .changeLogFileMaxNumHours
                 logInformations.maxNumberOfRegistrations = .changeLogFileNumRegistrations
+                useBufferToWrite.Checked = .useBufferToWrite
 
                 useEventRegistry.Checked = .useEventRegistry
                 useCounter.Checked = .useRequestCounter
                 useMessageService.Checked = .useAdminMessage
+                useProfile.Checked = .useProfile
+                useAlert.Checked = .useAlert
             End With
 
             Return True
@@ -254,7 +259,9 @@ Public Class Settings
         Try
             With data
                 Select Case chainServiceName.SelectedIndex
-                    Case 0 : .sideChainName = "Primary"
+                    Case 0 : .sideChainName = "Local Work Machine"
+                    Case 1 : .sideChainName = "Sidechain Service"
+                    Case 2 : .sideChainName = "Primary"
                 End Select
 
                 .internalName = internalName.Text
@@ -278,9 +285,12 @@ Public Class Settings
                 .trackConfiguration = logInformations.trackConfiguration
                 .changeLogFileMaxNumHours = logInformations.maxNumHours
                 .changeLogFileNumRegistrations = logInformations.maxNumberOfRegistrations
+                .useBufferToWrite = useBufferToWrite.Checked
                 .useEventRegistry = useEventRegistry.Checked
                 .useRequestCounter = useCounter.Checked
                 .useAdminMessage = useMessageService.Checked
+                .useProfile = useProfile.Checked
+                .useAlert = useAlert.Checked
             End With
         Catch ex As Exception
         End Try
@@ -346,6 +356,8 @@ Public Class Settings
         logInformations.maxNumberOfRegistrations = 0
         logInformations.useTrackRotate = False
 
+        useBufferToWrite.Checked = True
+
         logInformations.trackRotateFrequency = CHCModels.AreaModel.Log.LogRotateConfig.FrequencyEnum.every12h
         logInformations.trackRotateKeepFile = CHCModels.AreaModel.Log.LogRotateConfig.KeepFileEnum.nothingFiles
         logInformations.trackRotateKeepLast = CHCModels.AreaModel.Log.KeepEnum.lastDay
@@ -354,6 +366,8 @@ Public Class Settings
         useCounter.Checked = False
         useMessageService.Checked = False
         useAutoMaintenance.Checked = False
+        useAlert.Checked = False
+        useProfile.Checked = False
 
         Return True
     End Function
@@ -532,7 +546,7 @@ Public Class Settings
             Dim completeFileName As String = ""
 
             completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
-            completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text & ".Settings")
+            completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text.Replace(" ", "") & ".Settings")
 
             Shell("notepad.exe " & completeFileName, AppWinStyle.NormalFocus)
         Catch ex As Exception
@@ -888,7 +902,4 @@ Public Class Settings
         End If
     End Sub
 
-    Private Sub chainServiceName_SelectedIndexChanged(sender As Object, e As EventArgs) Handles chainServiceName.SelectedIndexChanged
-
-    End Sub
 End Class

@@ -118,6 +118,7 @@
     <Compile Include="Command\CommandHelp.vb" />
     <Compile Include="Command\CommandInfo.vb" />
     <Compile Include="Command\CommandIPAddress.vb" />
+    <Compile Include="Command\CommandPause.vb" />
     <Compile Include="Command\CommandSetDefaultParameter.vb" />
     <Compile Include="Command\CommandWait.vb" />
     <Compile Include="Command\CommandRelease.vb" />

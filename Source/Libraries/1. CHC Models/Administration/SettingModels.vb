@@ -31,18 +31,21 @@ Namespace AreaModel.Administration.Settings
         Public Property intranetMode As Boolean = False
         Public Property secureChannel As Boolean = False
 
-        Public Property trackConfiguration As AreaModel.Log.TrackRuntimeModeEnum = AreaModel.Log.TrackRuntimeModeEnum.trackAll
+        Public Property trackConfiguration As Log.TrackRuntimeModeEnum = Log.TrackRuntimeModeEnum.trackAll
         Public Property changeLogFileMaxNumHours As Integer = 0
         Public Property changeLogFileNumRegistrations As Integer = 0
+        Public Property useBufferToWrite As Boolean = False
 
         Public Property useAutoMaintanance As Boolean = False
         Public Property autoMaintenanceFrequencyHours As Integer = 0
 
-        Public Property trackRotateConfig As New AreaModel.Log.LogRotateConfig
+        Public Property trackRotateConfig As New Log.LogRotateConfig
 
         Public Property useEventRegistry As Boolean = False
         Public Property useRequestCounter As Boolean = False
         Public Property useAdminMessage As Boolean = False
+        Public Property useProfile As Boolean = False
+        Public Property useAlert As Boolean = False
 
     End Class
 

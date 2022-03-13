@@ -23,6 +23,7 @@ Namespace AreaEngine.Log
         Private Property _InQueue As New List(Of SingleActionApplication)
         Private Property _IO As New TrackIOEngine
         Private Property _SaveMode As TrackRuntimeModeEnum
+        Private Property _UseBufferToWrite As Boolean = True
         Private Property _ToProcessDataCache As Boolean = False
         Private Property _ToProcessInQueue As Boolean = False
         Private Property _ToFlushCache As Boolean = False
@@ -95,7 +96,7 @@ Namespace AreaEngine.Log
                     _DataCache.Add(item)
                 End If
 
-                flushCache()
+                flushCache(Not _UseBufferToWrite)
             Catch ex As Exception
             End Try
 
@@ -160,6 +161,7 @@ Namespace AreaEngine.Log
         ''' <returns></returns>
         Public Function changeSettings(ByVal value As TrackConfiguration) As Boolean
             _SaveMode = value.saveMode
+            _UseBufferToWrite = value.useBufferToWrite
 
             Return _IO.changeSettings(value)
         End Function

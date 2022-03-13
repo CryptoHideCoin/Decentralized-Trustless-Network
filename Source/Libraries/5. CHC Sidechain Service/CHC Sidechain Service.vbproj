@@ -88,7 +88,7 @@
     <Compile Include="Controllers\Admin\Power\SetPowerOffController.vb" />
     <Compile Include="Controllers\Admin\Power\SetPowerOnController.vb" />
     <Compile Include="Controllers\Admin\Settings\SettingController.vb" />
-    <Compile Include="Controllers\Admin\LogStream\LogStreamController.vb" />
+    <Compile Include="Controllers\Admin\Log\LogStreamController.vb" />
     <Compile Include="Controllers\Admin\Maintenance\CleanLogController.vb" />
     <Compile Include="Controllers\Service\InformationController.vb" />
     <Compile Include="Controllers\Service\SupportedProtocols.vb" />

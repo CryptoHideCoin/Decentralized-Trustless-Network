@@ -60,7 +60,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Common\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCModels, Version=0.3.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Models\CHCModels.dll</HintPath>
     </Reference>
@@ -157,6 +157,10 @@
     <Content Include="64.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Libraries\2. CHC Common\CHC Common.vbproj">
+      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
+      <Name>CHC Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Libraries\5. CHC Sidechain Service\CHC Sidechain Service.vbproj">
       <Project>{f586744f-8890-4341-8ae8-2583d5a4d084}</Project>
       <Name>CHC Sidechain Service</Name>

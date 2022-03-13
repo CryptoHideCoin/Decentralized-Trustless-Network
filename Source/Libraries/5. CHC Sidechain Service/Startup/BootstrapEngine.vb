@@ -145,6 +145,7 @@ Namespace AreaCommon.Startup
                     .saveMode = environment.settings.trackConfiguration
                     .changeFileEvery = environment.settings.changeLogFileMaxNumHours
                     .changeNumberOfRegistrations = environment.settings.changeLogFileNumRegistrations
+                    .useBufferToWrite = environment.settings.useBufferToWrite
                     .pathFile = environment.paths.system.logs
                     .instanceID = Guid.NewGuid.ToString
                 End With
