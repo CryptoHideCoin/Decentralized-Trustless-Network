@@ -538,7 +538,7 @@ Partial Class Settings
         Me.chainServiceName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chainServiceName.FormattingEnabled = True
-        Me.chainServiceName.Items.AddRange(New Object() {"Local Work Machine", "Primary"})
+        Me.chainServiceName.Items.AddRange(New Object() {"Local Work Machine", "Sidechain Service"})
         Me.chainServiceName.Location = New System.Drawing.Point(108, 20)
         Me.chainServiceName.Name = "chainServiceName"
         Me.chainServiceName.Size = New System.Drawing.Size(550, 21)

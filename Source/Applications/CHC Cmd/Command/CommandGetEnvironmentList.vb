@@ -26,12 +26,19 @@ Namespace AreaCommon.Command
             End Set
         End Property
 
+        Private Function printRow(ByVal colA As String, ByVal colB As String, ByVal colC As String) As Boolean
+            Console.WriteLine(colA.PadRight(20) & colB.PadRight(7) & colC)
+
+            Return True
+        End Function
+
         Private Function CommandModel_run() As Boolean Implements CommandModel.run
             Try
                 Dim path As String = AreaEngine.EnvironmentRepositoryEngine.searchUserEnvironmentPath()
                 Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environments.path")
                 Dim environmentPath As String = ""
                 Dim collection As List(Of AreaEngine.EnvironmentData)
+                Dim maxCar As Integer, numCar As Integer
 
                 If IO.File.Exists(environmentRepositoryPath) Then
                     environmentPath = IO.File.ReadAllText(environmentRepositoryPath)
@@ -44,8 +51,20 @@ Namespace AreaCommon.Command
                     Console.WriteLine()
 
                     If (collection.Count > 0) Then
+                        printRow("Name", "Active", "Path")
+
                         For Each item In collection
-                            Console.WriteLine("{0} - {1} - active:{2}", item.name, item.path, item.active)
+                            numCar = item.name.Length + item.path.Length + 7
+
+                            If (numCar > maxCar) Then
+                                maxCar = numCar
+                            End If
+                        Next
+
+                        Console.WriteLine((Space(20 + maxCar + 7)).ToString.Replace(" ", "-"))
+
+                        For Each item In collection
+                            printRow(item.name, IIf(item.active, "X", " "), item.path)
                         Next
                         Console.WriteLine()
                         Console.WriteLine(collection.Count & " item(s)")

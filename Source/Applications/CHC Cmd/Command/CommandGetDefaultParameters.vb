@@ -10,9 +10,9 @@ Imports CHCCommonLibrary.AreaEngine.CommandLine
 Namespace AreaCommon.Command
 
     ''' <summary>
-    ''' This class manage the command Get Applications Path
+    ''' This class manage the command Get Default Parameters
     ''' </summary>
-    Public Class CommandGetApplicationsPath : Implements CommandModel
+    Public Class CommandGetDefaultParameters : Implements CommandModel
 
         Private Property _Command As CommandStructure
 
@@ -38,14 +38,14 @@ Namespace AreaCommon.Command
 
                 AreaEngine.ApplicationPathEngine.init()
 
-                Console.WriteLine("Applications path list:")
+                Console.WriteLine("Default parameters:")
                 Console.WriteLine()
 
                 If (ApplicationCommon.appConfigurations.data.Count > 0) Then
-                    printRow("Application", "Complete file path")
+                    printRow("Name", "Value")
 
-                    For Each item In ApplicationCommon.appConfigurations.data
-                        numCar = item.rootPath.Length + item.directoryName.Length + item.applicationName.Length
+                    For Each item In ApplicationCommon.defaultParameters.data
+                        numCar = item.name.Length + item.value.Length
 
                         If (numCar > maxCar) Then
                             maxCar = numCar
@@ -54,12 +54,12 @@ Namespace AreaCommon.Command
 
                     Console.WriteLine((Space(30 + maxCar + 2)).ToString.Replace(" ", "-"))
 
-                    For Each item In ApplicationCommon.appConfigurations.data
-                        printRow(item.applicationReferement.ToString(), item.rootPath & "\" & item.directoryName & "\" & item.applicationName)
+                    For Each item In ApplicationCommon.defaultParameters.data
+                        printRow(item.name, item.value)
                     Next
 
                     Console.WriteLine()
-                    Console.WriteLine(ApplicationCommon.appConfigurations.data.Count & " item(s)")
+                    Console.WriteLine(ApplicationCommon.defaultParameters.data.Count & " item(s)")
                 Else
                     Console.WriteLine("No item found")
                 End If

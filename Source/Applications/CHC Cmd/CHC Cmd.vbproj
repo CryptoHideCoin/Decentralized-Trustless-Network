@@ -112,6 +112,7 @@
     <Compile Include="Command\CommandCurrentTime.vb" />
     <Compile Include="Command\CommandGetApplicationsPath.vb" />
     <Compile Include="Command\CommandGetCurrentEnvironment.vb" />
+    <Compile Include="Command\CommandGetDefaultParameters.vb" />
     <Compile Include="Command\CommandGetEnvironmentList.vb" />
     <Compile Include="Command\CommandGetEnvironmentRepository.vb" />
     <Compile Include="Command\CommandHelp.vb" />

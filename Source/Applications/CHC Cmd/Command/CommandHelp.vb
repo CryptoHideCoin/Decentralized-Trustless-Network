@@ -67,10 +67,20 @@ Namespace AreaCommon.Command
             Console.WriteLine("   --dataPath:               Set a data path of environment")
             Console.WriteLine("-removeEnvironment           Remove an environment from the repository")
             Console.WriteLine("   --name:                   Set a name of environment to remove")
+            Console.WriteLine("-getEnvironmentList          List of environments")
             Console.WriteLine("-getCurrentEnvironment       Get a current environment")
             Console.WriteLine("-setCurrentEnvironment       Set a current environment")
             Console.WriteLine("   --name:                   Specify a name of environment that set as a current")
+            Console.WriteLine("-getApplicationsPath         List a path of a applications")
+            Console.WriteLine("-setDefaultParameter         Set a default parameter")
+            Console.WriteLine("   --name:                   Specify a name of a default parameter to set")
+            Console.WriteLine("   --value:                  Specify a value of a default parameter to set")
+            Console.WriteLine("-getDefaultParameters        List a default parameters")
 
+            Console.WriteLine()
+            Console.WriteLine("General switch:")
+            Console.WriteLine("   --pause:                  Wait a key press to close a chc command")
+            Console.WriteLine("   --pause:                  Wait a specific interval time (in millisecond) to close a chc command")
             Return True
         End Function
 

@@ -35,6 +35,7 @@ Namespace AreaCommon
         Private Const _commandGetApplicationsPath As String = "getApplicationsPath"
         Private Const _commandWait As String = "wait"
         Private Const _commandSetDefaultParameter As String = "setDefaultParameter"
+        Private Const _commandGetDefaultParameters As String = "getDefaultParameters"
 
 
         Public Property command As New CommandStructure
@@ -75,6 +76,7 @@ Namespace AreaCommon
                     Case _commandGetApplicationsPath.ToLower : classSupport = New Command.CommandGetApplicationsPath
                     Case _commandWait : classSupport = New Command.CommandWait
                     Case _commandSetDefaultParameter : classSupport = New Command.CommandSetDefaultParameter
+                    Case _commandGetDefaultParameters : classSupport = New Command.CommandGetDefaultParameters
                     Case Else
                         If (command.code.Length > 0) Then
                             Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")
