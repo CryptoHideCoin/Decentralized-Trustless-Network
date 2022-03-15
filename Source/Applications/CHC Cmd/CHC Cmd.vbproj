@@ -120,6 +120,7 @@
     <Compile Include="Command\CommandIPAddress.vb" />
     <Compile Include="Command\CommandPause.vb" />
     <Compile Include="Command\CommandSetDefaultParameter.vb" />
+    <Compile Include="Command\CommandStatusServe.vb" />
     <Compile Include="Command\CommandWait.vb" />
     <Compile Include="Command\CommandRelease.vb" />
     <Compile Include="Command\CommandRemoveEnvironment.vb" />

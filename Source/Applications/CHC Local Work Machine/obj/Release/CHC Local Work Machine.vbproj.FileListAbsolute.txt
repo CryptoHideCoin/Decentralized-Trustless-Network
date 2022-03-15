@@ -8,3 +8,10 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\obj\Release\CHC 
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\obj\Release\CHC Local Work Machine.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\obj\Release\CHCLocalWorkMachine.exe
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machina\obj\Release\CHCLocalWorkMachine.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Release\CHC Local Work Machine.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Release\CHCLocalWorkMachine.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Release\CHCLocalWorkMachine.ServiceList.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Release\CHC Local Work Machine.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Release\CHC Local Work Machine.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Release\CHCLocalWorkMachine.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Release\CHCLocalWorkMachine.pdb

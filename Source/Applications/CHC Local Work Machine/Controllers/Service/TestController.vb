@@ -11,7 +11,7 @@ Imports CHCModels.AreaModel.Network.Response
 Namespace Controllers
 
     ' GET: api/{GUID service}/service/testController
-    <RoutePrefix("LWMServiceApi")>
+    <Route("ServiceApi")>
     Public Class testController
 
         Inherits ApiController

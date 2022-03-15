@@ -36,28 +36,29 @@ Namespace AreaCommon.Command
                 Dim parameterMode As String = ""
                 Dim parameterAddress As String = ""
                 Dim parameterSecurityKey As String = ""
+                Dim parameterPause As String = ""
 
                 AreaEngine.ApplicationPathEngine.init()
                 applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.showLog)
 
                 If _Command.haveParameter("service") Then
                     parameterService = "--service:" & _Command.parameterValue("service")
-                Else
+                ElseIf (ApplicationCommon.defaultParameters.getParameter("service").trim.Length > 0) Then
                     parameterService = "--service:" & ApplicationCommon.defaultParameters.getParameter("service")
                 End If
                 If _Command.haveParameter("dataPath") Then
                     parameterDataPath = "--dataPath:" & _Command.parameterValue("dataPath")
-                Else
+                ElseIf (ApplicationCommon.defaultParameters.getParameter("dataPath").trim.Length > 0) Then
                     parameterDataPath = "--dataPath:" & ApplicationCommon.defaultParameters.getParameter("dataPath")
                 End If
                 If _Command.haveParameter("password") Then
                     parameterPassword = "--password:" & _Command.parameterValue("password")
-                Else
+                ElseIf (ApplicationCommon.defaultParameters.getParameter("password").trim.Length > 0) Then
                     parameterPassword = "--password:" & ApplicationCommon.defaultParameters.getParameter("password")
                 End If
                 If _Command.haveParameter("securityKey") Then
                     parameterSecurityKey = "--password:" & _Command.parameterValue("securityKey")
-                Else
+                ElseIf (ApplicationCommon.defaultParameters.getParameter("securityKey").trim.Length > 0) Then
                     parameterPassword = "--securitykey:" & ApplicationCommon.defaultParameters.getParameter("securityKey")
                 End If
                 If _Command.haveParameter("mode") Then
@@ -72,6 +73,9 @@ Namespace AreaCommon.Command
                 Else
                     parameterPassword = "--address:localhost"
                 End If
+                If _Command.haveParameter("pause") Then
+                    parameterPause = "--pause"
+                End If
 
                 path = applicationInfo.rootPath
                 path = IO.Path.Combine(path, applicationInfo.directoryName)
@@ -82,7 +86,7 @@ Namespace AreaCommon.Command
                     If Not IO.File.Exists(path) Then
                         Console.WriteLine("Error: the application '" & path & "' is not exist")
                     Else
-                        Process.Start(path, "-force " & parameterService & " " & parameterDataPath & " " & parameterPassword & " " & parameterMode & " " & parameterAddress & " " & parameterSecurityKey)
+                        Process.Start(path, "-force " & parameterService & " " & parameterDataPath & " " & parameterPassword & " " & parameterMode & " " & parameterAddress & " " & parameterSecurityKey & " " & parameterPause)
 
                         Return True
                     End If

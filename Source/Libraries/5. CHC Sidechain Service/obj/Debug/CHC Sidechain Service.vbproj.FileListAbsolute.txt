@@ -31,3 +31,5 @@ E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Debug\CHC Sid
 E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Debug\CHCSidechainServiceLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Debug\CHCSidechainServiceLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\bin\Debug\CHCModels.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\bin\Debug\Newtonsoft.Json.xml

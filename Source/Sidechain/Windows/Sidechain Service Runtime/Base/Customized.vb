@@ -7,7 +7,7 @@ Namespace AreaCommon
 
     Public Module Customized
 
-        Public Const CUSTOM_ChainServiceName As String = "Primary"
+        Public Const CUSTOM_ChainServiceName As String = "SidechainService"
 
     End Module
 

@@ -87,24 +87,24 @@ Namespace AreaCommon
         Private Function manageParameters(ByRef value As CommandStructure) As Boolean
             Try
                 If value.haveParameter("dataPath") Then
-                    _DataPath = value.parameters("dataPath".ToLower()).value
+                    _DataPath = value.parameterValue("dataPath")
                 End If
                 If value.haveParameter("service") Then
-                    _Service = value.parameters("service").value
+                    _Service = value.parameterValue("service")
                 End If
                 If value.haveParameter("password") Then
-                    _Password = value.parameters("password").value
+                    _Password = value.parameterValue("password")
                 End If
                 If value.haveParameter("mode") Then
-                    _Mode = value.parameters("mode").value
+                    _Mode = value.parameterValue("mode")
                 End If
                 If value.haveParameter("securityKey") Then
-                    _SecurityKey = value.parameters("securityKey".ToLower()).value
+                    _SecurityKey = value.parameterValue("securityKey")
                 End If
                 If value.haveParameter("address") Then
-                    _Address = value.parameters("address").value
+                    _Address = value.parameterValue("address")
                 End If
-                _Pause = (value.haveParameter("pause"))
+                _Pause = value.haveParameter("pause")
 
                 Return (_DataPath.Length > 0) And (_Service.Length > 0)
             Catch ex As Exception

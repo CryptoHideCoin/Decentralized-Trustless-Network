@@ -71,6 +71,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Protocol\CHCProtocolLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCSidechainServiceLibrary, Version=0.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\CHCSidechainServiceLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Binary\Libraries\ThirdParts\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -155,16 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="64.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\2. CHC Common\CHC Common.vbproj">
-      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
-      <Name>CHC Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Libraries\5. CHC Sidechain Service\CHC Sidechain Service.vbproj">
-      <Project>{f586744f-8890-4341-8ae8-2583d5a4d084}</Project>
-      <Name>CHC Sidechain Service</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

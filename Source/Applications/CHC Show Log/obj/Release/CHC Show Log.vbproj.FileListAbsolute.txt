@@ -15,7 +15,6 @@ E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Log\CHCShowLog.exe
 E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Log\CHCShowLog.pdb
 E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Log\CHCShowLog.xml
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHC Show Log.vbprojAssemblyReference.cache
-E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHCShowLog.exe.config
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHCShowLog.Resources.resources
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHC Show Log.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHC Show Log.vbproj.CopyComplete

@@ -37,6 +37,7 @@ Namespace AreaCommon
         Private Const _commandPause As String = "pause"
         Private Const _commandSetDefaultParameter As String = "setDefaultParameter"
         Private Const _commandGetDefaultParameters As String = "getDefaultParameters"
+        Private Const _commandStatusServe As String = "statusServe"
 
 
         Public Property command As New CommandStructure
@@ -79,6 +80,7 @@ Namespace AreaCommon
                     Case _commandSetDefaultParameter : classSupport = New Command.CommandSetDefaultParameter
                     Case _commandGetDefaultParameters : classSupport = New Command.CommandGetDefaultParameters
                     Case _commandPause : classSupport = New Command.CommandPause
+                    Case _commandStatusServe : classSupport = New Command.CommandStatusServe
                     Case Else
                         If (command.code.Length > 0) Then
                             Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")

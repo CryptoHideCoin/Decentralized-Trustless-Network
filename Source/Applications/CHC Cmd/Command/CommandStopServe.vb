@@ -60,6 +60,8 @@ Namespace AreaCommon.Command
             Try
                 If _Command.haveParameter("service") Then
                     _ParameterService = _Command.parameterValue("service")
+                ElseIf (ApplicationCommon.defaultParameters.getParameter("service").Length > 0) Then
+                    _ParameterService = ApplicationCommon.defaultParameters.getParameter("service")
                 Else
                     Console.WriteLine("Service parameter not found!")
 
@@ -67,6 +69,8 @@ Namespace AreaCommon.Command
                 End If
                 If _Command.haveParameter("dataPath") Then
                     _ParameterDataPath = _Command.parameterValue("dataPath")
+                ElseIf (ApplicationCommon.defaultParameters.getParameter("dataPath").Length > 0) Then
+                    _ParameterDataPath = ApplicationCommon.defaultParameters.getParameter("dataPath")
                 Else
                     Console.WriteLine("DataPath parameter not found!")
 
@@ -74,6 +78,8 @@ Namespace AreaCommon.Command
                 End If
                 If _Command.haveParameter("password") Then
                     _ParameterPassword = _Command.parameterValue("password")
+                ElseIf (ApplicationCommon.defaultParameters.getParameter("password").Length > 0) Then
+                    _ParameterPassword = ApplicationCommon.defaultParameters.getParameter("password")
                 End If
                 If _Command.haveParameter("securityKey") Then
                     _ParameterSecurityKey = _Command.parameterValue("securityKey")
@@ -86,6 +92,8 @@ Namespace AreaCommon.Command
 
                 Return True
             Catch ex As Exception
+                Console.WriteLine("Problem during execute readParameters")
+
                 Return False
             End Try
         End Function
@@ -101,7 +109,11 @@ Namespace AreaCommon.Command
 
                 completeFileName = IO.Path.Combine(_Path.settings, _ParameterService & ".Settings")
 
-                If Not IO.File.Exists(completeFileName) Then Return False
+                If Not IO.File.Exists(completeFileName) Then
+                    Console.WriteLine("Missing file settings")
+
+                    Return False
+                End If
 
                 If (_ParameterPassword.Length > 0) Then
                     engineFile.cryptoKEY = _ParameterPassword
@@ -117,6 +129,8 @@ Namespace AreaCommon.Command
                     _SettingServiceID = engineFile.data.serviceID
                     _SettingCertificate = engineFile.data.clientCertificate
                     _SettingPublicAddress = engineFile.data.publicAddress
+                Else
+                    Console.WriteLine("Error during read file")
                 End If
 
                 If IsNothing(engineFile.data) Then
@@ -127,6 +141,8 @@ Namespace AreaCommon.Command
 
                 Return True
             Catch ex As Exception
+                Console.WriteLine("Problem during execute readSettings")
+
                 Return False
             End Try
         End Function
@@ -187,6 +203,8 @@ Namespace AreaCommon.Command
                 End If
                 If proceed Then
                     proceed = (remote.getData() = "")
+                Else
+                    Console.WriteLine("Error during getData")
                 End If
                 If proceed Then
                     Return (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)

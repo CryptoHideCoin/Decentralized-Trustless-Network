@@ -8,7 +8,7 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("CHCShowLog")>
+<Assembly: AssemblyTitle("CHC Show Log")>
 <Assembly: AssemblyDescription("Masternode Client Show Log Application")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("CHC Show Log")>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' usando l'asterisco '*' come illustrato di seguito:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("0.3.0.0")>
-<Assembly: AssemblyFileVersion("0.3.0.0")>
+<Assembly: AssemblyVersion("0.3.1.0")>
+<Assembly: AssemblyFileVersion("0.3.1.0")>

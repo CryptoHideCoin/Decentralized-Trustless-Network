@@ -51,7 +51,7 @@ Namespace AreaCommon.Command
                     If AreaEngine.EnvironmentsEngine.createNew(environmentPath, _Command.parameterValue("name"), _Command.parameterValue("dataPath")) Then
                         Console.WriteLine("Environment created successfully")
 
-                        If Not IO.File.Exists(_Command.parameterValue("dataPath")) Then
+                        If Not IO.Directory.Exists(_Command.parameterValue("dataPath")) Then
                             Console.WriteLine("Warning: " & _Command.parameterValue("dataPath") & " not exist")
                         End If
                     Else
