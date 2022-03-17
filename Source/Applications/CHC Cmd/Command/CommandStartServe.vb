@@ -39,7 +39,7 @@ Namespace AreaCommon.Command
                 If _Command.haveParameter("service") Then
                     parameterService = "--service:" & _Command.parameterValue("service")
                 ElseIf (ApplicationCommon.defaultParameters.getParameter("service").Length > 0) Then
-                    parameterService = "--service:" & ApplicationCommon.defaultParameters.getParameter("service")
+                    parameterService = ApplicationCommon.defaultParameters.getParameter("service")
                 End If
                 If _Command.haveParameter("dataPath") Then
                     parameterDataPath = "--dataPath:" & _Command.parameterValue("dataPath")
@@ -57,7 +57,7 @@ Namespace AreaCommon.Command
                     parameterSecurityKey = "--securityKey:" & ApplicationCommon.defaultParameters.getParameter("securityKey")
                 End If
 
-                Select Case _Command.parameterValue("service").ToLower()
+                Select Case parameterService
                     Case "localworkmachine"
                         directory = "CHC Local Work Machine"
                         exeFileName = "CHCLocalWorkMachine.exe"
@@ -75,6 +75,10 @@ Namespace AreaCommon.Command
 
                         Return False
                 End Select
+
+                If (parameterService.Length > 0) Then
+                    parameterService = "--service:" & parameterService
+                End If
 
                 path = applicationInfo.rootPath
                 path = IO.Path.Combine(path, directory)

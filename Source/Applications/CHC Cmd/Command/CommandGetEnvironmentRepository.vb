@@ -31,7 +31,11 @@ Namespace AreaCommon.Command
                 Dim path As String = AreaEngine.EnvironmentRepositoryEngine.searchUserEnvironmentPath()
 
                 Try
-                    Console.WriteLine("Environment path = " & IO.File.ReadAllText(IO.Path.Combine(path, "Environments.path")))
+                    path = IO.Path.Combine(path, "Environments.path")
+
+                    If IO.File.Exists(path) Then
+                        Console.WriteLine("Environment path = " & IO.File.ReadAllText(IO.Path.Combine(path, "Environments.path")))
+                    End If
 
                     Return True
                 Catch ex As Exception

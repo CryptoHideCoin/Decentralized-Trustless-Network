@@ -160,10 +160,16 @@ Namespace AreaEngine.CommandLine
         ''' This method provide to run a split of a Commandline
         ''' </summary>
         ''' <param name="commandLine"></param>
-        <DebuggerHiddenAttribute()> Public Function run() As CommandStructure
+        <DebuggerHiddenAttribute()> Public Function run(Optional ByVal forceCommandLine As String = "") As CommandStructure
             Dim result As New CommandStructure
+            Dim parameterCommand As String()
             Try
-                For Each item In Environment.GetCommandLineArgs
+                If (forceCommandLine.Length = 0) Then
+                    parameterCommand = Environment.GetCommandLineArgs
+                Else
+                    parameterCommand = forceCommandLine.Split(" ")
+                End If
+                For Each item In parameterCommand
                     If (item = IO.Path.Combine(My.Application.Info.DirectoryPath, My.Application.Info.AssemblyName & ".exe")) Or
                        (item = My.Application.Info.AssemblyName & ".exe") Or
                        (item = My.Application.Info.AssemblyName) Then

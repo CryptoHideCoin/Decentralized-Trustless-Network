@@ -106,7 +106,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\CommandExecutor.vb" />
     <Compile Include="Application\Common.vb" />
+    <Compile Include="Command\CommandBatch.vb" />
     <Compile Include="Command\CommandChainServiceSettings.vb" />
     <Compile Include="Command\CommandCreateNewEnvironment.vb" />
     <Compile Include="Command\CommandCurrentTime.vb" />
@@ -116,6 +118,7 @@
     <Compile Include="Command\CommandGetEnvironmentList.vb" />
     <Compile Include="Command\CommandGetEnvironmentRepository.vb" />
     <Compile Include="Command\CommandHelp.vb" />
+    <Compile Include="Command\CommandIf.vb" />
     <Compile Include="Command\CommandInfo.vb" />
     <Compile Include="Command\CommandIPAddress.vb" />
     <Compile Include="Command\CommandPause.vb" />
@@ -191,6 +194,5 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

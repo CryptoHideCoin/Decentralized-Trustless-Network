@@ -41,7 +41,7 @@ Namespace AreaCommon.Command
                 Console.WriteLine("Default parameters:")
                 Console.WriteLine()
 
-                If (ApplicationCommon.appConfigurations.data.Count > 0) Then
+                If (ApplicationCommon.defaultParameters.data.Count > 0) Then
                     printRow("Name", "Value")
 
                     For Each item In ApplicationCommon.defaultParameters.data
