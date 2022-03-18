@@ -1,0 +1,6 @@
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Basic Cryptography\x86\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Basic Cryptography\x86\CHCBasicCryptographyLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\0. CHC Basic Cryptography\obj\x86\Release x86\CHC Basic Cryptography.csprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\0. CHC Basic Cryptography\obj\x86\Release x86\CHC Basic Cryptography.csproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\0. CHC Basic Cryptography\obj\x86\Release x86\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\0. CHC Basic Cryptography\obj\x86\Release x86\CHCBasicCryptographyLibrary.pdb

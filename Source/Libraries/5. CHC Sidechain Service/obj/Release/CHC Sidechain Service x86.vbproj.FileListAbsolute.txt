@@ -1,0 +1,7 @@
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Sidechain Service\x86\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Sidechain Service\x86\CHCSidechainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Release\CHCSidechainServiceLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Release\CHC Sidechain Service x86.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Release\CHC Sidechain Service x86.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Release\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Release\CHCSidechainServiceLibrary.pdb

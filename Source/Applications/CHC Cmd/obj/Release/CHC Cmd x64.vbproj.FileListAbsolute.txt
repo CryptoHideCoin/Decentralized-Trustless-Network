@@ -1,0 +1,7 @@
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Cmd\x64\CHCCmd.exe.config
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Cmd\x64\CHCCmd.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Release\CHC Cmd x64.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Release\CHCCmd.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Release\CHC Cmd x64.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Release\CHC Cmd x64.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Release\CHCCmd.exe

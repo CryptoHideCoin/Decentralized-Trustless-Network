@@ -1,0 +1,13 @@
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\Debug\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\Debug\CHCModels.dll
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Debug\CHC Protocol x86.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Debug\CHCProtocolLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Debug\CHC Protocol x86.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Debug\CHC Protocol x86.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Debug\CHCProtocolLibrary.pdb
