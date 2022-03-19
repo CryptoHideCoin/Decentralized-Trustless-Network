@@ -13,7 +13,7 @@ Namespace AreaEngine
         ''' <param name="path"></param>
         ''' <returns></returns>
         Private Shared Function trySearchPath(ByVal path As String) As Boolean
-            path = IO.Path.Combine(path, "Environments.path")
+            path = IO.Path.Combine(path, "Environment.path")
 
             Try
                 Return IO.File.Exists(path)
@@ -34,7 +34,7 @@ Namespace AreaEngine
             Try
                 If Not found Then
 #If DEBUG Then
-                    path = "E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Cmd"
+                    path = "E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Cmd\x64"
 #Else
                 path = Environment.CurrentDirectory
 #End If

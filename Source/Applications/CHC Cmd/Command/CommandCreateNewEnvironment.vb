@@ -40,12 +40,11 @@ Namespace AreaCommon.Command
                 End If
 
                 Dim path As String = AreaEngine.EnvironmentRepositoryEngine.searchUserEnvironmentPath()
-                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environments.path")
+                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environment.path")
                 Dim environmentPath As String = ""
 
                 If IO.File.Exists(environmentRepositoryPath) Then
                     environmentPath = IO.File.ReadAllText(environmentRepositoryPath)
-
                     environmentPath = IO.Path.Combine(environmentPath, "Environments.list")
 
                     If AreaEngine.EnvironmentsEngine.createNew(environmentPath, _Command.parameterValue("name"), _Command.parameterValue("dataPath")) Then

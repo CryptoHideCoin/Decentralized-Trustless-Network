@@ -75,7 +75,11 @@ Namespace AreaCommon.Command
                 Dim commands As String() = fileContent.Split(vbNewLine)
 
                 For Each singleCommand In commands
-                    processSingleCommand(singleCommand.Trim())
+                    singleCommand = singleCommand.Replace(vbLf, "").Trim()
+
+                    If (singleCommand.Length > 0) Then
+                        processSingleCommand(singleCommand.Trim())
+                    End If
                 Next
             Catch ex As Exception
                 Console.WriteLine("Error: Problem during process batch")

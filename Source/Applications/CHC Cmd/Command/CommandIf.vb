@@ -52,12 +52,14 @@ Namespace AreaCommon.Command
                 Dim path As String = AreaEngine.EnvironmentRepositoryEngine.searchUserEnvironmentPath()
 
                 Try
-                    path = IO.Path.Combine(path, "Environments.path")
+                    path = IO.Path.Combine(path, "Environment.path")
 
                     If IO.File.Exists(path) Then
-                        path = IO.File.ReadAllText(IO.Path.Combine(path, "Environments.path"))
+                        path = IO.File.ReadAllText(IO.Path.Combine(path, "Environment.path"))
 
-                        Return (path.Length > 0)
+                        Return (path.Length = 0)
+                    Else
+                        Return True
                     End If
                 Catch ex As Exception
                 End Try
@@ -74,7 +76,7 @@ Namespace AreaCommon.Command
         Private Function testEnvironmentCurrentNotSet() As Boolean
             Try
                 Dim path As String = AreaEngine.EnvironmentRepositoryEngine.searchUserEnvironmentPath()
-                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environments.path")
+                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environment.path")
                 Dim environmentSET As String = ""
                 Dim currentEnvironment As String = ""
 
@@ -85,8 +87,9 @@ Namespace AreaCommon.Command
 
                     currentEnvironment = AreaEngine.EnvironmentsEngine.getCurrent(environmentSET)
 
-                    Return (currentEnvironment.Length > 0)
+                    Return (currentEnvironment.Length = 0)
                 Else
+                    Return True
                 End If
             Catch ex As Exception
             End Try
@@ -100,7 +103,7 @@ Namespace AreaCommon.Command
         ''' <returns></returns>
         Private Function defaultParametersNotDefine() As Boolean
             Try
-                Return (ApplicationCommon.defaultParameters.data.Count > 0)
+                Return (ApplicationCommon.defaultParameters.data.Count = 0)
             Catch ex As Exception
                 Return False
             End Try
@@ -112,7 +115,7 @@ Namespace AreaCommon.Command
         ''' <returns></returns>
         Private Function applicationsPathNotDefine() As Boolean
             Try
-                Return (ApplicationCommon.appConfigurations.data.Count > 0)
+                Return (ApplicationCommon.appConfigurations.data.Count = 0)
             Catch ex As Exception
                 Return False
             End Try
@@ -133,10 +136,12 @@ Namespace AreaCommon.Command
             End If
             If proceed Then
                 Return executeBatchCommand(_Command.parameterValue("batch"))
+            Else
+                proceed = True
             End If
 
             If proceed Then
-                proceed = _Command.haveParameter("testEnvironmentCurrentNotSet")
+                proceed = _Command.haveParameter("environmentDefaultNotSet")
             End If
             If proceed Then
                 proceed = _Command.haveParameter("batch")
@@ -146,6 +151,8 @@ Namespace AreaCommon.Command
             End If
             If proceed Then
                 Return executeBatchCommand(_Command.parameterValue("batch"))
+            Else
+                proceed = True
             End If
 
             If proceed Then
@@ -159,6 +166,8 @@ Namespace AreaCommon.Command
             End If
             If proceed Then
                 Return executeBatchCommand(_Command.parameterValue("batch"))
+            Else
+                proceed = True
             End If
 
             If proceed Then
@@ -172,9 +181,11 @@ Namespace AreaCommon.Command
             End If
             If proceed Then
                 Return executeBatchCommand(_Command.parameterValue("batch"))
+            Else
+                proceed = True
             End If
 
-            Return False
+            Return proceed
         End Function
 
     End Class

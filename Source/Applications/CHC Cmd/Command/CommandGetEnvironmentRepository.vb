@@ -31,10 +31,14 @@ Namespace AreaCommon.Command
                 Dim path As String = AreaEngine.EnvironmentRepositoryEngine.searchUserEnvironmentPath()
 
                 Try
-                    path = IO.Path.Combine(path, "Environments.path")
+                    path = IO.Path.Combine(path, "Environment.path")
 
                     If IO.File.Exists(path) Then
-                        Console.WriteLine("Environment path = " & IO.File.ReadAllText(IO.Path.Combine(path, "Environments.path")))
+                        path = IO.File.ReadAllText(path)
+
+                        Console.WriteLine("Environment path = " & path)
+                    Else
+                        Console.WriteLine("Environment not set")
                     End If
 
                     Return True

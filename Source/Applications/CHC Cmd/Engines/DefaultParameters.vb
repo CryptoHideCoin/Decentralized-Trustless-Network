@@ -152,7 +152,7 @@ Namespace AreaEngine
         Public Shared Function init() As Boolean
             Try
                 Dim path As String = EnvironmentRepositoryEngine.searchUserEnvironmentPath()
-                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environments.path")
+                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environment.path")
 
                 If IO.File.Exists(environmentRepositoryPath) Then
                     Dim environmentPath As String = IO.File.ReadAllText(environmentRepositoryPath)

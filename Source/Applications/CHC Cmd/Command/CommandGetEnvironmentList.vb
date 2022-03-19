@@ -35,7 +35,7 @@ Namespace AreaCommon.Command
         Private Function CommandModel_run() As Boolean Implements CommandModel.run
             Try
                 Dim path As String = AreaEngine.EnvironmentRepositoryEngine.searchUserEnvironmentPath()
-                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environments.path")
+                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environment.path")
                 Dim environmentPath As String = ""
                 Dim collection As List(Of AreaEngine.EnvironmentData)
                 Dim maxCar As Integer, numCar As Integer

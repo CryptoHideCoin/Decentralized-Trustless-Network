@@ -93,8 +93,8 @@ Namespace AreaCommon.Command
 
             Console.WriteLine()
             Console.WriteLine("General switch:")
-            Console.WriteLine("   --pause:                  Wait a key press to close a chc command")
-            Console.WriteLine("   --wait:                  Wait a specific interval time (in millisecond) to close a chc command")
+            Console.WriteLine("   --pause:                          Wait a key press to close a chc command")
+            Console.WriteLine("   --wait:                           Wait a specific interval time (in millisecond) to close a chc command")
             Return True
         End Function
 
