@@ -4,6 +4,6 @@
     <StartArguments>-help</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-batch --fileName:e:\Environment\CreateEnvironment.batch</StartArguments>
+    <StartArguments>-write --message:Ciao come stai %3f --pause</StartArguments>
   </PropertyGroup>
 </Project>

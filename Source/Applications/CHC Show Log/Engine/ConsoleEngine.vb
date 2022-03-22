@@ -160,12 +160,21 @@ Namespace AreaCommon
             Try
                 Dim remote As New ProxyWS(Of RemoteResponse)
                 Dim proceed As Boolean = True
+                Dim response As String = ""
 
                 If proceed Then
                     remote.url = buildURL("/service/test/")
                 End If
                 If proceed Then
-                    proceed = (remote.getData() = "")
+                    response = remote.getData()
+
+                    If (response.Length > 0) Then
+                        Console.WriteLine("Error during connect service - " & response)
+
+                        proceed = False
+                    Else
+                        proceed = True
+                    End If
                 End If
                 If proceed Then
                     Return (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
@@ -412,7 +421,13 @@ Namespace AreaCommon
                 proceed = readSettings()
             End If
             If proceed Then
-                proceed = readAdminKeyStore()
+                If readAdminKeyStore() Then
+                    proceed = True
+                Else
+                    Console.WriteLine("Public admin key missing")
+
+                    proceed = False
+                End If
             End If
             If proceed Then
                 Do While Not serviceFound()

@@ -1,0 +1,11 @@
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHCShowLog.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHC Show Log x86.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHCShowLog.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHCShowLog.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHCShowLog.pdb
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Log\x86\CHCShowLog.exe.config
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Log\x86\CHCShowLog.exe
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Log\x86\CHCShowLog.pdb
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Log\x86\CHCShowLog.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHC Show Log x86.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHC Show Log x86.vbproj.CopyComplete

@@ -1,0 +1,7 @@
+E:\CryptoHideCoinDTN\Source\Libraries\0. CHC Basic Cryptography\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\0. CHC Basic Cryptography\bin\Debug\CHCBasicCryptographyLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\0. CHC Basic Cryptography\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Libraries\0. CHC Basic Cryptography\obj\Debug\CHC Basic Cryptography.csprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\0. CHC Basic Cryptography\obj\Debug\CHC Basic Cryptography.csproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\0. CHC Basic Cryptography\obj\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\0. CHC Basic Cryptography\obj\Debug\CHCBasicCryptographyLibrary.pdb

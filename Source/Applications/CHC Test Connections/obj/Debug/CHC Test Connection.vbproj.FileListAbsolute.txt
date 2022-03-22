@@ -1,0 +1,9 @@
+E:\CryptoHideCoinDTN\Source\Applications\CHC Test Connections\bin\Debug\CHCTestConnection.exe.config
+E:\CryptoHideCoinDTN\Source\Applications\CHC Test Connections\bin\Debug\CHCTestConnection.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Test Connections\bin\Debug\CHCTestConnection.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Test Connections\obj\Debug\CHC Test Connection.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Test Connections\obj\Debug\CHCTestConnection.Main.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Test Connections\obj\Debug\CHCTestConnection.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Test Connections\obj\Debug\CHC Test Connection.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Test Connections\obj\Debug\CHCTestConnection.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Test Connections\obj\Debug\CHCTestConnection.pdb

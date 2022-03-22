@@ -41,6 +41,9 @@ Namespace AreaCommon
         Private Const _CommandStatusServe As String = "statusServe"
         Private Const _CommandBatch As String = "batch"
         Private Const _CommandIf As String = "if"
+        Private Const _CommandTestRAWServe As String = "testServeResponse"
+        Private Const _CommandNote As String = "note"
+        Private Const _CommandWrite As String = "write"
 
 
         Public Property command As New CommandStructure
@@ -78,6 +81,9 @@ Namespace AreaCommon
                 Case _CommandStatusServe : classSupport = New Command.CommandStatusServe
                 Case _CommandBatch : classSupport = New Command.CommandBatch
                 Case _CommandIf : classSupport = New Command.CommandIf
+                Case _CommandTestRAWServe : classSupport = New Command.CommandTestRAWServe
+                Case _CommandNote : classSupport = New Command.CommandNote
+                Case _CommandWrite : classSupport = New Command.CommandWrite
                 Case Else
                     If (command.code.Length > 0) Then
                         Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")

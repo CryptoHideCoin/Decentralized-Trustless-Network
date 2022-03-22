@@ -27,7 +27,18 @@ Namespace AreaCommon
             Try
                 Dim executor As New CommandExecutor
 
-                executor.command = New CommandBuilder().run()
+                With New CommandBuilder()
+                    executor.command = .run()
+
+                    If .lastErrorDescription.CompareTo("pippo") > 0 Then
+                        Console.WriteLine("Error: " & .lastErrorDescription)
+                        Console.WriteLine("")
+                        Console.WriteLine("Press a key to continue")
+                        Console.ReadKey()
+
+                        Return False
+                    End If
+                End With
 
                 Return executor.run()
             Catch ex As Exception

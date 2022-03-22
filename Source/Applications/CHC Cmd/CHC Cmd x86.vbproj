@@ -106,7 +106,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\CommandExecutor.vb" />
+<Compile Include="Application\CommandExecutor.vb" />
     <Compile Include="Application\Common.vb" />
     <Compile Include="Command\CommandBatch.vb" />
     <Compile Include="Command\CommandChainServiceSettings.vb" />
@@ -121,9 +121,11 @@
     <Compile Include="Command\CommandIf.vb" />
     <Compile Include="Command\CommandInfo.vb" />
     <Compile Include="Command\CommandIPAddress.vb" />
+    <Compile Include="Command\CommandNote.vb" />
     <Compile Include="Command\CommandPause.vb" />
     <Compile Include="Command\CommandSetDefaultParameter.vb" />
     <Compile Include="Command\CommandStatusServe.vb" />
+    <Compile Include="Command\CommandTestRAWServe.vb" />
     <Compile Include="Command\CommandWait.vb" />
     <Compile Include="Command\CommandRelease.vb" />
     <Compile Include="Command\CommandRemoveEnvironment.vb" />
@@ -135,10 +137,13 @@
     <Compile Include="Command\CommandTestServe.vb" />
     <Compile Include="Command\CommandUpdateSystemDate.vb" />
     <Compile Include="Application\CommandProcessor.vb" />
+    <Compile Include="Command\CommandWrite.vb" />
     <Compile Include="Engines\ApplicationPaths.vb" />
     <Compile Include="Engines\DefaultParameters.vb" />
     <Compile Include="Engines\EnvironmentRepository.vb" />
     <Compile Include="Engines\Environments.vb" />
+    <Compile Include="Engines\IntegrityApplication.vb" />
+    <Compile Include="Engines\Utils.vb" />
     <Compile Include="Models\Models.vb" />
     <Compile Include="Startup\Startup.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

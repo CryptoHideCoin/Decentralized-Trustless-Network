@@ -26,11 +26,17 @@ Namespace AreaCommon
         ''' This method provide to run a application
         ''' </summary>
         Sub Main()
-            Dim commandManager As New CommandProcessor
+            If Not (New IntegrityApplication).run() Then
+                Return
+            End If
+            Try
+                Dim commandManager As New CommandProcessor
 
-            AreaEngine.ParametersEngine.init()
+                AreaEngine.ParametersEngine.init()
 
-            commandManager.run()
+                commandManager.run()
+            Catch ex As Exception
+            End Try
         End Sub
 
     End Module
