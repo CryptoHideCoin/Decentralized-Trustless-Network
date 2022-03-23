@@ -46,10 +46,20 @@ Namespace AreaCommon.Command
                 ElseIf (ApplicationCommon.defaultParameters.getParameter("service").trim.Length > 0) Then
                     parameterService = "--service:" & ApplicationCommon.defaultParameters.getParameter("service")
                 End If
+                If (parameterService.Length = 0) Then
+                    Console.WriteLine("Service parameter not defined")
+
+                    Return False
+                End If
                 If _Command.haveParameter("dataPath") Then
                     parameterDataPath = "--dataPath:" & _Command.parameterValue("dataPath")
                 ElseIf (ApplicationCommon.defaultParameters.getParameter("dataPath").trim.Length > 0) Then
                     parameterDataPath = "--dataPath:" & ApplicationCommon.defaultParameters.getParameter("dataPath")
+                End If
+                If (parameterService.Length = 0) Then
+                    Console.WriteLine("DataPath parameter not defined")
+
+                    Return False
                 End If
                 If _Command.haveParameter("password") Then
                     parameterPassword = "--password:" & _Command.parameterValue("password")

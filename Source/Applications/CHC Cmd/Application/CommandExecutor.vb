@@ -54,6 +54,14 @@ Namespace AreaCommon
             Dim classSupport As Models.CommandModel
             Dim response As Boolean
 
+            If command.isPath Then
+                command.parameters.Clear()
+
+                command.addNewParameter($"--fileName:{command.code.Trim()}")
+
+                command.code = "batch"
+            End If
+
             Select Case command.code
                 Case _CommandRelease.ToLower : classSupport = New Command.CommandRelease
                 Case _CommandInfo.ToLower : classSupport = New Command.CommandInfo

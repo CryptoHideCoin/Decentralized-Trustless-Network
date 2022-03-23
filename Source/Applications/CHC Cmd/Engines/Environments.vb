@@ -101,11 +101,12 @@ Namespace AreaEngine
         ''' <param name="name"></param>
         ''' <param name="path"></param>
         ''' <returns></returns>
-        Public Function addNew(ByVal name As String, ByVal path As String) As Boolean
+        Public Function addNew(ByVal name As String, ByVal path As String, ByVal active As Boolean) As Boolean
             Dim newItem As New EnvironmentData
 
             newItem.name = name
             newItem.path = path
+            newItem.active = True
 
             data.Add(newItem)
 
@@ -123,7 +124,7 @@ Namespace AreaEngine
         ''' This method provide to create and ad a new environment into the environment list
         ''' </summary>
         ''' <returns></returns>
-        Public Shared Function createNew(ByVal environmentFilePath As String, ByVal name As String, ByVal path As String) As Boolean
+        Public Shared Function createNew(ByVal environmentFilePath As String, ByVal name As String, ByVal path As String, ByVal active As Boolean) As Boolean
             Try
                 Dim collection = IOFast(Of EnvironmentCollection).read(environmentFilePath)
                 Dim proceed As Boolean = True
@@ -132,7 +133,7 @@ Namespace AreaEngine
                     proceed = collection.removeItem(name)
                 End If
                 If proceed Then
-                    proceed = collection.addNew(name, path)
+                    proceed = collection.addNew(name, path, active)
                 End If
                 If proceed Then
                     proceed = IOFast(Of EnvironmentCollection).save(environmentFilePath, collection)

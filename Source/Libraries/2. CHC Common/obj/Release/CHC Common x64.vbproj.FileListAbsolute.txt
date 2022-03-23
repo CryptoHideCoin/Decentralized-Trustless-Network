@@ -5,3 +5,4 @@ E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\Release\CHC Common x64.v
 E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\Release\CHC Common x64.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\Release\CHCCommonLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\Release\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\Release\CHC Common x64.vbprojAssemblyReference.cache

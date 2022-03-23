@@ -30,7 +30,7 @@ Namespace AreaCommon
                 With New CommandBuilder()
                     executor.command = .run()
 
-                    If .lastErrorDescription.CompareTo("pippo") > 0 Then
+                    If (.lastErrorDescription.Length > 0) Then
                         Console.WriteLine("Error: " & .lastErrorDescription)
                         Console.WriteLine("")
                         Console.WriteLine("Press a key to continue")

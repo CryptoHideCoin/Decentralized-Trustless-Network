@@ -30,16 +30,17 @@ Namespace AreaEngine.CommandLine
 
         Private Property _CurrentParameter As SingleArgument
 
-        Public Property code As String = ""
         Public Property parameters As New Dictionary(Of String, SingleArgument)
+        Public Property code As String = ""
+        Public Property isPath As Boolean = False
+
 
         ''' <summary>
         ''' This method provide to decode a command from a string
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        '<DebuggerHiddenAttribute()>
-        Public Function addNewParameter(ByVal value As String) As Boolean
+        <DebuggerHiddenAttribute()> Public Function addNewParameter(ByVal value As String) As Boolean
             Try
                 Dim separated() As String
                 Dim newParameter As New SingleArgument
@@ -163,6 +164,7 @@ Namespace AreaEngine.CommandLine
         <DebuggerHiddenAttribute()> Public Function run(Optional ByVal forceCommandLine As String = "") As CommandStructure
             Dim result As New CommandStructure
             Dim parameterCommand As String()
+            Dim parameterPath As String = ""
             Try
                 If (forceCommandLine.Length = 0) Then
                     parameterCommand = Environment.GetCommandLineArgs
@@ -175,6 +177,8 @@ Namespace AreaEngine.CommandLine
                        (item = My.Application.Info.AssemblyName) Then
                         Continue For
                     Else
+                        parameterPath += " " & item
+
                         If isCommand(item) Then
                             If (result.code.Length > 0) Then
                                 lastErrorDescription = "To more command"
@@ -192,6 +196,16 @@ Namespace AreaEngine.CommandLine
                         End If
                     End If
                 Next
+
+                If (result.code.Length = 0) Then
+                    If (parameterPath.Length > 0) Then
+                        If IO.File.Exists(parameterPath) Then
+                            result.code = parameterPath
+
+                            result.isPath = True
+                        End If
+                    End If
+                End If
             Catch ex As Exception
                 lastErrorDescription = ex.Message
             End Try
