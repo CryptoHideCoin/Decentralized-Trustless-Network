@@ -81,7 +81,7 @@ Namespace AreaCommon.Command
                 ElseIf (ApplicationCommon.defaultParameters.getParameter("address").Length > 0) Then
                     parameterPassword = "--address:" & ApplicationCommon.defaultParameters.getParameter("address")
                 Else
-                    parameterPassword = "--address:localhost"
+                    parameterPassword = ""
                 End If
                 If _Command.haveParameter("pause") Then
                     parameterPause = "--pause"

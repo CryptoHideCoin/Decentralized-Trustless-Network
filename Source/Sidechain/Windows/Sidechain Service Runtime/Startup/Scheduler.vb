@@ -25,8 +25,7 @@ Namespace AreaCommon.Startup
                 Do While (serviceInformation.currentStatus = CHCModels.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started)
                     _Engine.manageJobProcessList(AreaCommon.Customized.CUSTOM_ChainServiceName)
 
-                    ' CSR-20
-                    Threading.Thread.Sleep(10000)
+                    Threading.Thread.Sleep(1000)
                     Application.DoEvents()
                 Loop
 

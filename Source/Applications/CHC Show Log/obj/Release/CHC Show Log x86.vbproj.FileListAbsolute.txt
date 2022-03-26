@@ -9,3 +9,4 @@ E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Log\x86\CHCShowLog.pdb
 E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Log\x86\CHCShowLog.xml
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHC Show Log x86.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHC Show Log x86.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Release\CHCShowLog.exe.config

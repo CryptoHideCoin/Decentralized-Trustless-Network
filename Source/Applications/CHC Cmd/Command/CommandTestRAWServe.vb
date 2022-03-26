@@ -41,6 +41,7 @@ Namespace AreaCommon.Command
         ''' </summary>
         ''' <returns></returns>
         Private Async Function ProcessRequests() As Task
+            Dim startProcedure As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(), endProcedure As Double, durate As Double
             Dim url = $"{_Address}/api/service/test/"
 
             Dim options = New Utils.WebRequest.Options With {
@@ -52,9 +53,16 @@ Namespace AreaCommon.Command
 
             Dim response = Await Utils.WebRequest.GetAsync(url)
 
+            endProcedure = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+            durate = CDec(endProcedure) - startProcedure
+
             Console.WriteLine($"Status: {CInt(response.Result.StatusCode)} - {response.Result.StatusDescription}")
             Console.WriteLine($"Bytes Received: {response.Bytes.Length}")
             Console.WriteLine($"Body: {response.Body}")
+            Console.WriteLine("")
+            Console.WriteLine($"Begin at:{CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(startProcedure)}")
+            Console.WriteLine($"End at:{CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(endProcedure)}")
+            Console.WriteLine($"Complete in:{durate} msec.")
             Console.WriteLine("")
         End Function
 

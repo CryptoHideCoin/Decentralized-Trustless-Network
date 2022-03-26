@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("CHC Show Log")>
 <Assembly: AssemblyDescription("Masternode Client Show Log Application")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CHC Show Log")>
+<Assembly: AssemblyProduct("CHC Show Log x64")>
 <Assembly: AssemblyCopyright("Copyright ©  2022")>
 <Assembly: AssemblyTrademark("")>
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' usando l'asterisco '*' come illustrato di seguito:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("0.4.0.0")>
-<Assembly: AssemblyFileVersion("0.4.0.0")>
+<Assembly: AssemblyVersion("0.5.0.0")>
+<Assembly: AssemblyFileVersion("0.5.0.0")>

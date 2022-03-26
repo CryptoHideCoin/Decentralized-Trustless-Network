@@ -106,7 +106,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-<Compile Include="Application\CommandExecutor.vb" />
+    <Compile Include="Application\CommandExecutor.vb" />
     <Compile Include="Application\Common.vb" />
     <Compile Include="Command\CommandBatch.vb" />
     <Compile Include="Command\CommandChainServiceSettings.vb" />

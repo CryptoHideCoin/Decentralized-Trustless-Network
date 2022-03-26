@@ -50,12 +50,6 @@
     <Reference Include="CHCBasicCryptographyLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Basic Cryptography\x64\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCModels">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModels.dll</HintPath>
-    </Reference>
     <Reference Include="CHCProtocolLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x64\CHCProtocolLibrary.dll</HintPath>
     </Reference>

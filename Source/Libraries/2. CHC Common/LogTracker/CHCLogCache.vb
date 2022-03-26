@@ -29,7 +29,7 @@ Namespace AreaEngine.Log
         Private Property _ToFlushCache As Boolean = False
         Private Property _InBootstrapMode As Boolean = True
 
-        Public Property timeInCache As Double = 6000
+        Public Property timeInCache As Double = 20000
 
 
         ''' <summary>
@@ -51,6 +51,7 @@ Namespace AreaEngine.Log
                     item = _DataCache(i)
 
                     If (item.instant < limit) Or forceClean Then
+                        timeInCache = 5000
 
                         If (item.action = ActionEnumeration.printIntoConsole) Then
                             itemToWrite = False

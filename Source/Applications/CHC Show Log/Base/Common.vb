@@ -24,10 +24,16 @@ Namespace AreaCommon
 
                 command = engine.run()
 
-                If (command.code.ToLower.CompareTo("force") = 0) Then
+                If (Command.code.ToLower.CompareTo("force") = 0) Then
                     Dim console As New ConsoleEngine
 
-                    console.execute(command)
+                    If Not (New IntegrityApplication).run() Then
+                        Return
+                    End If
+
+                    console.execute(Command)
+                ElseIf Command.isPath Then
+                    ShowFileLogEngine.execute(command.code)
                 Else
                     Console.WriteLine("Command not recognized")
                 End If

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-force --dataPath:E:\DATA --service:sideChainService</StartArguments>
+    <StartArguments>E:\DATA\System\Logs\RunTime\098419af-d2b2-4821-8f6d-4085db66f93f\execute-164811355801929.log</StartArguments>
   </PropertyGroup>
 </Project>

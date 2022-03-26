@@ -41,7 +41,7 @@ Namespace AreaCommon
         Private Const _CommandStatusServe As String = "statusServe"
         Private Const _CommandBatch As String = "batch"
         Private Const _CommandIf As String = "if"
-        Private Const _CommandTestRAWServe As String = "testServeResponse"
+        Private Const _CommandTestRAWServe As String = "testRAWServe"
         Private Const _CommandNote As String = "note"
         Private Const _CommandWrite As String = "write"
 

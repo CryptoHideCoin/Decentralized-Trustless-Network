@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("CHC Common Library")>
 <Assembly: AssemblyDescription("Crypto Hide Coin Library Common")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CHC Common Library")>
+<Assembly: AssemblyProduct("CHC Common Library x86")>
 <Assembly: AssemblyCopyright("Copyright ©  2019")>
 <Assembly: AssemblyTrademark("")>
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' usando l'asterisco '*' come illustrato di seguito:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.17.2.0")>
-<Assembly: AssemblyFileVersion("1.17.2.0")>
+<Assembly: AssemblyVersion("1.17.4.0")>
+<Assembly: AssemblyFileVersion("1.17.4.0")>

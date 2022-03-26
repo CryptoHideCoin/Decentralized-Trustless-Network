@@ -26,7 +26,6 @@ Namespace AreaCommon.Startup
                 If proceed Then
                     environment.log.trackEnter("startUp.Service.run")
 
-                    environment.log.track("startUp.Service.run", "Begin")
                     environment.log.track("startUp.Service.run", "Commandline process execute is " & System.Environment.CommandLine)
                     environment.log.track("startUp.Service.run", "DataPath is " & environment.paths.directoryData)
 

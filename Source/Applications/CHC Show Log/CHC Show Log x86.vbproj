@@ -51,6 +51,10 @@
     <ApplicationIcon>64.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CHCCommonLibrary, Version=1.17.1.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="CHCModels">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModels.dll</HintPath>
     </Reference>
@@ -87,6 +91,8 @@
   <ItemGroup>
     <Compile Include="Base\Common.vb" />
     <Compile Include="Engine\ConsoleEngine.vb" />
+    <Compile Include="Engine\IntegrityApplication.vb" />
+    <Compile Include="Engine\ShowFileLogEngine.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -126,12 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="64.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\2. CHC Common\CHC Common x86.vbproj">
-      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
-      <Name>CHC Common x86</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

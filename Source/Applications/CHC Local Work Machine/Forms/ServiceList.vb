@@ -2,10 +2,15 @@
 Option Explicit On
 
 
+
+
 Public Class ServiceList
 
     Private Sub ServiceList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
+            If Not (New IntegrityApplication).run() Then
+                End
+            End If
             If Not AreaCommon.Startup.Bootstrap.run() Then
                 End
             End If
@@ -19,13 +24,15 @@ Public Class ServiceList
 
             AreaCommon.Main.interfaceEntryPoint = Me
         Catch ex As Exception
+            Me.Opacity = 100
+
             MessageBox.Show("An error occurrence with ServiceList_Load - " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
     Private Sub ServiceList_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         e.Cancel = True
-        Me.WindowState = FormWindowState.Minimized
+        Me.Opacity = 0
 
         mainNotifyIcon.ShowBalloonTip(5000, "Crypto Hide Coin - Local Work Machine", "The service is running", ToolTipIcon.Info)
     End Sub
@@ -34,7 +41,7 @@ Public Class ServiceList
         If (e.Button = MouseButtons.Right) Then
             serviceContextMenu.Show()
         Else
-            Me.WindowState = FormWindowState.Normal
+            Me.Opacity = 100
         End If
     End Sub
 
@@ -43,7 +50,7 @@ Public Class ServiceList
     End Sub
 
     Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
-        Me.WindowState = FormWindowState.Normal
+        Me.Opacity = 100
     End Sub
 
     ''' <summary>

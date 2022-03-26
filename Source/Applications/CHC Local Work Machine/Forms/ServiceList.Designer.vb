@@ -34,13 +34,13 @@ Partial Class ServiceList
         Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.pageDataGrid = New System.Windows.Forms.DataGridView()
-        Me.mainStatus = New System.Windows.Forms.StatusStrip()
-        Me.descriptionOperationLabel = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.mainTimer = New System.Windows.Forms.Timer(Me.components)
         Me.internalNameButton = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.serviceColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.portNumberColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.StateColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.mainStatus = New System.Windows.Forms.StatusStrip()
+        Me.descriptionOperationLabel = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.mainTimer = New System.Windows.Forms.Timer(Me.components)
         Me.serviceContextMenu.SuspendLayout()
         CType(Me.pageDataGrid, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.mainStatus.SuspendLayout()
@@ -100,26 +100,6 @@ Partial Class ServiceList
         Me.pageDataGrid.Size = New System.Drawing.Size(766, 213)
         Me.pageDataGrid.TabIndex = 16
         '
-        'mainStatus
-        '
-        Me.mainStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.descriptionOperationLabel})
-        Me.mainStatus.Location = New System.Drawing.Point(0, 219)
-        Me.mainStatus.Name = "mainStatus"
-        Me.mainStatus.Size = New System.Drawing.Size(770, 22)
-        Me.mainStatus.TabIndex = 17
-        Me.mainStatus.Text = "StatusStrip1"
-        '
-        'descriptionOperationLabel
-        '
-        Me.descriptionOperationLabel.Name = "descriptionOperationLabel"
-        Me.descriptionOperationLabel.Size = New System.Drawing.Size(0, 17)
-        Me.descriptionOperationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'mainTimer
-        '
-        Me.mainTimer.Enabled = True
-        Me.mainTimer.Interval = 1000
-        '
         'internalNameButton
         '
         Me.internalNameButton.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
@@ -162,6 +142,26 @@ Partial Class ServiceList
         Me.StateColumn.Name = "StateColumn"
         Me.StateColumn.ReadOnly = True
         '
+        'mainStatus
+        '
+        Me.mainStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.descriptionOperationLabel})
+        Me.mainStatus.Location = New System.Drawing.Point(0, 219)
+        Me.mainStatus.Name = "mainStatus"
+        Me.mainStatus.Size = New System.Drawing.Size(770, 22)
+        Me.mainStatus.TabIndex = 17
+        Me.mainStatus.Text = "StatusStrip1"
+        '
+        'descriptionOperationLabel
+        '
+        Me.descriptionOperationLabel.Name = "descriptionOperationLabel"
+        Me.descriptionOperationLabel.Size = New System.Drawing.Size(0, 17)
+        Me.descriptionOperationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'mainTimer
+        '
+        Me.mainTimer.Enabled = True
+        Me.mainTimer.Interval = 1000
+        '
         'ServiceList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -174,10 +174,10 @@ Partial Class ServiceList
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximumSize = New System.Drawing.Size(786, 280)
         Me.Name = "ServiceList"
+        Me.Opacity = 0R
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Crypto Hide Coin - Local Work Machine"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Minimized
         Me.serviceContextMenu.ResumeLayout(False)
         CType(Me.pageDataGrid, System.ComponentModel.ISupportInitialize).EndInit()
         Me.mainStatus.ResumeLayout(False)

@@ -113,5 +113,16 @@ CHCShowLog
  <param name="value"></param>
  <returns></returns>
 </member>
+<member name="T:CHCShowLog.IntegrityApplication">
+ <summary>
+ This class contain all element of check integrity
+ </summary>
+</member>
+<member name="M:CHCShowLog.IntegrityApplication.run">
+ <summary>
+ This method provide to check all this application
+ </summary>
+ <returns></returns>
+</member>
 </members>
 </doc>

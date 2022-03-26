@@ -75,7 +75,7 @@ Namespace AreaEngine.Log
         ''' <param name="addictionalInformation"></param>
         ''' <returns></returns>
         <DebuggerHiddenAttribute()> Public Function trackExit(ByVal completeName As String, Optional ByVal addictionalInformation As String = "", Optional ByVal count As Boolean = False) As Boolean
-            Return addNewDataCache(ActionEnumeration.exitIntoMethod, addictionalInformation, completeName)
+            Return addNewDataCache(ActionEnumeration.exitFromTheMethod, addictionalInformation, completeName)
         End Function
 
         ''' <summary>

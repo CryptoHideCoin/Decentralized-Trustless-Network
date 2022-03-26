@@ -4,3 +4,4 @@ E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\x86\Release\CHCModels.Re
 E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\x86\Release\CHC Models.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\x86\Release\CHCModels.dll
 E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\x86\Release\CHCModels.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\x86\Release\CHC Models.vbprojAssemblyReference.cache

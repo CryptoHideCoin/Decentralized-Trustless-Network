@@ -21,7 +21,7 @@ Namespace AreaModel.Log
         notDefined
         printIntoConsole
         enterIntoMethod
-        exitIntoMethod
+        exitFromTheMethod
         genericTrack
         exception
     End Enum
@@ -82,7 +82,7 @@ Namespace AreaModel.Log
             Select Case action
                 Case ActionEnumeration.enterIntoMethod : tmp += "Enter into method|"
                 Case ActionEnumeration.exception : tmp += "Exception|"
-                Case ActionEnumeration.exitIntoMethod : tmp += "Exit into method|"
+                Case ActionEnumeration.exitFromTheMethod : tmp += "Exit into method|"
                 Case ActionEnumeration.genericTrack : tmp += "Generic Track|"
                 Case ActionEnumeration.printIntoConsole : tmp += "Print into console|"
             End Select

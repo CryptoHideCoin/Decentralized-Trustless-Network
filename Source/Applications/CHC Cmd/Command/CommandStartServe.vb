@@ -57,7 +57,7 @@ Namespace AreaCommon.Command
                     parameterSecurityKey = "--securityKey:" & ApplicationCommon.defaultParameters.getParameter("securityKey")
                 End If
 
-                Select Case parameterService
+                Select Case _Command.parameterValue("service").ToLower
                     Case "localworkmachine"
                         directory = "CHC Local Work Machine"
                         exeFileName = "CHCLocalWorkMachine.exe"
