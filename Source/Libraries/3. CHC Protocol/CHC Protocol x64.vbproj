@@ -22,7 +22,7 @@
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,18 +47,6 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CHCBasicCryptographyLibrary, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Basic Cryptography\x64\CHCBasicCryptographyLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.17.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCModels, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModels.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Numerics" />
@@ -150,6 +138,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Other\ReleaseNote.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\0. CHC Basic Cryptography\CHC Basic Cryptography.csproj">
+      <Project>{0d976974-b421-410d-9c1a-d885e88fba68}</Project>
+      <Name>CHC Basic Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\1. CHC Models\CHC Models.vbproj">
+      <Project>{5475fb38-e6b1-4049-8a92-b16607841e96}</Project>
+      <Name>CHC Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\2. CHC Common\CHC Common x64.vbproj">
+      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
+      <Name>CHC Common x64</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

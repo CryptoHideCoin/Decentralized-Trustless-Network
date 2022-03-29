@@ -19,3 +19,6 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHC Lo
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHC Local Work Machine x86.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHCLocalWorkMachine.exe
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHCLocalWorkMachine.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\CHCSidechainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\Newtonsoft.Json.xml

@@ -29,6 +29,7 @@ Namespace Controllers
         Public Function PutValue(<FromBody()> ByVal parameter As MinimalDataToRegister) As BaseRemoteResponse
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
+            Dim found As Boolean = False
             Try
                 If (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
 
@@ -36,7 +37,17 @@ Namespace Controllers
                         Application.DoEvents()
                     Loop
 
-                    AreaCommon.Main.serviceToRegister.Add(parameter)
+                    For Each singleItem In AreaCommon.Main.serviceToRegister
+                        If (singleItem.service = parameter.service) And (singleItem.portNumber = parameter.portNumber) Then
+                            found = True
+
+                            Exit For
+                        End If
+                    Next
+
+                    If Not found Then
+                        AreaCommon.Main.serviceToRegister.Add(parameter)
+                    End If
                 Else
                     result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                 End If

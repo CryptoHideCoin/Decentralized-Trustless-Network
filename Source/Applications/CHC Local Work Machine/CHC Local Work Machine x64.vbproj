@@ -25,7 +25,7 @@
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -55,22 +55,6 @@
     <ApplicationIcon>64.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CHCCommonLibrary, Version=1.17.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCModels, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModels.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCSidechainServiceLibrary, Version=0.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x64\CHCSidechainServiceLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -166,6 +150,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\1. CHC Models\CHC Models.vbproj">
+      <Project>{5475fb38-e6b1-4049-8a92-b16607841e96}</Project>
+      <Name>CHC Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\2. CHC Common\CHC Common x64.vbproj">
+      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
+      <Name>CHC Common x64</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\3. CHC Protocol\CHC Protocol x64.vbproj">
+      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
+      <Name>CHC Protocol x64</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\5. CHC Sidechain Service\CHC Sidechain Service x64.vbproj">
+      <Project>{f586744f-8890-4341-8ae8-2583d5a4d084}</Project>
+      <Name>CHC Sidechain Service x64</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -53,10 +53,6 @@
     <ApplicationIcon>64.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CHCCommonLibrary, Version=1.17.3.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCModels, Version=0.4.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModels.dll</HintPath>
@@ -64,10 +60,6 @@
     <Reference Include="CHCProtocolLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCSidechainServiceLibrary, Version=0.8.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x86\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -165,6 +157,15 @@
   <ItemGroup>
     <Content Include="64.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\2. CHC Common\CHC Common x86.vbproj">
+      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
+      <Name>CHC Common x86</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\5. CHC Sidechain Service\CHC Sidechain Service x86.vbproj">
+      <Project>{f586744f-8890-4341-8ae8-2583d5a4d084}</Project>
+      <Name>CHC Sidechain Service x86</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

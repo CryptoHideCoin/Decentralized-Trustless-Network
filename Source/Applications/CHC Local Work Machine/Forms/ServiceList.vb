@@ -34,6 +34,8 @@ Public Class ServiceList
         e.Cancel = True
         Me.Opacity = 0
 
+        mainTimer.Enabled = False
+
         mainNotifyIcon.ShowBalloonTip(5000, "Crypto Hide Coin - Local Work Machine", "The service is running", ToolTipIcon.Info)
     End Sub
 
@@ -42,6 +44,8 @@ Public Class ServiceList
             serviceContextMenu.Show()
         Else
             Me.Opacity = 100
+
+            mainTimer.Enabled = True
         End If
     End Sub
 
@@ -51,6 +55,8 @@ Public Class ServiceList
 
     Private Sub OpenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OpenToolStripMenuItem.Click
         Me.Opacity = 100
+
+        mainTimer.Enabled = True
     End Sub
 
     ''' <summary>

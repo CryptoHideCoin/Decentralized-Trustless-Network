@@ -45,7 +45,7 @@ Namespace AreaScheduler
 
                 Return response
             Catch ex As Exception
-                environment.log.trackException("Scheduler.startServiceProcessor", ex.Message)
+                environment.log.trackException("Scheduler.loadLocalWorkMachineSlot", ex.Message)
 
                 Return New JobSchedule
             End Try

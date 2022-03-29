@@ -4,6 +4,6 @@
     <StartArguments>-help</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>E:\Environment\CreateEnvironment.batch</StartArguments>
+    <StartArguments>-statusServe --service:sideChainService --dataPath:e:\data</StartArguments>
   </PropertyGroup>
 </Project>

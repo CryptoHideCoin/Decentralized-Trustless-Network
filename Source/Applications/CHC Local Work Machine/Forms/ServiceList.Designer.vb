@@ -24,11 +24,11 @@ Partial Class ServiceList
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ServiceList))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.mainNotifyIcon = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.serviceContextMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.OpenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -79,14 +79,14 @@ Partial Class ServiceList
         Me.pageDataGrid.AllowUserToResizeColumns = False
         Me.pageDataGrid.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.pageDataGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.pageDataGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle11
         Me.pageDataGrid.ColumnHeadersHeight = 42
         Me.pageDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing
         Me.pageDataGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.internalNameButton, Me.serviceColumn, Me.portNumberColumn, Me.StateColumn})
@@ -103,9 +103,9 @@ Partial Class ServiceList
         'internalNameButton
         '
         Me.internalNameButton.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.internalNameButton.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.internalNameButton.DefaultCellStyle = DataGridViewCellStyle12
         Me.internalNameButton.HeaderText = "Internal Name"
         Me.internalNameButton.Name = "internalNameButton"
         Me.internalNameButton.ReadOnly = True
@@ -114,8 +114,8 @@ Partial Class ServiceList
         '
         'serviceColumn
         '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.serviceColumn.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.serviceColumn.DefaultCellStyle = DataGridViewCellStyle13
         Me.serviceColumn.HeaderText = "Service"
         Me.serviceColumn.Name = "serviceColumn"
         Me.serviceColumn.ReadOnly = True
@@ -125,8 +125,8 @@ Partial Class ServiceList
         '
         'portNumberColumn
         '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.portNumberColumn.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.portNumberColumn.DefaultCellStyle = DataGridViewCellStyle14
         Me.portNumberColumn.HeaderText = "Port Number"
         Me.portNumberColumn.Name = "portNumberColumn"
         Me.portNumberColumn.ReadOnly = True
@@ -136,8 +136,8 @@ Partial Class ServiceList
         '
         'StateColumn
         '
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        Me.StateColumn.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.StateColumn.DefaultCellStyle = DataGridViewCellStyle15
         Me.StateColumn.HeaderText = "State"
         Me.StateColumn.Name = "StateColumn"
         Me.StateColumn.ReadOnly = True
@@ -159,7 +159,6 @@ Partial Class ServiceList
         '
         'mainTimer
         '
-        Me.mainTimer.Enabled = True
         Me.mainTimer.Interval = 1000
         '
         'ServiceList

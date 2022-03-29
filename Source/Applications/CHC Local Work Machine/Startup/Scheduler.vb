@@ -337,6 +337,7 @@ Namespace AreaCommon.Startup
                 Dim toRemove As List(Of GeneralModel.ServiceData)
                 Dim noAdd As Boolean = False
                 Dim snapShotToRegister As New List(Of CHCModels.AreaModel.Service.MinimalDataToRegister)
+
                 Do
                     Main.schedulerInWorking = True
 
@@ -357,8 +358,10 @@ Namespace AreaCommon.Startup
                         noAdd = False
 
                         For Each itemService In Main.settingList.Values
-                            If itemService.configuration.sideChainName.Contains(item.service) Then
+                            If (itemService.configuration.sideChainName.Contains(item.service) = 0) Then
                                 noAdd = True
+
+                                Exit For
                             End If
                         Next
 
@@ -370,7 +373,8 @@ Namespace AreaCommon.Startup
                                     data = New GeneralModel.ServiceData With {.configuration = response.settings}
 
                                     data.keys = readAdminKeyStore(data)
-                                    Main.settingList.Add(response.settings.internalName, data)
+
+                                    Main.settingList.Add(response.settings.sideChainName, data)
 
                                     If Not IsNothing(Main.interfaceEntryPoint) Then
                                         Main.interfaceEntryPoint.notifyAddNewService(response.settings.internalName)
@@ -399,7 +403,7 @@ Namespace AreaCommon.Startup
                             Main.interfaceEntryPoint.notifyRemoveService(item.configuration.internalName)
                         End If
 
-                        Main.settingList.Remove(item.configuration.internalName)
+                        Main.settingList.Remove(item.configuration.sideChainName)
                     Next
 
                     toRemove = Nothing

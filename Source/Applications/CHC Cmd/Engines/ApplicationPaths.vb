@@ -11,6 +11,7 @@ Namespace AreaEngine
         undefined
         sideChainServiceSettings
         showLog
+        localWorkMachine
         sideChainService
     End Enum
 
@@ -69,10 +70,13 @@ Namespace AreaEngine
                 proceed = addNew(ApplicationID.sideChainServiceSettings, rootPath, "CHC Sidechain Service Settings", "CHCSidechainServiceSettings.exe")
             End If
             If proceed Then
-                proceed = addNew(ApplicationID.showLog, rootPath, "CHC SHow Log", "CHCShowLog.exe")
+                proceed = addNew(ApplicationID.showLog, rootPath, "CHC Show Log", "CHCShowLog.exe")
             End If
             If proceed Then
-                proceed = addNew(ApplicationID.sideChainService, rootPath, "{value}", "{value}.exe")
+                proceed = addNew(ApplicationID.localWorkMachine, rootPath, "CHC Local Work Machine", "CHCLocalWorkMachine.exe")
+            End If
+            If proceed Then
+                proceed = addNew(ApplicationID.sideChainService, rootPath, "CHC Sidechain Service Runtime", "{value}.exe")
             End If
 
             Return proceed

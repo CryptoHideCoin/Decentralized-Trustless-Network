@@ -22,8 +22,8 @@ Namespace Controllers
         ''' This method provide to return a current time of server (test service)
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue() As RemoteResponse
-            Dim result As New RemoteResponse
+        Public Function GetValue() As BaseRemoteResponse
+            Dim result As New BaseRemoteResponse
             Dim enter As Boolean = False
             Try
                 enter = True

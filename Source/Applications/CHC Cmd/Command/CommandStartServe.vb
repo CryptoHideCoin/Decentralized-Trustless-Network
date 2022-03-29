@@ -28,24 +28,32 @@ Namespace AreaCommon.Command
         Private Function CommandModel_run() As Boolean Implements CommandModel.run
             Try
                 Dim applicationInfo As AreaEngine.ApplicationPathData
-                Dim path As String = "", parameterService As String = ""
-                Dim parameterDataPath As String = "", parameterPassword As String = ""
+                Dim path As String = "", parameterService As String = "", parameterServiceName As String = ""
+                Dim parameterDataPath As String = "", parameterDataPathValue As String = "", parameterPassword As String = ""
                 Dim parameterSecurityKey As String = "", parameters As String = ""
                 Dim directory As String = "", exeFileName As String = ""
 
                 AreaEngine.ApplicationPathEngine.init()
-                applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.showLog)
+                applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.sideChainService)
 
                 If _Command.haveParameter("service") Then
-                    parameterService = "--service:" & _Command.parameterValue("service")
+                    parameterServiceName = _Command.parameterValue("service")
                 ElseIf (ApplicationCommon.defaultParameters.getParameter("service").Length > 0) Then
-                    parameterService = ApplicationCommon.defaultParameters.getParameter("service")
+                    parameterServiceName = ApplicationCommon.defaultParameters.getParameter("service")
                 End If
+                If (parameterService.Length > 0) Then
+                    parameterService = $"--service:{parameterServiceName}"
+                End If
+
                 If _Command.haveParameter("dataPath") Then
-                    parameterDataPath = "--dataPath:" & _Command.parameterValue("dataPath")
+                    parameterDataPathValue = _Command.parameterValue("dataPath")
                 ElseIf (ApplicationCommon.defaultParameters.getParameter("dataPath").Length > 0) Then
-                    parameterDataPath = "--dataPath:" & ApplicationCommon.defaultParameters.getParameter("dataPath")
+                    parameterDataPathValue = ApplicationCommon.defaultParameters.getParameter("dataPath")
                 End If
+                If (parameterDataPathValue.Length > 0) Then
+                    parameterDataPath = $"--dataPath:{parameterDataPathValue}"
+                End If
+
                 If _Command.haveParameter("password") Then
                     parameterPassword = "--password:" & _Command.parameterValue("password")
                 ElseIf (ApplicationCommon.defaultParameters.getParameter("password").Length > 0) Then
@@ -57,28 +65,26 @@ Namespace AreaCommon.Command
                     parameterSecurityKey = "--securityKey:" & ApplicationCommon.defaultParameters.getParameter("securityKey")
                 End If
 
-                Select Case _Command.parameterValue("service").ToLower
+                Select Case parameterServiceName.ToLower()
                     Case "localworkmachine"
                         directory = "CHC Local Work Machine"
                         exeFileName = "CHCLocalWorkMachine.exe"
                         parameters = parameterDataPath & " " & parameterPassword
+                        applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.localWorkMachine)
                     Case "sidechainservice"
-                        directory = "CHC Sidechain Service Runtime"
+                        applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.sideChainService)
+                        directory = applicationInfo.directoryName
                         exeFileName = "CHCSidechainServiceRuntime.exe"
-                        parameters = parameterService & " " & parameterDataPath & " " & parameterPassword
+                        parameters = parameterDataPath & " " & parameterPassword
                     Case "primary"
                         directory = "CHC Primary Service Runtime"
                         exeFileName = "CHCPrimaryServiceRuntime.exe"
                         parameters = parameterDataPath & " " & parameterPassword
                     Case Else
-                        Console.WriteLine("Error: service not managed")
+                        Console.WriteLine($"Error: {parameterServiceName} service not managed")
 
                         Return False
                 End Select
-
-                If (parameterService.Length > 0) Then
-                    parameterService = "--service:" & parameterService
-                End If
 
                 path = applicationInfo.rootPath
                 path = IO.Path.Combine(path, directory)

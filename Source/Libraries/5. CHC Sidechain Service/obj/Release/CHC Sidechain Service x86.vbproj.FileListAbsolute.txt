@@ -5,3 +5,4 @@ E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Release\CHC S
 E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Release\CHC Sidechain Service x86.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Release\CHCSidechainServiceLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Release\CHCSidechainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Sidechain Service\obj\Release\CHC Sidechain Service x86.vbprojAssemblyReference.cache

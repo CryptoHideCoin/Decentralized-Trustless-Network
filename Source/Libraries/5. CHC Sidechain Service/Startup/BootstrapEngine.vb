@@ -66,7 +66,11 @@ Namespace AreaCommon.Startup
                 command = engine.run()
 
                 If (command.code.ToLower.CompareTo("force") = 0) Then
-                    _DataPath = command.parameterValue("dataPath")
+                    Try
+                        _DataPath = command.parameterValue("dataPath")
+                    Catch ex As Exception
+                    End Try
+
                     Main.settingsPassword = command.parameterValue("password")
                     Main.securityKey = command.parameterValue("securityKey")
                 Else

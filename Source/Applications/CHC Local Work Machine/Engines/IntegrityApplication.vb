@@ -16,7 +16,7 @@ Public Class IntegrityApplication
         Try
             Dim fileName As String
 
-            For Each singleFile In IO.Directory.GetFiles(IO.Directory.GetCurrentDirectory)
+            For Each singleFile In IO.Directory.GetFiles(Application.StartupPath)
                 fileName = New IO.FileInfo(singleFile).Name
 
                 Select Case fileName.ToLower()

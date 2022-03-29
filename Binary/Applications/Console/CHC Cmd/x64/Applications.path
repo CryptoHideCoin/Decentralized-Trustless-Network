@@ -7,14 +7,20 @@
   },
   {
     "applicationReferement": 2,
-    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console\\CHC SHow Log",
-    "directoryName": "x64",
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console\\x64",
+    "directoryName": "CHC Show Log",
     "applicationName": "CHCShowLog.exe"
   },
   {
     "applicationReferement": 3,
-    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console\\CHC Cmd",
-    "directoryName": "{value}",
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Windows",
+    "directoryName": "CHC Local Work Machine",
+    "applicationName": "CHCLocalWorkMachine.exe"
+  },
+  {
+    "applicationReferement": 4,
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Sidechains\\Windows\\CHC Sidechain Service Runtime",
+    "directoryName": "x64",
     "applicationName": "{value}.exe"
   }
 ]

@@ -11,7 +11,6 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\System
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\CHCBasicCryptographyLibrary.dll
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\Newtonsoft.Json.dll
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\BouncyCastle.Crypto.dll
-E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\CHCModels.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\CHCSidechainServiceLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\System.Web.Http.SelfHost.xml
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHC Local Work Machine x64.vbprojAssemblyReference.cache
@@ -21,5 +20,8 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHC Lo
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHC Local Work Machine x64.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHCLocalWorkMachine.exe
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHCLocalWorkMachine.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\CHCModels.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\CHCCommonLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\CHCBasicCryptographyLibrary.pdb

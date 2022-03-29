@@ -51,7 +51,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Basic Cryptography\x86\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.16.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary, Version=1.17.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
     </Reference>
