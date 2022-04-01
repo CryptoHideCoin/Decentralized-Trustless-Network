@@ -97,12 +97,25 @@
     <Compile Include="Controllers\Linked\LinkedController.vb" />
     <Compile Include="Controllers\Power\SetPowerOffController.vb" />
     <Compile Include="Controllers\Service\TestController.vb" />
+    <Compile Include="Controllers\ShowLog\ShowLogParametersController.vb" />
     <Compile Include="Engines\IntegrityApplication.vb" />
+    <Compile Include="Forms\Informations.Designer.vb">
+      <DependentUpon>Informations.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Informations.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\ServiceList.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ServiceList.Designer.vb">
       <DependentUpon>ServiceList.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ShowLogConfiguration.Designer.vb">
+      <DependentUpon>ShowLogConfiguration.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ShowLogConfiguration.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Models\GeneralModel.vb" />
@@ -125,6 +138,12 @@
     <Compile Include="Startup\Scheduler.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\Informations.resx">
+      <DependentUpon>Informations.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ShowLogConfiguration.resx">
+      <DependentUpon>ShowLogConfiguration.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>

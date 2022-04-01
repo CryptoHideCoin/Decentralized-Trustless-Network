@@ -14,7 +14,7 @@ Option Explicit On
 Namespace AreaModel.Service
 
     ''' <summary>
-    ''' This class contain the minimal data to register a new service
+    ''' This class contain the minimal data to register a new service (Local Work Machine)
     ''' </summary>
     Public Class MinimalDataToRegister
         Public Property service As String = ""

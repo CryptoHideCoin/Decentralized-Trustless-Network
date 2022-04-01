@@ -51,6 +51,15 @@ Namespace AreaModel.Log
 
 
     ''' <summary>
+    ''' This class contain the runtime parameter's for the log panel
+    ''' </summary>
+    Public Class LogPanelParameters
+        Public Property showOnlyInfo As Boolean = True
+        Public Property pause As Boolean = False
+        Public Property frequencyRefresh As Double = 1000
+    End Class
+
+    ''' <summary>
     ''' This class contain the element of a single action of application
     ''' </summary>
     Public Class SingleActionApplication
@@ -239,6 +248,15 @@ Namespace AreaModel.Log
         Inherits BaseRemoteResponse
 
         Public Property value As New List(Of SingleActionApplication)
+    End Class
+
+    ''' <summary>
+    ''' This class contain the information response model of Log Panel Parameters
+    ''' </summary>
+    Public Class LogPanelParametersResponseModel
+        Inherits BaseRemoteResponse
+
+        Public Property value As New LogPanelParameters
     End Class
 
 End Namespace

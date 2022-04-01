@@ -25,3 +25,5 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\CHCCom
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\CHCProtocolLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Debug\CHCBasicCryptographyLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHCLocalWorkMachine.ShowLogConfiguration.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHCLocalWorkMachine.Informations.resources

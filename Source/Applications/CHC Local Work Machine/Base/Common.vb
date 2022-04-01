@@ -19,8 +19,9 @@ Namespace AreaCommon
         Public Shared Property schedulerInWorking As Boolean = False
         Public Shared Property notAddInScheduler As Boolean = False
 
-        Public Shared Property settingList As New Dictionary(Of String, AreaCommon.GeneralModel.ServiceData)
+        Public Shared Property settingList As New Dictionary(Of String, GeneralModel.ServiceData)
         Public Shared Property serviceToRegister As New List(Of MinimalDataToRegister)
+        Public Shared Property showLogParameters As New CHCModels.AreaModel.Log.LogPanelParameters
 
         Public Shared Property interfaceEntryPoint As ServiceList
 

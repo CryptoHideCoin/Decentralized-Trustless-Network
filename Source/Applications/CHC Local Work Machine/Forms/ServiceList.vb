@@ -118,4 +118,22 @@ Public Class ServiceList
         End Try
     End Sub
 
+    Private Sub ExitToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem1.Click
+        End
+    End Sub
+
+    Private Sub ShowLogParametersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowLogParametersToolStripMenuItem.Click
+        ShowLogConfiguration.ShowDialog()
+    End Sub
+
+    Private Sub setTopMostToolStrip_Click(sender As Object, e As EventArgs) Handles setTopMostToolStrip.Click
+        setTopMostToolStrip.Checked = Not setTopMostToolStrip.Checked
+
+        Me.TopMost = setTopMostToolStrip.Checked
+    End Sub
+
+    Private Sub InfoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InfoToolStripMenuItem.Click
+        Informations.ShowDialog()
+    End Sub
+
 End Class

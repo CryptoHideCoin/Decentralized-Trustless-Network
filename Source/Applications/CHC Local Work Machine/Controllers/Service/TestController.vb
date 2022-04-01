@@ -12,7 +12,7 @@ Namespace Controllers
 
     ' GET: api/{GUID service}/service/testController
     <Route("ServiceApi")>
-    Public Class testController
+    Public Class TestController
 
         Inherits ApiController
 

@@ -34,20 +34,26 @@ Namespace AreaCommon
         Private Property _Keys As New KeysEngine
 
         Private Property _DataSettings As SettingsSidechainService
+        Private Property _LocalWorkMachineSettings As SettingsSidechainService
 
 
         ''' <summary>
         ''' This method provide to read a settings
         ''' </summary>
         ''' <returns></returns>
-        Private Function readSettings() As Boolean
+        Private Function readSettings(ByVal loadService As Boolean) As Boolean
             Try
                 Dim completeFileName As String = ""
+                Dim serviceName As String = _Service
 
                 Dim engineFile As New BaseFile(Of SettingsSidechainService)
 
+                If Not loadService Then
+                    serviceName = "LocalWorkMachine"
+                End If
+
                 completeFileName = IO.Path.Combine(_DataPath, "Settings")
-                completeFileName = IO.Path.Combine(completeFileName, _Service & ".Settings")
+                completeFileName = IO.Path.Combine(completeFileName, serviceName & ".Settings")
 
                 If Not IO.File.Exists(completeFileName) Then
                     Console.WriteLine(completeFileName & " not found.")
@@ -64,7 +70,11 @@ Namespace AreaCommon
                 engineFile.fileName = completeFileName
 
                 If engineFile.read() Then
-                    _DataSettings = engineFile.data
+                    If loadService Then
+                        _DataSettings = engineFile.data
+                    Else
+                        _LocalWorkMachineSettings = engineFile.data
+                    End If
 
                     Return True
                 Else
@@ -119,29 +129,37 @@ Namespace AreaCommon
         ''' </summary>
         ''' <param name="api"></param>
         ''' <returns></returns>
-        Public Function buildURL(ByVal api As String) As String
+        Public Function buildURL(ByVal useService As Boolean, ByVal api As String) As String
             Dim url As String = ""
             Try
                 Dim proceed As Boolean = True
+                Dim settings As SettingsSidechainService = _DataSettings
+                Dim address As String = ""
+
+                If Not useService Then
+                    settings = _LocalWorkMachineSettings
+                Else
+                    address = _Address
+                End If
 
                 If proceed Then
-                    If _DataSettings.secureChannel Then
+                    If settings.secureChannel Then
                         url += "https"
                     Else
                         url += "http"
                     End If
                 End If
                 If proceed Then
-                    If (_Address.Length = 0) Then
-                        _Address += "localhost:" & _DataSettings.servicePort
+                    If (address.Length = 0) Then
+                        address += "localhost:" & settings.servicePort
                     End If
                 End If
                 If proceed Then
-                    url += "://" & _Address & "/api"
+                    url += "://" & address & "/api"
                 End If
                 If proceed Then
-                    If (_DataSettings.serviceID.Length > 0) Then
-                        url += "/" & _DataSettings.serviceID & api
+                    If (settings.serviceID.Length > 0) Then
+                        url += "/" & settings.serviceID & api
                     Else
                         url += api
                     End If
@@ -156,14 +174,14 @@ Namespace AreaCommon
         ''' This method provide to get a service
         ''' </summary>
         ''' <returns></returns>
-        Private Function serviceFound() As Boolean
+        Private Function serviceFound(ByVal useService As Boolean) As Boolean
             Try
                 Dim remote As New ProxyWS(Of RemoteResponse)
                 Dim proceed As Boolean = True
                 Dim response As String = ""
 
                 If proceed Then
-                    remote.url = buildURL("/service/test/")
+                    remote.url = buildURL(useService, "/service/test/")
                 End If
                 If proceed Then
                     response = remote.getData()
@@ -313,7 +331,7 @@ Namespace AreaCommon
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    remote.url = buildURL("/administration/security/requestAccessKey/?signature=" & signCertificate())
+                    remote.url = buildURL(True, "/administration/security/requestAccessKey/?signature=" & signCertificate())
                 End If
                 If proceed Then
                     proceed = (remote.getData() = "")
@@ -345,7 +363,7 @@ Namespace AreaCommon
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    remote.url = buildURL("/administration/security/requestAdminSecurityToken/?signature=" & signAccessKey())
+                    remote.url = buildURL(True, "/administration/security/requestAdminSecurityToken/?signature=" & signAccessKey())
                 End If
                 If proceed Then
                     proceed = (remote.getData() = "")
@@ -361,8 +379,57 @@ Namespace AreaCommon
 
                 Return proceed
             Catch ex As Exception
-                Console.WriteLine("Error during serviceFound - " & ex.Message)
+                Console.WriteLine("Error during getSecurityToken - " & ex.Message)
 
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to read a parameters settings from CHC Local Work Machine Service
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function readParameterSettings() As LogPanelParameters
+            Try
+                Dim remote As New ProxyWS(Of LogPanelParametersResponseModel)
+
+                remote.url = buildURL(False, "/service/showLogParameters/")
+
+                If (remote.getData().Length > 0) Then
+                    Return New LogPanelParameters
+                End If
+
+                Return remote.data.value
+            Catch ex As Exception
+                Return New LogPanelParameters
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method read the log stream data
+        ''' </summary>
+        ''' <param name="parameters"></param>
+        ''' <returns></returns>
+        Private Function readRemoteLog(ByVal parameters As LogPanelParameters) As Boolean
+            Try
+                Dim remote As New ProxyWS(Of LogStreamResponseModel)
+
+                remote.url = buildURL(True, "/administration/logStream/?securityToken=" & _SecurityToken & "&mode=" & IIf(parameters.showOnlyInfo, "console", "full"))
+
+                If (remote.getData().Length = 0) Then
+                    If (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete) Then
+                        For Each item In remote.data.value
+                            If (parameters.showOnlyInfo) Then
+                                Console.WriteLine(item.message)
+                            Else
+                                Console.WriteLine(item.toString(True))
+                            End If
+                        Next
+                    End If
+                End If
+
+                Return True
+            Catch ex As Exception
                 Return False
             End Try
         End Function
@@ -373,27 +440,25 @@ Namespace AreaCommon
         ''' <returns></returns>
         Private Function readLogFile() As Boolean
             Try
-                Dim remote As New ProxyWS(Of LogStreamResponseModel)
+                Dim lastErrorTime As Double = 0
                 Dim proceed As Boolean = True
+                Dim parameters As New LogPanelParameters
 
-                If proceed Then
-                    remote.url = buildURL("/administration/logStream/?securityToken=" & _SecurityToken & "&mode=" & IIf(_Mode.ToLower() = "console", "console", "full"))
-                End If
                 Do While proceed
-                    If proceed Then
-                        proceed = (remote.getData() = "")
-                    End If
-                    If proceed Then
-                        proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
-                    End If
-                    If proceed Then
-                        For Each item In remote.data.value
-                            If (_Mode.ToLower() = "console") Then
-                                Console.WriteLine(item.message)
+                    parameters = readParameterSettings()
+
+                    If Not parameters.pause Then
+                        If Not readRemoteLog(parameters) Then
+                            If (lastErrorTime = 0) Then
+                                lastErrorTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                             Else
-                                Console.WriteLine(item.ToString(True))
+                                proceed = ((lastErrorTime + 2500) <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
                             End If
-                        Next
+                        Else
+                            Threading.Thread.Sleep(parameters.frequencyRefresh)
+                        End If
+                    Else
+                        Threading.Thread.Sleep(parameters.frequencyRefresh)
                     End If
                 Loop
 
@@ -418,7 +483,10 @@ Namespace AreaCommon
                 proceed = manageParameters(value)
             End If
             If proceed Then
-                proceed = readSettings()
+                proceed = readSettings(True)
+            End If
+            If proceed Then
+                readSettings(False)
             End If
             If proceed Then
                 If readAdminKeyStore() Then
@@ -430,7 +498,7 @@ Namespace AreaCommon
                 End If
             End If
             If proceed Then
-                Do While Not serviceFound()
+                Do While Not serviceFound(True)
                     Console.Clear()
                     Console.WriteLine(CHCCommonLibrary.AreaEngine.Miscellaneous.atMomentGMT() & " - wait to start service " & _Service & "...")
 
