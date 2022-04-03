@@ -27,9 +27,9 @@ Namespace AreaCommon
                 If (Command.code.ToLower.CompareTo("force") = 0) Then
                     Dim console As New ConsoleEngine
 
-                    If Not (New IntegrityApplication).run() Then
-                        Return
-                    End If
+                    'If Not (New IntegrityApplication).run() Then
+                    '    Return
+                    'End If
 
                     console.execute(Command)
                 ElseIf Command.isPath Then
