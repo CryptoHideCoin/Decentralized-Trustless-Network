@@ -18,3 +18,5 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHCCmd.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Debug\CHCCommonLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Debug\CHCSidechainServiceLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Debug\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Debug\CHCBasicCryptographyLibrary.pdb

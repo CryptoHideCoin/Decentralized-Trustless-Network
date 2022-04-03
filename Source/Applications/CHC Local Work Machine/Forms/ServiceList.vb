@@ -20,6 +20,10 @@ Public Class ServiceList
             If Not AreaCommon.Controllers.webServiceThread() Then
                 End
             End If
+            If (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus = CHCModels.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started) Then
+                checkSwitchOff.Enabled = True
+            End If
+
             mainNotifyIcon.ShowBalloonTip(5000, "Crypto Hide Coin - Local Work Machine", "The service is running. Click here to use or close!", ToolTipIcon.Info)
 
             AreaCommon.Main.interfaceEntryPoint = Me
@@ -123,7 +127,11 @@ Public Class ServiceList
     End Sub
 
     Private Sub ShowLogParametersToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowLogParametersToolStripMenuItem.Click
+        Me.TopMost = False
+
         ShowLogConfiguration.ShowDialog()
+
+        Me.TopMost = setTopMostToolStrip.Checked
     End Sub
 
     Private Sub setTopMostToolStrip_Click(sender As Object, e As EventArgs) Handles setTopMostToolStrip.Click
@@ -136,4 +144,12 @@ Public Class ServiceList
         Informations.ShowDialog()
     End Sub
 
+    Private Sub checkSwitchOff_Tick(sender As Object, e As EventArgs) Handles checkSwitchOff.Tick
+        If (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus <> CHCModels.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started) Then
+            checkSwitchOff.Enabled = False
+            mainTimer.Enabled = False
+
+            End
+        End If
+    End Sub
 End Class

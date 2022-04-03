@@ -2,35 +2,39 @@
 Option Explicit On
 
 Imports System.Web.Http
-Imports CHCModels.AreaModel.Network.Response
 Imports CHCModels.AreaModel.Information
+Imports CHCModels.AreaModel.Network.Response
+
 
 
 
 
 Namespace Controllers
 
-
-    ' GET: api/{GUID service}/administration/setPowerOff
-    <RoutePrefix("LWMAdministrationApi")>
-    Public Class setPowerOffController
+    ' GET: api/{GUID service}/service/switchOffShowLogController
+    <Route("ServiceApi")>
+    Public Class SwitchOffShowLogController
 
         Inherits ApiController
 
 
 
         ''' <summary>
-        ''' This method provides to set a power off service
+        ''' This method provide to power off the show log panel
         ''' </summary>
-        ''' <param name="securityToken"></param>
-        ''' <param name="data"></param>
+        ''' <param name="parameter"></param>
         ''' <returns></returns>
-        Public Function PutValue() As BaseRemoteResponse
+        Public Function PutValue(ByVal securityToken As String) As BaseRemoteResponse
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
+            Dim found As Boolean = False
             Try
                 If (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.shutDown
+                    If (CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken).Length = 0) Then
+                        AreaCommon.Main.showLogParameters.switchOff = True
+                    Else
+                        result.responseStatus = BaseRemoteResponse.EnumResponseStatus.missingAuthorization
+                    End If
                 Else
                     result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                 End If

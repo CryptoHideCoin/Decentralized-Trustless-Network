@@ -196,7 +196,7 @@ Namespace AreaCommon.Command
         ''' <returns></returns>
         Private Function serviceFound() As Boolean
             Try
-                Dim remote As New ProxyWS(Of RemoteResponse)
+                Dim remote As New ProxyWS(Of BaseRemoteResponse)
                 Dim proceed As Boolean = True
 
                 If proceed Then

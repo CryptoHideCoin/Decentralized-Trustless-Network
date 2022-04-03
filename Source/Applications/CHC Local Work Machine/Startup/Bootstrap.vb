@@ -63,6 +63,11 @@ Namespace AreaCommon.Startup
                         End If
                     End With
                 End If
+                If proceed Then
+                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.iAmLocalWorkMachine = True
+
+                    proceed = _Bootstrap.readAdminKeyStore()
+                End If
 
                 Return proceed
             Catch ex As Exception

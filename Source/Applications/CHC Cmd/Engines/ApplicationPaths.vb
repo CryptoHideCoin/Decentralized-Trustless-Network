@@ -76,7 +76,7 @@ Namespace AreaEngine
                 proceed = addNew(ApplicationID.localWorkMachine, rootPath, "CHC Local Work Machine", "CHCLocalWorkMachine.exe")
             End If
             If proceed Then
-                proceed = addNew(ApplicationID.sideChainService, rootPath, "CHC Sidechain Service Runtime", "{value}.exe")
+                proceed = addNew(ApplicationID.sideChainService, rootPath, "CHC Sidechain Service Runtime", "CHCSidechainServiceRuntime.exe")
             End If
 
             Return proceed
@@ -119,7 +119,7 @@ Namespace AreaEngine
         Public Shared ReadOnly Property applicationPath As String
             Get
 #If DEBUG Then
-                Return "E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Cmd"
+                Return "E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Cmd\x64"
 #Else
                 return Environment.CurrentDirectory
 #End If

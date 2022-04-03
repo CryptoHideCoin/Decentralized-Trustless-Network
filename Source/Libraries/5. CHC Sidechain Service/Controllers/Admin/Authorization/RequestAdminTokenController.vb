@@ -24,7 +24,7 @@ Namespace Controllers
         ''' <summary>
         ''' This method provides to return an Admin Security Token 
         ''' </summary>
-        ''' <param name="signature"></param>
+        ''' <param name="signature">Is asignature of a certificate with a admin private key</param>
         ''' <returns></returns>
         Public Function GetValue(ByVal signature As String) As ResponseRequestAdminSecurityTokenModel
             Dim result As New ResponseRequestAdminSecurityTokenModel
@@ -35,7 +35,7 @@ Namespace Controllers
                         AreaCommon.Main.environment.log.trackEnter("RequestAdminSecurityToken.GetValue",, True)
 
                         enter = True
-                        result.tokenValue = AreaCommon.Main.environment.adminToken.create()
+                        result.tokenValue = AreaCommon.Main.environment.adminToken.createNewToken()
 
                         AreaCommon.Main.environment.log.trackIntoConsole("Security token created")
                         AreaCommon.Main.environment.registry.addNew(CHCCommonLibrary.Support.RegistryEngine.RegistryData.TypeEvent.adminTokenReleased)

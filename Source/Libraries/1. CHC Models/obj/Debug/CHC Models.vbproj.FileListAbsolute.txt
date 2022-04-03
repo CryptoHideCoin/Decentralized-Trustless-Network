@@ -7,8 +7,8 @@ E:\CryptoHideCoinDTN\Source\Libraries\CHC Models\obj\Debug\CHCModels.dll
 E:\CryptoHideCoinDTN\Source\Libraries\CHC Models\obj\Debug\CHCModels.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\bin\Debug\CHCModels.dll
 E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\bin\Debug\CHCModels.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\Debug\CHC Models.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\Debug\CHCModels.Resources.resources
 E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\Debug\CHC Models.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\Debug\CHCModels.dll
 E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\Debug\CHCModels.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\Debug\CHC Models.vbprojAssemblyReference.cache

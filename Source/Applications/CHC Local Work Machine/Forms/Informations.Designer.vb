@@ -28,11 +28,13 @@ Partial Class Informations
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.usedPortValue = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Close
         '
-        Me.Close.Location = New System.Drawing.Point(173, 85)
+        Me.Close.Location = New System.Drawing.Point(173, 101)
         Me.Close.Name = "Close"
         Me.Close.Size = New System.Drawing.Size(75, 23)
         Me.Close.TabIndex = 14
@@ -77,13 +79,34 @@ Partial Class Informations
         Me.Label1.TabIndex = 8
         Me.Label1.Text = "Application name:"
         '
+        'usedPortValue
+        '
+        Me.usedPortValue.AutoSize = True
+        Me.usedPortValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.usedPortValue.Location = New System.Drawing.Point(210, 68)
+        Me.usedPortValue.Name = "usedPortValue"
+        Me.usedPortValue.Size = New System.Drawing.Size(27, 13)
+        Me.usedPortValue.TabIndex = 16
+        Me.usedPortValue.Text = "0.1"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(137, 68)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(67, 13)
+        Me.Label5.TabIndex = 15
+        Me.Label5.Text = "Used port:"
+        '
         'Informations
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(415, 121)
+        Me.ClientSize = New System.Drawing.Size(415, 136)
         Me.ControlBox = False
+        Me.Controls.Add(Me.usedPortValue)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Close)
         Me.Controls.Add(Me.releaseLabel)
         Me.Controls.Add(Me.Label3)
@@ -107,4 +130,6 @@ Partial Class Informations
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
+    Friend WithEvents usedPortValue As Label
+    Friend WithEvents Label5 As Label
 End Class

@@ -11,61 +11,88 @@ Namespace AreaEngine.Security
     ''' </summary>
     Public Class AdminTokenEngine
 
-        Private Property _CurrentToken As String = ""
-        Private Property _CurrentAccessKey As String = ""
-        Private Property _DateLastAccess As Double = 0
-        Private Property _DateAccessKeyCreation As Double = 0
+        ''' <summary>
+        ''' This class contain the element of a key
+        ''' </summary>
+        Private Class KeyValidity
+            Public Property key As String = ""
+            Public Property expireTimeStamp As Double = 0
+
+            Public ReadOnly Property isExpired() As Boolean
+                Get
+                    Return (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime > Me.expireTimeStamp)
+                End Get
+            End Property
+
+            Public Sub New(ByVal valid As Double)
+                key = Guid.NewGuid.ToString()
+                expireTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime + valid
+            End Sub
+        End Class
+
+        Private Property _CurrentAccessKey As KeyValidity
+        Private Property _CurrentTokens As New Dictionary(Of String, KeyValidity)
+
+
+        ''' <summary>
+        ''' Thie method provide to create access key into memory
+        ''' </summary>
+        ''' <returns>New Access Key</returns>
+        Public Function createAccessKey() As String
+            Try
+                _CurrentAccessKey = New KeyValidity(5000)
+
+                Return _CurrentAccessKey.key
+            Catch ex As Exception
+                Return ""
+            End Try
+        End Function
 
         ''' <summary>
         ''' This method provide to create a new token into memory
         ''' </summary>
         ''' <returns></returns>
-        Public Function create() As String
-            _CurrentToken = Guid.NewGuid.ToString()
-            _DateLastAccess = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
+        Public Function createNewToken() As String
+            Try
+#If DEBUG Then
+                Dim newToken As New KeyValidity(30 * 60000)
+#Else
+                Dim newToken As New KeyValidity(10 * 60000)
+#End If
 
-            Return _CurrentToken
-        End Function
+                _CurrentTokens.Add(newToken.key, newToken)
 
-        ''' <summary>
-        ''' Thie method provide to create access key into memory
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function createAccessKey() As String
-            _CurrentAccessKey = Guid.NewGuid.ToString()
-            _DateAccessKeyCreation = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
-
-            Return _CurrentAccessKey
+                Return newToken.key
+            Catch ex As Exception
+                Return ""
+            End Try
         End Function
 
         ''' <summary>
         ''' This method provide to test if check token is successful
         ''' </summary>
+        ''' <param name="value"></param>
         ''' <returns></returns>
         Public Function check(ByVal value As String) As String
             Try
                 Dim expirationTime As Double = 0
+                Dim key As KeyValidity
 
-                If (_CurrentToken.Length = 0) Then
-                    Return "Missing token"
+                If (_CurrentTokens.Count = 0) Then
+                    Return "Token error"
                 End If
 
-#If DEBUG Then
-                expirationTime = (24 * 60 * 1000)
-#Else
-                expirationTime = (10 * 60 * 1000)
-#End If
-
-                If (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime > _DateLastAccess + expirationTime) Then
-                    _CurrentToken = ""
-
+                If Not _CurrentTokens.ContainsKey(value) Then
                     Return "Token expired"
-                End If
-                If (value.CompareTo(_CurrentToken) <> 0) Then
-                    Return "Token mismatch"
-                End If
+                Else
+                    key = _CurrentTokens(value)
 
-                _DateLastAccess = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
+                    If key.isExpired Then
+                        _CurrentTokens.Remove(value)
+
+                        Return "Token expired"
+                    End If
+                End If
             Catch ex As Exception
                 Return "Token error"
             End Try
@@ -79,17 +106,14 @@ Namespace AreaEngine.Security
         ''' <returns></returns>
         Public Function getCurrentAccessKey() As String
             Try
-                If (_CurrentAccessKey.Length = 0) Then
+                If (_CurrentAccessKey.key.Length = 0) Then
                     Return ""
                 End If
-                If (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime > _DateAccessKeyCreation + (5 * 1000)) Then
-                    _CurrentAccessKey = ""
-                    _DateAccessKeyCreation = 0
-
+                If (_CurrentAccessKey.isExpired) Then
                     Return ""
                 End If
 
-                Return _CurrentAccessKey
+                Return _CurrentAccessKey.key
             Catch ex As Exception
                 Return ""
             End Try

@@ -75,7 +75,6 @@ Public Class Settings
         If (chainServiceName.Text.CompareTo("Local Work Machine") = 0) Then
             serviceID.Enabled = False
             serviceUUID.Enabled = False
-            adminPublicAddress.Enabled = False
             selectPublicPort.Enabled = False
 
             tabControl.TabPages(0).Enabled = False
@@ -94,7 +93,6 @@ Public Class Settings
             secureChannel.Enabled = True
             serviceID.Enabled = True
             serviceUUID.Enabled = True
-            adminPublicAddress.Enabled = True
             selectPublicPort.Enabled = True
             logInformations.Enabled = True
             useEventRegistry.Enabled = True

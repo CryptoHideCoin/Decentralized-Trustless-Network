@@ -27,18 +27,26 @@ Namespace AreaCommon.Command
 
         Private Function CommandModel_run() As Boolean Implements CommandModel.run
             Try
+                Dim value As String
+
                 If Not _Command.haveParameter("name") Then
                     Console.WriteLine("Error: name missing")
 
                     Return False
                 End If
                 If Not _Command.haveParameter("value") Then
-                    Console.WriteLine("Error: value missing")
+                    If (_Command.parameterValue("value").ToLower.Contains("datapath") = 0) Then
+                        value = AreaEngine.EnvironmentUtils.getCurrentEnvironmentPath()
+                    Else
+                        Console.WriteLine("Error: value missing")
 
-                    Return False
+                        Return False
+                    End If
+                Else
+                    value = _Command.parameterValue("value")
                 End If
 
-                If AreaEngine.ParametersEngine.createNew(_Command.parameterValue("name"), _Command.parameterValue("value")) Then
+                If AreaEngine.ParametersEngine.createNew(_Command.parameterValue("name"), value) Then
                     Console.WriteLine("Default parameter set")
                 Else
                     Console.WriteLine("Error: environment not found")

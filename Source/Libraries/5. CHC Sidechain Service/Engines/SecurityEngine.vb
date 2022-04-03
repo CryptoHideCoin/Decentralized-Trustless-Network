@@ -37,7 +37,11 @@ Namespace AreaSecurity
                 publicAddress = WalletAddressEngine.SingleKeyPair.cleanAddress(publicAddress)
 
                 If (keyWord.Length = 0) Then
-                    keyWord = AreaCommon.Main.environment.settings.clientCertificate
+                    If AreaCommon.Main.environment.iAmLocalWorkMachine Then
+                        keyWord = AreaCommon.Main.environment.localWorkMachineSettings.clientCertificate
+                    Else
+                        keyWord = AreaCommon.Main.environment.settings.clientCertificate
+                    End If
                 End If
 
                 Return Encryption.Base58Signature.verifySignature(keyWord, publicAddress, value)

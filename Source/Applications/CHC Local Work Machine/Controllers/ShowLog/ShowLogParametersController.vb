@@ -31,7 +31,14 @@ Namespace Controllers
                 enter = True
 
                 result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                result.value = AreaCommon.Main.showLogParameters
+                With result.value
+                    .frequencyRefresh = AreaCommon.Main.showLogParameters.frequencyRefresh
+                    .pause = AreaCommon.Main.showLogParameters.pause
+                    .showOnlyInfo = AreaCommon.Main.showLogParameters.showOnlyInfo
+                    .switchOff = AreaCommon.Main.showLogParameters.switchOff
+                End With
+
+                AreaCommon.Main.showLogParameters.switchOff = False
             Catch ex As Exception
                 result.responseStatus = LogPanelParametersResponseModel.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"

@@ -95,9 +95,8 @@
     <Compile Include="Base\Customized.vb" />
     <Compile Include="Base\Controller.vb" />
     <Compile Include="Controllers\Linked\LinkedController.vb" />
-    <Compile Include="Controllers\Power\SetPowerOffController.vb" />
-    <Compile Include="Controllers\Service\TestController.vb" />
     <Compile Include="Controllers\ShowLog\ShowLogParametersController.vb" />
+    <Compile Include="Controllers\ShowLog\SwitchOffShowLogController.vb" />
     <Compile Include="Engines\IntegrityApplication.vb" />
     <Compile Include="Forms\Informations.Designer.vb">
       <DependentUpon>Informations.vb</DependentUpon>

@@ -193,15 +193,22 @@ Namespace AreaCommon.Startup
         Public Function readAdminKeyStore() As Boolean
             Try
                 Dim uuidWallet As String = ""
+                Dim settings As CHCModels.AreaModel.Administration.Settings.SettingsSidechainService
+
+                If environment.iAmLocalWorkMachine Then
+                    settings = environment.localWorkMachineSettings
+                Else
+                    settings = environment.settings
+                End If
 
                 environment.log.trackEnter("CHCSidechainServiceLibrary.AreaCommon.startUp.readAdminKeyStore")
 
-                If (environment.settings.publicAddress.Length >= 11) Then
-                    If environment.settings.publicAddress.StartsWith("keystoreid:") Then
+                If (settings.publicAddress.Length >= 11) Then
+                    If settings.publicAddress.StartsWith("keystoreid:") Then
                         Try
                             Dim keyStoreManager = New CHCProtocolLibrary.AreaWallet.Support.KeyStoreEngine
 
-                            uuidWallet = environment.settings.publicAddress.Substring(11)
+                            uuidWallet = settings.publicAddress.Substring(11)
 
                             keyStoreManager.fileName = IO.Path.Combine(environment.paths.keyStore, "keyAddress.list")
 
@@ -222,7 +229,7 @@ Namespace AreaCommon.Startup
                     End If
                 End If
 
-                environment.keys.administration.public = environment.settings.publicAddress
+                environment.keys.administration.public = settings.publicAddress
 
                 Return True
             Catch ex As Exception

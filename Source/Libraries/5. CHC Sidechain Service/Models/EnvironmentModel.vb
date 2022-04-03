@@ -46,6 +46,7 @@ Namespace AreaChain.Runtime.Models
         Public Property keys As New KeysEngine
         Public Property support As New AreaCommon.Engine.SupportEngine
         Public Property adminToken As New AdminTokenEngine
+        Public Property iAmLocalWorkMachine As Boolean = False
 
         ''' TODO: Complete this class
 

@@ -31,6 +31,7 @@ Namespace AreaCommon.Command
         Private Property _ParameterPassword As String = ""
         Private Property _ParameterSecurityKey As String = ""
         Private Property _ParameterAddress As String = ""
+        Private Property _ParameterToShowLog As Boolean = False
 
         Private Property _SettingSecureChannel As Boolean = False
         Private Property _SettingServicePort As Integer = 0
@@ -67,6 +68,13 @@ Namespace AreaCommon.Command
 
                     Return False
                 End If
+
+                If (_ParameterService.ToLower.CompareTo("ShowLog".ToLower()) = 0) Then
+                    _ParameterToShowLog = True
+
+                    _ParameterService = "localWorkMachine"
+                End If
+
                 If _Command.haveParameter("dataPath") Then
                     _ParameterDataPath = _Command.parameterValue("dataPath")
                 ElseIf (ApplicationCommon.defaultParameters.getParameter("dataPath").Length > 0) Then
@@ -416,7 +424,11 @@ Namespace AreaCommon.Command
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    remote.url = buildURL("/administration/setPowerOff/?securityToken=" & _SecurityToken)
+                    If _ParameterToShowLog Then
+                        remote.url = buildURL($"/service/switchOffShowLog/?securityToken={_SecurityToken}")
+                    Else
+                        remote.url = buildURL($"/administration/setPowerOff/?securityToken={_SecurityToken}")
+                    End If
                 End If
                 If proceed Then
                     proceed = (remote.sendData("PUT") = "")

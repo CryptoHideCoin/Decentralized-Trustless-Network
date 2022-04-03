@@ -20,7 +20,7 @@ Namespace Controllers
 
 
         ''' <summary>
-        ''' This method provides to set a power off service
+        ''' This method provides to set a power off this service
         ''' </summary>
         ''' <param name="securityToken"></param>
         ''' <param name="data"></param>

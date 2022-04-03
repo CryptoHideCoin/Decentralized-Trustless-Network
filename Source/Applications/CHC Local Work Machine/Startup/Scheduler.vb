@@ -415,7 +415,7 @@ Namespace AreaCommon.Startup
 
                     Application.DoEvents()
                     Threading.Thread.Sleep(10000)
-                Loop Until (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus = CHCModels.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.shutDown)
+                Loop Until (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus <> InternalServiceInformation.EnumInternalServiceState.started)
             Catch ex As Exception
                 MessageBox.Show("Problem with startServiceProcessor " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try

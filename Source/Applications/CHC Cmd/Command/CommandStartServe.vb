@@ -67,14 +67,14 @@ Namespace AreaCommon.Command
 
                 Select Case parameterServiceName.ToLower()
                     Case "localworkmachine"
-                        directory = "CHC Local Work Machine"
+                        applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.localWorkMachine)
+                        directory = applicationInfo.directoryName
                         exeFileName = "CHCLocalWorkMachine.exe"
                         parameters = parameterDataPath & " " & parameterPassword
-                        applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.localWorkMachine)
                     Case "sidechainservice"
                         applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.sideChainService)
                         directory = applicationInfo.directoryName
-                        exeFileName = "CHCSidechainServiceRuntime.exe"
+                        exeFileName = applicationInfo.applicationName
                         parameters = parameterDataPath & " " & parameterPassword
                     Case "primary"
                         directory = "CHC Primary Service Runtime"

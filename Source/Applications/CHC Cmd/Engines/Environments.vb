@@ -96,6 +96,23 @@ Namespace AreaEngine
         End Function
 
         ''' <summary>
+        ''' This method provide to get a current environment path
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function getCurrentPath() As String
+            Try
+                For Each item In data
+                    If item.active Then
+                        Return item.path
+                    End If
+                Next
+            Catch ex As Exception
+            End Try
+
+            Return ""
+        End Function
+
+        ''' <summary>
         ''' This method provide to add a new item into collection
         ''' </summary>
         ''' <param name="name"></param>
@@ -202,6 +219,46 @@ Namespace AreaEngine
             Catch ex As Exception
                 Return ""
             End Try
+        End Function
+
+        Public Shared Function getCurrentPath(ByVal environmentFilePath As String) As String
+            Try
+                Dim collection = IOFast(Of EnvironmentCollection).read(environmentFilePath)
+
+                Return collection.getCurrentPath()
+            Catch ex As Exception
+                Return ""
+            End Try
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain all element of a util repository
+    ''' </summary>
+    Public Class EnvironmentUtils
+
+        ''' <summary>
+        ''' This method provide to get a current environment
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Function getCurrentEnvironmentPath() As String
+            Try
+                Dim path As String = AreaEngine.EnvironmentRepositoryEngine.searchUserEnvironmentPath()
+                Dim environmentRepositoryPath As String = IO.Path.Combine(path, "Environment.path")
+                Dim environmentPath As String = ""
+
+                If IO.File.Exists(environmentRepositoryPath) Then
+                    environmentPath = IO.File.ReadAllText(environmentRepositoryPath)
+
+                    environmentPath = IO.Path.Combine(environmentPath, "Environments.list")
+
+                    Return AreaEngine.EnvironmentsEngine.getCurrentPath(environmentPath)
+                End If
+            Catch ex As Exception
+            End Try
+
+            Return ""
         End Function
 
     End Class

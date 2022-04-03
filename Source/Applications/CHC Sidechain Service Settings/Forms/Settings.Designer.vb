@@ -381,7 +381,6 @@ Partial Class Settings
         Me.frequencyAutoMaintenance.Name = "frequencyAutoMaintenance"
         Me.frequencyAutoMaintenance.Size = New System.Drawing.Size(100, 21)
         Me.frequencyAutoMaintenance.TabIndex = 1
-        Me.frequencyAutoMaintenance.Text = "0"
         Me.frequencyAutoMaintenance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.frequencyAutoMaintenance.useDecimal = False
         '

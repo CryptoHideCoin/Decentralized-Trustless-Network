@@ -176,7 +176,7 @@ Namespace AreaCommon
         ''' <returns></returns>
         Private Function serviceFound(ByVal useService As Boolean) As Boolean
             Try
-                Dim remote As New ProxyWS(Of RemoteResponse)
+                Dim remote As New ProxyWS(Of BaseRemoteResponse)
                 Dim proceed As Boolean = True
                 Dim response As String = ""
 
@@ -389,19 +389,19 @@ Namespace AreaCommon
         ''' This method provide to read a parameters settings from CHC Local Work Machine Service
         ''' </summary>
         ''' <returns></returns>
-        Private Function readParameterSettings() As LogPanelParameters
+        Private Function readParameterSettings(ByRef oldParameters As LogPanelParameters) As LogPanelParameters
             Try
                 Dim remote As New ProxyWS(Of LogPanelParametersResponseModel)
 
                 remote.url = buildURL(False, "/service/showLogParameters/")
 
                 If (remote.getData().Length > 0) Then
-                    Return New LogPanelParameters
+                    Return oldParameters
                 End If
 
                 Return remote.data.value
             Catch ex As Exception
-                Return New LogPanelParameters
+                Return oldParameters
             End Try
         End Function
 
@@ -445,8 +445,11 @@ Namespace AreaCommon
                 Dim parameters As New LogPanelParameters
 
                 Do While proceed
-                    parameters = readParameterSettings()
+                    parameters = readParameterSettings(parameters)
 
+                    If parameters.switchOff Then
+                        Return False
+                    End If
                     If Not parameters.pause Then
                         If Not readRemoteLog(parameters) Then
                             If (lastErrorTime = 0) Then

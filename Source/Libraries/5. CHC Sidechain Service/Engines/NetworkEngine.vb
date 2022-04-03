@@ -24,6 +24,23 @@ Namespace AreaNetwork
                     log.trackEnter("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP")
                 End If
                 Try
+                    Dim hostName = Net.Dns.GetHostName()
+                    Dim first As String = ""
+
+                    For Each hostAdr In Net.Dns.GetHostEntry(hostName).AddressList()
+                        first = hostAdr.ToString
+
+                        If (hostAdr.AddressFamily = Net.Sockets.AddressFamily.InterNetwork) Then
+                            If hostAdr.ToString.Length > 3 Then
+                                If Not {"192", "127", "10."}.Contains(hostAdr.ToString.Substring(0, 3)) Then
+                                    Return hostAdr.ToString
+                                End If
+                            End If
+                        End If
+                    Next
+                Catch ex As Exception
+                End Try
+                Try
                     ipAddress = ipEngine.DownloadString("http://checkip.dyndns.org/")
                 Catch ex As Exception
                 End Try
@@ -85,7 +102,11 @@ Namespace AreaNetwork
                     first = hostAdr.ToString
 
                     If (hostAdr.AddressFamily = Net.Sockets.AddressFamily.InterNetwork) Then
-                        Return hostAdr.ToString
+                        If hostAdr.ToString.Length > 3 Then
+                            If {"192", "127", "10."}.Contains(hostAdr.ToString.Substring(0, 3)) Then
+                                Return hostAdr.ToString
+                            End If
+                        End If
                     End If
                 Next
 

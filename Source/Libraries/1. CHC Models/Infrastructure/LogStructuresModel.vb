@@ -54,6 +54,7 @@ Namespace AreaModel.Log
     ''' This class contain the runtime parameter's for the log panel
     ''' </summary>
     Public Class LogPanelParameters
+        Public Property switchOff As Boolean = False
         Public Property showOnlyInfo As Boolean = True
         Public Property pause As Boolean = False
         Public Property frequencyRefresh As Double = 1000

@@ -15,9 +15,10 @@ Namespace AreaCommon
     ''' </summary>
     Module Controllers
 
-        Private _controllerComplete As Boolean = False
-        Private _controllerInError As Boolean = False
-        Private _portNumber As String = ""
+        Private Property _controllerComplete As Boolean = False
+        Private Property _controllerInError As Boolean = False
+
+        Public Property portNumber As String = ""
 
 
         ''' <summary>
@@ -28,18 +29,19 @@ Namespace AreaCommon
                 Dim httpConfig As HttpSelfHostConfiguration
                 Dim serviceID As String = ""
 
-                If (_portNumber = "0") Then
+                If (portNumber = "0") Then
                     httpConfig = New HttpSelfHostConfiguration("http://127.0.0.1")
                 Else
-                    httpConfig = New HttpSelfHostConfiguration("http://127.0.0.1:" & _portNumber)
+                    httpConfig = New HttpSelfHostConfiguration("http://127.0.0.1:" & portNumber)
                 End If
 
                 If (environment.settings.serviceID.Length > 0) Then
                     serviceID = environment.settings.serviceID & "/"
                 End If
 
-                httpConfig.Routes.MapHttpRoute(name:="LWMServiceApi", routeTemplate:="api/" & serviceID & "service/{controller}")
-                httpConfig.Routes.MapHttpRoute(name:="LWMAdministrationApi", routeTemplate:="api/" & serviceID & "administration/{controller}")
+                httpConfig.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & serviceID & "service/{controller}")
+                httpConfig.Routes.MapHttpRoute(name:="AdministrationApi", routeTemplate:="api/" & serviceID & "administration/{controller}")
+                httpConfig.Routes.MapHttpRoute(name:="SecurityApi", routeTemplate:="api/" & serviceID & "administration/security/{controller}")
                 httpConfig.Routes.MapHttpRoute(name:="LWMLinkedApi", routeTemplate:="api/" & serviceID & "linked/{controller}")
 
                 Using server As New HttpSelfHostServer(httpConfig)

@@ -12,7 +12,7 @@ Namespace Controllers
 
     ' GET: api/{GUID service}/service/testController
     <Route("ServiceApi")>
-    Public Class testController
+    Public Class TestController
 
         Inherits ApiController
 
@@ -22,11 +22,11 @@ Namespace Controllers
         ''' This method provide to return a current time of server (test service)
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValue() As RemoteResponse
-            Dim result As New RemoteResponse
+        Public Function GetValue() As BaseRemoteResponse
+            Dim result As New BaseRemoteResponse
             Dim enter As Boolean = False
             Try
-                AreaCommon.Main.environment.log.trackEnter("test.GetValue",, True)
+                AreaCommon.Main.environment.log.trackEnter("Service.Test.GetValue",, True)
 
                 enter = True
 
@@ -35,10 +35,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("test.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("Service.Test.GetValue", ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("test.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("Service.Test.GetValue",, True)
                 End If
             End Try
 
