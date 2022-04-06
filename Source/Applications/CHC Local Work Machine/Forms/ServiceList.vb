@@ -8,9 +8,6 @@ Public Class ServiceList
 
     Private Sub ServiceList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
-            If Not (New IntegrityApplication).run() Then
-                End
-            End If
             If Not AreaCommon.Startup.Bootstrap.run() Then
                 End
             End If

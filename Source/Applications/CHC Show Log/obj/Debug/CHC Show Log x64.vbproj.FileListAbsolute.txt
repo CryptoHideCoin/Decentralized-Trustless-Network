@@ -28,6 +28,5 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\Debug64\CHCPrimarySide
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\Debug64\CHCModels.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\Debug64\CHCCommonLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\Debug64\Newtonsoft.Json.xml
-E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Debug\CHCShowLog.exe.config
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\Debug64\CHCProtocolLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\Debug64\CHCBasicCryptographyLibrary.pdb

@@ -23,7 +23,7 @@ Partial Class Informations
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Informations))
-        Me.Close = New System.Windows.Forms.Button()
+        Me.closeButton = New System.Windows.Forms.Button()
         Me.releaseLabel = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -34,12 +34,12 @@ Partial Class Informations
         '
         'Close
         '
-        Me.Close.Location = New System.Drawing.Point(173, 101)
-        Me.Close.Name = "Close"
-        Me.Close.Size = New System.Drawing.Size(75, 23)
-        Me.Close.TabIndex = 14
-        Me.Close.Text = "Close"
-        Me.Close.UseVisualStyleBackColor = True
+        Me.closeButton.Location = New System.Drawing.Point(173, 101)
+        Me.closeButton.Name = "Close"
+        Me.closeButton.Size = New System.Drawing.Size(75, 23)
+        Me.closeButton.TabIndex = 14
+        Me.closeButton.Text = "Close"
+        Me.closeButton.UseVisualStyleBackColor = True
         '
         'releaseLabel
         '
@@ -107,7 +107,7 @@ Partial Class Informations
         Me.ControlBox = False
         Me.Controls.Add(Me.usedPortValue)
         Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.Close)
+        Me.Controls.Add(Me.closeButton)
         Me.Controls.Add(Me.releaseLabel)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -118,6 +118,7 @@ Partial Class Informations
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Informations"
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Informations"
         Me.ResumeLayout(False)
@@ -125,7 +126,7 @@ Partial Class Informations
 
     End Sub
 
-    Friend WithEvents Close As Button
+    Friend WithEvents closeButton As Button
     Friend WithEvents releaseLabel As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label

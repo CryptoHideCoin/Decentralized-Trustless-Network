@@ -94,6 +94,12 @@ Namespace AreaCommon
                 serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.swithOff
 
                 environment.log.track("Controllers.StartWebService", "Service Off")
+            Catch exFile As system.io.FileLoadException
+                environment.log.trackException("Controllers.StartWebService", $"Problem with dll release - {exFile.Message}")
+
+                IntegrityApplication.executeRepairNewton(exFile.FileName)
+
+                _controllerInError = True
             Catch ex As Exception
                 environment.log.trackException("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion - Error:" & ex.Message)
 

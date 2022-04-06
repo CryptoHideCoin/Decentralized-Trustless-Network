@@ -105,7 +105,7 @@
     <Compile Include="Base\Common.vb" />
     <Compile Include="Base\Customized.vb" />
     <Compile Include="Controller\Controller.vb" />
-    <Compile Include="Engines\IntegrityApplication.vb" />
+    <Compile Include="Engine\IntegrityApplication.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

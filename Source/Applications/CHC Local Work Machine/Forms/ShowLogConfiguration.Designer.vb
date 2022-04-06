@@ -124,6 +124,7 @@ Partial Class ShowLogConfiguration
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "ShowLogConfiguration"
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Show Log Configuration"
         Me.groupMain.ResumeLayout(False)

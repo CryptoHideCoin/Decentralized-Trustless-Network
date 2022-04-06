@@ -83,6 +83,7 @@
     <Compile Include="Controllers\Service\SupportedProtocols.vb" />
     <Compile Include="Controllers\Service\TestController.vb" />
     <Compile Include="Engines\CleanLogEngine.vb" />
+    <Compile Include="Engines\IntegrityApplication.vb" />
     <Compile Include="Engines\NetworkEngine.vb" />
     <Compile Include="Engines\SchedulerEngine.vb" />
     <Compile Include="Engines\SecurityEngine.vb" />
@@ -124,24 +125,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\0. CHC Basic Cryptography\CHC Basic Cryptography.csproj">
-      <Project>{0d976974-b421-410d-9c1a-d885e88fba68}</Project>
-      <Name>CHC Basic Cryptography</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\1. CHC Models\CHC Models.vbproj">
-      <Project>{5475fb38-e6b1-4049-8a92-b16607841e96}</Project>
-      <Name>CHC Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\2. CHC Common\CHC Common x64.vbproj">
-      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
-      <Name>CHC Common x64</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\3. CHC Protocol\CHC Protocol x64.vbproj">
-      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
-      <Name>CHC Protocol x64</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

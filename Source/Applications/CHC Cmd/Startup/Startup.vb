@@ -26,9 +26,6 @@ Namespace AreaCommon
         ''' This method provide to run a application
         ''' </summary>
         Sub Main()
-            If Not (New IntegrityApplication).run() Then
-                Return
-            End If
             Try
                 Dim commandManager As New CommandProcessor
 

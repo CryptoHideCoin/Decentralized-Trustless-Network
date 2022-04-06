@@ -112,6 +112,10 @@ Namespace AreaScheduler
                 End If
 
                 Return proceed
+            Catch exFile As system.io.FileLoadException
+                IntegrityApplication.executeRepairNewton(exFile.FileName)
+
+                Return False
             Catch ex As Exception
                 Return False
             End Try

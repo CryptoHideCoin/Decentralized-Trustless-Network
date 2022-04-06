@@ -1,0 +1,8 @@
+E:\CryptoHideCoinDTN\Binary\Applications\Windows\CHC Repair Newtown\CHCRepairNewtown.exe.config
+E:\CryptoHideCoinDTN\Binary\Applications\Windows\CHC Repair Newtown\CHCRepairNewtown.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Repair Newtown\obj\Release\CHC Repair Newtown.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Repair Newtown\obj\Release\CHCRepairNewtown.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Repair Newtown\obj\Release\CHC Repair Newtown.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Repair Newtown\obj\Release\CHC Repair Newtown.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Repair Newtown\obj\Release\CHCRepairNewtown.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Repair Newtown\obj\Release\CHCRepairNewtown.exe.config

@@ -9,31 +9,17 @@ Option Explicit On
 Public Class IntegrityApplication
 
     ''' <summary>
-    ''' This method provide to check all this application
+    ''' This method provide to run a Repair Newtown utility
     ''' </summary>
+    ''' <param name="fileName"></param>
     ''' <returns></returns>
-    Public Function run() As Boolean
+    Public Shared Function executeRepairNewton(ByVal fileName As String) As Boolean
         Try
-            Dim fileName As String
-
-            For Each singleFile In IO.Directory.GetFiles(IO.Directory.GetCurrentDirectory)
-                fileName = New IO.FileInfo(singleFile).Name
-
-                Select Case fileName.ToLower()
-                    Case "Newtonsoft.Json.dll".ToLower()
-#If DEBUG Then
-                        If (FileVersionInfo.GetVersionInfo(singleFile).ProductMajorPart <> 12) Then
-#Else
-                            If (FileVersionInfo.GetVersionInfo(singleFile).ProductMajorPart <> 6) Then
-#End If
-                            Console.WriteLine("The 'Newtonsoft.Json.dll' release is wrong. Current is " & FileVersionInfo.GetVersionInfo(singleFile).ProductVersion)
-                            Console.ReadKey()
-
-                            Return False
-                        End If
-                End Select
-
-            Next
+            If fileName.Contains("12.0.0") Then
+                Process.Start(IO.Path.Combine(My.Application.Info.DirectoryPath, "CHCRepairNewtown.exe"), "-copy --repair:useNewer")
+            Else
+                Process.Start(IO.Path.Combine(My.Application.Info.DirectoryPath, "CHCRepairNewtown.exe"), "-copy --repair:useOlder")
+            End If
 
             Return True
         Catch ex As Exception

@@ -1,0 +1,8 @@
+E:\CryptoHideCoinDTN\Binary\Sidechains\Windows\CHC Sidechain Service Runtime\x86\CHCSidechainServiceRuntime.exe.config
+E:\CryptoHideCoinDTN\Binary\Sidechains\Windows\CHC Sidechain Service Runtime\x86\CHCSidechainServiceRuntime.exe
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\x86\Release\CHC Sidechain Service Runtime.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\x86\Release\CHCSidechainServiceRuntime.exe.config
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\x86\Release\CHCSidechainServiceRuntime.Resources.resources
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\x86\Release\CHC Sidechain Service Runtime.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\x86\Release\CHC Sidechain Service Runtime.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\x86\Release\CHCSidechainServiceRuntime.exe

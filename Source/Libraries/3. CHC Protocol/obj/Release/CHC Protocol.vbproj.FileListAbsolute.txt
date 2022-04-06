@@ -11,4 +11,4 @@ E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Release\CHCProtocolLib
 E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Release\CHC Protocol.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Release\CHC Protocol.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Release\CHCProtocolLibrary.dll
-E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Release\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Protocol\Standard\CHCProtocolLibrary.dll

@@ -34,6 +34,7 @@ Namespace AreaCommon.Command
                 Dim directory As String = "", exeFileName As String = ""
 
                 AreaEngine.ApplicationPathEngine.init()
+
                 applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.sideChainService)
 
                 If _Command.haveParameter("service") Then

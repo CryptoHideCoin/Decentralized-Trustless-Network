@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("CHC Common Library")>
 <Assembly: AssemblyDescription("Crypto Hide Coin Library Common")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CHC Common Library x86")>
+<Assembly: AssemblyProduct("CHC Common Library")>
 <Assembly: AssemblyCopyright("Copyright ©  2019")>
 <Assembly: AssemblyTrademark("")>
 

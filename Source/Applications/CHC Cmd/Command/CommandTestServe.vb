@@ -182,39 +182,6 @@ Namespace AreaCommon.Command
         End Function
 
         ''' <summary>
-        ''' This method provide to call a Local Work Machine
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function callLocalWorkMachine(ByVal serviceName As String) As Boolean
-            Try
-                Dim remote As New ProxyWS(Of MinimalDataToRegister)
-                Dim proceed As Boolean = True
-                Dim data As New MinimalDataToRegister
-
-                If proceed Then
-                    remote.url = buildURL("/linked/addNewService/")
-                End If
-                If proceed Then
-                    data.service = serviceName
-                    data.portNumber = "8888"
-
-                    remote.data = data
-                End If
-                If proceed Then
-                    proceed = (remote.sendData("PUT") = "")
-                End If
-                If proceed Then
-                    proceed = (remote.remoteResponse.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
-                End If
-
-                Return proceed
-            Catch ex As Exception
-                Return False
-            End Try
-        End Function
-
-
-        ''' <summary>
         ''' This method provide to test service found
         ''' </summary>
         ''' <returns></returns>
@@ -236,6 +203,10 @@ Namespace AreaCommon.Command
                 End If
 
                 Return proceed
+            Catch exFile As system.io.FileLoadException
+                IntegrityApplication.executeRepairNewton(exFile.FileName)
+
+                Return False
             Catch ex As Exception
                 Console.WriteLine("Error during serviceFound - " & ex.Message)
 
@@ -255,7 +226,6 @@ Namespace AreaCommon.Command
                     proceed = readSettings()
                 End If
                 If proceed Then
-                    'If Not callLocalWorkMachine("test") Then
                     If Not serviceFound() Then
                         Console.WriteLine("Problem during test service")
 

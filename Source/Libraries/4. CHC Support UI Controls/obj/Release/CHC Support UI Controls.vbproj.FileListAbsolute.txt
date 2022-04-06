@@ -67,4 +67,4 @@ E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Release\CHC
 E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Release\CHC Support UI Controls.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Release\CHC Support UI Controls.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Release\CHCSupportUIControls.dll
-E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Release\CHCSupportUIControls.pdb
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Support UI\Standard\CHCSupportUIControls.dll

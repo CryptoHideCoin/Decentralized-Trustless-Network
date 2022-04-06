@@ -16,4 +16,6 @@ E:\CryptoHideCoinDTN\Binary\Sidechains\Windows\CHC Sidechain Service Runtime\CHC
 E:\CryptoHideCoinDTN\Binary\Sidechains\Windows\CHC Sidechain Service Runtime\CHCSidechainServiceRuntime.exe
 E:\CryptoHideCoinDTN\Binary\Sidechains\Windows\CHC Sidechain Service Runtime\CHCSidechainServiceRuntime.pdb
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Release\CHCSidechainServiceRuntime.exe
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Release\CHCSidechainServiceRuntime.pdb
+E:\CryptoHideCoinDTN\Binary\Sidechains\Windows\CHC Sidechain Service Runtime\Standard\CHCSidechainServiceRuntime.exe.config
+E:\CryptoHideCoinDTN\Binary\Sidechains\Windows\CHC Sidechain Service Runtime\Standard\CHCSidechainServiceRuntime.exe
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Release\CHCSidechainServiceRuntime.exe.config

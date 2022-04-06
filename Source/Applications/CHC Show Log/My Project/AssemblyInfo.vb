@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("CHC Show Log")>
 <Assembly: AssemblyDescription("Masternode Client Show Log Application")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CHC Show Log x64")>
+<Assembly: AssemblyProduct("CHC Show Log")>
 <Assembly: AssemblyCopyright("Copyright ©  2022")>
 <Assembly: AssemblyTrademark("")>
 

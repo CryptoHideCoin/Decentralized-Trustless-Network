@@ -3,4 +3,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartArguments>-force --service:primary --dataPath:e:\path --address:localhost --mode:Console</StartArguments>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <StartArguments>-force --service:primary --dataPath:e:\path --address:localhost --mode:Console</StartArguments>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <StartArguments>-force --service:primary --dataPath:e:\path --address:localhost --mode:Console</StartArguments>
+  </PropertyGroup>
 </Project>

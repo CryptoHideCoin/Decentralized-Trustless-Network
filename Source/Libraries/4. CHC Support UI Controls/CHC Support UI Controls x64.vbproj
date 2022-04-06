@@ -53,10 +53,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Basic Cryptography\x64\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.8.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x64\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -277,16 +273,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Other\ReleaseNote.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\1. CHC Models\CHC Models.vbproj">
-      <Project>{5475fb38-e6b1-4049-8a92-b16607841e96}</Project>
-      <Name>CHC Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\2. CHC Common\CHC Common x64.vbproj">
-      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
-      <Name>CHC Common x64</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

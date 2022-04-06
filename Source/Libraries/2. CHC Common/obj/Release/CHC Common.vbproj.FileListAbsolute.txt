@@ -11,6 +11,6 @@ E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\Release\CHCCommonLibrary
 E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\Release\CHC Common.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\Release\CHC Common.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\Release\CHCCommonLibrary.dll
-E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\Release\CHCCommonLibrary.pdb
 E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll
 E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll

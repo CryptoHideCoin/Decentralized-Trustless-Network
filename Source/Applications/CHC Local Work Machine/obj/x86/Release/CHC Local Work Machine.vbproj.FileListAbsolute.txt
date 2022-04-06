@@ -1,0 +1,10 @@
+E:\CryptoHideCoinDTN\Binary\Applications\Windows\CHC Local Work Machine\x86\CHCLocalWorkMachine.exe.config
+E:\CryptoHideCoinDTN\Binary\Applications\Windows\CHC Local Work Machine\x86\CHCLocalWorkMachine.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\x86\Release\CHC Local Work Machine.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\x86\Release\CHCLocalWorkMachine.Informations.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\x86\Release\CHCLocalWorkMachine.ShowLogConfiguration.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\x86\Release\CHCLocalWorkMachine.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\x86\Release\CHCLocalWorkMachine.ServiceList.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\x86\Release\CHC Local Work Machine.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\x86\Release\CHC Local Work Machine.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\x86\Release\CHCLocalWorkMachine.exe

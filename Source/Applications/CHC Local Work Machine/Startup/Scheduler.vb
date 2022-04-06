@@ -72,6 +72,10 @@ Namespace AreaCommon.Startup
                 End If
 
                 Return proceed
+            Catch exFile As system.io.FileLoadException
+                IntegrityApplication.executeRepairNewton(exFile.FileName)
+
+                Return False
             Catch ex As Exception
                 Console.WriteLine("Error during serviceFound - " & ex.Message)
 
@@ -285,6 +289,10 @@ Namespace AreaCommon.Startup
                 End If
 
                 Return True
+            Catch exFile As system.io.FileLoadException
+                IntegrityApplication.executeRepairNewton(exFile.FileName)
+
+                Return False
             Catch ex As Exception
                 Console.WriteLine("Error during getServiceState - " & ex.Message)
 

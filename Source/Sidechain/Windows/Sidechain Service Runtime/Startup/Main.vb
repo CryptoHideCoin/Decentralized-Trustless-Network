@@ -18,7 +18,6 @@ Namespace AreaCommon.Startup
             Try
                 Dim proceed As Boolean = True
 
-                If proceed Then proceed = (New IntegrityApplication).run()
                 If proceed Then proceed = Bootstrap.run()
                 If proceed Then proceed = Service.run()
                 If proceed Then proceed = Scheduler.run()
