@@ -27,41 +27,22 @@ Partial Class Settings
         Me.tabMain = New System.Windows.Forms.TabPage()
         Me.internalName = New System.Windows.Forms.TextBox()
         Me.internalNameLabel = New System.Windows.Forms.Label()
-        Me.secureChannel = New System.Windows.Forms.CheckBox()
         Me.networkName = New System.Windows.Forms.TextBox()
         Me.networkNameLabel = New System.Windows.Forms.Label()
         Me.intranetMode = New System.Windows.Forms.CheckBox()
-        Me.tabInternal = New System.Windows.Forms.TabPage()
-        Me.certificateClient = New CHCSupportUIControls.Certificate()
-        Me.adminPublicAddress = New CHCSupportUIControls.WalletAddress()
+        Me.tabConnection = New System.Windows.Forms.TabPage()
         Me.serviceID = New System.Windows.Forms.TextBox()
         Me.serviceUUID = New System.Windows.Forms.Label()
         Me.selectServicePort = New CHCSupportUIControls.SelectPort()
         Me.selectPublicPort = New CHCSupportUIControls.SelectPort()
-        Me.tabComponents = New System.Windows.Forms.TabPage()
-        Me.useMessageService = New System.Windows.Forms.CheckBox()
-        Me.useCounter = New System.Windows.Forms.CheckBox()
-        Me.logGroup = New System.Windows.Forms.GroupBox()
-        Me.logInformations = New CHCSupportUIControls.LogControl()
-        Me.useEventRegistry = New System.Windows.Forms.CheckBox()
-        Me.tabMaintenance = New System.Windows.Forms.TabPage()
-        Me.autoMaintenanceGroup = New System.Windows.Forms.GroupBox()
-        Me.frequencyAutoMaintenance = New CHCSupportUIControls.NumericText()
-        Me.keepFileTypeLabel = New System.Windows.Forms.Label()
-        Me.keepFileTypeValueCombo = New System.Windows.Forms.ComboBox()
-        Me.keepOnlyRecentFileLabel = New System.Windows.Forms.Label()
-        Me.keepOnlyRecentFileValueCombo = New System.Windows.Forms.ComboBox()
-        Me.startCleanEveryLabel = New System.Windows.Forms.Label()
-        Me.startCleanEveryValueCombo = New System.Windows.Forms.ComboBox()
-        Me.unitMeasureFrequencyLabel = New System.Windows.Forms.Label()
-        Me.frequencyLabel = New System.Windows.Forms.Label()
-        Me.useAutoMaintenance = New System.Windows.Forms.CheckBox()
+        Me.tabSecurity = New System.Windows.Forms.TabPage()
+        Me.tabService = New System.Windows.Forms.TabPage()
         Me.generalFrame = New System.Windows.Forms.GroupBox()
         Me.localDataLabel = New System.Windows.Forms.Label()
         Me.browseLocalPath = New System.Windows.Forms.Button()
         Me.dataPath = New System.Windows.Forms.TextBox()
         Me.loadSettingButton = New System.Windows.Forms.Button()
-        Me.chainServiceName = New System.Windows.Forms.ComboBox()
+        Me.sidechainServiceName = New System.Windows.Forms.ComboBox()
         Me.chainSettingLabel = New System.Windows.Forms.Label()
         Me.saveButton = New System.Windows.Forms.Button()
         Me.folderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
@@ -69,16 +50,28 @@ Partial Class Settings
         Me.infoButton = New System.Windows.Forms.Button()
         Me.fromRemoteButton = New System.Windows.Forms.Button()
         Me.toRemoteButton = New System.Windows.Forms.Button()
-        Me.useBufferToWrite = New System.Windows.Forms.CheckBox()
-        Me.useProfile = New System.Windows.Forms.CheckBox()
+        Me.serviceMode = New System.Windows.Forms.ComboBox()
+        Me.serviceModeLabel = New System.Windows.Forms.Label()
         Me.useAlert = New System.Windows.Forms.CheckBox()
+        Me.useProfile = New System.Windows.Forms.CheckBox()
+        Me.useMessageService = New System.Windows.Forms.CheckBox()
+        Me.useCounter = New System.Windows.Forms.CheckBox()
+        Me.useEventRegistry = New System.Windows.Forms.CheckBox()
+        Me.certificateClient = New CHCSupportUIControls.Certificate()
+        Me.adminPublicAddress = New CHCSupportUIControls.WalletAddress()
+        Me.secureChannel = New System.Windows.Forms.CheckBox()
+        Me.staticIPAddress = New System.Windows.Forms.TextBox()
+        Me.staticIPAddressLabel = New System.Windows.Forms.Label()
+        Me.pathBase = New System.Windows.Forms.TextBox()
+        Me.pathBaseLabel = New System.Windows.Forms.Label()
+        Me.useTrackLog = New System.Windows.Forms.CheckBox()
+        Me.useAutoMaintenance = New System.Windows.Forms.CheckBox()
+        Me.settingsTrack = New System.Windows.Forms.Button()
         Me.tabControl.SuspendLayout()
         Me.tabMain.SuspendLayout()
-        Me.tabInternal.SuspendLayout()
-        Me.tabComponents.SuspendLayout()
-        Me.logGroup.SuspendLayout()
-        Me.tabMaintenance.SuspendLayout()
-        Me.autoMaintenanceGroup.SuspendLayout()
+        Me.tabConnection.SuspendLayout()
+        Me.tabSecurity.SuspendLayout()
+        Me.tabService.SuspendLayout()
         Me.generalFrame.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -87,9 +80,9 @@ Partial Class Settings
         Me.tabControl.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tabControl.Controls.Add(Me.tabMain)
-        Me.tabControl.Controls.Add(Me.tabInternal)
-        Me.tabControl.Controls.Add(Me.tabComponents)
-        Me.tabControl.Controls.Add(Me.tabMaintenance)
+        Me.tabControl.Controls.Add(Me.tabConnection)
+        Me.tabControl.Controls.Add(Me.tabSecurity)
+        Me.tabControl.Controls.Add(Me.tabService)
         Me.tabControl.Enabled = False
         Me.tabControl.Location = New System.Drawing.Point(16, 126)
         Me.tabControl.Name = "tabControl"
@@ -99,9 +92,10 @@ Partial Class Settings
         '
         'tabMain
         '
+        Me.tabMain.Controls.Add(Me.serviceMode)
+        Me.tabMain.Controls.Add(Me.serviceModeLabel)
         Me.tabMain.Controls.Add(Me.internalName)
         Me.tabMain.Controls.Add(Me.internalNameLabel)
-        Me.tabMain.Controls.Add(Me.secureChannel)
         Me.tabMain.Controls.Add(Me.networkName)
         Me.tabMain.Controls.Add(Me.networkNameLabel)
         Me.tabMain.Controls.Add(Me.intranetMode)
@@ -135,19 +129,6 @@ Partial Class Settings
         Me.internalNameLabel.TabIndex = 38
         Me.internalNameLabel.Text = "&Internal name"
         '
-        'secureChannel
-        '
-        Me.secureChannel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.secureChannel.AutoSize = True
-        Me.secureChannel.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.secureChannel.Enabled = False
-        Me.secureChannel.Location = New System.Drawing.Point(563, 94)
-        Me.secureChannel.Name = "secureChannel"
-        Me.secureChannel.Size = New System.Drawing.Size(114, 17)
-        Me.secureChannel.TabIndex = 3
-        Me.secureChannel.Text = "&Secure channel"
-        Me.secureChannel.UseVisualStyleBackColor = True
-        '
         'networkName
         '
         Me.networkName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -176,55 +157,30 @@ Partial Class Settings
         Me.intranetMode.AutoSize = True
         Me.intranetMode.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.intranetMode.Enabled = False
-        Me.intranetMode.Location = New System.Drawing.Point(435, 94)
+        Me.intranetMode.Location = New System.Drawing.Point(569, 109)
         Me.intranetMode.Name = "intranetMode"
         Me.intranetMode.Size = New System.Drawing.Size(108, 17)
-        Me.intranetMode.TabIndex = 2
+        Me.intranetMode.TabIndex = 3
         Me.intranetMode.Text = "&Intranet mode"
         Me.intranetMode.UseVisualStyleBackColor = True
         '
-        'tabInternal
+        'tabConnection
         '
-        Me.tabInternal.Controls.Add(Me.certificateClient)
-        Me.tabInternal.Controls.Add(Me.adminPublicAddress)
-        Me.tabInternal.Controls.Add(Me.serviceID)
-        Me.tabInternal.Controls.Add(Me.serviceUUID)
-        Me.tabInternal.Controls.Add(Me.selectServicePort)
-        Me.tabInternal.Controls.Add(Me.selectPublicPort)
-        Me.tabInternal.Location = New System.Drawing.Point(4, 22)
-        Me.tabInternal.Name = "tabInternal"
-        Me.tabInternal.Size = New System.Drawing.Size(701, 281)
-        Me.tabInternal.TabIndex = 2
-        Me.tabInternal.Text = "Internal"
-        Me.tabInternal.UseVisualStyleBackColor = True
-        '
-        'certificateClient
-        '
-        Me.certificateClient.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.certificateClient.dataPath = ""
-        Me.certificateClient.Enabled = False
-        Me.certificateClient.Location = New System.Drawing.Point(70, 93)
-        Me.certificateClient.Name = "certificateClient"
-        Me.certificateClient.noChange = True
-        Me.certificateClient.serviceId = ""
-        Me.certificateClient.Size = New System.Drawing.Size(592, 30)
-        Me.certificateClient.TabIndex = 2
-        Me.certificateClient.urlService = ""
-        Me.certificateClient.value = ""
-        '
-        'adminPublicAddress
-        '
-        Me.adminPublicAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.adminPublicAddress.caption = "Public admin key"
-        Me.adminPublicAddress.dataPath = ""
-        Me.adminPublicAddress.Location = New System.Drawing.Point(10, 45)
-        Me.adminPublicAddress.Name = "adminPublicAddress"
-        Me.adminPublicAddress.Size = New System.Drawing.Size(656, 51)
-        Me.adminPublicAddress.TabIndex = 1
-        Me.adminPublicAddress.useFontBold = True
-        Me.adminPublicAddress.value = ""
+        Me.tabConnection.Controls.Add(Me.pathBase)
+        Me.tabConnection.Controls.Add(Me.pathBaseLabel)
+        Me.tabConnection.Controls.Add(Me.staticIPAddress)
+        Me.tabConnection.Controls.Add(Me.staticIPAddressLabel)
+        Me.tabConnection.Controls.Add(Me.secureChannel)
+        Me.tabConnection.Controls.Add(Me.serviceID)
+        Me.tabConnection.Controls.Add(Me.serviceUUID)
+        Me.tabConnection.Controls.Add(Me.selectServicePort)
+        Me.tabConnection.Controls.Add(Me.selectPublicPort)
+        Me.tabConnection.Location = New System.Drawing.Point(4, 22)
+        Me.tabConnection.Name = "tabConnection"
+        Me.tabConnection.Size = New System.Drawing.Size(701, 281)
+        Me.tabConnection.TabIndex = 2
+        Me.tabConnection.Text = "Connection"
+        Me.tabConnection.UseVisualStyleBackColor = True
         '
         'serviceID
         '
@@ -232,17 +188,17 @@ Partial Class Settings
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.serviceID.Enabled = False
         Me.serviceID.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.serviceID.Location = New System.Drawing.Point(149, 18)
+        Me.serviceID.Location = New System.Drawing.Point(141, 88)
         Me.serviceID.Name = "serviceID"
         Me.serviceID.Size = New System.Drawing.Size(513, 21)
-        Me.serviceID.TabIndex = 0
+        Me.serviceID.TabIndex = 2
         '
         'serviceUUID
         '
         Me.serviceUUID.AutoSize = True
         Me.serviceUUID.Enabled = False
         Me.serviceUUID.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.serviceUUID.Location = New System.Drawing.Point(75, 21)
+        Me.serviceUUID.Location = New System.Drawing.Point(67, 91)
         Me.serviceUUID.Name = "serviceUUID"
         Me.serviceUUID.Size = New System.Drawing.Size(68, 13)
         Me.serviceUUID.TabIndex = 45
@@ -254,7 +210,7 @@ Partial Class Settings
         Me.selectServicePort.Enabled = False
         Me.selectServicePort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.selectServicePort.label = "Service port number (0..65535)"
-        Me.selectServicePort.Location = New System.Drawing.Point(237, 167)
+        Me.selectServicePort.Location = New System.Drawing.Point(319, 145)
         Me.selectServicePort.Name = "selectServicePort"
         Me.selectServicePort.Size = New System.Drawing.Size(339, 23)
         Me.selectServicePort.TabIndex = 4
@@ -266,220 +222,39 @@ Partial Class Settings
         Me.selectPublicPort.Enabled = False
         Me.selectPublicPort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.selectPublicPort.label = "Public port number (0..65535)"
-        Me.selectPublicPort.Location = New System.Drawing.Point(294, 138)
+        Me.selectPublicPort.Location = New System.Drawing.Point(376, 116)
         Me.selectPublicPort.Name = "selectPublicPort"
         Me.selectPublicPort.Size = New System.Drawing.Size(282, 23)
         Me.selectPublicPort.TabIndex = 3
         Me.selectPublicPort.value = 0
         '
-        'tabComponents
+        'tabSecurity
         '
-        Me.tabComponents.Controls.Add(Me.useAlert)
-        Me.tabComponents.Controls.Add(Me.useProfile)
-        Me.tabComponents.Controls.Add(Me.useMessageService)
-        Me.tabComponents.Controls.Add(Me.useCounter)
-        Me.tabComponents.Controls.Add(Me.logGroup)
-        Me.tabComponents.Controls.Add(Me.useEventRegistry)
-        Me.tabComponents.Location = New System.Drawing.Point(4, 22)
-        Me.tabComponents.Name = "tabComponents"
-        Me.tabComponents.Size = New System.Drawing.Size(701, 281)
-        Me.tabComponents.TabIndex = 4
-        Me.tabComponents.Text = "Components"
-        Me.tabComponents.UseVisualStyleBackColor = True
+        Me.tabSecurity.Controls.Add(Me.certificateClient)
+        Me.tabSecurity.Controls.Add(Me.adminPublicAddress)
+        Me.tabSecurity.Location = New System.Drawing.Point(4, 22)
+        Me.tabSecurity.Name = "tabSecurity"
+        Me.tabSecurity.Size = New System.Drawing.Size(701, 281)
+        Me.tabSecurity.TabIndex = 4
+        Me.tabSecurity.Text = "Security"
+        Me.tabSecurity.UseVisualStyleBackColor = True
         '
-        'useMessageService
+        'tabService
         '
-        Me.useMessageService.AutoSize = True
-        Me.useMessageService.Location = New System.Drawing.Point(12, 190)
-        Me.useMessageService.Name = "useMessageService"
-        Me.useMessageService.Size = New System.Drawing.Size(147, 17)
-        Me.useMessageService.TabIndex = 3
-        Me.useMessageService.Text = "Use Message Service"
-        Me.useMessageService.UseVisualStyleBackColor = True
-        '
-        'useCounter
-        '
-        Me.useCounter.AutoSize = True
-        Me.useCounter.Location = New System.Drawing.Point(12, 167)
-        Me.useCounter.Name = "useCounter"
-        Me.useCounter.Size = New System.Drawing.Size(147, 17)
-        Me.useCounter.TabIndex = 2
-        Me.useCounter.Text = "Use Request Counter"
-        Me.useCounter.UseVisualStyleBackColor = True
-        '
-        'logGroup
-        '
-        Me.logGroup.Controls.Add(Me.useBufferToWrite)
-        Me.logGroup.Controls.Add(Me.logInformations)
-        Me.logGroup.Location = New System.Drawing.Point(12, 17)
-        Me.logGroup.Name = "logGroup"
-        Me.logGroup.Size = New System.Drawing.Size(675, 121)
-        Me.logGroup.TabIndex = 0
-        Me.logGroup.TabStop = False
-        Me.logGroup.Text = "Log"
-        '
-        'logInformations
-        '
-        Me.logInformations.Enabled = False
-        Me.logInformations.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.logInformations.Location = New System.Drawing.Point(4, 20)
-        Me.logInformations.maxNumberOfRegistrations = 0
-        Me.logInformations.maxNumHours = 0
-        Me.logInformations.Name = "logInformations"
-        Me.logInformations.Size = New System.Drawing.Size(671, 63)
-        Me.logInformations.TabIndex = 0
-        Me.logInformations.trackConfiguration = CHCModels.AreaModel.Log.TrackRuntimeModeEnum.neverTrace
-        Me.logInformations.trackRotateFrequency = CHCModels.AreaModel.Log.LogRotateConfig.FrequencyEnum.every12h
-        Me.logInformations.trackRotateKeepFile = CHCModels.AreaModel.Log.LogRotateConfig.KeepFileEnum.nothingFiles
-        Me.logInformations.trackRotateKeepLast = CHCModels.AreaModel.Log.KeepEnum.lastDay
-        Me.logInformations.useTrackRotate = False
-        '
-        'useEventRegistry
-        '
-        Me.useEventRegistry.AutoSize = True
-        Me.useEventRegistry.Location = New System.Drawing.Point(12, 144)
-        Me.useEventRegistry.Name = "useEventRegistry"
-        Me.useEventRegistry.Size = New System.Drawing.Size(134, 17)
-        Me.useEventRegistry.TabIndex = 1
-        Me.useEventRegistry.Text = "Use Event Registry"
-        Me.useEventRegistry.UseVisualStyleBackColor = True
-        '
-        'tabMaintenance
-        '
-        Me.tabMaintenance.Controls.Add(Me.autoMaintenanceGroup)
-        Me.tabMaintenance.Location = New System.Drawing.Point(4, 22)
-        Me.tabMaintenance.Name = "tabMaintenance"
-        Me.tabMaintenance.Size = New System.Drawing.Size(701, 281)
-        Me.tabMaintenance.TabIndex = 3
-        Me.tabMaintenance.Text = "Maintenance"
-        Me.tabMaintenance.UseVisualStyleBackColor = True
-        '
-        'autoMaintenanceGroup
-        '
-        Me.autoMaintenanceGroup.Controls.Add(Me.frequencyAutoMaintenance)
-        Me.autoMaintenanceGroup.Controls.Add(Me.keepFileTypeLabel)
-        Me.autoMaintenanceGroup.Controls.Add(Me.keepFileTypeValueCombo)
-        Me.autoMaintenanceGroup.Controls.Add(Me.keepOnlyRecentFileLabel)
-        Me.autoMaintenanceGroup.Controls.Add(Me.keepOnlyRecentFileValueCombo)
-        Me.autoMaintenanceGroup.Controls.Add(Me.startCleanEveryLabel)
-        Me.autoMaintenanceGroup.Controls.Add(Me.startCleanEveryValueCombo)
-        Me.autoMaintenanceGroup.Controls.Add(Me.unitMeasureFrequencyLabel)
-        Me.autoMaintenanceGroup.Controls.Add(Me.frequencyLabel)
-        Me.autoMaintenanceGroup.Controls.Add(Me.useAutoMaintenance)
-        Me.autoMaintenanceGroup.Location = New System.Drawing.Point(20, 14)
-        Me.autoMaintenanceGroup.Name = "autoMaintenanceGroup"
-        Me.autoMaintenanceGroup.Size = New System.Drawing.Size(661, 251)
-        Me.autoMaintenanceGroup.TabIndex = 4
-        Me.autoMaintenanceGroup.TabStop = False
-        Me.autoMaintenanceGroup.Text = "Automatic Maintenance"
-        '
-        'frequencyAutoMaintenance
-        '
-        Me.frequencyAutoMaintenance.currentFormat = ""
-        Me.frequencyAutoMaintenance.Location = New System.Drawing.Point(198, 66)
-        Me.frequencyAutoMaintenance.locationCode = "it-IT"
-        Me.frequencyAutoMaintenance.Name = "frequencyAutoMaintenance"
-        Me.frequencyAutoMaintenance.Size = New System.Drawing.Size(100, 21)
-        Me.frequencyAutoMaintenance.TabIndex = 1
-        Me.frequencyAutoMaintenance.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.frequencyAutoMaintenance.useDecimal = False
-        '
-        'keepFileTypeLabel
-        '
-        Me.keepFileTypeLabel.AutoSize = True
-        Me.keepFileTypeLabel.Enabled = False
-        Me.keepFileTypeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.keepFileTypeLabel.Location = New System.Drawing.Point(106, 154)
-        Me.keepFileTypeLabel.Name = "keepFileTypeLabel"
-        Me.keepFileTypeLabel.Size = New System.Drawing.Size(86, 13)
-        Me.keepFileTypeLabel.TabIndex = 36
-        Me.keepFileTypeLabel.Text = "Keep file type"
-        '
-        'keepFileTypeValueCombo
-        '
-        Me.keepFileTypeValueCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.keepFileTypeValueCombo.Enabled = False
-        Me.keepFileTypeValueCombo.FormattingEnabled = True
-        Me.keepFileTypeValueCombo.Items.AddRange(New Object() {"Nothing exclude", "Keep only main log"})
-        Me.keepFileTypeValueCombo.Location = New System.Drawing.Point(198, 151)
-        Me.keepFileTypeValueCombo.Name = "keepFileTypeValueCombo"
-        Me.keepFileTypeValueCombo.Size = New System.Drawing.Size(150, 21)
-        Me.keepFileTypeValueCombo.TabIndex = 4
-        '
-        'keepOnlyRecentFileLabel
-        '
-        Me.keepOnlyRecentFileLabel.AutoSize = True
-        Me.keepOnlyRecentFileLabel.Enabled = False
-        Me.keepOnlyRecentFileLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.keepOnlyRecentFileLabel.Location = New System.Drawing.Point(47, 124)
-        Me.keepOnlyRecentFileLabel.Name = "keepOnlyRecentFileLabel"
-        Me.keepOnlyRecentFileLabel.Size = New System.Drawing.Size(146, 13)
-        Me.keepOnlyRecentFileLabel.TabIndex = 35
-        Me.keepOnlyRecentFileLabel.Text = "Keep only recent file log"
-        '
-        'keepOnlyRecentFileValueCombo
-        '
-        Me.keepOnlyRecentFileValueCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.keepOnlyRecentFileValueCombo.Enabled = False
-        Me.keepOnlyRecentFileValueCombo.FormattingEnabled = True
-        Me.keepOnlyRecentFileValueCombo.Items.AddRange(New Object() {"last day", "last week", "last month", "last year"})
-        Me.keepOnlyRecentFileValueCombo.Location = New System.Drawing.Point(198, 121)
-        Me.keepOnlyRecentFileValueCombo.Name = "keepOnlyRecentFileValueCombo"
-        Me.keepOnlyRecentFileValueCombo.Size = New System.Drawing.Size(207, 21)
-        Me.keepOnlyRecentFileValueCombo.TabIndex = 3
-        '
-        'startCleanEveryLabel
-        '
-        Me.startCleanEveryLabel.AutoSize = True
-        Me.startCleanEveryLabel.Enabled = False
-        Me.startCleanEveryLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.startCleanEveryLabel.Location = New System.Drawing.Point(71, 95)
-        Me.startCleanEveryLabel.Name = "startCleanEveryLabel"
-        Me.startCleanEveryLabel.Size = New System.Drawing.Size(121, 13)
-        Me.startCleanEveryLabel.TabIndex = 34
-        Me.startCleanEveryLabel.Text = "Frequency log clean"
-        '
-        'startCleanEveryValueCombo
-        '
-        Me.startCleanEveryValueCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.startCleanEveryValueCombo.Enabled = False
-        Me.startCleanEveryValueCombo.FormattingEnabled = True
-        Me.startCleanEveryValueCombo.Items.AddRange(New Object() {"12 hours", "1 day"})
-        Me.startCleanEveryValueCombo.Location = New System.Drawing.Point(198, 92)
-        Me.startCleanEveryValueCombo.Name = "startCleanEveryValueCombo"
-        Me.startCleanEveryValueCombo.Size = New System.Drawing.Size(207, 21)
-        Me.startCleanEveryValueCombo.TabIndex = 2
-        '
-        'unitMeasureFrequencyLabel
-        '
-        Me.unitMeasureFrequencyLabel.AutoSize = True
-        Me.unitMeasureFrequencyLabel.Enabled = False
-        Me.unitMeasureFrequencyLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.unitMeasureFrequencyLabel.Location = New System.Drawing.Point(304, 69)
-        Me.unitMeasureFrequencyLabel.Name = "unitMeasureFrequencyLabel"
-        Me.unitMeasureFrequencyLabel.Size = New System.Drawing.Size(45, 13)
-        Me.unitMeasureFrequencyLabel.TabIndex = 3
-        Me.unitMeasureFrequencyLabel.Text = "Hour/s"
-        '
-        'frequencyLabel
-        '
-        Me.frequencyLabel.AutoSize = True
-        Me.frequencyLabel.Enabled = False
-        Me.frequencyLabel.Location = New System.Drawing.Point(126, 69)
-        Me.frequencyLabel.Name = "frequencyLabel"
-        Me.frequencyLabel.Size = New System.Drawing.Size(66, 13)
-        Me.frequencyLabel.TabIndex = 1
-        Me.frequencyLabel.Text = "Frequency"
-        '
-        'useAutoMaintenance
-        '
-        Me.useAutoMaintenance.AutoSize = True
-        Me.useAutoMaintenance.Location = New System.Drawing.Point(29, 30)
-        Me.useAutoMaintenance.Name = "useAutoMaintenance"
-        Me.useAutoMaintenance.Size = New System.Drawing.Size(184, 17)
-        Me.useAutoMaintenance.TabIndex = 0
-        Me.useAutoMaintenance.Text = "Use automatic maintenance"
-        Me.useAutoMaintenance.UseVisualStyleBackColor = True
+        Me.tabService.Controls.Add(Me.settingsTrack)
+        Me.tabService.Controls.Add(Me.useAutoMaintenance)
+        Me.tabService.Controls.Add(Me.useTrackLog)
+        Me.tabService.Controls.Add(Me.useAlert)
+        Me.tabService.Controls.Add(Me.useProfile)
+        Me.tabService.Controls.Add(Me.useMessageService)
+        Me.tabService.Controls.Add(Me.useCounter)
+        Me.tabService.Controls.Add(Me.useEventRegistry)
+        Me.tabService.Location = New System.Drawing.Point(4, 22)
+        Me.tabService.Name = "tabService"
+        Me.tabService.Size = New System.Drawing.Size(701, 281)
+        Me.tabService.TabIndex = 3
+        Me.tabService.Text = "Components"
+        Me.tabService.UseVisualStyleBackColor = True
         '
         'generalFrame
         '
@@ -489,7 +264,7 @@ Partial Class Settings
         Me.generalFrame.Controls.Add(Me.browseLocalPath)
         Me.generalFrame.Controls.Add(Me.dataPath)
         Me.generalFrame.Controls.Add(Me.loadSettingButton)
-        Me.generalFrame.Controls.Add(Me.chainServiceName)
+        Me.generalFrame.Controls.Add(Me.sidechainServiceName)
         Me.generalFrame.Controls.Add(Me.chainSettingLabel)
         Me.generalFrame.Location = New System.Drawing.Point(16, 13)
         Me.generalFrame.Name = "generalFrame"
@@ -538,16 +313,16 @@ Partial Class Settings
         Me.loadSettingButton.Text = "&Load / New"
         Me.loadSettingButton.UseVisualStyleBackColor = True
         '
-        'chainServiceName
+        'sidechainServiceName
         '
-        Me.chainServiceName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.sidechainServiceName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.chainServiceName.FormattingEnabled = True
-        Me.chainServiceName.Items.AddRange(New Object() {"Local Work Machine", "Sidechain Service"})
-        Me.chainServiceName.Location = New System.Drawing.Point(108, 20)
-        Me.chainServiceName.Name = "chainServiceName"
-        Me.chainServiceName.Size = New System.Drawing.Size(550, 21)
-        Me.chainServiceName.TabIndex = 0
+        Me.sidechainServiceName.FormattingEnabled = True
+        Me.sidechainServiceName.Items.AddRange(New Object() {"Local Work Machine", "Sidechain Service"})
+        Me.sidechainServiceName.Location = New System.Drawing.Point(108, 20)
+        Me.sidechainServiceName.Name = "sidechainServiceName"
+        Me.sidechainServiceName.Size = New System.Drawing.Size(550, 21)
+        Me.sidechainServiceName.TabIndex = 0
         '
         'chainSettingLabel
         '
@@ -618,35 +393,200 @@ Partial Class Settings
         Me.toRemoteButton.Text = "To remote"
         Me.toRemoteButton.UseVisualStyleBackColor = True
         '
-        'useBufferToWrite
+        'serviceMode
         '
-        Me.useBufferToWrite.AutoSize = True
-        Me.useBufferToWrite.Location = New System.Drawing.Point(179, 80)
-        Me.useBufferToWrite.Name = "useBufferToWrite"
-        Me.useBufferToWrite.Size = New System.Drawing.Size(132, 17)
-        Me.useBufferToWrite.TabIndex = 1
-        Me.useBufferToWrite.Text = "Use buffer to write"
-        Me.useBufferToWrite.UseVisualStyleBackColor = True
+        Me.serviceMode.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.serviceMode.Enabled = False
+        Me.serviceMode.FormattingEnabled = True
+        Me.serviceMode.Items.AddRange(New Object() {"Desktop  Application", "System Service ", "Webservice"})
+        Me.serviceMode.Location = New System.Drawing.Point(157, 82)
+        Me.serviceMode.Name = "serviceMode"
+        Me.serviceMode.Size = New System.Drawing.Size(520, 21)
+        Me.serviceMode.TabIndex = 2
+        '
+        'serviceModeLabel
+        '
+        Me.serviceModeLabel.AutoSize = True
+        Me.serviceModeLabel.Enabled = False
+        Me.serviceModeLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.serviceModeLabel.Location = New System.Drawing.Point(55, 85)
+        Me.serviceModeLabel.Name = "serviceModeLabel"
+        Me.serviceModeLabel.Size = New System.Drawing.Size(96, 13)
+        Me.serviceModeLabel.TabIndex = 40
+        Me.serviceModeLabel.Text = "&Service mode"
+        '
+        'useAlert
+        '
+        Me.useAlert.AutoSize = True
+        Me.useAlert.Enabled = False
+        Me.useAlert.Location = New System.Drawing.Point(404, 72)
+        Me.useAlert.Name = "useAlert"
+        Me.useAlert.Size = New System.Drawing.Size(78, 17)
+        Me.useAlert.TabIndex = 5
+        Me.useAlert.Text = "Use Alert"
+        Me.useAlert.UseVisualStyleBackColor = True
         '
         'useProfile
         '
         Me.useProfile.AutoSize = True
-        Me.useProfile.Location = New System.Drawing.Point(12, 215)
+        Me.useProfile.Enabled = False
+        Me.useProfile.Location = New System.Drawing.Point(404, 34)
         Me.useProfile.Name = "useProfile"
         Me.useProfile.Size = New System.Drawing.Size(87, 17)
         Me.useProfile.TabIndex = 4
         Me.useProfile.Text = "Use Profile"
         Me.useProfile.UseVisualStyleBackColor = True
         '
-        'useAlert
+        'useMessageService
         '
-        Me.useAlert.AutoSize = True
-        Me.useAlert.Location = New System.Drawing.Point(12, 238)
-        Me.useAlert.Name = "useAlert"
-        Me.useAlert.Size = New System.Drawing.Size(78, 17)
-        Me.useAlert.TabIndex = 5
-        Me.useAlert.Text = "Use Alert"
-        Me.useAlert.UseVisualStyleBackColor = True
+        Me.useMessageService.AutoSize = True
+        Me.useMessageService.Enabled = False
+        Me.useMessageService.Location = New System.Drawing.Point(48, 148)
+        Me.useMessageService.Name = "useMessageService"
+        Me.useMessageService.Size = New System.Drawing.Size(100, 17)
+        Me.useMessageService.TabIndex = 3
+        Me.useMessageService.Text = "Use Message"
+        Me.useMessageService.UseVisualStyleBackColor = True
+        '
+        'useCounter
+        '
+        Me.useCounter.AutoSize = True
+        Me.useCounter.Enabled = False
+        Me.useCounter.Location = New System.Drawing.Point(48, 110)
+        Me.useCounter.Name = "useCounter"
+        Me.useCounter.Size = New System.Drawing.Size(147, 17)
+        Me.useCounter.TabIndex = 2
+        Me.useCounter.Text = "Use Request Counter"
+        Me.useCounter.UseVisualStyleBackColor = True
+        '
+        'useEventRegistry
+        '
+        Me.useEventRegistry.AutoSize = True
+        Me.useEventRegistry.Enabled = False
+        Me.useEventRegistry.Location = New System.Drawing.Point(48, 72)
+        Me.useEventRegistry.Name = "useEventRegistry"
+        Me.useEventRegistry.Size = New System.Drawing.Size(134, 17)
+        Me.useEventRegistry.TabIndex = 1
+        Me.useEventRegistry.Text = "Use Event Registry"
+        Me.useEventRegistry.UseVisualStyleBackColor = True
+        '
+        'certificateClient
+        '
+        Me.certificateClient.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.certificateClient.dataPath = ""
+        Me.certificateClient.Enabled = False
+        Me.certificateClient.Location = New System.Drawing.Point(87, 69)
+        Me.certificateClient.Name = "certificateClient"
+        Me.certificateClient.noChange = True
+        Me.certificateClient.serviceId = ""
+        Me.certificateClient.Size = New System.Drawing.Size(595, 30)
+        Me.certificateClient.TabIndex = 1
+        Me.certificateClient.urlService = ""
+        Me.certificateClient.value = ""
+        '
+        'adminPublicAddress
+        '
+        Me.adminPublicAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.adminPublicAddress.caption = "Public admin key"
+        Me.adminPublicAddress.dataPath = ""
+        Me.adminPublicAddress.Location = New System.Drawing.Point(17, 21)
+        Me.adminPublicAddress.Name = "adminPublicAddress"
+        Me.adminPublicAddress.Size = New System.Drawing.Size(665, 51)
+        Me.adminPublicAddress.TabIndex = 0
+        Me.adminPublicAddress.useFontBold = True
+        Me.adminPublicAddress.value = ""
+        '
+        'secureChannel
+        '
+        Me.secureChannel.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.secureChannel.AutoSize = True
+        Me.secureChannel.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.secureChannel.Enabled = False
+        Me.secureChannel.Location = New System.Drawing.Point(540, 174)
+        Me.secureChannel.Name = "secureChannel"
+        Me.secureChannel.Size = New System.Drawing.Size(114, 17)
+        Me.secureChannel.TabIndex = 5
+        Me.secureChannel.Text = "&Secure channel"
+        Me.secureChannel.UseVisualStyleBackColor = True
+        '
+        'staticIPAddress
+        '
+        Me.staticIPAddress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.staticIPAddress.Enabled = False
+        Me.staticIPAddress.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.staticIPAddress.Location = New System.Drawing.Point(141, 34)
+        Me.staticIPAddress.Name = "staticIPAddress"
+        Me.staticIPAddress.Size = New System.Drawing.Size(513, 21)
+        Me.staticIPAddress.TabIndex = 0
+        '
+        'staticIPAddressLabel
+        '
+        Me.staticIPAddressLabel.AutoSize = True
+        Me.staticIPAddressLabel.Enabled = False
+        Me.staticIPAddressLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.staticIPAddressLabel.Location = New System.Drawing.Point(31, 37)
+        Me.staticIPAddressLabel.Name = "staticIPAddressLabel"
+        Me.staticIPAddressLabel.Size = New System.Drawing.Size(104, 13)
+        Me.staticIPAddressLabel.TabIndex = 48
+        Me.staticIPAddressLabel.Text = "&Static IP address"
+        '
+        'pathBase
+        '
+        Me.pathBase.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.pathBase.Enabled = False
+        Me.pathBase.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.pathBase.Location = New System.Drawing.Point(141, 61)
+        Me.pathBase.Name = "pathBase"
+        Me.pathBase.Size = New System.Drawing.Size(513, 21)
+        Me.pathBase.TabIndex = 1
+        '
+        'pathBaseLabel
+        '
+        Me.pathBaseLabel.AutoSize = True
+        Me.pathBaseLabel.Enabled = False
+        Me.pathBaseLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.pathBaseLabel.Location = New System.Drawing.Point(72, 64)
+        Me.pathBaseLabel.Name = "pathBaseLabel"
+        Me.pathBaseLabel.Size = New System.Drawing.Size(63, 13)
+        Me.pathBaseLabel.TabIndex = 50
+        Me.pathBaseLabel.Text = "&Path base"
+        '
+        'useTrackLog
+        '
+        Me.useTrackLog.AutoSize = True
+        Me.useTrackLog.Enabled = False
+        Me.useTrackLog.Location = New System.Drawing.Point(48, 34)
+        Me.useTrackLog.Name = "useTrackLog"
+        Me.useTrackLog.Size = New System.Drawing.Size(101, 17)
+        Me.useTrackLog.TabIndex = 0
+        Me.useTrackLog.Text = "Use track log"
+        Me.useTrackLog.UseVisualStyleBackColor = True
+        '
+        'useAutoMaintenance
+        '
+        Me.useAutoMaintenance.AutoSize = True
+        Me.useAutoMaintenance.Enabled = False
+        Me.useAutoMaintenance.Location = New System.Drawing.Point(404, 110)
+        Me.useAutoMaintenance.Name = "useAutoMaintenance"
+        Me.useAutoMaintenance.Size = New System.Drawing.Size(129, 17)
+        Me.useAutoMaintenance.TabIndex = 6
+        Me.useAutoMaintenance.Text = "Auto maintenance"
+        Me.useAutoMaintenance.UseVisualStyleBackColor = True
+        '
+        'settingsTrack
+        '
+        Me.settingsTrack.Enabled = False
+        Me.settingsTrack.Location = New System.Drawing.Point(206, 31)
+        Me.settingsTrack.Name = "settingsTrack"
+        Me.settingsTrack.Size = New System.Drawing.Size(75, 23)
+        Me.settingsTrack.TabIndex = 7
+        Me.settingsTrack.Text = "Settings"
+        Me.settingsTrack.UseVisualStyleBackColor = True
         '
         'Settings
         '
@@ -670,15 +610,11 @@ Partial Class Settings
         Me.tabControl.ResumeLayout(False)
         Me.tabMain.ResumeLayout(False)
         Me.tabMain.PerformLayout()
-        Me.tabInternal.ResumeLayout(False)
-        Me.tabInternal.PerformLayout()
-        Me.tabComponents.ResumeLayout(False)
-        Me.tabComponents.PerformLayout()
-        Me.logGroup.ResumeLayout(False)
-        Me.logGroup.PerformLayout()
-        Me.tabMaintenance.ResumeLayout(False)
-        Me.autoMaintenanceGroup.ResumeLayout(False)
-        Me.autoMaintenanceGroup.PerformLayout()
+        Me.tabConnection.ResumeLayout(False)
+        Me.tabConnection.PerformLayout()
+        Me.tabSecurity.ResumeLayout(False)
+        Me.tabService.ResumeLayout(False)
+        Me.tabService.PerformLayout()
         Me.generalFrame.ResumeLayout(False)
         Me.generalFrame.PerformLayout()
         Me.ResumeLayout(False)
@@ -690,48 +626,43 @@ Partial Class Settings
     Friend WithEvents networkName As TextBox
     Friend WithEvents networkNameLabel As Label
     Friend WithEvents intranetMode As CheckBox
-    Friend WithEvents tabInternal As TabPage
+    Friend WithEvents tabConnection As TabPage
     Friend WithEvents generalFrame As GroupBox
     Friend WithEvents localDataLabel As Label
     Friend WithEvents browseLocalPath As Button
     Friend WithEvents dataPath As TextBox
     Friend WithEvents loadSettingButton As Button
-    Friend WithEvents chainServiceName As ComboBox
+    Friend WithEvents sidechainServiceName As ComboBox
     Friend WithEvents chainSettingLabel As Label
     Friend WithEvents saveButton As Button
-    Friend WithEvents secureChannel As CheckBox
     Friend WithEvents folderBrowserDialog As FolderBrowserDialog
     Friend WithEvents openAsFileButton As Button
     Friend WithEvents infoButton As Button
     Friend WithEvents internalName As TextBox
     Friend WithEvents internalNameLabel As Label
-    Friend WithEvents adminPublicAddress As CHCSupportUIControls.WalletAddress
     Friend WithEvents serviceID As TextBox
     Friend WithEvents serviceUUID As Label
     Friend WithEvents selectServicePort As CHCSupportUIControls.SelectPort
     Friend WithEvents selectPublicPort As CHCSupportUIControls.SelectPort
-    Friend WithEvents tabMaintenance As TabPage
-    Friend WithEvents autoMaintenanceGroup As GroupBox
-    Friend WithEvents unitMeasureFrequencyLabel As Label
-    Friend WithEvents frequencyLabel As Label
-    Friend WithEvents useAutoMaintenance As CheckBox
-    Friend WithEvents tabComponents As TabPage
-    Friend WithEvents useMessageService As CheckBox
-    Friend WithEvents useCounter As CheckBox
-    Friend WithEvents logGroup As GroupBox
-    Friend WithEvents logInformations As CHCSupportUIControls.LogControl
-    Friend WithEvents useEventRegistry As CheckBox
-    Friend WithEvents keepFileTypeLabel As Label
-    Friend WithEvents keepFileTypeValueCombo As ComboBox
-    Friend WithEvents keepOnlyRecentFileLabel As Label
-    Friend WithEvents keepOnlyRecentFileValueCombo As ComboBox
-    Friend WithEvents startCleanEveryLabel As Label
-    Friend WithEvents startCleanEveryValueCombo As ComboBox
-    Friend WithEvents frequencyAutoMaintenance As CHCSupportUIControls.NumericText
-    Friend WithEvents certificateClient As CHCSupportUIControls.Certificate
+    Friend WithEvents tabService As TabPage
+    Friend WithEvents tabSecurity As TabPage
     Friend WithEvents fromRemoteButton As Button
     Friend WithEvents toRemoteButton As Button
+    Friend WithEvents serviceMode As ComboBox
+    Friend WithEvents serviceModeLabel As Label
+    Friend WithEvents pathBase As TextBox
+    Friend WithEvents pathBaseLabel As Label
+    Friend WithEvents staticIPAddress As TextBox
+    Friend WithEvents staticIPAddressLabel As Label
+    Friend WithEvents secureChannel As CheckBox
+    Friend WithEvents certificateClient As CHCSupportUIControls.Certificate
+    Friend WithEvents adminPublicAddress As CHCSupportUIControls.WalletAddress
+    Friend WithEvents useTrackLog As CheckBox
     Friend WithEvents useAlert As CheckBox
     Friend WithEvents useProfile As CheckBox
-    Friend WithEvents useBufferToWrite As CheckBox
+    Friend WithEvents useMessageService As CheckBox
+    Friend WithEvents useCounter As CheckBox
+    Friend WithEvents useEventRegistry As CheckBox
+    Friend WithEvents settingsTrack As Button
+    Friend WithEvents useAutoMaintenance As CheckBox
 End Class

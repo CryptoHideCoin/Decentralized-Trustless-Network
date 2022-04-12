@@ -12,7 +12,7 @@ Option Compare Text
 Imports System.Net
 Imports Newtonsoft.Json
 Imports System.Text
-Imports CHCModels.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Network.Response
 
 
 

@@ -89,8 +89,8 @@
     <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModels.dll</HintPath>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCProtocolLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
@@ -103,8 +103,8 @@
     <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModels.dll</HintPath>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCProtocolLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x64\CHCProtocolLibrary.dll</HintPath>
@@ -117,8 +117,8 @@
     <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModels.dll</HintPath>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCProtocolLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\Standard\CHCProtocolLibrary.dll</HintPath>

@@ -1,0 +1,24 @@
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCSidechainServiceSettings.exe.config
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCSidechainServiceSettings.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCSidechainServiceSettings.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCSupportUIControls.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\System.Web.Http.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCModels.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\zxing.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHC Sidechain Service Settings - Debug.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.informations.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.RequestPassword.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.Settings.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHC Sidechain Service Settings - Debug.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHC Sidechain Service Settings - Debug.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.pdb

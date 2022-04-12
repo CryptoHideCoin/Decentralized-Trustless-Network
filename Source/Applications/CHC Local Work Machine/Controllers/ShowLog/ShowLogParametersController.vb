@@ -2,9 +2,9 @@
 Option Explicit On
 
 Imports System.Web.Http
-Imports CHCModels.AreaModel.Log
-Imports CHCModels.AreaModel.Information
-Imports CHCModels.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Log
+Imports CHCModelsLibrary.AreaModel.Information
+Imports CHCModelsLibrary.AreaModel.Network.Response
 
 
 

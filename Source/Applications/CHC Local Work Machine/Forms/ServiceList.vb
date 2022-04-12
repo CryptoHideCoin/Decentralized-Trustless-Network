@@ -17,7 +17,7 @@ Public Class ServiceList
             If Not AreaCommon.Controllers.webServiceThread() Then
                 End
             End If
-            If (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus = CHCModels.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started) Then
+            If (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus = CHCModelsLibrary.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started) Then
                 checkSwitchOff.Enabled = True
             End If
 
@@ -142,7 +142,7 @@ Public Class ServiceList
     End Sub
 
     Private Sub checkSwitchOff_Tick(sender As Object, e As EventArgs) Handles checkSwitchOff.Tick
-        If (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus <> CHCModels.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started) Then
+        If (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus <> CHCModelsLibrary.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started) Then
             checkSwitchOff.Enabled = False
             mainTimer.Enabled = False
 

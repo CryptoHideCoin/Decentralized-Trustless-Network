@@ -3,8 +3,8 @@ Option Explicit On
 
 Imports CHCSidechainServiceLibrary.AreaCommon.Main
 Imports CHCCommonLibrary.AreaEngine.Communication
-Imports CHCModels.AreaModel.Network.Response
-Imports CHCModels.AreaModel.Service
+Imports CHCModelsLibrary.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Service
 
 
 

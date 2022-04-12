@@ -1,12 +1,11 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCModels.AreaModel.Administration.Security
-Imports CHCModels.AreaModel.Administration.Settings
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
+Imports CHCModelsLibrary.AreaModel.Administration.Security
+Imports CHCModelsLibrary.AreaModel.Administration.Settings
 Imports CHCCommonLibrary.AreaEngine.CommandLine
 Imports CHCCommonLibrary.AreaEngine.Communication
-Imports CHCModels.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Network.Response
 Imports CHCProtocolLibrary.AreaWallet.Support
 
 
@@ -35,9 +34,9 @@ Public Class Settings
 
             If (command.code.ToLower.CompareTo("force") = 0) Then
                 Select Case command.parameterValue("service").ToLower
-                    Case "localworkmachine" : chainServiceName.SelectedIndex = 0
-                    Case "sidechainservice" : chainServiceName.SelectedIndex = 1
-                    Case "primary" : chainServiceName.SelectedIndex = 2
+                    Case "localworkmachine" : sidechainServiceName.SelectedIndex = 0
+                    Case "sidechainservice" : sidechainServiceName.SelectedIndex = 1
+                    Case "primary" : sidechainServiceName.SelectedIndex = 2
                 End Select
 
                 dataPath.Text = command.parameterValue("dataPath")
@@ -72,162 +71,54 @@ Public Class Settings
         certificateClient.Enabled = True
         saveButton.Enabled = True
 
-        If (chainServiceName.Text.CompareTo("Local Work Machine") = 0) Then
-            serviceID.Enabled = False
-            serviceUUID.Enabled = False
+        If (sidechainServiceName.Text.CompareTo("Local Work Machine") = 0) Then
+            internalNameLabel.Enabled = False
+            internalName.Enabled = False
+            secureChannel.Enabled = True
+
             selectPublicPort.Enabled = False
 
-            tabControl.TabPages(0).Enabled = False
+            useTrackLog.Enabled = False
+            useEventRegistry.Enabled = False
+            useCounter.Enabled = False
+            useMessageService.Enabled = False
+            useProfile.Enabled = False
+            useAlert.Enabled = False
+            useAutoMaintenance.Enabled = False
+
             tabControl.TabPages(2).Enabled = False
             tabControl.TabPages(3).Enabled = False
         Else
-            tabControl.TabPages(0).Enabled = True
-            tabControl.TabPages(2).Enabled = True
-            tabControl.TabPages(3).Enabled = True
-
             internalNameLabel.Enabled = True
             internalName.Enabled = True
-            networkNameLabel.Enabled = True
-            networkName.Enabled = True
-            intranetMode.Enabled = True
             secureChannel.Enabled = True
-            serviceID.Enabled = True
-            serviceUUID.Enabled = True
+
             selectPublicPort.Enabled = True
-            logInformations.Enabled = True
-            useEventRegistry.Enabled = True
-            useCounter.Enabled = True
-            useMessageService.Enabled = True
-            useProfile.Enabled = True
-            useAlert.Enabled = True
+
+            useTrackLog.Enabled = True
+            useEventRegistry.Enabled = False
+            useCounter.Enabled = False
+            useMessageService.Enabled = False
+            useProfile.Enabled = False
+            useAlert.Enabled = False
+            useAutoMaintenance.Enabled = False
+
+            tabControl.TabPages(2).Enabled = True
+            tabControl.TabPages(3).Enabled = True
         End If
 
+        tabControl.TabPages(0).Enabled = True
+
+        networkNameLabel.Enabled = True
+        networkName.Enabled = True
+
+        serviceModeLabel.Enabled = True
+        serviceMode.Enabled = True
+
+        intranetMode.Enabled = True
+
+        settingsTrack.Enabled = False
     End Sub
-
-    ''' <summary>
-    ''' This method provide to get a data and request 
-    ''' </summary>
-    ''' <param name="engineFile"></param>
-    ''' <returns></returns>
-    Private Function getDataFromFile(ByRef engineFile As BaseFile(Of CHCModels.AreaModel.Administration.Settings.SettingsSidechainService)) As CHCModels.AreaModel.Administration.Settings.SettingsSidechainService
-        Dim result As SettingsSidechainService
-        Try
-            Dim decodeData As Boolean = False
-            Dim errorReading As Boolean = False
-
-            Do While Not decodeData And Not errorReading
-                If engineFile.read() Then
-                    result = engineFile.data
-
-                    decodeData = True
-                Else
-                    _Password = getPassword()
-
-                    If (_Password.CompareTo("(cancelMe)") = 0) Then
-                        errorReading = True
-                    Else
-                        engineFile.cryptoKEY = _Password
-
-                        engineFile.noCrypt = False
-                    End If
-                End If
-            Loop
-        Catch ex As Exception
-            result = New CHCModels.AreaModel.Administration.Settings.SettingsSidechainService
-        End Try
-
-#Disable Warning BC42104
-        Return result
-#Enable Warning BC42104
-    End Function
-
-    ''' <summary>
-    ''' This method provide to fill all field
-    ''' </summary>
-    ''' <param name="data"></param>
-    ''' <returns></returns>
-    Private Function fillAllField(ByVal data As SettingsSidechainService) As Boolean
-        Try
-            With data
-                internalName.Text = .internalName
-                networkName.Text = .networkReferement
-                intranetMode.Checked = .intranetMode
-                secureChannel.Checked = .secureChannel
-                serviceID.Text = .serviceID
-                adminPublicAddress.value = .publicAddress
-                certificateClient.value = .clientCertificate
-                selectPublicPort.value = .publicPort
-                selectServicePort.value = .servicePort
-                useAutoMaintenance.Checked = .useAutoMaintanance
-
-                If .useAutoMaintanance Then
-                    frequencyAutoMaintenance.Text = .autoMaintenanceFrequencyHours
-
-                    startCleanEveryValueCombo.SelectedIndex = .trackRotateConfig.frequency
-                    keepOnlyRecentFileValueCombo.SelectedIndex = .trackRotateConfig.keepLast
-                    keepFileTypeValueCombo.SelectedIndex = .trackRotateConfig.keepFile
-                End If
-
-                logInformations.trackConfiguration = .trackConfiguration
-                logInformations.maxNumHours = .changeLogFileMaxNumHours
-                logInformations.maxNumberOfRegistrations = .changeLogFileNumRegistrations
-                useBufferToWrite.Checked = .useBufferToWrite
-
-                useEventRegistry.Checked = .useEventRegistry
-                useCounter.Checked = .useRequestCounter
-                useMessageService.Checked = .useAdminMessage
-                useProfile.Checked = .useProfile
-                useAlert.Checked = .useAlert
-            End With
-
-            Return True
-        Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-            Return False
-        End Try
-    End Function
-
-    ''' <summary>
-    ''' This method provide to load data from a data path
-    ''' </summary>
-    ''' <returns></returns>
-    Private Function loadData() As Boolean
-        Try
-            Dim completeFileName As String = ""
-            Dim data As SettingsSidechainService
-            Dim engineFile As New BaseFile(Of SettingsSidechainService)
-
-            completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
-            completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text.Replace(" ", "") & ".Settings")
-
-            If Not IO.File.Exists(completeFileName) Then Return False
-
-            openAsFileButton.Enabled = True
-
-            If (_Password.Length > 0) Then
-                engineFile.cryptoKEY = _Password
-            Else
-                engineFile.noCrypt = True
-            End If
-
-            engineFile.fileName = completeFileName
-
-            data = getDataFromFile(engineFile)
-
-            If IsNothing(data) Then
-                MessageBox.Show("Error during read file e/o parameter", "Error notify", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-                End
-            End If
-
-            Return fillAllField(data)
-        Catch ex As Exception
-            MessageBox.Show("Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-            Return False
-        End Try
-    End Function
 
     ''' <summary>
     ''' This method provide to acquire the password 
@@ -249,14 +140,97 @@ Public Class Settings
     End Function
 
     ''' <summary>
+    ''' This method provide to fill all field
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
+    Private Function fillAllField(ByVal data As SettingsSidechainServiceComplete) As Boolean
+        Try
+            With data
+                internalName.Text = .internalName
+                networkName.Text = .networkReferement
+                serviceMode.SelectedIndex = .serviceMode
+                intranetMode.Checked = .intranetMode
+
+                staticIPAddress.Text = .staticIP
+                pathBase.Text = .middlePath
+                serviceID.Text = .serviceID
+                selectPublicPort.value = .publicPort
+                selectServicePort.value = .servicePort
+                secureChannel.Checked = .secureChannel
+
+                adminPublicAddress.value = .publicAddress
+                certificateClient.value = .clientCertificate
+
+                useTrackLog.Checked = .useLog
+                useEventRegistry.Checked = .useEventRegistry
+                useCounter.Checked = .useRequestCounter
+                useMessageService.Checked = .useAdminMessage
+                useProfile.Checked = .useProfile
+                useAlert.Checked = .useAlert
+
+                useAutoMaintenance.Checked = .useAutomaintenance
+            End With
+
+            Return True
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' This method provide to load data from a data path
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function loadData() As Boolean
+        Try
+            Dim engine As New CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine
+            Dim decodeData As Boolean = False
+            Dim errorReading As Boolean = False
+            Dim data As SettingsSidechainServiceComplete
+
+            Do While Not decodeData And Not errorReading
+                engine.dataPath = dataPath.Text
+                engine.serviceName = sidechainServiceName.Text
+                engine.password = _Password
+
+                Select Case engine.read()
+                    Case CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine.ResultReadSetting.ReadError
+                        _Password = getPassword()
+
+                        If (_Password.CompareTo("(cancelMe)") = 0) Then
+                            Return False
+                        End If
+                    Case CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine.ResultReadSetting.fileNotFound
+                        data = New SettingsSidechainServiceComplete
+
+                        Return True
+                    Case CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine.ResultReadSetting.Successfull
+                        openAsFileButton.Enabled = True
+
+                        Return fillAllField(engine.data)
+                End Select
+            Loop
+
+            Return False
+        Catch ex As Exception
+            MessageBox.Show("Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
     ''' This method provide to get the information from the interface
     ''' </summary>
     ''' <returns></returns>
-    Private Function getDataModel() As SettingsSidechainService
-        Dim data As New SettingsSidechainService
+    Private Function getDataModel() As SettingsSidechainServiceComplete
+        Dim data As New SettingsSidechainServiceComplete
         Try
             With data
-                Select Case chainServiceName.SelectedIndex
+                Select Case sidechainServiceName.SelectedIndex
                     Case 0 : .sideChainName = "Local Work Machine"
                     Case 1 : .sideChainName = "Sidechain Service"
                     Case 2 : .sideChainName = "Primary"
@@ -271,29 +245,32 @@ Public Class Settings
                 .clientCertificate = certificateClient.value
                 .publicPort = selectPublicPort.value
                 .servicePort = selectServicePort.value
-                .useAutoMaintanance = useAutoMaintenance.Checked
+                .useAutomaintenance = useAutoMaintenance.Checked
 
-                If useAutoMaintenance.Checked Then
-                    .autoMaintenanceFrequencyHours = frequencyAutoMaintenance.Value
-                    .trackRotateConfig.frequency = startCleanEveryValueCombo.SelectedIndex
-                    .trackRotateConfig.keepLast = keepOnlyRecentFileValueCombo.SelectedIndex
-                    .trackRotateConfig.keepFile = keepFileTypeValueCombo.SelectedIndex
-                End If
+                'If useAutoMaintenance.Checked Then
+                '    .autoMaintenanceFrequencyHours = frequencyAutoMaintenance.Value
+                '    .trackRotateConfig.frequency = startCleanEveryValueCombo.SelectedIndex
+                '    .trackRotateConfig.keepLast = keepOnlyRecentFileValueCombo.SelectedIndex
+                '    .trackRotateConfig.keepFile = keepFileTypeValueCombo.SelectedIndex
+                'End If
 
-                .trackConfiguration = logInformations.trackConfiguration
-                .changeLogFileMaxNumHours = logInformations.maxNumHours
-                .changeLogFileNumRegistrations = logInformations.maxNumberOfRegistrations
-                .useBufferToWrite = useBufferToWrite.Checked
+                '.trackConfiguration = logInformations.trackConfiguration
+                '.changeLogFileMaxNumHours = logInformations.maxNumHours
+                '.changeLogFileNumRegistrations = logInformations.maxNumberOfRegistrations
+                '.useBufferToWrite = useBufferToWrite.Checked
                 .useEventRegistry = useEventRegistry.Checked
                 .useRequestCounter = useCounter.Checked
                 .useAdminMessage = useMessageService.Checked
                 .useProfile = useProfile.Checked
                 .useAlert = useAlert.Checked
             End With
-        Catch ex As Exception
-        End Try
 
-        Return data
+            Return data
+        Catch ex As Exception
+            MessageBox.Show("Problem during assign the data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return New SettingsSidechainServiceComplete
+        End Try
     End Function
 
     ''' <summary>
@@ -302,31 +279,26 @@ Public Class Settings
     ''' <returns></returns>
     Private Function saveData() As Boolean
         Try
-            Dim completeFileName As String = ""
-            Dim data As New SettingsSidechainService
-            Dim engineFile As New BaseFile(Of SettingsSidechainService)
+            Dim engine As New CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine
+            Dim data As SettingsSidechainServiceComplete = getDataModel()
 
-            completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
-            completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text.Replace(" ", "") & ".Settings")
-
-            data = getDataModel()
-
-            _Password = getPassword()
+            engine.dataPath = dataPath.Text
+            engine.serviceName = sidechainServiceName.Text
+            engine.password = getPassword()
 
             If (_Password.CompareTo("(cancelMe)") = 0) Then
                 Return False
             End If
 
-            engineFile.fileName = completeFileName
-            engineFile.data = data
+            engine.data = data
 
-            If (_Password.Length = 0) Then
-                engineFile.noCrypt = True
+            If engine.write() Then
+                Return True
             Else
-                engineFile.cryptoKEY = _Password
-            End If
+                MessageBox.Show("Problem during save data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-            Return engineFile.save()
+                Return False
+            End If
         Catch ex As Exception
             MessageBox.Show("Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
@@ -349,16 +321,16 @@ Public Class Settings
         intranetMode.Checked = False
         secureChannel.Checked = False
 
-        logInformations.trackConfiguration = CHCModels.AreaModel.Log.TrackRuntimeModeEnum.neverTrace
-        logInformations.maxNumHours = 0
-        logInformations.maxNumberOfRegistrations = 0
-        logInformations.useTrackRotate = False
+        'logInformations.trackConfiguration = CHCModels.AreaModel.Log.TrackRuntimeModeEnum.neverTrace
+        'logInformations.maxNumHours = 0
+        'logInformations.maxNumberOfRegistrations = 0
+        'logInformations.useTrackRotate = False
 
-        useBufferToWrite.Checked = True
+        'useBufferToWrite.Checked = True
 
-        logInformations.trackRotateFrequency = CHCModels.AreaModel.Log.LogRotateConfig.FrequencyEnum.every12h
-        logInformations.trackRotateKeepFile = CHCModels.AreaModel.Log.LogRotateConfig.KeepFileEnum.nothingFiles
-        logInformations.trackRotateKeepLast = CHCModels.AreaModel.Log.KeepEnum.lastDay
+        'logInformations.trackRotateFrequency = CHCModels.AreaModel.Log.LogRotateConfig.FrequencyEnum.every12h
+        'logInformations.trackRotateKeepFile = CHCModels.AreaModel.Log.LogRotateConfig.KeepFileEnum.nothingFiles
+        'logInformations.trackRotateKeepLast = CHCModels.AreaModel.Log.KeepEnum.lastDay
 
         useEventRegistry.Checked = False
         useCounter.Checked = False
@@ -379,7 +351,7 @@ Public Class Settings
         Try
             Dim paths As New AreaSystem.Paths
 
-            If (chainServiceName.Text.Length = 0) Then
+            If (sidechainServiceName.Text.Length = 0) Then
                 If Not silentMode Then
                     MessageBox.Show("The service name is missing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
@@ -447,6 +419,22 @@ Public Class Settings
 
             Return False
         End If
+        If (serviceMode.SelectedIndex = -1) Then
+            MessageBox.Show("The service mode is not define", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            tabControl.SelectedIndex = 0
+            serviceMode.Select()
+
+            Return False
+        End If
+        If (selectPublicPort.value = 0) And selectPublicPort.Enabled Then
+            MessageBox.Show("The Public port is missing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            tabControl.SelectedIndex = 1
+            selectPublicPort.Select()
+
+            Return False
+        End If
         If (adminPublicAddress.value.Trim.Length = 0) And adminPublicAddress.Enabled Then
             MessageBox.Show("The Admin wallet address is missing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
@@ -460,22 +448,6 @@ Public Class Settings
 
             tabControl.SelectedIndex = 1
             certificateClient.Select()
-
-            Return False
-        End If
-        If (selectPublicPort.value = 0) And selectPublicPort.Enabled Then
-            MessageBox.Show("The Public port is missing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-            tabControl.SelectedIndex = 1
-            selectPublicPort.Select()
-
-            Return False
-        End If
-        If (selectServicePort.value = 0) Then
-            MessageBox.Show("The Service port is missing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-            tabControl.SelectedIndex = 1
-            selectServicePort.Select()
 
             Return False
         End If
@@ -544,7 +516,7 @@ Public Class Settings
             Dim completeFileName As String = ""
 
             completeFileName = IO.Path.Combine(dataPath.Text, "Settings")
-            completeFileName = IO.Path.Combine(completeFileName, chainServiceName.Text.Replace(" ", "") & ".Settings")
+            completeFileName = IO.Path.Combine(completeFileName, sidechainServiceName.Text.Replace(" ", "") & ".Settings")
 
             Shell("notepad.exe " & completeFileName, AppWinStyle.NormalFocus)
         Catch ex As Exception
@@ -558,29 +530,29 @@ Public Class Settings
 
     Private Function enableAutoMaintenance(ByVal value As Boolean) As Boolean
         Try
-            frequencyLabel.Enabled = value
-            frequencyAutoMaintenance.Enabled = value
-            unitMeasureFrequencyLabel.Enabled = value
-            startCleanEveryLabel.Enabled = value
-            startCleanEveryValueCombo.Enabled = value
-            keepOnlyRecentFileLabel.Enabled = value
-            keepOnlyRecentFileValueCombo.Enabled = value
-            keepFileTypeLabel.Enabled = value
-            keepFileTypeValueCombo.Enabled = value
+            'frequencyLabel.Enabled = value
+            'frequencyAutoMaintenance.Enabled = value
+            'unitMeasureFrequencyLabel.Enabled = value
+            'startCleanEveryLabel.Enabled = value
+            'startCleanEveryValueCombo.Enabled = value
+            'keepOnlyRecentFileLabel.Enabled = value
+            'keepOnlyRecentFileValueCombo.Enabled = value
+            'keepFileTypeLabel.Enabled = value
+            'keepFileTypeValueCombo.Enabled = value
 
-            If Not value Then
-                frequencyAutoMaintenance.Text = "0"
-                startCleanEveryValueCombo.SelectedIndex = -1
-                keepOnlyRecentFileValueCombo.SelectedIndex = -1
-                keepFileTypeValueCombo.SelectedIndex = -1
-            End If
+            'If Not value Then
+            '    frequencyAutoMaintenance.Text = "0"
+            '    startCleanEveryValueCombo.SelectedIndex = -1
+            '    keepOnlyRecentFileValueCombo.SelectedIndex = -1
+            '    keepFileTypeValueCombo.SelectedIndex = -1
+            'End If
         Catch ex As Exception
         End Try
 
         Return True
     End Function
 
-    Private Sub useAutoMaintenance_CheckedChanged(sender As Object, e As EventArgs) Handles useAutoMaintenance.CheckedChanged
+    Private Sub useAutoMaintenance_CheckedChanged(sender As Object, e As EventArgs)
         enableAutoMaintenance(useAutoMaintenance.Checked)
     End Sub
 
@@ -760,32 +732,31 @@ Public Class Settings
     ''' <param name="ipAddress"></param>
     ''' <returns></returns>
     Private Function saveRemoteConfig(ByVal securityToken As String, ByVal ipAddress As String) As Boolean
-        Try
-            Dim remote As New ProxyWS(Of SettingsSidechainService)
-            Dim proceed As Boolean = True
-            Dim data As New SettingsSidechainService
+        'Try
+        '    Dim remote As New ProxyWS(Of ResponseUpdateSettingsModel)
+        '    Dim proceed As Boolean = True
 
-            If proceed Then
-                remote.url = buildURL("/administration/settings/?securityToken=" & securityToken, ipAddress)
-            End If
-            If proceed Then
-                remote.data = getDataModel()
+        '    If proceed Then
+        '        remote.url = buildURL("/administration/settings/?securityToken=" & securityToken, ipAddress)
+        '    End If
+        '    If proceed Then
+        '        remote.data = getDataModel()
 
-                proceed = True
-            End If
-            If proceed Then
-                proceed = (remote.sendData("PUT").Length = 0)
-            End If
-            If proceed Then
-                proceed = (remote.remoteResponse.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
-            End If
+        '        proceed = True
+        '    End If
+        '    If proceed Then
+        '        proceed = (remote.sendData("PUT").Length = 0)
+        '    End If
+        '    If proceed Then
+        '        proceed = (remote.remoteResponse.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+        '    End If
 
-            Return proceed
-        Catch ex As Exception
-            Console.WriteLine("Error during saveRemoteConfig - " & ex.Message)
+        '    Return proceed
+        'Catch ex As Exception
+        '    Console.WriteLine("Error during saveRemoteConfig - " & ex.Message)
 
-            Return False
-        End Try
+        '    Return False
+        'End Try
     End Function
 
     ''' <summary>

@@ -44,6 +44,7 @@ Namespace AreaCommon
         Private Const _CommandTestRAWServe As String = "testRAWServe"
         Private Const _CommandNote As String = "note"
         Private Const _CommandWrite As String = "write"
+        Private Const _CommandBuildPath As String = "buildPath"
 
 
         Public Property command As New CommandStructure
@@ -82,16 +83,17 @@ Namespace AreaCommon
                 Case _CommandSetCurrentEnvironment.ToLower : classSupport = New Command.CommandSetCurrentEnvironment
                 Case _CommandGetCurrentEnvironment.ToLower : classSupport = New Command.CommandGetCurrentEnvironment
                 Case _CommandGetApplicationsPath.ToLower : classSupport = New Command.CommandGetApplicationsPath
-                Case _CommandWait : classSupport = New Command.CommandWait
-                Case _CommandSetDefaultParameter : classSupport = New Command.CommandSetDefaultParameter
-                Case _CommandGetDefaultParameters : classSupport = New Command.CommandGetDefaultParameters
-                Case _CommandPause : classSupport = New Command.CommandPause
-                Case _CommandStatusServe : classSupport = New Command.CommandStatusServe
-                Case _CommandBatch : classSupport = New Command.CommandBatch
-                Case _CommandIf : classSupport = New Command.CommandIf
-                Case _CommandTestRAWServe : classSupport = New Command.CommandTestRAWServe
-                Case _CommandNote : classSupport = New Command.CommandNote
-                Case _CommandWrite : classSupport = New Command.CommandWrite
+                Case _CommandWait.ToLower() : classSupport = New Command.CommandWait
+                Case _CommandSetDefaultParameter.ToLower() : classSupport = New Command.CommandSetDefaultParameter
+                Case _CommandGetDefaultParameters.ToLower() : classSupport = New Command.CommandGetDefaultParameters
+                Case _CommandPause.ToLower() : classSupport = New Command.CommandPause
+                Case _CommandStatusServe.ToLower() : classSupport = New Command.CommandStatusServe
+                Case _CommandBatch.ToLower() : classSupport = New Command.CommandBatch
+                Case _CommandIf.ToLower() : classSupport = New Command.CommandIf
+                Case _CommandTestRAWServe.ToLower() : classSupport = New Command.CommandTestRAWServe
+                Case _CommandNote.ToLower() : classSupport = New Command.CommandNote
+                Case _CommandWrite.ToLower() : classSupport = New Command.CommandWrite
+                Case _CommandBuildPath.ToLower() : classSupport = New Command.commandBuildPath
                 Case Else
                     If (command.code.Length > 0) Then
                         Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")

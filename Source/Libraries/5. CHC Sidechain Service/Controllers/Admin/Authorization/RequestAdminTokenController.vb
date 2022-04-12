@@ -3,9 +3,9 @@ Option Explicit On
 
 Imports System.Web.Http
 
-Imports CHCModels.AreaModel.Administration.Security
-Imports CHCModels.AreaModel.Network.Response
-Imports CHCModels.AreaModel.Information
+Imports CHCModelsLibrary.AreaModel.Administration.Security
+Imports CHCModelsLibrary.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Information
 
 
 

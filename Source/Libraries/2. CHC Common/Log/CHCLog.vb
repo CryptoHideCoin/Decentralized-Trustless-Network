@@ -10,7 +10,7 @@ Option Compare Text
 
 
 Imports CHCCommonLibrary.AreaEngine.Miscellaneous
-Imports CHCModels.AreaModel.Log
+Imports CHCModelsLibrary.AreaModel.Log
 
 
 

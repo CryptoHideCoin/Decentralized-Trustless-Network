@@ -1,7 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCModels.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Network.Response
 
 ' ****************************************
 ' File: Notify Model

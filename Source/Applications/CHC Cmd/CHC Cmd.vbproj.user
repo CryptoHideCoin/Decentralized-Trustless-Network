@@ -11,7 +11,7 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-batch --fileName:e:\environments\general.batch</StartArguments>
+    <StartArguments>-buildPath --dataPath:e:\LegacyNetwork</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <StartArguments>-sideChainServiceSettings --service:primary --dataPath:e:\data</StartArguments>

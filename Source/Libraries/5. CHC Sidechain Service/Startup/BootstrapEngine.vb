@@ -146,12 +146,12 @@ Namespace AreaCommon.Startup
         Public Function trackRuntimeStart(ByRef problemDescription As String) As Boolean
             Try
                 With environment.log.settings
-                    .saveMode = environment.settings.trackConfiguration
-                    .changeFileEvery = environment.settings.changeLogFileMaxNumHours
-                    .changeNumberOfRegistrations = environment.settings.changeLogFileNumRegistrations
-                    .useBufferToWrite = environment.settings.useBufferToWrite
-                    .pathFile = environment.paths.system.logs
-                    .instanceID = Guid.NewGuid.ToString
+                    '.saveMode = environment.settings.trackConfiguration
+                    '.changeFileEvery = environment.settings.changeLogFileMaxNumHours
+                    '.changeNumberOfRegistrations = environment.settings.changeLogFileNumRegistrations
+                    '.useBufferToWrite = environment.settings.useBufferToWrite
+                    '.pathFile = environment.paths.system.logs
+                    '.instanceID = Guid.NewGuid.ToString
                 End With
 
                 Return True
@@ -193,7 +193,7 @@ Namespace AreaCommon.Startup
         Public Function readAdminKeyStore() As Boolean
             Try
                 Dim uuidWallet As String = ""
-                Dim settings As CHCModels.AreaModel.Administration.Settings.SettingsSidechainService
+                Dim settings As CHCModelsLibrary.AreaModel.Administration.Settings.SettingsSidechainServiceComplete
 
                 If environment.iAmLocalWorkMachine Then
                     settings = environment.localWorkMachineSettings

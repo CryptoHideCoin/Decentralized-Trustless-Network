@@ -3,10 +3,10 @@ Option Explicit On
 
 Imports System.Web.Http
 Imports System.Threading
-Imports CHCModels.AreaModel.Log
-Imports CHCModels.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Log
+Imports CHCModelsLibrary.AreaModel.Network.Response
 Imports CHCProtocolLibrary.AreaCommon
-Imports CHCModels.AreaModel.Information
+Imports CHCModelsLibrary.AreaModel.Information
 
 
 

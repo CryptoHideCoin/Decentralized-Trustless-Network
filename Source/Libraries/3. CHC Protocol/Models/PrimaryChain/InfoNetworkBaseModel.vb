@@ -12,7 +12,7 @@ Option Explicit On
 Imports CHCCommonLibrary.AreaCommon.Models
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCCommonLibrary.AreaEngine.Base.CHCStringExtensions
-Imports CHCModels.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Network.Response
 
 
 

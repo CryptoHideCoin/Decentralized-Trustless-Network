@@ -8,7 +8,7 @@ Option Explicit On
 ' Date last successfully test: 25/02/2022
 ' ****************************************
 
-Imports CHCModels.AreaModel.Administration.Settings
+Imports CHCModelsLibrary.AreaModel.Administration.Settings
 Imports CHCProtocolLibrary.AreaEngine.Keys
 
 
@@ -18,7 +18,7 @@ Namespace AreaCommon.GeneralModel
     ''' This class contain all information relative a single service
     ''' </summary>
     Public Class ServiceData
-        Public Property configuration As SettingsSidechainService
+        Public Property configuration As SettingsSidechainServiceComplete
         Public Property keys As KeysEngine.KeyPair
         Public Property securityToken As String = ""
         Public Property status As String = ""

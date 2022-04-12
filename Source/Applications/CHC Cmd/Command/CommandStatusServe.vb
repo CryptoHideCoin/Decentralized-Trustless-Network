@@ -2,15 +2,13 @@
 Option Explicit On
 
 Imports CHCCmd.AreaCommon.Models
-Imports CHCModels.AreaModel.Administration.Security
-Imports CHCModels.AreaModel.Administration.Settings
-Imports CHCModels.AreaModel.Network.Response
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
+Imports CHCModelsLibrary.AreaModel.Administration.Security
+Imports CHCModelsLibrary.AreaModel.Network.Response
 Imports CHCCommonLibrary.AreaEngine.CommandLine
 Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCProtocolLibrary.AreaSystem
 Imports CHCProtocolLibrary.AreaWallet.Support
-Imports CHCModels.AreaModel.Information
+Imports CHCModelsLibrary.AreaModel.Information
 
 
 
@@ -106,46 +104,34 @@ Namespace AreaCommon.Command
         Private Function readSettings() As Boolean
             Try
                 Dim completeFileName As String = ""
-                Dim engineFile As New BaseFile(Of SettingsSidechainService)
+                Dim engine As New CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine
+#Disable Warning BC42024
+                Dim data As CHCModelsLibrary.AreaModel.Administration.Settings.SettingsSidechainServiceComplete
+#Enable Warning BC42024
 
-                completeFileName = IO.Path.Combine(_Path.settings, _ParameterService & ".Settings")
+                engine.dataPath = _Path.settings
+                engine.serviceName = _ParameterService
+                engine.password = _ParameterPassword
 
-                If Not IO.File.Exists(completeFileName) Then
-                    Console.WriteLine("Missing file settings")
+                Select Case engine.read()
+                    Case CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine.ResultReadSetting.fileNotFound
+                        Console.WriteLine("Missing  setting's File ")
+                    Case CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine.ResultReadSetting.ReadError
+                        Console.WriteLine("Error during read file")
+                    Case CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine.ResultReadSetting.Successfull
+                        _SettingSecureChannel = engine.data.secureChannel
+                        _SettingServicePort = engine.data.servicePort
+                        _SettingServiceID = engine.data.serviceID
+                        _SettingCertificate = engine.data.clientCertificate
+                        _SettingPublicAddress = engine.data.publicAddress
 
-                    Return False
-                End If
-
-                If (_ParameterPassword.Length > 0) Then
-                    engineFile.cryptoKEY = _ParameterPassword
-                Else
-                    engineFile.noCrypt = True
-                End If
-
-                engineFile.fileName = completeFileName
-
-                If engineFile.read() Then
-                    _SettingSecureChannel = engineFile.data.secureChannel
-                    _SettingServicePort = engineFile.data.servicePort
-                    _SettingServiceID = engineFile.data.serviceID
-                    _SettingCertificate = engineFile.data.clientCertificate
-                    _SettingPublicAddress = engineFile.data.publicAddress
-                Else
-                    Console.WriteLine("Error during read file")
-                End If
-
-                If IsNothing(engineFile.data) Then
-                    Console.WriteLine("Error during read file e/o parameter")
-
-                    Return False
-                End If
-
-                Return True
+                        Return True
+                End Select
             Catch ex As Exception
                 Console.WriteLine("Problem during execute readSettings")
-
-                Return False
             End Try
+
+            Return False
         End Function
 
         ''' <summary>

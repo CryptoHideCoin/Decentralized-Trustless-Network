@@ -95,9 +95,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCModelsLibrary">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModels.dll</HintPath>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCProtocolLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -113,9 +113,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCModelsLibrary">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModels.dll</HintPath>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCProtocolLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -131,9 +131,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCModelsLibrary">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModels.dll</HintPath>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCProtocolLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

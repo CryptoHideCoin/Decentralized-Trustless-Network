@@ -32,57 +32,16 @@ Namespace AreaSystem
             runTime
         End Enum
 
-        '''' <summary>
-        '''' This class contain the information relative of a other path not code into engine
-        '''' </summary>
-        'Public Class OtherPathEngine
-
-        '    Inherits BaseFile(Of List(Of OtherPath))
-
-
-        '    ''' <summary>
-        '    ''' This class contain the property of a single property of Other Path
-        '    ''' </summary>
-        '    Public Class OtherPath
-
-        '        Public Property context As String = ""
-        '        Public Property alternativePath As String = ""
-
-        '    End Class
-
-        'End Class
-
         ''' <summary>
         ''' This class contain the specific path of all element of the system path
         ''' </summary>
         Public Class SystemPath
 
             Public Property path As String = ""
+
             Public Property counters As String = ""
             Public Property events As String = ""
             Public Property logs As String = ""
-
-        End Class
-
-        ''' <summary>
-        ''' This class contain the contain all information reguard the define of the transaction chain
-        ''' </summary>
-        Public Class DefinePath
-
-            Public Property path As String = ""
-
-            Public Property assets As String = ""
-            Public Property pricesList As String = ""
-            Public Property privacyPapers As String = ""
-
-            Public Property referenceProtocols As String = ""
-            Public Property refundPlans As String = ""
-            Public Property sideChainContracts As String = ""
-
-            Public Property termsAndConditionsPapers As String = ""
-
-            Public Property whitePapers As String = ""
-            Public Property yellowPapers As String = ""
 
         End Class
 
@@ -126,7 +85,7 @@ Namespace AreaSystem
         ''' <summary>
         ''' This class contain the element of a work path
         ''' </summary>
-        Public Class ChainWorkPath
+        Public Class SidechainWorkPath
 
             Public Property path As String = ""
 
@@ -143,7 +102,7 @@ Namespace AreaSystem
         Private Const keyStoreFolderName As String = "KeyStore"
         Private Const settingsFolderName As String = "Settings"
         Private Const systemFolderName As String = "System"
-        Private Const workFolderName As String = "Work"
+        Private Const workFolderName As String = "Sidechains"
         Private Const adminFolderName As String = "Admin"
         Private Const runTimeFolderName As String = "RunTime"
         Private Const maintenanceFolderName As String = "Maintenance"
@@ -160,16 +119,6 @@ Namespace AreaSystem
         Private Const internalName As String = "Internal"
         Private Const bulletinName As String = "Bulletines"
         Private Const consensusName As String = "Consensus"
-        Private Const defineName As String = "Define"
-        Private Const assetsName As String = "Assets"
-        Private Const priceListName As String = "PriceList"
-        Private Const privacyPapersName As String = "PrivacyPapers"
-        Private Const referenceProtocolsName As String = "ReferenceProtocols"
-        Private Const refundPlansName As String = "RefundPlans"
-        Private Const sideChainContractsName As String = "SidechainContracts"
-        Private Const termAndConditionPapersName As String = "TermAndConditionPapers"
-        Private Const whitePapersName As String = "WhitePapers"
-        Private Const yellowPapersName As String = "YellowPapers"
         Private Const receivedName As String = "Received"
         Private Const rejectedName As String = "Rejected"
         Private Const trashedName As String = "Trashed"
@@ -186,8 +135,7 @@ Namespace AreaSystem
         Public Property keyStore As String = ""
         Public Property system As New SystemPath
         Public Property settings As String = ""
-        Public Property workData As New ChainWorkPath
-        Public Property workDefine As New DefinePath
+        Public Property workData As New SidechainWorkPath
 
 
         ''' <summary>
@@ -220,36 +168,36 @@ Namespace AreaSystem
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Private Function trySettingsPath(ByVal path As String) As Boolean
-                Try
-                    path = IO.Path.Combine(path, "define.path")
-                    Return IO.File.Exists(path)
-                Catch ex As Exception
-                End Try
+        Private Function trySettingsPath(ByVal path As String) As Boolean
+            Try
+                path = IO.Path.Combine(path, "define.path")
+                Return IO.File.Exists(path)
+            Catch ex As Exception
+            End Try
 
-                Return False
-            End Function
+            Return False
+        End Function
 
         ''' <summary>
         ''' This method provide to test write a path
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Private Function tryWritePath(ByVal path As String) As Boolean
-                path = IO.Path.Combine(path, "define.path")
+        Private Function tryWritePath(ByVal path As String) As Boolean
+            path = IO.Path.Combine(path, "define.path")
 
-                Try
-                    IO.File.WriteAllText(path, "Test")
+            Try
+                IO.File.WriteAllText(path, "Test")
 
-                    If IO.File.Exists(path) Then
-                        IO.File.Delete(path)
-                        Return True
-                    End If
-                Catch ex As Exception
-                End Try
+                If IO.File.Exists(path) Then
+                    IO.File.Delete(path)
+                    Return True
+                End If
+            Catch ex As Exception
+            End Try
 
-                Return False
-            End Function
+            Return False
+        End Function
 
         ''' <summary>
         ''' This method test a single path
@@ -259,21 +207,21 @@ Namespace AreaSystem
         ''' <param name="newPath"></param>
         ''' <param name="trySettings"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Private Function testPath(ByVal found As Boolean, ByRef path As String, ByVal newPath As String, Optional ByVal trySettings As Boolean = False) As Boolean
-                If Not found Then
+        Private Function testPath(ByVal found As Boolean, ByRef path As String, ByVal newPath As String, Optional ByVal trySettings As Boolean = False) As Boolean
+            If Not found Then
 
-                    path = newPath
+                path = newPath
 
-                    If trySettings Then
-                        Return trySettingsPath(path)
-                    Else
-                        Return tryWritePath(path)
-                    End If
-
+                If trySettings Then
+                    Return trySettingsPath(path)
+                Else
+                    Return tryWritePath(path)
                 End If
 
-                Return found
-            End Function
+            End If
+
+            Return found
+        End Function
 
         ''' <summary>
         ''' This method search define path
@@ -342,21 +290,21 @@ Namespace AreaSystem
         ''' This method provide to initialize the engine
         ''' </summary>
         ''' <param name="[type]"></param>
-        ''' <param name="chainName"></param>
+        ''' <param name="sideChainName"></param>
         ''' <returns></returns>
-        Public Function init(ByVal [type] As EnumSystemType, Optional ByVal chainName As String = "Primary") As Boolean
+        Public Function init(ByVal [type] As EnumSystemType, Optional ByVal sideChainName As String = "Primary") As Boolean
             Try
                 If (directoryData.Trim.Length > 0) Then
                     Dim folderName As String
 
-                    activeChain = chainName
+                    activeChain = sideChainName
 
                     Select Case type
                         Case EnumSystemType.admin
                             settingFileName = defaultAdminServiceSettings
                             folderName = adminFolderName
                         Case EnumSystemType.runTime
-                            settingFileName = chainName & "-" & defaultRunTimeServiceSettings
+                            settingFileName = sideChainName & "-" & defaultRunTimeServiceSettings
                             folderName = runTimeFolderName
                         Case EnumSystemType.maintenance
                             settingFileName = defaultLoaderServiceSettings
@@ -387,7 +335,7 @@ Namespace AreaSystem
                     End With
 
                     With workData
-                        folderName = manageSinglePath(directoryData, workFolderName, chainFolderName & chainName)
+                        folderName = manageSinglePath(directoryData, workFolderName, chainFolderName & sideChainName)
 
                         .path = folderName
 
@@ -411,21 +359,6 @@ Namespace AreaSystem
                         .ledger = manageSinglePath(.path, ledgerName)
                         .temp = manageSinglePath(.path, temporallyName)
                     End With
-
-                    With workDefine
-                        .path = manageSinglePath(directoryData, workFolderName, defineName)
-
-                        .assets = manageSinglePath(.path, assetsName)
-                        .pricesList = manageSinglePath(.path, priceListName)
-                        .privacyPapers = manageSinglePath(.path, privacyPapersName)
-                        .referenceProtocols = manageSinglePath(.path, referenceProtocolsName)
-                        .refundPlans = manageSinglePath(.path, refundPlansName)
-                        .sideChainContracts = manageSinglePath(.path, sideChainContractsName)
-                        .termsAndConditionsPapers = manageSinglePath(.path, termAndConditionPapersName)
-                        .whitePapers = manageSinglePath(.path, whitePapersName)
-                        .yellowPapers = manageSinglePath(.path, yellowPapersName)
-                    End With
-
                 End If
             Catch ex As Exception
             End Try
@@ -439,7 +372,7 @@ Namespace AreaSystem
         ''' <param name="parentPath"></param>
         ''' <param name="blockName"></param>
         ''' <returns></returns>
-        Public Shared Function createBlockPath(ByVal parentPath As String, ByVal blockName As String) As LedgerBlockPath
+        <DebuggerHiddenAttribute()> Public Shared Function createBlockPath(ByVal parentPath As String, ByVal blockName As String) As LedgerBlockPath
             Try
                 Dim result As New LedgerBlockPath
 

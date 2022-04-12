@@ -4,7 +4,7 @@ Option Explicit On
 Imports System.Web.Http
 Imports System.Web.Http.SelfHost
 Imports CHCSidechainServiceLibrary.AreaCommon.Main
-Imports CHCModels.AreaModel.Information
+Imports CHCModelsLibrary.AreaModel.Information
 
 
 

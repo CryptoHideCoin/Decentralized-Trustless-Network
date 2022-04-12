@@ -9,8 +9,8 @@ Option Explicit On
 ' ****************************************
 
 
-Imports CHCModels.AreaModel.Network.Response
-Imports CHCModels.AreaModel.Log
+Imports CHCModelsLibrary.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Log
 
 
 

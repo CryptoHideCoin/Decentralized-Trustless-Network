@@ -1,0 +1,3 @@
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\x64\Debug\CHC Protocol.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\x64\Debug\CHCProtocolLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\x64\Debug\CHC Protocol.vbproj.GenerateResource.cache

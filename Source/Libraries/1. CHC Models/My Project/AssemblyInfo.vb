@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("CHC Models")>
+<Assembly: AssemblyTitle("CHC Models Library")>
 <Assembly: AssemblyDescription("Crypto Hide Coin Library Models")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("CHC Models")>
+<Assembly: AssemblyProduct("CHC Models Library")>
 <Assembly: AssemblyCopyright("Copyright ©  2022")>
 <Assembly: AssemblyTrademark("")>
 

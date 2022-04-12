@@ -1,10 +1,10 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports CHCModels.AreaModel.Administration.Security
-Imports CHCModels.AreaModel.Administration.Settings
-Imports CHCModels.AreaModel.Information
-Imports CHCModels.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Administration.Security
+Imports CHCModelsLibrary.AreaModel.Administration.Settings
+Imports CHCModelsLibrary.AreaModel.Information
+Imports CHCModelsLibrary.AreaModel.Network.Response
 Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCProtocolLibrary.AreaWallet.Support
 Imports CHCProtocolLibrary.AreaEngine.Keys
@@ -22,7 +22,7 @@ Namespace AreaCommon.Startup
         ''' <param name="api"></param>
         ''' <param name="ipAddress"></param>
         ''' <returns></returns>
-        Private Function buildURL(ByVal api As String, ByRef config As SettingsSidechainService) As String
+        Private Function buildURL(ByVal api As String, ByRef config As SettingsSidechainServiceComplete) As String
             Dim ipAddress As String = "localhost:" & config.servicePort
             Dim url As String = ""
             Try
@@ -56,7 +56,7 @@ Namespace AreaCommon.Startup
         ''' </summary>
         ''' <param name="config"></param>
         ''' <returns></returns>
-        Private Function testService(ByRef config As SettingsSidechainService) As Boolean
+        Private Function testService(ByRef config As SettingsSidechainServiceComplete) As Boolean
             Try
                 Dim remote As New ProxyWS(Of RemoteResponse)
                 Dim proceed As Boolean = True
@@ -72,7 +72,7 @@ Namespace AreaCommon.Startup
                 End If
 
                 Return proceed
-            Catch exFile As system.io.FileLoadException
+            Catch exFile As System.IO.FileLoadException
                 IntegrityApplication.executeRepairNewton(exFile.FileName)
 
                 Return False
@@ -344,7 +344,7 @@ Namespace AreaCommon.Startup
                 Dim data As GeneralModel.ServiceData
                 Dim toRemove As List(Of GeneralModel.ServiceData)
                 Dim noAdd As Boolean = False
-                Dim snapShotToRegister As New List(Of CHCModels.AreaModel.Service.MinimalDataToRegister)
+                Dim snapShotToRegister As New List(Of CHCModelsLibrary.AreaModel.Service.MinimalDataToRegister)
 
                 Do
                     Main.schedulerInWorking = True
@@ -358,7 +358,7 @@ Namespace AreaCommon.Startup
                     Main.notAddInScheduler = True
 
                     snapShotToRegister = Main.serviceToRegister
-                    Main.serviceToRegister = New List(Of CHCModels.AreaModel.Service.MinimalDataToRegister)
+                    Main.serviceToRegister = New List(Of CHCModelsLibrary.AreaModel.Service.MinimalDataToRegister)
 
                     Main.notAddInScheduler = False
 

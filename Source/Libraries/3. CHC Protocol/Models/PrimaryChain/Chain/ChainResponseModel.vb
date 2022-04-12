@@ -10,8 +10,8 @@ Option Compare Text
 
 
 Imports CHCCommonLibrary.AreaEngine.Encryption
-Imports CHCModels.AreaModel.Network.Response
-Imports CHCModels.AreaModel.Ledger
+Imports CHCModelsLibrary.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Ledger
 
 
 

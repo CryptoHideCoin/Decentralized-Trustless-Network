@@ -2,9 +2,9 @@
 Option Explicit On
 
 Imports System.Web.Http
-Imports CHCModels.AreaModel.Administration.Settings
-Imports CHCModels.AreaModel.Network.Response
-Imports CHCModels.AreaModel.Information
+Imports CHCModelsLibrary.AreaModel.Administration.Settings
+Imports CHCModelsLibrary.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Information
 
 
 
@@ -68,7 +68,7 @@ Namespace Controllers
         ''' <param name="securityToken"></param>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Function PutValue(ByVal securityToken As String, <FromBody()> ByVal data As SettingsSidechainService) As BaseRemoteResponse
+        Public Function PutValue(ByVal securityToken As String, <FromBody()> ByVal data As SettingsSidechainServiceComplete) As BaseRemoteResponse
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
             Dim enter As Boolean = False

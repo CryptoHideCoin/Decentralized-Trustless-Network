@@ -89,8 +89,8 @@
     <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModels.dll</HintPath>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'x64'">
@@ -100,8 +100,8 @@
     <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModels.dll</HintPath>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'x86'">
@@ -111,8 +111,8 @@
     <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModels.dll</HintPath>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +181,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Security\KeyPairEngine.vb" />
+    <Compile Include="Settings\SetttingsEngine.vb" />
     <Compile Include="Utility\CertificateEngine.vb" />
     <Compile Include="Wallet\KeyStoreEngine.vb" />
     <Compile Include="Wallet\WalletAddressEngine.vb" />
@@ -195,6 +196,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

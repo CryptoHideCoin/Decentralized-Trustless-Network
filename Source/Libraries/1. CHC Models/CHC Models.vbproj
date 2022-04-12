@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5475FB38-E6B1-4049-8A92-B16607841E96}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>CHCModels</RootNamespace>
-    <AssemblyName>CHCModels</AssemblyName>
+    <RootNamespace>CHCModelsLibrary</RootNamespace>
+    <AssemblyName>CHCModelsLibrary</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>

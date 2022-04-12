@@ -1,7 +1,7 @@
 ﻿Option Explicit On
 Option Compare Text
 
-Imports CHCModels.AreaModel.Log
+Imports CHCModelsLibrary.AreaModel.Log
 
 
 

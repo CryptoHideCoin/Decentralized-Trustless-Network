@@ -36,8 +36,8 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debu
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHC Sidechain Service Settings.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.exe
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.pdb
-E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCModels.pdb
-E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCSupportUIControls.pdb
-E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCCommonLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\System.Web.Http.dll

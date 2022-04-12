@@ -8,7 +8,7 @@ Option Explicit On
 ' Date last successfully test: 13/03/2022
 ' ****************************************
 
-Imports CHCModels.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Network.Response
 
 
 

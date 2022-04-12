@@ -1,6 +1,5 @@
 E:\CryptoHideCoinDTN\Binary\Applications\Windows\CHC Sidechain Service Settings\CHCSidechainServiceSettings.exe.config
 E:\CryptoHideCoinDTN\Binary\Applications\Windows\CHC Sidechain Service Settings\CHCSidechainServiceSettings.exe
-E:\CryptoHideCoinDTN\Binary\Applications\Windows\CHC Sidechain Service Settings\CHCSidechainServiceSettings.pdb
 E:\CryptoHideCoinDTN\Source\Client\CHC Sidechain Service Settings\obj\Release\CHC Sidechain Service Settings.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\Client\CHC Sidechain Service Settings\obj\Release\CHCSidechainServiceSettings.informations.resources
 E:\CryptoHideCoinDTN\Source\Client\CHC Sidechain Service Settings\obj\Release\CHCSidechainServiceSettings.RequestPassword.resources
@@ -18,4 +17,3 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Rele
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Release\CHC Sidechain Service Settings.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Release\CHC Sidechain Service Settings.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Release\CHCSidechainServiceSettings.exe
-E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Release\CHCSidechainServiceSettings.pdb

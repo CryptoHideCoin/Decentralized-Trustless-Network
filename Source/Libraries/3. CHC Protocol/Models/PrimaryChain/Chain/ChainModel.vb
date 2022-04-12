@@ -11,7 +11,7 @@ Option Compare Text
 
 Imports CHCCommonLibrary.AreaEngine.Encryption
 Imports CHCCommonLibrary.AreaEngine.Base.CHCStringExtensions
-Imports CHCModels.AreaModel.Ledger
+Imports CHCModelsLibrary.AreaModel.Ledger
 
 
 

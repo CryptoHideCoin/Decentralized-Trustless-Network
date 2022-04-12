@@ -6,14 +6,11 @@ Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
 Imports CHCProtocolLibrary.AreaWallet.Support
 Imports CHCProtocolLibrary.AreaEngine.Keys
-Imports CHCModels.AreaModel.Administration.Security
-Imports CHCModels.AreaModel.Administration.Settings
-Imports CHCModels.AreaModel.Network.Response
-Imports CHCModels.AreaModel.Log
-
-
-
-
+Imports CHCProtocolLibrary.AreaEngine.Settings
+Imports CHCModelsLibrary.AreaModel.Administration.Security
+Imports CHCModelsLibrary.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Log
+Imports CHCModelsLibrary.AreaModel.Administration.Settings
 
 Namespace AreaCommon
 
@@ -33,8 +30,8 @@ Namespace AreaCommon
         Private Property _Pause As Boolean = False
         Private Property _Keys As New KeysEngine
 
-        Private Property _DataSettings As SettingsSidechainService
-        Private Property _LocalWorkMachineSettings As SettingsSidechainService
+        Private Property _DataSettings As SettingsSidechainServiceComplete
+        Private Property _LocalWorkMachineSettings As SettingsSidechainServiceComplete
 
 
         ''' <summary>
@@ -43,50 +40,37 @@ Namespace AreaCommon
         ''' <returns></returns>
         Private Function readSettings(ByVal loadService As Boolean) As Boolean
             Try
-                Dim completeFileName As String = ""
                 Dim serviceName As String = _Service
-
-                Dim engineFile As New BaseFile(Of SettingsSidechainService)
+                Dim completeFileName As String = ""
+                Dim engine As New CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine
 
                 If Not loadService Then
                     serviceName = "LocalWorkMachine"
                 End If
 
-                completeFileName = IO.Path.Combine(_DataPath, "Settings")
-                completeFileName = IO.Path.Combine(completeFileName, serviceName & ".Settings")
+                engine.dataPath = _DataPath
+                engine.serviceName = serviceName
+                engine.password = _Password
 
-                If Not IO.File.Exists(completeFileName) Then
-                    Console.WriteLine(completeFileName & " not found.")
+                Select Case engine.read()
+                    Case SettingsEngine.ResultReadSetting.fileNotFound
+                        Console.WriteLine("Missing setting's file")
+                    Case SettingsEngine.ResultReadSetting.ReadError
+                        Console.WriteLine("Error during read file")
+                    Case SettingsEngine.ResultReadSetting.Successfull
+                        If loadService Then
+                            _DataSettings = engine.data
+                        Else
+                            _LocalWorkMachineSettings = engine.data
+                        End If
 
-                    Return False
-                End If
-
-                If (_Password.Length > 0) Then
-                    engineFile.cryptoKEY = _Password
-                Else
-                    engineFile.noCrypt = True
-                End If
-
-                engineFile.fileName = completeFileName
-
-                If engineFile.read() Then
-                    If loadService Then
-                        _DataSettings = engineFile.data
-                    Else
-                        _LocalWorkMachineSettings = engineFile.data
-                    End If
-
-                    Return True
-                Else
-                    Console.WriteLine("Error during readSettings")
-
-                    Return False
-                End If
+                        Return True
+                End Select
             Catch ex As Exception
-                Console.WriteLine("Error during readSettings - " & ex.Message)
-
-                Return False
+                Console.WriteLine("Problem during execute readSettings")
             End Try
+
+            Return False
         End Function
 
         ''' <summary>
@@ -133,7 +117,7 @@ Namespace AreaCommon
             Dim url As String = ""
             Try
                 Dim proceed As Boolean = True
-                Dim settings As SettingsSidechainService = _DataSettings
+                Dim settings As SettingsSidechainServiceComplete = _DataSettings
                 Dim address As String = ""
 
                 If Not useService Then
@@ -414,7 +398,7 @@ Namespace AreaCommon
         ''' </summary>
         ''' <param name="parameters"></param>
         ''' <returns></returns>
-        Private Function readRemoteLog(ByVal parameters As LogPanelParameters) As Boolean
+        Private Function readRemoteLog(ByVal parameters As LogPanelParameters, ByRef times As Integer) As Boolean
             Try
                 Dim remote As New ProxyWS(Of LogStreamResponseModel)
 
@@ -422,11 +406,16 @@ Namespace AreaCommon
 
                 If (remote.getData().Length = 0) Then
                     If (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete) Then
+                        If (remote.data.value.Count = 0) Then
+                            times += 1
+
+                            Return True
+                        End If
                         For Each item In remote.data.value
                             If (parameters.showOnlyInfo) Then
                                 Console.WriteLine(item.message)
                             Else
-                                Console.WriteLine(item.toString(True))
+                                Console.WriteLine(item.ToString(True))
                             End If
                         Next
                     End If
@@ -446,6 +435,7 @@ Namespace AreaCommon
             Try
                 Dim lastErrorTime As Double = 0
                 Dim proceed As Boolean = True
+                Dim times As Short = 0
                 Dim parameters As New LogPanelParameters
 
                 Do While proceed
@@ -455,7 +445,7 @@ Namespace AreaCommon
                         Return False
                     End If
                     If Not parameters.pause Then
-                        If Not readRemoteLog(parameters) Then
+                        If Not readRemoteLog(parameters, times) Then
                             If (lastErrorTime = 0) Then
                                 lastErrorTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                             Else
@@ -463,6 +453,12 @@ Namespace AreaCommon
                             End If
                         Else
                             Threading.Thread.Sleep(parameters.frequencyRefresh)
+                        End If
+
+                        If (times = 3) Then
+                            times = 0
+
+                            Console.WriteLine("No data from service. Check 'Use buffer' property.")
                         End If
                     Else
                         Threading.Thread.Sleep(parameters.frequencyRefresh)
