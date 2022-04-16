@@ -77,7 +77,7 @@ Public Class RequestPassword
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub cancelButton_Click(sender As Object, e As EventArgs) Handles cancelButton.Click
+    Private Sub cancelButton_Click(sender As Object, e As EventArgs) Handles mainCancelButton.Click
         Me.Close()
     End Sub
 

@@ -113,7 +113,7 @@ Namespace AreaCommon.Command
                 Dim completeFileName As String = ""
                 Dim engine As New CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine
 
-                engine.dataPath = _Path.settings
+                engine.dataPath = _Path.directoryData
                 engine.serviceName = _ParameterService
                 engine.password = _ParameterPassword
 

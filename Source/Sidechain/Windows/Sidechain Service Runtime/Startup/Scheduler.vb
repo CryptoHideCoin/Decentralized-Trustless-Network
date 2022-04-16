@@ -2,6 +2,7 @@
 Option Explicit On
 
 Imports CHCSidechainServiceLibrary.AreaCommon.Main
+Imports CHCModelsLibrary.AreaModel.Information.InternalServiceInformation
 
 
 
@@ -15,14 +16,13 @@ Namespace AreaCommon.Startup
         ''' <summary>
         ''' This method provide to start service processor
         ''' </summary>
-        ''' <returns></returns>
         Private Sub startServiceProcessor()
             Try
                 environment.log.trackEnter("Scheduler.startServiceProcessor")
 
                 _Engine.loadScheduleList()
 
-                Do While (serviceInformation.currentStatus = CHCModels.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started)
+                Do While (serviceInformation.currentStatus = EnumInternalServiceState.started)
                     _Engine.manageJobProcessList(AreaCommon.Customized.CUSTOM_ChainServiceName)
 
                     Threading.Thread.Sleep(1000)
@@ -53,7 +53,7 @@ Namespace AreaCommon.Startup
 
                 environment.log.trackEnter("Scheduler.run")
 
-                Do While (serviceInformation.currentStatus <> CHCModels.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started)
+                Do While (serviceInformation.currentStatus <> EnumInternalServiceState.started)
                     Application.DoEvents()
                 Loop
 

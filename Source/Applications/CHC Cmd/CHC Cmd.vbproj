@@ -99,7 +99,7 @@
     <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
     </Reference>
-     <Reference Include="CHCModelsLibrary">
+    <Reference Include="CHCModelsLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCProtocolLibrary">

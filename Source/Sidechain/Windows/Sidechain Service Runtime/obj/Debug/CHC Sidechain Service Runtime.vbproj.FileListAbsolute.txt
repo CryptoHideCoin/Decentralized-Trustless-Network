@@ -23,21 +23,6 @@ E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Chain Service Runtime\obj\Debug\CH
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Chain Service Runtime\bin\Debug\CHCSidechainServiceLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Chain Service Runtime\bin\Debug\CHCCommonLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Chain Service Runtime\bin\Debug\CHCProtocolLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCSidechainServiceRuntime.exe.config
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCSidechainServiceRuntime.exe
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCSidechainServiceRuntime.pdb
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCCommonLibrary.dll
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCPrimarySidechainLibrary.dll
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCProtocolLibrary.dll
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCSidechainServiceLibrary.dll
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\Newtonsoft.Json.dll
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\System.Net.Http.Formatting.dll
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\System.Web.Http.dll
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\System.Web.Http.SelfHost.dll
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCBasicCryptographyLibrary.dll
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\BouncyCastle.Crypto.dll
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\Newtonsoft.Json.xml
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\System.Web.Http.SelfHost.xml
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Debug\CHC Sidechain Service Runtime.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Debug\CHCSidechainServiceRuntime.exe.config
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Debug\CHCSidechainServiceRuntime.Resources.resources
@@ -45,7 +30,20 @@ E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Debu
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Debug\CHC Sidechain Service Runtime.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Debug\CHCSidechainServiceRuntime.exe
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\Debug\CHCSidechainServiceRuntime.pdb
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCModels.dll
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCSidechainServiceLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCModels.pdb
-E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\CHCSidechainServiceRuntime.exe.config
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\CHCSidechainServiceRuntime.exe
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\CHCSidechainServiceRuntime.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\CHCPrimarySidechainLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\System.Net.Http.Formatting.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\System.Web.Http.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\System.Web.Http.SelfHost.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\CHCModels.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\System.Web.Http.SelfHost.xml

@@ -2,10 +2,10 @@
 Option Explicit On
 
 ' ****************************************
-' Engine: Security Model
+' Model: Settings
 ' Release Engine: 1.0 
 ' 
-' Date last successfully test: 21/02/2022
+' Date last successfully test: 13/04/2022
 ' ****************************************
 
 
@@ -82,8 +82,37 @@ Namespace AreaModel.Administration.Settings
 
         Inherits SettingsSidechainServiceBase
 
-        Public Property logSettings As SettingsLogSidechainService
-        Public Property autoMaintenance As SettingsAutoMaintenanceSidechainService
+        Public Property logSettings As New SettingsLogSidechainService
+        Public Property autoMaintenance As New SettingsAutoMaintenanceSidechainService
+
+        Public ReadOnly Property getServiceBase() As SettingsSidechainServiceBase
+            Get
+                Dim data As New SettingsSidechainServiceBase
+
+                data.clientCertificate = MyBase.clientCertificate
+                data.internalName = MyBase.internalName
+                data.intranetMode = MyBase.intranetMode
+                data.middlePath = MyBase.middlePath
+                data.networkReferement = MyBase.networkReferement
+                data.publicAddress = MyBase.publicAddress
+                data.publicPort = MyBase.publicPort
+                data.secureChannel = MyBase.secureChannel
+                data.serviceID = MyBase.serviceID
+                data.serviceMode = MyBase.serviceMode
+                data.servicePort = MyBase.servicePort
+                data.sideChainName = MyBase.sideChainName
+                data.staticIP = MyBase.staticIP
+                data.useAdminMessage = MyBase.useAdminMessage
+                data.useAlert = MyBase.useAlert
+                data.useAutomaintenance = MyBase.useAutomaintenance
+                data.useEventRegistry = MyBase.useEventRegistry
+                data.useLog = MyBase.useLog
+                data.useProfile = MyBase.useProfile
+                data.useRequestCounter = MyBase.useRequestCounter
+
+                Return data
+            End Get
+        End Property
 
     End Class
 

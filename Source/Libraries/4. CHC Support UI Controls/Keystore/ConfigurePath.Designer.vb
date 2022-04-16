@@ -23,15 +23,15 @@ Partial Class ConfigurePath
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.confirmButton = New System.Windows.Forms.Button()
-        Me.container = New System.Windows.Forms.GroupBox()
+        Me.containerBox = New System.Windows.Forms.GroupBox()
         Me.remoteStorageButton = New System.Windows.Forms.RadioButton()
         Me.pathLabel = New System.Windows.Forms.Label()
         Me.localStorageRadio = New System.Windows.Forms.RadioButton()
         Me.browseLocalPathButton = New System.Windows.Forms.Button()
         Me.localPathDataText = New System.Windows.Forms.TextBox()
-        Me.cancelButton = New System.Windows.Forms.Button()
+        Me.mainCancelButton = New System.Windows.Forms.Button()
         Me.folderBrowserDialog = New System.Windows.Forms.FolderBrowserDialog()
-        Me.container.SuspendLayout()
+        Me.containerBox.SuspendLayout()
         Me.SuspendLayout()
         '
         'confirmButton
@@ -45,16 +45,16 @@ Partial Class ConfigurePath
         '
         'container
         '
-        Me.container.Controls.Add(Me.remoteStorageButton)
-        Me.container.Controls.Add(Me.pathLabel)
-        Me.container.Controls.Add(Me.localStorageRadio)
-        Me.container.Controls.Add(Me.browseLocalPathButton)
-        Me.container.Controls.Add(Me.localPathDataText)
-        Me.container.Location = New System.Drawing.Point(14, 12)
-        Me.container.Name = "container"
-        Me.container.Size = New System.Drawing.Size(472, 135)
-        Me.container.TabIndex = 8
-        Me.container.TabStop = False
+        Me.containerBox.Controls.Add(Me.remoteStorageButton)
+        Me.containerBox.Controls.Add(Me.pathLabel)
+        Me.containerBox.Controls.Add(Me.localStorageRadio)
+        Me.containerBox.Controls.Add(Me.browseLocalPathButton)
+        Me.containerBox.Controls.Add(Me.localPathDataText)
+        Me.containerBox.Location = New System.Drawing.Point(14, 12)
+        Me.containerBox.Name = "container"
+        Me.containerBox.Size = New System.Drawing.Size(472, 135)
+        Me.containerBox.TabIndex = 8
+        Me.containerBox.TabStop = False
         '
         'remoteStorageButton
         '
@@ -108,21 +108,21 @@ Partial Class ConfigurePath
         Me.localPathDataText.Size = New System.Drawing.Size(388, 21)
         Me.localPathDataText.TabIndex = 7
         '
-        'cancelButton
+        'mainCancelButton
         '
-        Me.cancelButton.Location = New System.Drawing.Point(411, 153)
-        Me.cancelButton.Name = "cancelButton"
-        Me.cancelButton.Size = New System.Drawing.Size(75, 23)
-        Me.cancelButton.TabIndex = 9
-        Me.cancelButton.Text = "Cancel"
-        Me.cancelButton.UseVisualStyleBackColor = True
+        Me.mainCancelButton.Location = New System.Drawing.Point(411, 153)
+        Me.mainCancelButton.Name = "mainCancelButton"
+        Me.mainCancelButton.Size = New System.Drawing.Size(75, 23)
+        Me.mainCancelButton.TabIndex = 9
+        Me.mainCancelButton.Text = "Cancel"
+        Me.mainCancelButton.UseVisualStyleBackColor = True
         '
         'ConfigurePath
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(498, 187)
-        Me.Controls.Add(Me.cancelButton)
+        Me.Controls.Add(Me.mainCancelButton)
         Me.Controls.Add(Me.container)
         Me.Controls.Add(Me.confirmButton)
         Me.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -130,19 +130,19 @@ Partial Class ConfigurePath
         Me.Name = "ConfigurePath"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Configure Keystore Manager"
-        Me.container.ResumeLayout(False)
-        Me.container.PerformLayout()
+        Me.containerBox.ResumeLayout(False)
+        Me.containerBox.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents confirmButton As Button
-    Friend WithEvents container As GroupBox
+    Friend WithEvents containerBox As GroupBox
     Friend WithEvents remoteStorageButton As RadioButton
     Friend WithEvents pathLabel As Label
     Friend WithEvents localStorageRadio As RadioButton
     Friend WithEvents browseLocalPathButton As Button
     Friend WithEvents localPathDataText As TextBox
-    Friend WithEvents cancelButton As Button
+    Friend WithEvents mainCancelButton As Button
     Friend WithEvents folderBrowserDialog As FolderBrowserDialog
 End Class

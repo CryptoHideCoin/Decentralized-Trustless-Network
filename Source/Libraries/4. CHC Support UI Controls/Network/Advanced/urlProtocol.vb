@@ -10,7 +10,7 @@ Option Explicit On
 
 
 Imports CHCCommonLibrary.AreaEngine.Communication
-Imports CHCModels.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Network.Response
 
 
 

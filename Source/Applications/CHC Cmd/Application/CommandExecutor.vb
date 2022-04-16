@@ -122,7 +122,9 @@ Namespace AreaCommon
             End If
             If _command.haveParameter("wait") Then
                 If IsNumeric(_command.parameterValue("wait")) Then
+#Disable Warning BC42016
                     Threading.Thread.Sleep(_command.parameterValue("wait"))
+#Enable Warning BC42016
                 Else
                     Threading.Thread.Sleep(5000)
                 End If

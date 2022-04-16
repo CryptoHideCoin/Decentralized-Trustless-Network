@@ -16,9 +16,10 @@ Imports CHCProtocolLibrary.AreaWallet.Support
 ''' </summary>
 Public Class Settings
 
-    Private _ParameterExist As Boolean = False
-    Private _Password As String = ""
-    Private _PortList = New List(Of String) From {1, 5, 7, 9, 11, 13, 17, 18, 19, 20, 21, 22, 23, 25, 37, 39, 42, 43, 49, 50, 53, 67, 68, 69, 70, 71, 79, 80, 81, 82, 88, 101, 102, 105, 107, 109, 110, 111, 113, 115, 117, 119, 123, 137, 138, 139, 143, 161, 162, 177, 179, 194, 199, 201, 209, 210, 213, 220, 369, 370, 389, 427, 443, 444, 445, 464, 500, 512, 513, 514, 515, 517, 518, 520, 521, 525, 530, 531, 532, 533, 540, 543, 544, 546, 547, 548, 554, 556, 563, 587, 631, 636, 674, 694, 749, 750, 873, 992, 993, 995, 1080, 1433, 1434, 1494, 1512, 1524, 1701, 1719, 1720, 1812, 1813, 1985, 2008, 2010, 2049, 2102, 2103, 2104, 2401, 2809, 3306, 4321, 5999, 6000, 11371, 13720, 13721, 13724, 13782, 13783, 22273, 23399, 25565, 26000, 27017, 33434}
+    Private Property _ParameterExist As Boolean = False
+    Private Property _Password As String = ""
+    Private Property _PortList = New List(Of String) From {1, 5, 7, 9, 11, 13, 17, 18, 19, 20, 21, 22, 23, 25, 37, 39, 42, 43, 49, 50, 53, 67, 68, 69, 70, 71, 79, 80, 81, 82, 88, 101, 102, 105, 107, 109, 110, 111, 113, 115, 117, 119, 123, 137, 138, 139, 143, 161, 162, 177, 179, 194, 199, 201, 209, 210, 213, 220, 369, 370, 389, 427, 443, 444, 445, 464, 500, 512, 513, 514, 515, 517, 518, 520, 521, 525, 530, 531, 532, 533, 540, 543, 544, 546, 547, 548, 554, 556, 563, 587, 631, 636, 674, 694, 749, 750, 873, 992, 993, 995, 1080, 1433, 1434, 1494, 1512, 1524, 1701, 1719, 1720, 1812, 1813, 1985, 2008, 2010, 2049, 2102, 2103, 2104, 2401, 2809, 3306, 4321, 5999, 6000, 11371, 13720, 13721, 13724, 13782, 13783, 22273, 23399, 25565, 26000, 27017, 33434}
+    Private Property _Data As SettingsSidechainServiceComplete
 
 
     ''' <summary>
@@ -53,6 +54,9 @@ Public Class Settings
     End Function
 
     Private Sub Settings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        selectPublicPort.isNecessary = False
+        selectServicePort.isNecessary = False
+
         If readParameters() Then
             entireLoad(True)
         Else
@@ -60,6 +64,22 @@ Public Class Settings
 
             dataPath.Text = paths.readDefinePath()
         End If
+    End Sub
+
+    Private Sub disableForm()
+        tabControl.TabPages(0).Select()
+        tabControl.Enabled = False
+
+        internalNameLabel.Enabled = False
+        internalName.Enabled = False
+
+        networkNameLabel.Enabled = False
+        networkName.Enabled = False
+
+        serviceMode.Enabled = False
+        serviceModeLabel.Enabled = False
+
+        intranetMode.Enabled = False
     End Sub
 
     ''' <summary>
@@ -76,12 +96,19 @@ Public Class Settings
             internalName.Enabled = False
             secureChannel.Enabled = True
 
+            staticIPAddressLabel.Enabled = False
+            staticIPAddress.Enabled = False
+            pathBaseLabel.Enabled = False
+            pathBase.Enabled = False
+            serviceUUID.Enabled = False
+            serviceID.Enabled = False
+
             selectPublicPort.Enabled = False
 
             useTrackLog.Enabled = False
             useEventRegistry.Enabled = False
             useCounter.Enabled = False
-            useMessageService.Enabled = False
+            useMessage.Enabled = False
             useProfile.Enabled = False
             useAlert.Enabled = False
             useAutoMaintenance.Enabled = False
@@ -93,18 +120,27 @@ Public Class Settings
             internalName.Enabled = True
             secureChannel.Enabled = True
 
+            staticIPAddressLabel.Enabled = True
+            staticIPAddress.Enabled = True
+            pathBaseLabel.Enabled = True
+            pathBase.Enabled = True
+            serviceUUID.Enabled = True
+            serviceID.Enabled = True
+
             selectPublicPort.Enabled = True
 
             useTrackLog.Enabled = True
             useEventRegistry.Enabled = False
             useCounter.Enabled = False
-            useMessageService.Enabled = False
+            useMessage.Enabled = False
             useProfile.Enabled = False
             useAlert.Enabled = False
             useAutoMaintenance.Enabled = False
 
             tabControl.TabPages(2).Enabled = True
             tabControl.TabPages(3).Enabled = True
+
+            useTrackLog.Enabled = True
         End If
 
         tabControl.TabPages(0).Enabled = True
@@ -116,7 +152,6 @@ Public Class Settings
         serviceMode.Enabled = True
 
         intranetMode.Enabled = True
-
         settingsTrack.Enabled = False
     End Sub
 
@@ -135,6 +170,8 @@ Public Class Settings
         Catch ex As Exception
             Return "(cancelMe)"
         Finally
+            formPassword.Close()
+
             formPassword = Nothing
         End Try
     End Function
@@ -144,9 +181,9 @@ Public Class Settings
     ''' </summary>
     ''' <param name="data"></param>
     ''' <returns></returns>
-    Private Function fillAllField(ByVal data As SettingsSidechainServiceComplete) As Boolean
+    Private Function fillAllField() As Boolean
         Try
-            With data
+            With _Data
                 internalName.Text = .internalName
                 networkName.Text = .networkReferement
                 serviceMode.SelectedIndex = .serviceMode
@@ -165,7 +202,7 @@ Public Class Settings
                 useTrackLog.Checked = .useLog
                 useEventRegistry.Checked = .useEventRegistry
                 useCounter.Checked = .useRequestCounter
-                useMessageService.Checked = .useAdminMessage
+                useMessage.Checked = .useAdminMessage
                 useProfile.Checked = .useProfile
                 useAlert.Checked = .useAlert
 
@@ -199,18 +236,22 @@ Public Class Settings
                 Select Case engine.read()
                     Case CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine.ResultReadSetting.ReadError
                         _Password = getPassword()
+                        _Data = New SettingsSidechainServiceComplete
 
                         If (_Password.CompareTo("(cancelMe)") = 0) Then
                             Return False
                         End If
                     Case CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine.ResultReadSetting.fileNotFound
                         data = New SettingsSidechainServiceComplete
+                        _Data = New SettingsSidechainServiceComplete
 
                         Return True
                     Case CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine.ResultReadSetting.Successfull
                         openAsFileButton.Enabled = True
 
-                        Return fillAllField(engine.data)
+                        _Data = engine.data
+
+                        Return fillAllField()
                 End Select
             Loop
 
@@ -245,25 +286,16 @@ Public Class Settings
                 .clientCertificate = certificateClient.value
                 .publicPort = selectPublicPort.value
                 .servicePort = selectServicePort.value
+                .useLog = useTrackLog.Checked
                 .useAutomaintenance = useAutoMaintenance.Checked
-
-                'If useAutoMaintenance.Checked Then
-                '    .autoMaintenanceFrequencyHours = frequencyAutoMaintenance.Value
-                '    .trackRotateConfig.frequency = startCleanEveryValueCombo.SelectedIndex
-                '    .trackRotateConfig.keepLast = keepOnlyRecentFileValueCombo.SelectedIndex
-                '    .trackRotateConfig.keepFile = keepFileTypeValueCombo.SelectedIndex
-                'End If
-
-                '.trackConfiguration = logInformations.trackConfiguration
-                '.changeLogFileMaxNumHours = logInformations.maxNumHours
-                '.changeLogFileNumRegistrations = logInformations.maxNumberOfRegistrations
-                '.useBufferToWrite = useBufferToWrite.Checked
                 .useEventRegistry = useEventRegistry.Checked
                 .useRequestCounter = useCounter.Checked
-                .useAdminMessage = useMessageService.Checked
+                .useAdminMessage = useMessage.Checked
                 .useProfile = useProfile.Checked
                 .useAlert = useAlert.Checked
             End With
+
+            data.logSettings = _Data.logSettings
 
             Return data
         Catch ex As Exception
@@ -313,31 +345,26 @@ Public Class Settings
     Private Function resetAllField() As Boolean
         internalName.Text = ""
         networkName.Text = ""
+        serviceMode.SelectedIndex = -1
+        intranetMode.Checked = False
+
+        staticIPAddress.Text = ""
+        pathBase.Text = ""
         serviceID.Text = ""
-        adminPublicAddress.value = ""
-        certificateClient.value = ""
         selectPublicPort.value = 0
         selectServicePort.value = 0
-        intranetMode.Checked = False
         secureChannel.Checked = False
 
-        'logInformations.trackConfiguration = CHCModels.AreaModel.Log.TrackRuntimeModeEnum.neverTrace
-        'logInformations.maxNumHours = 0
-        'logInformations.maxNumberOfRegistrations = 0
-        'logInformations.useTrackRotate = False
+        adminPublicAddress.value = ""
+        certificateClient.value = ""
 
-        'useBufferToWrite.Checked = True
-
-        'logInformations.trackRotateFrequency = CHCModels.AreaModel.Log.LogRotateConfig.FrequencyEnum.every12h
-        'logInformations.trackRotateKeepFile = CHCModels.AreaModel.Log.LogRotateConfig.KeepFileEnum.nothingFiles
-        'logInformations.trackRotateKeepLast = CHCModels.AreaModel.Log.KeepEnum.lastDay
-
+        useTrackLog.Checked = False
         useEventRegistry.Checked = False
         useCounter.Checked = False
-        useMessageService.Checked = False
-        useAutoMaintenance.Checked = False
-        useAlert.Checked = False
+        useMessage.Checked = False
         useProfile.Checked = False
+        useAlert.Checked = False
+        useAutoMaintenance.Checked = False
 
         Return True
     End Function
@@ -404,6 +431,7 @@ Public Class Settings
 
         fromRemoteButton.Enabled = True
         toRemoteButton.Enabled = True
+        openAsFileButton.Enabled = True
     End Sub
 
     ''' <summary>
@@ -427,26 +455,18 @@ Public Class Settings
 
             Return False
         End If
-        If (selectPublicPort.value = 0) And selectPublicPort.Enabled Then
-            MessageBox.Show("The Public port is missing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-            tabControl.SelectedIndex = 1
-            selectPublicPort.Select()
-
-            Return False
-        End If
         If (adminPublicAddress.value.Trim.Length = 0) And adminPublicAddress.Enabled Then
             MessageBox.Show("The Admin wallet address is missing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-            tabControl.SelectedIndex = 1
+            tabControl.SelectedIndex = 2
             adminPublicAddress.Select()
 
             Return False
         End If
-        If (certificateClient.value.Trim.Length = 0) Then
+        If certificateClient.Enabled And (certificateClient.value.Trim.Length = 0) Then
             MessageBox.Show("The Certificate is missing", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-            tabControl.SelectedIndex = 1
+            tabControl.SelectedIndex = 2
             certificateClient.Select()
 
             Return False
@@ -526,34 +546,6 @@ Public Class Settings
 
     Private Sub infoButton_Click(sender As Object, e As EventArgs) Handles infoButton.Click
         informations.ShowDialog()
-    End Sub
-
-    Private Function enableAutoMaintenance(ByVal value As Boolean) As Boolean
-        Try
-            'frequencyLabel.Enabled = value
-            'frequencyAutoMaintenance.Enabled = value
-            'unitMeasureFrequencyLabel.Enabled = value
-            'startCleanEveryLabel.Enabled = value
-            'startCleanEveryValueCombo.Enabled = value
-            'keepOnlyRecentFileLabel.Enabled = value
-            'keepOnlyRecentFileValueCombo.Enabled = value
-            'keepFileTypeLabel.Enabled = value
-            'keepFileTypeValueCombo.Enabled = value
-
-            'If Not value Then
-            '    frequencyAutoMaintenance.Text = "0"
-            '    startCleanEveryValueCombo.SelectedIndex = -1
-            '    keepOnlyRecentFileValueCombo.SelectedIndex = -1
-            '    keepFileTypeValueCombo.SelectedIndex = -1
-            'End If
-        Catch ex As Exception
-        End Try
-
-        Return True
-    End Function
-
-    Private Sub useAutoMaintenance_CheckedChanged(sender As Object, e As EventArgs)
-        enableAutoMaintenance(useAutoMaintenance.Checked)
     End Sub
 
     ''' <summary>
@@ -732,31 +724,31 @@ Public Class Settings
     ''' <param name="ipAddress"></param>
     ''' <returns></returns>
     Private Function saveRemoteConfig(ByVal securityToken As String, ByVal ipAddress As String) As Boolean
-        'Try
-        '    Dim remote As New ProxyWS(Of ResponseUpdateSettingsModel)
-        '    Dim proceed As Boolean = True
+        Try
+            Dim remote As New ProxyWS(Of SettingsSidechainServiceComplete)
+            Dim proceed As Boolean = True
 
-        '    If proceed Then
-        '        remote.url = buildURL("/administration/settings/?securityToken=" & securityToken, ipAddress)
-        '    End If
-        '    If proceed Then
-        '        remote.data = getDataModel()
+            If proceed Then
+                remote.url = buildURL("/administration/settings/?securityToken=" & securityToken, ipAddress)
+            End If
+            If proceed Then
+                remote.data = getDataModel()
 
-        '        proceed = True
-        '    End If
-        '    If proceed Then
-        '        proceed = (remote.sendData("PUT").Length = 0)
-        '    End If
-        '    If proceed Then
-        '        proceed = (remote.remoteResponse.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
-        '    End If
+                proceed = True
+            End If
+            If proceed Then
+                proceed = (remote.sendData("PUT").Length = 0)
+            End If
+            If proceed Then
+                proceed = (remote.remoteResponse.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+            End If
 
-        '    Return proceed
-        'Catch ex As Exception
-        '    Console.WriteLine("Error during saveRemoteConfig - " & ex.Message)
+            Return proceed
+        Catch ex As Exception
+            Console.WriteLine("Error during saveRemoteConfig - " & ex.Message)
 
-        '    Return False
-        'End Try
+            Return False
+        End Try
     End Function
 
     ''' <summary>
@@ -778,7 +770,10 @@ Public Class Settings
                 proceed = (remote.getData().Length = 0)
             End If
             If proceed Then
-                proceed = fillAllField(remote.data.value)
+                _Data = remote.data.value
+            End If
+            If proceed Then
+                proceed = fillAllField()
             End If
 
             Return proceed
@@ -873,6 +868,65 @@ Public Class Settings
         If proceed Then
             MessageBox.Show("Remote settings update", "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
+    End Sub
+
+    Private Sub useTrackLog_CheckedChanged(sender As Object, e As EventArgs) Handles useTrackLog.CheckedChanged
+        If useTrackLog.Checked Then
+            settingsTrack.Enabled = True
+        Else
+            settingsTrack.Enabled = False
+
+            _Data.logSettings = New SettingsLogSidechainService
+        End If
+
+    End Sub
+
+    Private Sub settingsTrack_Click(sender As Object, e As EventArgs) Handles settingsTrack.Click
+        Dim settingPage As New trackLogSettings
+
+        Select Case _Data.logSettings.trackConfiguration
+            Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.neverTrace : settingPage.trackConfiguration.SelectedIndex = 0
+            Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackOnlyBootstrapAndError : settingPage.trackConfiguration.SelectedIndex = 1
+            Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackAll : settingPage.trackConfiguration.SelectedIndex = 2
+        End Select
+
+        settingPage.useBufferToWrite.Checked = _Data.logSettings.useBufferToWrite
+        settingPage.writeToFile.Checked = _Data.logSettings.writeToFile
+        settingPage.everyChangeFile.Text = _Data.logSettings.changeLogFileMaxNumHours
+        settingPage.numberRegistrations.Text = _Data.logSettings.changeLogFileNumRegistrations
+
+        If (settingPage.ShowDialog() = DialogResult.OK) Then
+            Select Case settingPage.trackConfiguration.SelectedIndex
+                Case 0 : _Data.logSettings.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.neverTrace
+                Case 1 : _Data.logSettings.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackOnlyBootstrapAndError
+                Case 2 : _Data.logSettings.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackAll
+            End Select
+
+            _Data.logSettings.useBufferToWrite = settingPage.useBufferToWrite.Checked
+            _Data.logSettings.writeToFile = settingPage.writeToFile.Checked
+            If IsNumeric(settingPage.everyChangeFile.Text) Then
+                _Data.logSettings.changeLogFileMaxNumHours = settingPage.everyChangeFile.Text
+            Else
+                _Data.logSettings.changeLogFileMaxNumHours = 0
+            End If
+            If IsNumeric(settingPage.numberRegistrations.Text) Then
+                _Data.logSettings.changeLogFileNumRegistrations = settingPage.numberRegistrations.Text
+            Else
+                _Data.logSettings.changeLogFileNumRegistrations = 0
+            End If
+        End If
+
+        settingPage.Close()
+
+        settingPage = Nothing
+    End Sub
+
+    Private Sub sidechainServiceName_SelectedIndexChanged(sender As Object, e As EventArgs) Handles sidechainServiceName.SelectedIndexChanged
+        resetAllField()
+        disableForm()
+
+        saveButton.Enabled = False
+        openAsFileButton.Enabled = False
     End Sub
 
 End Class

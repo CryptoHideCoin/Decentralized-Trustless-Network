@@ -100,68 +100,53 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Platform)' == 'x86'">
-    <Reference Include="CHCCommonLibrary, Version=1.17.4.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels, Version=0.4.1.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModels.dll</HintPath>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCPrimarySidechainLibrary, Version=0.1.2.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CHCPrimarySidechainLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Primary Sidechain\x86\CHCPrimarySidechainLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CHCProtocolLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCSidechainServiceLibrary, Version=0.8.1.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CHCSidechainServiceLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x86\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'x64'">
-    <Reference Include="CHCCommonLibrary, Version=1.17.4.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels, Version=0.4.1.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModels.dll</HintPath>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCPrimarySidechainLibrary, Version=0.1.2.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CHCPrimarySidechainLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Primary Sidechain\x64\CHCPrimarySidechainLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CHCProtocolLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Protocol\x64\CHCProtocolLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCSidechainServiceLibrary, Version=0.8.1.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CHCSidechainServiceLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x64\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'AnyCPU'">
-    <Reference Include="CHCCommonLibrary, Version=1.17.4.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModels, Version=0.4.1.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModels.dll</HintPath>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCPrimarySidechainLibrary, Version=0.1.2.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CHCPrimarySidechainLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Primary Sidechain\Standard\CHCPrimarySidechainLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CHCProtocolLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Protocol\Standard\CHCProtocolLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCSidechainServiceLibrary, Version=0.8.1.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CHCSidechainServiceLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\Standard\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>

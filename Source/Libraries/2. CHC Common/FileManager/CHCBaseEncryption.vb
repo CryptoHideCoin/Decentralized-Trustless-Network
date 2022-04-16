@@ -70,7 +70,7 @@ Namespace AreaEngine.DataFileManagement.Encrypted
                 If File.Exists(fileName) Then
                     stream = New StreamReader(fileName)
 
-                    If _combineCryptoKEY = "-" Then
+                    If (_combineCryptoKEY.CompareTo("-") = 0) Then
                         memory = New MemoryStream(Text.Encoding.ASCII.GetBytes(stream.ReadToEnd()))
                     Else
                         memory = New MemoryStream(Text.Encoding.ASCII.GetBytes(Encryption.AES.decrypt(stream.ReadToEnd(), _combineCryptoKEY)))

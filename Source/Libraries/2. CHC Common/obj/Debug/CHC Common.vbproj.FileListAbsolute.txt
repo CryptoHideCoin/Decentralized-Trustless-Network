@@ -14,7 +14,6 @@ E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\bin\Debug\CHCCommonLibrary.d
 E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\bin\Debug\CHCCommonLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\bin\Debug\CHCModelsLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\bin\Debug\Newtonsoft.Json.dll
-E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\bin\Debug\CHCModelsLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\bin\Debug\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\Debug\CHC Common.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\Debug\CHCCommonLibrary.Resources.resources

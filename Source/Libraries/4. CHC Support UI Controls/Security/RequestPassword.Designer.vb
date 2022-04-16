@@ -24,7 +24,7 @@ Partial Class RequestPassword
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(RequestPassword))
         Me.showCharacterButton = New System.Windows.Forms.Button()
-        Me.cancelButton = New System.Windows.Forms.Button()
+        Me.mainCancelButton = New System.Windows.Forms.Button()
         Me.confirmButton = New System.Windows.Forms.Button()
         Me.passwordTextBox = New System.Windows.Forms.TextBox()
         Me.logoPictureBox = New System.Windows.Forms.PictureBox()
@@ -40,14 +40,14 @@ Partial Class RequestPassword
         Me.showCharacterButton.TabIndex = 1
         Me.showCharacterButton.UseVisualStyleBackColor = True
         '
-        'cancelButton
+        'mainCancelButton
         '
-        Me.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.cancelButton.Location = New System.Drawing.Point(352, 54)
-        Me.cancelButton.Name = "cancelButton"
-        Me.cancelButton.Size = New System.Drawing.Size(94, 23)
-        Me.cancelButton.TabIndex = 3
-        Me.cancelButton.Text = "&Annulla"
+        Me.mainCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.mainCancelButton.Location = New System.Drawing.Point(352, 54)
+        Me.mainCancelButton.Name = "mainCancelButton"
+        Me.mainCancelButton.Size = New System.Drawing.Size(94, 23)
+        Me.mainCancelButton.TabIndex = 3
+        Me.mainCancelButton.Text = "&Annulla"
         '
         'confirmButton
         '
@@ -81,7 +81,7 @@ Partial Class RequestPassword
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(450, 238)
         Me.Controls.Add(Me.showCharacterButton)
-        Me.Controls.Add(Me.cancelButton)
+        Me.Controls.Add(Me.mainCancelButton)
         Me.Controls.Add(Me.confirmButton)
         Me.Controls.Add(Me.passwordTextBox)
         Me.Controls.Add(Me.logoPictureBox)
@@ -97,7 +97,7 @@ Partial Class RequestPassword
     End Sub
 
     Friend WithEvents showCharacterButton As Button
-    Friend WithEvents cancelButton As Button
+    Friend WithEvents mainCancelButton As Button
     Friend WithEvents confirmButton As Button
     Friend WithEvents passwordTextBox As TextBox
     Friend WithEvents logoPictureBox As PictureBox

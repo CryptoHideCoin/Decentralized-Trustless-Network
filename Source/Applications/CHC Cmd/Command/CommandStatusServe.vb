@@ -109,7 +109,7 @@ Namespace AreaCommon.Command
                 Dim data As CHCModelsLibrary.AreaModel.Administration.Settings.SettingsSidechainServiceComplete
 #Enable Warning BC42024
 
-                engine.dataPath = _Path.settings
+                engine.dataPath = _Path.directoryData
                 engine.serviceName = _ParameterService
                 engine.password = _ParameterPassword
 

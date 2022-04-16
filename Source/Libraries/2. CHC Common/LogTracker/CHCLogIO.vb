@@ -78,6 +78,10 @@ Namespace AreaEngine.Log
 
                 Return True
             Else
+                If (_CurrentFileName.Length > 0) And _Settings.writeToFile Then
+                    Return True
+                End If
+
                 Return False
             End If
 

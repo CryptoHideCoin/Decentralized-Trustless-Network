@@ -67,11 +67,11 @@ Namespace AreaChain.Runtime.Models
                 Dim completeFileName As String = ""
                 Dim engine As New CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine
 
-                engine.dataPath = AreaCommon.Main.environment.paths.settings
+                engine.dataPath = AreaCommon.Main.environment.paths.directoryData
                 engine.serviceName = chainServiceName
                 engine.password = AreaCommon.Main.settingsPassword
 
-                If Not engine.read() Then
+                If (engine.read() <> CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine.ResultReadSetting.Successfull) Then
                     response.problemDescription = "Problem during read a settings"
                 Else
                     response.settings = engine.data

@@ -35,7 +35,9 @@ Namespace AreaCommon.Command
                     Return False
                 End If
                 If Not _Command.haveParameter("value") Then
+#Disable Warning BC42016
                     If (_Command.parameterValue("value").ToLower.Contains("datapath") = 0) Then
+#Enable Warning BC42016
                         value = AreaEngine.EnvironmentUtils.getCurrentEnvironmentPath()
                     Else
                         Console.WriteLine("Error: value missing")

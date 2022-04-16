@@ -57,7 +57,7 @@ Public Class ConfigurePath
         End Try
     End Sub
 
-    Private Sub cancelButton_Click(sender As Object, e As EventArgs) Handles cancelButton.Click
+    Private Sub cancelButton_Click(sender As Object, e As EventArgs) Handles mainCancelButton.Click
         DialogResult = DialogResult.Cancel
     End Sub
 

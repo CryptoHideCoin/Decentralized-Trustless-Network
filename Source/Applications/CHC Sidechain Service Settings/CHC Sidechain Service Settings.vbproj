@@ -69,51 +69,38 @@
     <ApplicationIcon>64.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Platform)' == 'AnyCPU'">
-    <Reference Include="CHCCommonLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCModelsLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCProtocolLibrary">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\Standard\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCSidechainServiceLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\Standard\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCCommonLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'x64'">
-    <Reference Include="CHCCommonLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCModelsLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCProtocolLibrary">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x64\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCSidechainServiceLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x64\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
-  </ItemGroup>
-   <ItemGroup Condition=" '$(Platform)' == 'x86'">
     <Reference Include="CHCCommonLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
     </Reference>
-     <Reference Include="CHCModelsLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCProtocolLibrary">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Platform)' == 'x86'">
     <Reference Include="CHCSidechainServiceLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x86\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCCommonLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="CHCModelsLibrary, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCProtocolLibrary, Version=1.11.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\Standard\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="CHCSupportUIControls, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Support UI\Standard\CHCSupportUIControls.dll</HintPath>
@@ -164,6 +151,12 @@
       <DependentUpon>Settings.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\trackLogSettings.Designer.vb">
+      <DependentUpon>trackLogSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\trackLogSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -189,6 +182,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Settings.resx">
       <DependentUpon>Settings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\trackLogSettings.resx">
+      <DependentUpon>trackLogSettings.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

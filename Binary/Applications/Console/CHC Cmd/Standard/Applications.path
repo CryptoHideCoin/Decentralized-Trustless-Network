@@ -1,0 +1,26 @@
+[
+  {
+    "applicationReferement": 1,
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console\\CHC Cmd",
+    "directoryName": "CHC Sidechain Service Settings",
+    "applicationName": "CHCSidechainServiceSettings.exe"
+  },
+  {
+    "applicationReferement": 2,
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console\\CHC Cmd",
+    "directoryName": "CHC Show Log",
+    "applicationName": "CHCShowLog.exe"
+  },
+  {
+    "applicationReferement": 3,
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console\\CHC Cmd",
+    "directoryName": "CHC Local Work Machine",
+    "applicationName": "CHCLocalWorkMachine.exe"
+  },
+  {
+    "applicationReferement": 4,
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console\\CHC Cmd",
+    "directoryName": "CHC Sidechain Service Runtime",
+    "applicationName": "CHCSidechainServiceRuntime.exe"
+  }
+]

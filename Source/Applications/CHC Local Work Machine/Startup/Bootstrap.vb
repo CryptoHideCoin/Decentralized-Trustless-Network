@@ -60,6 +60,8 @@ Namespace AreaCommon.Startup
                             MessageBox.Show(.problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                             proceed = False
+                        Else
+                            CHCSidechainServiceLibrary.AreaCommon.Main.environment.settings = .settings
                         End If
                     End With
                 End If

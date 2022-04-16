@@ -8,8 +8,8 @@ Option Explicit On
 ' Date last successfully test: 06/10/2021
 ' ****************************************
 
-Imports CHCModels.AreaModel.Log
-Imports CHCModels.AreaModel.Log.LogRotateConfig
+Imports CHCModelsLibrary.AreaModel.Log
+Imports CHCModelsLibrary.AreaModel.Log.LogRotateConfig
 
 
 

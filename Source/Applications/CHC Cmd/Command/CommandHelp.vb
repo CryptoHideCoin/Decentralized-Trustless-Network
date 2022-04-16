@@ -88,6 +88,7 @@ Namespace AreaCommon.Command
             Console.WriteLine("-write                               Print a message into console")
             Console.WriteLine("   --message:                        Contain a message into console")
             Console.WriteLine("-note                                Add a note to the script")
+            Console.WriteLine("-buildPath                           Build a path of a platform")
             Console.WriteLine("-batch                               Process a file batch")
             Console.WriteLine("   --fileName:                       Specify the file name of a batch")
             Console.WriteLine("-if                                  Check and execute a batch file is case positive")

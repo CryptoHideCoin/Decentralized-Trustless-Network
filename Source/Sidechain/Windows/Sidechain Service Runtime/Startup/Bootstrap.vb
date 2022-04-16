@@ -2,7 +2,8 @@
 Option Explicit On
 
 Imports CHCSidechainServiceLibrary.AreaCommon.Main
-Imports CHCModels.AreaModel.Information
+Imports CHCModelsLibrary.AreaModel.Information
+Imports CHCSidechainServiceLibrary.AreaCommon.Startup
 
 
 
@@ -11,7 +12,7 @@ Namespace AreaCommon.Startup
     ''' <summary>
     ''' This static class run the application
     ''' </summary>
-    Module Bootstrap
+    Module MainBootstrap
 
         ''' <summary>
         ''' This method provide to acquire the service information
@@ -70,7 +71,7 @@ Namespace AreaCommon.Startup
         ''' <returns></returns>
         Public Function run() As Boolean
             Try
-                Dim bootstrap As New CHCSidechainServiceLibrary.AreaCommon.Startup.Bootstrap
+                Dim bootstrap As New Bootstrap
                 Dim problemDescription As String
                 Dim proceed As Boolean = True
 
@@ -89,15 +90,21 @@ Namespace AreaCommon.Startup
                     End If
                 End If
                 If proceed Then
+#Disable Warning BC42030
                     If Not bootstrap.managePath(problemDescription) Then
+#Enable Warning BC42030
                         MessageBox.Show(problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                         proceed = False
                     End If
                 End If
                 If proceed Then
+#Disable Warning BC42025
                     With environment.readSettings(CUSTOM_ChainServiceName)
+#Enable Warning BC42025
                         proceed = .successful
+
+                        environment.settings = .settings
 
                         If Not proceed Then
                             MessageBox.Show(.problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -123,8 +130,12 @@ Namespace AreaCommon.Startup
                     proceed = bootstrap.readAdminKeyStore()
                 End If
                 If proceed Then
+#Disable Warning BC42025
                     With environment.readSettings("LocalWorkMachine")
+#Enable Warning BC42025
                         If .successful Then
+                            environment.localWorkMachineSettings = .settings
+
                             Scheduler.addWorkLocalMachineJob()
                         End If
                     End With

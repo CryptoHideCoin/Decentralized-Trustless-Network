@@ -32,6 +32,7 @@ Namespace AreaScheduler
 
         Private Property _ScheduleJobs As New List(Of JobSchedule)
 
+
         ''' <summary>
         ''' This method provide to return a Local Work Machine
         ''' </summary>

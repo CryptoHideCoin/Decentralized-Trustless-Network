@@ -146,12 +146,13 @@ Namespace AreaCommon.Startup
         Public Function trackRuntimeStart(ByRef problemDescription As String) As Boolean
             Try
                 With environment.log.settings
-                    '.saveMode = environment.settings.trackConfiguration
-                    '.changeFileEvery = environment.settings.changeLogFileMaxNumHours
-                    '.changeNumberOfRegistrations = environment.settings.changeLogFileNumRegistrations
-                    '.useBufferToWrite = environment.settings.useBufferToWrite
-                    '.pathFile = environment.paths.system.logs
-                    '.instanceID = Guid.NewGuid.ToString
+                    .saveMode = environment.settings.logSettings.trackConfiguration
+                    .changeFileEvery = environment.settings.logSettings.changeLogFileMaxNumHours
+                    .changeNumberOfRegistrations = environment.settings.logSettings.changeLogFileNumRegistrations
+                    .useBufferToWrite = environment.settings.logSettings.useBufferToWrite
+                    .writeToFile = environment.settings.logSettings.writeToFile
+                    .pathFile = environment.paths.system.logs
+                    .instanceID = Guid.NewGuid.ToString
                 End With
 
                 Return True

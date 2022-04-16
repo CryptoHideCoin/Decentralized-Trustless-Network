@@ -2,7 +2,7 @@
 Option Compare Text
 
 Imports CHCCommonLibrary.AreaEngine.Communication
-Imports CHCModels.AreaModel.Network.Response
+Imports CHCModelsLibrary.AreaModel.Network.Response
 
 ' ****************************************
 ' File: Dialog Change Certificate

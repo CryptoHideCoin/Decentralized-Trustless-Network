@@ -64,7 +64,9 @@ Namespace AreaCommon.Command
                         Console.WriteLine((Space(20 + maxCar + 7)).ToString.Replace(" ", "-"))
 
                         For Each item In collection
+#Disable Warning BC42016
                             printRow(item.name, IIf(item.active, "X", " "), item.path)
+#Enable Warning BC42016
                         Next
                         Console.WriteLine()
                         Console.WriteLine(collection.Count & " item(s)")

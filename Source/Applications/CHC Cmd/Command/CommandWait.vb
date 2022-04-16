@@ -31,7 +31,9 @@ Namespace AreaCommon.Command
 
                 If _Command.haveParameter("durate") Then
                     If IsNumeric(_Command.parameterValue("durate")) Then
+#Disable Warning BC42016
                         pauseValue = _Command.parameterValue("durate")
+#Enable Warning BC42016
                     End If
                 End If
 

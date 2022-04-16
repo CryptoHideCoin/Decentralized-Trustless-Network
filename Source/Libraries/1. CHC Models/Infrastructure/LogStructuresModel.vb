@@ -118,6 +118,7 @@ Namespace AreaModel.Log
         Private Property _ChangeFileEveryLocal As Integer = 0
         Private Property _ChangeNumberOfRegistrationsLocal As Integer = 0
         Private Property _UseBufferToWrite As Boolean = True
+        Private Property _WriteToFile As Boolean = True
 
         Public Property pathFileLog As String = ""
 
@@ -216,6 +217,19 @@ Namespace AreaModel.Log
             End Get
             Set(value As Boolean)
                 _UseBufferToWrite = value
+
+                RaiseEvent ChangeValue()
+            End Set
+        End Property
+
+        Public Property writeToFile() As Boolean
+            Get
+                Return _WriteToFile
+            End Get
+            Set(value As Boolean)
+                _WriteToFile = value
+
+                RaiseEvent ChangeValue()
             End Set
         End Property
 

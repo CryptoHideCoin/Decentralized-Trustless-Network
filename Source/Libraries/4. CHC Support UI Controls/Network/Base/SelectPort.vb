@@ -18,6 +18,34 @@ Option Explicit On
 
 Public Class SelectPort
 
+    Private Property _IsNecessary As Boolean = False
+
+
+    Public Property isNecessary() As Boolean
+        Get
+            Return _IsNecessary
+        End Get
+        Set(value As Boolean)
+            Dim style As FontStyle
+
+            If Not _IsNecessary Then
+                _IsNecessary = True
+
+                style = FontStyle.Bold
+
+                portNumberLabel.Location = New Point(3, portNumberLabel.Location.Y)
+            Else
+                _IsNecessary = False
+
+                style = FontStyle.Regular
+
+                portNumberLabel.Location = New Point(5, portNumberLabel.Location.Y)
+            End If
+
+            portNumberLabel.Font = New Font(portNumberLabel.Font.FontFamily, portNumberLabel.Font.Size, style)
+        End Set
+    End Property
+
     ''' <summary>
     ''' This property get/let the value of the control
     ''' </summary>

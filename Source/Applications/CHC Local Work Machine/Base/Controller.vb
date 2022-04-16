@@ -85,7 +85,7 @@ Namespace AreaCommon
             Try
                 Dim objWS As New Threading.Thread(AddressOf startWebService)
 
-                _portNumber = CHCSidechainServiceLibrary.AreaCommon.Main.environment.localWorkMachineSettings.servicePort
+                _portNumber = CHCSidechainServiceLibrary.AreaCommon.Main.environment.settings.servicePort
 
                 objWS.Start()
 

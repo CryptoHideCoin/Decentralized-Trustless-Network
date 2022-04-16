@@ -72,7 +72,9 @@ Namespace AreaCommon.Command
                 End If
 
                 Dim fileContent As String = My.Computer.FileSystem.ReadAllText(fileName)
+#Disable Warning BC42016
                 Dim commands As String() = fileContent.Split(vbNewLine)
+#Enable Warning BC42016
 
                 For Each singleCommand In commands
                     singleCommand = singleCommand.Replace(vbLf, "").Trim()
