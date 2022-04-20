@@ -91,7 +91,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup Condition=" '$(Platform)' == 'AnyCPU'">
-    <Reference Include="CHCCommonLibrary, Version=1.17.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
     </Reference>
@@ -99,17 +99,25 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\Standard\CHCProtocolLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCSidechainServiceLibrary, Version=0.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCSidechainServiceLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\Standard\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCSidechainServiceLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\Standard\CHCSidechainServiceLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCSupportUIControls">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Support UI\Standard\CHCSupportUIControls.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'x64'">
-    <Reference Include="CHCCommonLibrary, Version=1.17.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
     </Reference>
@@ -117,17 +125,21 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x64\CHCProtocolLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCSidechainServiceLibrary, Version=0.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCSidechainServiceLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x64\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCSupportUIControls">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Support UI\x64\CHCSupportUIControls.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'x86'">
-    <Reference Include="CHCCommonLibrary, Version=1.17.4.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCCommonLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
     </Reference>
@@ -135,13 +147,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCProtocolLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCSidechainServiceLibrary, Version=0.8.1.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="CHCSidechainServiceLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x86\CHCSidechainServiceLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCSupportUIControls">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Support UI\x86\CHCSupportUIControls.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +200,7 @@
     <Compile Include="Base\Common.vb" />
     <Compile Include="Base\Customized.vb" />
     <Compile Include="Base\Controller.vb" />
+    <Compile Include="Base\Network.vb" />
     <Compile Include="Controllers\Linked\LinkedController.vb" />
     <Compile Include="Controllers\ShowLog\ShowLogParametersController.vb" />
     <Compile Include="Controllers\ShowLog\SwitchOffShowLogController.vb" />
@@ -205,6 +222,12 @@
       <DependentUpon>ShowLogConfiguration.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\ShowLogConfiguration.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TrackLogSettings.Designer.vb">
+      <DependentUpon>TrackLogSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TrackLogSettings.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Models\GeneralModel.vb" />

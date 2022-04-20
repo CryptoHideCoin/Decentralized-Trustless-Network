@@ -127,4 +127,15 @@ Namespace AreaModel.Administration.Settings
 
     End Class
 
+    ''' <summary>
+    ''' This class response the Log Setting
+    ''' </summary>
+    Public Class ResponseLogSettingsModel
+
+        Inherits Network.Response.BaseRemoteResponse
+
+        Public Property value As New SettingsLogSidechainService
+
+    End Class
+
 End Namespace

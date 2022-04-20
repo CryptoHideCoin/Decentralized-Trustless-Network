@@ -13,6 +13,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CHC Models", "..\..\Librari
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CHC Common", "..\..\Libraries\2. CHC Common\CHC Common.vbproj", "{47BBA986-9288-41C3-BB67-C5BF45573DEE}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CHC Support UI Controls", "..\..\Libraries\4. CHC Support UI Controls\CHC Support UI Controls.vbproj", "{2B477A78-3139-4570-BB5E-3FC09475C316}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{47BBA986-9288-41C3-BB67-C5BF45573DEE}.Release|x64.Build.0 = Release|x64
 		{47BBA986-9288-41C3-BB67-C5BF45573DEE}.Release|x86.ActiveCfg = Release|x86
 		{47BBA986-9288-41C3-BB67-C5BF45573DEE}.Release|x86.Build.0 = Release|x86
+		{2B477A78-3139-4570-BB5E-3FC09475C316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B477A78-3139-4570-BB5E-3FC09475C316}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B477A78-3139-4570-BB5E-3FC09475C316}.Debug|x64.ActiveCfg = Debug|x64
+		{2B477A78-3139-4570-BB5E-3FC09475C316}.Debug|x64.Build.0 = Debug|x64
+		{2B477A78-3139-4570-BB5E-3FC09475C316}.Debug|x86.ActiveCfg = Debug|x86
+		{2B477A78-3139-4570-BB5E-3FC09475C316}.Debug|x86.Build.0 = Debug|x86
+		{2B477A78-3139-4570-BB5E-3FC09475C316}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B477A78-3139-4570-BB5E-3FC09475C316}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B477A78-3139-4570-BB5E-3FC09475C316}.Release|x64.ActiveCfg = Release|x64
+		{2B477A78-3139-4570-BB5E-3FC09475C316}.Release|x64.Build.0 = Release|x64
+		{2B477A78-3139-4570-BB5E-3FC09475C316}.Release|x86.ActiveCfg = Release|x86
+		{2B477A78-3139-4570-BB5E-3FC09475C316}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

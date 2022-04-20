@@ -13,8 +13,8 @@
   },
   {
     "applicationReferement": 3,
-    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Windows",
-    "directoryName": "CHC Local Work Machine",
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Windows\\CHC Local Work Machine",
+    "directoryName": "x64",
     "applicationName": "CHCLocalWorkMachine.exe"
   },
   {

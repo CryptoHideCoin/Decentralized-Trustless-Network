@@ -23,3 +23,19 @@ E:\CryptoHideCoinDTN\Source\Client\CHC Show Log\bin\Debug\CHCModels.pdb
 E:\CryptoHideCoinDTN\Source\Client\CHC Show Log\bin\Debug\CHCProtocolLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Client\CHC Show Log\bin\Debug\CHCSidechainServiceLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Client\CHC Show Log\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\CHCShowLog.exe.config
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\CHCShowLog.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\CHCShowLog.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\bin\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Debug\CHC Show Log.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Debug\CHCShowLog.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Debug\CHC Show Log.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Debug\CHC Show Log.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Debug\CHCShowLog.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Log\obj\Debug\CHCShowLog.pdb

@@ -72,6 +72,13 @@ Namespace AreaCommon
                         environment.log.track("Controllers.StartWebService", "WS Listen")
                         environment.log.track("Controllers.StartWebService", "Webservice Run at " & _portNumber & " port")
                     Catch aggEx As AggregateException
+                        If (TypeName(aggEx.InnerException).ToLower.CompareTo("AddressAlreadyInUseException".ToLower) = 0) Then
+                            environment.log.trackException("Controllers.StartWebService", "Service in use")
+
+                            environment.log.writeCacheToLogFile()
+
+                            End
+                        End If
                         environment.log.trackException("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion!")
                     End Try
 

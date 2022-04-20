@@ -113,6 +113,7 @@
     <Compile Include="Common\Internal.vb" />
     <Compile Include="Controllers\Admin\Authorization\RequestAccessKeyController.vb" />
     <Compile Include="Controllers\Admin\Authorization\RequestAdminTokenController.vb" />
+    <Compile Include="Controllers\Admin\Log\LogSettingsController.vb" />
     <Compile Include="Controllers\Admin\Power\SetPowerOffController.vb" />
     <Compile Include="Controllers\Admin\Power\SetPowerOnController.vb" />
     <Compile Include="Controllers\Admin\Settings\SettingController.vb" />

@@ -62,3 +62,4 @@ E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Debug\CHC S
 E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Debug\CHC Support UI Controls.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Debug\CHCSupportUIControls.dll
 E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Debug\CHCSupportUIControls.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\bin\Newtonsoft.Json.xml

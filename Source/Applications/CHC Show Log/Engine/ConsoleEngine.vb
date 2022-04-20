@@ -55,8 +55,12 @@ Namespace AreaCommon
                 Select Case engine.read()
                     Case SettingsEngine.ResultReadSetting.fileNotFound
                         Console.WriteLine("Missing setting's file")
+
+                        Console.ReadKey()
                     Case SettingsEngine.ResultReadSetting.ReadError
                         Console.WriteLine("Error during read file")
+
+                        Console.ReadKey()
                     Case SettingsEngine.ResultReadSetting.Successfull
                         If loadService Then
                             _DataSettings = engine.data
@@ -435,8 +439,11 @@ Namespace AreaCommon
             Try
                 Dim lastErrorTime As Double = 0
                 Dim proceed As Boolean = True
+                Dim dontShowMessage As Boolean = False
                 Dim times As Short = 0
                 Dim parameters As New LogPanelParameters
+
+                parameters.showOnlyInfo = (_Mode.ToLower().CompareTo("Console".ToLower()) = 0)
 
                 Do While proceed
                     parameters = readParameterSettings(parameters)
@@ -452,10 +459,11 @@ Namespace AreaCommon
                                 proceed = ((lastErrorTime + 2500) <= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
                             End If
                         Else
+                            dontShowMessage = True
                             Threading.Thread.Sleep(parameters.frequencyRefresh)
                         End If
 
-                        If (times = 3) Then
+                        If (times = 3) And Not dontShowMessage Then
                             times = 0
 
                             Console.WriteLine("No data from service. Check 'Use buffer' property.")

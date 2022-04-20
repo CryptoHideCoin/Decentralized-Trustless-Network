@@ -52,7 +52,6 @@ Namespace AreaCommon.Startup
                 serviceInformation = serviceInformation
 
                 environment.log.trackIntoConsole("Acquire service information")
-                environment.log.trackExit("startUp.acquireServiceInformation")
 
                 Return True
             Catch ex As Exception

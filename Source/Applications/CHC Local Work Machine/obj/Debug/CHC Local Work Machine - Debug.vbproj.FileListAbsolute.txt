@@ -24,3 +24,9 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHCLoc
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHCLocalWorkMachine.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\CHCProtocolLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\CHCModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\CHCSupportUIControls.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\zxing.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\CHCSupportUIControls.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHCLocalWorkMachine.trackLogSettings.resources

@@ -90,31 +90,13 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(Platform)' == 'AnyCPU'">
-    <Reference Include="CHCCommonLibrary, Version=1.17.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCModelsLibrary">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
-    </Reference>
-  </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'x64'">
-    <Reference Include="CHCCommonLibrary, Version=1.17.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCModelsLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'x86'">
-    <Reference Include="CHCCommonLibrary, Version=1.17.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCModelsLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
@@ -160,6 +142,7 @@
     <Compile Include="Base\Common.vb" />
     <Compile Include="Base\Customized.vb" />
     <Compile Include="Base\Controller.vb" />
+    <Compile Include="Base\Network.vb" />
     <Compile Include="Controllers\Linked\LinkedController.vb" />
     <Compile Include="Controllers\ShowLog\ShowLogParametersController.vb" />
     <Compile Include="Controllers\ShowLog\SwitchOffShowLogController.vb" />
@@ -181,6 +164,12 @@
       <DependentUpon>ShowLogConfiguration.vb</DependentUpon>
     </Compile>
     <Compile Include="Forms\ShowLogConfiguration.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TrackLogSettings.Designer.vb">
+      <DependentUpon>TrackLogSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TrackLogSettings.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Models\GeneralModel.vb" />
@@ -209,6 +198,9 @@
     <EmbeddedResource Include="Forms\ShowLogConfiguration.resx">
       <DependentUpon>ShowLogConfiguration.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\trackLogSettings.resx">
+      <DependentUpon>TrackLogSettings.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -236,9 +228,21 @@
     <Content Include="64.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\1. CHC Models\CHC Models.vbproj">
+      <Project>{5475fb38-e6b1-4049-8a92-b16607841e96}</Project>
+      <Name>CHC Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\2. CHC Common\CHC Common.vbproj">
+      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
+      <Name>CHC Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\3. CHC Protocol\CHC Protocol - Debug.vbproj">
       <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
       <Name>CHC Protocol - Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\4. CHC Support UI Controls\CHC Support UI Controls.vbproj">
+      <Project>{2b477a78-3139-4570-bb5e-3fc09475c316}</Project>
+      <Name>CHC Support UI Controls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\5. CHC Sidechain Service\CHC Sidechain Service - Debug.vbproj">
       <Project>{f586744f-8890-4341-8ae8-2583d5a4d084}</Project>

@@ -14,6 +14,23 @@ Namespace AreaCommon
     ''' </summary>
     Module Common
 
+        Private Function showHelp() As Boolean
+            Console.WriteLine("Help list command")
+            Console.WriteLine("=================")
+            Console.WriteLine()
+            Console.WriteLine("-help                                Show this list")
+            Console.WriteLine("-force                               Show a log of a service")
+            Console.WriteLine("   --service:                        Set a service name")
+            Console.WriteLine("   --dataPath:                       Set a data path")
+            Console.WriteLine("   --password:                       Set a password to decode settings file")
+            Console.WriteLine("   --mode:                           Set a mode of a detail")
+            Console.WriteLine("   --securityKey:                    Set a password of a security key")
+            Console.WriteLine("   --address:                        Set an address of a service")
+            Console.WriteLine("<file log path>                      Show a file log paginated")
+
+            Return True
+        End Function
+
         ''' <summary>
         ''' This method provide to run a application
         ''' </summary>
@@ -24,15 +41,13 @@ Namespace AreaCommon
 
                 command = engine.run()
 
-                If (Command.code.ToLower.CompareTo("force") = 0) Then
+                If (command.code.ToLower.CompareTo("force") = 0) Then
                     Dim console As New ConsoleEngine
 
-                    'If Not (New IntegrityApplication).run() Then
-                    '    Return
-                    'End If
-
-                    console.execute(Command)
-                ElseIf Command.isPath Then
+                    console.execute(command)
+                ElseIf (command.code.ToLower.CompareTo("help") = 0) Then
+                    showHelp()
+                ElseIf command.isPath Then
                     ShowFileLogEngine.execute(command.code)
                 Else
                     Console.WriteLine("Command not recognized")
