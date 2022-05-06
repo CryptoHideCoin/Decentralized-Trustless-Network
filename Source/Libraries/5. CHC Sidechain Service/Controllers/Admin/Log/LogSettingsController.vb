@@ -31,7 +31,7 @@ Namespace Controllers
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("LogSettings.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackEnter("LogSettings.GetValue", $"token={securityToken}", True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -73,7 +73,7 @@ Namespace Controllers
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("LogSettings.PutValue",, True)
+                    AreaCommon.Main.environment.log.trackEnter("LogSettings.PutValue", $"token={securityToken}", True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)

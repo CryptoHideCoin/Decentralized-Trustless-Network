@@ -12,54 +12,10 @@ Imports CHCModelsLibrary.AreaModel.Log
 
 Namespace AreaEngine
 
-    ''' <summary>
-    ''' This class contain all element of engine clean of log
-    ''' </summary>
+    '''' <summary>
+    '''' This class contain all element of engine clean of log
+    '''' </summary>
     Public Class CleanLogEngine
-
-        Public Property instanceLog As String = ""
-        Public Property pathLog As String = ""
-        Public Property keepFile As KeepEnum
-
-
-        ''' <summary>
-        ''' This method provide to clean a log instance
-        ''' </summary>
-        ''' <param name="specificPathLog"></param>
-        ''' <returns></returns>
-        Private Function cleanLogInstance(ByVal specificPathLog As String) As Boolean
-            Try
-                Dim path As String = IO.Path.Combine(pathLog, specificPathLog)
-                Dim diff As Decimal = 0
-                Dim toEliminate As Boolean = False
-
-                For Each logFile As IO.FileInfo In New IO.DirectoryInfo(path).GetFiles
-                    If (IO.Path.GetExtension(logFile.Name) = ".track") Then
-
-                        diff = Now.Subtract(logFile.LastWriteTime).TotalDays
-                        toEliminate = 0
-
-                        Select Case keepFile
-
-                            Case KeepEnum.lastDay : toEliminate = (diff >= 1)
-                            Case KeepEnum.lastMonth : toEliminate = (diff >= 30)
-                            Case KeepEnum.lastWeek : toEliminate = (diff >= 7)
-                            Case Else : toEliminate = (diff >= 365)
-
-                        End Select
-
-                        If toEliminate Then
-                            IO.File.Delete(logFile.FullName)
-                        End If
-                    End If
-                Next
-
-                Return True
-            Catch ex As Exception
-                Return False
-            End Try
-        End Function
-
 
         ''' <summary>
         ''' This method provide to delete all older log file
@@ -67,20 +23,47 @@ Namespace AreaEngine
         ''' <returns></returns>
         Public Function run() As Boolean
             Try
-                If (instanceLog.Length > 0) Then
-                    Return cleanLogInstance(instanceLog)
-                Else
-                    For Each instance As IO.FileInfo In New IO.DirectoryInfo(pathLog).GetFiles
-                        If (instance.Attributes = IO.FileAttributes.Directory) Then
-                            If Not cleanLogInstance(instance.Name) Then
-                                Return False
-                            End If
-                        End If
-                    Next
+                AreaCommon.Main.environment.log.trackEnter("CleanLogEngine.run")
 
-                    Return True
-                End If
+                Dim limitTime As Double = CDbl(1000) * 60 * 60 * 24
+                Dim blockEngine As New CHCCommonLibrary.AreaEngine.Log.LogBlockEngine
+                Dim testFile As Boolean
+
+                Select Case AreaCommon.Main.environment.settings.autoMaintenance.trackLogRotateConfig.keepLast
+                    Case KeepEnum.lastMonth : limitTime = CDbl(limitTime) * 30
+                    Case KeepEnum.lastWeek : limitTime = CDbl(limitTime) * 7
+                    Case KeepEnum.lastYear : limitTime = CDbl(limitTime) * 365
+                End Select
+
+                limitTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - limitTime
+
+                blockEngine.logFilePath = AreaCommon.Main.environment.log.settings.pathFile
+                blockEngine.logInstance = AreaCommon.Main.environment.log.settings.instanceID
+
+                For Each singleFile In blockEngine.readListLogFile().items
+                    testFile = False
+
+                    If (AreaCommon.Main.environment.settings.autoMaintenance.trackLogRotateConfig.keepFile = LogRotateConfig.KeepFileEnum.onlyMainTracks) Then
+                        testFile = (singleFile.name.Contains("main.log") <> 0)
+                    Else
+                        testFile = True
+                    End If
+
+                    If testFile Then
+                        If (singleFile.startAt < limitTime) Then
+                            blockEngine.delete(singleFile.name)
+
+                            AreaCommon.Main.environment.log.track("CleanLogEngine.run", $"Delete file = {singleFile.name}")
+                        End If
+                    End If
+                Next
+
+                AreaCommon.Main.environment.log.trackExit("CleanLogEngine.run")
+
+                Return True
             Catch ex As Exception
+                AreaCommon.Main.environment.log.trackException("CleanLogEngine.run", ex.Message)
+
                 Return False
             End Try
         End Function

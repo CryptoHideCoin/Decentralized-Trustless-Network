@@ -23,6 +23,7 @@ Namespace AreaEngine.Log
         Private Property _ToWrite As New Concurrent.ConcurrentQueue(Of SingleActionApplication)
         Private Property _Settings As New TrackConfiguration
 
+        Private Property _UseMainFile As Boolean = False
         Private Property _ChangeInBeginWrite As Boolean = False
         Private Property _ChangeInNormalMode As Boolean = False
         Private Property _ForceWriteFile As Boolean = False
@@ -46,35 +47,56 @@ Namespace AreaEngine.Log
         End Function
 
         ''' <summary>
+        ''' This method provide to add a new file to index
+        ''' </summary>
+        Private Sub addNewFileToIndex()
+            Try
+                Dim indexFile As String = IO.Path.Combine(_Settings.pathFileLog, "index.dat")
+
+                Using fileData As IO.StreamWriter = IO.File.AppendText(indexFile)
+                    fileData.WriteLine($"{IO.Path.GetFileName(_CurrentFileName).Replace(".log", "")}|{Miscellaneous.timeStampFromDateTime()}")
+                End Using
+            Catch ex As Exception
+            End Try
+        End Sub
+
+        ''' <summary>
         ''' This method provide to set a file name
         ''' </summary>
         ''' <returns></returns>
         Private Function setFileName() As Boolean
             Dim setFile As Boolean = False
 
-            If _ForceWriteFile Then
-                Return True
-            ElseIf _ChangeInBeginWrite Then
+            If _ChangeInBeginWrite Then
                 IO.Directory.CreateDirectory(_Settings.pathFileLog)
 
                 _CurrentFileName = IO.Path.Combine(_Settings.pathFileLog, "main.log")
                 _ChangeInBeginWrite = False
+
+                addNewFileToIndex()
 
                 Return True
             ElseIf _ChangeInNormalMode Then
                 setFile = True
 
                 _ChangeInNormalMode = False
-            ElseIf (_Settings.changeFileEvery > 0) And (_StartWriteFile + _Settings.changeFileEvery > Miscellaneous.timeStampFromDateTime()) Then
-                setFile = True
             ElseIf (_Settings.changeNumberOfRegistrations > 0) And (_NumRegistrationOnFile > _Settings.changeNumberOfRegistrations) Then
                 setFile = True
+            ElseIf (_Settings.changeFileEvery > 0) And (_StartWriteFile + _Settings.changeFileEvery > Miscellaneous.timeStampFromDateTime()) Then
+                setFile = True
+            ElseIf _ForceWriteFile Then
+                Return True
             End If
 
             If setFile Then
                 _StartWriteFile = Miscellaneous.timeStampFromDateTime()
                 _NumRegistrationOnFile = 0
-                _CurrentFileName = IO.Path.Combine(_Settings.pathFileLog, "execute-" & _StartWriteFile.ToString.Replace(",", "").Replace(".", "") & ".log")
+
+                If _UseMainFile Then
+                    _CurrentFileName = IO.Path.Combine(_Settings.pathFileLog, "execute-" & _StartWriteFile.ToString.Replace(",", "").Replace(".", "") & ".log")
+
+                    addNewFileToIndex()
+                End If
 
                 Return True
             Else
@@ -103,12 +125,16 @@ Namespace AreaEngine.Log
                     Return False
                 End If
 
+                _UseMainFile = True
+
                 Using fileData As IO.StreamWriter = IO.File.AppendText(_CurrentFileName)
                     Do While (_ToWrite.Count > 0)
 #Disable Warning BC42030
                         If _ToWrite.TryDequeue(item) Then
 #Enable Warning BC42030
                             fileData.WriteLine(item.toString())
+
+                            _NumRegistrationOnFile += 1
                         End If
                     Loop
                 End Using

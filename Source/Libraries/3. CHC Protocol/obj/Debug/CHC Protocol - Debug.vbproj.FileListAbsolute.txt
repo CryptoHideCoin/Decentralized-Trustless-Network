@@ -11,5 +11,5 @@ E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Debug\CHC Protocol - D
 E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Debug\CHC Protocol - Debug.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Debug\CHCProtocolLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Debug\CHCProtocolLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\CHCCommonLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\CHCModelsLibrary.pdb

@@ -72,9 +72,6 @@
     <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModelsLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCSidechainServiceLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\Standard\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
@@ -85,10 +82,6 @@
     </Reference>
     <Reference Include="CHCModelsLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCProtocolLibrary">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x64\CHCProtocolLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCSidechainServiceLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x64\CHCSidechainServiceLibrary.dll</HintPath>
@@ -141,6 +134,12 @@
   <ItemGroup>
     <Compile Include="Base\IntegrityApplication.vb" />
     <Compile Include="Base\Paths.vb" />
+    <Compile Include="Forms\AutoMaintenanceSettings.Designer.vb">
+      <DependentUpon>AutoMaintenanceSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AutoMaintenanceSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Informations.Designer.vb">
       <DependentUpon>Informations.vb</DependentUpon>
     </Compile>
@@ -154,6 +153,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Settings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\trackLogSettings.Designer.vb">
+      <DependentUpon>trackLogSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\trackLogSettings.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Settings.Designer.vb">
@@ -177,6 +182,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\AutoMaintenanceSettings.resx">
+      <DependentUpon>AutoMaintenanceSettings.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Informations.resx">
       <DependentUpon>Informations.vb</DependentUpon>
     </EmbeddedResource>
@@ -222,9 +230,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\3. CHC Protocol\CHC Protocol.vbproj">
+    <ProjectReference Include="..\..\Libraries\1. CHC Models\CHC Models.vbproj">
+      <Project>{5475fb38-e6b1-4049-8a92-b16607841e96}</Project>
+      <Name>CHC Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\3. CHC Protocol\CHC Protocol - Debug.vbproj">
       <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
-      <Name>CHC Protocol</Name>
+      <Name>CHC Protocol - Debug</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

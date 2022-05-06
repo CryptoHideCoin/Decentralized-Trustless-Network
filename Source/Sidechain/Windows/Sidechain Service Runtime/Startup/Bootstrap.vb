@@ -113,7 +113,7 @@ Namespace AreaCommon.Startup
                     End With
                 End If
                 If proceed Then
-                    If Not bootstrap.trackRuntimeStart(problemDescription) Then
+                    If Not bootstrap.trackRuntimeStart(CUSTOM_ChainServiceName, problemDescription) Then
                         MessageBox.Show(problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                         proceed = False

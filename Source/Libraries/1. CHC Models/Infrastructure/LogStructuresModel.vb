@@ -18,7 +18,7 @@ Namespace AreaModel.Log
     ''' This enumeration contain the type of log row
     ''' </summary>
     Public Enum ActionEnumeration
-        notDefined
+        undefined
         printIntoConsole
         enterIntoMethod
         exitFromTheMethod
@@ -34,7 +34,6 @@ Namespace AreaModel.Log
     ''' trackAll - Track all event
     ''' </summary>
     Public Enum TrackRuntimeModeEnum
-        neverTrace
         trackOnlyBootstrapAndError
         trackAll
     End Enum
@@ -43,6 +42,7 @@ Namespace AreaModel.Log
     ''' This enum contain the log file that we want to mantain
     ''' </summary>
     Public Enum KeepEnum
+        undefined
         lastDay
         lastWeek
         lastMonth
@@ -65,7 +65,7 @@ Namespace AreaModel.Log
     ''' </summary>
     Public Class SingleActionApplication
         Public Property instant As Double = 0
-        Public Property action As ActionEnumeration = ActionEnumeration.notDefined
+        Public Property action As ActionEnumeration = ActionEnumeration.undefined
         Public Property position As String = ""
         Public Property message As String = ""
         Public Property duringBootstrap As Boolean = False
@@ -240,17 +240,12 @@ Namespace AreaModel.Log
     ''' </summary>
     Public Class LogRotateConfig
 
-        Public Enum FrequencyEnum
-            every12h
-            everyDay
-        End Enum
-
         Public Enum KeepFileEnum
+            undefined
             nothingFiles
             onlyMainTracks
         End Enum
 
-        Public frequency As FrequencyEnum
         Public keepLast As KeepEnum = KeepEnum.lastWeek
         Public keepFile As KeepFileEnum = KeepFileEnum.nothingFiles
 
@@ -272,6 +267,46 @@ Namespace AreaModel.Log
         Inherits BaseRemoteResponse
 
         Public Property value As New LogPanelParameters
+    End Class
+
+    ''' <summary>
+    ''' This class contain all element of the list Index
+    ''' </summary>
+    Public Class LogListModel
+
+        ''' <summary>
+        ''' This class contain the element of a single log block model
+        ''' </summary>
+        Public Class SingleLogBlockModel
+
+            Public Property [name] As String = ""
+            Public Property startAt As Double = 0
+
+        End Class
+
+        Public Property items As New List(Of SingleLogBlockModel)
+
+        Public Function addNew(ByVal name As String, ByVal startAt As Double) As SingleLogBlockModel
+
+            Dim item As New SingleLogBlockModel
+
+            item.name = name
+            item.startAt = startAt
+
+            items.Add(item)
+
+            Return item
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain the information response model of Log Panel Parameters
+    ''' </summary>
+    Public Class LogListResponseModel
+        Inherits BaseRemoteResponse
+
+        Public Property value As New LogListModel
     End Class
 
 End Namespace

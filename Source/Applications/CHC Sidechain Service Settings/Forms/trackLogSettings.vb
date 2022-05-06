@@ -11,23 +11,13 @@ Public Class trackLogSettings
     End Sub
 
     Private Sub saveButton_Click(sender As Object, e As EventArgs) Handles saveButton.Click
+        If trackConfiguration.SelectedIndex < 0 Then
+            MessageBox.Show("Select the track configuration", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return
+        End If
+
         DialogResult = DialogResult.OK
-    End Sub
-
-    Private Sub everyChangeFile_TextChanged(sender As Object, e As EventArgs) Handles everyChangeFile.TextChanged
-        If IsNumeric(everyChangeFile.text) Then
-            If (everyChangeFile.Value > 0) Then
-                numberRegistrations.text = "0"
-            End If
-        End If
-    End Sub
-
-    Private Sub numberRegistrations_TextChanged(sender As Object, e As EventArgs) Handles numberRegistrations.TextChanged
-        If IsNumeric(numberRegistrations.Text) Then
-            If (numberRegistrations.Value > 0) Then
-                everyChangeFile.text = "0"
-            End If
-        End If
     End Sub
 
 End Class

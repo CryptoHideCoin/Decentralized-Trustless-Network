@@ -55,7 +55,7 @@ Namespace Support
         Private Property _CurrentPage As String = ""
         Private Property _FileName As String = ""
 
-        Public Property saveMode As TrackRuntimeModeEnum = TrackRuntimeModeEnum.neverTrace
+        Public Property saveMode As TrackRuntimeModeEnum = TrackRuntimeModeEnum.trackOnlyBootstrapAndError
         Public Property inBootStrapAction As Boolean = False
         Public Property noPrintConsole As Boolean = False
         Public Property useCache As Boolean = True
@@ -103,13 +103,11 @@ Namespace Support
         ''' </summary>
         Private Sub flushCache()
             Try
-                If (saveMode <> TrackRuntimeModeEnum.neverTrace) Then
-                    Using fileData As IO.StreamWriter = IO.File.AppendText(completeFileName)
-                        For Each strTmp In _cache
-                            fileData.WriteLine(strTmp)
-                        Next
-                    End Using
-                End If
+                Using fileData As IO.StreamWriter = IO.File.AppendText(completeFileName)
+                    For Each strTmp In _cache
+                        fileData.WriteLine(strTmp)
+                    Next
+                End Using
 
                 writeConsoleGUI()
             Catch ex As Exception
@@ -188,9 +186,6 @@ Namespace Support
                         Console.WriteLine("Error:" & content & " (" & position & ")")
                     End If
 
-                    Return
-                End If
-                If (saveMode = TrackRuntimeModeEnum.neverTrace) Then
                     Return
                 End If
 

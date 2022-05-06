@@ -52,7 +52,7 @@ Namespace Controllers
                 AreaCommon.Main.environment.log.trackException("RequestAccessKey.GetValue", ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("RequestAccessKey.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("RequestAccessKey.GetValue", result.accessKey, True)
                 End If
             End Try
 

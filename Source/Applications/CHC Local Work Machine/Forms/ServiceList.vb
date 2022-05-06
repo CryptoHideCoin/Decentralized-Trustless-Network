@@ -221,9 +221,8 @@ Public Class ServiceList
             Dim topMostValue As Boolean = Me.TopMost
 
             Select Case value.trackConfiguration
-                Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.neverTrace : settingPage.trackConfiguration.SelectedIndex = 0
-                Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackOnlyBootstrapAndError : settingPage.trackConfiguration.SelectedIndex = 1
-                Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackAll : settingPage.trackConfiguration.SelectedIndex = 2
+                Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackOnlyBootstrapAndError : settingPage.trackConfiguration.SelectedIndex = 0
+                Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackAll : settingPage.trackConfiguration.SelectedIndex = 1
             End Select
 
             settingPage.useBufferToWrite.Checked = value.useBufferToWrite
@@ -235,9 +234,8 @@ Public Class ServiceList
 
             If (settingPage.ShowDialog() = DialogResult.OK) Then
                 Select Case settingPage.trackConfiguration.SelectedIndex
-                    Case 0 : value.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.neverTrace
-                    Case 1 : value.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackOnlyBootstrapAndError
-                    Case 2 : value.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackAll
+                    Case 0 : value.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackOnlyBootstrapAndError
+                    Case 1 : value.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackAll
                 End Select
 
                 value.useBufferToWrite = settingPage.useBufferToWrite.Checked

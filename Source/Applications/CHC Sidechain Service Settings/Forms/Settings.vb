@@ -20,6 +20,7 @@ Public Class Settings
     Private Property _Password As String = ""
     Private Property _PortList = New List(Of String) From {1, 5, 7, 9, 11, 13, 17, 18, 19, 20, 21, 22, 23, 25, 37, 39, 42, 43, 49, 50, 53, 67, 68, 69, 70, 71, 79, 80, 81, 82, 88, 101, 102, 105, 107, 109, 110, 111, 113, 115, 117, 119, 123, 137, 138, 139, 143, 161, 162, 177, 179, 194, 199, 201, 209, 210, 213, 220, 369, 370, 389, 427, 443, 444, 445, 464, 500, 512, 513, 514, 515, 517, 518, 520, 521, 525, 530, 531, 532, 533, 540, 543, 544, 546, 547, 548, 554, 556, 563, 587, 631, 636, 674, 694, 749, 750, 873, 992, 993, 995, 1080, 1433, 1434, 1494, 1512, 1524, 1701, 1719, 1720, 1812, 1813, 1985, 2008, 2010, 2049, 2102, 2103, 2104, 2401, 2809, 3306, 4321, 5999, 6000, 11371, 13720, 13721, 13724, 13782, 13783, 22273, 23399, 25565, 26000, 27017, 33434}
     Private Property _Data As SettingsSidechainServiceComplete
+    Private Property _DuringReadData As Boolean = False
 
 
     ''' <summary>
@@ -135,7 +136,7 @@ Public Class Settings
             useMessage.Enabled = False
             useProfile.Enabled = False
             useAlert.Enabled = False
-            useAutoMaintenance.Enabled = False
+            useAutoMaintenance.Enabled = True
 
             tabControl.TabPages(2).Enabled = True
             tabControl.TabPages(3).Enabled = True
@@ -296,6 +297,7 @@ Public Class Settings
             End With
 
             data.logSettings = _Data.logSettings
+            data.autoMaintenance = _Data.autoMaintenance
 
             Return data
         Catch ex As Exception
@@ -427,11 +429,15 @@ Public Class Settings
     End Function
 
     Private Sub loadSettingButton_Click(sender As Object, e As EventArgs) Handles loadSettingButton.Click
+        _DuringReadData = True
+
         entireLoad(False)
 
         fromRemoteButton.Enabled = True
         toRemoteButton.Enabled = True
         openAsFileButton.Enabled = True
+
+        _DuringReadData = False
     End Sub
 
     ''' <summary>
@@ -873,21 +879,24 @@ Public Class Settings
     Private Sub useTrackLog_CheckedChanged(sender As Object, e As EventArgs) Handles useTrackLog.CheckedChanged
         If useTrackLog.Checked Then
             settingsTrack.Enabled = True
+
+            If _DuringReadData Then Return
+
+            _Data.autoMaintenance.trackLogRotateConfig.keepFile = CHCModelsLibrary.AreaModel.Log.LogRotateConfig.KeepFileEnum.undefined
+            _Data.autoMaintenance.trackLogRotateConfig.keepLast = CHCModelsLibrary.AreaModel.Log.KeepEnum.undefined
         Else
             settingsTrack.Enabled = False
 
             _Data.logSettings = New SettingsLogSidechainService
         End If
-
     End Sub
 
     Private Sub settingsTrack_Click(sender As Object, e As EventArgs) Handles settingsTrack.Click
         Dim settingPage As New trackLogSettings
 
         Select Case _Data.logSettings.trackConfiguration
-            Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.neverTrace : settingPage.trackConfiguration.SelectedIndex = 0
-            Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackOnlyBootstrapAndError : settingPage.trackConfiguration.SelectedIndex = 1
-            Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackAll : settingPage.trackConfiguration.SelectedIndex = 2
+            Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackOnlyBootstrapAndError : settingPage.trackConfiguration.SelectedIndex = 0
+            Case CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackAll : settingPage.trackConfiguration.SelectedIndex = 1
         End Select
 
         settingPage.useBufferToWrite.Checked = _Data.logSettings.useBufferToWrite
@@ -897,9 +906,8 @@ Public Class Settings
 
         If (settingPage.ShowDialog() = DialogResult.OK) Then
             Select Case settingPage.trackConfiguration.SelectedIndex
-                Case 0 : _Data.logSettings.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.neverTrace
-                Case 1 : _Data.logSettings.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackOnlyBootstrapAndError
-                Case 2 : _Data.logSettings.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackAll
+                Case 0 : _Data.logSettings.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackOnlyBootstrapAndError
+                Case 1 : _Data.logSettings.trackConfiguration = CHCModelsLibrary.AreaModel.Log.TrackRuntimeModeEnum.trackAll
             End Select
 
             _Data.logSettings.useBufferToWrite = settingPage.useBufferToWrite.Checked
@@ -927,6 +935,41 @@ Public Class Settings
 
         saveButton.Enabled = False
         openAsFileButton.Enabled = False
+    End Sub
+
+    Private Sub useAutoMaintenance_CheckedChanged_1(sender As Object, e As EventArgs) Handles useAutoMaintenance.CheckedChanged
+        settingAutomMaintenanceButton.Enabled = useAutoMaintenance.Checked
+
+        If Not useAutoMaintenance.Checked Then
+            If _DuringReadData Then Return
+
+            _Data.autoMaintenance.autoMaintenanceFrequencyHours = 0
+            _Data.autoMaintenance.trackLogRotateConfig.keepFile = CHCModelsLibrary.AreaModel.Log.LogRotateConfig.KeepFileEnum.undefined
+            _Data.autoMaintenance.trackLogRotateConfig.keepLast = CHCModelsLibrary.AreaModel.Log.KeepEnum.undefined
+        End If
+    End Sub
+
+    Private Sub settingAutomMaintenanceButton_Click(sender As Object, e As EventArgs) Handles settingAutomMaintenanceButton.Click
+        If _DuringReadData Then Return
+
+        Dim autoMaintenance As New AutoMaintenanceSettings
+
+        autoMaintenance.everyChangeFile.Text = _Data.autoMaintenance.autoMaintenanceFrequencyHours
+
+        autoMaintenance.keepFileLabel.Enabled = _Data.useLog
+        autoMaintenance.keepFile.Enabled = _Data.useLog
+        autoMaintenance.keepLastLabel.Enabled = _Data.useLog
+        autoMaintenance.keepLast.Enabled = _Data.useLog
+
+        autoMaintenance.keepFile.SelectedIndex = _Data.autoMaintenance.trackLogRotateConfig.keepFile
+        autoMaintenance.keepLast.SelectedIndex = _Data.autoMaintenance.trackLogRotateConfig.keepLast
+
+        If autoMaintenance.ShowDialog = DialogResult.OK Then
+            _Data.autoMaintenance.autoMaintenanceFrequencyHours = autoMaintenance.everyChangeFile.Text
+            _Data.autoMaintenance.trackLogRotateConfig.keepFile = autoMaintenance.keepFile.SelectedIndex
+            _Data.autoMaintenance.trackLogRotateConfig.keepLast = autoMaintenance.keepLast.SelectedIndex
+        End If
+
     End Sub
 
 End Class

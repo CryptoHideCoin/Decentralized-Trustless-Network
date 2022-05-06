@@ -96,6 +96,12 @@ Namespace AreaCommon.Command
             Console.WriteLine("   --environmentDefaultNotSet:       Test if default environment not set")
             Console.WriteLine("   --defaultParametersNotDefine:     Test if default parameters not define")
             Console.WriteLine("   --applicationsPathNotDefine:      Test if application's path not define")
+            Console.WriteLine("-log                                 Log action")
+            Console.WriteLine("   --getList:                        Return the list of log file")
+            Console.WriteLine("   --blockExplorer:<value>           Show the block explorer data")
+            Console.WriteLine("   --deleteBlock:<value>             Delete a block data (file and index)")
+            Console.WriteLine("   --deleteOldLogInstance:           Delete all previous log instance")
+            Console.WriteLine("   --logRotate:                      Start log rotate")
 
             Console.WriteLine()
             Console.WriteLine("General switch:")

@@ -329,9 +329,9 @@ Namespace AreaSystem
 
                     With system
                         .path = manageSinglePath(directoryData, systemFolderName)
-                        .counters = manageSinglePath(.path, countersFolderName, folderName)
-                        .events = manageSinglePath(.path, eventsFolderName, folderName)
-                        .logs = manageSinglePath(.path, logsFolderName, folderName)
+                        .counters = manageSinglePath(.path, countersFolderName)
+                        .events = manageSinglePath(.path, eventsFolderName)
+                        .logs = manageSinglePath(.path, logsFolderName)
                     End With
 
                     With workData

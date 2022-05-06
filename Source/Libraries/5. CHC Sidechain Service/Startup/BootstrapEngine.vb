@@ -143,7 +143,7 @@ Namespace AreaCommon.Startup
         ''' </summary>
         ''' <param name="problemDescription"></param>
         ''' <returns></returns>
-        Public Function trackRuntimeStart(ByRef problemDescription As String) As Boolean
+        Public Function trackRuntimeStart(ByVal sideChainServiceName As String, ByRef problemDescription As String) As Boolean
             Try
                 With environment.log.settings
                     .saveMode = environment.settings.logSettings.trackConfiguration
@@ -151,8 +151,9 @@ Namespace AreaCommon.Startup
                     .changeNumberOfRegistrations = environment.settings.logSettings.changeLogFileNumRegistrations
                     .useBufferToWrite = environment.settings.logSettings.useBufferToWrite
                     .writeToFile = environment.settings.logSettings.writeToFile
-                    .pathFile = environment.paths.system.logs
+                    .pathFile = IO.Path.Combine(environment.paths.system.logs, sideChainServiceName)
                     .instanceID = Guid.NewGuid.ToString
+                    '.instanceID = "f103cadd-4977-4d50-8c4c-5fe29b788623" ''' TODO: To remove
                 End With
 
                 Return True

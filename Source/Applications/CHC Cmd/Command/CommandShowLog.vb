@@ -96,7 +96,7 @@ Namespace AreaCommon.Command
                     If Not IO.File.Exists(path) Then
                         Console.WriteLine("Error: the application '" & path & "' is not exist")
                     Else
-                        Process.Start(path, "-force " & parameterService & " " & parameterDataPath & " " & parameterPassword & " " & parameterMode & " " & parameterAddress & " " & parameterSecurityKey & " " & parameterPause)
+                        Process.Start(path, "-stream " & parameterService & " " & parameterDataPath & " " & parameterPassword & " " & parameterMode & " " & parameterAddress & " " & parameterSecurityKey & " " & parameterPause)
 
                         Return True
                     End If

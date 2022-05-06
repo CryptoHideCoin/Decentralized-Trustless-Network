@@ -1,0 +1,108 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+CHCSidechainServiceRuntime
+</name>
+</assembly>
+<members>
+<member name="T:CHCSidechainServiceRuntime.My.Resources.Resources">
+<summary>
+  Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
+</summary>
+</member>
+<member name="P:CHCSidechainServiceRuntime.My.Resources.Resources.ResourceManager">
+<summary>
+  Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
+</summary>
+</member>
+<member name="P:CHCSidechainServiceRuntime.My.Resources.Resources.Culture">
+<summary>
+  Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
+  ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
+</summary>
+</member>
+<member name="T:CHCSidechainServiceRuntime.AreaCommon.Controllers">
+ <summary>
+ This static class contain the element of webservice component
+ </summary>
+</member>
+<member name="M:CHCSidechainServiceRuntime.AreaCommon.Controllers.startWebService">
+ <summary>
+ This method provide to start a webservice
+ </summary>
+</member>
+<member name="M:CHCSidechainServiceRuntime.AreaCommon.Controllers.webServiceThread(System.Boolean)">
+ <summary>
+ This method provide to start a webservice in a new thread
+ </summary>
+</member>
+<member name="T:CHCSidechainServiceRuntime.AreaCommon.Startup.MainBootstrap">
+ <summary>
+ This static class run the application
+ </summary>
+</member>
+<member name="M:CHCSidechainServiceRuntime.AreaCommon.Startup.MainBootstrap.acquireServiceInformation">
+ <summary>
+ This method provide to acquire the service information
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSidechainServiceRuntime.AreaCommon.Startup.MainBootstrap.run">
+ <summary>
+ This method provide to prepare the application to the startup
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCSidechainServiceRuntime.AreaCommon.Startup.Main">
+ <summary>
+ This static class run the application
+ </summary>
+</member>
+<member name="M:CHCSidechainServiceRuntime.AreaCommon.Startup.Main.Main">
+ <summary>
+ This method provide to run a application
+ </summary>
+</member>
+<member name="M:CHCSidechainServiceRuntime.AreaCommon.Startup.Scheduler.startServiceProcessor">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:CHCSidechainServiceRuntime.AreaCommon.Startup.Scheduler.addWorkLocalMachineJob">
+ <summary>
+ This method provide to add work local machine job
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:CHCSidechainServiceRuntime.AreaCommon.Startup.Scheduler.run">
+ <summary>
+ This method provide to start all maintenance service
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCSidechainServiceRuntime.AreaCommon.Startup.Service">
+ <summary>
+ This static class run the service of application
+ </summary>
+</member>
+<member name="M:CHCSidechainServiceRuntime.AreaCommon.Startup.Service.run">
+ <summary>
+ This method provide to run all service of application
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:CHCSidechainServiceRuntime.IntegrityApplication">
+ <summary>
+ This class contain all element of check integrity
+ </summary>
+</member>
+<member name="M:CHCSidechainServiceRuntime.IntegrityApplication.executeRepairNewton(System.String)">
+ <summary>
+ This method provide to run a Repair Newtown utility
+ </summary>
+ <param name="fileName"></param>
+ <returns></returns>
+</member>
+</members>
+</doc>

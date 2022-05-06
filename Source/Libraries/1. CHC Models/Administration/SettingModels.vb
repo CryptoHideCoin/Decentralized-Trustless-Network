@@ -31,7 +31,6 @@ Namespace AreaModel.Administration.Settings
     Public Class SettingsAutoMaintenanceSidechainService
 
         Public Property autoMaintenanceFrequencyHours As Integer = 0
-
         Public Property trackLogRotateConfig As New Log.LogRotateConfig
 
     End Class

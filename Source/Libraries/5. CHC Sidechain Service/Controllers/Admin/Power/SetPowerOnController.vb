@@ -2,10 +2,7 @@
 Option Explicit On
 
 Imports System.Web.Http
-Imports System.Threading
-Imports CHCModelsLibrary.AreaModel.Log
 Imports CHCModelsLibrary.AreaModel.Network.Response
-Imports CHCProtocolLibrary.AreaCommon
 Imports CHCModelsLibrary.AreaModel.Information
 
 
@@ -16,7 +13,7 @@ Namespace Controllers
 
     ' GET: api/{GUID service}/administration/setPowerOn
     <Route("AdministrationApi")>
-    Public Class setPowerOnController
+    Public Class SetPowerOnController
 
         Inherits ApiController
 
@@ -27,27 +24,20 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="signature"></param>
         ''' <returns></returns>
-        Public Function GetValue(ByVal securityToken As String, ByVal keepFile As KeepEnum, ByVal specificInstance As String) As BaseRemoteResponse
+        Public Function GetValue(ByVal securityToken As String) As BaseRemoteResponse
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
-            Dim asynchThread As Thread
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("CleanLog.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackEnter("SetPowerOn.GetValue",, True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
 
-                    If (response.Length = 0) Then
-                        AreaAsynchronous.instanceID = specificInstance
-                        AreaAsynchronous.keepFile = keepFile
-
-                        asynchThread = New Thread(AddressOf AreaAsynchronous.executeLogClean)
-
-                        asynchThread.Start()
-                    Else
+                    If (response.Length <> 0) Then
                         result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
+
                         result.errorDescription = response
                     End If
                 Else
@@ -57,10 +47,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("CleanLog.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("SetPowerOn.GetValue", ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("CleanLog.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("SetPowerOn.GetValue",, True)
                 End If
             End Try
 

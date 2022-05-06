@@ -20,6 +20,7 @@ Namespace AreaEngine.Settings
         Public Property dataPath As String = ""
         Public Property serviceName As String = ""
         Public Property password As String = ""
+
         Public Property data As SettingsSidechainServiceComplete
 
 
@@ -37,6 +38,34 @@ Namespace AreaEngine.Settings
                 completeFileName = IO.Path.Combine(completeFileName, serviceName.Replace(" ", "") & "-log.Settings")
 
                 If Not IO.File.Exists(completeFileName) Then Return New SettingsLogSidechainService
+
+                engineFile.fileName = completeFileName
+
+                If (password.Length > 0) Then
+                    engineFile.cryptoKEY = password
+                Else
+                    engineFile.noCrypt = True
+                End If
+
+                If engineFile.read() Then
+                    Return engineFile.data
+                End If
+            Catch ex As Exception
+            End Try
+
+            Return result
+        End Function
+
+        Private Function getAutoMaintenanceSettings() As SettingsAutoMaintenanceSidechainService
+            Dim result As New SettingsAutoMaintenanceSidechainService
+            Try
+                Dim completeFileName As String = ""
+                Dim engineFile As New BaseFile(Of SettingsAutoMaintenanceSidechainService)
+
+                completeFileName = IO.Path.Combine(dataPath, "Settings")
+                completeFileName = IO.Path.Combine(completeFileName, serviceName.Replace(" ", "") & "-automaintenance.Settings")
+
+                If Not IO.File.Exists(completeFileName) Then Return New SettingsAutoMaintenanceSidechainService
 
                 engineFile.fileName = completeFileName
 
@@ -84,6 +113,38 @@ Namespace AreaEngine.Settings
                 End If
 
                 engineFile.data = _data.logSettings
+
+                Return engineFile.save()
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Private Function saveAutoMaintenance() As Boolean
+            Try
+                Dim completeFileName As String = ""
+                Dim engineFile As New BaseFile(Of SettingsAutoMaintenanceSidechainService)
+
+                completeFileName = IO.Path.Combine(dataPath, "Settings")
+                completeFileName = IO.Path.Combine(completeFileName, serviceName.Replace(" ", "") & "-automaintenance.Settings")
+
+                If IO.File.Exists(completeFileName) Then
+                    IO.File.Delete(completeFileName)
+                End If
+
+                If Not _data.useLog Then
+                    Return True
+                End If
+
+                engineFile.fileName = completeFileName
+
+                If (password.Length > 0) Then
+                    engineFile.cryptoKEY = password
+                Else
+                    engineFile.noCrypt = True
+                End If
+
+                engineFile.data = _data.autoMaintenance
 
                 Return engineFile.save()
             Catch ex As Exception
@@ -139,6 +200,7 @@ Namespace AreaEngine.Settings
                         data.useRequestCounter = .useRequestCounter
 
                         data.logSettings = getLogSettings()
+                        data.autoMaintenance = getAutoMaintenanceSettings()
                     End With
 
                     Return ResultReadSetting.Successfull
@@ -172,7 +234,11 @@ Namespace AreaEngine.Settings
                 End If
 
                 If engineFile.save() Then
-                    Return saveLogSettings()
+                    If saveLogSettings() Then
+                        Return saveAutoMaintenance()
+                    Else
+                        Return False
+                    End If
                 Else
                     Return False
                 End If

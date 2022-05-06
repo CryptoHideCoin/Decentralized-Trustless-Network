@@ -130,6 +130,7 @@
     <Compile Include="Encryption\SHAInterface.vb" />
     <Compile Include="FileManager\CHCBaseEncryption.vb" />
     <Compile Include="FileManager\CHCFile.vb" />
+    <Compile Include="LogTracker\CHCLogBlock.vb" />
     <Compile Include="LogTracker\CHCLogCache.vb" />
     <Compile Include="LogTracker\CHCLogEngine.vb" />
     <Compile Include="LogTracker\CHCLogIO.vb" />

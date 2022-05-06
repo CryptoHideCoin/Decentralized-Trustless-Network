@@ -45,6 +45,7 @@ Namespace AreaCommon
         Private Const _CommandNote As String = "note"
         Private Const _CommandWrite As String = "write"
         Private Const _CommandBuildPath As String = "buildPath"
+        Private Const _CommandLog As String = "Log"
 
 
         Public Property command As New CommandStructure
@@ -93,7 +94,8 @@ Namespace AreaCommon
                 Case _CommandTestRAWServe.ToLower() : classSupport = New Command.CommandTestRAWServe
                 Case _CommandNote.ToLower() : classSupport = New Command.CommandNote
                 Case _CommandWrite.ToLower() : classSupport = New Command.CommandWrite
-                Case _CommandBuildPath.ToLower() : classSupport = New Command.commandBuildPath
+                Case _CommandBuildPath.ToLower() : classSupport = New Command.CommandBuildPath
+                Case _CommandLog.ToLower() : classSupport = New Command.CommandLog
                 Case Else
                     If (command.code.Length > 0) Then
                         Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")

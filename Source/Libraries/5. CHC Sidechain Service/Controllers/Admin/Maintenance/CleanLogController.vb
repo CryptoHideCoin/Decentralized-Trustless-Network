@@ -27,7 +27,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="signature"></param>
         ''' <returns></returns>
-        Public Function GetValue(ByVal securityToken As String, ByVal keepFile As KeepEnum, ByVal specificInstance As String) As BaseRemoteResponse
+        Public Function GetValue(ByVal securityToken As String) As BaseRemoteResponse
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
             Dim asynchThread As Thread
@@ -40,9 +40,6 @@ Namespace Controllers
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        AreaAsynchronous.instanceID = specificInstance
-                        AreaAsynchronous.keepFile = keepFile
-
                         asynchThread = New Thread(AddressOf AreaAsynchronous.executeLogClean)
 
                         asynchThread.Start()

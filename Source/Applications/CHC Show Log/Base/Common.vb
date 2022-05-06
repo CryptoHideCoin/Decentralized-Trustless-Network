@@ -41,19 +41,24 @@ Namespace AreaCommon
 
                 command = engine.run()
 
-                If (command.code.ToLower.CompareTo("force") = 0) Then
-                    Dim console As New ConsoleEngine
+                If (command.code.ToLower.CompareTo("stream") = 0) Or
+                   (command.code.ToLower.CompareTo("showBlock".ToLower) = 0) Then
+                    Dim consoleClass As New ConsoleEngine
 
-                    console.execute(command)
+                    consoleClass.execute(command)
                 ElseIf (command.code.ToLower.CompareTo("help") = 0) Then
                     showHelp()
                 ElseIf command.isPath Then
                     ShowFileLogEngine.execute(command.code)
                 Else
                     Console.WriteLine("Command not recognized")
+
+                    Console.ReadKey()
                 End If
             Catch ex As Exception
                 Console.WriteLine("Error during sub main")
+
+                Console.ReadKey()
             End Try
         End Sub
 

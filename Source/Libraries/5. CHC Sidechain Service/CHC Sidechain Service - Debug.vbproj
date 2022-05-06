@@ -113,7 +113,11 @@
     <Compile Include="Common\Internal.vb" />
     <Compile Include="Controllers\Admin\Authorization\RequestAccessKeyController.vb" />
     <Compile Include="Controllers\Admin\Authorization\RequestAdminTokenController.vb" />
+    <Compile Include="Controllers\Admin\Log\LogBlockController.vb" />
+    <Compile Include="Controllers\Admin\Log\LogBlockDeleteController.vb" />
+    <Compile Include="Controllers\Admin\Log\LogListController.vb" />
     <Compile Include="Controllers\Admin\Log\LogSettingsController.vb" />
+    <Compile Include="Controllers\Admin\Maintenance\CleanOldLogInstanceController.vb" />
     <Compile Include="Controllers\Admin\Power\SetPowerOffController.vb" />
     <Compile Include="Controllers\Admin\Power\SetPowerOnController.vb" />
     <Compile Include="Controllers\Admin\Settings\SettingController.vb" />
@@ -123,6 +127,7 @@
     <Compile Include="Controllers\Service\SupportedProtocols.vb" />
     <Compile Include="Controllers\Service\TestController.vb" />
     <Compile Include="Engines\CleanLogEngine.vb" />
+    <Compile Include="Engines\CleanOldLogInstanceEngine.vb" />
     <Compile Include="Engines\IntegrityApplication.vb" />
     <Compile Include="Engines\NetworkEngine.vb" />
     <Compile Include="Engines\SchedulerEngine.vb" />

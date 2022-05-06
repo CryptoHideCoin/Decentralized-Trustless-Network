@@ -46,8 +46,9 @@ Partial Class Settings
         Me.certificateClient = New CHCSupportUIControls.Certificate()
         Me.adminPublicAddress = New CHCSupportUIControls.WalletAddress()
         Me.tabService = New System.Windows.Forms.TabPage()
-        Me.settingsTrack = New System.Windows.Forms.Button()
+        Me.settingAutomMaintenanceButton = New System.Windows.Forms.Button()
         Me.useAutoMaintenance = New System.Windows.Forms.CheckBox()
+        Me.settingsTrack = New System.Windows.Forms.Button()
         Me.useTrackLog = New System.Windows.Forms.CheckBox()
         Me.useAlert = New System.Windows.Forms.CheckBox()
         Me.useProfile = New System.Windows.Forms.CheckBox()
@@ -289,7 +290,7 @@ Partial Class Settings
         Me.selectServicePort.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.selectServicePort.Enabled = False
         Me.selectServicePort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.selectServicePort.isNecessary = False
+        Me.selectServicePort.isNecessary = True
         Me.selectServicePort.label = "Service port number (0..65535)"
         Me.selectServicePort.Location = New System.Drawing.Point(319, 145)
         Me.selectServicePort.Name = "selectServicePort"
@@ -302,7 +303,7 @@ Partial Class Settings
         Me.selectPublicPort.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.selectPublicPort.Enabled = False
         Me.selectPublicPort.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.selectPublicPort.isNecessary = False
+        Me.selectPublicPort.isNecessary = True
         Me.selectPublicPort.label = "Public port number (0..65535)"
         Me.selectPublicPort.Location = New System.Drawing.Point(376, 116)
         Me.selectPublicPort.Name = "selectPublicPort"
@@ -351,8 +352,9 @@ Partial Class Settings
         '
         'tabService
         '
-        Me.tabService.Controls.Add(Me.settingsTrack)
+        Me.tabService.Controls.Add(Me.settingAutomMaintenanceButton)
         Me.tabService.Controls.Add(Me.useAutoMaintenance)
+        Me.tabService.Controls.Add(Me.settingsTrack)
         Me.tabService.Controls.Add(Me.useTrackLog)
         Me.tabService.Controls.Add(Me.useAlert)
         Me.tabService.Controls.Add(Me.useProfile)
@@ -366,6 +368,26 @@ Partial Class Settings
         Me.tabService.Text = "Components"
         Me.tabService.UseVisualStyleBackColor = True
         '
+        'settingAutomMaintenanceButton
+        '
+        Me.settingAutomMaintenanceButton.Enabled = False
+        Me.settingAutomMaintenanceButton.Location = New System.Drawing.Point(539, 106)
+        Me.settingAutomMaintenanceButton.Name = "settingAutomMaintenanceButton"
+        Me.settingAutomMaintenanceButton.Size = New System.Drawing.Size(75, 23)
+        Me.settingAutomMaintenanceButton.TabIndex = 10
+        Me.settingAutomMaintenanceButton.Text = "Settings"
+        Me.settingAutomMaintenanceButton.UseVisualStyleBackColor = True
+        '
+        'useAutoMaintenance
+        '
+        Me.useAutoMaintenance.AutoSize = True
+        Me.useAutoMaintenance.Location = New System.Drawing.Point(404, 110)
+        Me.useAutoMaintenance.Name = "useAutoMaintenance"
+        Me.useAutoMaintenance.Size = New System.Drawing.Size(129, 17)
+        Me.useAutoMaintenance.TabIndex = 9
+        Me.useAutoMaintenance.Text = "Auto maintenance"
+        Me.useAutoMaintenance.UseVisualStyleBackColor = True
+        '
         'settingsTrack
         '
         Me.settingsTrack.Enabled = False
@@ -375,17 +397,6 @@ Partial Class Settings
         Me.settingsTrack.TabIndex = 7
         Me.settingsTrack.Text = "Settings"
         Me.settingsTrack.UseVisualStyleBackColor = True
-        '
-        'useAutoMaintenance
-        '
-        Me.useAutoMaintenance.AutoSize = True
-        Me.useAutoMaintenance.Enabled = False
-        Me.useAutoMaintenance.Location = New System.Drawing.Point(404, 110)
-        Me.useAutoMaintenance.Name = "useAutoMaintenance"
-        Me.useAutoMaintenance.Size = New System.Drawing.Size(129, 17)
-        Me.useAutoMaintenance.TabIndex = 6
-        Me.useAutoMaintenance.Text = "Auto maintenance"
-        Me.useAutoMaintenance.UseVisualStyleBackColor = True
         '
         'useTrackLog
         '
@@ -666,5 +677,6 @@ Partial Class Settings
     Friend WithEvents useCounter As CheckBox
     Friend WithEvents useEventRegistry As CheckBox
     Friend WithEvents settingsTrack As Button
+    Friend WithEvents settingAutomMaintenanceButton As Button
     Friend WithEvents useAutoMaintenance As CheckBox
 End Class

@@ -41,4 +41,4 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debu
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\System.Web.Http.dll
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.trackLogSettings.resources
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCProtocolLibrary.dll
-E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\Newtonsoft.Json.xml

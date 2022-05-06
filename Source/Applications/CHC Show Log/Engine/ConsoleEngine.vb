@@ -3,7 +3,6 @@ Option Explicit On
 
 Imports CHCCommonLibrary.AreaEngine.CommandLine
 Imports CHCCommonLibrary.AreaEngine.Communication
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
 Imports CHCProtocolLibrary.AreaWallet.Support
 Imports CHCProtocolLibrary.AreaEngine.Keys
 Imports CHCProtocolLibrary.AreaEngine.Settings
@@ -29,6 +28,8 @@ Namespace AreaCommon
         Private Property _Mode As String = "console"
         Private Property _Pause As Boolean = False
         Private Property _Keys As New KeysEngine
+        Private Property _ShowBlock As Boolean = False
+        Private Property _BlockValue As String = ""
 
         Private Property _DataSettings As SettingsSidechainServiceComplete
         Private Property _LocalWorkMachineSettings As SettingsSidechainServiceComplete
@@ -42,7 +43,7 @@ Namespace AreaCommon
             Try
                 Dim serviceName As String = _Service
                 Dim completeFileName As String = ""
-                Dim engine As New CHCProtocolLibrary.AreaEngine.Settings.SettingsEngine
+                Dim engine As New SettingsEngine
 
                 If Not loadService Then
                     serviceName = "LocalWorkMachine"
@@ -102,7 +103,19 @@ Namespace AreaCommon
                 If value.haveParameter("address") Then
                     _Address = value.parameterValue("address")
                 End If
+
                 _Pause = value.haveParameter("pause")
+                _ShowBlock = (value.code.ToLower.CompareTo("showBlock".ToLower()) = 0)
+
+                If _ShowBlock Then
+                    If Not value.haveParameter("loadBlock") Then
+                        Console.WriteLine("Block number value missing")
+
+                        Return False
+                    Else
+                        _BlockValue = value.parameterValue("loadBlock")
+                    End If
+                End If
 
                 Return (_DataPath.Length > 0) And (_Service.Length > 0)
             Catch ex As Exception
@@ -432,6 +445,38 @@ Namespace AreaCommon
         End Function
 
         ''' <summary>
+        ''' This method provide to read a remote block log file
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function readBlockLogFile() As Boolean
+            Try
+                Dim remote As New ProxyWS(Of LogStreamResponseModel)
+
+                remote.url = buildURL(True, $"/administration/logBlock/?securityToken={_SecurityToken}&blockNumber={_BlockValue}")
+
+                If (remote.getData().Length = 0) Then
+                    If (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete) Then
+                        If (remote.data.value.Count > 0) Then
+                            Console.WriteLine($"Block Log explorer = {_BlockValue}")
+                            Console.WriteLine()
+                            Console.WriteLine()
+
+                            For Each item In remote.data.value
+                                Console.WriteLine(item.ToString(True))
+                            Next
+                        Else
+                            Console.WriteLine("No data")
+                        End If
+                    End If
+                End If
+
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
         ''' This method provide to read a remote log file
         ''' </summary>
         ''' <returns></returns>
@@ -528,7 +573,11 @@ Namespace AreaCommon
             If proceed Then
                 Console.Clear()
 
-                readLogFile()
+                If _ShowBlock Then
+                    readBlockLogFile()
+                Else
+                    readLogFile()
+                End If
 
                 If _Pause Then
                     Console.WriteLine("")

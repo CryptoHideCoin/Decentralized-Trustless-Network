@@ -237,12 +237,6 @@
     <Compile Include="Security\RequestPassword.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="System\LogControl.Designer.vb">
-      <DependentUpon>LogControl.vb</DependentUpon>
-    </Compile>
-    <Compile Include="System\LogControl.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Wallet\CustomizeWallet.Designer.vb">
       <DependentUpon>CustomizeWallet.vb</DependentUpon>
     </Compile>
@@ -314,9 +308,6 @@
     <EmbeddedResource Include="Security\RequestPassword.resx">
       <DependentUpon>RequestPassword.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="System\LogControl.resx">
-      <DependentUpon>LogControl.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Wallet\CustomizeWallet.resx">
       <DependentUpon>CustomizeWallet.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -349,7 +340,7 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Folder Include="System\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Other\ReleaseNote.txt" />

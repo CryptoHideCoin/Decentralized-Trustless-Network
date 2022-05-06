@@ -28,13 +28,13 @@ Partial Class trackLogSettings
         Me.useBufferToWrite = New System.Windows.Forms.CheckBox()
         Me.writeToFile = New System.Windows.Forms.CheckBox()
         Me.changeFileBox = New System.Windows.Forms.GroupBox()
+        Me.numberRegistrations = New CHCSupportUIControls.NumericText()
+        Me.everyChangeFile = New CHCSupportUIControls.NumericText()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.everyLabel = New System.Windows.Forms.Label()
         Me.saveButton = New System.Windows.Forms.Button()
-        Me.everyChangeFile = New CHCSupportUIControls.NumericText()
-        Me.numberRegistrations = New CHCSupportUIControls.NumericText()
         Me.changeFileBox.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -51,7 +51,7 @@ Partial Class trackLogSettings
         '
         Me.trackConfiguration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.trackConfiguration.FormattingEnabled = True
-        Me.trackConfiguration.Items.AddRange(New Object() {"Don't track log events", "Track only bootstrap", "Track all runtime"})
+        Me.trackConfiguration.Items.AddRange(New Object() {"Track only bootstrap", "Track all runtime"})
         Me.trackConfiguration.Location = New System.Drawing.Point(17, 32)
         Me.trackConfiguration.Name = "trackConfiguration"
         Me.trackConfiguration.Size = New System.Drawing.Size(306, 21)
@@ -91,6 +91,30 @@ Partial Class trackLogSettings
         Me.changeFileBox.TabIndex = 4
         Me.changeFileBox.TabStop = False
         Me.changeFileBox.Text = "Change file"
+        '
+        'numberRegistrations
+        '
+        Me.numberRegistrations.currentFormat = ""
+        Me.numberRegistrations.Location = New System.Drawing.Point(143, 76)
+        Me.numberRegistrations.locationCode = "it-IT"
+        Me.numberRegistrations.Name = "numberRegistrations"
+        Me.numberRegistrations.Size = New System.Drawing.Size(100, 21)
+        Me.numberRegistrations.TabIndex = 7
+        Me.numberRegistrations.Text = "0"
+        Me.numberRegistrations.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.numberRegistrations.useDecimal = False
+        '
+        'everyChangeFile
+        '
+        Me.everyChangeFile.currentFormat = ""
+        Me.everyChangeFile.Location = New System.Drawing.Point(143, 28)
+        Me.everyChangeFile.locationCode = "it-IT"
+        Me.everyChangeFile.Name = "everyChangeFile"
+        Me.everyChangeFile.Size = New System.Drawing.Size(100, 21)
+        Me.everyChangeFile.TabIndex = 6
+        Me.everyChangeFile.Text = "0"
+        Me.everyChangeFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.everyChangeFile.useDecimal = False
         '
         'Label3
         '
@@ -137,30 +161,6 @@ Partial Class trackLogSettings
         Me.saveButton.TabIndex = 5
         Me.saveButton.Text = "Update"
         Me.saveButton.UseVisualStyleBackColor = True
-        '
-        'everyChangeFile
-        '
-        Me.everyChangeFile.currentFormat = ""
-        Me.everyChangeFile.Location = New System.Drawing.Point(143, 28)
-        Me.everyChangeFile.locationCode = "it-IT"
-        Me.everyChangeFile.Name = "everyChangeFile"
-        Me.everyChangeFile.Size = New System.Drawing.Size(100, 21)
-        Me.everyChangeFile.TabIndex = 6
-        Me.everyChangeFile.text = "0"
-        Me.everyChangeFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.everyChangeFile.useDecimal = False
-        '
-        'numberRegistrations
-        '
-        Me.numberRegistrations.currentFormat = ""
-        Me.numberRegistrations.Location = New System.Drawing.Point(143, 76)
-        Me.numberRegistrations.locationCode = "it-IT"
-        Me.numberRegistrations.Name = "numberRegistrations"
-        Me.numberRegistrations.Size = New System.Drawing.Size(100, 21)
-        Me.numberRegistrations.TabIndex = 7
-        Me.numberRegistrations.text = "0"
-        Me.numberRegistrations.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        Me.numberRegistrations.useDecimal = False
         '
         'trackLogSettings
         '

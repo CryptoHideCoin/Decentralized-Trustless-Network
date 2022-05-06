@@ -5,6 +5,7 @@ Imports CHCSidechainServiceLibrary.AreaCommon.Main
 Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCModelsLibrary.AreaModel.Network.Response
 Imports CHCModelsLibrary.AreaModel.Service
+Imports System.Threading
 
 
 
@@ -19,6 +20,7 @@ Namespace AreaScheduler
         Private Enum ScheduleJobType
             notDefined
             notifyLocalWorkMachine
+            logRotate
         End Enum
 
         ''' <summary>
@@ -47,6 +49,26 @@ Namespace AreaScheduler
                 Return response
             Catch ex As Exception
                 environment.log.trackException("Scheduler.loadLocalWorkMachineSlot", ex.Message)
+
+                Return New JobSchedule
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to return a Log Rotate Job
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function loadLogRotate() As JobSchedule
+            Try
+                Dim response As New JobSchedule
+
+                response.type = ScheduleJobType.logRotate
+
+                response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000))
+
+                Return response
+            Catch ex As Exception
+                environment.log.trackException("Scheduler.loadLogRotate", ex.Message)
 
                 Return New JobSchedule
             End Try
@@ -123,6 +145,25 @@ Namespace AreaScheduler
         End Function
 
         ''' <summary>
+        ''' This method provide to 
+        ''' </summary>
+        ''' <param name="serviceName"></param>
+        ''' <returns></returns>
+        Private Function callLogRotate() As Boolean
+            Try
+                Dim asynchThread As Thread
+
+                asynchThread = New Thread(AddressOf AreaAsynchronous.executeLogClean)
+
+                asynchThread.Start()
+
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
         ''' This method provide to process slot
         ''' </summary>
         ''' <param name="item"></param>
@@ -137,6 +178,14 @@ Namespace AreaScheduler
                             item.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 10000
 
                             Return True
+                        Case ScheduleJobType.logRotate
+                            environment.log.track("AreaScheduler.MainEngine.processJob", "Start log rotate")
+
+                            callLogRotate()
+
+                            item.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000))
+
+                            environment.log.track("AreaScheduler.MainEngine.processJob", $"Complete log rotate. Next time {item.nextTimeExecuted}")
                     End Select
 
                     Return False
@@ -144,6 +193,8 @@ Namespace AreaScheduler
 
                 Return True
             Catch ex As Exception
+                environment.log.trackException("Scheduler.processJob", ex.Message)
+
                 Return False
             End Try
         End Function
@@ -153,7 +204,7 @@ Namespace AreaScheduler
         ''' </summary>
         ''' <returns></returns>
         Public Function loadScheduleList() As Boolean
-            ' Clean old log file
+            _ScheduleJobs.Add(loadLogRotate)
 
             ' Manage the Profile 
 

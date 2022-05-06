@@ -57,7 +57,6 @@ Namespace AreaEngine.Log
                             itemToWrite = False
                         Else
                             Select Case _SaveMode
-                                Case TrackRuntimeModeEnum.neverTrace : itemToWrite = False
                                 Case TrackRuntimeModeEnum.trackAll : itemToWrite = True
                                 Case TrackRuntimeModeEnum.trackOnlyBootstrapAndError : itemToWrite = (item.action = ActionEnumeration.exception) Or item.duringBootstrap
                             End Select

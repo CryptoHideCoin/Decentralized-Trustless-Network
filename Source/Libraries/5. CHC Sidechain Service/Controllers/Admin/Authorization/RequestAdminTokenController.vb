@@ -52,7 +52,7 @@ Namespace Controllers
                 AreaCommon.Main.environment.log.trackException("RequestAdminSecurityTokenController.GetValue", ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("RequestAdminSecurityToken.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("RequestAdminSecurityToken.GetValue", result.tokenValue, True)
                 End If
             End Try
 

@@ -31,7 +31,7 @@ Namespace Controllers
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("LogStream.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackEnter("LogStream.GetValue", $"token={securityToken}", True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
