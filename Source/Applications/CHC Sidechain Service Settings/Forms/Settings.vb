@@ -114,7 +114,7 @@ Public Class Settings
             useAlert.Enabled = False
             useAutoMaintenance.Enabled = False
 
-            tabControl.TabPages(2).Enabled = False
+            tabControl.TabPages(2).Enabled = True
             tabControl.TabPages(3).Enabled = False
         Else
             internalNameLabel.Enabled = True

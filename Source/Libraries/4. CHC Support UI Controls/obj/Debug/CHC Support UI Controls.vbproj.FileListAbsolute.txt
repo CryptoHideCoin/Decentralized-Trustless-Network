@@ -53,7 +53,6 @@ E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Debug\CHCSu
 E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Debug\CHCSupportUIControls.WalletKeyPrivate.resources
 E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Debug\CHCSupportUIControls.DialogChangeCertificate.resources
 E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Debug\CHCSupportUIControls.RequestPassword.resources
-E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Debug\CHCSupportUIControls.LogControl.resources
 E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Debug\CHCSupportUIControls.CustomizeWalletAddress.resources
 E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Debug\CHCSupportUIControls.KeyPair.resources
 E:\CryptoHideCoinDTN\Source\Libraries\4. CHC Support UI Controls\obj\Debug\CHCSupportUIControls.Resources.resources

@@ -11,7 +11,7 @@
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-log --deleteOldLogInstance --pause</StartArguments>
+    <StartArguments>-stopServe --service:localWorkMachine</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <StartArguments>-getLogIndex --pause</StartArguments>
@@ -26,6 +26,6 @@
     <StartArguments>-getLogIndex --pause</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <StartArguments>-getLogIndex --pause</StartArguments>
+    <StartArguments>-stopServe</StartArguments>
   </PropertyGroup>
 </Project>

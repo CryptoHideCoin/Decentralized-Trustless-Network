@@ -45,3 +45,5 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\System.Web.H
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHCLocalWorkMachine.Informations.resources
 E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\obj\Debug\CHCLocalWorkMachine.ShowLogConfiguration.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\CHCSupportUIControls.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Local Work Machine\bin\zxing.dll

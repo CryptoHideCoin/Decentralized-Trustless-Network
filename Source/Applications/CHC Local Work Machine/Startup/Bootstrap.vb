@@ -62,6 +62,8 @@ Namespace AreaCommon.Startup
                             proceed = False
                         Else
                             CHCSidechainServiceLibrary.AreaCommon.Main.environment.settings = .settings
+
+                            CHCSidechainServiceLibrary.AreaCommon.Main.environment.localWorkMachineSettings = .settings
                         End If
                     End With
                 End If
