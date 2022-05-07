@@ -50,11 +50,11 @@ Namespace Controllers
                 result.errorDescription = "503 - Generic Error"
 
                 AreaCommon.Main.environment.log.trackException("LogStream.GetValue", ex.Message)
-            Finally
-                If enter Then
-                    AreaCommon.Main.environment.log.trackExit("LogStream.GetValue",, True)
-                End If
             End Try
+
+            If enter Then
+                AreaCommon.Main.environment.log.trackExit("LogStream.GetValue",, True)
+            End If
 
             result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 

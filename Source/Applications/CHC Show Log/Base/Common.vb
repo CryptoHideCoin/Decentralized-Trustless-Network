@@ -19,13 +19,15 @@ Namespace AreaCommon
             Console.WriteLine("=================")
             Console.WriteLine()
             Console.WriteLine("-help                                Show this list")
-            Console.WriteLine("-force                               Show a log of a service")
+            Console.WriteLine("-showBlock                           Show a log block from a service")
+            Console.WriteLine("-stream                              Show a log of a service")
             Console.WriteLine("   --service:                        Set a service name")
             Console.WriteLine("   --dataPath:                       Set a data path")
             Console.WriteLine("   --password:                       Set a password to decode settings file")
             Console.WriteLine("   --mode:                           Set a mode of a detail")
             Console.WriteLine("   --securityKey:                    Set a password of a security key")
             Console.WriteLine("   --address:                        Set an address of a service")
+            Console.WriteLine("   --frequencyRefresh:               Set a frequency refresh")
             Console.WriteLine("<file log path>                      Show a file log paginated")
 
             Return True

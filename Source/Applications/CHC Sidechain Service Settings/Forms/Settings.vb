@@ -282,6 +282,8 @@ Public Class Settings
                 .networkReferement = networkName.Text
                 .intranetMode = intranetMode.Checked
                 .secureChannel = secureChannel.Checked
+                .staticIP = staticIPAddress.Text
+                .middlePath = pathBase.Text
                 .serviceID = serviceID.Text
                 .publicAddress = adminPublicAddress.value
                 .clientCertificate = certificateClient.value

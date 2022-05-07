@@ -11,6 +11,7 @@ Imports CHCModelsLibrary.AreaModel.Network.Response
 Imports CHCModelsLibrary.AreaModel.Log
 Imports CHCModelsLibrary.AreaModel.Administration.Settings
 
+
 Namespace AreaCommon
 
     ''' <summary>
@@ -26,6 +27,7 @@ Namespace AreaCommon
         Private Property _AccessKey As String = ""
         Private Property _SecurityToken As String = ""
         Private Property _Mode As String = "console"
+        Private Property _FrequencyRefresh As String = "100"
         Private Property _Pause As Boolean = False
         Private Property _Keys As New KeysEngine
         Private Property _ShowBlock As Boolean = False
@@ -96,6 +98,9 @@ Namespace AreaCommon
                 End If
                 If value.haveParameter("mode") Then
                     _Mode = value.parameterValue("mode")
+                End If
+                If value.haveParameter("frequencyRefresh") Then
+                    _FrequencyRefresh = value.parameterValue("frequencyRefresh")
                 End If
                 If value.haveParameter("securityKey") Then
                     _SecurityKey = value.parameterValue("securityKey")
@@ -429,6 +434,18 @@ Namespace AreaCommon
                             Return True
                         End If
                         For Each item In remote.data.value
+
+                            If (item.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exception) Then
+                                Console.ForegroundColor = ConsoleColor.Red
+                            ElseIf (item.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.printIntoConsole) Then
+                                Console.ForegroundColor = ConsoleColor.Green
+                            ElseIf (item.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.enterIntoMethod) Or
+                                   (item.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exitFromTheMethod) Then
+                                Console.ForegroundColor = ConsoleColor.Gray
+                            Else
+                                Console.ForegroundColor = ConsoleColor.White
+                            End If
+
                             If (parameters.showOnlyInfo) Then
                                 Console.WriteLine(item.message)
                             Else
@@ -462,6 +479,17 @@ Namespace AreaCommon
                             Console.WriteLine()
 
                             For Each item In remote.data.value
+                                If (item.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exception) Then
+                                    Console.ForegroundColor = ConsoleColor.Red
+                                ElseIf (item.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.printIntoConsole) Then
+                                    Console.ForegroundColor = ConsoleColor.Green
+                                ElseIf (item.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.enterIntoMethod) Or
+                                   (item.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exitFromTheMethod) Then
+                                    Console.ForegroundColor = ConsoleColor.Gray
+                                Else
+                                    Console.ForegroundColor = ConsoleColor.White
+                                End If
+
                                 Console.WriteLine(item.ToString(True))
                             Next
                         Else
@@ -489,6 +517,10 @@ Namespace AreaCommon
                 Dim parameters As New LogPanelParameters
 
                 parameters.showOnlyInfo = (_Mode.ToLower().CompareTo("Console".ToLower()) = 0)
+
+                If IsNumeric(_FrequencyRefresh) Then
+                    parameters.frequencyRefresh = _FrequencyRefresh
+                End If
 
                 Do While proceed
                     parameters = readParameterSettings(parameters)

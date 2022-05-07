@@ -14,6 +14,7 @@ Namespace AreaCommon
     Public Class ShowFileLogEngine
 
         Private Class ResultDecode
+            Public Property action As CHCModelsLibrary.AreaModel.Log.ActionEnumeration
             Public Property previousTimeStamp As Double = 0
             Public Property formattedLineLog As String = ""
             Public Property complete As Boolean = False
@@ -58,13 +59,24 @@ Namespace AreaCommon
                     Select Case methodType.Trim()
                         Case "0"
                             result.complete = False
+                            result.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.undefined
 
                             Return result
-                        Case "1" : result.formattedLineLog += "PrintInConsole - "
-                        Case "2" : result.formattedLineLog += "EnterIntoMethod - "
-                        Case "3" : result.formattedLineLog += "ExitFromTheMethod - "
-                        Case "4" : result.formattedLineLog += "GenericTrack - "
-                        Case "5" : result.formattedLineLog += "Exception - "
+                        Case "1"
+                            result.formattedLineLog += "PrintInConsole - "
+                            result.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.printIntoConsole
+                        Case "2"
+                            result.formattedLineLog += "EnterIntoMethod - "
+                            result.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.enterIntoMethod
+                        Case "3"
+                            result.formattedLineLog += "ExitFromTheMethod - "
+                            result.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exitFromTheMethod
+                        Case "4"
+                            result.formattedLineLog += "GenericTrack - "
+                            result.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.genericTrack
+                        Case "5"
+                            result.formattedLineLog += "Exception - "
+                            result.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exception
                         Case Else : result.formattedLineLog += methodType & " - "
                     End Select
                 End If
@@ -96,9 +108,20 @@ Namespace AreaCommon
                     line = reader.ReadLine
 
                     Do While Not IsNothing(line)
-                        With decode(previous, reader.ReadLine)
+                        With decode(previous, line)
                             If .complete Then
                                 previous = .previousTimeStamp
+
+                                If (.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exception) Then
+                                    Console.ForegroundColor = ConsoleColor.Red
+                                ElseIf (.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.printIntoConsole) Then
+                                    Console.ForegroundColor = ConsoleColor.Green
+                                ElseIf (.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.enterIntoMethod) Or
+                                       (.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exitFromTheMethod) Then
+                                    Console.ForegroundColor = ConsoleColor.Gray
+                                Else
+                                    Console.ForegroundColor = ConsoleColor.White
+                                End If
 
                                 Console.WriteLine(.formattedLineLog)
                             End If

@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>-showBlock --service:sidechainservice --dataPath:e:\LegacyNetwork --loadBlock:main --pause</StartArguments>
+    <StartArguments>-stream --service:SidechainService --dataPath:E:\LegacyNetwork --mode:all --address:80.209.224.113:3333 --frequencyRefresh:10000</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <StartArguments>-force --service:primary --dataPath:e:\path --address:localhost --mode:Console</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <StartArguments>-force --service:sideChainService --dataPath:E:\LegacyNetwork --address:localhost --mode:Console</StartArguments>
+    <StartArguments>-stream --service:sideChainService --dataPath:E:\LegacyNetwork --address:localhost --mode:Console</StartArguments>
   </PropertyGroup>
 </Project>

@@ -110,6 +110,10 @@ Namespace AreaCommon.Command
                         _ParameterServicePort = engine.data.servicePort
                         _ParameterServiceID = engine.data.serviceID
 
+                        If (engine.data.staticIP.Trim().Length > 0) Then
+                            _ParameterAddress = engine.data.staticIP
+                        End If
+
                         Return True
                 End Select
 

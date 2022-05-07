@@ -129,6 +129,10 @@ Namespace AreaCommon.Command
                         _SettingCertificate = engine.data.clientCertificate
                         _SettingPublicAddress = engine.data.publicAddress
 
+                        If (engine.data.staticIP.Trim().Length > 0) Then
+                            _ParameterAddress = engine.data.staticIP
+                        End If
+
                         Return True
                 End Select
             Catch ex As Exception
