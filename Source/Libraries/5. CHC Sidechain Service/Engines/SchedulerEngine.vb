@@ -21,6 +21,7 @@ Namespace AreaScheduler
             notDefined
             notifyLocalWorkMachine
             logRotate
+            registryRotate
         End Enum
 
         ''' <summary>
@@ -69,6 +70,26 @@ Namespace AreaScheduler
                 Return response
             Catch ex As Exception
                 environment.log.trackException("Scheduler.loadLogRotate", ex.Message)
+
+                Return New JobSchedule
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to return a Registry Rotate Job
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function loadRegistryRotate() As JobSchedule
+            Try
+                Dim response As New JobSchedule
+
+                response.type = ScheduleJobType.logRotate
+
+                response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000)) + 1000
+
+                Return response
+            Catch ex As Exception
+                environment.log.trackException("Scheduler.loadRegistryRotate", ex.Message)
 
                 Return New JobSchedule
             End Try
@@ -145,7 +166,7 @@ Namespace AreaScheduler
         End Function
 
         ''' <summary>
-        ''' This method provide to 
+        ''' This method provide to call in asynch the delete procedure old log
         ''' </summary>
         ''' <param name="serviceName"></param>
         ''' <returns></returns>
@@ -154,6 +175,24 @@ Namespace AreaScheduler
                 Dim asynchThread As Thread
 
                 asynchThread = New Thread(AddressOf AreaAsynchronous.executeLogClean)
+
+                asynchThread.Start()
+
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to call in asynch the delete a procedure old registry
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function callRegistryRotate() As Boolean
+            Try
+                Dim asynchThread As Thread
+
+                asynchThread = New Thread(AddressOf AreaAsynchronous.executeRegistryClean)
 
                 asynchThread.Start()
 
@@ -180,12 +219,22 @@ Namespace AreaScheduler
                             Return True
                         Case ScheduleJobType.logRotate
                             environment.log.track("AreaScheduler.MainEngine.processJob", "Start log rotate")
+                            environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.autoMaintenanceStartup)
 
                             callLogRotate()
 
                             item.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000))
 
                             environment.log.track("AreaScheduler.MainEngine.processJob", $"Complete log rotate. Next time {item.nextTimeExecuted}")
+                        Case ScheduleJobType.registryRotate
+                            environment.log.track("AreaScheduler.MainEngine.processJob", "Start registry rotate")
+                            environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.autoMaintenanceStartup)
+
+                            callRegistryRotate()
+
+                            item.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000))
+
+                            environment.log.track("AreaScheduler.MainEngine.processJob", $"Complete registry rotate. Next time {item.nextTimeExecuted}")
                     End Select
 
                     Return False
@@ -204,7 +253,12 @@ Namespace AreaScheduler
         ''' </summary>
         ''' <returns></returns>
         Public Function loadScheduleList() As Boolean
-            _ScheduleJobs.Add(loadLogRotate)
+            If AreaCommon.Main.environment.settings.useLog Then
+                _ScheduleJobs.Add(loadLogRotate)
+            End If
+            If AreaCommon.Main.environment.settings.useEventRegistry Then
+                _ScheduleJobs.Add(loadRegistryRotate)
+            End If
 
             ' Manage the Profile 
 

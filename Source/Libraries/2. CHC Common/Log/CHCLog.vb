@@ -11,6 +11,7 @@ Option Compare Text
 
 Imports CHCCommonLibrary.AreaEngine.Miscellaneous
 Imports CHCModelsLibrary.AreaModel.Log
+Imports CHCCommonLibrary.AreaEngine.Registry
 
 
 
@@ -22,19 +23,6 @@ Namespace Support
     ''' This class manage a Log Engine
     ''' </summary>
     Public Class LogEngine
-
-        '''' <summary>
-        '''' This enumeration contain the following value:
-        '''' 
-        '''' dontTrackEver - Don't save a log never
-        '''' trackOnlyBootstrapAndError - Track only bootstrap and error
-        '''' trackAll - Track all event
-        '''' </summary>
-        'Public Enum TrackRuntimeModeEnum
-        '    dontTrackEver
-        '    trackOnlyBootstrapAndError
-        '    trackAll
-        'End Enum
 
         ''' <summary>
         ''' This class contain the data of a log file
@@ -133,7 +121,7 @@ Namespace Support
         ''' <param name="fileName"></param>
         ''' <param name="registryPointer"></param>
         ''' <returns></returns>
-        Public Function init(ByVal basePath As String, Optional ByVal fileName As String = "Main", Optional ByVal registryPointer As Support.RegistryEngine = Nothing) As Boolean
+        Public Function init(ByVal basePath As String, Optional ByVal fileName As String = "Main", Optional ByVal registryPointer As CHCCommonLibrary.AreaEngine.Registry.RegistryEngine = Nothing) As Boolean
             Try
                 _registry = registryPointer
 
@@ -209,7 +197,7 @@ Namespace Support
 
                 If fatalError Then
                     If Not IsNothing(_registry) Then
-                        _registry.addNew(RegistryEngine.RegistryData.TypeEvent.applicationError, content, completeFileName)
+                        _registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.applicationError, content, completeFileName)
                     End If
                 End If
             Catch ex As Exception

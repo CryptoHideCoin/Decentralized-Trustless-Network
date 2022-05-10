@@ -157,7 +157,11 @@ Namespace AreaCommon
                 End If
                 If proceed Then
                     If (address.Length = 0) Then
-                        address += "localhost:" & settings.servicePort
+                        If (settings.staticIP.Length = 0) Then
+                            address += $"localhost:{settings.servicePort}"
+                        Else
+                            address += $"{settings.staticIP}:{settings.servicePort}"
+                        End If
                     End If
                 End If
                 If proceed Then

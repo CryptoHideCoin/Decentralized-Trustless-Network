@@ -26,12 +26,16 @@ Partial Class AutoMaintenanceSettings
         Me.Label2 = New System.Windows.Forms.Label()
         Me.everyLabel = New System.Windows.Forms.Label()
         Me.logRotateSettings = New System.Windows.Forms.GroupBox()
-        Me.keepLastLabel = New System.Windows.Forms.Label()
-        Me.keepLast = New System.Windows.Forms.ComboBox()
         Me.keepFile = New System.Windows.Forms.ComboBox()
         Me.keepFileLabel = New System.Windows.Forms.Label()
+        Me.keepLast = New System.Windows.Forms.ComboBox()
+        Me.keepLastLabel = New System.Windows.Forms.Label()
         Me.confirmButton = New System.Windows.Forms.Button()
+        Me.registryEventsGroup = New System.Windows.Forms.GroupBox()
+        Me.keepLastRegistry = New System.Windows.Forms.ComboBox()
+        Me.keepLastRegistryLabel = New System.Windows.Forms.Label()
         Me.logRotateSettings.SuspendLayout()
+        Me.registryEventsGroup.SuspendLayout()
         Me.SuspendLayout()
         '
         'everyChangeFile
@@ -78,24 +82,6 @@ Partial Class AutoMaintenanceSettings
         Me.logRotateSettings.TabStop = False
         Me.logRotateSettings.Text = "Log rotate"
         '
-        'keepLastLabel
-        '
-        Me.keepLastLabel.AutoSize = True
-        Me.keepLastLabel.Location = New System.Drawing.Point(53, 32)
-        Me.keepLastLabel.Name = "keepLastLabel"
-        Me.keepLastLabel.Size = New System.Drawing.Size(60, 13)
-        Me.keepLastLabel.TabIndex = 0
-        Me.keepLastLabel.Text = "Keep last"
-        '
-        'keepLast
-        '
-        Me.keepLast.FormattingEnabled = True
-        Me.keepLast.Items.AddRange(New Object() {"Day", "Week", "Month", "Year"})
-        Me.keepLast.Location = New System.Drawing.Point(119, 29)
-        Me.keepLast.Name = "keepLast"
-        Me.keepLast.Size = New System.Drawing.Size(148, 21)
-        Me.keepLast.TabIndex = 1
-        '
         'keepFile
         '
         Me.keepFile.FormattingEnabled = True
@@ -114,6 +100,24 @@ Partial Class AutoMaintenanceSettings
         Me.keepFileLabel.TabIndex = 2
         Me.keepFileLabel.Text = "Keep file"
         '
+        'keepLast
+        '
+        Me.keepLast.FormattingEnabled = True
+        Me.keepLast.Items.AddRange(New Object() {"Day", "Week", "Month", "Year"})
+        Me.keepLast.Location = New System.Drawing.Point(119, 29)
+        Me.keepLast.Name = "keepLast"
+        Me.keepLast.Size = New System.Drawing.Size(148, 21)
+        Me.keepLast.TabIndex = 1
+        '
+        'keepLastLabel
+        '
+        Me.keepLastLabel.AutoSize = True
+        Me.keepLastLabel.Location = New System.Drawing.Point(53, 32)
+        Me.keepLastLabel.Name = "keepLastLabel"
+        Me.keepLastLabel.Size = New System.Drawing.Size(60, 13)
+        Me.keepLastLabel.TabIndex = 0
+        Me.keepLastLabel.Text = "Keep last"
+        '
         'confirmButton
         '
         Me.confirmButton.Location = New System.Drawing.Point(327, 12)
@@ -123,12 +127,42 @@ Partial Class AutoMaintenanceSettings
         Me.confirmButton.Text = "Confirm"
         Me.confirmButton.UseVisualStyleBackColor = True
         '
+        'registryEventsGroup
+        '
+        Me.registryEventsGroup.Controls.Add(Me.keepLastRegistry)
+        Me.registryEventsGroup.Controls.Add(Me.keepLastRegistryLabel)
+        Me.registryEventsGroup.Location = New System.Drawing.Point(12, 149)
+        Me.registryEventsGroup.Name = "registryEventsGroup"
+        Me.registryEventsGroup.Size = New System.Drawing.Size(296, 66)
+        Me.registryEventsGroup.TabIndex = 12
+        Me.registryEventsGroup.TabStop = False
+        Me.registryEventsGroup.Text = "Registry events"
+        '
+        'keepLastRegistry
+        '
+        Me.keepLastRegistry.FormattingEnabled = True
+        Me.keepLastRegistry.Items.AddRange(New Object() {"Day", "Week", "Month", "Year"})
+        Me.keepLastRegistry.Location = New System.Drawing.Point(119, 29)
+        Me.keepLastRegistry.Name = "keepLastRegistry"
+        Me.keepLastRegistry.Size = New System.Drawing.Size(148, 21)
+        Me.keepLastRegistry.TabIndex = 1
+        '
+        'keepLastRegistryLabel
+        '
+        Me.keepLastRegistryLabel.AutoSize = True
+        Me.keepLastRegistryLabel.Location = New System.Drawing.Point(53, 32)
+        Me.keepLastRegistryLabel.Name = "keepLastRegistryLabel"
+        Me.keepLastRegistryLabel.Size = New System.Drawing.Size(60, 13)
+        Me.keepLastRegistryLabel.TabIndex = 0
+        Me.keepLastRegistryLabel.Text = "Keep last"
+        '
         'AutoMaintenanceSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(412, 164)
+        Me.ClientSize = New System.Drawing.Size(412, 229)
+        Me.Controls.Add(Me.registryEventsGroup)
         Me.Controls.Add(Me.confirmButton)
         Me.Controls.Add(Me.logRotateSettings)
         Me.Controls.Add(Me.everyChangeFile)
@@ -141,6 +175,8 @@ Partial Class AutoMaintenanceSettings
         Me.Text = "Auto maintenance settings"
         Me.logRotateSettings.ResumeLayout(False)
         Me.logRotateSettings.PerformLayout()
+        Me.registryEventsGroup.ResumeLayout(False)
+        Me.registryEventsGroup.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -155,4 +191,7 @@ Partial Class AutoMaintenanceSettings
     Friend WithEvents keepLast As ComboBox
     Friend WithEvents keepLastLabel As Label
     Friend WithEvents confirmButton As Button
+    Friend WithEvents registryEventsGroup As GroupBox
+    Friend WithEvents keepLastRegistry As ComboBox
+    Friend WithEvents keepLastRegistryLabel As Label
 End Class

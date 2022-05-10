@@ -59,7 +59,11 @@ Public Class Settings
         selectServicePort.isNecessary = False
 
         If readParameters() Then
+            _DuringReadData = True
+
             entireLoad(True)
+
+            _DuringReadData = False
         Else
             Dim paths As New AreaSystem.Paths
 
@@ -131,7 +135,7 @@ Public Class Settings
             selectPublicPort.Enabled = True
 
             useTrackLog.Enabled = True
-            useEventRegistry.Enabled = False
+            useEventRegistry.Enabled = True
             useCounter.Enabled = False
             useMessage.Enabled = False
             useProfile.Enabled = False
@@ -184,6 +188,7 @@ Public Class Settings
     ''' <returns></returns>
     Private Function fillAllField() As Boolean
         Try
+
             With _Data
                 internalName.Text = .internalName
                 networkName.Text = .networkReferement
@@ -374,6 +379,22 @@ Public Class Settings
     End Function
 
     ''' <summary>
+    ''' This method provide to review button check
+    ''' </summary>
+    ''' <returns></returns>
+    Private Function reviewButtonCheck() As Boolean
+        Try
+            If tabControl.TabPages(3).Enabled Then
+                settingsTrack.Enabled = useTrackLog.Checked
+                settingAutomMaintenanceButton.Enabled = useAutoMaintenance.Checked
+            End If
+        Catch ex As Exception
+        End Try
+
+        Return True
+    End Function
+
+    ''' <summary>
     ''' This method provide to load entire data
     ''' </summary>
     ''' <param name="silentMode"></param>
@@ -416,6 +437,8 @@ Public Class Settings
                 If Not _ParameterExist Then
                     paths.updateRootPath(dataPath.Text)
                 End If
+
+                reviewButtonCheck()
             End If
 
             adminPublicAddress.dataPath = paths.pathKeystore
@@ -882,12 +905,15 @@ Public Class Settings
         If useTrackLog.Checked Then
             settingsTrack.Enabled = True
 
+            _Data.useLog = True
+
             If _DuringReadData Then Return
 
-            _Data.autoMaintenance.trackLogRotateConfig.keepFile = CHCModelsLibrary.AreaModel.Log.LogRotateConfig.KeepFileEnum.undefined
-            _Data.autoMaintenance.trackLogRotateConfig.keepLast = CHCModelsLibrary.AreaModel.Log.KeepEnum.undefined
+            _Data.autoMaintenance.trackLogRotate.keepFile = CHCModelsLibrary.AreaModel.Log.LogRotateConfig.KeepFileEnum.undefined
+            _Data.autoMaintenance.trackLogRotate.keepLast = CHCModelsLibrary.AreaModel.Log.KeepEnum.undefined
         Else
             settingsTrack.Enabled = False
+            _Data.useLog = False
 
             _Data.logSettings = New SettingsLogSidechainService
         End If
@@ -946,8 +972,8 @@ Public Class Settings
             If _DuringReadData Then Return
 
             _Data.autoMaintenance.autoMaintenanceFrequencyHours = 0
-            _Data.autoMaintenance.trackLogRotateConfig.keepFile = CHCModelsLibrary.AreaModel.Log.LogRotateConfig.KeepFileEnum.undefined
-            _Data.autoMaintenance.trackLogRotateConfig.keepLast = CHCModelsLibrary.AreaModel.Log.KeepEnum.undefined
+            _Data.autoMaintenance.trackLogRotate.keepFile = CHCModelsLibrary.AreaModel.Log.LogRotateConfig.KeepFileEnum.undefined
+            _Data.autoMaintenance.trackLogRotate.keepLast = CHCModelsLibrary.AreaModel.Log.KeepEnum.undefined
         End If
     End Sub
 
@@ -963,15 +989,31 @@ Public Class Settings
         autoMaintenance.keepLastLabel.Enabled = _Data.useLog
         autoMaintenance.keepLast.Enabled = _Data.useLog
 
-        autoMaintenance.keepFile.SelectedIndex = _Data.autoMaintenance.trackLogRotateConfig.keepFile
-        autoMaintenance.keepLast.SelectedIndex = _Data.autoMaintenance.trackLogRotateConfig.keepLast
+        autoMaintenance.keepFile.SelectedIndex = _Data.autoMaintenance.trackLogRotate.keepFile - 1
+        autoMaintenance.keepLast.SelectedIndex = _Data.autoMaintenance.trackLogRotate.keepLast - 1
 
-        If autoMaintenance.ShowDialog = DialogResult.OK Then
+        autoMaintenance.keepLastRegistryLabel.Enabled = _Data.useEventRegistry
+        autoMaintenance.keepLastRegistry.Enabled = _Data.useEventRegistry
+        autoMaintenance.keepLastRegistry.SelectedIndex = _Data.autoMaintenance.registryRotate.keepLast - 1
+
+        If (autoMaintenance.ShowDialog = DialogResult.OK) Then
             _Data.autoMaintenance.autoMaintenanceFrequencyHours = autoMaintenance.everyChangeFile.Text
-            _Data.autoMaintenance.trackLogRotateConfig.keepFile = autoMaintenance.keepFile.SelectedIndex
-            _Data.autoMaintenance.trackLogRotateConfig.keepLast = autoMaintenance.keepLast.SelectedIndex
+            _Data.autoMaintenance.trackLogRotate.keepFile = autoMaintenance.keepFile.SelectedIndex + 1
+            _Data.autoMaintenance.trackLogRotate.keepLast = autoMaintenance.keepLast.SelectedIndex + 1
+            _Data.autoMaintenance.registryRotate.keepLast = autoMaintenance.keepLastRegistry.SelectedIndex + 1
         End If
 
     End Sub
 
+    Private Sub useEventRegistry_CheckedChanged(sender As Object, e As EventArgs) Handles useEventRegistry.CheckedChanged
+        _Data.useEventRegistry = useEventRegistry.Checked
+
+        If useEventRegistry.Checked Then
+            If _DuringReadData Then
+                Return
+            End If
+
+            _Data.autoMaintenance.registryRotate.keepLast = CHCModelsLibrary.AreaModel.Log.KeepEnum.undefined
+        End If
+    End Sub
 End Class

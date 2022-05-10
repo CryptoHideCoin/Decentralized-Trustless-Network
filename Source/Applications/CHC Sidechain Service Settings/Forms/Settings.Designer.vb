@@ -456,7 +456,6 @@ Partial Class Settings
         'useEventRegistry
         '
         Me.useEventRegistry.AutoSize = True
-        Me.useEventRegistry.Enabled = False
         Me.useEventRegistry.Location = New System.Drawing.Point(48, 72)
         Me.useEventRegistry.Name = "useEventRegistry"
         Me.useEventRegistry.Size = New System.Drawing.Size(134, 17)

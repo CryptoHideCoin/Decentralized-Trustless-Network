@@ -96,7 +96,7 @@ Namespace AreaCommon
 
                 End Using
 
-                environment.registry.addNew(CHCCommonLibrary.Support.RegistryEngine.RegistryData.TypeEvent.applicationShutdown)
+                environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.applicationShutdown)
 
                 serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.swithOff
 

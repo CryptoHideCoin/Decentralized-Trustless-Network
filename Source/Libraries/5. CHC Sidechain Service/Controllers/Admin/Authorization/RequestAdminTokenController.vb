@@ -38,7 +38,7 @@ Namespace Controllers
                         result.tokenValue = AreaCommon.Main.environment.adminToken.createNewToken()
 
                         AreaCommon.Main.environment.log.trackIntoConsole("Security token created")
-                        AreaCommon.Main.environment.registry.addNew(CHCCommonLibrary.Support.RegistryEngine.RegistryData.TypeEvent.adminTokenReleased)
+                        AreaCommon.Main.environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.adminTokenReleased)
                     Else
                         result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
                     End If

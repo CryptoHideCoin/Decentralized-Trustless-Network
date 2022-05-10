@@ -30,7 +30,7 @@ Namespace AreaEngine
                 Dim testFile As Boolean
                 Dim listFile As New List(Of LogListModel.SingleLogBlockModel)
 
-                Select Case AreaCommon.Main.environment.settings.autoMaintenance.trackLogRotateConfig.keepLast
+                Select Case AreaCommon.Main.environment.settings.autoMaintenance.trackLogRotate.keepLast
                     Case KeepEnum.lastMonth : limitTime = CDbl(limitTime) * 30
                     Case KeepEnum.lastWeek : limitTime = CDbl(limitTime) * 7
                     Case KeepEnum.lastYear : limitTime = CDbl(limitTime) * 365
@@ -46,7 +46,7 @@ Namespace AreaEngine
                 For Each singleFile In listFile
                     testFile = False
 
-                    If (AreaCommon.Main.environment.settings.autoMaintenance.trackLogRotateConfig.keepFile = LogRotateConfig.KeepFileEnum.onlyMainTracks) Then
+                    If (AreaCommon.Main.environment.settings.autoMaintenance.trackLogRotate.keepFile = LogRotateConfig.KeepFileEnum.onlyMainTracks) Then
                         testFile = (singleFile.name.Contains("main.log") <> 0)
                     Else
                         testFile = True

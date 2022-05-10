@@ -23,4 +23,11 @@
     "directoryName": "x64",
     "applicationName": "CHCSidechainServiceRuntime.exe"
   }
+  ,
+  {
+    "applicationReferement": 5,
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console\\CHC Show Journal",
+    "directoryName": "x64",
+    "applicationName": "CHCShowJournal.exe"
+  }
 ]

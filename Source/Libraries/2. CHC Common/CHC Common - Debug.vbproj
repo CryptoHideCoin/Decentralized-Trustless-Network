@@ -119,7 +119,7 @@
     <Compile Include="Log\CHCLog.vb" />
     <Compile Include="Log\CHCLogRotate.vb" />
     <Compile Include="Log\CHCModule.vb" />
-    <Compile Include="Log\CHCRegistry.vb" />
+    <Compile Include="Registry\CHCRegistry.vb" />
     <Compile Include="Miscellaneous\CHCCheckSum.vb" />
     <Compile Include="CommandLine\CHCCommandListEngine.vb" />
     <Compile Include="FileManager\CHCBaseFileDB.vb" />

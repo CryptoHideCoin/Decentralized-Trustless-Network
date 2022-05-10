@@ -180,6 +180,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\AutoMaintenanceSettings.resx">
+      <DependentUpon>AutoMaintenanceSettings.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Informations.resx">
       <DependentUpon>Informations.vb</DependentUpon>
     </EmbeddedResource>

@@ -17,7 +17,7 @@ Imports CHCProtocolLibrary.AreaWallet.Support
 Namespace AreaCommon.Command
 
     ''' <summary>
-    ''' This class manage the command Stop Serve 
+    ''' This class manage the command Log
     ''' </summary>
     Public Class CommandLog : Implements CommandModel
 
@@ -100,6 +100,9 @@ Namespace AreaCommon.Command
                 End If
                 If _Command.haveParameter("deleteOldLogInstance") Then
                     _ParameterCommand = "deleteOldLogInstance"
+                End If
+                If _Command.haveParameter("logRotate") Then
+                    _ParameterCommand = "logRotate"
                 End If
 
                 If (_ParameterCommand.Length = 0) Then

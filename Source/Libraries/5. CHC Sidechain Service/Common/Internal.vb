@@ -35,6 +35,26 @@ Namespace AreaAsynchronous
         End Function
 
         ''' <summary>
+        ''' This method provide to execute a registry clean
+        ''' </summary>
+        ''' <returns></returns>
+        Friend Function executeRegistryClean() As Boolean
+            Try
+                AreaCommon.Main.environment.log.trackEnter("AreaAsynchronous.Internal.executeRegistryClean")
+
+                Dim engine As New AreaEngine.CleanRegistryEngine
+
+                Return engine.run
+            Catch ex As Exception
+                AreaCommon.Main.environment.log.trackException("AreaAsynchronous.Internal.executeRegistryClean", ex.Message)
+
+                Return False
+            Finally
+                AreaCommon.Main.environment.log.trackExit("AreaAsynchronous.Internal.executeRegistryClean")
+            End Try
+        End Function
+
+        ''' <summary>
         ''' This method provide to execute an a old a log instance
         ''' </summary>
         ''' <returns></returns>

@@ -23,6 +23,7 @@ Namespace AreaCommon
         Private Const _CommandChainServiceSettings As String = "sideChainServiceSettings"
         Private Const _CommandIPAddress As String = "ipAddress"
         Private Const _CommandShowLog As String = "showLog"
+        Private Const _CommandShowJournal As String = "showJournal"
         Private Const _CommandStopServe As String = "stopServe"
         Private Const _CommandTestServe As String = "testServe"
         Private Const _CommandStartServe As String = "startServe"
@@ -46,6 +47,7 @@ Namespace AreaCommon
         Private Const _CommandWrite As String = "write"
         Private Const _CommandBuildPath As String = "buildPath"
         Private Const _CommandLog As String = "Log"
+        Private Const _CommandRegistry As String = "Registry"
 
 
         Public Property command As New CommandStructure
@@ -73,6 +75,7 @@ Namespace AreaCommon
                 Case _CommandChainServiceSettings.ToLower() : classSupport = New Command.CommandChainServiceSettings
                 Case _CommandIPAddress.ToLower() : classSupport = New Command.CommandIPAddress
                 Case _CommandShowLog.ToLower() : classSupport = New Command.CommandShowLog
+                Case _CommandShowJournal.ToLower() : classSupport = New Command.CommandShowJournal
                 Case _CommandStopServe.ToLower() : classSupport = New Command.CommandStopServe
                 Case _CommandTestServe.ToLower() : classSupport = New Command.CommandTestServe
                 Case _CommandStartServe.ToLower() : classSupport = New Command.CommandStartServe
@@ -96,6 +99,7 @@ Namespace AreaCommon
                 Case _CommandWrite.ToLower() : classSupport = New Command.CommandWrite
                 Case _CommandBuildPath.ToLower() : classSupport = New Command.CommandBuildPath
                 Case _CommandLog.ToLower() : classSupport = New Command.CommandLog
+                Case _CommandRegistry.ToLower() : classSupport = New Command.CommandRegistry
                 Case Else
                     If (command.code.Length > 0) Then
                         Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")

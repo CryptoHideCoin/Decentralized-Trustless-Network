@@ -83,7 +83,7 @@ Namespace Controllers
                         AreaCommon.Main.environment.settings = data
 
                         If AreaCommon.Main.environment.saveSettings() Then
-                            AreaCommon.Main.environment.registry.addNew(CHCCommonLibrary.Support.RegistryEngine.RegistryData.TypeEvent.other, "Settings update")
+                            AreaCommon.Main.environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.other, "Settings update")
                             AreaCommon.Main.environment.log.trackIntoConsole("Settings update")
                             AreaCommon.Main.environment.log.track("AcquireSettings.PutValue", "Settings update")
                         Else

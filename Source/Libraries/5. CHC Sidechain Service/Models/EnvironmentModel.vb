@@ -6,8 +6,8 @@ Imports CHCProtocolLibrary.AreaSystem
 Imports CHCProtocolLibrary.AreaEngine.Keys
 Imports CHCProtocolLibrary.AreaEngine.Security
 Imports CHCCommonLibrary.AreaEngine.Log
+Imports CHCCommonLibrary.AreaEngine.Registry
 Imports CHCCommonLibrary.Support
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
 
 
 

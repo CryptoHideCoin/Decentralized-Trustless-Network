@@ -18,3 +18,4 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Rele
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Release\CHC Sidechain Service Settings.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Release\CHCSidechainServiceSettings.exe
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Release\CHCSidechainServiceSettings.trackLogSettings.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Release\CHCSidechainServiceSettings.AutoMaintenanceSettings.resources

@@ -107,6 +107,7 @@
   <ItemGroup>
     <Compile Include="Administration\SecurityModel.vb" />
     <Compile Include="Administration\SettingModels.vb" />
+    <Compile Include="Infrastructure\RegistryStructuresModel.vb" />
     <Compile Include="Infrastructure\ResponseModel.vb" />
     <Compile Include="Infrastructure\CommunicationServiceInformationModel.vb" />
     <Compile Include="Infrastructure\LogStructuresModel.vb" />

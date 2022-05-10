@@ -1,0 +1,18 @@
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\bin\Debug\CHCShowJournal.exe.config
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\bin\Debug\CHCShowJournal.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\bin\Debug\CHCShowJournal.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\bin\Debug\CHCShowJournal.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\bin\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Debug\CHC Show Journal.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Debug\CHCShowJournal.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Debug\CHC Show Journal.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Debug\CHC Show Journal.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Debug\CHCShowJournal.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Debug\CHCShowJournal.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Debug\CHCShowJournal.pdb

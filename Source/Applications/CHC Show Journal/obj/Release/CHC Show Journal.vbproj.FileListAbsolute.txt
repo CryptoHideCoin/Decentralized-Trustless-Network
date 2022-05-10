@@ -1,0 +1,11 @@
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Journal\Standard\CHCShowJournal.exe.config
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Journal\Standard\CHCShowJournal.exe
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Journal\Standard\CHCShowJournal.pdb
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Journal\Standard\CHCShowJournal.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Release\CHC Show Journal.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Release\CHCShowJournal.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Release\CHC Show Journal.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Release\CHC Show Journal.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Release\CHCShowJournal.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Release\CHCShowJournal.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Release\CHCShowJournal.pdb

@@ -13,6 +13,7 @@ Namespace AreaEngine
         showLog
         localWorkMachine
         sideChainService
+        showJournal
     End Enum
 
     ''' <summary>

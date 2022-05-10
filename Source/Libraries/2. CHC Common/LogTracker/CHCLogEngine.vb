@@ -24,6 +24,7 @@ Namespace AreaEngine.Log
 
 
         Public WithEvents settings As New TrackConfiguration
+        Public Property registryService As CHCCommonLibrary.AreaEngine.Registry.RegistryEngine
 
 
         ''' <summary>
@@ -85,7 +86,15 @@ Namespace AreaEngine.Log
         ''' <param name="errorMessage"></param>
         ''' <returns></returns>
         <DebuggerHiddenAttribute()> Public Function trackException(ByVal completeName As String, ByVal errorMessage As String) As Boolean
-            Return addNewDataCache(ActionEnumeration.exception, errorMessage, completeName)
+            If addNewDataCache(ActionEnumeration.exception, errorMessage, completeName) Then
+                If Not IsNothing(registryService) Then
+                    Return registryService.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.applicationError, errorMessage, completeName)
+                End If
+
+                Return True
+            End If
+
+            Return False
         End Function
 
         ''' <summary>

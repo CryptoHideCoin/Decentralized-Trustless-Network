@@ -153,7 +153,6 @@ Namespace AreaCommon.Startup
                     .writeToFile = environment.settings.logSettings.writeToFile
                     .pathFile = IO.Path.Combine(environment.paths.system.logs, sideChainServiceName)
                     .instanceID = Guid.NewGuid.ToString
-                    '.instanceID = "f103cadd-4977-4d50-8c4c-5fe29b788623" ''' TODO: To remove
                 End With
 
                 Return True
