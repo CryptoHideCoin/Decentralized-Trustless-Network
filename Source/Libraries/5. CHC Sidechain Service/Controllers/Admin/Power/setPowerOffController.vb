@@ -1,6 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports System.Threading
 Imports System.Web.Http
 Imports CHCModelsLibrary.AreaModel.Network.Response
 Imports CHCModelsLibrary.AreaModel.Information
@@ -17,6 +18,24 @@ Namespace Controllers
 
         Inherits ApiController
 
+
+        ''' <summary>
+        ''' This method provide to call in asynch the delete procedure shutdown
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function callShutDown() As Boolean
+            Try
+                Dim asynchThread As Thread
+
+                asynchThread = New Thread(AddressOf AreaAsynchronous.executeShutDown)
+
+                asynchThread.Start()
+
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
 
 
         ''' <summary>
@@ -40,8 +59,7 @@ Namespace Controllers
                         AreaCommon.Main.securityTokenSwitchOnService = securityToken
                         AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.shutDown
 
-                        AreaCommon.Main.environment.log.trackIntoConsole("Service in switch off state")
-                        AreaCommon.Main.environment.log.track("setPowerOff.PutValue", "Switch off state")
+                        callShutDown()
                     Else
                         result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
                         result.errorDescription = response

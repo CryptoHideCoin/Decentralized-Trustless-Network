@@ -42,6 +42,7 @@ Namespace AreaSystem
             Public Property counters As String = ""
             Public Property events As String = ""
             Public Property logs As String = ""
+            Public Property performanceProfile As String = ""
 
         End Class
 
@@ -110,6 +111,7 @@ Namespace AreaSystem
         Private Const countersFolderName As String = "Counters"
         Private Const eventsFolderName As String = "Events"
         Private Const logsFolderName As String = "Logs"
+        Private Const profileFolderName As String = "PerformanceProfile"
         Private Const chainFolderName As String = "Chain-"
         Private Const ledgerName As String = "Ledger"
         Private Const requestsName As String = "Requests"
@@ -332,6 +334,7 @@ Namespace AreaSystem
                         .counters = manageSinglePath(.path, countersFolderName)
                         .events = manageSinglePath(.path, eventsFolderName)
                         .logs = manageSinglePath(.path, logsFolderName)
+                        .performanceProfile = manageSinglePath(.path, profileFolderName)
                     End With
 
                     With workData

@@ -245,6 +245,18 @@ Namespace Support
             Return False
         End Function
 
+        ''' <summary>
+        ''' This method provide to terminate this class
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function close() As Boolean
+            Try
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
     End Class
 
 End Namespace

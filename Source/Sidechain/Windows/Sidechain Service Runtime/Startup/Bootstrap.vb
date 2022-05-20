@@ -75,6 +75,8 @@ Namespace AreaCommon.Startup
                 Dim proceed As Boolean = True
 
                 If proceed Then
+                    environment.log.trackMarker("Bootstrap run")
+
                     If Not bootstrap.readParameters() Then
                         MessageBox.Show("Problem during read a parameters", "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
@@ -120,6 +122,13 @@ Namespace AreaCommon.Startup
                     End If
                 End If
                 If proceed Then
+                    If environment.settings.useProfile Then
+                        environment.performanceProfile.log = environment.log
+
+                        proceed = environment.performanceProfile.init(environment.paths.system.performanceProfile)
+                    End If
+                End If
+                If proceed Then
                     proceed = bootstrap.acquireIPAddress()
                 End If
                 If proceed Then
@@ -139,6 +148,7 @@ Namespace AreaCommon.Startup
                         End If
                     End With
                 End If
+
                 If proceed Then
                     environment.log.trackIntoConsole("Root paths set " & environment.paths.directoryData)
                     environment.log.trackIntoConsole("Service GUID = " & environment.settings.serviceID)

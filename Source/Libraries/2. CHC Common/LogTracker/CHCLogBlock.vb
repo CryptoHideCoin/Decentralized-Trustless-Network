@@ -102,6 +102,7 @@ Namespace AreaEngine.Log
                             Case 3 : singleData.action = ActionEnumeration.exitFromTheMethod
                             Case 4 : singleData.action = ActionEnumeration.genericTrack
                             Case 5 : singleData.action = ActionEnumeration.exception
+                            Case 6 : singleData.action = ActionEnumeration.trackMarker
                         End Select
 
                         singleData.position = fields(2)

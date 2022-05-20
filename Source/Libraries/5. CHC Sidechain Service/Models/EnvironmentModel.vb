@@ -41,6 +41,7 @@ Namespace AreaChain.Runtime.Models
         Public Property counter As New CounterEngine
         Public Property registry As New RegistryEngine
         Public Property settings As New SettingsSidechainServiceComplete
+        Public Property performanceProfile As New CHCProtocolLibrary.AreaEngine.PerformanceProfile.PerformanceProfileEngine
         Public Property localWorkMachineSettings As New SettingsSidechainServiceComplete
         Public Property ipAddress As New IPAddressConfiguration
         Public Property keys As New KeysEngine

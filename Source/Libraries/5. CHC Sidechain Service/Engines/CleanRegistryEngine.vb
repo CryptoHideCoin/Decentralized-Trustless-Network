@@ -25,6 +25,10 @@ Namespace AreaEngine
             Try
                 AreaCommon.Main.environment.log.trackEnter("CleanRegistryEngine.run")
 
+                If (AreaCommon.Main.serviceInformation.currentStatus <> CHCModelsLibrary.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started) Then
+                    Return False
+                End If
+
                 Dim limitTime As Double = CDbl(1000) * 60 * 60 * 24
                 Dim fileData As IO.FileInfo
                 Dim listFile As New List(Of String)
@@ -37,7 +41,11 @@ Namespace AreaEngine
 
                 limitTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - limitTime
 
-                For Each singleFile In IO.Directory.GetFiles(AreaCommon.Main.environment.paths.system.events)
+                For Each singleFile In IO.Directory.GetFiles(AreaCommon.Main.environment.registry.path)
+                    If (AreaCommon.Main.serviceInformation.currentStatus <> CHCModelsLibrary.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started) Then
+                        Return False
+                    End If
+
                     fileData = New IO.FileInfo(singleFile)
 
                     If (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(fileData.LastWriteTimeUtc) < limitTime) Then
@@ -46,6 +54,10 @@ Namespace AreaEngine
                 Next
 
                 For Each singleFile In listFile
+                    If (AreaCommon.Main.serviceInformation.currentStatus <> CHCModelsLibrary.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started) Then
+                        Return False
+                    End If
+
                     AreaCommon.Main.environment.log.track("CleanRegistryEngine.run", $"Delete file = {singleFile}")
                     IO.File.Delete(singleFile)
                 Next

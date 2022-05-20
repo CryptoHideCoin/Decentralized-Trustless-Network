@@ -30,17 +30,29 @@ Namespace AreaEngine.Miscellaneous
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Function formatDateTimeGMT(ByVal value As DateTime) As String
+        <DebuggerHiddenAttribute()> Function formatDateTimeGMT(ByVal value As DateTime, Optional ByVal onlyFormat As Boolean = False) As String
             Try
                 If _ErrorFormatDate Then
-                    Return value.ToUniversalTime().ToString("yyyy-MM-dd") & "T" & value.ToUniversalTime().ToLongTimeString & "Z"
+                    If onlyFormat Then
+                        Return value.ToString("yyyy-MM-dd") & "T" & value.ToLongTimeString & "Z"
+                    Else
+                        Return value.ToUniversalTime().ToString("yyyy-MM-dd") & "T" & value.ToUniversalTime().ToLongTimeString & "Z"
+                    End If
                 End If
 
-                Return value.ToUniversalTime().GetDateTimeFormats()(78).ToString() & "Z"
+                If onlyFormat Then
+                    Return value.GetDateTimeFormats()(78).ToString() & "Z"
+                Else
+                    Return value.ToUniversalTime().GetDateTimeFormats()(78).ToString() & "Z"
+                End If
             Catch ex As Exception
                 _ErrorFormatDate = True
 
-                Return value.ToUniversalTime().ToString("yyyy-MM-dd") & "T" & value.ToUniversalTime().ToLongTimeString & "Z"
+                If onlyFormat Then
+                    Return value.ToString("yyyy-MM-dd") & "T" & value.ToLongTimeString & "Z"
+                Else
+                    Return value.ToUniversalTime().ToString("yyyy-MM-dd") & "T" & value.ToUniversalTime().ToLongTimeString & "Z"
+                End If
             End Try
         End Function
 

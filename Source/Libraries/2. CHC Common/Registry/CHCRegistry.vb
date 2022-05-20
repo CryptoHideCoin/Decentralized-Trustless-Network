@@ -25,10 +25,10 @@ Namespace AreaEngine.Registry
         Inherits BaseFile(Of List(Of RegistryData))
 
 
-        Private _Path As String = ""
         Private _Day As String = ""
 
-        Public noSave As Boolean = False
+        Public Property path As String = ""
+        Public Property noSave As Boolean = False
 
 
 
@@ -39,17 +39,19 @@ Namespace AreaEngine.Registry
         ''' <param name="description"></param>
         ''' <param name="fileDetail"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function addNew(ByVal type As RegistryData.TypeEvent, Optional ByVal description As String = "", Optional ByVal fileDetail As String = "") As Boolean
+        <DebuggerHiddenAttribute()>
+        Public Function addNew(ByVal type As RegistryData.TypeEvent, Optional ByVal description As String = "", Optional ByVal fileDetail As String = "") As Boolean
             Try
                 Dim item As New RegistryData
                 Dim localDay As String = Now.ToUniversalTime().ToString("yyyy-MM-dd")
                 Dim localFileName As String = IO.Path.Combine(_Path, localDay & ".registry")
 
-                If (localFileName.CompareTo(_Path) <> 0) Then
+                If (localDay.CompareTo(_Day) <> 0) Then
                     MyBase.data = New List(Of RegistryData)
 
                     _Day = localDay
-                    _Path = localFileName
+
+                    MyBase.fileName = IO.Path.Combine(_Path, _Day & ".registry")
                 End If
 
                 item.istant = Miscellaneous.timeStampFromDateTime()
@@ -78,7 +80,7 @@ Namespace AreaEngine.Registry
             Try
                 Dim engine As New BaseFile(Of List(Of RegistryData))
 
-                engine.fileName = IO.Path.Combine(_Path, value & ".registry")
+                engine.fileName = IO.Path.Combine(path, value & ".registry")
 
                 If engine.read() Then
                     Return engine.data
@@ -98,7 +100,7 @@ Namespace AreaEngine.Registry
             Try
                 Dim result As New List(Of String)
 
-                For Each singleFile In IO.Directory.GetFiles(_Path)
+                For Each singleFile In IO.Directory.GetFiles(path)
                     result.Add(IO.Path.GetFileName(singleFile).Replace(".registry", ""))
                 Next
 
@@ -114,11 +116,10 @@ Namespace AreaEngine.Registry
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function init(Optional ByVal path As String = "", Optional ByVal onlySetPath As Boolean = False) As Boolean
+        <DebuggerHiddenAttribute()>
+        Public Function init(Optional ByVal onlySetPath As Boolean = False) As Boolean
             Try
-                If (_Day <> Now.ToUniversalTime().ToString("yyyy-MM-dd")) Then
-                    _Path = path
-
+                If (_Day.CompareTo(Now.ToUniversalTime().ToString("yyyy-MM-dd")) <> 0) Then
                     If Not IO.Directory.Exists(path) Then
                         IO.Directory.CreateDirectory(path)
                     End If

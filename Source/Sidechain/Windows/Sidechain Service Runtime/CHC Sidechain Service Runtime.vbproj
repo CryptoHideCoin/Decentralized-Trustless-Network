@@ -209,7 +209,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Startup\Bootstrap.vb" />
-    <Compile Include="Startup\Main.vb" />
+    <Compile Include="Base\Main.vb" />
     <Compile Include="Startup\Scheduler.vb" />
     <Compile Include="Startup\Service.vb" />
   </ItemGroup>

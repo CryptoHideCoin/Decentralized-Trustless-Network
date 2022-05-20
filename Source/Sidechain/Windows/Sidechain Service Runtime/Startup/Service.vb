@@ -32,7 +32,9 @@ Namespace AreaCommon.Startup
                     environment.registry.noSave = Not environment.settings.useEventRegistry
                 End If
                 If proceed Then
-                    proceed = environment.registry.init(IO.Path.Combine(environment.paths.system.events, CUSTOM_ChainServiceName))
+                    environment.registry.path = IO.Path.Combine(environment.paths.system.events, CUSTOM_ChainServiceName)
+
+                    proceed = environment.registry.init()
                 End If
                 If proceed Then
                     environment.log.trackIntoConsole("Registry Service Start")
@@ -40,8 +42,11 @@ Namespace AreaCommon.Startup
                     proceed = environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.applicationStartUp)
                 End If
                 If proceed Then
-                    environment.log.track("startUp.Service.run", "System Registry is running")
+                    environment.log.registryService = environment.registry
 
+                    environment.log.track("startUp.Service.run", "System Registry is running")
+                End If
+                If proceed Then
                     environment.counter.init(environment.paths.system.counters)
                 End If
                 If proceed Then

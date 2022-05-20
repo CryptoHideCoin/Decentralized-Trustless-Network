@@ -46,8 +46,8 @@ Namespace AreaCommon
                 difference = instant - previous
                 result.previousTimeStamp = instant
 
-                result.formattedLineLog += CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(instant)
-                result.formattedLineLog += " (" & Math.Round(difference, 1, MidpointRounding.AwayFromZero) & " ms.) "
+                result.formattedLineLog = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(instant), True)
+                result.formattedLineLog = result.formattedLineLog.PadRight(44 - result.formattedLineLog.Length)
             Else
                 result.complete = False
             End If
@@ -63,26 +63,33 @@ Namespace AreaCommon
 
                             Return result
                         Case "1"
-                            result.formattedLineLog += "PrintInConsole - "
+                            result.formattedLineLog += "PrintInConsole"
                             result.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.printIntoConsole
                         Case "2"
-                            result.formattedLineLog += "EnterIntoMethod - "
+                            result.formattedLineLog += "EnterIntoMethod"
                             result.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.enterIntoMethod
                         Case "3"
-                            result.formattedLineLog += "ExitFromTheMethod - "
+                            result.formattedLineLog += "ExitFromTheMethod"
                             result.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exitFromTheMethod
                         Case "4"
-                            result.formattedLineLog += "GenericTrack - "
+                            result.formattedLineLog += "GenericTrack"
                             result.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.genericTrack
                         Case "5"
-                            result.formattedLineLog += "Exception - "
+                            result.formattedLineLog += "Exception"
                             result.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exception
-                        Case Else : result.formattedLineLog += methodType & " - "
+                        Case "6"
+                            result.formattedLineLog += "Mark"
+                            result.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.trackMarker
+                        Case Else
+                            result.formattedLineLog += methodType
                     End Select
                 End If
+
+                result.formattedLineLog = result.formattedLineLog.PadRight(45)
             End If
+
             If (singleField.Count > 2) Then
-                result.formattedLineLog += singleField(2)
+                result.formattedLineLog += singleField(2) & "  "
             End If
             If (singleField.Count > 3) Then
                 result.formattedLineLog += singleField(3)
@@ -102,7 +109,12 @@ Namespace AreaCommon
             Try
                 Dim previous As Double = 0
                 Dim line As String
-                Dim numLine As Integer = 0
+                Dim numLine As Integer = 0, totalNumLines As Integer = 0
+                Dim temp As String = $"File name:{completeFileName}"
+
+                Console.WriteLine(temp)
+                Console.WriteLine(Strings.StrDup(temp.Length, "="))
+                Console.WriteLine("")
 
                 Using reader As IO.StreamReader = New IO.StreamReader(completeFileName)
                     line = reader.ReadLine
@@ -130,14 +142,18 @@ Namespace AreaCommon
                         line = reader.ReadLine
 
                         numLine += 1
+                        totalNumLines += 1
 
-                        If (numLine = 10) Then
+                        If (numLine = 20) Then
                             Console.ReadKey()
 
                             numLine = 0
                         End If
                     Loop
                 End Using
+
+                Console.WriteLine("")
+                Console.WriteLine($"{totalNumLines} item(s)")
 
                 Return True
             Catch ex As Exception

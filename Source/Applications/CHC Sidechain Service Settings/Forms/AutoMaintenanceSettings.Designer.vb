@@ -85,7 +85,7 @@ Partial Class AutoMaintenanceSettings
         'keepFile
         '
         Me.keepFile.FormattingEnabled = True
-        Me.keepFile.Items.AddRange(New Object() {"Only main", "Nothing"})
+        Me.keepFile.Items.AddRange(New Object() {"Nothing", "Only main"})
         Me.keepFile.Location = New System.Drawing.Point(119, 56)
         Me.keepFile.Name = "keepFile"
         Me.keepFile.Size = New System.Drawing.Size(148, 21)

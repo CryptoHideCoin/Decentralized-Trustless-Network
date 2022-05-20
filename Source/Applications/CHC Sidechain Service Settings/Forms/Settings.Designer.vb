@@ -46,6 +46,7 @@ Partial Class Settings
         Me.certificateClient = New CHCSupportUIControls.Certificate()
         Me.adminPublicAddress = New CHCSupportUIControls.WalletAddress()
         Me.tabService = New System.Windows.Forms.TabPage()
+        Me.performanceProfileButton = New System.Windows.Forms.Button()
         Me.settingAutomMaintenanceButton = New System.Windows.Forms.Button()
         Me.useAutoMaintenance = New System.Windows.Forms.CheckBox()
         Me.settingsTrack = New System.Windows.Forms.Button()
@@ -352,6 +353,7 @@ Partial Class Settings
         '
         'tabService
         '
+        Me.tabService.Controls.Add(Me.performanceProfileButton)
         Me.tabService.Controls.Add(Me.settingAutomMaintenanceButton)
         Me.tabService.Controls.Add(Me.useAutoMaintenance)
         Me.tabService.Controls.Add(Me.settingsTrack)
@@ -368,33 +370,43 @@ Partial Class Settings
         Me.tabService.Text = "Components"
         Me.tabService.UseVisualStyleBackColor = True
         '
+        'performanceProfileButton
+        '
+        Me.performanceProfileButton.Enabled = False
+        Me.performanceProfileButton.Location = New System.Drawing.Point(226, 106)
+        Me.performanceProfileButton.Name = "performanceProfileButton"
+        Me.performanceProfileButton.Size = New System.Drawing.Size(75, 23)
+        Me.performanceProfileButton.TabIndex = 4
+        Me.performanceProfileButton.Text = "Settings"
+        Me.performanceProfileButton.UseVisualStyleBackColor = True
+        '
         'settingAutomMaintenanceButton
         '
         Me.settingAutomMaintenanceButton.Enabled = False
-        Me.settingAutomMaintenanceButton.Location = New System.Drawing.Point(539, 106)
+        Me.settingAutomMaintenanceButton.Location = New System.Drawing.Point(537, 68)
         Me.settingAutomMaintenanceButton.Name = "settingAutomMaintenanceButton"
         Me.settingAutomMaintenanceButton.Size = New System.Drawing.Size(75, 23)
-        Me.settingAutomMaintenanceButton.TabIndex = 10
+        Me.settingAutomMaintenanceButton.TabIndex = 9
         Me.settingAutomMaintenanceButton.Text = "Settings"
         Me.settingAutomMaintenanceButton.UseVisualStyleBackColor = True
         '
         'useAutoMaintenance
         '
         Me.useAutoMaintenance.AutoSize = True
-        Me.useAutoMaintenance.Location = New System.Drawing.Point(404, 110)
+        Me.useAutoMaintenance.Location = New System.Drawing.Point(402, 72)
         Me.useAutoMaintenance.Name = "useAutoMaintenance"
         Me.useAutoMaintenance.Size = New System.Drawing.Size(129, 17)
-        Me.useAutoMaintenance.TabIndex = 9
+        Me.useAutoMaintenance.TabIndex = 8
         Me.useAutoMaintenance.Text = "Auto maintenance"
         Me.useAutoMaintenance.UseVisualStyleBackColor = True
         '
         'settingsTrack
         '
         Me.settingsTrack.Enabled = False
-        Me.settingsTrack.Location = New System.Drawing.Point(206, 31)
+        Me.settingsTrack.Location = New System.Drawing.Point(226, 30)
         Me.settingsTrack.Name = "settingsTrack"
         Me.settingsTrack.Size = New System.Drawing.Size(75, 23)
-        Me.settingsTrack.TabIndex = 7
+        Me.settingsTrack.TabIndex = 1
         Me.settingsTrack.Text = "Settings"
         Me.settingsTrack.UseVisualStyleBackColor = True
         '
@@ -413,10 +425,10 @@ Partial Class Settings
         '
         Me.useAlert.AutoSize = True
         Me.useAlert.Enabled = False
-        Me.useAlert.Location = New System.Drawing.Point(404, 72)
+        Me.useAlert.Location = New System.Drawing.Point(402, 34)
         Me.useAlert.Name = "useAlert"
         Me.useAlert.Size = New System.Drawing.Size(78, 17)
-        Me.useAlert.TabIndex = 5
+        Me.useAlert.TabIndex = 7
         Me.useAlert.Text = "Use Alert"
         Me.useAlert.UseVisualStyleBackColor = True
         '
@@ -424,21 +436,21 @@ Partial Class Settings
         '
         Me.useProfile.AutoSize = True
         Me.useProfile.Enabled = False
-        Me.useProfile.Location = New System.Drawing.Point(404, 34)
+        Me.useProfile.Location = New System.Drawing.Point(48, 112)
         Me.useProfile.Name = "useProfile"
-        Me.useProfile.Size = New System.Drawing.Size(87, 17)
-        Me.useProfile.TabIndex = 4
-        Me.useProfile.Text = "Use Profile"
+        Me.useProfile.Size = New System.Drawing.Size(164, 17)
+        Me.useProfile.TabIndex = 3
+        Me.useProfile.Text = "Use Performance Profile"
         Me.useProfile.UseVisualStyleBackColor = True
         '
         'useMessage
         '
         Me.useMessage.AutoSize = True
         Me.useMessage.Enabled = False
-        Me.useMessage.Location = New System.Drawing.Point(48, 148)
+        Me.useMessage.Location = New System.Drawing.Point(48, 189)
         Me.useMessage.Name = "useMessage"
         Me.useMessage.Size = New System.Drawing.Size(100, 17)
-        Me.useMessage.TabIndex = 3
+        Me.useMessage.TabIndex = 6
         Me.useMessage.Text = "Use Message"
         Me.useMessage.UseVisualStyleBackColor = True
         '
@@ -446,10 +458,10 @@ Partial Class Settings
         '
         Me.useCounter.AutoSize = True
         Me.useCounter.Enabled = False
-        Me.useCounter.Location = New System.Drawing.Point(48, 110)
+        Me.useCounter.Location = New System.Drawing.Point(48, 151)
         Me.useCounter.Name = "useCounter"
         Me.useCounter.Size = New System.Drawing.Size(147, 17)
-        Me.useCounter.TabIndex = 2
+        Me.useCounter.TabIndex = 5
         Me.useCounter.Text = "Use Request Counter"
         Me.useCounter.UseVisualStyleBackColor = True
         '
@@ -459,7 +471,7 @@ Partial Class Settings
         Me.useEventRegistry.Location = New System.Drawing.Point(48, 72)
         Me.useEventRegistry.Name = "useEventRegistry"
         Me.useEventRegistry.Size = New System.Drawing.Size(134, 17)
-        Me.useEventRegistry.TabIndex = 1
+        Me.useEventRegistry.TabIndex = 2
         Me.useEventRegistry.Text = "Use Event Registry"
         Me.useEventRegistry.UseVisualStyleBackColor = True
         '
@@ -678,4 +690,5 @@ Partial Class Settings
     Friend WithEvents settingsTrack As Button
     Friend WithEvents settingAutomMaintenanceButton As Button
     Friend WithEvents useAutoMaintenance As CheckBox
+    Friend WithEvents performanceProfileButton As Button
 End Class

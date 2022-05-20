@@ -446,6 +446,8 @@ Namespace AreaCommon
                             ElseIf (item.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.enterIntoMethod) Or
                                    (item.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exitFromTheMethod) Then
                                 Console.ForegroundColor = ConsoleColor.Gray
+                            ElseIf (item.action = ActionEnumeration.trackMarker) Then
+                                Console.ForegroundColor = ConsoleColor.Yellow
                             Else
                                 Console.ForegroundColor = ConsoleColor.White
                             End If
@@ -490,6 +492,8 @@ Namespace AreaCommon
                                 ElseIf (item.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.enterIntoMethod) Or
                                    (item.action = CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exitFromTheMethod) Then
                                     Console.ForegroundColor = ConsoleColor.Gray
+                                ElseIf (item.action = ActionEnumeration.trackMarker) Then
+                                    Console.ForegroundColor = ConsoleColor.Yellow
                                 Else
                                     Console.ForegroundColor = ConsoleColor.White
                                 End If

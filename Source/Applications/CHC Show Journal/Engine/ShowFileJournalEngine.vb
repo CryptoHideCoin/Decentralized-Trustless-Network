@@ -28,7 +28,9 @@ Namespace AreaCommon
                 Dim singleLine As String = ""
                 Dim key As String = IO.Path.GetFileName(completeFileName).Replace(".registry", "")
 
-                If engine.init(IO.Path.GetDirectoryName(completeFileName), True) Then
+                engine.path = completeFileName
+
+                If engine.init(True) Then
                     dataDay = engine.getData(key)
 
                     Console.WriteLine($"Service journal: {key}")
@@ -38,7 +40,7 @@ Namespace AreaCommon
                     For Each item In dataDay
                         singleLine = ""
 
-                        singleLine += CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(item.istant))
+                        singleLine += CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(item.istant), True)
 
                         singleLine = singleLine.PadRight(50 - singleLine.Length)
 
@@ -60,23 +62,27 @@ Namespace AreaCommon
                                 Console.ForegroundColor = ConsoleColor.White
                         End Select
 
+                        Console.WriteLine(singleLine)
+
                         If item.description.Length > 0 Then
-                            singleLine += vbNewLine
-                            singleLine += Space(50)
+                            singleLine = Space(30)
                             singleLine += item.description
+
+                            Console.ForegroundColor = ConsoleColor.Gray
+                            Console.WriteLine(singleLine)
                         End If
 
                         If (item.fileDetail.Length > 0) Then
-                            singleLine += vbNewLine
-                            singleLine += Space(50)
+                            singleLine = Space(30)
                             singleLine += item.fileDetail
+
+                            Console.ForegroundColor = ConsoleColor.Gray
+                            Console.WriteLine(singleLine)
                         End If
-
-                        Console.WriteLine(singleLine)
-
-                        Console.ForegroundColor = ConsoleColor.Gray
-                        Console.WriteLine(StrDup(80, "-"))
                     Next
+
+                    Console.ForegroundColor = ConsoleColor.Gray
+                    Console.WriteLine(StrDup(80, "-"))
                 End If
 
                 Console.WriteLine()

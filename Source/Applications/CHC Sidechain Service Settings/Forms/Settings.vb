@@ -23,6 +23,17 @@ Public Class Settings
     Private Property _DuringReadData As Boolean = False
 
 
+
+    Private Function getIndexFromServiceName(ByVal value As String) As Integer
+        Select Case value
+            Case "localworkmachine" : Return 0
+            Case "sidechainservice" : Return 1
+            Case "primary" : Return 2
+            Case Else : Return -1
+        End Select
+    End Function
+
+
     ''' <summary>
     ''' This method provide to test if the user indicate the parameter in the command line
     ''' </summary>
@@ -35,11 +46,7 @@ Public Class Settings
             command = engine.run()
 
             If (command.code.ToLower.CompareTo("force") = 0) Then
-                Select Case command.parameterValue("service").ToLower
-                    Case "localworkmachine" : sidechainServiceName.SelectedIndex = 0
-                    Case "sidechainservice" : sidechainServiceName.SelectedIndex = 1
-                    Case "primary" : sidechainServiceName.SelectedIndex = 2
-                End Select
+                sidechainServiceName.SelectedIndex = getIndexFromServiceName(command.parameterValue("service").ToLower)
 
                 dataPath.Text = command.parameterValue("dataPath")
                 _Password = command.parameterValue("password")
@@ -47,6 +54,22 @@ Public Class Settings
                 _ParameterExist = True
 
                 Return True
+            ElseIf command.isPath Then
+                Dim fileName As String = IO.Path.GetFileName(command.code).Replace(IO.Path.GetExtension(command.code), "")
+                Dim extension As String = IO.Path.GetExtension(command.code).Replace(".", "")
+                Dim path As String = IO.Path.GetDirectoryName(command.code)
+
+                If path.ToLower().EndsWith("\settings") Then
+                    path = path.ToLower().Replace("\settings", "")
+                End If
+
+                If (extension.ToLower().CompareTo("settings".ToLower()) = 0) Then
+                    sidechainServiceName.SelectedIndex = getIndexFromServiceName(fileName.Replace(" ", ""))
+
+                    dataPath.Text = path
+
+                    loadSettingData()
+                End If
             End If
         Catch ex As Exception
         End Try
@@ -138,7 +161,7 @@ Public Class Settings
             useEventRegistry.Enabled = True
             useCounter.Enabled = False
             useMessage.Enabled = False
-            useProfile.Enabled = False
+            useProfile.Enabled = True
             useAlert.Enabled = False
             useAutoMaintenance.Enabled = True
 
@@ -158,6 +181,7 @@ Public Class Settings
 
         intranetMode.Enabled = True
         settingsTrack.Enabled = False
+        performanceProfileButton.Enabled = False
     End Sub
 
     ''' <summary>
@@ -305,6 +329,7 @@ Public Class Settings
 
             data.logSettings = _Data.logSettings
             data.autoMaintenance = _Data.autoMaintenance
+            data.performanceProfile = _Data.performanceProfile
 
             Return data
         Catch ex As Exception
@@ -386,6 +411,7 @@ Public Class Settings
         Try
             If tabControl.TabPages(3).Enabled Then
                 settingsTrack.Enabled = useTrackLog.Checked
+                performanceProfileButton.Enabled = useProfile.Checked
                 settingAutomMaintenanceButton.Enabled = useAutoMaintenance.Checked
             End If
         Catch ex As Exception
@@ -453,7 +479,7 @@ Public Class Settings
         End Try
     End Function
 
-    Private Sub loadSettingButton_Click(sender As Object, e As EventArgs) Handles loadSettingButton.Click
+    Private Sub loadSettingData()
         _DuringReadData = True
 
         entireLoad(False)
@@ -463,6 +489,10 @@ Public Class Settings
         openAsFileButton.Enabled = True
 
         _DuringReadData = False
+    End Sub
+
+    Private Sub loadSettingButton_Click(sender As Object, e As EventArgs) Handles loadSettingButton.Click
+        loadSettingData()
     End Sub
 
     ''' <summary>
@@ -640,7 +670,7 @@ Public Class Settings
             End If
 
             Return proceed
-        Catch exFile As system.io.FileLoadException
+        Catch exFile As System.IO.FileLoadException
             IntegrityApplication.executeRepairNewton(exFile.FileName)
 
             Return False
@@ -1014,6 +1044,32 @@ Public Class Settings
             End If
 
             _Data.autoMaintenance.registryRotate.keepLast = CHCModelsLibrary.AreaModel.Log.KeepEnum.undefined
+        End If
+    End Sub
+
+    Private Sub useProfile_CheckedChanged(sender As Object, e As EventArgs) Handles useProfile.CheckedChanged
+        _Data.useProfile = useProfile.Checked
+
+        If useProfile.Checked Then
+            If _DuringReadData Then
+                Return
+            End If
+
+            performanceProfileButton.Enabled = True
+        End If
+    End Sub
+
+    Private Sub performanceProfileButton_Click(sender As Object, e As EventArgs) Handles performanceProfileButton.Click
+        Dim settingPage As New PerformanceProfilerSettings
+
+        settingPage.everyProcess.Text = _Data.performanceProfile.useEveryHour
+
+        If (settingPage.ShowDialog() = DialogResult.OK) Then
+            _Data.performanceProfile.useEveryHour = settingPage.everyProcess.Value
+
+            settingPage.Close()
+
+            settingPage = Nothing
         End If
     End Sub
 End Class

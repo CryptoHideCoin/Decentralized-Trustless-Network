@@ -24,6 +24,7 @@ Namespace AreaModel.Log
         exitFromTheMethod
         genericTrack
         exception
+        trackMarker
     End Enum
 
     ''' <summary>
@@ -95,6 +96,7 @@ Namespace AreaModel.Log
                 Case ActionEnumeration.exitFromTheMethod : tmp += "Exit into method|"
                 Case ActionEnumeration.genericTrack : tmp += "Generic Track|"
                 Case ActionEnumeration.printIntoConsole : tmp += "Print into console|"
+                Case ActionEnumeration.trackMarker : tmp += "Mark!"
             End Select
 
             tmp += position & "|"

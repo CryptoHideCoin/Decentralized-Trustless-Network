@@ -119,6 +119,17 @@ Namespace AreaEngine.Security
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to close this service
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function close() As Boolean
+            _CurrentAccessKey = Nothing
+            _CurrentTokens = New Dictionary(Of String, KeyValidity)
+
+            Return True
+        End Function
+
     End Class
 
 End Namespace

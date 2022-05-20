@@ -13,7 +13,7 @@ Option Explicit On
 Namespace AreaModel.Administration.Settings
 
     ''' <summary>
-    ''' This method provide to collect all element of Log Service 
+    ''' This class collect all element of Log Service 
     ''' </summary>
     Public Class SettingsLogSidechainService
 
@@ -22,6 +22,15 @@ Namespace AreaModel.Administration.Settings
         Public Property changeLogFileNumRegistrations As Integer = 0
         Public Property useBufferToWrite As Boolean = False
         Public Property writeToFile As Boolean = False
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain all element of a Performance Profile Service
+    ''' </summary>
+    Public Class SettingsPerformanceProfileService
+
+        Public Property useEveryHour As Integer = 0
 
     End Class
 
@@ -70,6 +79,7 @@ Namespace AreaModel.Administration.Settings
         Public Property useAdminMessage As Boolean = False
         Public Property useProfile As Boolean = False
         Public Property useAlert As Boolean = False
+        Public Property useAcquireEnvironmentInformation As Boolean = False
 
         Public Property useAutomaintenance As Boolean = False
 
@@ -83,6 +93,7 @@ Namespace AreaModel.Administration.Settings
         Inherits SettingsSidechainServiceBase
 
         Public Property logSettings As New SettingsLogSidechainService
+        Public Property performanceProfile As New SettingsPerformanceProfileService
         Public Property autoMaintenance As New SettingsAutoMaintenanceSidechainService
 
         Public ReadOnly Property getServiceBase() As SettingsSidechainServiceBase

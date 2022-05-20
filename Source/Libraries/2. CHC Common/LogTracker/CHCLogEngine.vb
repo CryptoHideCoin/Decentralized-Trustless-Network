@@ -135,6 +135,16 @@ Namespace AreaEngine.Log
             Return _Cache.writeCacheToLogFile()
         End Function
 
+        ''' <summary>
+        ''' This method provide to add a marker in log file to decode
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Function trackMarker(ByVal name As String) As Boolean
+            Return addNewDataCache(ActionEnumeration.trackMarker, "", name)
+        End Function
+
+
         Private Sub settings_ChangeValue() Handles settings.ChangeValue
             _Cache.changeSettings(settings)
         End Sub

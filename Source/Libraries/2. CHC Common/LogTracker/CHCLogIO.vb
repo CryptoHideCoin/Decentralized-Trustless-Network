@@ -20,6 +20,7 @@ Namespace AreaEngine.Log
     Friend Class TrackIOEngine
 
         Private Property _CurrentFileName As String = ""
+        Private Property _LastWriteFileName As String = ""
         Private Property _ToWrite As New Concurrent.ConcurrentQueue(Of SingleActionApplication)
         Private Property _Settings As New TrackConfiguration
 
@@ -49,16 +50,24 @@ Namespace AreaEngine.Log
         ''' <summary>
         ''' This method provide to add a new file to index
         ''' </summary>
-        Private Sub addNewFileToIndex()
+        Private Function addNewFileToIndex() As Boolean
             Try
                 Dim indexFile As String = IO.Path.Combine(_Settings.pathFileLog, "index.dat")
+                Dim currentFileName As String = IO.Path.GetFileName(_CurrentFileName).Replace(".log", "")
 
-                Using fileData As IO.StreamWriter = IO.File.AppendText(indexFile)
-                    fileData.WriteLine($"{IO.Path.GetFileName(_CurrentFileName).Replace(".log", "")}|{Miscellaneous.timeStampFromDateTime()}")
-                End Using
+                If (currentFileName.CompareTo(_LastWriteFileName) <> 0) Then
+                    Using fileData As IO.StreamWriter = IO.File.AppendText(indexFile)
+                        fileData.WriteLine($"{currentFileName}|{Miscellaneous.timeStampFromDateTime()}")
+                    End Using
+
+                    _LastWriteFileName = currentFileName
+                End If
+
+                Return True
             Catch ex As Exception
+                Return False
             End Try
-        End Sub
+        End Function
 
         ''' <summary>
         ''' This method provide to set a file name
@@ -66,14 +75,19 @@ Namespace AreaEngine.Log
         ''' <returns></returns>
         Private Function setFileName() As Boolean
             Dim setFile As Boolean = False
+            Dim newFile As String = ""
 
             If _ChangeInBeginWrite Then
+                _StartWriteFile = Miscellaneous.timeStampFromDateTime()
+
                 IO.Directory.CreateDirectory(_Settings.pathFileLog)
 
-                _CurrentFileName = IO.Path.Combine(_Settings.pathFileLog, "main.log")
+                newFile = IO.Path.Combine(_Settings.pathFileLog, "main.log")
                 _ChangeInBeginWrite = False
 
-                addNewFileToIndex()
+                If newFile.CompareTo(_CurrentFileName) <> 0 Then
+                    _CurrentFileName = newFile
+                End If
 
                 Return True
             ElseIf _ChangeInNormalMode Then
@@ -82,7 +96,7 @@ Namespace AreaEngine.Log
                 _ChangeInNormalMode = False
             ElseIf (_Settings.changeNumberOfRegistrations > 0) And (_NumRegistrationOnFile > _Settings.changeNumberOfRegistrations) Then
                 setFile = True
-            ElseIf (_Settings.changeFileEvery > 0) And (_StartWriteFile + _Settings.changeFileEvery > Miscellaneous.timeStampFromDateTime()) Then
+            ElseIf (_Settings.changeFileEvery > 0) And (Miscellaneous.timeStampFromDateTime() > _StartWriteFile + (CDec(_Settings.changeFileEvery) * 60 * 60 * 1000)) Then
                 setFile = True
             ElseIf _ForceWriteFile Then
                 Return True
@@ -93,9 +107,11 @@ Namespace AreaEngine.Log
                 _NumRegistrationOnFile = 0
 
                 If _UseMainFile Then
-                    _CurrentFileName = IO.Path.Combine(_Settings.pathFileLog, "execute-" & _StartWriteFile.ToString.Replace(",", "").Replace(".", "") & ".log")
+                    newFile = IO.Path.Combine(_Settings.pathFileLog, "execute-" & _StartWriteFile.ToString.Replace(",", "").Replace(".", "") & ".log")
 
-                    addNewFileToIndex()
+                    If newFile.CompareTo(_CurrentFileName) <> 0 Then
+                        _CurrentFileName = newFile
+                    End If
                 End If
 
                 Return True
@@ -126,6 +142,8 @@ Namespace AreaEngine.Log
                 End If
 
                 _UseMainFile = True
+
+                addNewFileToIndex()
 
                 Using fileData As IO.StreamWriter = IO.File.AppendText(_CurrentFileName)
                     Do While (_ToWrite.Count > 0)

@@ -1,6 +1,13 @@
 ﻿Option Explicit On
 Option Compare Text
 
+' ****************************************
+' Engine: Settings Engine
+' Release Engine: 1.0 
+' 
+' Date last successfully test: 12/05/2022
+' ****************************************
+
 Imports CHCModelsLibrary.AreaModel.Administration.Settings
 Imports CHCCommonLibrary.AreaEngine.DataFileManagement.Encrypted
 
@@ -38,6 +45,38 @@ Namespace AreaEngine.Settings
                 completeFileName = IO.Path.Combine(completeFileName, serviceName.Replace(" ", "") & "-log.Settings")
 
                 If Not IO.File.Exists(completeFileName) Then Return New SettingsLogSidechainService
+
+                engineFile.fileName = completeFileName
+
+                If (password.Length > 0) Then
+                    engineFile.cryptoKEY = password
+                Else
+                    engineFile.noCrypt = True
+                End If
+
+                If engineFile.read() Then
+                    Return engineFile.data
+                End If
+            Catch ex As Exception
+            End Try
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get a performance profile settings
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function getPerformanceProfileSettings() As SettingsPerformanceProfileService
+            Dim result As New SettingsPerformanceProfileService
+            Try
+                Dim completeFileName As String = ""
+                Dim engineFile As New BaseFile(Of SettingsPerformanceProfileService)
+
+                completeFileName = IO.Path.Combine(dataPath, "Settings")
+                completeFileName = IO.Path.Combine(completeFileName, serviceName.Replace(" ", "") & "-performance.Settings")
+
+                If Not IO.File.Exists(completeFileName) Then Return New SettingsPerformanceProfileService
 
                 engineFile.fileName = completeFileName
 
@@ -113,6 +152,42 @@ Namespace AreaEngine.Settings
                 End If
 
                 engineFile.data = _data.logSettings
+
+                Return engineFile.save()
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to save a performance profile setting's file
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function savePerformanceProfileSettings() As Boolean
+            Try
+                Dim completeFileName As String = ""
+                Dim engineFile As New BaseFile(Of SettingsPerformanceProfileService)
+
+                completeFileName = IO.Path.Combine(dataPath, "Settings")
+                completeFileName = IO.Path.Combine(completeFileName, serviceName.Replace(" ", "") & "-performance.Settings")
+
+                If IO.File.Exists(completeFileName) Then
+                    IO.File.Delete(completeFileName)
+                End If
+
+                If Not _data.useLog Then
+                    Return True
+                End If
+
+                engineFile.fileName = completeFileName
+
+                If (password.Length > 0) Then
+                    engineFile.cryptoKEY = password
+                Else
+                    engineFile.noCrypt = True
+                End If
+
+                engineFile.data = _data.performanceProfile
 
                 Return engineFile.save()
             Catch ex As Exception
@@ -200,6 +275,7 @@ Namespace AreaEngine.Settings
                         data.useRequestCounter = .useRequestCounter
 
                         data.logSettings = getLogSettings()
+                        data.performanceProfile = getPerformanceProfileSettings()
                         data.autoMaintenance = getAutoMaintenanceSettings()
                     End With
 
@@ -220,6 +296,7 @@ Namespace AreaEngine.Settings
             Try
                 Dim completeFileName As String = ""
                 Dim engineFile As New BaseFile(Of SettingsSidechainServiceBase)
+                Dim proceed As Boolean = True
 
                 completeFileName = IO.Path.Combine(dataPath, "Settings")
                 completeFileName = IO.Path.Combine(completeFileName, serviceName.Replace(" ", "") & ".Settings")
@@ -233,15 +310,20 @@ Namespace AreaEngine.Settings
                     engineFile.cryptoKEY = _password
                 End If
 
-                If engineFile.save() Then
-                    If saveLogSettings() Then
-                        Return saveAutoMaintenance()
-                    Else
-                        Return False
-                    End If
-                Else
-                    Return False
+                If proceed Then
+                    proceed = engineFile.save()
                 End If
+                If proceed Then
+                    proceed = saveLogSettings()
+                End If
+                If proceed Then
+                    proceed = savePerformanceProfileSettings()
+                End If
+                If proceed Then
+                    proceed = saveAutoMaintenance()
+                End If
+
+                Return proceed
             Catch ex As Exception
                 Return False
             End Try
