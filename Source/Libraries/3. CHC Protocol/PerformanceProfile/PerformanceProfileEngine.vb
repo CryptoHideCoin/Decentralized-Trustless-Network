@@ -15,26 +15,130 @@ Imports CHCModelsLibrary.AreaModel.PerformanceProfile
 
 
 
-Namespace AreaEngine.PerformanceProfile
+Namespace AreaEngine.PerformanceProfile.Internal
 
     ''' <summary>
-    ''' This method provide to manage a method information structure
+    ''' This class contain all element of manage Stack data
     ''' </summary>
-    Public Class MethodInformationEngine
+    Public Class StackInformationEngine
 
-        Inherits MethodInformation
+        Public Property ownerStacks As New List(Of StackInformations)
+
+        ''' <summary>
+        ''' This method provide to add a method into stack and return a parent
+        ''' </summary>
+        ''' <param name="ownerId"></param>
+        ''' <param name="methodName"></param>
+        ''' <param name="startAt"></param>
+        ''' <returns></returns>
+        Public Function addMethod(ByVal ownerId As String, ByVal methodName As String, ByVal startAt As Double) As String
+            Try
+                Dim ownerStack As StackInformations
+                Dim parent As String
+
+                For Each item In ownerStacks
+                    If (item.ownerId.ToLower().CompareTo(ownerId.ToLower()) = 0) Then
+                        ownerStack = item
+
+                        Exit For
+                    End If
+                Next
+
+                If IsNothing(ownerStack) Then
+                    ownerStack = New StackInformations
+
+                    ownerStack.ownerId = ownerId
+
+                    ownerStacks.Add(ownerStack)
+                End If
+
+                If (ownerStack.callStacks.Count = 0) Then
+                    parent = ""
+                Else
+                    parent = ownerStack.callStacks.Last.name
+                End If
+
+                ownerStack.callStacks.Add(New MethodStackInformation With {.name = methodName, .startAt = startAt})
+
+                Return parent
+            Catch ex As Exception
+                Return ""
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to remove an element to the stack if it is correct
+        ''' </summary>
+        ''' <param name="ownerId"></param>
+        ''' <param name="methodName"></param>
+        ''' <returns></returns>
+        Public Function remove(ByVal ownerId As String, ByVal methodName As String, ByVal completeAt As Double) As Double
+            Try
+                Dim ownerStack As StackInformations
+                Dim data As MethodStackInformation
+
+                For Each item In ownerStacks
+                    If (item.ownerId.ToLower.CompareTo(ownerId.ToLower()) = 0) Then
+                        ownerStack = item
+
+                        Exit For
+                    End If
+                Next
+
+                If IsNothing(ownerStack) Then
+                    Return -1
+                End If
+
+                If (ownerStack.callStacks.Count = 0) Then
+                    Return -1
+                Else
+                    If (ownerStack.callStacks.Last.name.ToLower().CompareTo(methodName.ToLower) = 0) Then
+                        data = ownerStack.callStacks.Last
+
+                        ownerStack.callStacks.Remove(data)
+
+                        If (ownerStacks.Count = 0) Then
+                            ownerStacks.Remove(ownerStack)
+                        End If
+
+                        Return CDbl(completeAt) - data.startAt
+                    End If
+                End If
+
+                Return 0
+            Catch ex As Exception
+                Return -1
+            End Try
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain all element method information engine
+    ''' </summary>
+    Public Class MethodListInformationsEngine
+
+        Private Property _Index As New Dictionary(Of String, MethodInformations)
+
+        Public Property data As New MethodListInformations
+        Public Property stackEngine As New StackInformationEngine
+
+
 
         ''' <summary>
         ''' This method provide to add a new child method
         ''' </summary>
         ''' <param name="name"></param>
+        ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function addUse(ByVal name As String) As Boolean
-            For Each singleCall In uses
-                If (singleCall.CompareTo(name) = 0) Then
+        Public Function addUseMethod(ByVal name As String, ByRef value As MethodInformations) As Boolean
+            For Each singleCall In value.uses
+                If (singleCall.ToLower().CompareTo(name.ToLower()) = 0) Then
                     Return True
                 End If
             Next
+
+            value.uses.Add(name)
 
             Return True
         End Function
@@ -43,43 +147,19 @@ Namespace AreaEngine.PerformanceProfile
         ''' This method provide to add a new parent method
         ''' </summary>
         ''' <param name="name"></param>
+        ''' <param name="value"></param>
         ''' <returns></returns>
-        Public Function addUsedIn(ByVal name As String) As Boolean
-            For Each singleCall In usedFrom
-                If (singleCall.CompareTo(name) = 0) Then
+        Public Function addUsedInMethod(ByVal name As String, ByRef value As MethodInformations) As Boolean
+            For Each singleCall In value.usedFrom
+                If (singleCall.ToLower().CompareTo(name.ToLower()) = 0) Then
                     Return True
                 End If
             Next
 
+            value.usedFrom.Add(name)
+
             Return True
         End Function
-
-    End Class
-
-    Public Class MethodListInformationsEngine
-
-        Inherits MethodListInformations
-
-        ''' <summary>
-        ''' This method provide to retrieve the last method chain in the stack
-        ''' </summary>
-        ''' <returns></returns>
-        Private Function getParentFromStack() As MethodInformationEngine
-            Try
-                If (stacks.Count = 0) Then
-                    Return New MethodInformationEngine
-                Else
-                    If index.ContainsKey(stacks.Last) Then
-                        Return index(stacks.Last)
-                    Else
-                        Return New MethodInformationEngine
-                    End If
-                End If
-            Catch ex As Exception
-                Return New MethodInformationEngine
-            End Try
-        End Function
-
 
         ''' <summary>
         ''' This method provide to manage enter to method procedure
@@ -87,32 +167,32 @@ Namespace AreaEngine.PerformanceProfile
         ''' <param name="startAt"></param>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Public Function enterIntoMethod(ByVal startAt As Double, ByVal name As String) As Boolean
+        Public Function enterIntoMethod(ByVal ownerId As String, ByVal item As CHCModelsLibrary.AreaModel.Log.LogListModel.SingleLogBlockModel) As Boolean
             Try
-                Dim methodData As MethodInformationEngine
-                Dim parent As MethodInformationEngine = getParentFromStack()
+                Dim methodData As MethodInformations
+                Dim parent As String = ""
 
-                If index.ContainsKey(name) Then
-                    methodData = index(name)
+                If _Index.ContainsKey(item.name) Then
+                    methodData = _Index(item.name)
                 Else
-                    methodData = New MethodInformationEngine
+                    methodData = New MethodInformations
 
-                    methodData.name = name
-                    methodData.maxDuring = startAt
-                    methodData.minDuring = startAt
-                    methodData.refDuring = startAt
+                    methodData.name = item.name
 
-                    methods.Add(methodData)
-
-                    index.Add(name, methodData)
+                    data.methods.Add(methodData)
+                    _Index.Add(item.name, methodData)
                 End If
 
-                methodData.lastStart = startAt
+                methodData.usedCount += 1
 
-                If (parent.name.Length > 0) Then
-                    methodData.addUsedIn(parent.name)
+                parent = stackEngine.addMethod(ownerId, item.name, item.startAt)
 
-                    parent.addUse(name)
+                If (parent.Length > 0) Then
+                    addUsedInMethod(parent, methodData)
+
+                    If _Index.ContainsKey(parent) Then
+                        addUseMethod(methodData.name, _Index(parent))
+                    End If
                 End If
 
                 Return True
@@ -127,26 +207,37 @@ Namespace AreaEngine.PerformanceProfile
         ''' <param name="startAt"></param>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Public Function exitFromMethod(ByVal startAt As Double, ByVal name As String) As Boolean
+        Public Function exitFromMethod(ByVal ownerId As String, ByVal name As String, ByVal completeAt As Double) As Boolean
             Try
-                Dim methodData As MethodInformation
-                Dim durate As Double
+                Dim during As Double = stackEngine.remove(ownerId, name, completeAt)
 
-                If index.ContainsKey(name) Then
-                    methodData = index(name)
+                If (during <> -1) Then
+                    Dim methodData As MethodInformations
+                    Dim durate As Double
 
-                    durate = startAt - methodData.lastStart
+                    If _Index.ContainsKey(name) Then
+                        methodData = _Index(name)
 
-                    If (durate > methodData.maxDuring) Then
-                        methodData.maxDuring = durate
+                        If (methodData.refDuring = 0) Then
+                            methodData.refDuring = during
+                            methodData.maxDuring = during
+                            methodData.minDuring = during
+                        Else
+                            If (durate > methodData.maxDuring) Then
+                                methodData.maxDuring = durate
+                            End If
+                            If (durate < methodData.minDuring) Then
+                                methodData.minDuring = durate
+                            End If
+                        End If
+
+                        Return True
+                    Else
+                        Return False
                     End If
-                    If (durate < methodData.minDuring) Then
-                        methodData.minDuring = durate
-                    End If
-
-                    Return True
                 Else
                     Return False
+
                 End If
             Catch ex As Exception
                 Return False
@@ -157,23 +248,24 @@ Namespace AreaEngine.PerformanceProfile
         ''' This method provide to track a new marker
         ''' </summary>
         ''' <param name="name"></param>
+        ''' <param name="startAt"></param>
         ''' <returns></returns>
         Public Function trackMarker(ByVal name As String, ByVal startAt As Double) As Boolean
             Try
-                Dim data As MarkersInformations
+                Dim marker As MarkersInformations
 
-                If (markers.Count > 0) Then
-                    data = markers.Last
+                If (data.markers.Count > 0) Then
+                    marker = data.markers.Last
 
-                    data.durate = startAt - data.startAt
+                    marker.durate = CDbl(startAt) - marker.startAt
                 End If
 
-                data = New MarkersInformations
+                marker = New MarkersInformations
 
-                data.name = name
-                data.startAt = startAt
+                marker.name = name
+                marker.startAt = startAt
 
-                markers.Add(data)
+                data.markers.Add(marker)
 
                 Return True
             Catch ex As Exception
@@ -185,10 +277,10 @@ Namespace AreaEngine.PerformanceProfile
         ''' This method provide to rebuild the index of a method list
         ''' </summary>
         ''' <returns></returns>
-        Public Function rebuildIndex() As Boolean
+        Private Function rebuildIndex() As Boolean
             Try
-                For Each item In methods
-                    index.Add(item.name, item)
+                For Each item In data.methods
+                    _Index.Add(item.name, item)
                 Next
 
                 Return True
@@ -197,167 +289,16 @@ Namespace AreaEngine.PerformanceProfile
             End Try
         End Function
 
-    End Class
+        Public Function read(ByVal completeFileName As String) As Boolean
+            data = IOFast(Of MethodListInformations).read(completeFileName)
 
-    Public Class PerformanceProfileEngine
-
-        Private Property _CompleteProfileName As String = ""
-
-        Public Property Data As New MethodListInformationsEngine
-        Public Property log As CHCCommonLibrary.AreaEngine.Log.TrackEngine
-
-
-
-        ''' <summary>
-        ''' This method provide to initialize the engine
-        ''' </summary>
-        ''' <param name="path"></param>
-        ''' <returns></returns>
-        Public Function init(ByVal pathProfile As String) As Boolean
-            Try
-                If IsNothing(log) Then Return False
-
-                log.trackEnter("CHCProtocol.PerformanceProfileEngine.init")
-
-                If Not IO.Directory.Exists(pathProfile) Then
-                    IO.Directory.CreateDirectory(pathProfile)
-                End If
-
-                _CompleteProfileName = IO.Path.Combine(pathProfile, "Data.PerformanceProfile")
-
-                If IO.File.Exists(_CompleteProfileName) Then
-                    _Data = IOFast(Of MethodListInformations).read(_CompleteProfileName)
-
-                    Return Data.rebuildIndex()
-                Else
-                    Return True
-                End If
-            Catch ex As Exception
-                log.trackException("CHCProtocol.PerformanceProfileEngine.init", ex.Message)
-
-                Return False
-            Finally
-                log.trackExit("CHCProtocol.PerformanceProfileEngine.init")
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to process file log
-        ''' </summary>
-        ''' <param name="minItem"></param>
-        ''' <returns></returns>
-        Private Function processFileLog(ByRef currentItem As CHCModelsLibrary.AreaModel.Log.LogListModel.SingleLogBlockModel, ByVal minItem As Double) As Boolean
-            Try
-                Dim engine As CHCCommonLibrary.AreaEngine.Log.LogBlockEngine
-                Dim start As Boolean = False
-
-                engine = New CHCCommonLibrary.AreaEngine.Log.LogBlockEngine
-
-#If DEBUG Then
-                engine.logFilePath = "E:\LegacyNetwork\System\Logs\SidechainService\toElaborate"
+            If rebuildIndex() Then
+                stackEngine.ownerStacks = data.ownerStacks
 
                 Return True
-#Else
-                engine.logFilePath = log.settings.pathFileLog
-#End If
+            End If
 
-                engine.logInstance = ""
-
-                If engine.exist(currentItem.name) Then
-                    For Each item In engine.read(currentItem.name)
-
-                        If Not start Then
-                            start = (item.instant > minItem)
-                        End If
-
-                        If start Then
-                            Select Case item.action
-                                Case CHCModelsLibrary.AreaModel.Log.ActionEnumeration.enterIntoMethod : _Data.enterIntoMethod(item.instant, item.position)
-                                Case CHCModelsLibrary.AreaModel.Log.ActionEnumeration.exitFromTheMethod
-                                    If Not _Data.exitFromMethod(item.instant, item.position) Then
-                                        log.trackException("MethodListInformations.processFileLog", $"Method not enter: {item.position}")
-                                    End If
-                                Case CHCModelsLibrary.AreaModel.Log.ActionEnumeration.trackMarker
-                                    _Data.trackMarker(item.position, item.instant)
-                            End Select
-                        End If
-                    Next
-                End If
-
-                Return True
-            Catch ex As Exception
-                Return False
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to compute the remain log file 
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function run() As Boolean
-            Try
-                Dim value As CHCModelsLibrary.AreaModel.Log.LogListModel
-                Dim scanToFile As New List(Of CHCModelsLibrary.AreaModel.Log.LogListModel.SingleLogBlockModel)
-                Dim minItem As CHCModelsLibrary.AreaModel.Log.LogListModel.SingleLogBlockModel
-                Dim maxFile As Double = 0
-                Dim fileName As String = ""
-
-                If IsNothing(log) Then Return False
-
-                log.trackEnter("CHCProtocol.PerformanceProfileEngine.run")
-
-                With New CHCCommonLibrary.AreaEngine.Log.LogBlockEngine()
-#If DEBUG Then
-                    .logFilePath = "E:\LegacyNetwork\System\Logs\SidechainService\toElaborate"
-#Else
-                    .logFilePath = log.settings.pathFileLog
-#End If
-
-                    value = .readListLogFile()
-                End With
-
-                For Each item In value.items
-                    If (item.startAt > _Data.lastPosition) Then
-                        scanToFile.Add(New CHCModelsLibrary.AreaModel.Log.LogListModel.SingleLogBlockModel With {.name = item.name, .startAt = item.startAt})
-                    End If
-                Next
-
-                For Each item In value.items
-                    If (item.startAt < _Data.lastPosition) Then
-                        If (maxFile = 0) Or (item.startAt > maxFile) Then
-                            maxFile = item.startAt
-
-                            fileName = item.name
-                        End If
-                    End If
-                Next
-
-                If (maxFile > 0) Then
-                    scanToFile.Add(New CHCModelsLibrary.AreaModel.Log.LogListModel.SingleLogBlockModel With {.name = fileName, .startAt = maxFile})
-                End If
-
-                Do While (scanToFile.Count > 0)
-                    For Each item In scanToFile
-                        If IsNothing(minItem) Then
-                            minItem = item
-                        ElseIf (minItem.startAt > item.startAt) Then
-                            minItem = item
-                        End If
-                    Next
-
-                    processFileLog(minItem, _Data.lastPosition)
-
-                    scanToFile.Remove(minItem)
-                Loop
-
-                Return IOFast(Of MethodListInformations).save(_CompleteProfileName, _Data)
-            Catch ex As Exception
-                log.trackException("CHCProtocol.PerformanceProfileEngine.run", ex.Message)
-
-                Return False
-            Finally
-                log.trackExit("CHCProtocol.PerformanceProfileEngine.run")
-            End Try
+            Return False
         End Function
 
     End Class

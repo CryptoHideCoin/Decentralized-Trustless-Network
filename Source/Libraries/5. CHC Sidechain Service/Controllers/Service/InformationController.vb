@@ -26,12 +26,13 @@ Namespace Controllers
         ''' <param name="securityToken"></param>
         ''' <returns></returns>
         Public Function GetValue(ByVal securityToken As String) As InformationResponseModel
+            Dim ownerId As String = "information-" & Guid.NewGuid.ToString
             Dim result As New InformationResponseModel
             Dim response As String = ""
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("information.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackEnter("information.GetValue", ownerId,, True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -51,10 +52,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("information.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("information.GetValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("information.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("information.GetValue", ownerId,, True)
                 End If
             End Try
 

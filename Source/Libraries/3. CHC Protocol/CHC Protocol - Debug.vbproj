@@ -86,10 +86,6 @@
     <Reference Include="CHCBasicCryptographyLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Basic Cryptography\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCCommonLibrary, Version=1.19.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Numerics" />
@@ -155,6 +151,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="PerformanceProfile\PerformanceProfileEngine.vb" />
+    <Compile Include="PerformanceProfile\PerformanceProfileService.vb" />
     <Compile Include="Security\KeyPairEngine.vb" />
     <Compile Include="Settings\SetttingsEngine.vb" />
     <Compile Include="Utility\CertificateEngine.vb" />
@@ -189,6 +186,10 @@
     <ProjectReference Include="..\1. CHC Models\CHC Models.vbproj">
       <Project>{5475fb38-e6b1-4049-8a92-b16607841e96}</Project>
       <Name>CHC Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\2. CHC Common\CHC Common - Debug.vbproj">
+      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
+      <Name>CHC Common - Debug</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

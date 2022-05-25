@@ -18,7 +18,7 @@ Namespace AreaCommon.Startup
         ''' </summary>
         Private Sub startServiceProcessor()
             Try
-                environment.log.trackEnter("Scheduler.startServiceProcessor")
+                environment.log.trackEnter("Scheduler.startServiceProcessor", "Main")
 
                 _Engine.loadScheduleList()
 
@@ -29,9 +29,9 @@ Namespace AreaCommon.Startup
                     Application.DoEvents()
                 Loop
 
-                environment.log.trackExit("Scheduler.startServiceProcessor")
+                environment.log.trackExit("Scheduler.startServiceProcessor", "Main")
             Catch ex As Exception
-                environment.log.trackException("Scheduler.startServiceProcessor", ex.Message)
+                environment.log.trackException("Scheduler.startServiceProcessor", "Main", ex.Message)
             End Try
         End Sub
 
@@ -51,7 +51,7 @@ Namespace AreaCommon.Startup
             Try
                 Dim objWS As Threading.Thread
 
-                environment.log.trackEnter("Scheduler.run")
+                environment.log.trackEnter("Scheduler.run", "Main")
 
                 Do While (serviceInformation.currentStatus <> EnumInternalServiceState.started)
                     Application.DoEvents()
@@ -61,11 +61,11 @@ Namespace AreaCommon.Startup
 
                 objWS.Start()
 
-                environment.log.trackExit("Scheduler.run")
+                environment.log.trackExit("Scheduler.run", "Main")
 
                 Return True
             Catch ex As Exception
-                environment.log.trackException("Scheduler.run", ex.Message)
+                environment.log.trackException("Scheduler.run", "Main", ex.Message)
 
                 Return False
             End Try

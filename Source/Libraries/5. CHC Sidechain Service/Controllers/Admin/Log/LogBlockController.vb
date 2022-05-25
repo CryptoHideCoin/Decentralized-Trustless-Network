@@ -27,13 +27,14 @@ Namespace Controllers
         ''' <param name="blockNumber"></param>
         ''' <returns></returns>
         Public Function GetValue(ByVal securityToken As String, ByVal blockNumber As String) As LogStreamResponseModel
+            Dim ownerId As String = "LogBlock-" & Guid.NewGuid.ToString
             Dim result As New LogStreamResponseModel
             Dim response As String = ""
             Dim enter As Boolean = False
             Dim engine As CHCCommonLibrary.AreaEngine.Log.LogBlockEngine
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("LogBlock.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackEnter("LogBlock.GetValue", ownerId,, True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -58,10 +59,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("LogBlock.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("LogBlock.GetValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("LogBlock.GetValue", $"token={securityToken}&blockNumber={blockNumber}", True)
+                    AreaCommon.Main.environment.log.trackExit("LogBlock.GetValue", ownerId, $"token={securityToken}&blockNumber={blockNumber}", True)
                 End If
             End Try
 

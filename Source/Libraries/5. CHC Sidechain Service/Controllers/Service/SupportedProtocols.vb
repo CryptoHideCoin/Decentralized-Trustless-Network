@@ -25,10 +25,11 @@ Namespace Controllers
         ''' </summary>
         ''' <returns></returns>
         Public Function GetValue() As SupportedProtocolsResponseModel
+            Dim ownerId As String = "SupportedProtocolsGet-" & Guid.NewGuid.ToString
             Dim result As New SupportedProtocolsResponseModel
             Dim enter As Boolean = False
             Try
-                AreaCommon.Main.environment.log.trackEnter("supportedProtocols.GetValue",, True)
+                AreaCommon.Main.environment.log.trackEnter("supportedProtocols.GetValue", ownerId,, True)
 
                 enter = True
 
@@ -39,10 +40,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("supportedProtocols.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("supportedProtocols.GetValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("supportedProtocols.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("supportedProtocols.GetValue", ownerId,, True)
                 End If
             End Try
 

@@ -24,10 +24,10 @@ Namespace AreaCommon.Startup
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    environment.log.trackEnter("startUp.Service.run")
+                    environment.log.trackEnter("startUp.Service.run", "Main")
 
-                    environment.log.track("startUp.Service.run", "Commandline process execute is " & System.Environment.CommandLine)
-                    environment.log.track("startUp.Service.run", "DataPath is " & environment.paths.directoryData)
+                    environment.log.track("startUp.Service.run", "Main", "Commandline process execute is " & System.Environment.CommandLine)
+                    environment.log.track("startUp.Service.run", "Main", "DataPath is " & environment.paths.directoryData)
 
                     environment.registry.noSave = Not environment.settings.useEventRegistry
                 End If
@@ -44,14 +44,14 @@ Namespace AreaCommon.Startup
                 If proceed Then
                     environment.log.registryService = environment.registry
 
-                    environment.log.track("startUp.Service.run", "System Registry is running")
+                    environment.log.track("startUp.Service.run", "Main", "System Registry is running")
                 End If
                 If proceed Then
                     environment.counter.init(environment.paths.system.counters)
                 End If
                 If proceed Then
                     environment.log.trackIntoConsole("Counter Service Start")
-                    environment.log.track("startUp.Service.runService", "Counter is running")
+                    environment.log.track("startUp.Service.runService", "Main", "Counter is running")
 
                     proceed = webServiceThread(True)
                 End If
@@ -62,11 +62,11 @@ Namespace AreaCommon.Startup
 
                 Return True
             Catch ex As Exception
-                environment.log.trackException("StartUp.Service.loadDataInformation", "Error during Load data information:" & ex.Message)
+                environment.log.trackException("StartUp.Service.loadDataInformation", "Main", "Error during Load data information:" & ex.Message)
 
                 Return False
             Finally
-                environment.log.trackExit("startUp.Service.run")
+                environment.log.trackExit("startUp.Service.run", "Main")
             End Try
         End Function
 

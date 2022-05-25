@@ -13,3 +13,4 @@ E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Debug\CHCProtocolLibra
 E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\obj\Debug\CHCProtocolLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\CHCModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\3. CHC Protocol\bin\CHCCommonLibrary.pdb

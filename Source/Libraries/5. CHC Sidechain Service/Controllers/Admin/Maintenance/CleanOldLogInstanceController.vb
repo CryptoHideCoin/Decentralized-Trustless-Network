@@ -28,13 +28,14 @@ Namespace Controllers
         ''' <param name="securityToken"></param>
         ''' <returns></returns>
         Public Function PutValue(ByVal securityToken As String) As BaseRemoteResponse
+            Dim ownerId As String = "CleanOldLogInstanceAct-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
             Dim asynchThread As Thread
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("CleanOldLogInstance.PutValue", $"token={securityToken}", True)
+                    AreaCommon.Main.environment.log.trackEnter("CleanOldLogInstance.PutValue", ownerId, $"token={securityToken}", True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -54,10 +55,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("CleanLog.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("CleanLog.PutValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("CleanLog.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("CleanLog.PutValue", ownerId,, True)
                 End If
             End Try
 

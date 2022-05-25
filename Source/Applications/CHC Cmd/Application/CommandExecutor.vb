@@ -37,6 +37,8 @@ Namespace AreaCommon
         Private Const _CommandGetApplicationsPath As String = "getApplicationsPath"
         Private Const _CommandWait As String = "wait"
         Private Const _CommandPause As String = "pause"
+        Private Const _CommandStartPerformanceProfileParameter As String = "startPerformanceProfile"
+        Private Const _CommandGetPerformanceProfileParameter As String = "getPerformanceProfile"
         Private Const _CommandSetDefaultParameter As String = "setDefaultParameter"
         Private Const _CommandGetDefaultParameters As String = "getDefaultParameters"
         Private Const _CommandStatusServe As String = "statusServe"
@@ -100,6 +102,8 @@ Namespace AreaCommon
                 Case _CommandBuildPath.ToLower() : classSupport = New Command.CommandBuildPath
                 Case _CommandLog.ToLower() : classSupport = New Command.CommandLog
                 Case _CommandRegistry.ToLower() : classSupport = New Command.CommandRegistry
+                Case _CommandStartPerformanceProfileParameter.ToLower : classSupport = New Command.CommandStartPerformanceProfile
+                Case _CommandGetPerformanceProfileParameter.ToLower : classSupport = New Command.CommandGetPerformanceProfile
                 Case Else
                     If (command.code.Length > 0) Then
                         Console.WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")

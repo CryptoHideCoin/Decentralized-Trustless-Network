@@ -17,13 +17,15 @@ Namespace AreaEngine
     '''' </summary>
     Public Class CleanLogEngine
 
+        Public Property ownerId As String = ""
+
         ''' <summary>
         ''' This method provide to delete all older log file
         ''' </summary>
         ''' <returns></returns>
         Public Function run() As Boolean
             Try
-                AreaCommon.Main.environment.log.trackEnter("CleanLogEngine.run")
+                AreaCommon.Main.environment.log.trackEnter("CleanLogEngine.run", ownerID)
 
                 If (AreaCommon.Main.serviceInformation.currentStatus <> CHCModelsLibrary.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started) Then
                     Return False
@@ -69,18 +71,19 @@ Namespace AreaEngine
                         If (singleFile.startAt < limitTime) And (blockEngine.readListLogFile.items.Count > 1) Then
                             blockEngine.delete(singleFile.name)
 
-                            AreaCommon.Main.environment.log.track("CleanLogEngine.run", $"Delete file = {singleFile.name}")
+                            AreaCommon.Main.environment.log.track("CleanLogEngine.run", ownerID, $"Delete file = {singleFile.name}")
                         End If
                     End If
                 Next
 
-                AreaCommon.Main.environment.log.trackExit("CleanLogEngine.run")
-
                 Return True
             Catch ex As Exception
-                AreaCommon.Main.environment.log.trackException("CleanLogEngine.run", ex.Message)
+                AreaCommon.Main.environment.log.trackException("CleanLogEngine.run", ownerID, ex.Message)
 
                 Return False
+
+            Finally
+                AreaCommon.Main.environment.log.trackExit("CleanLogEngine.run", ownerID)
             End Try
         End Function
 

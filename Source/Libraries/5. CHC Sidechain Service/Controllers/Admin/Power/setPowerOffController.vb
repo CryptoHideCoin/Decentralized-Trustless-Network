@@ -45,12 +45,13 @@ Namespace Controllers
         ''' <param name="data"></param>
         ''' <returns></returns>
         Public Function PutValue(ByVal securityToken As String) As BaseRemoteResponse
+            Dim ownerId As String = "SetPowerOff-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("setPowerOff.PutValue",, True)
+                    AreaCommon.Main.environment.log.trackEnter("setPowerOff.PutValue", ownerId,, True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -71,10 +72,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("setPowerOff.PutValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("setPowerOff.PutValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("setPowerOff.PutValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("setPowerOff.PutValue", ownerId,, True)
                 End If
             End Try
 

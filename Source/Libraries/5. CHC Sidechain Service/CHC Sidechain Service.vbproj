@@ -165,6 +165,7 @@
     <Compile Include="Controllers\Admin\Settings\SettingController.vb" />
     <Compile Include="Controllers\Admin\Log\LogStreamController.vb" />
     <Compile Include="Controllers\Admin\Maintenance\CleanLogController.vb" />
+	<Compile Include="Controllers\Admin\Tuning\PerformanceProfileController.vb" />
     <Compile Include="Controllers\Service\InformationController.vb" />
     <Compile Include="Controllers\Service\SupportedProtocols.vb" />
     <Compile Include="Controllers\Service\TestController.vb" />

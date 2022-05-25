@@ -15,13 +15,13 @@ Namespace AreaNetwork
         ''' This method provides to return a Public IP
         ''' </summary>
         ''' <returns></returns>
-        Public Shared Function acquirePublicIP(Optional ByRef log As CHCCommonLibrary.AreaEngine.Log.TrackEngine = Nothing) As String
+        Public Shared Function acquirePublicIP(Optional ByRef log As CHCCommonLibrary.AreaEngine.Log.TrackEngine = Nothing, Optional ByVal ownerId As String = "Main") As String
             Dim ipEngine As New Net.WebClient
             Dim ipAddress As String = "", tmp As String = ""
 
             Try
                 If Not IsNothing(log) Then
-                    log.trackEnter("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP")
+                    log.trackEnter("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP", ownerId)
                 End If
                 Try
                     Dim hostName = Net.Dns.GetHostName()
@@ -67,18 +67,18 @@ Namespace AreaNetwork
                 End If
                 If Not IsNothing(log) Then
                     If (tmp.Trim.Length = 0) Then
-                        log.track("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP", "Service Public IP: not found")
+                        log.track("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP", ownerId, "Service Public IP: not found")
                     Else
-                        log.track("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP", "Service Public IP: " & tmp)
+                        log.track("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP", ownerId, "Service Public IP: " & tmp)
                     End If
                 End If
             Catch ex As Exception
                 If Not IsNothing(log) Then
-                    log.trackException("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP", ex.Message)
+                    log.trackException("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP", ownerId, ex.Message)
                 End If
             Finally
                 If Not IsNothing(log) Then
-                    log.trackExit("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP")
+                    log.trackExit("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP", ownerId)
                 End If
             End Try
 
@@ -89,10 +89,10 @@ Namespace AreaNetwork
         ''' This method provides to return a Local IP
         ''' </summary>
         ''' <returns></returns>
-        Public Shared Function acquireLocalIP(ByVal intranetMode As Boolean, Optional ByRef log As CHCCommonLibrary.AreaEngine.Log.TrackEngine = Nothing) As String
+        Public Shared Function acquireLocalIP(ByVal intranetMode As Boolean, Optional ByRef log As CHCCommonLibrary.AreaEngine.Log.TrackEngine = Nothing, Optional ByRef ownerId As String = "Main") As String
             Try
                 If Not IsNothing(log) Then
-                    log.trackEnter("CHCSidechainServiceLibrary.AreaNetwork.Address.acquireLocalIP")
+                    log.trackEnter("CHCSidechainServiceLibrary.AreaNetwork.Address.acquireLocalIP", ownerId)
                 End If
 
                 Dim hostName = Net.Dns.GetHostName()
@@ -115,11 +115,11 @@ Namespace AreaNetwork
                 End If
             Catch ex As Exception
                 If Not IsNothing(log) Then
-                    log.trackException("CHCSidechainServiceLibrary.AreaNetwork.Address.acquireLocalIP", ex.Message)
+                    log.trackException("CHCSidechainServiceLibrary.AreaNetwork.Address.acquireLocalIP", ownerId, ex.Message)
                 End If
             Finally
                 If Not IsNothing(log) Then
-                    log.trackExit("CHCSidechainServiceLibrary.AreaNetwork.Address.acquireLocalIP")
+                    log.trackExit("CHCSidechainServiceLibrary.AreaNetwork.Address.acquireLocalIP", ownerId)
                 End If
             End Try
 

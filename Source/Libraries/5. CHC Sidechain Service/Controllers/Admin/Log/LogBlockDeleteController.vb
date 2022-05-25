@@ -26,13 +26,14 @@ Namespace Controllers
         ''' <param name="blockNumber"></param>
         ''' <returns></returns>
         Public Function PutValue(ByVal securityToken As String, ByVal blockNumber As String) As BaseRemoteResponse
+            Dim ownerId As String = "LogBlockDelete-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
             Dim enter As Boolean = False
             Dim engine As CHCCommonLibrary.AreaEngine.Log.LogBlockEngine
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("LogBlockDelete.PutValue", $"token={securityToken} blockNumber={blockNumber}", True)
+                    AreaCommon.Main.environment.log.trackEnter("LogBlockDelete.PutValue", ownerId, $"token={securityToken} blockNumber={blockNumber}", True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -61,10 +62,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("LogBlockDelete.PutValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("LogBlockDelete.PutValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("LogBlockDelete.PutValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("LogBlockDelete.PutValue", ownerId,, True)
                 End If
             End Try
 

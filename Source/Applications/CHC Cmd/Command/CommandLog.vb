@@ -446,7 +446,9 @@ Namespace AreaCommon.Command
                     Console.WriteLine()
 
                     For Each item In remote.data.value.items
+#Disable Warning BC42016
                         Console.WriteLine(item.name & Space(40 - item.name.Length) & CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(item.startAt.ToString()))
+#Enable Warning BC42016
                     Next
 
                     Console.WriteLine()

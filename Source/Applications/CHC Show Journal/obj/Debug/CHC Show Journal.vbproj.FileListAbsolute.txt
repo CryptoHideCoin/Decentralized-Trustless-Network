@@ -16,3 +16,4 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Debug\CHC Show Jou
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Debug\CHCShowJournal.exe
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Debug\CHCShowJournal.xml
 E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\obj\Debug\CHCShowJournal.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Journal\bin\Debug\CHCCommonLibrary.pdb

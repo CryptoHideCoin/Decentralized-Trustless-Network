@@ -27,11 +27,12 @@ Namespace Controllers
         ''' <param name="signature"></param>
         ''' <returns></returns>
         Public Function GetValue(ByVal signature As String) As ResponseRequestAccessKeyModel
+            Dim ownerId As String = "RequestAccessKeyGet-" & Guid.NewGuid.ToString
             Dim result As New ResponseRequestAccessKeyModel
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("RequestAccessKey.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackEnter("RequestAccessKey.GetValue", ownerId,, True)
 
                     enter = True
 
@@ -49,10 +50,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("RequestAccessKey.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("RequestAccessKey.GetValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("RequestAccessKey.GetValue", result.accessKey, True)
+                    AreaCommon.Main.environment.log.trackExit("RequestAccessKey.GetValue", ownerId, result.accessKey, True)
                 End If
             End Try
 

@@ -17,13 +17,15 @@ Namespace AreaEngine
     '''' </summary>
     Public Class CleanRegistryEngine
 
+        Public Property ownerId As String = ""
+
         ''' <summary>
         ''' This method provide to delete all older registry events file
         ''' </summary>
         ''' <returns></returns>
         Public Function run() As Boolean
             Try
-                AreaCommon.Main.environment.log.trackEnter("CleanRegistryEngine.run")
+                AreaCommon.Main.environment.log.trackEnter("CleanRegistryEngine.run", ownerId)
 
                 If (AreaCommon.Main.serviceInformation.currentStatus <> CHCModelsLibrary.AreaModel.Information.InternalServiceInformation.EnumInternalServiceState.started) Then
                     Return False
@@ -58,15 +60,15 @@ Namespace AreaEngine
                         Return False
                     End If
 
-                    AreaCommon.Main.environment.log.track("CleanRegistryEngine.run", $"Delete file = {singleFile}")
+                    AreaCommon.Main.environment.log.track("CleanRegistryEngine.run", ownerId, $"Delete file = {singleFile}")
                     IO.File.Delete(singleFile)
                 Next
 
-                AreaCommon.Main.environment.log.trackExit("CleanRegistryEngine.run")
+                AreaCommon.Main.environment.log.trackExit("CleanRegistryEngine.run", ownerId)
 
                 Return True
             Catch ex As Exception
-                AreaCommon.Main.environment.log.trackException("CleanRegistryEngine.run", ex.Message)
+                AreaCommon.Main.environment.log.trackException("CleanRegistryEngine.run", ownerId, ex.Message)
 
                 Return False
             End Try

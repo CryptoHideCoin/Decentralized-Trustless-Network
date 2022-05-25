@@ -26,13 +26,14 @@ Namespace Controllers
         ''' <param name="signature"></param>
         ''' <returns></returns>
         Public Function GetValue(ByVal securityToken As String) As BaseRemoteResponse
+            Dim ownerId As String = "CleanRegistry-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
             Dim asynchThread As Thread
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("CleanRegistryController.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackEnter("CleanRegistryController.GetValue", ownerId,, True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -52,10 +53,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("CleanRegistryController.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("CleanRegistryController.GetValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("CleanRegistryController.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("CleanRegistryController.GetValue", ownerId,, True)
                 End If
             End Try
 

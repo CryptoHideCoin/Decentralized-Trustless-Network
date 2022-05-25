@@ -1,0 +1,17 @@
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\obj\Debug\CHC Show Performance.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\obj\Debug\CHCShowPerformance.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\obj\Debug\CHC Show Performance.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\bin\Debug\CHCShowPerformance.exe.config
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\bin\Debug\CHCShowPerformance.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\bin\Debug\CHCShowPerformance.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\bin\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\obj\Debug\CHC Show Performance.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\obj\Debug\CHCShowPerformance.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\obj\Debug\CHCShowPerformance.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\bin\Debug\CHCProtocolLibrary.pdb

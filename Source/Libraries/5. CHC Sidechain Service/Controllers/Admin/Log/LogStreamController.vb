@@ -26,12 +26,13 @@ Namespace Controllers
         ''' <param name="signature"></param>
         ''' <returns></returns>
         Public Function GetValue(ByVal securityToken As String, ByVal mode As String) As LogStreamResponseModel
+            Dim ownerId As String = "LogStream-" & Guid.NewGuid.ToString
             Dim result As New LogStreamResponseModel
             Dim response As String = ""
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("LogStream.GetValue", $"token={securityToken}", True)
+                    AreaCommon.Main.environment.log.trackEnter("LogStream.GetValue", ownerId, $"token={securityToken}", True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -49,18 +50,17 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("LogStream.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("LogStream.GetValue", ownerId, ex.Message)
             End Try
 
             If enter Then
-                AreaCommon.Main.environment.log.trackExit("LogStream.GetValue",, True)
+                AreaCommon.Main.environment.log.trackExit("LogStream.GetValue", ownerId,, True)
             End If
 
             result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
             Return result
         End Function
-
 
     End Class
 

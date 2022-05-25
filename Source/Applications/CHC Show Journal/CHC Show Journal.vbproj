@@ -98,6 +98,7 @@
   </PropertyGroup>
   <ItemGroup Condition=" '$(Platform)' == 'AnyCPU'">
     <Reference Include="CHCCommonLibrary">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="CHCModelsLibrary">

@@ -27,12 +27,13 @@ Namespace Controllers
         ''' <param name="securityToken"></param>
         ''' <returns></returns>
         Public Function GetValue(ByVal securityToken As String) As ResponseUpdateSettingsModel
+            Dim ownerId As String = "SettingsGet-" & Guid.NewGuid.ToString
             Dim result As New ResponseUpdateSettingsModel
             Dim response As String = ""
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("AcquireSettings.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackEnter("AcquireSettings.GetValue", ownerId,, True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -50,10 +51,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("AcquireSettings.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("AcquireSettings.GetValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("AcquireSettings.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("AcquireSettings.GetValue", ownerId,, True)
                 End If
             End Try
 
@@ -69,12 +70,13 @@ Namespace Controllers
         ''' <param name="data"></param>
         ''' <returns></returns>
         Public Function PutValue(ByVal securityToken As String, <FromBody()> ByVal data As SettingsSidechainServiceComplete) As BaseRemoteResponse
+            Dim ownerId As String = "SettingsGet-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("AcquireSettings.PutValue",, True)
+                    AreaCommon.Main.environment.log.trackEnter("AcquireSettings.PutValue", ownerId,, True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -85,12 +87,12 @@ Namespace Controllers
                         If AreaCommon.Main.environment.saveSettings() Then
                             AreaCommon.Main.environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.other, "Settings update")
                             AreaCommon.Main.environment.log.trackIntoConsole("Settings update")
-                            AreaCommon.Main.environment.log.track("AcquireSettings.PutValue", "Settings update")
+                            AreaCommon.Main.environment.log.track("AcquireSettings.PutValue", ownerId, "Settings update")
                         Else
                             result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                             result.errorDescription = "503 - Generic Error"
 
-                            AreaCommon.Main.environment.log.trackException("AcquireSettings.PutValue", "Save settings fault")
+                            AreaCommon.Main.environment.log.trackException("AcquireSettings.PutValue", ownerId, "Save settings fault")
                         End If
                     Else
                         result.responseStatus = RemoteResponse.EnumResponseStatus.missingAuthorization
@@ -103,10 +105,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("AcquireSettings.PutValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("AcquireSettings.PutValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("AcquireSettings.PutValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("AcquireSettings.PutValue", ownerId,, True)
                 End If
             End Try
 

@@ -41,7 +41,7 @@ Namespace AreaCommon
                     serviceID = environment.settings.serviceID & "/"
                 End If
 
-                environment.log.track("Controllers.StartWebService", "New Configuration Port " & _portNumber)
+                environment.log.track("Controllers.StartWebService", "Main", "New Configuration Port " & _portNumber)
 
                 If _servicePort Then
                     httpConfig.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & serviceID & "service/{controller}")
@@ -61,25 +61,25 @@ Namespace AreaCommon
                     httpConfig.Routes.MapHttpRoute(name:="NotifyRequestApi", routeTemplate:="api/" & serviceID & "notify/{controller}")
                 End If
 
-                environment.log.track("Controllers.StartWebService", "Map route")
+                environment.log.track("Controllers.StartWebService", "Main", "Map route")
 
                 Using server As New HttpSelfHostServer(httpConfig)
                     Try
-                        environment.log.track("Controllers.StartWebService", "Enter in the using")
+                        environment.log.track("Controllers.StartWebService", "Main", "Enter in the using")
 
                         server.OpenAsync().Wait()
 
-                        environment.log.track("Controllers.StartWebService", "WS Listen")
-                        environment.log.track("Controllers.StartWebService", "Webservice Run at " & _portNumber & " port")
+                        environment.log.track("Controllers.StartWebService", "Main", "WS Listen")
+                        environment.log.track("Controllers.StartWebService", "Main", "Webservice Run at " & _portNumber & " port")
                     Catch aggEx As AggregateException
                         If (TypeName(aggEx.InnerException).ToLower.CompareTo("AddressAlreadyInUseException".ToLower) = 0) Then
-                            environment.log.trackException("Controllers.StartWebService", "Service in use")
+                            environment.log.trackException("Controllers.StartWebService", "Main", "Service in use")
 
                             environment.log.writeCacheToLogFile()
 
                             End
                         End If
-                        environment.log.trackException("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion!")
+                        environment.log.trackException("Controllers.StartWebService", "Main", "Enable start a webservice; check admin authorizathion!")
                     End Try
 
                     _controllerComplete = True
@@ -92,7 +92,7 @@ Namespace AreaCommon
                     server.CloseAsync().Wait()
                     server.Dispose()
 
-                    environment.log.track("Controllers.StartWebService", "Close webservice at " & _portNumber & " port")
+                    environment.log.track("Controllers.StartWebService", "Main", "Close webservice at " & _portNumber & " port")
 
                 End Using
 
@@ -100,15 +100,15 @@ Namespace AreaCommon
 
                 serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.swithOff
 
-                environment.log.track("Controllers.StartWebService", "Service Off")
+                environment.log.track("Controllers.StartWebService", "Main", "Service Off")
             Catch exFile As system.io.FileLoadException
-                environment.log.trackException("Controllers.StartWebService", $"Problem with dll release - {exFile.Message}")
+                environment.log.trackException("Controllers.StartWebService", "Main", $"Problem with dll release - {exFile.Message}")
 
                 IntegrityApplication.executeRepairNewton(exFile.FileName)
 
                 _controllerInError = True
             Catch ex As Exception
-                environment.log.trackException("Controllers.StartWebService", "Enable start a webservice; check admin authorizathion - Error:" & ex.Message)
+                environment.log.trackException("Controllers.StartWebService", "Main", "Enable start a webservice; check admin authorizathion - Error:" & ex.Message)
 
                 _controllerInError = True
             End Try
@@ -119,7 +119,7 @@ Namespace AreaCommon
         ''' This method provide to start a webservice in a new thread
         ''' </summary>
         Function webServiceThread(Optional ByVal useServicePort As Boolean = False) As Boolean
-            environment.log.trackEnter("Controllers.WebserviceThread")
+            environment.log.trackEnter("Controllers.WebserviceThread", "Main")
 
             Try
                 Dim objWS As New Threading.Thread(AddressOf startWebService)
@@ -144,11 +144,11 @@ Namespace AreaCommon
                     serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started
                 End If
 
-                environment.log.trackExit("Controllers.WebserviceThread")
+                environment.log.trackExit("Controllers.WebserviceThread", "Main")
 
                 Return True
             Catch ex As Exception
-                environment.log.trackException("Controllers.WebserviceThread", ex.Message)
+                environment.log.trackException("Controllers.WebserviceThread", "Main", ex.Message)
 
                 Return False
             End Try

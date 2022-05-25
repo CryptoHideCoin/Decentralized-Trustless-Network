@@ -27,12 +27,13 @@ Namespace Controllers
         ''' <param name="securityToken"></param>
         ''' <returns></returns>
         Public Function GetValue(ByVal securityToken As String) As LogListResponseModel
+            Dim ownerId As String = "LogList-" & Guid.NewGuid.ToString
             Dim result As New LogListResponseModel
             Dim response As String = ""
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("LogIndexController.GetValue", $"token={securityToken}", True)
+                    AreaCommon.Main.environment.log.trackEnter("LogIndexController.GetValue", ownerId, $"token={securityToken}", True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -54,10 +55,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("LogIndexController.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("LogIndexController.GetValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("LogIndexController.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("LogIndexController.GetValue", ownerId,, True)
                 End If
             End Try
 

@@ -27,12 +27,13 @@ Namespace Controllers
         ''' <param name="signature">Is asignature of a certificate with a admin private key</param>
         ''' <returns></returns>
         Public Function GetValue(ByVal signature As String) As ResponseRequestAdminSecurityTokenModel
+            Dim ownerId As String = "RequestAdminSecurityToken-" & Guid.NewGuid.ToString
             Dim result As New ResponseRequestAdminSecurityTokenModel
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
                     If AreaSecurity.checkSignature(signature, AreaCommon.Main.environment.adminToken.getCurrentAccessKey()) Then
-                        AreaCommon.Main.environment.log.trackEnter("RequestAdminSecurityToken.GetValue",, True)
+                        AreaCommon.Main.environment.log.trackEnter("RequestAdminSecurityToken.GetValue", ownerId,, True)
 
                         enter = True
                         result.tokenValue = AreaCommon.Main.environment.adminToken.createNewToken()
@@ -49,10 +50,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("RequestAdminSecurityTokenController.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("RequestAdminSecurityTokenController.GetValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("RequestAdminSecurityToken.GetValue", result.tokenValue, True)
+                    AreaCommon.Main.environment.log.trackExit("RequestAdminSecurityToken.GetValue", ownerId, result.tokenValue, True)
                 End If
             End Try
 

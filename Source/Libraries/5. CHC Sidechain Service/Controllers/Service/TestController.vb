@@ -23,10 +23,11 @@ Namespace Controllers
         ''' </summary>
         ''' <returns></returns>
         Public Function GetValue() As BaseRemoteResponse
+            Dim ownerId As String = "TestGet-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim enter As Boolean = False
             Try
-                AreaCommon.Main.environment.log.trackEnter("Service.Test.GetValue",, True)
+                AreaCommon.Main.environment.log.trackEnter("Service.Test.GetValue", ownerId,, True)
 
                 enter = True
 
@@ -35,10 +36,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("Service.Test.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("Service.Test.GetValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("Service.Test.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("Service.Test.GetValue", ownerId,, True)
                 End If
             End Try
 

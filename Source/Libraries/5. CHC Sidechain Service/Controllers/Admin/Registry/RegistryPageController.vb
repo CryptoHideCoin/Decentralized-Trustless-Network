@@ -27,12 +27,13 @@ Namespace Controllers
         ''' <param name="index"></param>
         ''' <returns></returns>
         Public Function GetValue(ByVal securityToken As String, ByVal index As String) As RegistryStreamResponseModel
+            Dim ownerId As String = "RegistryPage-" & Guid.NewGuid.ToString
             Dim result As New RegistryStreamResponseModel
             Dim response As String = ""
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("RegistryPageController.GetValue", $"token={securityToken}&index={index}", True)
+                    AreaCommon.Main.environment.log.trackEnter("RegistryPageController.GetValue", ownerId, $"token={securityToken}&index={index}", True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -51,11 +52,11 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("RegistryPageController.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("RegistryPageController.GetValue", ownerId, ex.Message)
             End Try
 
             If enter Then
-                AreaCommon.Main.environment.log.trackExit("RegistryPageController.GetValue", $"token={securityToken}", True)
+                AreaCommon.Main.environment.log.trackExit("RegistryPageController.GetValue", ownerId, $"token={securityToken}", True)
             End If
 
             result.responseTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()

@@ -112,13 +112,11 @@
     <Compile Include="Encryption\SHAInterface.vb" />
     <Compile Include="FileManager\CHCBaseEncryption.vb" />
     <Compile Include="FileManager\CHCFile.vb" />
-    <Compile Include="LogTracker\CHCLogBlock.vb" />
-    <Compile Include="LogTracker\CHCLogCache.vb" />
-    <Compile Include="LogTracker\CHCLogEngine.vb" />
-    <Compile Include="LogTracker\CHCLogIO.vb" />
-    <Compile Include="Log\CHCLog.vb" />
-    <Compile Include="Log\CHCLogRotate.vb" />
-    <Compile Include="Log\CHCModule.vb" />
+    <Compile Include="Log\Tracker\CHCLogBlock.vb" />
+    <Compile Include="Log\Tracker\CHCLogCache.vb" />
+    <Compile Include="Log\Tracker\CHCLogEngine.vb" />
+    <Compile Include="Log\Tracker\CHCLogIO.vb" />
+    <Compile Include="Log\Simply\CHCLog.vb" />
     <Compile Include="Registry\CHCRegistry.vb" />
     <Compile Include="Miscellaneous\CHCCheckSum.vb" />
     <Compile Include="CommandLine\CHCCommandListEngine.vb" />
@@ -128,8 +126,6 @@
     <Compile Include="Miscellaneous\CHCCounter.vb" />
     <Compile Include="Miscellaneous\CHCDateTime.vb" />
     <Compile Include="Miscellaneous\CHCStringExtensions.vb" />
-    <Compile Include="Models\EngineStandardInterface.vb" />
-    <Compile Include="Models\GeneralResponseModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -176,5 +172,6 @@
       <Name>CHC Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

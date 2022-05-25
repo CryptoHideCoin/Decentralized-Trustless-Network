@@ -27,12 +27,13 @@ Namespace Controllers
         ''' <param name="securityToken"></param>
         ''' <returns></returns>
         Public Function GetValue(ByVal securityToken As String) As RegistryListResponseModel
+            Dim ownerId As String = "RegistryList-" & Guid.NewGuid.ToString
             Dim result As New RegistryListResponseModel
             Dim response As String = ""
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("RegistryListController.GetValue", $"token={securityToken}", True)
+                    AreaCommon.Main.environment.log.trackEnter("RegistryListController.GetValue", ownerId, $"token={securityToken}", True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -50,10 +51,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("RegistryListController.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("RegistryListController.GetValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("RegistryListController.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("RegistryListController.GetValue", ownerId,, True)
                 End If
             End Try
 

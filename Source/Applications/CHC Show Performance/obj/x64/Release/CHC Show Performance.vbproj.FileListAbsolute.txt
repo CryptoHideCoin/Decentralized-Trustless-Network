@@ -1,0 +1,9 @@
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Performance\x64\CHCShowPerformance.exe.config
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Performance\x64\CHCShowPerformance.exe
+E:\CryptoHideCoinDTN\Binary\Applications\Console\CHC Show Performance\x64\CHCShowPerformance.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\obj\x64\Release\CHC Show Performance.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\obj\x64\Release\CHCShowPerformance.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\obj\x64\Release\CHC Show Performance.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\obj\x64\Release\CHC Show Performance.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\obj\x64\Release\CHCShowPerformance.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Show Performance\obj\x64\Release\CHCShowPerformance.pdb

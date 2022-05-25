@@ -181,6 +181,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="PerformanceProfile\PerformanceProfileEngine.vb" />
+    <Compile Include="PerformanceProfile\PerformanceProfileService.vb" />
     <Compile Include="Security\KeyPairEngine.vb" />
     <Compile Include="Settings\SetttingsEngine.vb" />
     <Compile Include="Utility\CertificateEngine.vb" />

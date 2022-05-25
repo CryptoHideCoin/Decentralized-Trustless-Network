@@ -44,22 +44,22 @@ Namespace AreaScheduler
         ''' <returns></returns>
         Private Function loadLocalWorkMachineSlot() As JobSchedule
             Try
-                environment.log.trackEnter("AreaScheduler.MainEngine.loadLocalWorkMachineSlot")
+                environment.log.trackEnter("AreaScheduler.MainEngine.loadLocalWorkMachineSlot", "Main")
 
                 Dim response As New JobSchedule
 
                 response.type = ScheduleJobType.notifyLocalWorkMachine
                 response.nextTimeExecuted = 0
 
-                environment.log.track("AreaScheduler.MainEngine.loadLocalWorkMachineSlot", "Next Time executed = Now")
+                environment.log.track("AreaScheduler.MainEngine.loadLocalWorkMachineSlot", "Main", "Next Time executed = Now")
 
                 Return response
             Catch ex As Exception
-                environment.log.trackException("Scheduler.MainEngine.loadLocalWorkMachineSlot", ex.Message)
+                environment.log.trackException("Scheduler.MainEngine.loadLocalWorkMachineSlot", "Main", ex.Message)
 
                 Return New JobSchedule
             Finally
-                environment.log.trackExit("AreaScheduler.MainEngine.loadLocalWorkMachineSlot")
+                environment.log.trackExit("AreaScheduler.MainEngine.loadLocalWorkMachineSlot", "Main")
             End Try
         End Function
 
@@ -69,7 +69,7 @@ Namespace AreaScheduler
         ''' <returns></returns>
         Private Function loadLogRotate() As JobSchedule
             Try
-                environment.log.trackEnter("AreaScheduler.MainEngine.loadLogRotate")
+                environment.log.trackEnter("AreaScheduler.MainEngine.loadLogRotate", "Main")
 
                 Dim response As New JobSchedule
 
@@ -83,15 +83,15 @@ Namespace AreaScheduler
 #End If
 
 
-                environment.log.track("AreaScheduler.MainEngine.loadLogRotate", "Next Time executed = " & response.nextTimeExecuted)
+                environment.log.track("AreaScheduler.MainEngine.loadLogRotate", "Main", "Next Time executed = " & response.nextTimeExecuted)
 
                 Return response
             Catch ex As Exception
-                environment.log.trackException("Scheduler.loadLogRotate", ex.Message)
+                environment.log.trackException("Scheduler.loadLogRotate", "Main", ex.Message)
 
                 Return New JobSchedule
             Finally
-                environment.log.trackExit("AreaScheduler.MainEngine.loadLogRotate")
+                environment.log.trackExit("AreaScheduler.MainEngine.loadLogRotate", "Main")
             End Try
         End Function
 
@@ -101,7 +101,7 @@ Namespace AreaScheduler
         ''' <returns></returns>
         Private Function loadRegistryRotate() As JobSchedule
             Try
-                environment.log.trackEnter("AreaScheduler.MainEngine.loadRegistryRotate")
+                environment.log.trackEnter("AreaScheduler.MainEngine.loadRegistryRotate", "Main")
 
                 Dim response As New JobSchedule
 
@@ -109,20 +109,20 @@ Namespace AreaScheduler
 
 #If DEBUG Then
                 response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 10000
-                'response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000)) + 1000
+                response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000)) + 1000
 #Else
                 response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000)) + 1000
 #End If
 
-                environment.log.track("AreaScheduler.MainEngine.loadRegistryRotate", "Next Time executed = " & response.nextTimeExecuted)
+                environment.log.track("AreaScheduler.MainEngine.loadRegistryRotate", "Main", "Next Time executed = " & response.nextTimeExecuted)
 
                 Return response
             Catch ex As Exception
-                environment.log.trackException("Scheduler.MainEngine.loadRegistryRotate", ex.Message)
+                environment.log.trackException("Scheduler.MainEngine.loadRegistryRotate", "Main", ex.Message)
 
                 Return New JobSchedule
             Finally
-                environment.log.trackExit("AreaScheduler.MainEngine.loadRegistryRotate")
+                environment.log.trackExit("AreaScheduler.MainEngine.loadRegistryRotate", "Main")
             End Try
         End Function
 
@@ -132,7 +132,7 @@ Namespace AreaScheduler
         ''' <returns></returns>
         Private Function loadPerformanceProfile() As JobSchedule
             Try
-                environment.log.trackEnter("AreaScheduler.MainEngine.loadPerformanceProfile")
+                environment.log.trackEnter("AreaScheduler.MainEngine.loadPerformanceProfile", "Main")
 
                 Dim response As New JobSchedule
 
@@ -140,19 +140,20 @@ Namespace AreaScheduler
 
 #If DEBUG Then
                 response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 10000
+                response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.performanceProfile.useEveryHour * 60 * 60 * CDbl(1000)) + 2000
 #Else
                 response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.performanceProfile.useEveryHour * 60 * 60 * CDbl(1000)) + 2000
 #End If
 
-                environment.log.track("AreaScheduler.MainEngine.loadPerformanceProfile", "Next Time executed = " & response.nextTimeExecuted)
+                environment.log.track("AreaScheduler.MainEngine.loadPerformanceProfile", "Main", "Next Time executed = " & response.nextTimeExecuted)
 
                 Return response
             Catch ex As Exception
-                environment.log.trackException("Scheduler.loadPerformanceProfile", ex.Message)
+                environment.log.trackException("Scheduler.loadPerformanceProfile", "Main", ex.Message)
 
                 Return New JobSchedule
             Finally
-                environment.log.trackExit("AreaScheduler.MainEngine.loadPerformanceProfile")
+                environment.log.trackExit("AreaScheduler.MainEngine.loadPerformanceProfile", "Main")
             End Try
         End Function
 
@@ -162,7 +163,7 @@ Namespace AreaScheduler
         ''' <returns></returns>
         Private Function loadRefreshCacheTracker() As JobSchedule
             Try
-                environment.log.trackEnter("AreaScheduler.MainEngine.loadRefreshCacheTracker")
+                environment.log.trackEnter("AreaScheduler.MainEngine.loadRefreshCacheTracker", "Main")
 
                 Dim response As New JobSchedule
 
@@ -170,15 +171,15 @@ Namespace AreaScheduler
 
                 response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 60000
 
-                environment.log.track("AreaScheduler.MainEngine.loadRefreshCacheTracker", "Next Time executed = " & response.nextTimeExecuted)
+                environment.log.track("AreaScheduler.MainEngine.loadRefreshCacheTracker", "Main", "Next Time executed = " & response.nextTimeExecuted)
 
                 Return response
             Catch ex As Exception
-                environment.log.trackException("Scheduler.loadRefreshCacheTracker", ex.Message)
+                environment.log.trackException("Scheduler.loadRefreshCacheTracker", "Main", ex.Message)
 
                 Return New JobSchedule
             Finally
-                environment.log.trackExit("AreaScheduler.MainEngine.loadRefreshCacheTracker")
+                environment.log.trackExit("AreaScheduler.MainEngine.loadRefreshCacheTracker", "Main")
             End Try
         End Function
 
@@ -325,32 +326,32 @@ Namespace AreaScheduler
 
                             Return True
                         Case ScheduleJobType.logRotate
-                            environment.log.track("AreaScheduler.MainEngine.processJob", "Start log rotate")
+                            environment.log.track("AreaScheduler.MainEngine.processJob", "Main", "Start log rotate")
                             environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.autoMaintenanceStartup, "Log Rotate")
 
                             item.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000))
 
                             callLogRotate()
 
-                            environment.log.track("AreaScheduler.MainEngine.processJob", $"Log rotate run. Next time {item.nextTimeExecuted}")
+                            environment.log.track("AreaScheduler.MainEngine.processJob", "Main", $"Log rotate run. Next time {item.nextTimeExecuted}")
                         Case ScheduleJobType.registryRotate
-                            environment.log.track("AreaScheduler.MainEngine.processJob", "Start registry rotate")
+                            environment.log.track("AreaScheduler.MainEngine.processJob", "Main", "Start registry rotate")
                             environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.autoMaintenanceStartup, "Registry Rotate")
 
                             item.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000)) + 1000
 
                             callRegistryRotate()
 
-                            environment.log.track("AreaScheduler.MainEngine.processJob", $"Registry rotate run. Next time {item.nextTimeExecuted}")
+                            environment.log.track("AreaScheduler.MainEngine.processJob", "Main", $"Registry rotate run. Next time {item.nextTimeExecuted}")
                         Case ScheduleJobType.performanceProfile
-                            environment.log.track("AreaScheduler.MainEngine.processJob", "Start Performance Profile")
+                            environment.log.track("AreaScheduler.MainEngine.processJob", "Main", "Start Performance Profile")
                             environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.autoMaintenanceStartup, "Performance Profile")
 
                             item.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.performanceProfile.useEveryHour * 60 * 60 * CDbl(1000)) + 2000
 
                             callPerformanceProfile()
 
-                            environment.log.track("AreaScheduler.MainEngine.processJob", $"Registry rotate run. Next time {item.nextTimeExecuted}")
+                            environment.log.track("AreaScheduler.MainEngine.processJob", "Main", $"Registry rotate run. Next time {item.nextTimeExecuted}")
                         Case ScheduleJobType.refreshTracker
                             environment.log.writeCacheToLogFile()
 
@@ -362,7 +363,7 @@ Namespace AreaScheduler
 
                 Return True
             Catch ex As Exception
-                environment.log.trackException("Scheduler.processJob", ex.Message)
+                environment.log.trackException("Scheduler.processJob", "Main", ex.Message)
 
                 Return False
             End Try
@@ -374,7 +375,7 @@ Namespace AreaScheduler
         ''' <returns></returns>
         Public Function loadScheduleList() As Boolean
             Try
-                environment.log.trackEnter("AreaScheduler.MainEngine.loadScheduleList")
+                environment.log.trackEnter("AreaScheduler.MainEngine.loadScheduleList", "Main")
 
                 If AreaCommon.Main.environment.settings.useLog Then
                     _ScheduleJobs.Add(loadLogRotate)
@@ -393,11 +394,11 @@ Namespace AreaScheduler
 
                 Return True
             Catch ex As Exception
-                environment.log.trackException("AreaScheduler.MainEngine.loadScheduleList", ex.Message)
+                environment.log.trackException("AreaScheduler.MainEngine.loadScheduleList", "Main", ex.Message)
 
                 Return False
             Finally
-                environment.log.trackExit("AreaScheduler.MainEngine.loadScheduleList")
+                environment.log.trackExit("AreaScheduler.MainEngine.loadScheduleList", "Main")
             End Try
         End Function
 

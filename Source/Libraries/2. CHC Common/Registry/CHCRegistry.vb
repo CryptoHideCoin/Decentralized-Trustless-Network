@@ -76,11 +76,15 @@ Namespace AreaEngine.Registry
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function getData(ByVal value As String) As List(Of RegistryData)
+        <DebuggerHiddenAttribute()> Public Function getData(Optional ByVal value As String = "") As List(Of RegistryData)
             Try
                 Dim engine As New BaseFile(Of List(Of RegistryData))
 
-                engine.fileName = IO.Path.Combine(path, value & ".registry")
+                If (value.Length = 0) Then
+                    engine.fileName = path
+                Else
+                    engine.fileName = IO.Path.Combine(path, value & ".registry")
+                End If
 
                 If engine.read() Then
                     Return engine.data
@@ -116,20 +120,24 @@ Namespace AreaEngine.Registry
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()>
+        '<DebuggerHiddenAttribute()>
         Public Function init(Optional ByVal onlySetPath As Boolean = False) As Boolean
             Try
                 If (_Day.CompareTo(Now.ToUniversalTime().ToString("yyyy-MM-dd")) <> 0) Then
-                    If Not IO.Directory.Exists(path) Then
-                        IO.Directory.CreateDirectory(path)
-                    End If
-
                     If Not onlySetPath Then
+                        If Not IO.Directory.Exists(path) Then
+                            IO.Directory.CreateDirectory(path)
+                        End If
+
                         _Day = Now.ToUniversalTime().ToString("yyyy-MM-dd")
 
                         MyBase.fileName = IO.Path.Combine(path, _Day & ".registry")
 
                         MyBase.read()
+                    Else
+                        _Day = IO.Path.GetFileName(path).Replace(".registry", "")
+
+                        MyBase.fileName = path
                     End If
                 End If
 

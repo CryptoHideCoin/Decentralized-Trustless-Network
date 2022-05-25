@@ -24,14 +24,14 @@ Namespace AreaCommon
         Public Shared Function execute(ByVal completeFileName As String) As Boolean
             Try
                 Dim engine As New CHCCommonLibrary.AreaEngine.Registry.RegistryEngine
-                Dim dataDay As List(Of CHCModelsLibrary.AreaModel.Registry.RegistryData)
+                Dim dataDay As New List(Of RegistryData)
                 Dim singleLine As String = ""
                 Dim key As String = IO.Path.GetFileName(completeFileName).Replace(".registry", "")
 
                 engine.path = completeFileName
 
                 If engine.init(True) Then
-                    dataDay = engine.getData(key)
+                    dataDay = engine.getData()
 
                     Console.WriteLine($"Service journal: {key}")
                     Console.WriteLine("")

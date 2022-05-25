@@ -11,6 +11,8 @@ Namespace AreaEngine
     ''' </summary>
     Public Class CleanOldLogInstanceEngine
 
+        Public Property ownerId As String = ""
+
         ''' <summary>
         ''' This method provide to delete a single directory
         ''' </summary>
@@ -36,7 +38,7 @@ Namespace AreaEngine
         ''' <returns></returns>
         Public Function run() As Boolean
             Try
-                AreaCommon.Main.environment.log.trackEnter("CleanOldLogInstanceEngine.run")
+                AreaCommon.Main.environment.log.trackEnter("CleanOldLogInstanceEngine.run", ownerId)
 
                 Dim path As String = AreaCommon.Main.environment.log.settings.pathFile
                 Dim instanceID As String = AreaCommon.Main.environment.log.settings.instanceID
@@ -56,11 +58,11 @@ Namespace AreaEngine
 
                 Return True
             Catch ex As Exception
-                AreaCommon.Main.environment.log.trackException("CleanOldLogInstanceEngine.run", ex.Message)
+                AreaCommon.Main.environment.log.trackException("CleanOldLogInstanceEngine.run", ownerId, ex.Message)
 
                 Return False
             Finally
-                AreaCommon.Main.environment.log.trackExit("CleanOldLogInstanceEngine.run")
+                AreaCommon.Main.environment.log.trackExit("CleanOldLogInstanceEngine.run", ownerId)
             End Try
         End Function
 

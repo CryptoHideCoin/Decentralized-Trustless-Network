@@ -47,13 +47,13 @@ Namespace AreaCommon
                 result.previousTimeStamp = instant
 
                 result.formattedLineLog = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(instant), True)
-                result.formattedLineLog = result.formattedLineLog.PadRight(44 - result.formattedLineLog.Length)
+                result.formattedLineLog = result.formattedLineLog & Space(22 - result.formattedLineLog.Length)
             Else
                 result.complete = False
             End If
 
             If (singleField.Count > 1) Then
-                Dim methodType As String = singleField(1)
+                Dim methodType As String = singleField(2)
 
                 If IsNumeric(methodType) Then
                     Select Case methodType.Trim()
@@ -85,14 +85,14 @@ Namespace AreaCommon
                     End Select
                 End If
 
-                result.formattedLineLog = result.formattedLineLog.PadRight(45)
+                result.formattedLineLog = result.formattedLineLog & Space(40 - result.formattedLineLog.Length)
             End If
 
-            If (singleField.Count > 2) Then
-                result.formattedLineLog += singleField(2) & "  "
+            If (singleField.Count > 3) And (singleField(3).Length > 0) Then
+                result.formattedLineLog += singleField(3) & "  "
             End If
-            If (singleField.Count > 3) Then
-                result.formattedLineLog += singleField(3)
+            If (singleField.Count > 4) Then
+                result.formattedLineLog += singleField(4)
             End If
 
             result.complete = True

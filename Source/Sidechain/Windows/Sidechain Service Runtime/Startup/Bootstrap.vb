@@ -22,7 +22,7 @@ Namespace AreaCommon.Startup
             environment.log.trackIntoConsole("Load service information")
 
             Try
-                environment.log.trackEnter("startUp.acquireServiceInformation")
+                environment.log.trackEnter("startUp.acquireServiceInformation", "Main")
 
                 With serviceInformation
                     .chainName = CUSTOM_ChainServiceName
@@ -55,11 +55,11 @@ Namespace AreaCommon.Startup
 
                 Return True
             Catch ex As Exception
-                environment.log.trackException("StartUp.acquireServiceInformation", "Error: " & ex.Message)
+                environment.log.trackException("StartUp.acquireServiceInformation", "Main", "Error: " & ex.Message)
 
                 Return False
             Finally
-                environment.log.trackExit("startUp.acquireServiceInformation")
+                environment.log.trackExit("startUp.acquireServiceInformation", "Main")
             End Try
         End Function
 

@@ -65,7 +65,7 @@ Namespace AreaCommon
 
                 serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.swithOff
             Catch exFile As system.io.FileLoadException
-                environment.log.trackException("Controllers.StartWebService", $"Problem with dll release - {exFile.Message}")
+                environment.log.trackException("Controllers.StartWebService", "Main", $"Problem with dll release - {exFile.Message}")
 
                 IntegrityApplication.executeRepairNewton(exFile.FileName)
 

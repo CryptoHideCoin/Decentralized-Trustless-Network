@@ -29,7 +29,7 @@ Namespace AreaCommon.Startup
                 Dim dataLoaded As Boolean = False
                 Dim securityValue As String = ""
 
-                environment.log.track("StartUp.readWalletAddress", "Begin")
+                environment.log.track("StartUp.readWalletAddress", "Main", "Begin")
 
                 engine.fileName = IO.Path.Combine(environment.paths.keyStore, uuid, "walletAddress.private")
 
@@ -38,16 +38,16 @@ Namespace AreaCommon.Startup
                 End If
 
                 If Not engine.load() Then
-                    environment.log.trackException("StartUp.readWalletAddress", "Error during load wallet")
+                    environment.log.trackException("StartUp.readWalletAddress", "Main", "Error during load wallet")
 
                     Return ""
                 Else
                     Return CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createNew(engine.data.privateRAWKey, True).official.publicKey
                 End If
 
-                environment.log.track("StartUp.readWalletAddress", "Completed")
+                environment.log.track("StartUp.readWalletAddress", "Main", "Completed")
             Catch ex As Exception
-                environment.log.trackException("StartUp.readWalletAddress", "Error during read wallet address:" & ex.Message)
+                environment.log.trackException("StartUp.readWalletAddress", "Main", "Error during read wallet address:" & ex.Message)
 
                 Return ""
             End Try
@@ -169,7 +169,7 @@ Namespace AreaCommon.Startup
         ''' <returns></returns>
         Public Function acquireIPAddress() As Boolean
             Try
-                environment.log.trackEnter("CHCSidechainServiceLibrary.AreaCommon.startUp.acquireIPAddress")
+                environment.log.trackEnter("CHCSidechainServiceLibrary.AreaCommon.startUp.acquireIPAddress", "Main")
 
                 environment.ipAddress.local = AreaNetwork.Address.acquireLocalIP(environment.settings.intranetMode, environment.log)
                 environment.ipAddress.public = AreaNetwork.Address.acquirePublicIP(environment.log)
@@ -177,11 +177,11 @@ Namespace AreaCommon.Startup
                 environment.log.trackIntoConsole("Public IP Address = " & environment.ipAddress.public)
                 environment.log.trackIntoConsole("Local IP Address = " & environment.ipAddress.local)
 
-                environment.log.trackExit("CHCSidechainServiceLibrary.AreaCommon.startUp.acquireIPAddress")
+                environment.log.trackExit("CHCSidechainServiceLibrary.AreaCommon.startUp.acquireIPAddress", "Main")
 
                 Return True
             Catch ex As Exception
-                environment.log.trackException("CHCSidechainServiceLibrary.AreaCommon.StartUp.acquireIPAddress", "Error during Load data information:" & ex.Message)
+                environment.log.trackException("CHCSidechainServiceLibrary.AreaCommon.StartUp.acquireIPAddress", "Main", "Error during Load data information:" & ex.Message)
 
                 Return False
             End Try
@@ -202,7 +202,7 @@ Namespace AreaCommon.Startup
                     settings = environment.settings
                 End If
 
-                environment.log.trackEnter("CHCSidechainServiceLibrary.AreaCommon.startUp.readAdminKeyStore")
+                environment.log.trackEnter("CHCSidechainServiceLibrary.AreaCommon.startUp.readAdminKeyStore", "Main")
 
                 If (settings.publicAddress.Length >= 11) Then
                     If settings.publicAddress.StartsWith("keystoreid:") Then
@@ -223,7 +223,7 @@ Namespace AreaCommon.Startup
                                 Next
                             End If
                         Catch ex As Exception
-                            environment.log.trackException("CHCSidechainServiceLibrary.AreaCommon.StartUp.readAdminKeyStore", "Error during Load data keyStore :" & ex.Message)
+                            environment.log.trackException("CHCSidechainServiceLibrary.AreaCommon.StartUp.readAdminKeyStore", "Main", "Error during Load data keyStore :" & ex.Message)
 
                             Return False
                         End Try
@@ -234,11 +234,11 @@ Namespace AreaCommon.Startup
 
                 Return True
             Catch ex As Exception
-                environment.log.trackException("CHCSidechainServiceLibrary.AreaCommon.StartUp.readAdminKeyStore", "Error during Load data information:" & ex.Message)
+                environment.log.trackException("CHCSidechainServiceLibrary.AreaCommon.StartUp.readAdminKeyStore", "Main", "Error during Load data information:" & ex.Message)
 
                 Return False
             Finally
-                environment.log.trackExit("CHCSidechainServiceLibrary.AreaCommon.startUp.readAdminKeyStore")
+                environment.log.trackExit("CHCSidechainServiceLibrary.AreaCommon.startUp.readAdminKeyStore", "Main")
 
                 environment.log.trackIntoConsole("KeyStore read successfully")
             End Try

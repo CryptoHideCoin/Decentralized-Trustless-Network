@@ -26,12 +26,13 @@ Namespace Controllers
         ''' <param name="securityToken"></param>
         ''' <returns></returns>
         Public Function GetValue(ByVal securityToken As String) As ResponseLogSettingsModel
+            Dim ownerId As String = "LogSettingsGet-" & Guid.NewGuid.ToString
             Dim result As New ResponseLogSettingsModel
             Dim response As String = ""
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("LogSettings.GetValue", $"token={securityToken}", True)
+                    AreaCommon.Main.environment.log.trackEnter("LogSettings.GetValue", ownerId, $"token={securityToken}", True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -49,10 +50,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("LogSettings.GetValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("LogSettings.GetValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("LogSettings.GetValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("LogSettings.GetValue", ownerId,, True)
                 End If
             End Try
 
@@ -68,12 +69,13 @@ Namespace Controllers
         ''' <param name="data"></param>
         ''' <returns></returns>
         Public Function PutValue(ByVal securityToken As String, <FromBody()> ByVal data As SettingsLogSidechainService) As BaseRemoteResponse
+            Dim ownerId As String = "LogSettingsSet-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
             Dim enter As Boolean = False
             Try
                 If (AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    AreaCommon.Main.environment.log.trackEnter("LogSettings.PutValue", $"token={securityToken}", True)
+                    AreaCommon.Main.environment.log.trackEnter("LogSettings.PutValue", ownerId, $"token={securityToken}", True)
 
                     enter = True
                     response = AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -97,10 +99,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                AreaCommon.Main.environment.log.trackException("LogSettings.PutValue", ex.Message)
+                AreaCommon.Main.environment.log.trackException("LogSettings.PutValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    AreaCommon.Main.environment.log.trackExit("LogSettings.PutValue",, True)
+                    AreaCommon.Main.environment.log.trackExit("LogSettings.PutValue", ownerId,, True)
                 End If
             End Try
 

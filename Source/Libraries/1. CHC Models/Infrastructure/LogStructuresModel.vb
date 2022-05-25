@@ -66,6 +66,7 @@ Namespace AreaModel.Log
     ''' </summary>
     Public Class SingleActionApplication
         Public Property instant As Double = 0
+        Public Property owner As String = ""
         Public Property action As ActionEnumeration = ActionEnumeration.undefined
         Public Property position As String = ""
         Public Property message As String = ""
@@ -76,7 +77,7 @@ Namespace AreaModel.Log
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function toString() As String
-            Return instant.ToString() & "|" & action & "|" & position & "|" & message
+            Return $"{instant.ToString()}|{owner}|{CInt(action)}|{position}|{message}"
         End Function
 
         ''' <summary>
@@ -88,6 +89,7 @@ Namespace AreaModel.Log
             Dim tmp As String = ""
 
             tmp += New DateTime(1970, 1, 1, 0, 0, 0, 0).AddMilliseconds(instant) & "|"
+            tmp += owner & "|"
             tmp += instant & "|"
 
             Select Case action
