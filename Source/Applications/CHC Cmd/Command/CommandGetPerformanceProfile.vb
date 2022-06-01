@@ -35,7 +35,7 @@ Namespace AreaCommon.Command
 
                 AreaEngine.ApplicationPathEngine.init()
 
-                applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.sideChainService)
+                applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.showPerformance)
 
                 If _Command.haveParameter("service") Then
                     parameterServiceName = _Command.parameterValue("service")
@@ -103,7 +103,6 @@ Namespace AreaCommon.Command
                 Else
                     Console.WriteLine("Error: the directory '" & path & "' is not exist")
                 End If
-
 
                 Return True
             Catch ex As Exception

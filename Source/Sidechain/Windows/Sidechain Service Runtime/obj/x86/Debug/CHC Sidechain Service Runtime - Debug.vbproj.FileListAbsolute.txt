@@ -28,3 +28,7 @@ E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\x86\
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\x86\Debug\CHCSidechainServiceRuntime.exe
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\x86\Debug\CHCSidechainServiceRuntime.xml
 E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\obj\x86\Debug\CHCSidechainServiceRuntime.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\x86\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\x86\System.Data.SQLite.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\x86\CHCDataAccess.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Windows\Sidechain Service Runtime\bin\x86\System.Data.SQLite.xml

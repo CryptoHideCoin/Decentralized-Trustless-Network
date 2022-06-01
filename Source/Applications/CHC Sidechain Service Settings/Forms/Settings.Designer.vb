@@ -69,6 +69,7 @@ Partial Class Settings
         Me.infoButton = New System.Windows.Forms.Button()
         Me.fromRemoteButton = New System.Windows.Forms.Button()
         Me.toRemoteButton = New System.Windows.Forms.Button()
+        Me.counterSettingsButton = New System.Windows.Forms.Button()
         Me.tabControl.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.tabConnection.SuspendLayout()
@@ -353,6 +354,7 @@ Partial Class Settings
         '
         'tabService
         '
+        Me.tabService.Controls.Add(Me.counterSettingsButton)
         Me.tabService.Controls.Add(Me.performanceProfileButton)
         Me.tabService.Controls.Add(Me.settingAutomMaintenanceButton)
         Me.tabService.Controls.Add(Me.useAutoMaintenance)
@@ -612,6 +614,16 @@ Partial Class Settings
         Me.toRemoteButton.Text = "To remote"
         Me.toRemoteButton.UseVisualStyleBackColor = True
         '
+        'counterSettingsButton
+        '
+        Me.counterSettingsButton.Enabled = False
+        Me.counterSettingsButton.Location = New System.Drawing.Point(226, 145)
+        Me.counterSettingsButton.Name = "counterSettingsButton"
+        Me.counterSettingsButton.Size = New System.Drawing.Size(75, 23)
+        Me.counterSettingsButton.TabIndex = 10
+        Me.counterSettingsButton.Text = "Settings"
+        Me.counterSettingsButton.UseVisualStyleBackColor = True
+        '
         'Settings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -691,4 +703,5 @@ Partial Class Settings
     Friend WithEvents settingAutomMaintenanceButton As Button
     Friend WithEvents useAutoMaintenance As CheckBox
     Friend WithEvents performanceProfileButton As Button
+    Friend WithEvents counterSettingsButton As Button
 End Class

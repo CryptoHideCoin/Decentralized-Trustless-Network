@@ -1,0 +1,8 @@
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Data Access\Standard\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Data Access\Standard\CHCDataAccess.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\obj\Release\CHC Data Access.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\obj\Release\CHCDataAccess.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\obj\Release\CHC Data Access.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\obj\Release\CHC Data Access.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\obj\Release\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\obj\Release\CHCDataAccess.pdb

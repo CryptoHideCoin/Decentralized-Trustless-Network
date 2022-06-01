@@ -44,7 +44,9 @@ Namespace AreaEngine.PerformanceProfile.Internal
                     End If
                 Next
 
+#Disable Warning BC42104
                 If IsNothing(ownerStack) Then
+#Enable Warning BC42104
                     ownerStack = New StackInformations
 
                     ownerStack.ownerId = ownerId
@@ -85,7 +87,9 @@ Namespace AreaEngine.PerformanceProfile.Internal
                     End If
                 Next
 
+#Disable Warning BC42104
                 If IsNothing(ownerStack) Then
+#Enable Warning BC42104
                     Return -1
                 End If
 

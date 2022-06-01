@@ -34,3 +34,7 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHC Cmd.vbproj.CopyComplete
 E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHCCmd.exe
 E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHCCmd.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\System.Data.SQLite.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCDataAccess.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\System.Data.SQLite.xml

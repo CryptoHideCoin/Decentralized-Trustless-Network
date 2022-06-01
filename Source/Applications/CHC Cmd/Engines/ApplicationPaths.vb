@@ -14,6 +14,7 @@ Namespace AreaEngine
         localWorkMachine
         sideChainService
         showJournal
+        showPerformance
     End Enum
 
     ''' <summary>

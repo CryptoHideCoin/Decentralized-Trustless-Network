@@ -48,8 +48,9 @@ Namespace AreaCommon
         Private Const _CommandNote As String = "note"
         Private Const _CommandWrite As String = "write"
         Private Const _CommandBuildPath As String = "buildPath"
-        Private Const _CommandLog As String = "Log"
-        Private Const _CommandRegistry As String = "Registry"
+        Private Const _CommandLog As String = "log"
+        Private Const _CommandRegistry As String = "registry"
+        Private Const _CommandCounter As String = "counter"
 
 
         Public Property command As New CommandStructure
@@ -102,6 +103,7 @@ Namespace AreaCommon
                 Case _CommandBuildPath.ToLower() : classSupport = New Command.CommandBuildPath
                 Case _CommandLog.ToLower() : classSupport = New Command.CommandLog
                 Case _CommandRegistry.ToLower() : classSupport = New Command.CommandRegistry
+                Case _CommandCounter.ToLower() : classSupport = New Command.CommandCounter
                 Case _CommandStartPerformanceProfileParameter.ToLower : classSupport = New Command.CommandStartPerformanceProfile
                 Case _CommandGetPerformanceProfileParameter.ToLower : classSupport = New Command.CommandGetPerformanceProfile
                 Case Else

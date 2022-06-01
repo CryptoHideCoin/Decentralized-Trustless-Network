@@ -120,10 +120,10 @@ Namespace AreaCommon.Command
             Console.WriteLine("   --deleteBlock:<value>             Delete a block data (file and index)")
             Console.WriteLine("   --deleteOldLogInstance:           Delete all previous log instance")
             Console.WriteLine("   --logRotate:                      Start log rotate")
-
-            Console.WriteLine("-journal                             Journal action")
-            Console.WriteLine("   --rotate:                         Start registry rotate")
-
+            Console.WriteLine("-showJournal                         Show journal action")
+            Console.WriteLine("-registry                            Registry action")
+            Console.WriteLine("   --getList                         Return the list of registry file")
+            Console.WriteLine("   --clean                           Start registry rotate")
             Console.WriteLine()
             Console.WriteLine("General switch:")
             Console.WriteLine("   --pause:                          Wait a key press to close a chc command")

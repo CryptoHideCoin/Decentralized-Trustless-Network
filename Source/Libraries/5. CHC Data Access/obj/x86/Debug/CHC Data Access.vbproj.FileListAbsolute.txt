@@ -1,0 +1,14 @@
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\bin\x86\Debug\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\bin\x86\Debug\CHCDataAccess.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\bin\x86\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\bin\x86\Debug\System.Data.SQLite.dll
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\bin\x86\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\bin\x86\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\bin\x86\Debug\System.Data.SQLite.xml
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\bin\x86\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\obj\x86\Debug\CHC Data Access.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\obj\x86\Debug\CHCDataAccess.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\obj\x86\Debug\CHC Data Access.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\obj\x86\Debug\CHC Data Access.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\obj\x86\Debug\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Libraries\5. CHC Data Access\obj\x86\Debug\CHCDataAccess.pdb

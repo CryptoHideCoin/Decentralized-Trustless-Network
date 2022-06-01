@@ -95,6 +95,38 @@ Namespace AreaEngine.Settings
             Return result
         End Function
 
+        ''' <summary>
+        ''' This method provide to return a counter settings
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function getCounterSettings() As CounterSidechainService
+            Dim result As New CounterSidechainService
+            Try
+                Dim completeFileName As String = ""
+                Dim engineFile As New BaseFile(Of CounterSidechainService)
+
+                completeFileName = IO.Path.Combine(dataPath, "Settings")
+                completeFileName = IO.Path.Combine(completeFileName, serviceName.Replace(" ", "") & "-counter.Settings")
+
+                If Not IO.File.Exists(completeFileName) Then Return New CounterSidechainService
+
+                engineFile.fileName = completeFileName
+
+                If (password.Length > 0) Then
+                    engineFile.cryptoKEY = password
+                Else
+                    engineFile.noCrypt = True
+                End If
+
+                If engineFile.read() Then
+                    Return engineFile.data
+                End If
+            Catch ex As Exception
+            End Try
+
+            Return result
+        End Function
+
         Private Function getAutoMaintenanceSettings() As SettingsAutoMaintenanceSidechainService
             Dim result As New SettingsAutoMaintenanceSidechainService
             Try
@@ -195,6 +227,46 @@ Namespace AreaEngine.Settings
             End Try
         End Function
 
+        ''' <summary>
+        ''' This method provide to save a counter settings
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function saveCounterSettings() As Boolean
+            Try
+                Dim completeFileName As String = ""
+                Dim engineFile As New BaseFile(Of CounterSidechainService)
+
+                completeFileName = IO.Path.Combine(dataPath, "Settings")
+                completeFileName = IO.Path.Combine(completeFileName, serviceName.Replace(" ", "") & "-counter.Settings")
+
+                If IO.File.Exists(completeFileName) Then
+                    IO.File.Delete(completeFileName)
+                End If
+
+                If Not _data.useLog Then
+                    Return True
+                End If
+
+                engineFile.fileName = completeFileName
+
+                If (password.Length > 0) Then
+                    engineFile.cryptoKEY = password
+                Else
+                    engineFile.noCrypt = True
+                End If
+
+                engineFile.data = _data.counterSettings
+
+                Return engineFile.save()
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to save an automaintenance data
+        ''' </summary>
+        ''' <returns></returns>
         Private Function saveAutoMaintenance() As Boolean
             Try
                 Dim completeFileName As String = ""
@@ -276,6 +348,7 @@ Namespace AreaEngine.Settings
 
                         data.logSettings = getLogSettings()
                         data.performanceProfile = getPerformanceProfileSettings()
+                        data.counterSettings = getCounterSettings()
                         data.autoMaintenance = getAutoMaintenanceSettings()
                     End With
 
@@ -318,6 +391,9 @@ Namespace AreaEngine.Settings
                 End If
                 If proceed Then
                     proceed = savePerformanceProfileSettings()
+                End If
+                If proceed Then
+                    proceed = saveCounterSettings()
                 End If
                 If proceed Then
                     proceed = saveAutoMaintenance()

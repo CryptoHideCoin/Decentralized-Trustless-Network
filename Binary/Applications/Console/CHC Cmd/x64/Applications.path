@@ -29,5 +29,11 @@
     "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console\\CHC Show Journal",
     "directoryName": "x64",
     "applicationName": "CHCShowJournal.exe"
+  },
+  {
+    "applicationReferement": 6,
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console\\CHC Show Performance",
+    "directoryName": "x64",
+    "applicationName": "CHCShowPerformance.exe"
   }
 ]

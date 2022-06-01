@@ -1,0 +1,23 @@
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\CHCSidechainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\System.Web.Http.dll
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\System.Data.SQLite.dll
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\CHCModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\CHCDataAccess.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\x64\System.Data.SQLite.xml
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\obj\x64\Debug\CHC Sidechain Service - Debug.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\obj\x64\Debug\CHCSidechainServiceLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\obj\x64\Debug\CHC Sidechain Service - Debug.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\obj\x64\Debug\CHC Sidechain Service - Debug.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\obj\x64\Debug\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\obj\x64\Debug\CHCSidechainServiceLibrary.pdb

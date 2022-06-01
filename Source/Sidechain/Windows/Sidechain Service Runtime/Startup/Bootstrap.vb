@@ -129,6 +129,15 @@ Namespace AreaCommon.Startup
                     End If
                 End If
                 If proceed Then
+                    environment.log.apiService = environment.counter.core
+
+                    If environment.settings.useRequestCounter Then
+                        environment.counter.serviceActive = True
+                        environment.counter.timeSpan = environment.settings.counterSettings.minimalTimeSlot
+                        environment.counter.writeIntoDB = environment.settings.counterSettings.writeToFile
+                    End If
+                End If
+                If proceed Then
                     proceed = bootstrap.acquireIPAddress()
                 End If
                 If proceed Then

@@ -7,6 +7,6 @@
     <StartArguments>-force --datapath:e:\data</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <StartArguments>-force --datapath:e:\data</StartArguments>
+    <StartArguments>-force --datapath:E:\LegacyNetwork</StartArguments>
   </PropertyGroup>
 </Project>

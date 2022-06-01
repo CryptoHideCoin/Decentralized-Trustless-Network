@@ -34,8 +34,12 @@ Partial Class AutoMaintenanceSettings
         Me.registryEventsGroup = New System.Windows.Forms.GroupBox()
         Me.keepLastRegistry = New System.Windows.Forms.ComboBox()
         Me.keepLastRegistryLabel = New System.Windows.Forms.Label()
+        Me.counterGroupBox = New System.Windows.Forms.GroupBox()
+        Me.keepLastCounter = New System.Windows.Forms.ComboBox()
+        Me.keepLastCounterLabel = New System.Windows.Forms.Label()
         Me.logRotateSettings.SuspendLayout()
         Me.registryEventsGroup.SuspendLayout()
+        Me.counterGroupBox.SuspendLayout()
         Me.SuspendLayout()
         '
         'everyChangeFile
@@ -156,12 +160,42 @@ Partial Class AutoMaintenanceSettings
         Me.keepLastRegistryLabel.TabIndex = 0
         Me.keepLastRegistryLabel.Text = "Keep last"
         '
+        'counterGroupBox
+        '
+        Me.counterGroupBox.Controls.Add(Me.keepLastCounter)
+        Me.counterGroupBox.Controls.Add(Me.keepLastCounterLabel)
+        Me.counterGroupBox.Location = New System.Drawing.Point(12, 221)
+        Me.counterGroupBox.Name = "counterGroupBox"
+        Me.counterGroupBox.Size = New System.Drawing.Size(296, 66)
+        Me.counterGroupBox.TabIndex = 13
+        Me.counterGroupBox.TabStop = False
+        Me.counterGroupBox.Text = "Counter rotate"
+        '
+        'keepLastCounter
+        '
+        Me.keepLastCounter.FormattingEnabled = True
+        Me.keepLastCounter.Items.AddRange(New Object() {"Day", "Week", "Month", "Year"})
+        Me.keepLastCounter.Location = New System.Drawing.Point(119, 29)
+        Me.keepLastCounter.Name = "keepLastCounter"
+        Me.keepLastCounter.Size = New System.Drawing.Size(148, 21)
+        Me.keepLastCounter.TabIndex = 1
+        '
+        'keepLastCounterLabel
+        '
+        Me.keepLastCounterLabel.AutoSize = True
+        Me.keepLastCounterLabel.Location = New System.Drawing.Point(53, 32)
+        Me.keepLastCounterLabel.Name = "keepLastCounterLabel"
+        Me.keepLastCounterLabel.Size = New System.Drawing.Size(60, 13)
+        Me.keepLastCounterLabel.TabIndex = 0
+        Me.keepLastCounterLabel.Text = "Keep last"
+        '
         'AutoMaintenanceSettings
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(412, 229)
+        Me.ClientSize = New System.Drawing.Size(412, 308)
+        Me.Controls.Add(Me.counterGroupBox)
         Me.Controls.Add(Me.registryEventsGroup)
         Me.Controls.Add(Me.confirmButton)
         Me.Controls.Add(Me.logRotateSettings)
@@ -177,6 +211,8 @@ Partial Class AutoMaintenanceSettings
         Me.logRotateSettings.PerformLayout()
         Me.registryEventsGroup.ResumeLayout(False)
         Me.registryEventsGroup.PerformLayout()
+        Me.counterGroupBox.ResumeLayout(False)
+        Me.counterGroupBox.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -194,4 +230,7 @@ Partial Class AutoMaintenanceSettings
     Friend WithEvents registryEventsGroup As GroupBox
     Friend WithEvents keepLastRegistry As ComboBox
     Friend WithEvents keepLastRegistryLabel As Label
+    Friend WithEvents counterGroupBox As GroupBox
+    Friend WithEvents keepLastCounter As ComboBox
+    Friend WithEvents keepLastCounterLabel As Label
 End Class

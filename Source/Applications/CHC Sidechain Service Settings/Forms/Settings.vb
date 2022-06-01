@@ -159,7 +159,7 @@ Public Class Settings
 
             useTrackLog.Enabled = True
             useEventRegistry.Enabled = True
-            useCounter.Enabled = False
+            useCounter.Enabled = True
             useMessage.Enabled = False
             useProfile.Enabled = True
             useAlert.Enabled = False
@@ -182,6 +182,7 @@ Public Class Settings
         intranetMode.Enabled = True
         settingsTrack.Enabled = False
         performanceProfileButton.Enabled = False
+        counterSettingsButton.Enabled = False
     End Sub
 
     ''' <summary>
@@ -330,6 +331,7 @@ Public Class Settings
             data.logSettings = _Data.logSettings
             data.autoMaintenance = _Data.autoMaintenance
             data.performanceProfile = _Data.performanceProfile
+            data.counterSettings = _Data.counterSettings
 
             Return data
         Catch ex As Exception
@@ -413,6 +415,7 @@ Public Class Settings
                 settingsTrack.Enabled = useTrackLog.Checked
                 performanceProfileButton.Enabled = useProfile.Checked
                 settingAutomMaintenanceButton.Enabled = useAutoMaintenance.Checked
+                counterSettingsButton.Enabled = useCounter.Checked
             End If
         Catch ex As Exception
         End Try
@@ -1026,11 +1029,16 @@ Public Class Settings
         autoMaintenance.keepLastRegistry.Enabled = _Data.useEventRegistry
         autoMaintenance.keepLastRegistry.SelectedIndex = _Data.autoMaintenance.registryRotate.keepLast - 1
 
+        autoMaintenance.keepLastCounterLabel.Enabled = _Data.useRequestCounter
+        autoMaintenance.keepLastCounter.Enabled = _Data.useRequestCounter
+        autoMaintenance.keepLastCounter.SelectedIndex = _Data.autoMaintenance.counterRotate.keepLast - 1
+
         If (autoMaintenance.ShowDialog = DialogResult.OK) Then
             _Data.autoMaintenance.autoMaintenanceFrequencyHours = autoMaintenance.everyChangeFile.Text
             _Data.autoMaintenance.trackLogRotate.keepFile = autoMaintenance.keepFile.SelectedIndex + 1
             _Data.autoMaintenance.trackLogRotate.keepLast = autoMaintenance.keepLast.SelectedIndex + 1
             _Data.autoMaintenance.registryRotate.keepLast = autoMaintenance.keepLastRegistry.SelectedIndex + 1
+            _Data.autoMaintenance.counterRotate.keepLast = autoMaintenance.keepLastCounter.SelectedIndex + 1
         End If
 
     End Sub
@@ -1070,6 +1078,34 @@ Public Class Settings
             settingPage.Close()
 
             settingPage = Nothing
+        End If
+    End Sub
+
+    Private Sub counterSettingsButton_Click(sender As Object, e As EventArgs) Handles counterSettingsButton.Click
+        Dim settingPage As New CounterSettings
+
+        settingPage.timeSlotCounter.SelectedIndex = _Data.counterSettings.minimalTimeSlot
+        settingPage.writeToFile.Checked = _Data.counterSettings.writeToFile
+
+        If (settingPage.ShowDialog() = DialogResult.OK) Then
+            _Data.counterSettings.minimalTimeSlot = settingPage.timeSlotCounter.SelectedIndex
+            _Data.counterSettings.writeToFile = settingPage.writeToFile.Checked
+
+            settingPage.Close()
+
+            settingPage = Nothing
+        End If
+    End Sub
+
+    Private Sub useCounter_CheckedChanged(sender As Object, e As EventArgs) Handles useCounter.CheckedChanged
+        _Data.useRequestCounter = useCounter.Checked
+
+        If useCounter.Checked Then
+            If _DuringReadData Then
+                Return
+            End If
+
+            counterSettingsButton.Enabled = True
         End If
     End Sub
 End Class

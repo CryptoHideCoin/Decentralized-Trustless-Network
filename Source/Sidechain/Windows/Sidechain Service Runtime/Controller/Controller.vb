@@ -98,6 +98,8 @@ Namespace AreaCommon
 
                 environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.applicationShutdown)
 
+                environment.counter.core.flushCache()
+
                 serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.swithOff
 
                 environment.log.track("Controllers.StartWebService", "Main", "Service Off")

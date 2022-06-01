@@ -45,9 +45,8 @@ Namespace AreaCommon.Startup
                     environment.log.registryService = environment.registry
 
                     environment.log.track("startUp.Service.run", "Main", "System Registry is running")
-                End If
-                If proceed Then
-                    environment.counter.init(environment.paths.system.counters)
+
+                    proceed = environment.counter.init(IO.Path.Combine(environment.paths.system.counters, CUSTOM_ChainServiceName))
                 End If
                 If proceed Then
                     environment.log.trackIntoConsole("Counter Service Start")

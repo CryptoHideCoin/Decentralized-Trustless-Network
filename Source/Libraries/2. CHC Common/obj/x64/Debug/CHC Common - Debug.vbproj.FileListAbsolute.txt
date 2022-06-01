@@ -1,0 +1,12 @@
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\bin\x64\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\bin\x64\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\bin\x64\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\bin\x64\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\bin\x64\Debug\CHCModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\bin\x64\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\x64\Debug\CHC Common - Debug.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\x64\Debug\CHCCommonLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\x64\Debug\CHC Common - Debug.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\x64\Debug\CHC Common - Debug.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\x64\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\2. CHC Common\obj\x64\Debug\CHCCommonLibrary.pdb

@@ -102,6 +102,10 @@
     <DocumentationFile>CHCSidechainServiceRuntime.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CHCModelsLibrary, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="CHCPrimarySidechainLibrary">
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Primary Sidechain\Standard\CHCPrimarySidechainLibrary.dll</HintPath>
     </Reference>
@@ -192,10 +196,6 @@
     <Content Include="64.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Libraries\1. CHC Models\CHC Models.vbproj">
-      <Project>{5475fb38-e6b1-4049-8a92-b16607841e96}</Project>
-      <Name>CHC Models</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Libraries\2. CHC Common\CHC Common - Debug.vbproj">
       <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
       <Name>CHC Common - Debug</Name>
@@ -204,7 +204,7 @@
       <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
       <Name>CHC Protocol - Debug</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Libraries\5. CHC Sidechain Service\CHC Sidechain Service - Debug.vbproj">
+    <ProjectReference Include="..\..\..\Libraries\6. CHC Sidechain Service\CHC Sidechain Service - Debug.vbproj">
       <Project>{f586744f-8890-4341-8ae8-2583d5a4d084}</Project>
       <Name>CHC Sidechain Service - Debug</Name>
     </ProjectReference>

@@ -12,6 +12,12 @@ Option Explicit On
 
 Namespace AreaModel.Administration.Settings
 
+    Public Enum ShortTimeEnum
+        second
+        minute
+        hour
+    End Enum
+
     ''' <summary>
     ''' This class collect all element of Log Service 
     ''' </summary>
@@ -21,6 +27,16 @@ Namespace AreaModel.Administration.Settings
         Public Property changeLogFileMaxNumHours As Integer = 0
         Public Property changeLogFileNumRegistrations As Integer = 0
         Public Property useBufferToWrite As Boolean = False
+        Public Property writeToFile As Boolean = False
+
+    End Class
+
+    ''' <summary>
+    ''' Thie class contain all element of a counter sidechain service
+    ''' </summary>
+    Public Class CounterSidechainService
+
+        Public Property minimalTimeSlot As ShortTimeEnum = ShortTimeEnum.second
         Public Property writeToFile As Boolean = False
 
     End Class
@@ -42,6 +58,7 @@ Namespace AreaModel.Administration.Settings
         Public Property autoMaintenanceFrequencyHours As Integer = 0
         Public Property trackLogRotate As New Log.LogRotateConfig
         Public Property registryRotate As New Registry.RegistryRotateConfig
+        Public Property counterRotate As New Counter.CounterRotateConfig
 
     End Class
 
@@ -94,6 +111,7 @@ Namespace AreaModel.Administration.Settings
 
         Public Property logSettings As New SettingsLogSidechainService
         Public Property performanceProfile As New SettingsPerformanceProfileService
+        Public Property counterSettings As New CounterSidechainService
         Public Property autoMaintenance As New SettingsAutoMaintenanceSidechainService
 
         Public ReadOnly Property getServiceBase() As SettingsSidechainServiceBase

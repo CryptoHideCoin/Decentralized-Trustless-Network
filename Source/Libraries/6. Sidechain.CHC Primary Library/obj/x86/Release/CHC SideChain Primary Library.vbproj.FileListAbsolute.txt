@@ -1,6 +1,0 @@
-E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Primary Sidechain\x86\CHCPrimarySidechainLibrary.dll
-E:\CryptoHideCoinDTN\Source\Libraries\6. Sidechain.CHC Primary Library\obj\x86\Release\CHC SideChain Primary Library.vbprojAssemblyReference.cache
-E:\CryptoHideCoinDTN\Source\Libraries\6. Sidechain.CHC Primary Library\obj\x86\Release\CHCPrimarySidechainLibrary.Resources.resources
-E:\CryptoHideCoinDTN\Source\Libraries\6. Sidechain.CHC Primary Library\obj\x86\Release\CHC SideChain Primary Library.vbproj.GenerateResource.cache
-E:\CryptoHideCoinDTN\Source\Libraries\6. Sidechain.CHC Primary Library\obj\x86\Release\CHC SideChain Primary Library.vbproj.CopyComplete
-E:\CryptoHideCoinDTN\Source\Libraries\6. Sidechain.CHC Primary Library\obj\x86\Release\CHCPrimarySidechainLibrary.dll

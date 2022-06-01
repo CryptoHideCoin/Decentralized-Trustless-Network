@@ -24,7 +24,8 @@ Namespace AreaEngine.Log
 
 
         Public WithEvents settings As New TrackConfiguration
-        Public Property registryService As CHCCommonLibrary.AreaEngine.Registry.RegistryEngine
+        Public Property registryService As Registry.RegistryEngine
+        Public Property apiService As Engine.CounterAPICacheEngine
 
 
         ''' <summary>
@@ -66,7 +67,14 @@ Namespace AreaEngine.Log
         ''' <param name="completeName"></param>
         ''' <param name="addictionalInformation"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function trackEnter(ByVal completeName As String, ByVal owner As String, Optional ByVal addictionalInformation As String = "", Optional ByVal count As Boolean = False) As Boolean
+        '<DebuggerHiddenAttribute()>
+        Public Function trackEnter(ByVal completeName As String, ByVal owner As String, Optional ByVal addictionalInformation As String = "", Optional ByVal accessType As AccessTypeEnumeration = AccessTypeEnumeration.undefined) As Boolean
+            If (accessType <> AccessTypeEnumeration.undefined) And Not IsNothing(apiService) Then
+                If apiService.serviceActive Then
+                    apiService.addNewCall(completeName, accessType)
+                End If
+            End If
+
             Return addNewDataCache(ActionEnumeration.enterIntoMethod, owner, addictionalInformation, completeName)
         End Function
 
@@ -76,7 +84,7 @@ Namespace AreaEngine.Log
         ''' <param name="completeName"></param>
         ''' <param name="addictionalInformation"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function trackExit(ByVal completeName As String, ByVal owner As String, Optional ByVal addictionalInformation As String = "", Optional ByVal count As Boolean = False) As Boolean
+        <DebuggerHiddenAttribute()> Public Function trackExit(ByVal completeName As String, ByVal owner As String, Optional ByVal addictionalInformation As String = "") As Boolean
             Return addNewDataCache(ActionEnumeration.exitFromTheMethod, owner, addictionalInformation, completeName)
         End Function
 
@@ -87,7 +95,7 @@ Namespace AreaEngine.Log
         ''' <param name="errorMessage"></param>
         ''' <returns></returns>
         <DebuggerHiddenAttribute()> Public Function trackException(ByVal completeName As String, ByVal owner As String, ByVal errorMessage As String) As Boolean
-            If addNewDataCache(ActionEnumeration.exception, errorMessage, completeName) Then
+            If addNewDataCache(ActionEnumeration.exception, owner, errorMessage, completeName) Then
                 If Not IsNothing(registryService) Then
                     Return registryService.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.applicationError, errorMessage, completeName)
                 End If

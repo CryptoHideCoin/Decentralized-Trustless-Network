@@ -167,6 +167,7 @@
     <Compile Include="Command\CommandBatch.vb" />
     <Compile Include="Command\CommandBuildPath.vb" />
     <Compile Include="Command\CommandChainServiceSettings.vb" />
+    <Compile Include="Command\CommandCounter.vb" />
     <Compile Include="Command\CommandCreateNewEnvironment.vb" />
     <Compile Include="Command\CommandCurrentTime.vb" />
     <Compile Include="Command\CommandGetApplicationsPath.vb" />
@@ -175,7 +176,6 @@
     <Compile Include="Command\CommandGetEnvironmentList.vb" />
     <Compile Include="Command\CommandGetEnvironmentRepository.vb" />
     <Compile Include="Command\CommandGetPerformanceProfile.vb" />
-    <Compile Include="Command\CommandJournal.vb" />
     <Compile Include="Command\CommandLog.vb" />
     <Compile Include="Command\CommandHelp.vb" />
     <Compile Include="Command\CommandIf.vb" />

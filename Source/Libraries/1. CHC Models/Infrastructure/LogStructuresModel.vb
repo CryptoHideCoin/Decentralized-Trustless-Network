@@ -27,6 +27,12 @@ Namespace AreaModel.Log
         trackMarker
     End Enum
 
+    Public Enum AccessTypeEnumeration
+        undefined
+        api
+        web
+    End Enum
+
     ''' <summary>
     ''' This enumeration contain the following value:
     ''' 

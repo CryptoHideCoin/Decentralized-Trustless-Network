@@ -92,6 +92,9 @@ Namespace AreaCommon.Command
                 If _Command.haveParameter("getList") Then
                     _ParameterCommand = "getList"
                 End If
+                If _Command.haveParameter("clean") Then
+                    _ParameterCommand = "clean"
+                End If
 
                 If (_ParameterCommand.Length = 0) Then
                     Console.WriteLine("Action not set!")
@@ -412,7 +415,7 @@ Namespace AreaCommon.Command
         End Function
 
         ''' <summary>
-        ''' This method provide to gest e registry list
+        ''' This method provide to get e registry list
         ''' </summary>
         ''' <returns></returns>
         Private Function getLogList() As Boolean
@@ -451,6 +454,42 @@ Namespace AreaCommon.Command
                 Return False
             End Try
         End Function
+
+        ''' <summary>
+        ''' This method provide to delete old data
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function deleteOld() As Boolean
+            Try
+                Dim remote As New ProxyWS(Of BaseRemoteResponse)
+                Dim proceed As Boolean = True
+
+                If proceed Then
+                    remote.url = buildURL($"/administration/maintenance/cleanRegistry/?securityToken={_SecurityToken}")
+                End If
+                If proceed Then
+                    proceed = (remote.sendData("PUT").Length = 0)
+                End If
+                If proceed Then
+                    proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+                End If
+                If proceed Then
+                    Console.WriteLine($"Command delete old registry")
+                    Console.WriteLine()
+                End If
+
+                Return proceed
+            Catch exFile As System.IO.FileLoadException
+                IntegrityApplication.executeRepairNewton(exFile.FileName)
+
+                Return False
+            Catch ex As Exception
+                Console.WriteLine("Error during deleteOld - " & ex.Message)
+
+                Return False
+            End Try
+        End Function
+
 
         Private Function CommandModel_run() As Boolean Implements CommandModel.run
             Try
@@ -495,12 +534,12 @@ Namespace AreaCommon.Command
 
                                 proceed = False
                             End If
-                            'Case "logRotate".ToLower()
-                            '    If Not deleteOld() Then
-                            '        Console.WriteLine("Problem during delete old log")
+                        Case "clean".ToLower()
+                            If Not deleteOld() Then
+                                Console.WriteLine("Problem during delete old log")
 
-                            '        proceed = False
-                            '    End If
+                                proceed = False
+                            End If
                     End Select
                 End If
 

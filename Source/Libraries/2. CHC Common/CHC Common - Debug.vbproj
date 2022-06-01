@@ -83,6 +83,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CHCModelsLibrary, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\ThirdParts\Newtonsoft.Json.6.0\Newtonsoft.Json.dll</HintPath>
@@ -123,7 +127,7 @@
     <Compile Include="FileManager\CHCBaseFileDB.vb" />
     <Compile Include="FileManager\CHCBaseFileJson.vb" />
     <Compile Include="Encryption\ModuleEncryption.vb" />
-    <Compile Include="Miscellaneous\CHCCounter.vb" />
+    <Compile Include="Miscellaneous\CHCCounterCache.vb" />
     <Compile Include="Miscellaneous\CHCDateTime.vb" />
     <Compile Include="Miscellaneous\CHCStringExtensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -165,12 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Other\ReleaseNote.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\1. CHC Models\CHC Models.vbproj">
-      <Project>{5475fb38-e6b1-4049-8a92-b16607841e96}</Project>
-      <Name>CHC Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

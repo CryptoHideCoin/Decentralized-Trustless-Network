@@ -20,3 +20,4 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Rele
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Release\CHCSidechainServiceSettings.trackLogSettings.resources
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Release\CHCSidechainServiceSettings.AutoMaintenanceSettings.resources
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Release\CHCSidechainServiceSettings.PerformanceProfilerSettings.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Release\CHCSidechainServiceSettings.CounterSettings.resources
