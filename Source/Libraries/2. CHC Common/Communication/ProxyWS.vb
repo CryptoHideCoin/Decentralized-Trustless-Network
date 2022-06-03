@@ -58,6 +58,32 @@ Namespace AreaEngine.Communication
         End Function
 
         ''' <summary>
+        ''' This method provides to get a remote data
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()>
+        Public Function getData(ByVal parameterName As String, ByVal parameterObject As Object) As String
+            Try
+                url += $"&{parameterName}={Web.HttpUtility.UrlEncode(JsonConvert.SerializeObject(parameterObject, Formatting.Indented))}"
+
+                Dim request As WebRequest = WebRequest.Create(url)
+                Dim response As WebResponse = request.GetResponse()
+                Dim dataStream As IO.Stream = response.GetResponseStream()
+                Dim reader As New IO.StreamReader(dataStream)
+                Dim responseFromServer As String = reader.ReadToEnd()
+
+                data = JsonConvert.DeserializeObject(Of ClassType)(responseFromServer)
+
+                reader.Close()
+                response.Close()
+
+                Return ""
+            Catch ex As Exception
+                Return ex.Message
+            End Try
+        End Function
+
+        ''' <summary>
         ''' This method provide to standardize a data to prepare to communicate
         ''' </summary>
         ''' <returns></returns>
@@ -82,17 +108,54 @@ Namespace AreaEngine.Communication
             Try
                 reqString = Encoding.Default.GetBytes(JsonConvert.SerializeObject(data, Formatting.Indented))
 
-                Dim req As WebRequest = WebRequest.Create(url)
+                Dim request As WebRequest = WebRequest.Create(url)
 
-                req.ContentType = "application/json"
-                req.Method = methodType
-                req.ContentLength = reqString.Length
+                request.ContentType = "application/json"
+                request.Method = methodType
+                request.ContentLength = reqString.Length
 
-                Dim stream = req.GetRequestStream()
+                Dim stream = request.GetRequestStream()
                 stream.Write(reqString, 0, reqString.Length)
                 stream.Close()
 
-                Dim dataStream As IO.Stream = req.GetResponse().GetResponseStream()
+                Dim dataStream As IO.Stream = request.GetResponse().GetResponseStream()
+                Dim reader As New IO.StreamReader(dataStream)
+                Dim responseFromServer As String = reader.ReadToEnd()
+
+                remoteResponse = JsonConvert.DeserializeObject(Of RemoteResponse)(responseFromServer)
+
+                reader.Close()
+                dataStream.Close()
+
+                Return ""
+            Catch ex As Exception
+                Return ex.Message
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provides to get a remote data with parameterValue
+        ''' </summary>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()>
+        Public Function sendData(ByVal parameterValue As Object) As String
+            Dim webClient As New WebClient()
+            Dim reqString() As Byte
+
+            Try
+                reqString = Encoding.Default.GetBytes(JsonConvert.SerializeObject(parameterValue, Formatting.Indented))
+
+                Dim request As WebRequest = WebRequest.Create(url)
+
+                request.ContentType = "application/json"
+                request.Method = "PUT"
+                request.ContentLength = reqString.Length
+
+                Dim stream = request.GetRequestStream()
+                stream.Write(reqString, 0, reqString.Length)
+                stream.Close()
+
+                Dim dataStream As IO.Stream = request.GetResponse().GetResponseStream()
                 Dim reader As New IO.StreamReader(dataStream)
                 Dim responseFromServer As String = reader.ReadToEnd()
 
@@ -173,6 +236,27 @@ Namespace AreaEngine.Communication
                 Return res
             Catch ex As Exception
                 Return ex.Message
+            End Try
+        End Function
+
+    End Class
+
+    ''' <summary>
+    ''' This class manage a fast deserialize object
+    ''' </summary>
+    ''' <typeparam name="ClassType"></typeparam>
+    Public Class DeserializeFast(Of ClassType As {New})
+
+        ''' <summary>
+        ''' This method provide to deserialize fast an string xml
+        ''' </summary>
+        ''' <param name="completeFileName"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()> Public Shared Function decode(ByVal value As String) As ClassType
+            Try
+                Return JsonConvert.DeserializeObject(Of ClassType)(value)
+            Catch ex As Exception
+                Return New ClassType
             End Try
         End Function
 

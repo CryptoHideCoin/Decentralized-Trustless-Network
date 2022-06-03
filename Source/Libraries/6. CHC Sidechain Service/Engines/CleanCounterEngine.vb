@@ -41,7 +41,7 @@ Namespace AreaEngine
                 End Select
 
 #If DEBUG Then
-                limitTime = 60000
+                'limitTime = 60000
 #End If
 
                 limitTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - limitTime

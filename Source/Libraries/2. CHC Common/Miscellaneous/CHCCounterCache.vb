@@ -16,7 +16,7 @@ Imports CHCModelsLibrary.AreaModel.Log
 
 
 
-Namespace Engine
+Namespace AreaEngine
 
     ''' <summary>
     ''' This class contain all element of API cache engine

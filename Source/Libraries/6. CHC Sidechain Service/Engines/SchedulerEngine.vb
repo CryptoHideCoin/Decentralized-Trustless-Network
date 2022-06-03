@@ -171,8 +171,8 @@ Namespace AreaScheduler
                 response.type = ScheduleJobType.counterRotate
 
 #If DEBUG Then
-                response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 10000
-                'response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000)) + 2000
+                'response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 10000
+                response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000)) + 2000
 #Else
                 response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (AreaCommon.Main.environment.settings.autoMaintenance.autoMaintenanceFrequencyHours * 60 * 60 * CDbl(1000)) + 2000
 #End If

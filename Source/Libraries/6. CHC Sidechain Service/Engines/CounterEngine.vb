@@ -8,7 +8,8 @@ Option Compare Text
 ' Date last successfully test: 28/05/2022
 ' ****************************************
 
-Imports CHCCommonLibrary.Engine
+Imports CHCCommonLibrary.AreaEngine
+Imports CHCModelsLibrary.AreaModel.Counter
 
 
 
@@ -55,13 +56,17 @@ Namespace AreaEngine
         ''' </summary>
         ''' <returns></returns>
         Private Function createEntryPointTable() As Boolean
-            Dim sql As String = ""
+            Try
+                Dim sql As String = ""
 
-            sql += "CREATE TABLE entryPoints "
-            sql += " ([id] INTEGER PRIMARY KEY AUTOINCREMENT, "
-            sql += "  [name] NVARCHAR(1024));"
+                sql += "CREATE TABLE entryPoints "
+                sql += " ([id] INTEGER PRIMARY KEY AUTOINCREMENT, "
+                sql += "  [name] NVARCHAR(1024));"
 
-            Return _EngineDB.executeDataTable(sql)
+                Return _EngineDB.executeDataTable(sql)
+            Catch ex As Exception
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -69,15 +74,19 @@ Namespace AreaEngine
         ''' </summary>
         ''' <returns></returns>
         Private Function createCountersTable() As Boolean
-            Dim sql As String = ""
+            Try
+                Dim sql As String = ""
 
-            sql += "CREATE TABLE counters "
-            sql += " ([entryPoint_id] INTEGER NOT NULL, "
-            sql += "  [slotTime] REAL, "
-            sql += "  [isAPI] INTEGER, "
-            sql += "  [value] INTEGER);"
+                sql += "CREATE TABLE counters "
+                sql += " ([entryPoint_id] INTEGER NOT NULL, "
+                sql += "  [slotTime] REAL, "
+                sql += "  [isAPI] INTEGER, "
+                sql += "  [value] INTEGER);"
 
-            Return _EngineDB.executeDataTable(sql)
+                Return _EngineDB.executeDataTable(sql)
+            Catch ex As Exception
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -85,12 +94,16 @@ Namespace AreaEngine
         ''' </summary>
         ''' <returns></returns>
         Private Function createEntryPointIndex() As Boolean
-            Dim sql As String = ""
+            Try
+                Dim sql As String = ""
 
-            sql += "CREATE UNIQUE INDEX idx_Name "
-            sql += " ON entryPoints ([name])"
+                sql += "CREATE UNIQUE INDEX idx_Name "
+                sql += " ON entryPoints ([name])"
 
-            Return _EngineDB.executeDataTable(sql)
+                Return _EngineDB.executeDataTable(sql)
+            Catch ex As Exception
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -98,12 +111,16 @@ Namespace AreaEngine
         ''' </summary>
         ''' <returns></returns>
         Private Function createCountersIndex() As Boolean
-            Dim sql As String = ""
+            Try
+                Dim sql As String = ""
 
-            sql += "CREATE INDEX idx_Primary "
-            sql += " ON counters ([entryPoint_id])"
+                sql += "CREATE INDEX idx_Primary "
+                sql += " ON counters ([entryPoint_id])"
 
-            Return _EngineDB.executeDataTable(sql)
+                Return _EngineDB.executeDataTable(sql)
+            Catch ex As Exception
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -112,11 +129,15 @@ Namespace AreaEngine
         ''' <param name="apiName"></param>
         ''' <returns></returns>
         Private Function addNewEntryPoint(ByVal apiName As String) As Integer
-            Dim sql As String
+            Try
+                Dim sql As String
 
-            sql = $"INSERT INTO entryPoints ([name]) VALUES ('{apiName}')"
+                sql = $"INSERT INTO entryPoints ([name]) VALUES ('{apiName}')"
 
-            Return _EngineDB.executeDataTableAndReturnID(sql)
+                Return _EngineDB.executeDataTableAndReturnID(sql)
+            Catch ex As Exception
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -125,18 +146,22 @@ Namespace AreaEngine
         ''' <param name="apiName"></param>
         ''' <returns></returns>
         Private Function addOrGetAPI(ByVal apiName As String) As Integer
-            Dim sql As String
-            Dim result As Object
+            Try
+                Dim sql As String
+                Dim result As Object
 
-            sql = $"SELECT id FROM entryPoints WHERE [name] = '{apiName}'"
+                sql = $"SELECT id FROM entryPoints WHERE [name] = '{apiName}'"
 
-            result = _EngineDB.selectResultDataTable(sql)
+                result = _EngineDB.selectResultDataTable(sql)
 
-            If Not IsNothing(result) Then
-                Return result
-            Else
-                Return addNewEntryPoint(apiName)
-            End If
+                If Not IsNothing(result) Then
+                    Return result
+                Else
+                    Return addNewEntryPoint(apiName)
+                End If
+            Catch ex As Exception
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -147,25 +172,29 @@ Namespace AreaEngine
         ''' <param name="access"></param>
         ''' <returns></returns>
         Private Function addSlotTime(ByVal timeSlot As Double, ByVal id_Api As Integer, ByVal fromAPI As Boolean, ByVal access As Integer) As Boolean
-            Dim sql As String
-            Dim result As Object
-            Dim value As Integer
+            Try
+                Dim sql As String
+                Dim result As Object
+                Dim value As Integer
 
-            If fromAPI Then
-                value = "1"
-            Else
-                value = "0"
-            End If
+                If fromAPI Then
+                    value = "1"
+                Else
+                    value = "0"
+                End If
 
-            sql = $"INSERT INTO counters ([entryPoint_id], [slotTime], [isAPI], [value]) VALUES ({id_Api}, '{timeSlot}', {value}, {access})"
+                sql = $"INSERT INTO counters ([entryPoint_id], [slotTime], [isAPI], [value]) VALUES ({id_Api}, '{timeSlot}', {value}, {access})"
 
-            result = _EngineDB.executeDataTable(sql)
+                result = _EngineDB.executeDataTable(sql)
 
-            If Not IsNothing(result) Then
+                If Not IsNothing(result) Then
+                    Return False
+                Else
+                    Return True
+                End If
+            Catch ex As Exception
                 Return False
-            Else
-                Return True
-            End If
+            End Try
         End Function
 
         ''' <summary>
@@ -174,18 +203,22 @@ Namespace AreaEngine
         ''' <param name="limitTime"></param>
         ''' <returns></returns>
         Public Function removeOld(ByVal limitTime As Double) As Boolean
-            Dim sql As String
-            Dim result As Object
+            Try
+                Dim sql As String
+                Dim result As Object
 
-            sql = $"DELETE FROM counters WHERE [slotTime]< '{limitTime}'"
+                sql = $"DELETE FROM counters WHERE [slotTime]< '{limitTime}'"
 
-            result = _EngineDB.executeDataTable(sql)
+                result = _EngineDB.executeDataTable(sql)
 
-            If Not IsNothing(result) Then
+                If Not IsNothing(result) Then
+                    Return False
+                Else
+                    Return True
+                End If
+            Catch ex As Exception
                 Return False
-            Else
-                Return True
-            End If
+            End Try
         End Function
 
         ''' <summary>
@@ -193,31 +226,144 @@ Namespace AreaEngine
         ''' </summary>
         ''' <returns></returns>
         Private Function createStructures() As Boolean
-            Dim proceed As Boolean = True
+            Try
+                Dim proceed As Boolean = True
 
-            If proceed Then
-                proceed = createEntryPointTable()
-            End If
-            If proceed Then
-                AreaCommon.Main.environment.log.track("CounterEngine.createStructures", _OwnerId, "Create 'EntryPoint' table")
+                If proceed Then
+                    proceed = createEntryPointTable()
+                End If
+                If proceed Then
+                    AreaCommon.Main.environment.log.track("CounterEngine.createStructures", _OwnerId, "Create 'EntryPoint' table")
 
-                proceed = createEntryPointIndex()
-            End If
-            If proceed Then
-                AreaCommon.Main.environment.log.track("CounterEngine.createStructures", _OwnerId, "Create 'EntryPoint' Index 'Name' field")
+                    proceed = createEntryPointIndex()
+                End If
+                If proceed Then
+                    AreaCommon.Main.environment.log.track("CounterEngine.createStructures", _OwnerId, "Create 'EntryPoint' Index 'Name' field")
 
-                proceed = createCountersTable()
-            End If
-            If proceed Then
-                AreaCommon.Main.environment.log.track("CounterEngine.createStructures", _OwnerId, "Create 'Counters' table")
+                    proceed = createCountersTable()
+                End If
+                If proceed Then
+                    AreaCommon.Main.environment.log.track("CounterEngine.createStructures", _OwnerId, "Create 'Counters' table")
 
-                proceed = createCountersIndex()
-            End If
-            If proceed Then
-                AreaCommon.Main.environment.log.track("CounterEngine.createStructures", _OwnerId, "Create 'Counters' Primary Index")
-            End If
+                    proceed = createCountersIndex()
+                End If
+                If proceed Then
+                    AreaCommon.Main.environment.log.track("CounterEngine.createStructures", _OwnerId, "Create 'Counters' Primary Index")
+                End If
 
-            Return proceed
+                Return proceed
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method return a get total call
+        ''' </summary>
+        ''' <param name="isAPI"></param>
+        ''' <param name="fromTimestamp"></param>
+        ''' <param name="toTimeStamp"></param>
+        ''' <returns></returns>
+        Public Function getTotalCall(ByVal isAPI As Boolean, ByVal fromTimestamp As Double, ByVal toTimeStamp As Double) As Integer
+            Try
+                Dim sql As String
+                Dim result As Object
+
+                sql = $"select sum(value) as totalValue FROM counters WHERE slotTime >= '{fromTimestamp}' AND slotTime <= '{toTimeStamp}'"
+
+                If isAPI Then
+                    sql += " AND isApi <> 0"
+                Else
+                    sql += " AND isApi = 0"
+                End If
+
+                result = _EngineDB.selectResultDataTable(sql)
+
+                If Not IsNothing(result) Then
+                    Return result
+                Else
+                    Return 0
+                End If
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to return a totals of a filter counter
+        ''' </summary>
+        ''' <param name="filter"></param>
+        ''' <returns></returns>
+        Public Function getTotals(filter As QueryCounterFilter) As QuerySingleTotal
+            Dim value As New QuerySingleTotal
+
+            Try
+                Select Case filter.components
+                    Case QueryCounterFilter.CounterComponentEnumeration.both
+                        value.onlyAPI = getTotalCall(True, filter.fromTimestamp, filter.toTimeStamp)
+                        value.onlyOther = getTotalCall(False, filter.fromTimestamp, filter.toTimeStamp)
+                    Case QueryCounterFilter.CounterComponentEnumeration.onlyAPI
+                        value.onlyAPI = getTotalCall(True, filter.fromTimestamp, filter.toTimeStamp)
+                    Case QueryCounterFilter.CounterComponentEnumeration.onlyOther
+                        value.onlyOther = getTotalCall(False, filter.fromTimestamp, filter.toTimeStamp)
+                End Select
+            Catch ex As Exception
+            End Try
+
+            Return value
+        End Function
+
+        ''' <summary>
+        ''' This method provide to return a counter Time slot in async
+        ''' </summary>
+        ''' <param name="filter"></param>
+        ''' <returns></returns>
+        Public Function getCounterTimeSlots(filter As QueryCounterFilter) As List(Of SlotDetailValue)
+            Dim sql As String
+            Dim result As Object
+            Dim openDB As Object
+            Dim value As New List(Of SlotDetailValue)
+
+            Try
+                AreaCommon.Main.environment.log.trackEnter("CounterEngine.getCounterTimeSlots", _OwnerId)
+
+                sql = $"SELECT slotTime, sum(value) as sumSlotTime FROM counters WHERE slotTime >= '{filter.fromTimestamp}' AND slotTime <= '{filter.toTimeStamp}'"
+
+                If (filter.components = QueryCounterFilter.CounterComponentEnumeration.onlyAPI) Then
+                    sql += " AND isApi <> 0"
+                ElseIf (filter.components = QueryCounterFilter.CounterComponentEnumeration.onlyOther) Then
+                    sql += " AND isApi = 0"
+                End If
+
+                sql += " GROUP BY slotTime"
+
+                openDB = _EngineDB.openDatabase()
+
+                If Not IsNothing(openDB) Then
+                    result = _EngineDB.selectDataReader(openDB, sql)
+
+                    If Not IsNothing(result) Then
+                        Dim item As SlotDetailValue
+
+                        While result.read()
+                            item = New SlotDetailValue
+
+                            item.timestamp = CDbl(result.GetString(0))
+                            item.value.onlyOther = result.GetInt32(1)
+
+                            value.Add(item)
+                        End While
+                    End If
+
+                    openDB.close()
+                End If
+            Catch ex As Exception
+                AreaCommon.Main.environment.log.trackException("CounterEngine.selectResultDataTable", _OwnerId, ex.Message)
+            Finally
+                AreaCommon.Main.environment.log.trackExit("CounterEngine.selectResultDataTable", _OwnerId)
+            End Try
+
+            Return value
         End Function
 
 

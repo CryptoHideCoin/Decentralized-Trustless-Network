@@ -1,0 +1,23 @@
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCCmd.exe.config
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCCmd.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCCmd.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\System.Web.Http.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\System.Data.SQLite.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\CHCDataAccess.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\bin\System.Data.SQLite.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHC Cmd - Debug.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHCCmd.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHC Cmd - Debug.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHC Cmd - Debug.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHCCmd.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\Debug\CHCCmd.pdb

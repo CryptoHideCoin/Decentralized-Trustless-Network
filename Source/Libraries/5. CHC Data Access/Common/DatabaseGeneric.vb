@@ -137,6 +137,80 @@ Namespace AreaCommon.Database
         End Function
 
         ''' <summary>
+        ''' This method provide to open a database and return it
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function openDatabase() As Object
+            Dim enter As Boolean = False
+
+            Try
+                If _Initialized Then
+                    Dim connectionDB As SQLiteConnection
+
+                    logInstance.trackEnter("DatabaseGeneric.selectResultDataTable", _OwnerId)
+
+                    enter = True
+
+                    connectionDB = New SQLiteConnection(_DBConnectionString)
+
+                    connectionDB.Open()
+
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "DB Open")
+
+                    Return connectionDB
+                End If
+            Catch ex As Exception
+                logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, ex.Message)
+            Finally
+                If enter Then
+                    logInstance.trackExit("DatabaseGeneric.executeDataTable", _OwnerId)
+                End If
+            End Try
+
+            Return Nothing
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get a datareader
+        ''' </summary>
+        ''' <param name="openDatabase"></param>
+        ''' <param name="sql"></param>
+        ''' <returns></returns>
+        Public Function selectDataReader(ByVal openConnectionDBN As Object, ByVal sql As String) As Object
+            Dim result As Object
+            Dim enter As Boolean = False
+
+            Try
+                If _Initialized Then
+                    Dim sqlCommand As SQLiteCommand
+                    Dim connectionDB As SQLiteConnection = openConnectionDBN
+
+                    logInstance.trackEnter("DatabaseGeneric.selectResultDataTable", _OwnerId)
+
+                    enter = True
+
+                    sqlCommand = New SQLiteCommand(connectionDB)
+
+                    sqlCommand.CommandText = sql
+
+                    result = sqlCommand.ExecuteReader()
+
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "Execute reader")
+
+                    Return result
+                End If
+            Catch ex As Exception
+                logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, ex.Message)
+            Finally
+                If enter Then
+                    logInstance.trackExit("DatabaseGeneric.executeDataTable", _OwnerId)
+                End If
+            End Try
+
+            Return Nothing
+        End Function
+
+        ''' <summary>
         ''' This method provide to select only result from a select SQL
         ''' </summary>
         ''' <param name="sql"></param>
@@ -183,51 +257,54 @@ Namespace AreaCommon.Database
         End Function
 
         ''' <summary>
-        ''' This method provide to get a select table data
+        ''' This method provide to select only result from a select SQL in async mode
         ''' </summary>
         ''' <param name="sql"></param>
         ''' <returns></returns>
-        Public Function selectDataReader(ByVal sql As String) As Object
+        Public Async Function selectResultDataTableAsync(ByVal sql As String, Optional ByVal returnRecordset As Boolean = False) As Task(Of Object)
             Dim result As Object
 
             Try
                 If _Initialized Then
-                    Dim sqlCommand As SQLiteCommand
                     Dim connectionDB As SQLiteConnection
+                    Dim sqlCommand As SQLiteCommand
 
-                    logInstance.trackEnter("DatabaseGeneric.selectDataReader", _OwnerId)
+                    logInstance.trackEnter("DatabaseGeneric.selectResultDataTable", _OwnerId)
 
                     connectionDB = New SQLiteConnection(_DBConnectionString)
 
                     connectionDB.Open()
 
-                    logInstance.track("DatabaseGeneric.selectDataReader", _OwnerId, "DB Open")
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "DB Open")
 
                     sqlCommand = New SQLiteCommand(connectionDB)
 
                     sqlCommand.CommandText = sql
 
-                    result = sqlCommand.ExecuteReader()
+                    If returnRecordset Then
+                        result = Await sqlCommand.ExecuteReaderAsync()
+                    Else
+                        result = Await sqlCommand.ExecuteScalarAsync()
+                    End If
 
-                    logInstance.track("DatabaseGeneric.selectDataReader", _OwnerId, "Execute scalar")
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "Execute scalar")
 
                     connectionDB.Close()
 
-                    logInstance.track("DatabaseGeneric.selectDataReader", _OwnerId, "DB Close")
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "DB Close")
 
                     Return result
                 Else
                     Return False
                 End If
             Catch ex As Exception
-                logInstance.track("DatabaseGeneric.selectDataReader", _OwnerId, ex.Message)
+                logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, ex.Message)
 
                 Return Nothing
             Finally
                 logInstance.trackExit("DatabaseGeneric.executeDataTable", _OwnerId)
             End Try
         End Function
-
 
         ''' <summary>
         ''' This method provide to delete a SQL Property Identity on DB

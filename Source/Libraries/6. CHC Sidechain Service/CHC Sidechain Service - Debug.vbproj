@@ -117,6 +117,7 @@
     <Compile Include="Common\Internal.vb" />
     <Compile Include="Controllers\Admin\Authorization\RequestAccessKeyController.vb" />
     <Compile Include="Controllers\Admin\Authorization\RequestAdminTokenController.vb" />
+    <Compile Include="Controllers\Admin\Counter\QueryCounterValueController.vb" />
     <Compile Include="Controllers\Admin\Log\LogBlockController.vb" />
     <Compile Include="Controllers\Admin\Log\LogBlockDeleteController.vb" />
     <Compile Include="Controllers\Admin\Log\LogListController.vb" />
@@ -197,8 +198,6 @@
       <Name>CHC Data Access</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\Admin\Counter\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

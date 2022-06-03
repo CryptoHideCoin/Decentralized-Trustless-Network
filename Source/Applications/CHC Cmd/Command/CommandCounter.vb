@@ -4,7 +4,7 @@ Option Explicit On
 Imports CHCCmd.AreaCommon.Models
 Imports CHCModelsLibrary.AreaModel.Administration.Security
 Imports CHCModelsLibrary.AreaModel.Network.Response
-Imports CHCModelsLibrary.AreaModel.Registry
+Imports CHCModelsLibrary.AreaModel.Counter
 Imports CHCCommonLibrary.AreaEngine.CommandLine
 Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCProtocolLibrary.AreaSystem
@@ -91,6 +91,9 @@ Namespace AreaCommon.Command
                 End If
                 If _Command.haveParameter("clean") Then
                     _ParameterCommand = "clean"
+                End If
+                If _Command.haveParameter("total") Then
+                    _ParameterCommand = "total"
                 End If
 
                 If (_ParameterCommand.Length = 0) Then
@@ -446,6 +449,76 @@ Namespace AreaCommon.Command
             End Try
         End Function
 
+        Private Function getTotal() As Boolean
+            Try
+                Dim filter As New QueryCounterFilter
+                Dim remote As New ProxyWS(Of QueryCounterResponseModel)
+                Dim proceed As Boolean = True
+
+                If proceed Then
+                    remote.url = buildURL($"/administration/maintenance/queryCounterValue/?securityToken={_SecurityToken}")
+                End If
+                If proceed Then
+                    proceed = (remote.getData("filter", filter).Length = 0)
+                End If
+                If proceed Then
+                    proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+                End If
+                If proceed Then
+                    Console.WriteLine($"Counter serve result:")
+                    Console.WriteLine($"=====================")
+                    Console.WriteLine()
+
+                    Console.WriteLine("Filters")
+
+                    If (filter.fromTimestamp = 0) Then
+                        Console.WriteLine($"   From       : Start")
+                    Else
+                        Console.WriteLine($"   From       : {filter.fromTimestamp}")
+                    End If
+                    If (filter.toTimeStamp = 0) Then
+                        Console.WriteLine($"   To         : Now")
+                    Else
+                        Console.WriteLine($"   To         : {filter.toTimeStamp}")
+                    End If
+                    Select Case filter.components
+                        Case QueryCounterFilter.CounterComponentEnumeration.both
+                            Console.WriteLine($"   Components : all")
+                        Case QueryCounterFilter.CounterComponentEnumeration.onlyAPI
+                            Console.WriteLine($"   Components : only API")
+                        Case QueryCounterFilter.CounterComponentEnumeration.onlyOther
+                            Console.WriteLine($"   Components : not API")
+                    End Select
+
+                    Console.WriteLine()
+                    Console.WriteLine("Totals")
+
+                    Console.WriteLine($"   API called     : {remote.data.totals.onlyAPI}")
+                    Console.WriteLine($"   Other called   : {remote.data.totals.onlyOther}")
+                    Console.WriteLine($"   called         : {remote.data.totals.total}")
+
+                    Console.WriteLine()
+                    Console.WriteLine("Call for times")
+
+                    For Each item In remote.data.timeSlots
+                        Console.WriteLine($"  At {CHCCommonLibrary.AreaEngine.Miscellaneous.SupportDate.dateTimeFromTimeStamp(item.timestamp)}  : {item.value.total} called")
+                    Next
+
+                    Console.WriteLine()
+                End If
+
+                Return proceed
+            Catch exFile As System.IO.FileLoadException
+                IntegrityApplication.executeRepairNewton(exFile.FileName)
+
+                Return False
+            Catch ex As Exception
+                Console.WriteLine("Error during deleteOld - " & ex.Message)
+
+                Return False
+            End Try
+        End Function
+
 
         Private Function CommandModel_run() As Boolean Implements CommandModel.run
             Try
@@ -484,6 +557,12 @@ Namespace AreaCommon.Command
                 End If
                 If proceed Then
                     Select Case _ParameterCommand.ToLower()
+                        Case "total".ToLower()
+                            If Not getTotal() Then
+                                Console.WriteLine("Problem during get a total")
+
+                                proceed = False
+                            End If
                         Case "clean".ToLower()
                             If Not deleteOld() Then
                                 Console.WriteLine("Problem during delete old counter")

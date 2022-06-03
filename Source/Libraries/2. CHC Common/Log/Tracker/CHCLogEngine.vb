@@ -25,7 +25,7 @@ Namespace AreaEngine.Log
 
         Public WithEvents settings As New TrackConfiguration
         Public Property registryService As Registry.RegistryEngine
-        Public Property apiService As Engine.CounterAPICacheEngine
+        Public Property apiService As AreaEngine.CounterAPICacheEngine
 
 
         ''' <summary>
