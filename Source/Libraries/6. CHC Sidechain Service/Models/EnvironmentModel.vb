@@ -61,7 +61,7 @@ Namespace AreaChain.Runtime.Models
         ''' </summary>
         ''' <param name="chainServiceName"></param>
         ''' <returns></returns>
-        Public Shared Function readSettings(ByVal chainServiceName As String, Optional ByVal noSetEnvironment As Boolean = False) As ResponseIOOperation
+        Public Shared Function readSettings(ByVal chainServiceName As String) As ResponseIOOperation
             Dim response As New ResponseIOOperation
             Try
                 Dim completeFileName As String = ""

@@ -74,9 +74,13 @@ Namespace AreaCommon.Startup
                     Main.settingsPassword = command.parameterValue("password")
                     Main.securityKey = command.parameterValue("securityKey")
                 Else
-                    _DataPath = dataPathParameter
-                    Main.settingsPassword = passwordParameter
-                    Main.securityKey = securityKeyParameter
+                    If dataPathParameter.Length = 0 Then
+                        Return False
+                    Else
+                        _DataPath = dataPathParameter
+                        Main.settingsPassword = passwordParameter
+                        Main.securityKey = securityKeyParameter
+                    End If
                 End If
 
                 Return True
@@ -92,8 +96,8 @@ Namespace AreaCommon.Startup
         ''' <returns></returns>
         Public Function printWelcome(ByVal serviceName As String, ByVal applicationVersion As String) As Boolean
             environment.log.trackIntoConsole("=== Welcome into ====")
-            environment.log.trackIntoConsole("Crypto Hide Coin Decentralized Trustless Network")
-            environment.log.trackIntoConsole(serviceName & " Chain Engine Service")
+            environment.log.trackIntoConsole("CHCDTN Trading System Service Network")
+            environment.log.trackIntoConsole(serviceName & " Sidechain Engine Service")
             environment.log.trackIntoConsole("Rel." & applicationVersion)
             environment.log.trackIntoConsole("System bootstrap " & atMomentGMT() & " (gmt)")
             environment.log.trackIntoConsole()
@@ -111,7 +115,7 @@ Namespace AreaCommon.Startup
         ''' </summary>
         ''' <param name="problemDescription"></param>
         ''' <returns></returns>
-        Public Function managePath(ByRef problemDescription As String) As Boolean
+        Public Function managePath(ByVal sideChainName As String, ByRef problemDescription As String) As Boolean
             Try
                 If (_DataPath.Trim.Length = 0) Then
                     problemDescription = "--dataPath parameter must be set!"
@@ -121,7 +125,7 @@ Namespace AreaCommon.Startup
                 If IO.Directory.Exists(_DataPath) Then
                     environment.paths.directoryData = _DataPath
 
-                    If environment.paths.init(CHCProtocolLibrary.AreaSystem.VirtualPathEngine.EnumSystemType.runTime) Then
+                    If environment.paths.init(sideChainName) Then
                         Return True
                     Else
                         problemDescription = "Problem during build a Path"
@@ -143,7 +147,7 @@ Namespace AreaCommon.Startup
         ''' </summary>
         ''' <param name="problemDescription"></param>
         ''' <returns></returns>
-        Public Function trackRuntimeStart(ByVal sideChainServiceName As String, ByRef problemDescription As String) As Boolean
+        Public Function trackRuntimeStart(ByRef problemDescription As String) As Boolean
             Try
                 With environment.log.settings
                     .saveMode = environment.settings.logSettings.trackConfiguration
@@ -151,8 +155,8 @@ Namespace AreaCommon.Startup
                     .changeNumberOfRegistrations = environment.settings.logSettings.changeLogFileNumRegistrations
                     .useBufferToWrite = environment.settings.logSettings.useBufferToWrite
                     .writeToFile = environment.settings.logSettings.writeToFile
-                    .pathFile = IO.Path.Combine(environment.paths.system.logs, sideChainServiceName)
-                    .instanceID = Guid.NewGuid.ToString
+                    .pathFile = environment.paths.system.logs
+                    .instanceID = environment.paths.instanceId
                 End With
 
                 Return True

@@ -58,6 +58,35 @@ Namespace AreaEngine.Communication
         End Function
 
         ''' <summary>
+        ''' This method provide to get a remote data with a user-agent
+        ''' </summary>
+        ''' <param name="userAgent"></param>
+        ''' <returns></returns>
+        <DebuggerHiddenAttribute()>
+        Public Async Function getData(ByVal userAgent As String) As Task(Of String)
+            Try
+                Using client As Http.HttpClient = New Http.HttpClient()
+
+                    client.DefaultRequestHeaders.Add("User-Agent", userAgent)
+
+                    Using response As Http.HttpResponseMessage = Await client.GetAsync(url)
+                        Using content As Http.HttpContent = response.Content
+                            Dim result As String = Await content.ReadAsStringAsync()
+
+                            If (result IsNot Nothing) Then
+                                data = JsonConvert.DeserializeObject(Of ClassType)(result)
+                            End If
+                        End Using
+                    End Using
+                End Using
+
+                Return ""
+            Catch ex As Exception
+                Return ex.Message
+            End Try
+        End Function
+
+        ''' <summary>
         ''' This method provides to get a remote data
         ''' </summary>
         ''' <returns></returns>

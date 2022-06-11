@@ -1,0 +1,71 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+TradingBotSystemModelsLibrary
+</name>
+</assembly>
+<members>
+<member name="T:TradingBotSystemModelsLibrary.My.Resources.Resources">
+<summary>
+  Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
+</summary>
+</member>
+<member name="P:TradingBotSystemModelsLibrary.My.Resources.Resources.ResourceManager">
+<summary>
+  Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
+</summary>
+</member>
+<member name="P:TradingBotSystemModelsLibrary.My.Resources.Resources.Culture">
+<summary>
+  Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
+  ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
+</summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyStructure">
+ <summary>
+ This class contain the data of an Exchange
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyListResponseModel">
+ <summary>
+ This class contain the currency list response model
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyResponseModel">
+ <summary>
+ This class contain the asset data response model
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeStructure">
+ <summary>
+ This class contain the data of an Exchange
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeListResponseModel">
+ <summary>
+ This class contain the exchange list response
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeResponseModel">
+ <summary>
+ This class contain the exchange data response model
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeReferenceStructure">
+ <summary>
+ This class contain the data of an Exchange Reference
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeReferenceListResponseModel">
+ <summary>
+ This class contain the exchange reference list response
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeReferenceResponseModel">
+ <summary>
+ This class contain the exchange reference data response model
+ </summary>
+</member>
+</members>
+</doc>

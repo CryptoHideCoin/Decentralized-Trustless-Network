@@ -48,19 +48,23 @@ Namespace AreaCommon.Database
         ''' </summary>
         ''' <param name="sql"></param>
         ''' <returns></returns>
-        Public Function executeDataTable(ByVal sql As String) As Boolean
+        Public Function executeDataTable(ByVal sql As String, Optional ByVal forceOwner As String = "") As Boolean
             Try
                 Dim connectionDB As SQLiteConnection
                 Dim sqlCommand As SQLiteCommand
 
+                If (forceOwner.Length = 0) Then
+                    forceOwner = _OwnerId
+                End If
+
                 If _Initialized Then
-                    logInstance.trackEnter("DatabaseGeneric.executeDataTable", _OwnerId)
+                    logInstance.trackEnter("DatabaseGeneric.executeDataTable", forceOwner)
 
                     connectionDB = New SQLiteConnection(_DBConnectionString)
 
                     connectionDB.Open()
 
-                    logInstance.track("DatabaseGeneric.executeDataTable", _OwnerId, "Connection Open")
+                    logInstance.track("DatabaseGeneric.executeDataTable", forceOwner, "Connection Open")
 
                     sqlCommand = New SQLiteCommand(connectionDB)
 
@@ -68,22 +72,22 @@ Namespace AreaCommon.Database
 
                     sqlCommand.ExecuteScalar()
 
-                    logInstance.track("DatabaseGeneric.executeDataTable", _OwnerId, "Command executed")
+                    logInstance.track("DatabaseGeneric.executeDataTable", forceOwner, "Command executed")
 
                     connectionDB.Close()
 
-                    logInstance.track("DatabaseGeneric.executeDataTable", _OwnerId, "Connection Closed")
+                    logInstance.track("DatabaseGeneric.executeDataTable", forceOwner, "Connection Closed")
 
                     Return True
                 Else
                     Return False
                 End If
             Catch ex As Exception
-                logInstance.trackException("DatabaseGeneric.executeDataTable", _OwnerId, ex.Message)
+                logInstance.trackException("DatabaseGeneric.executeDataTable", forceOwner, ex.Message)
 
                 Return False
             Finally
-                logInstance.trackExit("DatabaseGeneric.executeDataTable", _OwnerId)
+                logInstance.trackExit("DatabaseGeneric.executeDataTable", forceOwner)
             End Try
         End Function
 
@@ -92,20 +96,24 @@ Namespace AreaCommon.Database
         ''' </summary>
         ''' <param name="sql"></param>
         ''' <returns></returns>
-        Public Function executeDataTableAndReturnID(ByVal sql As String) As Object
+        Public Function executeDataTableAndReturnID(ByVal sql As String, Optional ByVal forceOwner As String = "") As Object
             Dim result As Integer = -1
             Try
                 Dim connectionDB As SQLiteConnection
                 Dim sqlCommand As SQLiteCommand
 
+                If (forceOwner.Length = 0) Then
+                    forceOwner = _OwnerId
+                End If
+
                 If _Initialized Then
-                    logInstance.trackEnter("DatabaseGeneric.executeDataTable", _OwnerId)
+                    logInstance.trackEnter("DatabaseGeneric.executeDataTable", forceOwner)
 
                     connectionDB = New SQLiteConnection(_DBConnectionString)
 
                     connectionDB.Open()
 
-                    logInstance.track("DatabaseGeneric.executeDataTable", _OwnerId, "Connection Open")
+                    logInstance.track("DatabaseGeneric.executeDataTable", forceOwner, "Connection Open")
 
                     sqlCommand = New SQLiteCommand(connectionDB)
 
@@ -113,7 +121,7 @@ Namespace AreaCommon.Database
 
                     sqlCommand.ExecuteScalar()
 
-                    logInstance.track("DatabaseGeneric.executeDataTable", _OwnerId, "Command executed")
+                    logInstance.track("DatabaseGeneric.executeDataTable", forceOwner, "Command executed")
 
                     sqlCommand = New SQLiteCommand(connectionDB)
 
@@ -123,16 +131,16 @@ Namespace AreaCommon.Database
 
                     connectionDB.Close()
 
-                    logInstance.track("DatabaseGeneric.executeDataTable", _OwnerId, "Connection Closed")
+                    logInstance.track("DatabaseGeneric.executeDataTable", forceOwner, "Connection Closed")
                 End If
 
                 Return result
             Catch ex As Exception
-                logInstance.trackException("DatabaseGeneric.executeDataTable", _OwnerId, ex.Message)
+                logInstance.trackException("DatabaseGeneric.executeDataTable", forceOwner, ex.Message)
 
                 Return -1
             Finally
-                logInstance.trackExit("DatabaseGeneric.executeDataTable", _OwnerId)
+                logInstance.trackExit("DatabaseGeneric.executeDataTable", forceOwner)
             End Try
         End Function
 
@@ -140,14 +148,18 @@ Namespace AreaCommon.Database
         ''' This method provide to open a database and return it
         ''' </summary>
         ''' <returns></returns>
-        Public Function openDatabase() As Object
+        Public Function openDatabase(Optional ByVal forceOwner As String = "") As Object
             Dim enter As Boolean = False
+
+            If (forceOwner.Length = 0) Then
+                forceOwner = _OwnerId
+            End If
 
             Try
                 If _Initialized Then
                     Dim connectionDB As SQLiteConnection
 
-                    logInstance.trackEnter("DatabaseGeneric.selectResultDataTable", _OwnerId)
+                    logInstance.trackEnter("DatabaseGeneric.selectResultDataTable", forceOwner)
 
                     enter = True
 
@@ -155,15 +167,15 @@ Namespace AreaCommon.Database
 
                     connectionDB.Open()
 
-                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "DB Open")
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", forceOwner, "DB Open")
 
                     Return connectionDB
                 End If
             Catch ex As Exception
-                logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, ex.Message)
+                logInstance.track("DatabaseGeneric.selectResultDataTable", forceOwner, ex.Message)
             Finally
                 If enter Then
-                    logInstance.trackExit("DatabaseGeneric.executeDataTable", _OwnerId)
+                    logInstance.trackExit("DatabaseGeneric.executeDataTable", forceOwner)
                 End If
             End Try
 
@@ -176,16 +188,20 @@ Namespace AreaCommon.Database
         ''' <param name="openDatabase"></param>
         ''' <param name="sql"></param>
         ''' <returns></returns>
-        Public Function selectDataReader(ByVal openConnectionDBN As Object, ByVal sql As String) As Object
+        Public Function selectDataReader(ByVal openConnectionDBN As Object, ByVal sql As String, Optional ByVal forceOwner As String = "") As Object
             Dim result As Object
             Dim enter As Boolean = False
+
+            If (forceOwner.Length = 0) Then
+                forceOwner = _OwnerId
+            End If
 
             Try
                 If _Initialized Then
                     Dim sqlCommand As SQLiteCommand
                     Dim connectionDB As SQLiteConnection = openConnectionDBN
 
-                    logInstance.trackEnter("DatabaseGeneric.selectResultDataTable", _OwnerId)
+                    logInstance.trackEnter("DatabaseGeneric.selectResultDataTable", forceOwner)
 
                     enter = True
 
@@ -195,15 +211,15 @@ Namespace AreaCommon.Database
 
                     result = sqlCommand.ExecuteReader()
 
-                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "Execute reader")
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", forceOwner, "Execute reader")
 
                     Return result
                 End If
             Catch ex As Exception
-                logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, ex.Message)
+                logInstance.track("DatabaseGeneric.selectResultDataTable", forceOwner, ex.Message)
             Finally
                 If enter Then
-                    logInstance.trackExit("DatabaseGeneric.executeDataTable", _OwnerId)
+                    logInstance.trackExit("DatabaseGeneric.executeDataTable", forceOwner)
                 End If
             End Try
 
@@ -215,21 +231,25 @@ Namespace AreaCommon.Database
         ''' </summary>
         ''' <param name="sql"></param>
         ''' <returns></returns>
-        Public Function selectResultDataTable(ByVal sql As String) As Object
+        Public Function selectResultDataTable(ByVal sql As String, Optional ByVal forceOwner As String = "") As Object
             Dim result As Object
+
+            If (forceOwner.Length = 0) Then
+                forceOwner = _OwnerId
+            End If
 
             Try
                 If _Initialized Then
                     Dim connectionDB As SQLiteConnection
                     Dim sqlCommand As SQLiteCommand
 
-                    logInstance.trackEnter("DatabaseGeneric.selectResultDataTable", _OwnerId)
+                    logInstance.trackEnter("DatabaseGeneric.selectResultDataTable", forceOwner)
 
                     connectionDB = New SQLiteConnection(_DBConnectionString)
 
                     connectionDB.Open()
 
-                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "DB Open")
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", forceOwner, "DB Open")
 
                     sqlCommand = New SQLiteCommand(connectionDB)
 
@@ -237,22 +257,22 @@ Namespace AreaCommon.Database
 
                     result = sqlCommand.ExecuteScalar()
 
-                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "Execute scalar")
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", forceOwner, "Execute scalar")
 
                     connectionDB.Close()
 
-                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "DB Close")
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", forceOwner, "DB Close")
 
                     Return result
                 Else
                     Return False
                 End If
             Catch ex As Exception
-                logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, ex.Message)
+                logInstance.track("DatabaseGeneric.selectResultDataTable", forceOwner, ex.Message)
 
                 Return Nothing
             Finally
-                logInstance.trackExit("DatabaseGeneric.executeDataTable", _OwnerId)
+                logInstance.trackExit("DatabaseGeneric.executeDataTable", forceOwner)
             End Try
         End Function
 
@@ -261,21 +281,25 @@ Namespace AreaCommon.Database
         ''' </summary>
         ''' <param name="sql"></param>
         ''' <returns></returns>
-        Public Async Function selectResultDataTableAsync(ByVal sql As String, Optional ByVal returnRecordset As Boolean = False) As Task(Of Object)
+        Public Async Function selectResultDataTableAsync(ByVal sql As String, Optional ByVal returnRecordset As Boolean = False, Optional ByVal forceOwner As String = "") As Task(Of Object)
             Dim result As Object
+
+            If (forceOwner.Length = 0) Then
+                forceOwner = _OwnerId
+            End If
 
             Try
                 If _Initialized Then
                     Dim connectionDB As SQLiteConnection
                     Dim sqlCommand As SQLiteCommand
 
-                    logInstance.trackEnter("DatabaseGeneric.selectResultDataTable", _OwnerId)
+                    logInstance.trackEnter("DatabaseGeneric.selectResultDataTable", forceOwner)
 
                     connectionDB = New SQLiteConnection(_DBConnectionString)
 
                     connectionDB.Open()
 
-                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "DB Open")
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", forceOwner, "DB Open")
 
                     sqlCommand = New SQLiteCommand(connectionDB)
 
@@ -287,22 +311,22 @@ Namespace AreaCommon.Database
                         result = Await sqlCommand.ExecuteScalarAsync()
                     End If
 
-                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "Execute scalar")
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", forceOwner, "Execute scalar")
 
                     connectionDB.Close()
 
-                    logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, "DB Close")
+                    logInstance.track("DatabaseGeneric.selectResultDataTable", forceOwner, "DB Close")
 
                     Return result
                 Else
                     Return False
                 End If
             Catch ex As Exception
-                logInstance.track("DatabaseGeneric.selectResultDataTable", _OwnerId, ex.Message)
+                logInstance.track("DatabaseGeneric.selectResultDataTable", forceOwner, ex.Message)
 
                 Return Nothing
             Finally
-                logInstance.trackExit("DatabaseGeneric.executeDataTable", _OwnerId)
+                logInstance.trackExit("DatabaseGeneric.executeDataTable", forceOwner)
             End Try
         End Function
 
@@ -311,12 +335,16 @@ Namespace AreaCommon.Database
         ''' </summary>
         ''' <param name="id"></param>
         ''' <returns></returns>
-        Private Function deleteSQLPropertyIdentityDB(ByVal id As DBPropertyID) As Boolean
+        Private Function deleteSQLPropertyIdentityDB(ByVal id As DBPropertyID, Optional ByVal forceOwner As String = "") As Boolean
+            If (forceOwner.Length = 0) Then
+                forceOwner = _OwnerId
+            End If
+
             Try
                 If _Initialized Then
                     Dim sql As String = ""
 
-                    logInstance.trackEnter("DatabaseGeneric.deleteSQLPropertyIdentityDB", _OwnerId)
+                    logInstance.trackEnter("DatabaseGeneric.deleteSQLPropertyIdentityDB", forceOwner)
 
                     sql = "DELETE FROM dbIdentity WHERE property_id = " & id
 
@@ -325,11 +353,11 @@ Namespace AreaCommon.Database
                     Return False
                 End If
             Catch ex As Exception
-                logInstance.trackException("DatabaseGeneric.deleteSQLPropertyIdentityDB", _OwnerId, ex.Message)
+                logInstance.trackException("DatabaseGeneric.deleteSQLPropertyIdentityDB", forceOwner, ex.Message)
 
                 Return False
             Finally
-                logInstance.trackExit("DatabaseGeneric.deleteSQLPropertyIdentityDB", _OwnerId)
+                logInstance.trackExit("DatabaseGeneric.deleteSQLPropertyIdentityDB", forceOwner)
             End Try
         End Function
 
@@ -339,12 +367,16 @@ Namespace AreaCommon.Database
         ''' <param name="id"></param>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        Private Function insertSQLPropertyIdentityDB(ByVal id As DBPropertyID, ByVal value As String) As Boolean
+        Private Function insertSQLPropertyIdentityDB(ByVal id As DBPropertyID, ByVal value As String, Optional ByVal forceOwner As String = "") As Boolean
+            If (forceOwner.Length = 0) Then
+                forceOwner = _OwnerId
+            End If
+
             Try
                 If _Initialized Then
                     Dim sql As String = ""
 
-                    logInstance.trackEnter("DatabaseGeneric.insertSQLPropertyIdentityDB", _OwnerId)
+                    logInstance.trackEnter("DatabaseGeneric.insertSQLPropertyIdentityDB", forceOwner)
 
                     sql += "INSERT INTO dbIdentity "
                     sql += " (property_id, value) "
@@ -356,11 +388,11 @@ Namespace AreaCommon.Database
                     Return False
                 End If
             Catch ex As Exception
-                logInstance.trackException("DatabaseGeneric.insertSQLPropertyIdentityDB", _OwnerId, ex.Message)
+                logInstance.trackException("DatabaseGeneric.insertSQLPropertyIdentityDB", forceOwner, ex.Message)
 
                 Return False
             Finally
-                logInstance.trackExit("DatabaseGeneric.insertSQLPropertyIdentityDB", _OwnerId)
+                logInstance.trackExit("DatabaseGeneric.insertSQLPropertyIdentityDB", forceOwner)
             End Try
         End Function
 
@@ -368,11 +400,15 @@ Namespace AreaCommon.Database
         ''' This method provide to create an identity db table
         ''' </summary>
         ''' <returns></returns>
-        Private Function createIdentityDBTable() As Boolean
+        Private Function createIdentityDBTable(Optional ByVal forceOwner As String = "") As Boolean
+            If (forceOwner.Length = 0) Then
+                forceOwner = _OwnerId
+            End If
+
             Try
                 Dim sql As String = ""
 
-                logInstance.trackEnter("DatabaseGeneric.createIdentityDBTable", _OwnerId)
+                logInstance.trackEnter("DatabaseGeneric.createIdentityDBTable", forceOwner)
 
                 sql += "CREATE TABLE dbIdentity "
                 sql += " (property_id INTEGER PRIMARY KEY, "
@@ -381,11 +417,11 @@ Namespace AreaCommon.Database
 
                 Return executeDataTable(sql)
             Catch ex As Exception
-                logInstance.trackException("DatabaseGeneric.selectResultDataTable", _OwnerId, ex.Message)
+                logInstance.trackException("DatabaseGeneric.selectResultDataTable", forceOwner, ex.Message)
 
                 Return False
             Finally
-                logInstance.trackExit("DatabaseGeneric.createIdentityDBTable", _OwnerId)
+                logInstance.trackExit("DatabaseGeneric.createIdentityDBTable", forceOwner)
             End Try
         End Function
 
@@ -442,7 +478,7 @@ Namespace AreaCommon.Database
             Try
                 Dim dbFileName As String = IO.Path.Combine(path, fileName)
 
-                _OwnerId = Guid.NewGuid.ToString()
+                _OwnerId = $"{nameDB} {Guid.NewGuid.ToString()}"
 
                 logInstance.trackEnter("DatabaseGeneric.init", _OwnerId)
 
@@ -491,15 +527,19 @@ Namespace AreaCommon.Database
         ''' </summary>
         ''' <param name="tableName"></param>
         ''' <returns></returns>
-        Public Function existTable(ByVal tableName As String) As Boolean
+        Public Function existTable(ByVal tableName As String, Optional ByVal forceOwner As String = "") As Boolean
             If Not _Initialized Then Return False
+
+            If (forceOwner.Length = 0) Then
+                forceOwner = _OwnerId
+            End If
 
             Try
                 Dim sql As String
                 Dim connectionDB As SQLiteConnection
                 Dim result As Object
 
-                logInstance.trackEnter("DatabaseGeneric.existTable", _OwnerId)
+                logInstance.trackEnter("DatabaseGeneric.existTable", forceOwner)
 
                 sql = $"SELECT name FROM sqlite_master WHERE type='table' AND name='{tableName}'"
 
@@ -507,7 +547,7 @@ Namespace AreaCommon.Database
 
                 connectionDB.Open()
 
-                logInstance.track("DatabaseGeneric.existTable", _OwnerId, $"DB Open")
+                logInstance.track("DatabaseGeneric.existTable", forceOwner, $"DB Open")
 
                 result = selectResultDataTable(sql)
 
@@ -517,6 +557,8 @@ Namespace AreaCommon.Database
                     Return False
                 End If
             Catch ex As Exception
+                logInstance.trackException("DatabaseGeneric.existTable", forceOwner, ex.Message)
+
                 Return False
             End Try
         End Function

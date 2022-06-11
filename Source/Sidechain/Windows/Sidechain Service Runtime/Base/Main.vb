@@ -29,10 +29,6 @@ Namespace AreaCommon.Startup
             End Try
         End Sub
 
-        Public Sub manageShutDown()
-
-        End Sub
-
     End Module
 
 End Namespace

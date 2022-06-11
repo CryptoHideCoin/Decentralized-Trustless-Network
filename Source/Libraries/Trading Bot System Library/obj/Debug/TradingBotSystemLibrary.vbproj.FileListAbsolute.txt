@@ -1,0 +1,44 @@
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\bin\Debug\TradingBotSystemLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\bin\Debug\TradingBotSystemLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\bin\Debug\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\bin\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\bin\Debug\System.Data.SQLite.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\bin\Debug\CHCDataAccess.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\bin\Debug\System.Data.SQLite.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\obj\Debug\TradingBotSystemLibrary.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\obj\Debug\TradingBotSystemLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\obj\Debug\TradingBotSystemLibrary.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\obj\Debug\TradingBotSystemLibrary.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\obj\Debug\TradingBotSystemLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot Library\obj\Debug\TradingBotSystemLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\obj\Debug\TradingBotSystemLibrary.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\obj\Debug\TradingBotSystemLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\obj\Debug\TradingBotSystemLibrary.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\obj\Debug\TradingBotSystemLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\obj\Debug\TradingBotSystemLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\TradingBotSystemLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\TradingBotSystemLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\System.Web.Http.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\TradingBotSystemModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\System.Data.SQLite.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\TradingBotSystemModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\TradingBotSystemModelsLibrary.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCDataAccess.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\System.Web.Http.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\System.Data.SQLite.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\obj\Debug\TradingBotSystemLibrary.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCSidechainServiceLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCCommonLibrary.pdb

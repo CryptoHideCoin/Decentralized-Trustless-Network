@@ -22,10 +22,10 @@ Namespace AreaEngine.Log
         Private Property _BootstrapMode As Boolean = True
         Private Property _Cache As New TrackCacheEngine
 
-
         Public WithEvents settings As New TrackConfiguration
         Public Property registryService As Registry.RegistryEngine
         Public Property apiService As AreaEngine.CounterAPICacheEngine
+        Public Property consoleObjectWriter As Object
 
 
         ''' <summary>
@@ -58,6 +58,13 @@ Namespace AreaEngine.Log
         ''' <param name="message"></param>
         ''' <returns></returns>
         <DebuggerHiddenAttribute()> Public Function trackIntoConsole(Optional ByVal message As String = "") As Boolean
+            If Not IsNothing(consoleObjectWriter) Then
+                Try
+                    consoleObjectWriter.write(ConsoleColor.Gray, message, True)
+                Catch ex As Exception
+                End Try
+            End If
+
             Return addNewDataCache(ActionEnumeration.printIntoConsole, "", message)
         End Function
 
@@ -95,6 +102,13 @@ Namespace AreaEngine.Log
         ''' <param name="errorMessage"></param>
         ''' <returns></returns>
         <DebuggerHiddenAttribute()> Public Function trackException(ByVal completeName As String, ByVal owner As String, ByVal errorMessage As String) As Boolean
+            If Not IsNothing(consoleObjectWriter) Then
+                Try
+                    consoleObjectWriter.write(ConsoleColor.Red, $"Error: {errorMessage} during: {completeName} owner: {owner}", True)
+                Catch ex As Exception
+                End Try
+            End If
+
             If addNewDataCache(ActionEnumeration.exception, owner, errorMessage, completeName) Then
                 If Not IsNothing(registryService) Then
                     Return registryService.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.applicationError, errorMessage, completeName)

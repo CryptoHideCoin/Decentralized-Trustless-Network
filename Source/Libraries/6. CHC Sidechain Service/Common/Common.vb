@@ -22,7 +22,7 @@ Namespace AreaCommon
         Public Shared Property securityKey As String = ""
         Public Shared Property securityTokenSwitchOnService As String = ""
 
-        Friend Shared Property updateLastGetServiceInformation As Double = 0
+        Public Shared Property updateLastGetServiceInformation As Double = 0
 
     End Class
 

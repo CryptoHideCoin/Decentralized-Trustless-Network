@@ -9,7 +9,6 @@ Option Explicit On
 ' ****************************************
 
 
-Imports CHCCommonLibrary.AreaEngine.DataFileManagement.XML
 
 
 
@@ -21,16 +20,6 @@ Namespace AreaSystem
     ''' This class manage a Virtual Path of a Crypto Hide Coin project
     ''' </summary>
     Public Class VirtualPathEngine
-
-        ''' <summary>
-        ''' This enumeration specify module of a system
-        ''' </summary>
-        Public Enum EnumSystemType
-            admin
-            loader
-            maintenance
-            runTime
-        End Enum
 
         ''' <summary>
         ''' This class contain the specific path of all element of the system path
@@ -99,20 +88,14 @@ Namespace AreaSystem
 
         End Class
 
-
         Private Const keyStoreFolderName As String = "KeyStore"
         Private Const settingsFolderName As String = "Settings"
         Private Const systemFolderName As String = "System"
         Private Const workFolderName As String = "Sidechains"
-        Private Const adminFolderName As String = "Admin"
-        Private Const runTimeFolderName As String = "RunTime"
-        Private Const maintenanceFolderName As String = "Maintenance"
-        Private Const loaderFolderName As String = "Loader"
         Private Const countersFolderName As String = "Counters"
         Private Const eventsFolderName As String = "Events"
         Private Const logsFolderName As String = "Logs"
         Private Const profileFolderName As String = "PerformanceProfile"
-        Private Const chainFolderName As String = "Chain-"
         Private Const ledgerName As String = "Ledger"
         Private Const requestsName As String = "Requests"
         Private Const messagesName As String = "Messages"
@@ -126,10 +109,6 @@ Namespace AreaSystem
         Private Const trashedName As String = "Trashed"
         Private Const temporallyName As String = "Temp"
 
-        Private Const defaultAdminServiceSettings As String = "AdminService.Settings"
-        Private Const defaultRunTimeServiceSettings As String = "RunTimeService.Settings"
-        Private Const defaultLoaderServiceSettings As String = "LoaderService.Settings"
-
         Public Property settingFileName As String = ""
         Public Property activeChain As String = ""
 
@@ -138,6 +117,7 @@ Namespace AreaSystem
         Public Property system As New SystemPath
         Public Property settings As String = ""
         Public Property workData As New SidechainWorkPath
+        Public Property instanceId As String = ""
 
 
         ''' <summary>
@@ -230,63 +210,63 @@ Namespace AreaSystem
         ''' </summary>
         ''' <returns></returns>
         <DebuggerHiddenAttribute()> Public Function searchDefinePath() As String
-                Dim found As Boolean = False
-                Dim path As String = ""
+            Dim found As Boolean = False
+            Dim path As String = ""
 
-                Try
-                    found = testPath(found, path, Application.StartupPath, True)
-                    found = testPath(found, path, Application.LocalUserAppDataPath, True)
-                    found = testPath(found, path, Application.UserAppDataPath, True)
+            Try
+                found = testPath(found, path, Application.StartupPath, True)
+                found = testPath(found, path, Application.LocalUserAppDataPath, True)
+                found = testPath(found, path, Application.UserAppDataPath, True)
 
-                    If found Then
-                        Return path
-                    End If
-                Catch ex As Exception
-                End Try
+                If found Then
+                    Return path
+                End If
+            Catch ex As Exception
+            End Try
 
-                Return ""
-            End Function
+            Return ""
+        End Function
 
         ''' <summary>
         ''' This method search and read a define path
         ''' </summary>
         ''' <returns></returns>
         <DebuggerHiddenAttribute()> Public Function readDefinePath() As String
-                Try
-                    Dim path As String = searchDefinePath()
+            Try
+                Dim path As String = searchDefinePath()
 
-                    If (path.Length > 0) Then
-                        Return IO.File.ReadAllText(IO.Path.Combine(searchDefinePath, "define.path"))
-                    End If
-                Catch ex As Exception
-                End Try
+                If (path.Length > 0) Then
+                    Return IO.File.ReadAllText(IO.Path.Combine(searchDefinePath, "define.path"))
+                End If
+            Catch ex As Exception
+            End Try
 
-                Return ""
-            End Function
+            Return ""
+        End Function
 
         ''' <summary>
         ''' This method provide to update root path
         ''' </summary>
         ''' <param name="dataPath"></param>
         <DebuggerHiddenAttribute()> Public Sub updateRootPath(ByVal dataPath As String)
-                Dim found As Boolean = False
-                Dim path As String = ""
+            Dim found As Boolean = False
+            Dim path As String = ""
 
-                Try
-                    found = testPath(found, path, Application.StartupPath, True)
-                    found = testPath(found, path, Application.LocalUserAppDataPath, True)
-                    found = testPath(found, path, Application.UserAppDataPath, True)
-                    found = testPath(found, path, Application.StartupPath)
-                    found = testPath(found, path, Application.LocalUserAppDataPath)
-                    found = testPath(found, path, Application.UserAppDataPath)
+            Try
+                found = testPath(found, path, Application.StartupPath, True)
+                found = testPath(found, path, Application.LocalUserAppDataPath, True)
+                found = testPath(found, path, Application.UserAppDataPath, True)
+                found = testPath(found, path, Application.StartupPath)
+                found = testPath(found, path, Application.LocalUserAppDataPath)
+                found = testPath(found, path, Application.UserAppDataPath)
 
-                    If found Then
-                        IO.File.WriteAllText(IO.Path.Combine(path, "define.path"), dataPath)
-                    End If
+                If found Then
+                    IO.File.WriteAllText(IO.Path.Combine(path, "define.path"), dataPath)
+                End If
 
-                Catch ex As Exception
-                End Try
-            End Sub
+            Catch ex As Exception
+            End Try
+        End Sub
 
         ''' <summary>
         ''' This method provide to initialize the engine
@@ -294,27 +274,17 @@ Namespace AreaSystem
         ''' <param name="[type]"></param>
         ''' <param name="sideChainName"></param>
         ''' <returns></returns>
-        Public Function init(ByVal [type] As EnumSystemType, Optional ByVal sideChainName As String = "Primary") As Boolean
+        Public Function init(ByVal sideChainName As String) As Boolean
             Try
                 If (directoryData.Trim.Length > 0) Then
                     Dim folderName As String
+                    Dim tempFolder As String
 
                     activeChain = sideChainName
 
-                    Select Case type
-                        Case EnumSystemType.admin
-                            settingFileName = defaultAdminServiceSettings
-                            folderName = adminFolderName
-                        Case EnumSystemType.runTime
-                            settingFileName = sideChainName & "-" & defaultRunTimeServiceSettings
-                            folderName = runTimeFolderName
-                        Case EnumSystemType.maintenance
-                            settingFileName = defaultLoaderServiceSettings
-                            folderName = maintenanceFolderName
-                        Case Else
-                            settingFileName = defaultLoaderServiceSettings
-                            folderName = loaderFolderName
-                    End Select
+                    instanceId = Guid.NewGuid.ToString
+
+                    folderName = sideChainName
 
                     keyStore = manageSinglePath(directoryData, keyStoreFolderName)
 
@@ -331,14 +301,25 @@ Namespace AreaSystem
 
                     With system
                         .path = manageSinglePath(directoryData, systemFolderName)
-                        .counters = manageSinglePath(.path, countersFolderName)
-                        .events = manageSinglePath(.path, eventsFolderName)
-                        .logs = manageSinglePath(.path, logsFolderName)
-                        .performanceProfile = manageSinglePath(.path, profileFolderName)
+
+                        tempFolder = manageSinglePath(.path, countersFolderName)
+                        tempFolder = manageSinglePath(tempFolder, sideChainName)
+                        .counters = manageSinglePath(tempFolder, instanceId)
+
+                        tempFolder = manageSinglePath(.path, eventsFolderName)
+                        .events = manageSinglePath(tempFolder, sideChainName)
+
+                        tempFolder = manageSinglePath(.path, logsFolderName)
+                        tempFolder = manageSinglePath(tempFolder, sideChainName)
+                        .logs = manageSinglePath(tempFolder, instanceId)
+
+                        tempFolder = manageSinglePath(.path, profileFolderName)
+                        tempFolder = manageSinglePath(tempFolder, sideChainName)
+                        .performanceProfile = manageSinglePath(tempFolder, instanceId)
                     End With
 
                     With workData
-                        folderName = manageSinglePath(directoryData, workFolderName, chainFolderName & sideChainName)
+                        folderName = manageSinglePath(directoryData, workFolderName, sideChainName)
 
                         .path = folderName
 
