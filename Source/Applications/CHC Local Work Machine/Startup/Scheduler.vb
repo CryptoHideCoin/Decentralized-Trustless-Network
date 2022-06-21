@@ -5,7 +5,7 @@ Imports CHCModelsLibrary.AreaModel.Information
 Imports CHCModelsLibrary.AreaModel.Network.Response
 Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCProtocolLibrary.AreaWallet.Support
-Imports CHCProtocolLibrary.AreaEngine.Keys
+Imports CHCCommonLibrary.AreaEngine.Keys
 
 
 
@@ -20,12 +20,12 @@ Namespace AreaCommon.Startup
         ''' </summary>
         ''' <param name="uuid"></param>
         ''' <returns></returns>
-        Private Function readWalletAddress(ByVal uuid As String, ByVal pathKeyStore As String) As KeysEngine.KeyPair
+        Private Function readWalletAddress(ByVal uuid As String, ByVal pathKeyStore As String) As KeyPair
             Try
                 Dim engine As New WalletAddressDataEngine
                 Dim dataLoaded As Boolean = False
                 Dim securityValue As String = ""
-                Dim result As New KeysEngine.KeyPair
+                Dim result As New KeyPair
 
                 engine.fileName = IO.Path.Combine(pathKeyStore, uuid, "walletAddress.private")
 
@@ -36,11 +36,11 @@ Namespace AreaCommon.Startup
                 If Not engine.load() Then
                     Console.WriteLine("Error during load wallet")
 
-                    Return New KeysEngine.KeyPair
+                    Return New KeyPair
                 Else
                     With WalletAddressEngine.createNew(engine.data.privateRAWKey, True).raw
-                        result.public = .publicKey
-                        result.private = .privateKey
+                        result.public = .public
+                        result.private = .private
                     End With
 
                     Return result
@@ -48,7 +48,7 @@ Namespace AreaCommon.Startup
             Catch ex As Exception
                 Console.WriteLine("Error during read wallet address:" & ex.Message)
 
-                Return New KeysEngine.KeyPair
+                Return New KeyPair
             End Try
         End Function
 
@@ -56,7 +56,7 @@ Namespace AreaCommon.Startup
         ''' This method provide to Read Admin Keystore
         ''' </summary>
         ''' <returns></returns>
-        Public Function readAdminKeyStore(ByVal data As GeneralModel.ServiceData) As KeysEngine.KeyPair
+        Public Function readAdminKeyStore(ByVal data As GeneralModel.ServiceData) As KeyPair
             Try
                 Dim uuidWallet As String = ""
                 Dim pathKeyStore As String = CHCSidechainServiceLibrary.AreaCommon.Main.environment.paths.keyStore
@@ -80,7 +80,7 @@ Namespace AreaCommon.Startup
                         Catch ex As Exception
                             Console.WriteLine("Error during Load data keyStore :" & ex.Message)
 
-                            Return New KeysEngine.KeyPair
+                            Return New KeyPair
                         End Try
                     End If
                 End If
@@ -90,7 +90,7 @@ Namespace AreaCommon.Startup
                 Console.WriteLine("Error during Load data information:" & ex.Message)
             End Try
 
-            Return New KeysEngine.KeyPair
+            Return New KeyPair
         End Function
 
         ''' <summary>
@@ -209,7 +209,7 @@ Namespace AreaCommon.Startup
                         Next
 
                         If Not noAdd Then
-                            response = CHCSidechainServiceLibrary.AreaChain.Runtime.Models.EnvironmentModel.readSettings(item.service, True)
+                            response = CHCSidechainServiceLibrary.AreaChain.Runtime.Models.EnvironmentModel.readSettings(item.service)
 
                             If response.successful Then
                                 If testService(response.settings) Then

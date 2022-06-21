@@ -263,9 +263,9 @@ Public Class KeyPair
             End If
             If validatePrivateKeyFormat() Then
                 With CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createNew(privateKeyText.Text)
-                    RaiseEvent SynchroOtherKeyPair(.raw.publicKey, .raw.privateKey)
+                    RaiseEvent SynchroOtherKeyPair(.raw.public, .raw.private)
 
-                    publicKeyText.Text = .official.publicKey
+                    publicKeyText.Text = .official.public
                 End With
 
                 inError = False

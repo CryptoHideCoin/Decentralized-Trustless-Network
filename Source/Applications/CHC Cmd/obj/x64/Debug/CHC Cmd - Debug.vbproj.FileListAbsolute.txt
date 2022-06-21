@@ -1,0 +1,5 @@
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\x64\Debug\CHC Cmd - Debug.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\x64\Debug\CHCCmd.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\x64\Debug\CHC Cmd - Debug.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\x64\Debug\CHCCmd.exe
+E:\CryptoHideCoinDTN\Source\Applications\CHC Cmd\obj\x64\Debug\CHCCmd.pdb

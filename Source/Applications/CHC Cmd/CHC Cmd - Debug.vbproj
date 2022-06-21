@@ -95,18 +95,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(Platform)' == 'x86'">
-    <Reference Include="CHCModelsLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCProtocolLibrary">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="CHCSidechainServiceLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x86\CHCSidechainServiceLibrary.dll</HintPath>
-    </Reference>
-  </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'x64'">
     <Reference Include="CHCModelsLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
@@ -132,6 +120,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="CHCCommonLibrary, Version=1.23.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCModelsLibrary, Version=0.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -154,52 +150,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\CommandExecutor.vb" />
-    <Compile Include="Application\Common.vb" />
-    <Compile Include="Command\CommandBatch.vb" />
-    <Compile Include="Command\CommandBuildPath.vb" />
-    <Compile Include="Command\CommandChainServiceSettings.vb" />
-    <Compile Include="Command\CommandCounter.vb" />
-    <Compile Include="Command\CommandCreateNewEnvironment.vb" />
-    <Compile Include="Command\CommandCurrentTime.vb" />
-    <Compile Include="Command\CommandGetApplicationsPath.vb" />
-    <Compile Include="Command\CommandGetCurrentEnvironment.vb" />
-    <Compile Include="Command\CommandGetDefaultParameters.vb" />
-    <Compile Include="Command\CommandGetEnvironmentList.vb" />
-    <Compile Include="Command\CommandGetEnvironmentRepository.vb" />
-    <Compile Include="Command\CommandGetPerformanceProfile.vb" />
-    <Compile Include="Command\CommandLog.vb" />
-    <Compile Include="Command\CommandHelp.vb" />
-    <Compile Include="Command\CommandIf.vb" />
-    <Compile Include="Command\CommandInfo.vb" />
-    <Compile Include="Command\CommandIPAddress.vb" />
-    <Compile Include="Command\CommandNote.vb" />
-    <Compile Include="Command\CommandPause.vb" />
-    <Compile Include="Command\CommandRegistry.vb" />
-    <Compile Include="Command\CommandSetDefaultParameter.vb" />
-    <Compile Include="Command\CommandShowJournal.vb" />
-    <Compile Include="Command\CommandStartPerformanceProfile.vb" />
-    <Compile Include="Command\CommandStatusServe.vb" />
-    <Compile Include="Command\CommandTestRAWServe.vb" />
-    <Compile Include="Command\CommandWait.vb" />
-    <Compile Include="Command\CommandRelease.vb" />
-    <Compile Include="Command\CommandRemoveEnvironment.vb" />
-    <Compile Include="Command\CommandSetCurrentEnvironment.vb" />
-    <Compile Include="Command\CommandSetEnvironmentRepository.vb" />
-    <Compile Include="Command\CommandShowLog.vb" />
-    <Compile Include="Command\CommandStartServe.vb" />
-    <Compile Include="Command\CommandStopServe.vb" />
-    <Compile Include="Command\CommandTestServe.vb" />
-    <Compile Include="Command\CommandUpdateSystemDate.vb" />
     <Compile Include="Application\CommandProcessor.vb" />
-    <Compile Include="Command\CommandWrite.vb" />
-    <Compile Include="Engines\ApplicationPaths.vb" />
-    <Compile Include="Engines\DefaultParameters.vb" />
-    <Compile Include="Engines\EnvironmentRepository.vb" />
-    <Compile Include="Engines\Environments.vb" />
     <Compile Include="Engines\IntegrityApplication.vb" />
-    <Compile Include="Engines\Utils.vb" />
-    <Compile Include="Models\Models.vb" />
     <Compile Include="Startup\Startup.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -255,9 +207,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\2. CHC Common\CHC Common - Debug.vbproj">
-      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
-      <Name>CHC Common - Debug</Name>
+    <ProjectReference Include="..\..\Libraries\8. CHC Command Support\CHC Commandline Support - DEBUG.vbproj">
+      <Project>{1d0ec78c-1ccb-47b3-a88f-c524618185b8}</Project>
+      <Name>CHC Commandline Support - DEBUG</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

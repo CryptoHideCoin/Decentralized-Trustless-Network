@@ -3,7 +3,7 @@ Option Explicit On
 
 Imports CHCBasicCryptographyLibrary.AreaEngine
 Imports CHCProtocolLibrary.AreaWallet.Support
-Imports CHCProtocolLibrary.AreaEngine.Keys.KeysEngine
+Imports CHCCommonLibrary.AreaEngine.Keys
 Imports CHCCommonLibrary.AreaEngine.Encryption
 
 

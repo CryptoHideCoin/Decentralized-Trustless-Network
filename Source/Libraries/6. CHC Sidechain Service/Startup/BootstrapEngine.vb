@@ -42,7 +42,7 @@ Namespace AreaCommon.Startup
 
                     Return ""
                 Else
-                    Return CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createNew(engine.data.privateRAWKey, True).official.publicKey
+                    Return CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.createNew(engine.data.privateRAWKey, True).official.public
                 End If
 
                 environment.log.track("StartUp.readWalletAddress", "Main", "Completed")

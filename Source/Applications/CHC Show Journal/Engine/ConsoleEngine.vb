@@ -3,6 +3,7 @@ Option Explicit On
 
 Imports CHCCommonLibrary.AreaEngine.CommandLine
 Imports CHCCommonLibrary.AreaEngine.Communication
+Imports CHCCommonLibrary.AreaEngine.Keys
 Imports CHCProtocolLibrary.AreaWallet.Support
 Imports CHCProtocolLibrary.AreaEngine.Keys
 Imports CHCProtocolLibrary.AreaEngine.Settings
@@ -195,12 +196,12 @@ Namespace AreaCommon
         ''' </summary>
         ''' <param name="uuid"></param>
         ''' <returns></returns>
-        Private Function readWalletAddress(ByVal uuid As String, ByVal pathKeyStore As String) As KeysEngine.KeyPair
+        Private Function readWalletAddress(ByVal uuid As String, ByVal pathKeyStore As String) As KeyPair
             Try
                 Dim engine As New WalletAddressDataEngine
                 Dim dataLoaded As Boolean = False
                 Dim securityValue As String = ""
-                Dim result As New KeysEngine.KeyPair
+                Dim result As New KeyPair
 
                 engine.fileName = IO.Path.Combine(pathKeyStore, uuid, "walletAddress.private")
 
@@ -211,11 +212,11 @@ Namespace AreaCommon
                 If Not engine.load() Then
                     Console.WriteLine("Error during load wallet")
 
-                    Return New KeysEngine.KeyPair
+                    Return New KeyPair
                 Else
                     With WalletAddressEngine.createNew(engine.data.privateRAWKey, True).raw
-                        result.public = .publicKey
-                        result.private = .privateKey
+                        result.public = .public
+                        result.private = .private
                     End With
 
                     Return result
@@ -223,7 +224,7 @@ Namespace AreaCommon
             Catch ex As Exception
                 Console.WriteLine("Error during read wallet address:" & ex.Message)
 
-                Return New KeysEngine.KeyPair
+                Return New KeyPair
             End Try
         End Function
 

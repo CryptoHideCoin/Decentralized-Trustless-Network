@@ -23,7 +23,7 @@ Namespace AreaCommon
         ''' <returns></returns>
         Public Shared Function execute(ByVal completeFileName As String) As Boolean
             Try
-                Dim service As New CHCProtocolLibrary.AreaEngine.PerformanceProfile.Service.PerformanceProfileService
+                Dim service As New CHCCommonLibrary.AreaEngine.PerformanceProfile.Service.PerformanceProfileService
                 Dim singleLine As String = ""
                 Dim numElements As Integer = 0
 

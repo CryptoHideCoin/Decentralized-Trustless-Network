@@ -1,0 +1,21 @@
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\Debug\CHC Commandline Support.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\Debug\CHCCommandlineSupport.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\Debug\CHC Commandline Support.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCCommandlineSupport.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCCommandlineSupport.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\System.Web.Http.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\System.Data.SQLite.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCDataAccess.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\System.Data.SQLite.xml
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\Debug\CHC Commandline Support.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\Debug\CHCCommandlineSupport.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\Debug\CHCCommandlineSupport.pdb

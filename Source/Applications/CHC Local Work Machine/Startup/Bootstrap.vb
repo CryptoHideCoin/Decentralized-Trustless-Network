@@ -44,7 +44,7 @@ Namespace AreaCommon.Startup
                     End If
                 End If
                 If proceed Then
-                    If Not _Bootstrap.managePath(problemDescription) Then
+                    If Not _Bootstrap.managePath(CUSTOM_ChainServiceName, problemDescription) Then
                         MessageBox.Show(problemDescription, "Notify problem", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                         proceed = False

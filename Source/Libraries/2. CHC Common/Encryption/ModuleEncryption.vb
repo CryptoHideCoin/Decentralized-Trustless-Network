@@ -26,8 +26,8 @@ Namespace AreaEngine.Encryption
         ''' <param name="key"></param>
         ''' <returns></returns>
         <DebuggerHiddenAttribute()> Public Shared Function encrypt(ByVal content As String, ByVal key As String) As String
-            Dim aes As New Security.Cryptography.RijndaelManaged
-            Dim hash_AES As New Security.Cryptography.MD5CryptoServiceProvider
+            Dim aes As New System.Security.Cryptography.RijndaelManaged
+            Dim hash_AES As New System.Security.Cryptography.MD5CryptoServiceProvider
             Dim encrypted As String = ""
 
             Try
@@ -38,9 +38,9 @@ Namespace AreaEngine.Encryption
                 Array.Copy(temp, 0, hash, 15, 16)
 
                 aes.Key = hash
-                aes.Mode = Security.Cryptography.CipherMode.ECB
+                aes.Mode = System.Security.Cryptography.CipherMode.ECB
 
-                Dim DESEncrypter As Security.Cryptography.ICryptoTransform = aes.CreateEncryptor
+                Dim DESEncrypter As System.Security.Cryptography.ICryptoTransform = aes.CreateEncryptor
                 Dim Buffer As Byte() = Text.Encoding.ASCII.GetBytes(content)
 
                 encrypted = Convert.ToBase64String(DESEncrypter.TransformFinalBlock(Buffer, 0, Buffer.Length))
@@ -57,8 +57,8 @@ Namespace AreaEngine.Encryption
         ''' <param name="key"></param>
         ''' <returns></returns>
         <DebuggerHiddenAttribute()> Public Shared Function decrypt(ByVal content As String, ByVal key As String) As String
-            Dim AES As New Security.Cryptography.RijndaelManaged
-            Dim Hash_AES As New Security.Cryptography.MD5CryptoServiceProvider
+            Dim AES As New System.Security.Cryptography.RijndaelManaged
+            Dim Hash_AES As New System.Security.Cryptography.MD5CryptoServiceProvider
             Dim decrypted As String = ""
 
             Try
@@ -69,7 +69,7 @@ Namespace AreaEngine.Encryption
                 Array.Copy(temp, 0, hash, 15, 16)
 
                 AES.Key = hash
-                AES.Mode = Security.Cryptography.CipherMode.ECB
+                AES.Mode = System.Security.Cryptography.CipherMode.ECB
 
                 Dim DESDecrypter As System.Security.Cryptography.ICryptoTransform = AES.CreateDecryptor
                 Dim Buffer As Byte() = Convert.FromBase64String(content)

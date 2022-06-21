@@ -271,7 +271,6 @@ Namespace AreaSystem
         ''' <summary>
         ''' This method provide to initialize the engine
         ''' </summary>
-        ''' <param name="[type]"></param>
         ''' <param name="sideChainName"></param>
         ''' <returns></returns>
         Public Function init(ByVal sideChainName As String) As Boolean

@@ -126,6 +126,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminSecurity\AdminToken.vb" />
+    <Compile Include="AdminSecurity\CertificateEngine.vb" />
     <Compile Include="CommandLine\CHCCommandBuilder.vb" />
     <Compile Include="Communication\ProxyWS.vb" />
     <Compile Include="Encryption\SHAInterface.vb" />
@@ -136,6 +138,9 @@
     <Compile Include="Log\Tracker\CHCLogEngine.vb" />
     <Compile Include="Log\Tracker\CHCLogIO.vb" />
     <Compile Include="Log\Simply\CHCLog.vb" />
+    <Compile Include="Parameters\Parameters.vb" />
+    <Compile Include="PerformanceProfile\PerformanceProfileEngine.vb" />
+    <Compile Include="PerformanceProfile\PerformanceProfileService.vb" />
     <Compile Include="Registry\CHCRegistry.vb" />
     <Compile Include="Miscellaneous\CHCCheckSum.vb" />
     <Compile Include="CommandLine\CHCCommandListEngine.vb" />
@@ -160,6 +165,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="UserAccess\KeyPair.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

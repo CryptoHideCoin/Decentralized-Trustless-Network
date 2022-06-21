@@ -1,0 +1,8 @@
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\Release\CHC Commandline Support.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\Release\CHCCommandlineSupport.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\Release\CHC Commandline Support.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Command Support\Standard\CHCCommandlineSupport.dll
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\CHC Command Support\Standard\CHCCommandlineSupport.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\Release\CHC Commandline Support.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\Release\CHCCommandlineSupport.dll
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\Release\CHCCommandlineSupport.pdb

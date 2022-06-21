@@ -4,7 +4,6 @@ Option Explicit On
 Imports CHCModelsLibrary.AreaModel.Administration.Settings
 Imports CHCProtocolLibrary.AreaSystem
 Imports CHCProtocolLibrary.AreaEngine.Keys
-Imports CHCProtocolLibrary.AreaEngine.Security
 Imports CHCCommonLibrary.AreaEngine.Log
 Imports CHCCommonLibrary.AreaEngine.Registry
 
@@ -40,12 +39,12 @@ Namespace AreaChain.Runtime.Models
         Public Property counter As New AreaEngine.CounterEngine
         Public Property registry As New RegistryEngine
         Public Property settings As New SettingsSidechainServiceComplete
-        Public Property performanceProfile As New CHCProtocolLibrary.AreaEngine.PerformanceProfile.Service.PerformanceProfileService
+        Public Property performanceProfile As New CHCCommonLibrary.AreaEngine.PerformanceProfile.Service.PerformanceProfileService
         Public Property localWorkMachineSettings As New SettingsSidechainServiceComplete
         Public Property ipAddress As New IPAddressConfiguration
         Public Property keys As New KeysEngine
         Public Property support As New AreaCommon.Engine.SupportEngine
-        Public Property adminToken As New AdminTokenEngine
+        Public Property adminToken As New CHCCommonLibrary.AreaEngine.Security.AdminTokenEngine
         Public Property iAmLocalWorkMachine As Boolean = False
 
         ''' TODO: Complete this class

@@ -1,4 +1,4 @@
-Option Compare Text
+﻿Option Compare Text
 Option Explicit On
 
 ' ****************************************
@@ -25,7 +25,7 @@ Namespace AreaWallet.Support
     ''' </summary>
     Public Class WalletAddressEngine
 
-        Private Const charList As String = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/*-+!�$%/()=-_#[],.;:\"
+        Private Const charList As String = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz/*-+!£$%/()=-_#[],.;:\"
 
         Public Shared ReadOnly Property baseAddr As String = "CWA:"
         Public Shared ReadOnly Property closeAddr As String = "//"
@@ -70,8 +70,7 @@ Namespace AreaWallet.Support
         ''' </summary>
         Public Class SingleKeyPair
 
-            Public Property publicKey As String = ""
-            Public Property privateKey As String = ""
+            Inherits CHCCommonLibrary.AreaEngine.Keys.KeyPair
 
 
             ''' <summary>
@@ -79,7 +78,7 @@ Namespace AreaWallet.Support
             ''' </summary>
             <DebuggerHiddenAttribute()> Public Sub generatePublicKey()
                 Try
-                    publicKey = Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(privateKey)
+                    Me.[public] = Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(Me.private)
                 Catch ex As Exception
                     Throw New Exception("SingleWallet.generatePublicAddress():" & ex.Message, ex)
                 End Try
@@ -91,8 +90,8 @@ Namespace AreaWallet.Support
             ''' <param name="publicValue"></param>
             <DebuggerHiddenAttribute()> Public Sub decoreDataAddress(ByVal publicValue As String)
                 Try
-                    publicKey = baseAddr & publicValue & CheckSum.create(publicValue) & closeAddr
-                    privateKey = basePvt & privateKey & CheckSum.create(privateKey) & closeBasePvt
+                    Me.[public] = baseAddr & publicValue & CheckSum.create(Me.[public]) & closeAddr
+                    Me.private = basePvt & Me.private & CheckSum.create(Me.private) & closeBasePvt
                 Catch ex As Exception
                     Throw New Exception("SingleWallet.decoreDataWallet():" & ex.Message, ex)
                 End Try
@@ -216,7 +215,7 @@ Namespace AreaWallet.Support
             Try
                 Dim index As Integer = 0
 
-                result.official.privateKey = privateKeyValue
+                result.official.private = privateKeyValue
 
                 If (privateKeyValue.Length <= (basePvt & closeBasePvt).Length) Then
                     Return result
@@ -229,14 +228,14 @@ Namespace AreaWallet.Support
                 For Each singleChar In privateKeyValue
                     If charAllowed(singleChar) Then
                         index = charList.IndexOf(singleChar)
-                        result.raw.privateKey += Strings.Right("0" & index.ToString.Trim(), 2)
+                        result.raw.private += Strings.Right("0" & index.ToString.Trim(), 2)
                     End If
                 Next
 
-                result.official.privateKey = privateKeyValue
+                result.official.private = privateKeyValue
 
-                result.raw.publicKey = Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(result.raw.privateKey)
-                result.official.decoreDataAddress(result.raw.publicKey)
+                result.raw.public = Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(result.raw.private)
+                result.official.decoreDataAddress(result.raw.public)
             Catch ex As Exception
                 Throw New Exception("WalletComplete.createNew():" & ex.Message, ex)
             End Try
@@ -276,13 +275,13 @@ Namespace AreaWallet.Support
 
                     index = rndChar.Next(0, 62)
 
-                    result.raw.privateKey += Right("0" & index.ToString.Trim(), 2)
-                    result.official.privateKey += charList.Substring(index, 1)
+                    result.raw.private += Right("0" & index.ToString.Trim(), 2)
+                    result.official.private += charList.Substring(index, 1)
 
                 Next
 
                 result.raw.generatePublicKey()
-                result.official.decoreDataAddress(result.raw.publicKey)
+                result.official.decoreDataAddress(result.raw.public)
 
             Catch ex As Exception
                 Throw New Exception("WalletComplete.createNew():" & ex.Message, ex)
@@ -301,12 +300,12 @@ Namespace AreaWallet.Support
             Dim result As New KeyPairComplete
             Try
                 If fromRaw Then
-                    result.raw.privateKey = privateKeyValue
-                    result.official.privateKey = generatePrivateKey(privateKeyValue)
+                    result.raw.private = privateKeyValue
+                    result.official.private = generatePrivateKey(privateKeyValue)
 
-                    result.raw.publicKey = Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(result.raw.privateKey)
+                    result.raw.public = Encryption.Base58Signature.getPublicKeyFromPrivateKeyEx(result.raw.private)
 
-                    result.official.decoreDataAddress(result.raw.publicKey)
+                    result.official.decoreDataAddress(result.raw.public)
                 Else
                     result = createNew(privateKeyValue)
                 End If
@@ -329,12 +328,12 @@ Namespace AreaWallet.Support
             Try
                 If fromRaw Then
                     If (forcePublicAddress.Length > 0) Then
-                        result.raw.privateKey = privateKeyValue
-                        result.official.privateKey = generatePrivateKey(privateKeyValue)
+                        result.raw.private = privateKeyValue
+                        result.official.private = generatePrivateKey(privateKeyValue)
 
-                        result.raw.publicKey = forcePublicAddress
+                        result.raw.public = forcePublicAddress
 
-                        result.official.decoreDataAddress(result.raw.publicKey)
+                        result.official.decoreDataAddress(result.raw.public)
                     Else
                         result = createNew(privateKeyValue, True)
                     End If
@@ -380,7 +379,7 @@ Namespace AreaWallet.Support
                     If value.StartsWith(basePvt) And value.EndsWith(closeBasePvt) Then
 
                         If CheckSum.verify(value).checkPositive Then
-                            privateRaw = createNew(value).raw.privateKey
+                            privateRaw = createNew(value).raw.private
                         End If
                     Else
                         privateRaw = value

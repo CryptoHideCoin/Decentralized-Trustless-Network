@@ -92,9 +92,6 @@
     <Reference Include="CHCModelsLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCDataAccess">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Data Access\x86\CHCDataAccess.dll</HintPath>
     </Reference>
@@ -175,7 +172,7 @@
     <Compile Include="Controllers\Admin\Settings\SettingController.vb" />
     <Compile Include="Controllers\Admin\Log\LogStreamController.vb" />
     <Compile Include="Controllers\Admin\Maintenance\CleanLogController.vb" />
-	<Compile Include="Controllers\Admin\Tuning\PerformanceProfileController.vb" />
+    <Compile Include="Controllers\Admin\Tuning\PerformanceProfileController.vb" />
     <Compile Include="Controllers\Service\InformationController.vb" />
     <Compile Include="Controllers\Service\SupportedProtocols.vb" />
     <Compile Include="Controllers\Service\TestController.vb" />
@@ -227,8 +224,14 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-   <ItemGroup>
+  <ItemGroup>
     <Folder Include="Controllers\Admin\Counter\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\3. CHC Protocol\CHC Protocol - Debug.vbproj">
+      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
+      <Name>CHC Protocol - Debug</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

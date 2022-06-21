@@ -17,7 +17,9 @@ Namespace AreaCommon
         ''' </summary>
         ''' <param name="message"></param>
         Sub CloseApplication(ByVal message As String)
+            Console.ForegroundColor = ConsoleColor.Red
             Console.WriteLine("Error: " & message)
+            Console.ReadKey()
 
             End
         End Sub
@@ -28,8 +30,6 @@ Namespace AreaCommon
         Sub Main()
             Try
                 Dim commandManager As New CommandProcessor
-
-                AreaEngine.ParametersEngine.init()
 
                 commandManager.run()
             Catch ex As Exception

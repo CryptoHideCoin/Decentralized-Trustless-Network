@@ -1,0 +1,3 @@
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\x86\Debug\CHC Commandline Support - DEBUG.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\x86\Debug\CHCCommandlineSupport.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\obj\x86\Debug\CHC Commandline Support - DEBUG.vbproj.GenerateResource.cache

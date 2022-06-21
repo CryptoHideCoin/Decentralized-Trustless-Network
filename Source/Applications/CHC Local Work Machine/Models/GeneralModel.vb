@@ -9,7 +9,7 @@ Option Explicit On
 ' ****************************************
 
 Imports CHCModelsLibrary.AreaModel.Administration.Settings
-Imports CHCProtocolLibrary.AreaEngine.Keys
+Imports CHCCommonLibrary.AreaEngine.Keys
 
 
 Namespace AreaCommon.GeneralModel
@@ -19,7 +19,7 @@ Namespace AreaCommon.GeneralModel
     ''' </summary>
     Public Class ServiceData
         Public Property configuration As SettingsSidechainServiceComplete
-        Public Property keys As KeysEngine.KeyPair
+        Public Property keys As KeyPair
         Public Property securityToken As String = ""
         Public Property status As String = ""
         Public Property lastCheckTimeStamp As Double = 0

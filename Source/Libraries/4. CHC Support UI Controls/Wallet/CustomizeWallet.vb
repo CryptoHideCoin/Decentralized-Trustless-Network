@@ -404,13 +404,13 @@ Public Class CustomizeWalletAddress
             With WalletAddressEngine.createNew()
 
                 userKeyPair.noCheck = True
-                userKeyPair.privateKey = .official.privateKey
-                userKeyPair.publicAddress = .official.publicKey
+                userKeyPair.privateKey = .official.private
+                userKeyPair.publicAddress = .official.public
                 userKeyPair.inError = False
 
                 rawKeyPair.noCheck = True
-                rawKeyPair.privateKey = .raw.privateKey
-                rawKeyPair.publicAddress = .raw.publicKey
+                rawKeyPair.privateKey = .raw.private
+                rawKeyPair.publicAddress = .raw.public
 
             End With
 
@@ -433,13 +433,13 @@ Public Class CustomizeWalletAddress
             With WalletAddressEngine.createNew(seedValueTextArea.Text.Replace(" ", "+"), False)
 
                 userKeyPair.noCheck = True
-                userKeyPair.privateKey = .official.privateKey
-                userKeyPair.publicAddress = .official.publicKey
+                userKeyPair.privateKey = .official.private
+                userKeyPair.publicAddress = .official.public
                 userKeyPair.inError = False
 
                 rawKeyPair.noCheck = True
-                rawKeyPair.privateKey = .raw.privateKey
-                rawKeyPair.publicAddress = .raw.publicKey
+                rawKeyPair.privateKey = .raw.private
+                rawKeyPair.publicAddress = .raw.public
 
             End With
 
@@ -636,12 +636,12 @@ Public Class CustomizeWalletAddress
 
                 With WalletAddressEngine.createNew(engine.data.privateRAWKey, True, engine.data.publicRAWAddress)
                     userKeyPair.noCheck = True
-                    userKeyPair.privateKeyText.Text = .official.privateKey
-                    userKeyPair.publicKeyText.Text = .official.publicKey
+                    userKeyPair.privateKeyText.Text = .official.private
+                    userKeyPair.publicKeyText.Text = .official.public
                     userKeyPair.noCheck = False
                     rawKeyPair.noCheck = True
-                    rawKeyPair.privateKeyText.Text = .raw.privateKey
-                    rawKeyPair.publicKeyText.Text = .raw.publicKey
+                    rawKeyPair.privateKeyText.Text = .raw.private
+                    rawKeyPair.publicKeyText.Text = .raw.public
                     rawKeyPair.noCheck = False
                 End With
 

@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1D0EC78C-1CCB-47B3-A88F-C524618185B8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CHCCommandlineSupport</RootNamespace>
+    <AssemblyName>CHCCommandlineSupport</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\Binary\Libraries\Internal\CHC Command Support\Standard\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Text</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\..\Binary\Libraries\Internal\CHC Command Support\x86\</OutputPath>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\..\Binary\Libraries\Internal\CHC Command Support\x86\</OutputPath>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Reference Include="CHCCommonLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCProtocolLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x64\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCSidechainServiceLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x64\CHCSidechainServiceLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <Reference Include="CHCCommonLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCProtocolLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCSidechainServiceLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x64\CHCSidechainServiceLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <Reference Include="CHCCommonLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCProtocolLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\Standard\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCSidechainServiceLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\Standard\CHCSidechainServiceLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CHCCommonLibrary, Version=1.23.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCModelsLibrary, Version=0.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCSidechainServiceLibrary, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\Standard\CHCSidechainServiceLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Command\CommandCreateNewEnvironment.vb" />
+    <Compile Include="Command\CommandBatch.vb" />
+    <Compile Include="Command\CommandBuildPath.vb" />
+    <Compile Include="Command\CommandChainServiceSettings.vb" />
+    <Compile Include="Command\CommandCounter.vb" />
+    <Compile Include="Command\CommandCurrentTime.vb" />
+    <Compile Include="Command\CommandGetApplicationsPath.vb" />
+    <Compile Include="Command\CommandGetCurrentEnvironment.vb" />
+    <Compile Include="Command\CommandGetDefaultParameters.vb" />
+    <Compile Include="Command\CommandGetEnvironmentList.vb" />
+    <Compile Include="Command\CommandGetEnvironmentRepository.vb" />
+    <Compile Include="Command\CommandGetPerformanceProfile.vb" />
+    <Compile Include="Command\CommandHelp.vb" />
+    <Compile Include="Command\CommandIf.vb" />
+    <Compile Include="Command\CommandInfo.vb" />
+    <Compile Include="Command\CommandIPAddress.vb" />
+    <Compile Include="Command\CommandLog.vb" />
+    <Compile Include="Command\CommandNote.vb" />
+    <Compile Include="Command\CommandPause.vb" />
+    <Compile Include="Command\CommandRegistry.vb" />
+    <Compile Include="Command\CommandRelease.vb" />
+    <Compile Include="Command\CommandRemoveEnvironment.vb" />
+    <Compile Include="Command\CommandSetCurrentEnvironment.vb" />
+    <Compile Include="Command\CommandSetDefaultParameter.vb" />
+    <Compile Include="Command\CommandSetEnvironmentRepository.vb" />
+    <Compile Include="Command\CommandShowJournal.vb" />
+    <Compile Include="Command\CommandShowLog.vb" />
+    <Compile Include="Command\CommandStartPerformanceProfile.vb" />
+    <Compile Include="Command\CommandStartServe.vb" />
+    <Compile Include="Command\CommandStatusServe.vb" />
+    <Compile Include="Command\CommandStopServe.vb" />
+    <Compile Include="Command\CommandTestRAWServe.vb" />
+    <Compile Include="Command\CommandTestServe.vb" />
+    <Compile Include="Command\CommandUpdateSystemDate.vb" />
+    <Compile Include="Command\CommandWait.vb" />
+    <Compile Include="Command\CommandWrite.vb" />
+    <Compile Include="Common\ApplicationCommon.vb" />
+    <Compile Include="Common\CommandExecutor.vb" />
+    <Compile Include="Engines\ApplicationPaths.vb" />
+    <Compile Include="Engines\DefaultParameters.vb" />
+    <Compile Include="Engines\EnvironmentRepository.vb" />
+    <Compile Include="Engines\Environments.vb" />
+    <Compile Include="Engines\ServiceAccess.vb" />
+    <Compile Include="Engines\Utils.vb" />
+    <Compile Include="Models\Models.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\3. CHC Protocol\CHC Protocol.vbproj">
+      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
+      <Name>CHC Protocol</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>

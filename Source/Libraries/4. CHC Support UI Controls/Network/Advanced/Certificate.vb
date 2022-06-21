@@ -191,7 +191,7 @@ Public Class Certificate
     End Sub
 
     Private Sub createButton_Click(sender As Object, e As EventArgs) Handles createButton.Click
-        valueText.Text = CHCProtocolLibrary.AreaBase.Certificate.createNew()
+        valueText.Text = CHCCommonLibrary.AreaBase.Certificate.createNew()
     End Sub
 
     Private Sub valueText_TextChanged(sender As Object, e As EventArgs) Handles valueText.TextChanged

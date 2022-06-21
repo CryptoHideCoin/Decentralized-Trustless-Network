@@ -35,8 +35,8 @@ Public Class WalletAddress
             If dialogForm.ShowDialog() = DialogResult.OK Then
                 Dim checkKey As WalletAddressEngine.KeyPairComplete = WalletAddressEngine.createNew(dialogForm.value, False)
 
-                If (checkKey.official.publicKey = value) Then
-                    Return checkKey.raw.privateKey
+                If (checkKey.official.public = value) Then
+                    Return checkKey.raw.private
                 Else
                     MessageBox.Show("The private key is not root to Public Address", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
@@ -143,8 +143,8 @@ Public Class WalletAddress
             If (value.Trim.Length > 0) Then
 
                 If WalletAddressEngine.SingleKeyPair.checkFormatPublicAddress(value.Trim) Then
-                    result.publicKey = value.Trim()
-                    result.privateKey = getPrivateKey()
+                    result.public = value.Trim()
+                    result.private = getPrivateKey()
                 ElseIf (value.ToLower.Substring(0, 11).CompareTo("keystoreid:") = 0) Then
                     Return getKeyPairRAWFromStore()
                 Else
@@ -253,10 +253,10 @@ Public Class WalletAddress
             If dataLoaded Then
                 If engine.data.authorizationKey <> "" Then
                     If requestAuthorizationKey(engine.data.authorizationKey) Then
-                        Return WalletAddressEngine.createNew(engine.data.privateRAWKey, True).official.privateKey
+                        Return WalletAddressEngine.createNew(engine.data.privateRAWKey, True).official.private
                     End If
                 Else
-                    Return WalletAddressEngine.createNew(engine.data.privateRAWKey, True).official.privateKey
+                    Return WalletAddressEngine.createNew(engine.data.privateRAWKey, True).official.private
                 End If
             End If
 
@@ -383,14 +383,14 @@ Public Class WalletAddress
             If dataLoaded Then
                 If (engine.data.authorizationKey <> "") Then
                     If requestAuthorizationKey(engine.data.authorizationKey) Then
-                        result.privateKey = engine.data.privateRAWKey
-                        result.publicKey = engine.data.publicRAWAddress
+                        result.private = engine.data.privateRAWKey
+                        result.public = engine.data.publicRAWAddress
 
                         Return result
                     End If
                 Else
-                    result.privateKey = engine.data.privateRAWKey
-                    result.publicKey = engine.data.publicRAWAddress
+                    result.private = engine.data.privateRAWKey
+                    result.public = engine.data.publicRAWAddress
 
                     Return result
                 End If

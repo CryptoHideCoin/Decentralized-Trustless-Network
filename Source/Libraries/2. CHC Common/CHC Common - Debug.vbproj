@@ -83,10 +83,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CHCModelsLibrary, Version=0.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\ThirdParts\Newtonsoft.Json.6.0\Newtonsoft.Json.dll</HintPath>
@@ -112,6 +108,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminSecurity\AdminToken.vb" />
+    <Compile Include="AdminSecurity\CertificateEngine.vb" />
     <Compile Include="CommandLine\CHCCommandBuilder.vb" />
     <Compile Include="Communication\ProxyWS.vb" />
     <Compile Include="Encryption\SHAInterface.vb" />
@@ -122,6 +120,9 @@
     <Compile Include="Log\Tracker\CHCLogEngine.vb" />
     <Compile Include="Log\Tracker\CHCLogIO.vb" />
     <Compile Include="Log\Simply\CHCLog.vb" />
+    <Compile Include="Parameters\Parameters.vb" />
+    <Compile Include="PerformanceProfile\PerformanceProfileEngine.vb" />
+    <Compile Include="PerformanceProfile\PerformanceProfileService.vb" />
     <Compile Include="Registry\CHCRegistry.vb" />
     <Compile Include="Miscellaneous\CHCCheckSum.vb" />
     <Compile Include="CommandLine\CHCCommandListEngine.vb" />
@@ -146,6 +147,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="UserAccess\KeyPair.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -171,6 +173,5 @@
   <ItemGroup>
     <Content Include="Other\ReleaseNote.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
