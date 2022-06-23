@@ -1,0 +1,13 @@
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\Trading Bot System Models Library\Standard\TradingBotSystemModelsLibrary.dll
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\Trading Bot System Models Library\Standard\TradingBotSystemModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Binary\Libraries\Internal\Trading Bot System Models Library\Standard\TradingBotSystemModelsLibrary.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Release\Trading Bot System Models Library.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Release\TradingBotSystemModelsLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Release\Trading Bot System Models Library.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Release\Trading Bot System Models Library.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Release\TradingBotSystemModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Release\TradingBotSystemModelsLibrary.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Release\TradingBotSystemModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Binary\Libraries\Applicative\Trading Bot System Models Library\Standard\TradingBotSystemModelsLibrary.dll
+E:\CryptoHideCoinDTN\Binary\Libraries\Applicative\Trading Bot System Models Library\Standard\TradingBotSystemModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Binary\Libraries\Applicative\Trading Bot System Models Library\Standard\TradingBotSystemModelsLibrary.xml

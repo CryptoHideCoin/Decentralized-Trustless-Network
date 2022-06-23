@@ -201,7 +201,6 @@
     <Compile Include="Engines\EnvironmentRepository.vb" />
     <Compile Include="Engines\Environments.vb" />
     <Compile Include="Engines\Utils.vb" />
-    <Compile Include="Models\Models.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -238,6 +237,8 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

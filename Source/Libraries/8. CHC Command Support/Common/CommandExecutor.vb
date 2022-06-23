@@ -52,10 +52,18 @@ Namespace AreaCommon
         Private Const _CommandRegistry As String = "registry"
         Private Const _CommandCounter As String = "counter"
 
+        Private Property _CommandNotRecognized As Boolean = False
+
 
         Public Property command As New CommandStructure
 
-        Public WithEvents classSupport As Models.CommandModel
+        Public WithEvents classSupport As CommandModel
+
+        Public ReadOnly Property commandNotRecognized() As Boolean
+            Get
+                Return _CommandNotRecognized
+            End Get
+        End Property
 
 
         Public Event WriteLine(ByVal message As String)
@@ -66,7 +74,7 @@ Namespace AreaCommon
 
 
 
-        Public Function run() As Boolean
+        Public Function run(Optional ByVal writeNotRecognized As Boolean = True) As Boolean
             Dim response As Boolean
 
             AreaEngine.ParametersEngine.init()
@@ -117,8 +125,16 @@ Namespace AreaCommon
                 Case _CommandStartPerformanceProfileParameter.ToLower : classSupport = New Command.CommandStartPerformanceProfile
                 Case _CommandGetPerformanceProfileParameter.ToLower : classSupport = New Command.CommandGetPerformanceProfile
                 Case Else
+                    If Not writeNotRecognized Then
+                        _CommandNotRecognized = True
+
+                        Return False
+                    End If
                     If (command.code.Length > 0) Then
+                        _CommandNotRecognized = True
+
                         RaiseEvent WriteLine(Chr(34) & command.code & Chr(34) & " not recognized")
+
                         Return False
                     ElseIf (command.parameters.Count > 0) Then
                         If (command.parameters.Values(command.parameters.Values.Count - 1).value.Trim().Length = 0) Then

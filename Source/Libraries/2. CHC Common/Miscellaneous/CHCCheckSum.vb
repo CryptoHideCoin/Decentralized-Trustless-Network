@@ -55,7 +55,8 @@ Namespace AreaEngine.Miscellaneous
         ''' </summary>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Shared Function verify(ByVal value As String) As CompleteStructure
+        '<DebuggerHiddenAttribute()>
+        Public Shared Function verify(ByVal value As String) As CompleteStructure
             Dim result As New CompleteStructure
 
             Try

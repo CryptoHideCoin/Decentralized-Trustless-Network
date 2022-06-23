@@ -41,4 +41,4 @@ E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCBa
 E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\BouncyCastle.Crypto.dll
 E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCSidechainServiceLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCProtocolLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCCommonLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\bin\Debug\CHCProtocolLibrary.xml

@@ -1288,7 +1288,7 @@ CHCProtocolLibrary
  </summary>
  <returns></returns>
 </member>
-<member name="M:CHCProtocolLibrary.AreaEngine.Service.AccessEngine.Init">
+<member name="M:CHCProtocolLibrary.AreaEngine.Service.AccessEngine.Init(CHCCommonLibrary.AreaEngine.CommandLine.CommandStructure@,CHCCommonLibrary.AreaEngine.Parameters.ParameterCollection@)">
  <summary>
  This method provide to initialize the component
  </summary>

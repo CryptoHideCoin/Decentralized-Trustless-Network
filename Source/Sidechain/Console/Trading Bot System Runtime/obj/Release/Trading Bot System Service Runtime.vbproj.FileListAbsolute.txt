@@ -1,0 +1,37 @@
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\TradingBotSystemServiceRuntime.exe.config
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\TradingBotSystemServiceRuntime.exe
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\TradingBotSystemServiceRuntime.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\TradingBotSystemServiceRuntime.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\System.Net.Http.Formatting.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\System.Web.Http.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\System.Web.Http.SelfHost.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\TradingBotSystemLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\TradingBotSystemModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\System.Data.SQLite.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\System.Web.Http.SelfHost.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\TradingBotSystemLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\TradingBotSystemModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\TradingBotSystemModelsLibrary.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\CHCDataAccess.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Release\System.Data.SQLite.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\Release\Trading Bot System Service Runtime.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\Release\TradingBotSystemServiceRuntime.exe.config
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\Release\TradingBotSystemServiceRuntime.Resources.resources
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\Release\Trading Bot System Service Runtime.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\Release\Trading Bot System Service Runtime.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\Release\TradingBotSystemServiceRuntime.exe
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\Release\TradingBotSystemServiceRuntime.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\Release\TradingBotSystemServiceRuntime.pdb
+E:\CryptoHideCoinDTN\Binary\Sidechains\Console\Trading Bot System Service Runtime\Standard\TradingBotSystemServiceRuntime.exe.config
+E:\CryptoHideCoinDTN\Binary\Sidechains\Console\Trading Bot System Service Runtime\Standard\TradingBotSystemServiceRuntime.exe
+E:\CryptoHideCoinDTN\Binary\Sidechains\Console\Trading Bot System Service Runtime\Standard\TradingBotSystemServiceRuntime.pdb
+E:\CryptoHideCoinDTN\Binary\Sidechains\Console\Trading Bot System Service Runtime\Standard\TradingBotSystemServiceRuntime.xml

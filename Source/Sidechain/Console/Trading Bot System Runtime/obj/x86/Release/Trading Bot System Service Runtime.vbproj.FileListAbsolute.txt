@@ -1,0 +1,12 @@
+E:\CryptoHideCoinDTN\Binary\Sidechains\Console\Trading Bot System Service Runtime\x86\TradingBotSystemServiceRuntime.exe.config
+E:\CryptoHideCoinDTN\Binary\Sidechains\Console\Trading Bot System Service Runtime\x86\TradingBotSystemServiceRuntime.exe
+E:\CryptoHideCoinDTN\Binary\Sidechains\Console\Trading Bot System Service Runtime\x86\TradingBotSystemServiceRuntime.pdb
+E:\CryptoHideCoinDTN\Binary\Sidechains\Console\Trading Bot System Service Runtime\x86\TradingBotSystemServiceRuntime.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\x86\Release\Trading Bot System Service Runtime.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\x86\Release\TradingBotSystemServiceRuntime.exe.config
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\x86\Release\TradingBotSystemServiceRuntime.Resources.resources
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\x86\Release\Trading Bot System Service Runtime.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\x86\Release\Trading Bot System Service Runtime.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\x86\Release\TradingBotSystemServiceRuntime.exe
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\x86\Release\TradingBotSystemServiceRuntime.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\x86\Release\TradingBotSystemServiceRuntime.pdb

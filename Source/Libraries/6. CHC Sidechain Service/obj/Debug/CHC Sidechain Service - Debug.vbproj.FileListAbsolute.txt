@@ -28,8 +28,6 @@ E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\System.Web.Ht
 E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\Newtonsoft.Json.dll
 E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\BouncyCastle.Crypto.dll
 E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\System.Data.SQLite.dll
-E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\CHCModelsLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\CHCCommonLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\CHCProtocolLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\CHCProtocolLibrary.xml
 E:\CryptoHideCoinDTN\Source\Libraries\6. CHC Sidechain Service\bin\CHCDataAccess.pdb

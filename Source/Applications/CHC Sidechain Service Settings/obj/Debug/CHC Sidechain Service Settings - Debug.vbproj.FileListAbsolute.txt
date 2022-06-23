@@ -24,3 +24,9 @@ E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debu
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCModelsLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\obj\Debug\CHCSidechainServiceSettings.AutoMaintenanceSettings.resources
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\System.Data.SQLite.dll
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCProtocolLibrary.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCDataAccess.pdb
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\System.Data.SQLite.xml
+E:\CryptoHideCoinDTN\Source\Applications\CHC Sidechain Service Settings\bin\Debug\CHCSupportUIControls.pdb

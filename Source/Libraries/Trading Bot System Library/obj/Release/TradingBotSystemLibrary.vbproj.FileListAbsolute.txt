@@ -1,0 +1,8 @@
+E:\CryptoHideCoinDTN\Binary\Libraries\Applicative\Trading Bot System\Standard\TradingBotSystemLibrary.dll
+E:\CryptoHideCoinDTN\Binary\Libraries\Applicative\Trading Bot System\Standard\TradingBotSystemLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\obj\Release\TradingBotSystemLibrary.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\obj\Release\TradingBotSystemLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\obj\Release\TradingBotSystemLibrary.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\obj\Release\TradingBotSystemLibrary.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\obj\Release\TradingBotSystemLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Library\obj\Release\TradingBotSystemLibrary.pdb

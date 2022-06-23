@@ -80,9 +80,6 @@
     <Reference Include="CHCCommonLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCModelsLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCSidechainServiceLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x64\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
@@ -94,19 +91,11 @@
     <Reference Include="CHCModelsLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCSidechainServiceLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x86\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CHCSupportUIControls, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Support UI\Standard\CHCSupportUIControls.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -140,8 +129,17 @@
     <Compile Include="Forms\AutoMaintenanceSettings.vb">
       <SubType>Form</SubType>
     </Compile>
-	    <Compile Include="Forms\PerformanceProfileSettings.Designer.vb">
+    <Compile Include="Forms\CounterSettings.Designer.vb">
+      <DependentUpon>CounterSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CounterSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PerformanceProfileSettings.Designer.vb">
       <DependentUpon>PerformanceProfileSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PerformanceProfileSettings.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Informations.Designer.vb">
       <DependentUpon>Informations.vb</DependentUpon>
@@ -240,6 +238,10 @@
     <ProjectReference Include="..\..\Libraries\3. CHC Protocol\CHC Protocol - Debug.vbproj">
       <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
       <Name>CHC Protocol - Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\4. CHC Support UI Controls\CHC Support UI Controls.vbproj">
+      <Project>{2b477a78-3139-4570-bb5e-3fc09475c316}</Project>
+      <Name>CHC Support UI Controls</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

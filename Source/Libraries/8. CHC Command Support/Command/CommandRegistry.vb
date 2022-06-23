@@ -16,20 +16,20 @@ Namespace AreaCommon.Command
     ''' <summary>
     ''' This class manage the command Stop Serve 
     ''' </summary>
-    Public Class CommandRegistry : Implements Models.CommandModel
+    Public Class CommandRegistry : Implements CommandModel
 
         Private Property _Command As CommandStructure
 
-        Public Event WriteLine(ByVal message As String) Implements Models.CommandModel.WriteLine
-        Public Event Process(ByVal applicationName As String, ByVal commandLine As String) Implements Models.CommandModel.Process
-        Public Event IntegrityApplication(ByVal fileName As String) Implements Models.CommandModel.IntegrityApplication
-        Public Event RaiseError(ByVal message As String) Implements Models.CommandModel.RaiseError
-        Public Event ReadKey() Implements Models.CommandModel.ReadKey
+        Public Event WriteLine(ByVal message As String) Implements CommandModel.WriteLine
+        Public Event Process(ByVal applicationName As String, ByVal commandLine As String) Implements CommandModel.Process
+        Public Event IntegrityApplication(ByVal fileName As String) Implements CommandModel.IntegrityApplication
+        Public Event RaiseError(ByVal message As String) Implements CommandModel.RaiseError
+        Public Event ReadKey() Implements CommandModel.ReadKey
 
         Private WithEvents _EngineService As New AccessEngine
 
 
-        Private Property CommandModel_command As CommandStructure Implements Models.CommandModel.command
+        Private Property CommandModel_command As CommandStructure Implements CommandModel.command
             Get
                 Return _Command
             End Get
@@ -115,7 +115,7 @@ Namespace AreaCommon.Command
         End Function
 
 
-        Private Function CommandModel_run() As Boolean Implements Models.CommandModel.run
+        Private Function CommandModel_run() As Boolean Implements CommandModel.run
             Try
                 Dim parameterCommand As String = ""
                 Dim proceed As Boolean = True

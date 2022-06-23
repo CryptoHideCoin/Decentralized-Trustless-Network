@@ -1,0 +1,70 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+TbsAc
+</name>
+</assembly>
+<members>
+<member name="T:TbsAc.My.Resources.Resources">
+<summary>
+  Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
+</summary>
+</member>
+<member name="P:TbsAc.My.Resources.Resources.ResourceManager">
+<summary>
+  Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
+</summary>
+</member>
+<member name="P:TbsAc.My.Resources.Resources.Culture">
+<summary>
+  Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
+  ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
+</summary>
+</member>
+<member name="T:TbsAc.AreaCommon.CommandProcessor">
+ <summary>
+ This class contain the processor of a command line
+ </summary>
+</member>
+<member name="M:TbsAc.AreaCommon.CommandProcessor.run">
+ <summary>
+ This method provide to execute a command
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:TbsAc.AreaCommon.Command.CommandHelpPlus">
+ <summary>
+ This class manage the command help plus
+ </summary>
+</member>
+<member name="T:TbsAc.AreaCommon.Common">
+ <summary>
+ This static class run the application
+ </summary>
+</member>
+<member name="M:TbsAc.AreaCommon.Common.CloseApplication(System.String)">
+ <summary>
+ This method provide to close this application
+ </summary>
+ <param name="message"></param>
+</member>
+<member name="M:TbsAc.AreaCommon.Common.Main">
+ <summary>
+ This method provide to run a application
+ </summary>
+</member>
+<member name="T:TbsAc.IntegrityApplication">
+ <summary>
+ This class contain all element of check integrity
+ </summary>
+</member>
+<member name="M:TbsAc.IntegrityApplication.executeRepairNewton(System.String)">
+ <summary>
+ This method provide to run a Repair Newtown utility
+ </summary>
+ <param name="fileName"></param>
+ <returns></returns>
+</member>
+</members>
+</doc>

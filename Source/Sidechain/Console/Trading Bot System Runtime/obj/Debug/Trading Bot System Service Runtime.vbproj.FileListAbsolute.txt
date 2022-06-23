@@ -29,8 +29,8 @@ E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\Deb
 E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\Debug\TradingBotSystemServiceRuntime.xml
 E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\obj\Debug\TradingBotSystemServiceRuntime.pdb
 E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Debug\CHCSidechainServiceLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Debug\CHCCommonLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Debug\CHCProtocolLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Debug\TradingBotSystemModelsLibrary.dll
 E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Debug\TradingBotSystemModelsLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Debug\TradingBotSystemModelsLibrary.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Trading Bot System Runtime\bin\Debug\CHCProtocolLibrary.xml

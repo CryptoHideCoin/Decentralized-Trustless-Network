@@ -200,7 +200,6 @@
     <Compile Include="Engines\Environments.vb" />
     <Compile Include="Engines\ServiceAccess.vb" />
     <Compile Include="Engines\Utils.vb" />
-    <Compile Include="Models\Models.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -236,12 +235,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\3. CHC Protocol\CHC Protocol.vbproj">
-      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
-      <Name>CHC Protocol</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

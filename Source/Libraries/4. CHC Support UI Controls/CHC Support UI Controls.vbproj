@@ -100,9 +100,6 @@
     <Reference Include="CHCModelsLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'x64'">
     <Reference Include="CHCBasicCryptographyLibrary">
@@ -344,6 +341,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Other\ReleaseNote.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\3. CHC Protocol\CHC Protocol - Debug.vbproj">
+      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
+      <Name>CHC Protocol - Debug</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

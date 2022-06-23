@@ -83,10 +83,70 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <Reference Include="CHCCommonLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCDataAccess">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Data Access\Standard\CHCDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="CHCModelsLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCProtocolLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\Standard\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCSidechainServiceLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\Standard\CHCSidechainServiceLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="TradingBotSystemModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Applicative\Trading Bot System Models Library\Standard\TradingBotSystemModelsLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64'">
+    <Reference Include="CHCCommonLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x64\CHCCommonLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCDataAccess">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Data Access\x64\CHCDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCProtocolLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x64\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCSidechainServiceLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x64\CHCSidechainServiceLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="TradingBotSystemModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Applicative\Trading Bot System Models Library\x64\TradingBotSystemModelsLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86'">
+    <Reference Include="CHCCommonLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\x86\CHCCommonLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCDataAccess">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Data Access\x86\CHCDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCProtocolLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CHCSidechainServiceLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x86\CHCSidechainServiceLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="TradingBotSystemModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Applicative\Trading Bot System Models Library\x86\TradingBotSystemModelsLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web.Http">
@@ -159,27 +219,5 @@
     </None>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\2. CHC Common\CHC Common - Debug.vbproj">
-      <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
-      <Name>CHC Common - Debug</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\3. CHC Protocol\CHC Protocol - Debug.vbproj">
-      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
-      <Name>CHC Protocol - Debug</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\5. CHC Data Access\CHC Data Access.vbproj">
-      <Project>{a50bcd6a-da4f-4ab6-8a9c-1446a6c46a40}</Project>
-      <Name>CHC Data Access</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\6. CHC Sidechain Service\CHC Sidechain Service - Debug.vbproj">
-      <Project>{f586744f-8890-4341-8ae8-2583d5a4d084}</Project>
-      <Name>CHC Sidechain Service - Debug</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Trading Bot System Models Library\Trading Bot System Models Library.vbproj">
-      <Project>{ad004081-0238-4121-b169-24bba321fb65}</Project>
-      <Name>Trading Bot System Models Library</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

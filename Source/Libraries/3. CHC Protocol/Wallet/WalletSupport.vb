@@ -90,7 +90,7 @@ Namespace AreaWallet.Support
             ''' <param name="publicValue"></param>
             <DebuggerHiddenAttribute()> Public Sub decoreDataAddress(ByVal publicValue As String)
                 Try
-                    Me.[public] = baseAddr & publicValue & CheckSum.create(Me.[public]) & closeAddr
+                    Me.[public] = baseAddr & publicValue & CheckSum.create(publicValue) & closeAddr
                     Me.private = basePvt & Me.private & CheckSum.create(Me.private) & closeBasePvt
                 Catch ex As Exception
                     Throw New Exception("SingleWallet.decoreDataWallet():" & ex.Message, ex)
