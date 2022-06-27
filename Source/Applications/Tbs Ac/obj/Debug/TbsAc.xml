@@ -33,6 +33,48 @@ TbsAc
  </summary>
  <returns></returns>
 </member>
+<member name="T:TbsAc.AreaCommon.Command.CommandExchange">
+ <summary>
+ This class manage the command exchange
+ </summary>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchange.getList">
+ <summary>
+ This method provide to get a list of a exchange
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchange.addNew(System.String,System.String)">
+ <summary>
+ This method provide to add a new exchange 
+ </summary>
+ <param name="name"></param>
+ <param name="isActive"></param>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchange.update(System.Int32,System.String,System.String)">
+ <summary>
+ This method provide to update a name of exchange or isActive flag
+ </summary>
+ <param name="updateId"></param>
+ <param name="name"></param>
+ <param name="isActive"></param>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchange.delete(System.Int32)">
+ <summary>
+ This method provide to delete a precisious id of unused exchange id
+ </summary>
+ <param name="id"></param>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchange.getData(System.Int32)">
+ <summary>
+ This method provide to get a data from an exchange
+ </summary>
+ <param name="id"></param>
+ <returns></returns>
+</member>
 <member name="T:TbsAc.AreaCommon.Command.CommandHelpPlus">
  <summary>
  This class manage the command help plus

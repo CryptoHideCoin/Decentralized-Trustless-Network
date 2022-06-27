@@ -533,7 +533,7 @@ Namespace AreaBusiness
                 End If
 
                 If _EngineDB.init("Evaluation", "Custom") Then
-                    If Not _EngineDB.existTable("assets", _OwnerId) Then
+                    If Not _EngineDB.existTable("currencies", _OwnerId) Then
                         CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.track("CurrencyEngine.init", _OwnerId, "Currency table not exist")
 
                         If Not createStructures() Then

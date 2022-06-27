@@ -130,7 +130,7 @@ Namespace AreaEngine.Communication
         ''' This method provides to send a remote data
         ''' </summary>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function sendData(Optional ByVal methodType As String = "PUT") As String
+        Public Function sendData(Optional ByVal methodType As String = "PUT") As String
             Dim webClient As New WebClient()
             Dim reqString() As Byte
 

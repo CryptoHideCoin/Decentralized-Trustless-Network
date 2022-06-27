@@ -18,7 +18,7 @@ Namespace AreaCommon.Startup
         ''' </summary>
         Private Sub startServiceProcessor()
             Try
-                Environment.log.trackEnter("Scheduler.startServiceProcessor", "Main")
+                environment.log.trackEnter("Scheduler.startServiceProcessor", "Main")
 
                 _Engine.loadScheduleList()
 

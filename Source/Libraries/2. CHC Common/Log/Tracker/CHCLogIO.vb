@@ -80,7 +80,9 @@ Namespace AreaEngine.Log
             If _ChangeInBeginWrite Then
                 _StartWriteFile = Miscellaneous.timeStampFromDateTime()
 
-                IO.Directory.CreateDirectory(_Settings.pathFileLog)
+                If Not IO.Directory.Exists(_Settings.pathFileLog) Then
+                    IO.Directory.CreateDirectory(_Settings.pathFileLog)
+                End If
 
                 newFile = IO.Path.Combine(_Settings.pathFileLog, "main.log")
                 _ChangeInBeginWrite = False
@@ -133,7 +135,7 @@ Namespace AreaEngine.Log
             Try
                 Dim item As SingleActionApplication
 
-                If (_Settings.pathFile.Length = 0) Then
+                If (_Settings.pathFileLog.Length = 0) Then
                     Return True
                 End If
 
@@ -172,7 +174,7 @@ Namespace AreaEngine.Log
             Try
                 _Settings = value
 
-                If (value.instanceID.Length > 0) And (value.pathFile.Length > 0) And Not _ChangeInBeginWrite Then
+                If (value.pathFileLog.Length > 0) And Not _ChangeInBeginWrite Then
                     _ChangeInBeginWrite = True
 
                     writeToFile()

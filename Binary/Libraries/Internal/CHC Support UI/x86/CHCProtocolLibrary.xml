@@ -139,7 +139,7 @@ CHCProtocolLibrary
  </summary>
  <param name="dataPath"></param>
 </member>
-<member name="M:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.init(System.String)">
+<member name="M:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.init(System.String,System.Boolean)">
  <summary>
  This method provide to initialize the engine
  </summary>

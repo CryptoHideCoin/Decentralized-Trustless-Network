@@ -1,0 +1,11 @@
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\bin\Debug\TradingBotSystemModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\bin\Debug\TradingBotSystemModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\bin\Debug\TradingBotSystemModelsLibrary.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\bin\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Debug\Trading Bot System Models Library - Debug.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Debug\TradingBotSystemModelsLibrary.Resources.resources
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Debug\Trading Bot System Models Library - Debug.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Debug\Trading Bot System Models Library - Debug.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Debug\TradingBotSystemModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Debug\TradingBotSystemModelsLibrary.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Debug\TradingBotSystemModelsLibrary.pdb

@@ -123,14 +123,11 @@ Namespace AreaModel.Log
     ''' </summary>
     Public Class TrackConfiguration
         Private Property _SaveModeLocal As TrackRuntimeModeEnum = TrackRuntimeModeEnum.trackAll
-        Private Property _InstanceIDLocal As String = ""
-        Private Property _PathFileLocal As String = ""
+        Private Property _PathFileLog As String = ""
         Private Property _ChangeFileEveryLocal As Integer = 0
         Private Property _ChangeNumberOfRegistrationsLocal As Integer = 0
         Private Property _UseBufferToWrite As Boolean = True
         Private Property _WriteToFile As Boolean = True
-
-        Public Property pathFileLog As String = ""
 
         Public Event ChangeValue()
 
@@ -144,44 +141,6 @@ Namespace AreaModel.Log
             End Get
             Set(value As TrackRuntimeModeEnum)
                 _SaveModeLocal = value
-
-                RaiseEvent ChangeValue()
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' This property get / set the InstanceID of runtime
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property instanceID As String
-            Get
-                Return _InstanceIDLocal
-            End Get
-            Set(value As String)
-                _InstanceIDLocal = value
-
-                If (_PathFileLocal.Length > 0) And (_InstanceIDLocal.Length > 0) Then
-                    pathFileLog = IO.Path.Combine(_PathFileLocal, _InstanceIDLocal)
-                End If
-
-                RaiseEvent ChangeValue()
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' This property get / set the path file of track
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property pathFile As String
-            Get
-                Return _PathFileLocal
-            End Get
-            Set(value As String)
-                _PathFileLocal = value
-
-                If (_PathFileLocal.Length > 0) And (_InstanceIDLocal.Length > 0) Then
-                    pathFileLog = IO.Path.Combine(_PathFileLocal, _InstanceIDLocal)
-                End If
 
                 RaiseEvent ChangeValue()
             End Set
@@ -243,6 +202,16 @@ Namespace AreaModel.Log
             End Set
         End Property
 
+        Public Property pathFileLog As String
+            Get
+                Return _PathFileLog
+            End Get
+            Set(value As String)
+                _PathFileLog = value
+
+                RaiseEvent ChangeValue()
+            End Set
+        End Property
     End Class
 
     ''' <summary>

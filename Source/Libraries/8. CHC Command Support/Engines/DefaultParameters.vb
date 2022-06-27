@@ -21,7 +21,7 @@ Namespace AreaEngine
         ''' <returns></returns>
         Public Shared Function createNew(ByVal name As String, ByVal value As String) As Boolean
             Try
-                Dim collection As ParameterCollection = IOFast(Of ParameterCollection).read(ApplicationCommon.defaultParameters.completeArchiveFileName)
+                Dim collection As ParameterCollection = IOFast(Of ParameterCollection).read(AreaCommon.ApplicationCommon.defaultParameters.completeArchiveFileName)
                 Dim proceed As Boolean = True
 
                 If proceed Then
@@ -31,7 +31,7 @@ Namespace AreaEngine
                     proceed = collection.addNew(name, value)
                 End If
                 If proceed Then
-                    proceed = IOFast(Of ParameterCollection).save(ApplicationCommon.defaultParameters.completeArchiveFileName, collection)
+                    proceed = IOFast(Of ParameterCollection).save(AreaCommon.ApplicationCommon.defaultParameters.completeArchiveFileName, collection)
                 End If
 
                 Return proceed
@@ -72,10 +72,10 @@ Namespace AreaEngine
                     Dim parameterCompleteFile As String = IO.Path.Combine(environmentPath, "Parameters.default")
 
                     If IO.File.Exists(parameterCompleteFile) Then
-                        ApplicationCommon.defaultParameters = IOFast(Of ParameterCollection).read(parameterCompleteFile)
+                        AreaCommon.ApplicationCommon.defaultParameters = IOFast(Of ParameterCollection).read(parameterCompleteFile)
                     End If
 
-                    ApplicationCommon.defaultParameters.completeArchiveFileName = parameterCompleteFile
+                    AreaCommon.ApplicationCommon.defaultParameters.completeArchiveFileName = parameterCompleteFile
 
                     Return True
                 End If

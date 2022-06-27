@@ -41,8 +41,8 @@ Namespace AreaEngine
             Try
                 AreaCommon.Main.environment.log.trackEnter("CleanOldLogInstanceEngine.run", ownerId)
 
-                Dim path As String = AreaCommon.Main.environment.log.settings.pathFile
-                Dim instanceID As String = AreaCommon.Main.environment.log.settings.instanceID
+                Dim path As String = AreaCommon.Main.environment.log.settings.pathFileLog
+                Dim instanceID As String = AreaCommon.Main.environment.paths.instanceId
                 Dim toDelete As New List(Of String)
 
                 For Each singleDir As String In IO.Directory.GetDirectories(path)

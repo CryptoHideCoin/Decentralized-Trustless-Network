@@ -384,7 +384,7 @@ Namespace AreaEngine.Service
                 If IO.Directory.Exists([input].dataPath) Then
                     _Path.directoryData = [input].dataPath
 
-                    If _Path.init([input].service.Replace(" ", "")) Then
+                    If _Path.init([input].service.Replace(" ", ""), False) Then
                         Return True
                     Else
                         RaiseEvent RaiseError($"Problem during build a Path")

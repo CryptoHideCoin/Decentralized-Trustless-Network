@@ -15,9 +15,12 @@ Namespace AreaCommon
     Public Class CommandProcessor
 
         Private Const _CommandHelpPlus As String = "helpPlus"
+        Private Const _CommandExchange As String = "exchange"
 
         Private WithEvents _Executor As New CHCCommandlineSupport.AreaCommon.CommandExecutor
         Private WithEvents _ClassSupport As CommandModel
+
+        Private Property _SecondPhase As Boolean = False
 
 
         Private Sub executor_WriteLine(message As String) Handles _Executor.WriteLine
@@ -37,7 +40,7 @@ Namespace AreaCommon
         End Sub
 
         Private Sub _Executor_RaiseError(message As String) Handles _Executor.RaiseError
-            If Not _Executor.commandNotRecognized Then
+            If Not _Executor.commandNotRecognized Or _SecondPhase Then
                 CloseApplication(message)
             End If
         End Sub
@@ -51,7 +54,7 @@ Namespace AreaCommon
         End Sub
 
         Private Sub _ClassSupport_RaiseError(message As String) Handles _ClassSupport.RaiseError
-            If Not _Executor.commandNotRecognized Then
+            If Not _Executor.commandNotRecognized Or _SecondPhase Then
                 CloseApplication(message)
             End If
         End Sub
@@ -86,8 +89,11 @@ Namespace AreaCommon
                 End With
 
                 If Not _Executor.run(False) Then
+                    _SecondPhase = True
+
                     Select Case _Executor.command.code
                         Case _CommandHelpPlus.ToLower : _ClassSupport = New Command.CommandHelpPlus
+                        Case _CommandExchange.ToLower : _ClassSupport = New Command.CommandExchange
                         Case Else
                             If (_Executor.command.code.Length > 0) Then
                                 Console.WriteLine(Chr(34) & _Executor.command.code & Chr(34) & " not recognized")

@@ -6,9 +6,14 @@ Imports CHCCommonLibrary.AreaEngine.Parameters
 
 
 
-Module ApplicationCommon
 
-    Public Property appConfigurations As New AreaEngine.ApplicationCollection
-    Public Property defaultParameters As New ParameterCollection
+Namespace AreaCommon
 
-End Module
+    Public Module ApplicationCommon
+
+        Public Property appConfigurations As New AreaEngine.ApplicationCollection
+        Public Property defaultParameters As New ParameterCollection
+
+    End Module
+
+End Namespace

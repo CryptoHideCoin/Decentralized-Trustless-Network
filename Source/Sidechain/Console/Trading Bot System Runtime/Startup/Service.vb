@@ -47,7 +47,7 @@ Namespace AreaCommon.Startup
                         environment.log.track("startUp.Service.run", "Main", "System Registry is load")
                     End If
 
-                    proceed = environment.counter.init(IO.Path.Combine(environment.paths.system.counters, CUSTOM_ChainServiceName))
+                    proceed = environment.counter.init(environment.paths.system.counters)
                 End If
                 If proceed Then
                     If environment.settings.useRequestCounter Then

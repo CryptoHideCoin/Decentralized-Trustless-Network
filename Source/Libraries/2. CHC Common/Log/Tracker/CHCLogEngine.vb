@@ -74,8 +74,7 @@ Namespace AreaEngine.Log
         ''' <param name="completeName"></param>
         ''' <param name="addictionalInformation"></param>
         ''' <returns></returns>
-        '<DebuggerHiddenAttribute()>
-        Public Function trackEnter(ByVal completeName As String, ByVal owner As String, Optional ByVal addictionalInformation As String = "", Optional ByVal accessType As AccessTypeEnumeration = AccessTypeEnumeration.undefined) As Boolean
+        <DebuggerHiddenAttribute()> Public Function trackEnter(ByVal completeName As String, ByVal owner As String, Optional ByVal addictionalInformation As String = "", Optional ByVal accessType As AccessTypeEnumeration = AccessTypeEnumeration.undefined) As Boolean
             If (accessType <> AccessTypeEnumeration.undefined) And Not IsNothing(apiService) Then
                 If apiService.serviceActive Then
                     apiService.addNewCall(completeName, accessType)
@@ -134,7 +133,8 @@ Namespace AreaEngine.Log
         ''' This method provide to change in bootstrap set a complete 
         ''' </summary>
         ''' <returns></returns>
-        <DebuggerHiddenAttribute()> Public Function changeInBootStrapComplete() As Boolean
+        '<DebuggerHiddenAttribute()>
+        Public Function changeInBootStrapComplete() As Boolean
             _BootstrapMode = False
 
             Return _Cache.changeInBootStrapComplete()

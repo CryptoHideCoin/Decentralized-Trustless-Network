@@ -64,7 +64,15 @@ Public Class Settings
                 End If
 
                 If (extension.ToLower().CompareTo("settings".ToLower()) = 0) Then
-                    sidechainServiceName.SelectedIndex = getIndexFromServiceName(fileName.Replace(" ", ""))
+                    For index As Integer = 0 To sidechainServiceName.Items.Count - 1
+                        If (sidechainServiceName.Items.Item(index).replace(" ", "").ToString.ToLower().CompareTo(fileName.Replace(" ", "")) = 0) Then
+                            sidechainServiceName.SelectedIndex = getIndexFromServiceName(fileName.Replace(" ", ""))
+                        End If
+                    Next
+
+                    If (sidechainServiceName.SelectedIndex = -1) Then
+                        sidechainServiceName.Text = fileName.Replace(" ", "")
+                    End If
 
                     dataPath.Text = path
 

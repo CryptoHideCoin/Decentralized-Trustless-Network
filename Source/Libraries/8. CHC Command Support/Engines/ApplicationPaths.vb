@@ -138,15 +138,15 @@ Namespace AreaEngine
             Try
                 Dim fileConfigurationPath As String = IO.Path.Combine(applicationPath, "Applications.path")
 
-                If (ApplicationCommon.appConfigurations.data.Count = 0) Then
+                If (AreaCommon.ApplicationCommon.appConfigurations.data.Count = 0) Then
                     If IO.File.Exists(fileConfigurationPath) Then
-                        ApplicationCommon.appConfigurations.data = IOFast(Of List(Of ApplicationPathData)).read(fileConfigurationPath)
+                        AreaCommon.ApplicationCommon.appConfigurations.data = IOFast(Of List(Of ApplicationPathData)).read(fileConfigurationPath)
 
-                        Return ApplicationCommon.appConfigurations.rebuildIndex()
+                        Return AreaCommon.ApplicationCommon.appConfigurations.rebuildIndex()
                     Else
-                        ApplicationCommon.appConfigurations.createDefault(applicationPath)
+                        AreaCommon.ApplicationCommon.appConfigurations.createDefault(applicationPath)
 
-                        Return IOFast(Of List(Of ApplicationPathData)).save(fileConfigurationPath, ApplicationCommon.appConfigurations.data)
+                        Return IOFast(Of List(Of ApplicationPathData)).save(fileConfigurationPath, AreaCommon.ApplicationCommon.appConfigurations.data)
                     End If
                 End If
 

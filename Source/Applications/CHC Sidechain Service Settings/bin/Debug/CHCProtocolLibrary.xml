@@ -139,7 +139,7 @@ CHCProtocolLibrary
  </summary>
  <param name="dataPath"></param>
 </member>
-<member name="M:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.init(System.String)">
+<member name="M:CHCProtocolLibrary.AreaSystem.VirtualPathEngine.init(System.String,System.Boolean)">
  <summary>
  This method provide to initialize the engine
  </summary>
@@ -1427,6 +1427,12 @@ CHCProtocolLibrary
  <summary>
  This method provide to generate a Public Key from Private Key
  </summary>
+</member>
+<member name="M:CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.SingleKeyPair.decoreDataAddress(System.String)">
+ <summary>
+ This method provide to decore a public key with suffix, checksum and prefix
+ </summary>
+ <param name="publicValue"></param>
 </member>
 <member name="M:CHCProtocolLibrary.AreaWallet.Support.WalletAddressEngine.SingleKeyPair.startAllowed(System.String)">
  <summary>

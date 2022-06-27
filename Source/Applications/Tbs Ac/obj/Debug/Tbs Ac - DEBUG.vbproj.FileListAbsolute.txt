@@ -1,0 +1,32 @@
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\TbsAc.exe.config
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\TbsAc.exe
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\TbsAc.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\TbsAc.xml
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCCommandlineSupport.dll
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCProtocolLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCSidechainServiceLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCBasicCryptographyLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\System.Web.Http.dll
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCDataAccess.dll
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\BouncyCastle.Crypto.dll
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\System.Data.SQLite.dll
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCCommandlineSupport.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCDataAccess.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\System.Data.SQLite.xml
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\obj\Debug\Tbs Ac - DEBUG.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\obj\Debug\TbsAc.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\obj\Debug\Tbs Ac - DEBUG.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\obj\Debug\Tbs Ac - DEBUG.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\obj\Debug\TbsAc.exe
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\obj\Debug\TbsAc.xml
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\obj\Debug\TbsAc.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\TradingBotSystemModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\TradingBotSystemModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\TradingBotSystemModelsLibrary.xml
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCProtocolLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCProtocolLibrary.xml
+E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCCommonLibrary.pdb

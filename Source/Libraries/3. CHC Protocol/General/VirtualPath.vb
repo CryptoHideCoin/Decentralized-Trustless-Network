@@ -273,7 +273,7 @@ Namespace AreaSystem
         ''' </summary>
         ''' <param name="sideChainName"></param>
         ''' <returns></returns>
-        Public Function init(ByVal sideChainName As String) As Boolean
+        Public Function init(ByVal sideChainName As String, Optional ByVal createNewDirectory As Boolean = True) As Boolean
             Try
                 If (directoryData.Trim.Length > 0) Then
                     Dim folderName As String
@@ -303,18 +303,33 @@ Namespace AreaSystem
 
                         tempFolder = manageSinglePath(.path, countersFolderName)
                         tempFolder = manageSinglePath(tempFolder, sideChainName)
-                        .counters = manageSinglePath(tempFolder, instanceId)
+
+                        If createNewDirectory Then
+                            .counters = manageSinglePath(tempFolder, instanceId)
+                        Else
+                            .counters = IO.Path.Combine(tempFolder, instanceId)
+                        End If
 
                         tempFolder = manageSinglePath(.path, eventsFolderName)
                         .events = manageSinglePath(tempFolder, sideChainName)
 
                         tempFolder = manageSinglePath(.path, logsFolderName)
                         tempFolder = manageSinglePath(tempFolder, sideChainName)
-                        .logs = manageSinglePath(tempFolder, instanceId)
+
+                        If createNewDirectory Then
+                            .logs = manageSinglePath(tempFolder, instanceId)
+                        Else
+                            .logs = IO.Path.Combine(tempFolder, instanceId)
+                        End If
 
                         tempFolder = manageSinglePath(.path, profileFolderName)
                         tempFolder = manageSinglePath(tempFolder, sideChainName)
-                        .performanceProfile = manageSinglePath(tempFolder, instanceId)
+
+                        If createNewDirectory Then
+                            .performanceProfile = manageSinglePath(tempFolder, instanceId)
+                        Else
+                            .performanceProfile = IO.Path.Combine(tempFolder, instanceId)
+                        End If
                     End With
 
                     With workData

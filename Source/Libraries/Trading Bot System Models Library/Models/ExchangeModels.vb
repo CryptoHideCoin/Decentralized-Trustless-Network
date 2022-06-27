@@ -21,6 +21,9 @@ Namespace AreaModel.Exchange
 
         Public Property id As Integer = 0
         Public Property [name] As String = ""
+        Public Property isActive As Boolean = False
+        Public Property lastCurrenciesCheck As Double = 0
+        Public Property lastProductsCheck As Double = 0
         Public Property isUsed As Boolean = False
 
     End Class

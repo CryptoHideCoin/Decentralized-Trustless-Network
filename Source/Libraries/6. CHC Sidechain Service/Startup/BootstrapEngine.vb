@@ -155,8 +155,7 @@ Namespace AreaCommon.Startup
                     .changeNumberOfRegistrations = environment.settings.logSettings.changeLogFileNumRegistrations
                     .useBufferToWrite = environment.settings.logSettings.useBufferToWrite
                     .writeToFile = environment.settings.logSettings.writeToFile
-                    .pathFile = environment.paths.system.logs
-                    .instanceID = environment.paths.instanceId
+                    .pathFileLog = environment.paths.system.logs
                 End With
 
                 Return True

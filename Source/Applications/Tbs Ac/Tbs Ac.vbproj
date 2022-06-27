@@ -114,6 +114,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
     </Reference>
+	<Reference Include="CHCProtocolLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\Standard\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64'">
     <Reference Include="CHCCommandlineSupport">
@@ -126,6 +130,10 @@
     <Reference Include="CHCModelsLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
+    </Reference>
+	<Reference Include="CHCProtocolLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x64\CHCProtocolLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86'">
@@ -140,6 +148,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x86\CHCModelsLibrary.dll</HintPath>
     </Reference>
+	<Reference Include="CHCProtocolLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -150,6 +162,9 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="TradingBotSystemModelsLibrary">
+      <HintPath>..\..\..\Binary\Libraries\Applicative\Trading Bot System Models Library\Standard\TradingBotSystemModelsLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -164,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\CommandProcessor.vb" />
+    <Compile Include="Command\CommandExchange.vb" />
     <Compile Include="Command\CommandHelpPlus.vb" />
     <Compile Include="Engines\IntegrityApplication.vb" />
     <Compile Include="Startup\Startup.vb" />

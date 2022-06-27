@@ -10,8 +10,6 @@ E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\System.We
 E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCDataAccess.dll
 E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\BouncyCastle.Crypto.dll
 E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\System.Data.SQLite.dll
-E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCProtocolLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCProtocolLibrary.xml
 E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\CHCDataAccess.pdb
 E:\CryptoHideCoinDTN\Source\Libraries\8. CHC Command Support\bin\Debug\System.Data.SQLite.xml

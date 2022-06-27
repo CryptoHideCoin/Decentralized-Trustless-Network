@@ -44,12 +44,12 @@ Namespace AreaEngine
 
                 limitTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - limitTime
 
-                blockEngine.logFilePath = AreaCommon.Main.environment.log.settings.pathFile
+                blockEngine.logFilePath = AreaCommon.Main.environment.log.settings.pathFileLog
 
 #If DEBUG Then
                 blockEngine.logInstance = "toElaborate"
 #Else
-                blockEngine.logInstance = AreaCommon.Main.environment.log.settings.instanceID
+                blockEngine.logInstance = AreaCommon.Main.environment.paths.instanceId
 #End If
 
                 listFile = blockEngine.readListLogFile().items

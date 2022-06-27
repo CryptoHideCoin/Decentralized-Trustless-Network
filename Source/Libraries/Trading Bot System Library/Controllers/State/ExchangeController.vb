@@ -12,8 +12,8 @@ Imports CHCModelsLibrary.AreaModel.Information
 Namespace Controllers
 
 
-    ' GET: api/{GUID service}/state/exchangeController
-    <Route("ServiceApi")>
+    ' GET: api/{GUID service}/state/base/exchangeController
+    <Route("StateBaseApi")>
     Public Class ExchangeController
 
         Inherits ApiController
@@ -113,7 +113,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="securityToken"></param>
         ''' <param name="[name]"></param>
-        Public Function PostValue(ByVal securityToken As String, <FromBody()> ByVal [name] As String) As BaseRemoteResponse
+        Public Function PostValue(ByVal securityToken As String, ByVal [name] As String, ByVal isActive As Integer) As BaseRemoteResponse
             Dim ownerId As String = "ExchangeController-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
@@ -126,7 +126,7 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        If (AreaCommon.state.exchangesEngine.addOrGetExchange(name).id = 0) Then
+                        If (AreaCommon.state.exchangesEngine.addOrGetExchange(StrConv(name, VbStrConv.ProperCase), isActive, ownerId).id = 0) Then
                             result.responseStatus = BaseRemoteResponse.EnumResponseStatus.inError
 
                             result.errorDescription = "Problem during add a new exchange"
@@ -159,7 +159,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="id"></param>
         ''' <param name="value"></param>
-        Public Function PutValue(ByVal securityToken As String, ByVal id As Integer, <FromBody()> ByVal [name] As String) As BaseRemoteResponse
+        Public Function PutValue(ByVal securityToken As String, ByVal id As Integer, ByVal [name] As String, ByVal isActive As Integer) As BaseRemoteResponse
             Dim ownerId As String = "ExchangeController-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
@@ -172,7 +172,7 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        If Not AreaCommon.state.exchangesEngine.updateExchangeName(id, name) Then
+                        If Not AreaCommon.state.exchangesEngine.updateExchangeName(id, StrConv(name, VbStrConv.ProperCase), isActive, ownerId) Then
                             result.responseStatus = RemoteResponse.EnumResponseStatus.inError
 
                             result.errorDescription = "999 - Cannot update data (check id)"
@@ -215,7 +215,7 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        If Not AreaCommon.state.exchangesEngine.delete(id) Then
+                        If Not AreaCommon.state.exchangesEngine.delete(id, ownerId) Then
                             result.responseStatus = RemoteResponse.EnumResponseStatus.inError
 
                             result.errorDescription = "999 - Cannot delete data (check id or it used)"
@@ -241,6 +241,5 @@ Namespace Controllers
         End Function
 
     End Class
-
 
 End Namespace

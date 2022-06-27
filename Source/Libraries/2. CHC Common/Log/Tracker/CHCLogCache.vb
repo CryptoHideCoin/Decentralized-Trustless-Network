@@ -27,7 +27,6 @@ Namespace AreaEngine.Log
         Private Property _ToProcessDataCache As Boolean = False
         Private Property _ToProcessInQueue As Boolean = False
         Private Property _ToFlushCache As Boolean = False
-        Private Property _InBootstrapMode As Boolean = True
 
         Public Property timeInCache As Double = 20000
 
@@ -171,8 +170,6 @@ Namespace AreaEngine.Log
         ''' </summary>
         ''' <returns></returns>
         Public Function changeInBootStrapComplete() As Boolean
-            _InBootstrapMode = False
-
             Return _IO.changeInBootStrapComplete()
         End Function
 
