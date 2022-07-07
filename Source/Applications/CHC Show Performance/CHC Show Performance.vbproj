@@ -94,7 +94,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-   <ItemGroup Condition=" '$(Platform)' == 'AnyCPU'">
+  <ItemGroup Condition=" '$(Platform)' == 'AnyCPU'">
     <Reference Include="CHCCommonLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Common\Standard\CHCCommonLibrary.dll</HintPath>

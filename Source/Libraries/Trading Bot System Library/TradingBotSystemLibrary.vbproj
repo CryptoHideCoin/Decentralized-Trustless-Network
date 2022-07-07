@@ -172,7 +172,7 @@
   <ItemGroup>
     <Compile Include="Base\Common.vb" />
     <Compile Include="Base\Internal.vb" />
-    <Compile Include="Controllers\State\CurrenciesController.vb" />
+    <Compile Include="Controllers\State\CurrencyController.vb" />
     <Compile Include="Controllers\State\ExchangeController.vb" />
     <Compile Include="Controllers\State\ExchangeReferenceController.vb" />
     <Compile Include="Engine\Currencies\CurrenciesEngine.vb" />

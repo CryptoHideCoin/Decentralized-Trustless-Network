@@ -24,6 +24,8 @@ Namespace AreaBusiness
 
         Public Property useCache As Boolean = False
 
+        Public Event SetExchangeActive(ByVal exchangeId As Integer, ByVal lastCurrenciesUpdate As Double, ByVal lastProductsUpdate As Double)
+
 
 
         ''' <summary>
@@ -39,7 +41,9 @@ Namespace AreaBusiness
                 sql += "  [name] NVARCHAR(512), "
                 sql += "  isActive INTEGER, "
                 sql += "  lastCurrenciesCheck REAL, "
-                sql += "  lastProductCheck REAL, "
+                sql += "  lastProductsCheck REAL, "
+                sql += "  isCentralized INTEGER, "
+                sql += "  groupId INTEGER, "
                 sql += "  isUsed INTEGER);"
 
                 Return _EngineDB.executeDataTable(sql)
@@ -75,13 +79,47 @@ Namespace AreaBusiness
         ''' </summary>
         ''' <param name="[name]"></param>
         ''' <returns></returns>
-        Private Function addNewAndReturnID(ByVal [name] As String, ByVal isActive As Integer, ByVal forceOwner As String) As Integer
+        Private Function addNewAndReturnID(ByRef data As NewExchangeStructure, ByVal forceOwner As String) As Integer
             Try
-                Dim sql As String
+                Dim sql As String = ""
+                Dim isActiveValue As Integer = 0
+                Dim isCentralized As Integer = 0
+                Dim groupId As Integer = 0
+                Dim newId As Integer = 0
+                Dim copyIntoGroup As Boolean = False
 
-                sql = $"INSERT INTO exchanges ([name], isActive, lastCurrenciesCheck, lastProductCheck, isUsed) VALUES ('{name}', {isActive}, 0, 0, 0)"
+                If data.isActive Then isActiveValue = 1
+                If data.isCentralized Then isCentralized = 1
 
-                Return _EngineDB.executeDataTableAndReturnID(sql, forceOwner)
+                If (data.group.Trim().Length > 0) Then
+                    If (data.group.CompareTo(data.name) = 0) Then
+                        copyIntoGroup = True
+                    Else
+                        groupId = [select](data.group).id
+
+                        If (groupId = 0) Then
+                            data.group = ""
+                        End If
+                    End If
+                End If
+
+                sql += $"INSERT INTO exchanges ([name], isActive, lastCurrenciesCheck, lastProductsCheck, isCentralized, groupId, isUsed) "
+                sql += $" VALUES "
+                sql += $"('{StrConv(data.name, VbStrConv.ProperCase)}', {isActiveValue}, 0, 0, {isCentralized}, {groupId}, 0)"
+
+                newId = _EngineDB.executeDataTableAndReturnID(sql, forceOwner)
+
+                If (newId <> 0) And copyIntoGroup Then
+                    sql = $"UPDATE exchanges SET groupId = {newId} WHERE id = {newId}"
+
+                    If _EngineDB.executeDataTable(sql, forceOwner) Then
+                        Return newId
+                    End If
+                Else
+                    Return newId
+                End If
+
+                Return 0
             Catch ex As Exception
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeEngine.addNew", forceOwner, ex.Message)
 
@@ -94,64 +132,46 @@ Namespace AreaBusiness
         ''' </summary>
         ''' <param name="apiName"></param>
         ''' <returns></returns>
-        Public Function addOrGetExchange(ByVal [name] As String, ByVal isActive As Integer, Optional ByVal forceOwner As String = "") As ExchangeStructure
-            Dim response As New ExchangeStructure With {.name = [name]}
+        Public Function addNewExchange(ByRef data As NewExchangeStructure, Optional ByVal forceOwner As String = "") As Boolean
+            Dim dataExt As New ExchangeStructure With {.name = StrConv(data.[name], VbStrConv.ProperCase), .group = data.group, .isActive = data.isActive, .isCentralized = data.isCentralized}
 
             If (forceOwner.Length = 0) Then
                 forceOwner = _OwnerId
             End If
 
             Try
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("ExchangeEngine.addOrGetExchange", forceOwner)
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("ExchangeEngine.addNewExchange", forceOwner)
 
                 If _Initialize Then
-                    Dim sql As String
-                    Dim result As Object
-
                     If useCache Then
-                        If Not _CacheExchangeByName.ContainsKey([name]) Then
-                            response.id = addNewAndReturnID([name], isActive, forceOwner)
-                            response.isActive = (isActive <> 1)
+                        If Not _CacheExchangeByName.ContainsKey(data.[name]) Then
+                            dataExt.id = addNewAndReturnID(data, forceOwner)
 
-                            _CacheExchangeByName.Add([name], response)
-                            _CacheExchangeById.Add(response.id, response)
-                        End If
-
-                        response = _CacheExchangeByName([name])
-                    Else
-                        Dim openDB As Object
-
-                        sql = $"SELECT id, lastCurrenciesCheck, lastProductCheck, isUsed FROM exchanges WHERE [name] = '{name}'"
-
-                        openDB = _EngineDB.openDatabase(forceOwner)
-
-                        If Not IsNothing(openDB) Then
-                            result = _EngineDB.selectDataReader(openDB, sql, forceOwner)
-
-                            If Not IsNothing(result) Then
-                                While result.read()
-                                    response.id = result.GetInt32(0)
-                                    response.name = name
-                                    response.lastCurrenciesCheck = result.getDouble(1)
-                                    response.lastProductsCheck = result.getDouble(2)
-                                    response.isUsed = (result.GetInt32(3) <> 0)
-                                End While
+                            If (dataExt.id <> 0) And (dataExt.isActive) Then
+                                RaiseEvent SetExchangeActive(dataExt.id, -1, -1)
                             End If
 
-                            openDB.close()
-                        Else
-                            response.id = addNewAndReturnID([name], isActive, forceOwner)
+                            _CacheExchangeByName.Add(data.name, dataExt)
+                            _CacheExchangeById.Add(dataExt.id, dataExt)
+                        End If
+                    Else
+                        If [select](data.name).id = 0 Then
+                            dataExt.id = addNewAndReturnID(data, forceOwner)
+
+                            If (dataExt.id <> 0) And dataExt.isActive Then
+                                RaiseEvent SetExchangeActive(dataExt.id, -1, -1)
+                            End If
                         End If
                     End If
                 End If
 
-                Return response
+                Return (dataExt.id <> 0)
             Catch ex As Exception
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeEngine.addOrGetExchange", forceOwner, ex.Message)
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeEngine.addNewExchange", forceOwner, ex.Message)
 
-                Return response
+                Return False
             Finally
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("ExchangeEngine.addOrGetExchange", forceOwner)
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("ExchangeEngine.addNewExchange", forceOwner)
             End Try
         End Function
 
@@ -161,7 +181,7 @@ Namespace AreaBusiness
         ''' <param name="id"></param>
         ''' <param name="newName"></param>
         ''' <returns></returns>
-        Public Function updateExchangeName(ByVal id As Integer, ByVal newName As String, ByVal isActive As Integer, Optional ByVal forceOwner As String = "") As Boolean
+        Public Function updateExchangeName(ByRef data As UpdateExchangeStructure, Optional ByVal forceOwner As String = "") As Boolean
             Try
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("ExchangeEngine.updateExchangeName", _OwnerId)
 
@@ -171,52 +191,64 @@ Namespace AreaBusiness
 
                 If _Initialize Then
                     Dim sql As String = ""
-                    Dim addComma As Boolean = False
+                    Dim groupId As Integer = 0
 
                     If useCache Then
                         Dim originalItem As ExchangeStructure
 
-                        If _CacheExchangeById.ContainsKey(id) Then
-                            originalItem = _CacheExchangeById(id)
+                        If _CacheExchangeById.ContainsKey(data.id) Then
+                            originalItem = _CacheExchangeById(data.id)
 
-                            If (newName.Length > 0) Then
-                                If Not _CacheExchangeByName.ContainsKey(newName) Then
-                                    _CacheExchangeByName.Remove(originalItem.name)
+                            If (data.name.Length > 0) Then
+                                If (data.name.CompareTo(originalItem.name) <> 0) Then
+                                    If Not _CacheExchangeByName.ContainsKey(data.name) Then
+                                        _CacheExchangeByName.Remove(originalItem.name)
 
-                                    originalItem.name = newName
+                                        originalItem.name = data.name
 
-                                    _CacheExchangeByName.Add(newName, originalItem)
+                                        _CacheExchangeByName.Add(data.name, originalItem)
+                                    End If
                                 End If
                             End If
-                            If (isActive > 0) Then
-                                originalItem.isActive = True
-                            Else
-                                originalItem.isActive = False
-                            End If
+
+                            originalItem.group = data.group
+                            originalItem.isActive = data.isActive
+                            originalItem.isCentralized = data.isCentralized
                         Else
                             Return False
                         End If
                     End If
 
-                    sql += $"UPDATE exchanges SET "
+                    sql += $"UPDATE exchanges "
+                    sql += $"   SET [name] = '{data.name}',"
 
-                    If (newName.Length > 0) Then
-                        sql += $"[name] = '{newName}'"
-
-                        addComma = True
+                    If data.isActive Then
+                        sql += $"       isActive = 1,"
+                    Else
+                        sql += $"       isActive = 0,"
                     End If
 
-                    If (newName.Length > 0) Then
-                        If addComma Then
-                            sql += ", "
-                        End If
-
-                        sql += $"isActive = {isActive}"
+                    If data.isCentralized Then
+                        sql += $"       isCentralized = 1,"
+                    Else
+                        sql += $"       isCentralized = 0,"
                     End If
 
-                    sql += $" WHERE [id] = '{id}'"
+                    groupId = [select](data.group).id
 
-                    Return _EngineDB.executeDataTable(sql, forceOwner)
+                    If (groupId = 0) Then
+                        sql += $"       groupId = '{data.name}'"
+                    Else
+                        sql += $"       groupId = {groupId}"
+                    End If
+
+                    sql += $" WHERE id = {data.id}"
+
+                    If _EngineDB.executeDataTable(sql, forceOwner) And data.isActive Then
+                        RaiseEvent SetExchangeActive(data.id, -1, -1)
+
+                        Return True
+                    End If
                 End If
 
                 Return False
@@ -317,7 +349,7 @@ Namespace AreaBusiness
         ''' <returns></returns>
         Public Function updateExchangeLast(ByVal id As Integer, ByVal updateCurrency As Boolean, Optional ByVal forceOwner As String = "") As Boolean
             Try
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("ExchangeEngine.updateExchangeActive", _OwnerId)
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("ExchangeEngine.updateExchangeLast", _OwnerId)
 
                 If (forceOwner.Length = 0) Then
                     forceOwner = _OwnerId
@@ -325,16 +357,27 @@ Namespace AreaBusiness
 
                 If _Initialize Then
                     Dim sql As String
+                    Dim lastUpdate As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    Dim columnName As String = "lastCurrenciesCheck"
 
                     If useCache Then
                         If _CacheExchangeById.ContainsKey(id) Then
                             _CacheExchangeById(id).isActive = True
+
+                            If updateCurrency Then
+                                _CacheExchangeById(id).lastCurrenciesCheck = lastUpdate
+                            Else
+                                _CacheExchangeById(id).lastProductsCheck = lastUpdate
+
+                                columnName = "lastProductsCheck"
+                            End If
+
                         Else
                             Return False
                         End If
                     End If
 
-                    sql = $"UPDATE exchanges SET lastCurrencyCheck = '{CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()}' WHERE [id] = '{id}'"
+                    sql = $"UPDATE exchanges SET {columnName} = '{lastUpdate.ToString().Replace(",", ".")}' WHERE [id] = '{id}'"
 
                     Return _EngineDB.executeDataTable(sql, forceOwner)
                 End If
@@ -365,13 +408,19 @@ Namespace AreaBusiness
 
                 If _Initialize Then
                     If useCache Then
-                        Return _CacheExchangeById(id)
+                        If _CacheExchangeById.ContainsKey(id) Then
+                            Return _CacheExchangeById(id)
+                        Else
+                            Return New ExchangeStructure
+                        End If
                     Else
-                        Dim sql As String
+                        Dim sql As String = ""
                         Dim result As Object
                         Dim openDB As Object
 
-                        sql = $"SELECT [name], lastCurrenciesCheck, lastProductsCheck, isActive, isUsed FROM exchanges WHERE [id] = {id}"
+                        sql += $"SELECT A.id, A.name, A.isActive, A.lastCurrenciesCheck, A.lastProductsCheck, A.isCentralized, B.name as [group], A.isUsed "
+                        sql += $"FROM exchanges A LEFT Join exchanges B ON A.id = B.groupId "
+                        sql += $"WHERE A.id = '{id}'"
 
                         openDB = _EngineDB.openDatabase(forceOwner)
 
@@ -380,11 +429,14 @@ Namespace AreaBusiness
 
                             While result.read()
                                 While result.read()
-                                    response.id = id
-                                    response.name = result.getString(0)
-                                    response.lastCurrenciesCheck = result.getDouble(1)
-                                    response.lastProductsCheck = result.getDouble(2)
-                                    response.isUsed = (result.GetInt32(3) <> 0)
+                                    response.id = result.GetInt32(0)
+                                    response.name = result.GetString(1)
+                                    response.isActive = (result.GetInt32(2) <> 0)
+                                    response.lastCurrenciesCheck = result.getDouble(3)
+                                    response.lastProductsCheck = result.getDouble(4)
+                                    response.isCentralized = (result.getInt32(5) <> 0)
+                                    response.group = result.getString(6)
+                                    response.isUsed = (result.GetInt32(7) <> 0)
                                 End While
                             End While
 
@@ -421,13 +473,19 @@ Namespace AreaBusiness
 
                 If _Initialize Then
                     If useCache Then
-                        Return _CacheExchangeByName([name])
+                        If _CacheExchangeByName.ContainsKey([name]) Then
+                            Return _CacheExchangeByName([name])
+                        Else
+                            Return New ExchangeStructure
+                        End If
                     Else
-                        Dim sql As String
+                        Dim sql As String = ""
                         Dim result As Object
                         Dim openDB As Object
 
-                        sql = $"SELECT id, lastCurrenciesCheck, lastProductsCheck, isActive, isUsed FROM exchanges FROM exchanges WHERE [name] = '{name}'"
+                        sql += $"SELECT A.id, A.isActive, A.lastCurrenciesCheck, A.lastProductsCheck, A.isCentralized, B.name as [group], A.isUsed "
+                        sql += $"FROM exchanges A LEFT Join exchanges B ON A.id = B.groupId "
+                        sql += $"WHERE A.name = '{[name]}'"
 
                         openDB = _EngineDB.openDatabase(forceOwner)
 
@@ -438,9 +496,12 @@ Namespace AreaBusiness
                                 While result.read()
                                     response.id = result.GetInt32(0)
                                     response.name = name
-                                    response.lastCurrenciesCheck = result.getDouble(1)
-                                    response.lastProductsCheck = result.getDouble(2)
-                                    response.isUsed = (result.GetInt32(3) <> 0)
+                                    response.isActive = (result.GetInt32(1) <> 0)
+                                    response.lastCurrenciesCheck = result.getDouble(2)
+                                    response.lastProductsCheck = result.getDouble(3)
+                                    response.isCentralized = (result.getInt32(4) <> 0)
+                                    response.group = result.getString(5)
+                                    response.isUsed = (result.GetInt32(6) <> 0)
                                 End While
                             End While
 
@@ -504,8 +565,8 @@ Namespace AreaBusiness
         ''' This method provide to get a list of a table's exchange
         ''' </summary>
         ''' <returns></returns>
-        Public Function list(Optional ByVal loadEntireCache As Boolean = False, Optional ByVal forceOwner As String = "") As List(Of ExchangeStructure)
-            Dim sql As String
+        Public Function list(Optional ByVal loadEntireCache As Boolean = False, Optional ByVal forceOwner As String = "", Optional ByVal checkActive As Boolean = False) As List(Of ExchangeStructure)
+            Dim sql As String = ""
             Dim result As Object
             Dim openDB As Object
             Dim response As New List(Of ExchangeStructure)
@@ -521,7 +582,8 @@ Namespace AreaBusiness
                     If useCache And Not loadEntireCache Then
                         Return _CacheExchangeById.Values.ToList()
                     Else
-                        sql = $"SELECT id, name FROM exchanges "
+                        sql += $"SELECT A.id, A.name, A.isActive, A.lastCurrenciesCheck, A.lastProductsCheck, A.isCentralized, B.name as [group], A.isUsed "
+                        sql += $"FROM exchanges A LEFT Join exchanges B ON A.groupId = B.id "
 
                         openDB = _EngineDB.openDatabase(forceOwner)
 
@@ -536,11 +598,21 @@ Namespace AreaBusiness
 
                                     item.id = result.GetInt32(0)
                                     item.name = result.GetString(1)
+                                    item.isActive = (result.GetInt32(2) <> 0)
+                                    item.lastCurrenciesCheck = result.getDouble(3)
+                                    item.lastProductsCheck = result.getDouble(4)
+                                    item.isCentralized = (result.getInt32(5) <> 0)
 
-                                    If loadEntireCache Then
-                                        _CacheExchangeById.Add(item.id, item)
-                                        _CacheExchangeByName.Add(item.name, item)
-                                    End If
+                                    Try
+                                        item.group = result.getString(6)
+                                    Catch ex As Exception
+                                        item.group = ""
+                                    End Try
+
+                                    item.isUsed = (result.GetInt32(7) <> 0)
+
+                                    _CacheExchangeById.Add(item.id, item)
+                                    _CacheExchangeByName.Add(item.name, item)
 
                                     response.Add(item)
                                 End While
@@ -551,10 +623,18 @@ Namespace AreaBusiness
                     End If
                 End If
             Catch ex As Exception
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeEngine.list", forceOwner, ex.Message)
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeEngine.list", forceOwner, $"{ex.Message}")
 
                 Return New List(Of ExchangeStructure)
             Finally
+                If checkActive Then
+                    For Each item In response
+                        If (item.id <> 0) And item.isActive Then
+                            RaiseEvent SetExchangeActive(item.id, item.lastCurrenciesCheck, item.lastProductsCheck)
+                        End If
+                    Next
+                End If
+
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("ExchangeEngine.list", forceOwner)
             End Try
 
@@ -575,7 +655,9 @@ Namespace AreaBusiness
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("ExchangeEngine.delete", forceOwner)
 
                 If useCache Then
-                    If _CacheExchangeById(id).isUsed Or Not _CacheExchangeById.ContainsKey(id) Then
+                    If Not _CacheExchangeById.ContainsKey(id) Then
+                        Return False
+                    ElseIf _CacheExchangeById(id).isUsed Then
                         Return False
                     ElseIf _CacheExchangeById.ContainsKey(id) Then
                         _CacheExchangeByName.Remove(_CacheExchangeById(id).name)
@@ -628,7 +710,7 @@ Namespace AreaBusiness
                             Return False
                         End If
                     ElseIf useCache Then
-                        list(True)
+                        list(True,, True)
                     End If
 
                     Return True

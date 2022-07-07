@@ -67,6 +67,8 @@ Namespace AreaNetwork
                 End If
                 If Not IsNothing(log) Then
                     If (tmp.Trim.Length = 0) Then
+                        tmp = "(not found)"
+
                         log.track("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP", ownerId, "Service Public IP: not found")
                     Else
                         log.track("CHCSidechainServiceLibrary.AreaNetwork.Address.acquirePublicIP", ownerId, "Service Public IP: " & tmp)

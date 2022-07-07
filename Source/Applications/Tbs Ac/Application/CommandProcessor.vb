@@ -16,6 +16,9 @@ Namespace AreaCommon
 
         Private Const _CommandHelpPlus As String = "helpPlus"
         Private Const _CommandExchange As String = "exchange"
+        Private Const _CommandExchangeReference As String = "exchangeReference"
+        Private Const _CommandBatch As String = "batchAdv"
+        Private Const _CommandCurrency As String = "currency"
 
         Private WithEvents _Executor As New CHCCommandlineSupport.AreaCommon.CommandExecutor
         Private WithEvents _ClassSupport As CommandModel
@@ -71,13 +74,20 @@ Namespace AreaCommon
         ''' This method provide to execute a command
         ''' </summary>
         ''' <returns></returns>
-        Public Function run() As Boolean
+        Public Function run(Optional ByRef mainStructure As CommandStructure = Nothing) As Boolean
             Try
                 Dim response As Boolean
+                Dim mainCommand As CommandBuilder
 
-                With New CommandBuilder()
-                    _Executor.command = .run()
+                mainCommand = New CommandBuilder()
 
+                If Not IsNothing(mainStructure) Then
+                    _Executor.command = mainStructure
+                Else
+                    _Executor.command = mainCommand.run()
+                End If
+
+                With mainCommand
                     If (.lastErrorDescription.Length > 0) Then
                         Console.WriteLine("Error: " & .lastErrorDescription)
                         Console.WriteLine("")
@@ -94,6 +104,9 @@ Namespace AreaCommon
                     Select Case _Executor.command.code
                         Case _CommandHelpPlus.ToLower : _ClassSupport = New Command.CommandHelpPlus
                         Case _CommandExchange.ToLower : _ClassSupport = New Command.CommandExchange
+                        Case _CommandExchangeReference.ToLower : _ClassSupport = New Command.CommandExchangeReference
+                        Case _CommandBatch.ToLower : _ClassSupport = New Command.CommandBarchAdv
+                        Case _CommandCurrency.ToLower : _ClassSupport = New Command.CommandCurrency
                         Case Else
                             If (_Executor.command.code.Length > 0) Then
                                 Console.WriteLine(Chr(34) & _Executor.command.code & Chr(34) & " not recognized")
@@ -118,6 +131,8 @@ Namespace AreaCommon
                     _ClassSupport.command = _Executor.command
 
                     response = _ClassSupport.run()
+                Else
+                    response = True
                 End If
 
                 If _Executor.command.haveParameter("pause") Or Not response Then

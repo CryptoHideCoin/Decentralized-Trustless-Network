@@ -27,12 +27,12 @@ Namespace AreaJob
         ''' <summary>
         ''' This method provide to download a currency from a provider
         ''' </summary>
-        Private Async Sub downloadCurrencies()
+        Private Async Sub downloadCurrencies(ByVal supplier As String, ByVal exchangeId As Integer)
             Try
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("GetCurrenciesFromWEB.downloadCurrencies", _OwnerId)
 
                 Select Case _CurrentExchange.ToLower
-                    Case "Coinbase".ToLower : Await Task.Run(Sub() AreaProvider.CoinbaseProvider.Worker.searchNewCurrenciesAsync(_Supplier))
+                    Case "Coinbase".ToLower : Await Task.Run(Sub() AreaProvider.CoinbaseProvider.Worker.searchNewCurrenciesAsync(supplier, exchangeId))
                 End Select
             Catch ex As Exception
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("GetCurrenciesFromWEB.downloadCurrencies", _OwnerId, ex.Message)
@@ -44,61 +44,32 @@ Namespace AreaJob
         ''' <summary>
         ''' This method provide to download from exchange (automatic)
         ''' </summary>
-        ''' <param name="exchange_id"></param>
+        ''' <param name="exchangeId"></param>
         ''' <returns></returns>
-        Public Function automaticDownloadFromExchange(ByVal [name] As String) As Boolean
+        Public Function downloadFromExchange(ByVal id As Integer, ByVal [name] As String, ByVal manual As Boolean) As Boolean
             Try
-                Dim downloadTask As Task
-
-                _CurrentExchange = [name]
-                _Supplier = "Automatic job"
-
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("GetCurrenciesFromWEB.automaticDownloadFromExchange", _OwnerId)
 
-                downloadTask = New Task(AddressOf downloadCurrencies)
+                If _Initialize Then
+                    _CurrentExchange = [name]
 
-                downloadTask.Start()
+                    If manual Then
+                        _Supplier = "Manual job"
+                    Else
+                        _Supplier = "Automatic job"
+                    End If
 
-                Return True
+                    downloadCurrencies(_Supplier, id)
+
+                    Return True
+                Else
+                    Return False
+                End If
             Catch ex As Exception
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("GetCurrenciesFromWEB.automaticDownloadFromExchange", _OwnerId, ex.Message)
 
                 Return False
             Finally
-                _CurrentExchange = ""
-                _Supplier = ""
-
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("GetCurrenciesFromWEB.automaticDownloadFromExchange", _OwnerId)
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to download from exchange (manual)
-        ''' </summary>
-        ''' <param name="exchange_id"></param>
-        ''' <returns></returns>
-        Public Function manualDownloadFromExchange(ByVal [name] As String) As Boolean
-            Try
-                Dim downloadTask As Task
-
-                _CurrentExchange = [name]
-                _Supplier = "Manual job"
-
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("GetCurrenciesFromWEB.automaticDownloadFromExchange", _OwnerId)
-
-                downloadTask = New Task(AddressOf downloadCurrencies)
-
-                downloadTask.Start()
-
-                Return True
-            Catch ex As Exception
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("GetCurrenciesFromWEB.automaticDownloadFromExchange", _OwnerId, ex.Message)
-
-                Return False
-            Finally
-                _CurrentExchange = ""
-                _Supplier = ""
-
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("GetCurrenciesFromWEB.automaticDownloadFromExchange", _OwnerId)
             End Try
         End Function

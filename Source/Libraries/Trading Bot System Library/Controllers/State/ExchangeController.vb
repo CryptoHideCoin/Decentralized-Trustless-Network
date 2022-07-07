@@ -12,7 +12,7 @@ Imports CHCModelsLibrary.AreaModel.Information
 Namespace Controllers
 
 
-    ' GET: api/{GUID service}/state/base/exchangeController
+    ' GET: api/{GUID service}/state/trade/exchangeController
     <Route("StateBaseApi")>
     Public Class ExchangeController
 
@@ -113,7 +113,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="securityToken"></param>
         ''' <param name="[name]"></param>
-        Public Function PostValue(ByVal securityToken As String, ByVal [name] As String, ByVal isActive As Integer) As BaseRemoteResponse
+        Public Function PostValue(ByVal securityToken As String, <FromBody()> ByVal data As NewExchangeStructure) As BaseRemoteResponse
             Dim ownerId As String = "ExchangeController-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
@@ -126,7 +126,7 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        If (AreaCommon.state.exchangesEngine.addOrGetExchange(StrConv(name, VbStrConv.ProperCase), isActive, ownerId).id = 0) Then
+                        If Not AreaCommon.state.exchangesEngine.addNewExchange(data, ownerId) Then
                             result.responseStatus = BaseRemoteResponse.EnumResponseStatus.inError
 
                             result.errorDescription = "Problem during add a new exchange"
@@ -159,7 +159,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="id"></param>
         ''' <param name="value"></param>
-        Public Function PutValue(ByVal securityToken As String, ByVal id As Integer, ByVal [name] As String, ByVal isActive As Integer) As BaseRemoteResponse
+        Public Function PutValue(ByVal securityToken As String, <FromBody()> ByVal data As UpdateExchangeStructure) As BaseRemoteResponse
             Dim ownerId As String = "ExchangeController-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
@@ -172,7 +172,7 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        If Not AreaCommon.state.exchangesEngine.updateExchangeName(id, StrConv(name, VbStrConv.ProperCase), isActive, ownerId) Then
+                        If Not AreaCommon.state.exchangesEngine.updateExchangeName(data, ownerId) Then
                             result.responseStatus = RemoteResponse.EnumResponseStatus.inError
 
                             result.errorDescription = "999 - Cannot update data (check id)"
@@ -209,7 +209,7 @@ Namespace Controllers
             Dim enter As Boolean = False
             Try
                 If (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("ExchangeController.PutValue", ownerId,, CHCModelsLibrary.AreaModel.Log.AccessTypeEnumeration.api)
+                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("ExchangeController.DeleteValue", ownerId,, CHCModelsLibrary.AreaModel.Log.AccessTypeEnumeration.api)
 
                     enter = True
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -230,10 +230,10 @@ Namespace Controllers
                     result.responseStatus = RemoteResponse.EnumResponseStatus.systemOffline
                 End If
             Catch ex As Exception
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeController.PutValue", ownerId, ex.Message)
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeController.DeleteValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("ExchangeController.PutValue", ownerId)
+                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("ExchangeController.DeleteValue", ownerId)
                 End If
             End Try
 

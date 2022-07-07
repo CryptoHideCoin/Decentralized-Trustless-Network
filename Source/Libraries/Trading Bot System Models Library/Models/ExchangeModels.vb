@@ -24,7 +24,34 @@ Namespace AreaModel.Exchange
         Public Property isActive As Boolean = False
         Public Property lastCurrenciesCheck As Double = 0
         Public Property lastProductsCheck As Double = 0
+        Public Property isCentralized As Boolean = False
+        Public Property group As String = ""
         Public Property isUsed As Boolean = False
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain the data of a new Exchange
+    ''' </summary>
+    Public Class NewExchangeStructure
+
+        Public Property [name] As String = ""
+        Public Property isActive As Boolean = False
+        Public Property isCentralized As Boolean = False
+        Public Property group As String = ""
+
+    End Class
+
+    ''' <summary>
+    ''' This class contain the data of an update Exchange
+    ''' </summary>
+    Public Class UpdateExchangeStructure
+
+        Public Property id As Integer = 0
+        Public Property [name] As String = ""
+        Public Property isActive As Boolean = False
+        Public Property isCentralized As Boolean = False
+        Public Property group As String = ""
 
     End Class
 

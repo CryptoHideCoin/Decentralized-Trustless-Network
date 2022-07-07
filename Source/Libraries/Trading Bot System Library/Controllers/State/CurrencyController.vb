@@ -11,10 +11,15 @@ Imports CHCModelsLibrary.AreaModel.Information
 
 Namespace Controllers
 
+    Public Class DataCurrency
+        Public Property description As String = ""
+        Public Property age As String = ""
+    End Class
 
-    ' GET: api/{GUID service}/state/currenciesController
-    <Route("ServiceApi")>
-    Public Class CurrenciesController
+
+    ' GET: api/{GUID service}/state/trade/currencyController
+    <Route("StateBaseApi")>
+    Public Class CurrencyController
 
         Inherits ApiController
 
@@ -114,9 +119,9 @@ Namespace Controllers
         ''' <param name="securityToken"></param>
         ''' <param name="newDataValue"></param>
         ''' <returns></returns>
-        Public Function PostValue(ByVal securityToken As String, <FromBody()> ByVal newDataValue As CurrencyStructure) As CurrencyResponseModel
+        Public Function postValue(ByVal securityToken As String, <FromBody()> ByVal data As DataCurrency) As BaseRemoteResponse
             Dim ownerId As String = "CurrencyController-" & Guid.NewGuid.ToString
-            Dim result As New CurrencyResponseModel
+            Dim result As New BaseRemoteResponse
             Dim response As String = ""
             Dim enter As Boolean = False
             Try
@@ -127,8 +132,9 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
+                        'If (AreaCommon.state.currenciesEngine.addOrGet(value).id = 0) Then
 
-                        result.value = AreaCommon.state.currenciesEngine.addOrGet(newDataValue)
+                        'End If
 
                         CHCSidechainServiceLibrary.AreaCommon.Main.updateLastGetServiceInformation = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                     Else
@@ -157,7 +163,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="id"></param>
         ''' <param name="value"></param>
-        Public Function PutValue(ByVal securityToken As String, ByVal id As Integer, <FromBody()> ByVal newDataValue As CurrencyStructure) As BaseRemoteResponse
+        Public Function putValue(ByVal securityToken As String, <FromBody()> ByVal data As DataCurrency) As BaseRemoteResponse
             Dim ownerId As String = "CurrenciesController-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
@@ -170,11 +176,11 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        If Not AreaCommon.state.currenciesEngine.updateData(id, newDataValue) Then
-                            result.responseStatus = RemoteResponse.EnumResponseStatus.inError
+                        'If Not AreaCommon.state.currenciesEngine.updateData(0, data) Then
+                        result.responseStatus = RemoteResponse.EnumResponseStatus.inError
 
                             result.errorDescription = "999 - Cannot update data (check id)"
-                        End If
+                        'End If
 
                         CHCSidechainServiceLibrary.AreaCommon.Main.updateLastGetServiceInformation = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                     Else

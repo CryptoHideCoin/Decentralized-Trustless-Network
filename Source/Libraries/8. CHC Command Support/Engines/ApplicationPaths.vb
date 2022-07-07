@@ -15,6 +15,7 @@ Namespace AreaEngine
         sideChainService
         showJournal
         showPerformance
+        tradingBotSystem
     End Enum
 
     ''' <summary>

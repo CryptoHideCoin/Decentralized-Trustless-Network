@@ -27,6 +27,4 @@ E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\obj\Debug\TbsAc.pdb
 E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\TradingBotSystemModelsLibrary.dll
 E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\TradingBotSystemModelsLibrary.pdb
 E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\TradingBotSystemModelsLibrary.xml
-E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCProtocolLibrary.pdb
-E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCProtocolLibrary.xml
 E:\CryptoHideCoinDTN\Source\Applications\Tbs Ac\bin\Debug\CHCCommonLibrary.pdb

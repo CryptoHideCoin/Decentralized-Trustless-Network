@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "AdminClientService", "AdminClientService.vbproj", "{9C4BF6D0-2477-44D2-B14C-68BE2C13B260}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CHC Support UI Controls", "..\..\Libraries\CHC Support UI Controls\CHC Support UI Controls.vbproj", "{2B477A78-3139-4570-BB5E-3FC09475C316}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{9C4BF6D0-2477-44D2-B14C-68BE2C13B260}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C4BF6D0-2477-44D2-B14C-68BE2C13B260}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C4BF6D0-2477-44D2-B14C-68BE2C13B260}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B477A78-3139-4570-BB5E-3FC09475C316}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B477A78-3139-4570-BB5E-3FC09475C316}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B477A78-3139-4570-BB5E-3FC09475C316}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B477A78-3139-4570-BB5E-3FC09475C316}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -112,6 +112,8 @@
     <Compile Include="AdminSecurity\CertificateEngine.vb" />
     <Compile Include="CommandLine\CHCCommandBuilder.vb" />
     <Compile Include="Communication\ProxyWS.vb" />
+    <Compile Include="Communication\RestAPIUtils.vb" />
+    <Compile Include="Communication\RestfulAPI.vb" />
     <Compile Include="Encryption\SHAInterface.vb" />
     <Compile Include="FileManager\CHCBaseEncryption.vb" />
     <Compile Include="FileManager\CHCFile.vb" />

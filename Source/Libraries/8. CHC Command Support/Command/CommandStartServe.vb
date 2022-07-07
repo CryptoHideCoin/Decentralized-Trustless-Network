@@ -82,6 +82,11 @@ Namespace AreaCommon.Command
                         directory = applicationInfo.directoryName
                         exeFileName = applicationInfo.applicationName
                         parameters = parameterDataPath & " " & parameterPassword
+                    Case "tradingbotsystem", "tradingbotsystemservice"
+                        applicationInfo = ApplicationCommon.appConfigurations.getApplicationData(AreaEngine.ApplicationID.tradingBotSystem)
+                        directory = applicationInfo.directoryName
+                        exeFileName = applicationInfo.applicationName
+                        parameters = parameterDataPath & " " & parameterPassword
                     Case "primary"
                         directory = "CHC Primary Service Runtime"
                         exeFileName = "CHCPrimaryServiceRuntime.exe"
@@ -106,7 +111,7 @@ Namespace AreaCommon.Command
                         Return True
                     End If
                 Else
-                    RaiseEvent WriteLine("Error: the directory '{path}' is not exist")
+                    RaiseEvent WriteLine($"Error: the directory '{path}' is not exist")
                 End If
 
                 Return False

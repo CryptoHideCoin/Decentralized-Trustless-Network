@@ -11,9 +11,13 @@ Option Explicit On
 
 
 
+
 Namespace Global.Utils
+
     Namespace WebRequest
+
         Public Module modRequest
+
             ''' <summary>
             ''' Executes a GET request on the given url
             ''' </summary>
@@ -21,7 +25,7 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function [Get](url As String _
-                                  , Optional options As Options = Nothing) As Response
+                                  , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As CHCModelsLibrary.AreaModel.Network.Response.GenericResponse
                 Return GetAsync(url, options:=options).Result
             End Function
 
@@ -32,8 +36,8 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function GetAsync(url As String _
-                                  , Optional options As Options = Nothing) As Task(Of Response)
-                Return ExecuteAsync(Method.Get, url, payload:=CType(Nothing, Byte()), options:=options)
+                                  , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As Task(Of CHCModelsLibrary.AreaModel.Network.Response.GenericResponse)
+                Return ExecuteAsync(CHCModelsLibrary.AreaModel.Network.Communication.Method.Get, url, payload:=CType(Nothing, Byte()), options:=options)
             End Function
 
             ''' <summary>
@@ -44,7 +48,7 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function Post(url As String, payload As String _
-                                , Optional options As Options = Nothing) As Response
+                                , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As CHCModelsLibrary.AreaModel.Network.Response.GenericResponse
                 Return Post(url, payload:=payload.GetBytes, options:=options)
             End Function
 
@@ -56,7 +60,7 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function Post(url As String, payload As Byte() _
-                                , Optional options As Options = Nothing) As Response
+                                , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As CHCModelsLibrary.AreaModel.Network.Response.GenericResponse
                 Return PostAsync(url, payload:=payload, options:=options).Result
             End Function
 
@@ -68,7 +72,7 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function PostAsync(url As String, payload As String _
-                                , Optional options As Options = Nothing) As Task(Of Response)
+                                , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As Task(Of CHCModelsLibrary.AreaModel.Network.Response.GenericResponse)
                 Return PostAsync(url, payload:=payload.GetBytes, options:=options)
             End Function
 
@@ -80,8 +84,8 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function PostAsync(url As String, payload As Byte() _
-                                , Optional options As Options = Nothing) As Task(Of Response)
-                Return ExecuteAsync(Method.Post, url, payload:=payload, options:=options)
+                                , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As Task(Of CHCModelsLibrary.AreaModel.Network.Response.GenericResponse)
+                Return ExecuteAsync(CHCModelsLibrary.AreaModel.Network.Communication.Method.Post, url, payload:=payload, options:=options)
             End Function
 
             ''' <summary>
@@ -92,7 +96,7 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function Put(url As String, payload As String _
-                                , Optional options As Options = Nothing) As Response
+                                , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As CHCModelsLibrary.AreaModel.Network.Response.GenericResponse
                 Return Put(url, payload:=payload.GetBytes, options:=options)
             End Function
 
@@ -104,7 +108,7 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function Put(url As String, payload As Byte() _
-                                , Optional options As Options = Nothing) As Response
+                                , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As CHCModelsLibrary.AreaModel.Network.Response.GenericResponse
                 Return PutAsync(url, payload:=payload, options:=options).Result
             End Function
 
@@ -116,7 +120,7 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function PutAsync(url As String, payload As String _
-                                , Optional options As Options = Nothing) As Task(Of Response)
+                                , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As Task(Of CHCModelsLibrary.AreaModel.Network.Response.GenericResponse)
                 Return PutAsync(url, payload:=payload.GetBytes, options:=options)
             End Function
 
@@ -128,8 +132,8 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function PutAsync(url As String, payload As Byte() _
-                                , Optional options As Options = Nothing) As Task(Of Response)
-                Return ExecuteAsync(Method.Put, url, payload:=payload, options:=options)
+                                , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As Task(Of CHCModelsLibrary.AreaModel.Network.Response.GenericResponse)
+                Return ExecuteAsync(CHCModelsLibrary.AreaModel.Network.Communication.Method.Put, url, payload:=payload, options:=options)
             End Function
 
             ''' <summary>
@@ -140,7 +144,7 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function Patch(url As String, payload As String _
-                                , Optional options As Options = Nothing) As Response
+                                , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As CHCModelsLibrary.AreaModel.Network.Response.GenericResponse
                 Return Patch(url, payload:=payload.GetBytes, options:=options)
             End Function
 
@@ -152,7 +156,7 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function Patch(url As String, payload As Byte() _
-                                , Optional options As Options = Nothing) As Response
+                                , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As CHCModelsLibrary.AreaModel.Network.Response.GenericResponse
                 Return PatchAsync(url, payload:=payload, options:=options).Result
             End Function
 
@@ -164,7 +168,7 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function PatchAsync(url As String, payload As String _
-                                , Optional options As Options = Nothing) As Task(Of Response)
+                                , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As Task(Of CHCModelsLibrary.AreaModel.Network.Response.GenericResponse)
                 Return PatchAsync(url, payload:=payload.GetBytes, options:=options)
             End Function
 
@@ -176,8 +180,8 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function PatchAsync(url As String, payload As Byte() _
-                                , Optional options As Options = Nothing) As Task(Of Response)
-                Return ExecuteAsync(Method.Patch, url, payload:=payload, options:=options)
+                                , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As Task(Of CHCModelsLibrary.AreaModel.Network.Response.GenericResponse)
+                Return ExecuteAsync(CHCModelsLibrary.AreaModel.Network.Communication.Method.Patch, url, payload:=payload, options:=options)
             End Function
 
             ''' <summary>
@@ -187,7 +191,7 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function Delete(url As String _
-                                  , Optional options As Options = Nothing) As Response
+                                  , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As CHCModelsLibrary.AreaModel.Network.Response.GenericResponse
                 Return DeleteAsync(url, options:=options).Result
             End Function
 
@@ -198,8 +202,8 @@ Namespace Global.Utils
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
             Public Function DeleteAsync(url As String _
-                                  , Optional options As Options = Nothing) As Task(Of Response)
-                Return ExecuteAsync(Method.Delete, url, payload:=CType(Nothing, Byte()), options:=options)
+                                  , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As Task(Of CHCModelsLibrary.AreaModel.Network.Response.GenericResponse)
+                Return ExecuteAsync(CHCModelsLibrary.AreaModel.Network.Communication.Method.Delete, url, payload:=CType(Nothing, Byte()), options:=options)
             End Function
 
             ''' <summary>
@@ -210,10 +214,10 @@ Namespace Global.Utils
             ''' <param name="payload">The data to send to the specified resource</param>
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
-            Public Function ExecuteAsync(type As Method _
+            Public Function ExecuteAsync(type As CHCModelsLibrary.AreaModel.Network.Communication.Method _
                                     , url As String _
                                     , Optional payload As String = Nothing _
-                                    , Optional options As Options = Nothing) As Task(Of Response)
+                                    , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As Task(Of CHCModelsLibrary.AreaModel.Network.Response.GenericResponse)
                 Return ExecuteAsync(type, url, payload:=CType(payload?.GetBytes, Byte()), options:=options)
             End Function
 
@@ -225,10 +229,10 @@ Namespace Global.Utils
             ''' <param name="payload">The data to send to the specified resource</param>
             ''' <param name="options">The options for the web request</param>
             ''' <returns>The result of the given request</returns>
-            Public Async Function ExecuteAsync(type As Method _
+            Public Async Function ExecuteAsync(type As CHCModelsLibrary.AreaModel.Network.Communication.Method _
                                     , url As String _
                                     , Optional payload As Byte() = Nothing _
-                                    , Optional options As Options = Nothing) As Task(Of Response)
+                                    , Optional options As CHCModelsLibrary.AreaModel.Network.Communication.Options = Nothing) As Task(Of CHCModelsLibrary.AreaModel.Network.Response.GenericResponse)
                 Dim request = CType(System.Net.WebRequest.Create(url), System.Net.HttpWebRequest)
                 If options IsNot Nothing Then
                     request.CopyProperties(options)
@@ -256,7 +260,7 @@ Namespace Global.Utils
                     Throw
                 End Try
 
-                Dim result = New Response With {
+                Dim result = New CHCModelsLibrary.AreaModel.Network.Response.GenericResponse With {
                     .Result = webResponse,
                     .Bytes = GetBytes(webResponse)
                 }
@@ -311,61 +315,6 @@ Namespace Global.Utils
             End Sub
         End Module
 
-        ''' <summary>
-        ''' The response result of a <see cref="System.Net.HttpWebRequest"/> 
-        ''' </summary>
-        Public Class Response
-            Public Property Result As System.Net.HttpWebResponse = Nothing
-            Public Property Bytes As Byte() = Nothing
-            Public ReadOnly Property Body As String
-                Get
-                    If _body Is Nothing AndAlso Bytes IsNot Nothing Then
-                        _body = Bytes.GetString()
-                    End If
-                    Return _body
-                End Get
-            End Property
-            Private _body As String = Nothing
-        End Class
-
-        ''' <summary>
-        ''' Options for the given <see cref="System.Net.HttpWebRequest"/> 
-        ''' </summary>
-        Public Class Options
-            Public Property Headers As New System.Net.WebHeaderCollection
-            Public Property Credentials As System.Net.ICredentials = Nothing
-            Public Property Connection As String = Nothing
-            Public Property KeepAlive As Boolean = True
-            Public Property Expect As String = Nothing
-            Public Property IfModifiedSince As Date
-            Public Property TransferEncoding As String
-            Public Property Accept As String = Nothing
-            Public Property AllowAutoRedirect As Boolean = True
-            Public Property AllowReadStreamBuffering As Boolean = False
-            Public Property AllowWriteStreamBuffering As Boolean = True
-            Public Property MaximumAutomaticRedirections As Integer = 50
-            Public Property MediaType As String = Nothing
-            Public Property Pipelined As Boolean = True
-            Public Property PreAuthenticate As Boolean = False
-            Public Property Referer As String = Nothing
-            Public Property SendChunked As Boolean = False
-            Public Property UseDefaultCredentials As Boolean = False
-            Public Property UserAgent As String = Nothing
-            Public Property ContentType As String = Nothing
-        End Class
-
-        Public MustInherit Class ContentType
-            Public Const ApplicationUrlEncoded As String = "application/x-www-form-urlencoded"
-            Public Const ApplicationJson As String = "application/json"
-            Public Const TextXml As String = "text/xml"
-        End Class
-
-        Public Enum Method
-            [Get]
-            Post
-            Put
-            Patch
-            Delete
-        End Enum
     End Namespace
+
 End Namespace ' http://programmingnotes.org/

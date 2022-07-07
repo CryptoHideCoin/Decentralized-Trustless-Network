@@ -27,11 +27,7 @@ Namespace AreaAsynchronous
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("Internal.executeDownloadCurrencies", ownerId)
 
                 For Each singleExchange In AreaCommon.state.exchangesEngine.list
-                    If automatic Then
-                        AreaCommon.state.currenciesDownloadEngine.automaticDownloadFromExchange(singleExchange.name)
-                    Else
-                        AreaCommon.state.currenciesDownloadEngine.manualDownloadFromExchange(singleExchange.name)
-                    End If
+                    AreaCommon.state.currenciesDownloadEngine.downloadFromExchange(singleExchange.id, singleExchange.name, Not automatic)
                 Next
 
                 Return True

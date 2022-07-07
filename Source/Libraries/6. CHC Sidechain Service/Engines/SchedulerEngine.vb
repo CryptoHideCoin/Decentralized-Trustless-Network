@@ -5,6 +5,7 @@ Imports CHCSidechainServiceLibrary.AreaCommon.Main
 Imports CHCCommonLibrary.AreaEngine.Communication
 Imports CHCModelsLibrary.AreaModel.Network.Response
 Imports CHCModelsLibrary.AreaModel.Service
+Imports CHCModelsLibrary.AreaModel.Service.Scheduler
 Imports System.Threading
 
 
@@ -13,28 +14,6 @@ Imports System.Threading
 Namespace AreaScheduler
 
     Public Class MainEngine
-
-        ''' <summary>
-        ''' This list contain the costant of a job of type
-        ''' </summary>
-        Private Enum ScheduleJobType
-            notDefined
-            notifyLocalWorkMachine
-            logRotate
-            registryRotate
-            performanceProfile
-            refreshTracker
-            counterRotate
-        End Enum
-
-        ''' <summary>
-        ''' This class contain all element of single slot of a scheduler
-        ''' </summary>
-        Private Class JobSchedule
-            Public Property [type] As ScheduleJobType
-            Public Property nextTimeExecuted As Double = 0
-            Public Property supportData As Object
-        End Class
 
         Private Property _ScheduleJobs As New List(Of JobSchedule)
 
@@ -49,7 +28,7 @@ Namespace AreaScheduler
 
                 Dim response As New JobSchedule
 
-                response.type = ScheduleJobType.notifyLocalWorkMachine
+                response.type = JobSchedule.ScheduleJobType.notifyLocalWorkMachine
                 response.nextTimeExecuted = 0
 
                 environment.log.track("AreaScheduler.MainEngine.loadLocalWorkMachineSlot", "Main", "Next Time executed = Now")
@@ -74,7 +53,7 @@ Namespace AreaScheduler
 
                 Dim response As New JobSchedule
 
-                response.type = ScheduleJobType.logRotate
+                response.type = JobSchedule.ScheduleJobType.logRotate
 
 #If DEBUG Then
                 response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 10000
@@ -106,7 +85,7 @@ Namespace AreaScheduler
 
                 Dim response As New JobSchedule
 
-                response.type = ScheduleJobType.registryRotate
+                response.type = JobSchedule.ScheduleJobType.registryRotate
 
 #If DEBUG Then
                 response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 10000
@@ -137,7 +116,7 @@ Namespace AreaScheduler
 
                 Dim response As New JobSchedule
 
-                response.type = ScheduleJobType.performanceProfile
+                response.type = JobSchedule.ScheduleJobType.performanceProfile
 
 #If DEBUG Then
                 response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 10000
@@ -168,7 +147,7 @@ Namespace AreaScheduler
 
                 Dim response As New JobSchedule
 
-                response.type = ScheduleJobType.counterRotate
+                response.type = JobSchedule.ScheduleJobType.counterRotate
 
 #If DEBUG Then
                 'response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 10000
@@ -200,7 +179,7 @@ Namespace AreaScheduler
 
                 Dim response As New JobSchedule
 
-                response.type = ScheduleJobType.refreshTracker
+                response.type = JobSchedule.ScheduleJobType.refreshTracker
 
                 response.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 60000
 
@@ -370,13 +349,13 @@ Namespace AreaScheduler
             Try
                 If (item.nextTimeExecuted < CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) Then
                     Select Case item.type
-                        Case ScheduleJobType.notifyLocalWorkMachine
+                        Case JobSchedule.ScheduleJobType.notifyLocalWorkMachine
                             callLocalWorkMachine(serviceName)
 
                             item.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 10000
 
                             Return True
-                        Case ScheduleJobType.logRotate
+                        Case JobSchedule.ScheduleJobType.logRotate
                             environment.log.track("AreaScheduler.MainEngine.processJob", "Main", "Start log rotate")
                             environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.autoMaintenanceStartup, "Log Rotate")
 
@@ -385,7 +364,7 @@ Namespace AreaScheduler
                             callLogRotate()
 
                             environment.log.track("AreaScheduler.MainEngine.processJob", "Main", $"Log rotate run. Next time {item.nextTimeExecuted}")
-                        Case ScheduleJobType.registryRotate
+                        Case JobSchedule.ScheduleJobType.registryRotate
                             environment.log.track("AreaScheduler.MainEngine.processJob", "Main", "Start registry rotate")
                             environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.autoMaintenanceStartup, "Registry Rotate")
 
@@ -394,7 +373,7 @@ Namespace AreaScheduler
                             callRegistryRotate()
 
                             environment.log.track("AreaScheduler.MainEngine.processJob", "Main", $"Registry rotate run. Next time {item.nextTimeExecuted}")
-                        Case ScheduleJobType.performanceProfile
+                        Case JobSchedule.ScheduleJobType.performanceProfile
                             environment.log.track("AreaScheduler.MainEngine.processJob", "Main", "Start Performance Profile")
                             environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.autoMaintenanceStartup, "Performance Profile")
 
@@ -404,7 +383,7 @@ Namespace AreaScheduler
 
                             environment.log.track("AreaScheduler.MainEngine.processJob", "Main", $"Registry rotate run. Next time {item.nextTimeExecuted}")
 
-                        Case ScheduleJobType.counterRotate
+                        Case JobSchedule.ScheduleJobType.counterRotate
                             environment.log.track("AreaScheduler.MainEngine.processJob", "Main", "Start Counter Rotate")
                             environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.autoMaintenanceStartup, "Counter Rotate")
 
@@ -420,10 +399,14 @@ Namespace AreaScheduler
 
                             environment.log.track("AreaScheduler.MainEngine.processJob", "Main", $"Registry rotate run. Next time {item.nextTimeExecuted}")
 
-                        Case ScheduleJobType.refreshTracker
+                        Case JobSchedule.ScheduleJobType.refreshTracker
                             environment.log.writeCacheToLogFile()
 
                             item.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 60000
+                        Case JobSchedule.ScheduleJobType.other
+                            item.nextTimeExecuted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + item.frequencies
+
+                            item.supportData.run()
                     End Select
 
                     Return False
@@ -486,6 +469,21 @@ Namespace AreaScheduler
         End Function
 
         ''' <summary>
+        ''' This method provide to add external Job
+        ''' </summary>
+        ''' <param name="item"></param>
+        ''' <returns></returns>
+        Public Function addExternalJob(ByVal item As CHCModelsLibrary.AreaModel.Service.Scheduler.JobSchedule) As Boolean
+            Try
+                _ScheduleJobs.Add(item)
+
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
         ''' This method provide to update next time executed local work machine job
         ''' </summary>
         ''' <returns></returns>
@@ -493,7 +491,7 @@ Namespace AreaScheduler
             Try
                 If (AreaCommon.Main.updateLastGetServiceInformation > 0) Then
                     For Each item In _ScheduleJobs
-                        If (item.type = ScheduleJobType.notifyLocalWorkMachine) Then
+                        If (item.type = JobSchedule.ScheduleJobType.notifyLocalWorkMachine) Then
                             item.nextTimeExecuted = AreaCommon.Main.updateLastGetServiceInformation + 10000
                         End If
                     Next

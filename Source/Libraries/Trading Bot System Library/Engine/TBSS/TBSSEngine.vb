@@ -58,6 +58,8 @@ Namespace AreaEngine
 
                 If _EngineDB.init("Evaluation", "Custom") Then
                     AreaCommon.state.exchangesEngine.useCache = True
+                    AreaCommon.state.exchangeReferencesEngine.useCache = True
+                    AreaCommon.state.currenciesEngine.useCache = True
 
                     If Not AreaCommon.state.exchangesEngine.init() Then
                         CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.track("EvaluationEngine.init", _OwnerId, "Problem during initialize Exchanges engine init")
@@ -69,13 +71,13 @@ Namespace AreaEngine
 
                         Return False
                     End If
-                    If Not AreaCommon.state.exchangeReferencesEngine.init() Then
-                        CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.track("EvaluationEngine.init", _OwnerId, "Problem during initialize Exchange References engine init")
+                    If Not AreaCommon.state.currenciesDownloadEngine.init() Then
+                        CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.track("EvaluationEngine.init", _OwnerId, "Problem during initialize Currencies Download engine init")
 
                         Return False
                     End If
-                    If Not AreaCommon.state.currenciesDownloadEngine.init() Then
-                        CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.track("EvaluationEngine.init", _OwnerId, "Problem during initialize Currencies Download engine init")
+                    If Not AreaCommon.state.exchangeReferencesEngine.init() Then
+                        CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.track("EvaluationEngine.init", _OwnerId, "Problem during initialize Exchange References engine init")
 
                         Return False
                     End If

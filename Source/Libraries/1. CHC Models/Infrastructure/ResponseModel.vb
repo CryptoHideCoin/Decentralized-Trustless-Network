@@ -90,4 +90,25 @@ Namespace AreaModel.Network.Response
 
     End Class
 
+    ''' <summary>
+    ''' The response result of a <see cref="System.Net.HttpWebRequest"/> 
+    ''' </summary>
+    Public Class GenericResponse
+
+        Private _body As String = Nothing
+
+        Public Property Result As System.Net.HttpWebResponse = Nothing
+        Public Property Bytes As Byte() = Nothing
+
+        Public ReadOnly Property Body As String
+            Get
+                If _body Is Nothing AndAlso Bytes IsNot Nothing Then
+                    _body = Text.Encoding.Default.GetString(Bytes)
+                End If
+                Return _body
+            End Get
+        End Property
+
+    End Class
+
 End Namespace

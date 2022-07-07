@@ -12,8 +12,8 @@ Imports CHCModelsLibrary.AreaModel.Information
 Namespace Controllers
 
 
-    ' GET: api/{GUID service}/state/exchangeReferenceController
-    <Route("ServiceApi")>
+    ' GET: api/{GUID service}/state/trade/exchangeReferenceController
+    <Route("StateBaseApi")>
     Public Class ExchangeReferenceController
 
         Inherits ApiController
@@ -24,7 +24,7 @@ Namespace Controllers
         ''' This method provide to return all exchange reference
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetValues(ByVal securityToken As String, ByVal exchange_id As Integer) As ExchangeReferenceListResponseModel
+        Public Function GetValues(ByVal securityToken As String, ByVal exchangeId As Integer) As ExchangeReferenceListResponseModel
             Dim ownerId As String = "ExchangeReferenceController-" & Guid.NewGuid.ToString
             Dim result As New ExchangeReferenceListResponseModel
             Dim response As String = ""
@@ -37,7 +37,7 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        result.value = AreaCommon.state.exchangeReferencesEngine.list(exchange_id, ownerId)
+                        result.value = AreaCommon.state.exchangeReferencesEngine.list(exchangeId, ownerId)
 
                         CHCSidechainServiceLibrary.AreaCommon.Main.updateLastGetServiceInformation = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                     Else
@@ -69,7 +69,7 @@ Namespace Controllers
         ''' <param name="securityToken"></param>
         ''' <param name="id"></param>
         ''' <returns></returns>
-        Public Function GetValue(ByVal securityToken As String, ByVal exchange_id As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration) As ExchangeReferenceResponseModel
+        Public Function GetValue(ByVal securityToken As String, ByVal exchangeId As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration) As ExchangeReferenceResponseModel
             Dim ownerId As String = "ExchangeReferenceController-" & Guid.NewGuid.ToString
             Dim result As New ExchangeReferenceResponseModel
             Dim response As String = ""
@@ -82,7 +82,7 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        result.value = AreaCommon.state.exchangeReferencesEngine.select(exchange_id, urlType, ownerId)
+                        result.value = AreaCommon.state.exchangeReferencesEngine.select(exchangeId, urlType, ownerId)
 
                         CHCSidechainServiceLibrary.AreaCommon.Main.updateLastGetServiceInformation = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                     Else
@@ -113,7 +113,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="securityToken"></param>
         ''' <param name="[name]"></param>
-        Public Function PostValue(ByVal securityToken As String, ByVal exchange_Id As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, ByVal url As String) As BaseRemoteResponse
+        Public Function PostValue(ByVal securityToken As String, <FromBody()> ByVal data As ExchangeReferenceStructure) As BaseRemoteResponse
             Dim ownerId As String = "ExchangeReferenceController-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
@@ -126,7 +126,7 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        If AreaCommon.state.exchangeReferencesEngine.addIfMissing(exchange_Id, urlType, url, ownerId) Then
+                        If Not AreaCommon.state.exchangeReferencesEngine.addIfMissing(data, ownerId) Then
                             result.responseStatus = BaseRemoteResponse.EnumResponseStatus.inError
 
                             result.errorDescription = "Problem during add a new exchange reference"
@@ -159,7 +159,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="id"></param>
         ''' <param name="value"></param>
-        Public Function PutValue(ByVal securityToken As String, ByVal exchange_Id As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, ByVal url As String) As BaseRemoteResponse
+        Public Function PutValue(ByVal securityToken As String, <FromBody()> ByVal data As ExchangeReferenceStructure) As BaseRemoteResponse
             Dim ownerId As String = "ExchangeReferenceController-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
@@ -172,7 +172,7 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        If Not AreaCommon.state.exchangeReferencesEngine.updateExchangeReference(exchange_Id, urlType, url, ownerId) Then
+                        If Not AreaCommon.state.exchangeReferencesEngine.updateExchangeReference(data.exchangeId, data.urlType, data.url, ownerId) Then
                             result.responseStatus = RemoteResponse.EnumResponseStatus.inError
 
                             result.errorDescription = "999 - Cannot update data (check id)"
@@ -202,7 +202,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="id"></param>
         ''' <param name="value"></param>
-        Public Function DeleteValue(ByVal securityToken As String, ByVal exchange_Id As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration) As BaseRemoteResponse
+        Public Function DeleteValue(ByVal securityToken As String, <FromBody()> ByVal data As ExchangeReferenceStructure) As BaseRemoteResponse
             Dim ownerId As String = "ExchangeReferenceController-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
@@ -215,7 +215,7 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        If Not AreaCommon.state.exchangeReferencesEngine.delete(exchange_Id, urlType, ownerId) Then
+                        If Not AreaCommon.state.exchangeReferencesEngine.delete(data.exchangeId, data.urlType, ownerId) Then
                             result.responseStatus = RemoteResponse.EnumResponseStatus.inError
 
                             result.errorDescription = "999 - Cannot delete data (check id or it used)"

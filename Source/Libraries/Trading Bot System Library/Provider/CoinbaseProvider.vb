@@ -48,72 +48,72 @@ Namespace AreaProvider.CoinbaseProvider
         ''' <summary>
         ''' This method provide to download a currency from a provider
         ''' </summary>
-        Public Async Sub searchNewCurrenciesAsync(ByVal supplier As String)
+        Public Async Sub searchNewCurrenciesAsync(ByVal supplier As String, ByVal exchangeId As Integer)
             Dim ownerId As String = "searchNewCurrencies"
             Try
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("Worker.searchNewCurrencies", ownerId)
 
                 Dim proxyEngine As New CHCCommonLibrary.AreaEngine.Communication.ProxyWS(Of List(Of Currency))
                 Dim newCurrency As TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyStructure
-                Dim exchange_id As Integer = 0
                 Dim newCurrencyAdded As Boolean = False
 
-                For Each item In AreaCommon.state.exchangesEngine.list
-                    If (item.name.CompareTo("Coinbase") = 0) Then
-                        exchange_id = item.id
+                proxyEngine.url = AreaCommon.state.exchangeReferencesEngine.select(exchangeId, TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeReferenceStructure.TypeReferenceEnumeration.apiCurrencies, ownerId).url
 
-                        Exit For
-                    End If
-                Next
+                Dim response As String = Await proxyEngine.getData("Accept")
 
-                If (exchange_id > 0) Then
-                    proxyEngine.url = AreaCommon.state.exchangeReferencesEngine.select(exchange_id, TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeReferenceStructure.TypeReferenceEnumeration.apiCurrencies, ownerId).url
+                If (response.Length > 0) Then
+                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("Worker.searchNewCurrencies", ownerId, response)
+                Else
+                    For Each singleCurrency In proxyEngine.data
+                        If (AreaCommon.state.currenciesEngine.select(singleCurrency.id, ownerId).id = 0) Then
+                            newCurrency = New TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyStructure
 
-                    Dim response As String = Await proxyEngine.getData("Accept")
+                            newCurrency.shortName = singleCurrency.id
+                            newCurrency.name = singleCurrency.name
+                            newCurrency.acquireTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
-                    If (response.Length > 0) Then
-                        CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("Worker.searchNewCurrencies", ownerId, response)
-                    Else
-                        For Each singleCurrency In proxyEngine.data
-                            If (AreaCommon.state.currenciesEngine.select(singleCurrency.id, ownerId).id = 0) Then
-                                newCurrency = New TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyStructure
+                            newCurrency.displayName = singleCurrency.details.display_name
 
-                                newCurrency.shortName = singleCurrency.id
-                                newCurrency.name = singleCurrency.name
-                                newCurrency.acquireTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                            Do While (singleCurrency.max_precision < 1)
+                                newCurrency.maxPrecision += 1
 
-                                newCurrency.displayName = singleCurrency.details.display_name
+                                singleCurrency.max_precision = singleCurrency.max_precision * 10
+                            Loop
 
-                                If (singleCurrency.max_precision > 0) Then
-                                    Do While (singleCurrency.max_precision > 0)
-                                        newCurrency.maxPrecision += 1
+                            Do While (singleCurrency.min_size < 1)
+                                newCurrency.minSize += 1
 
-                                        singleCurrency.max_precision = singleCurrency.max_precision * 10
-                                    Loop
-                                End If
+                                singleCurrency.min_size = singleCurrency.min_size * 10
+                            Loop
 
-                                If (singleCurrency.min_size > 0) Then
-                                    Do While (singleCurrency.min_size > 0)
-                                        newCurrency.minSize += 1
+                            newCurrency.source = "Coinbase"
+                            newCurrency.supplier = supplier
 
-                                        singleCurrency.min_size = singleCurrency.min_size * 10
-                                    Loop
-                                End If
-
-                                newCurrency.source = "Coinbase"
-                                newCurrency.supplier = supplier
+                            If IsNothing(singleCurrency.details.symbol) Then
+                                newCurrency.symbol = ""
+                            Else
                                 newCurrency.symbol = singleCurrency.details.symbol
-                                newCurrency.tipology = singleCurrency.details.type
-
-                                AreaCommon.state.currenciesEngine.addOrGet(newCurrency, ownerId)
-
-                                newCurrencyAdded = True
                             End If
-                        Next
 
-                        If newCurrencyAdded Then
-                            CHCSidechainServiceLibrary.AreaCommon.Main.environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.other, "[Business] - Add new coin into db")
+                            Select Case singleCurrency.details.type.ToString()
+                                Case "crypto" : newCurrency.tipology = TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyStructure.tipologyAsset.crypto
+                                Case Else : newCurrency.tipology = TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyStructure.tipologyAsset.fiat
+                            End Select
+
+                            newCurrency.nature = TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyStructure.natureAsset.undefined
+                            newCurrency.networkReferement = ""
+                            newCurrency.contractNetwork = ""
+
+                            AreaCommon.state.currenciesEngine.addOrGet(newCurrency, ownerId)
+
+                            newCurrencyAdded = True
                         End If
+                    Next
+
+                    AreaCommon.state.exchangesEngine.updateExchangeLast(exchangeId, True, ownerId)
+
+                    If newCurrencyAdded Then
+                        CHCSidechainServiceLibrary.AreaCommon.Main.environment.registry.addNew(CHCModelsLibrary.AreaModel.Registry.RegistryData.TypeEvent.other, "[Business] - Add new coin into db")
                     End If
                 End If
             Catch ex As Exception

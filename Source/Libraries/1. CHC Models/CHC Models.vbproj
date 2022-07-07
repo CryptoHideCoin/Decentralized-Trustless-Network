@@ -107,12 +107,14 @@
   <ItemGroup>
     <Compile Include="Administration\SecurityModel.vb" />
     <Compile Include="Administration\SettingModels.vb" />
+    <Compile Include="Infrastructure\CommunicationModel.vb" />
     <Compile Include="Infrastructure\CounterStructuresModel.vb" />
     <Compile Include="Infrastructure\PerformanceProfileModel.vb" />
     <Compile Include="Infrastructure\RegistryStructuresModel.vb" />
     <Compile Include="Infrastructure\ResponseModel.vb" />
     <Compile Include="Infrastructure\CommunicationServiceInformationModel.vb" />
     <Compile Include="Infrastructure\LogStructuresModel.vb" />
+    <Compile Include="Infrastructure\SchedulerModel.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -106,9 +106,6 @@
     <Reference Include="CHCModelsLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\x64\CHCModelsLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCProtocolLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x64\CHCProtocolLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="CHCDataAccess">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Data Access\x64\CHCDataAccess.dll</HintPath>
     </Reference>
@@ -131,6 +128,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="CHCProtocolLibrary, Version=1.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\x86\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web.Http">
@@ -226,12 +227,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Admin\Counter\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\3. CHC Protocol\CHC Protocol - Debug.vbproj">
-      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
-      <Name>CHC Protocol - Debug</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

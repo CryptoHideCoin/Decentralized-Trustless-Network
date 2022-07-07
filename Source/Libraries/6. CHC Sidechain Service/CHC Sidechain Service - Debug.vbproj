@@ -86,10 +86,6 @@
     <Reference Include="CHCBasicCryptographyLibrary">
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Basic Cryptography\CHCBasicCryptographyLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="CHCDataAccess, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Data Access\Standard\CHCDataAccess.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web.Http">
@@ -196,6 +192,10 @@
     <ProjectReference Include="..\3. CHC Protocol\CHC Protocol - Debug.vbproj">
       <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
       <Name>CHC Protocol - Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\5. CHC Data Access\CHC Data Access.vbproj">
+      <Project>{a50bcd6a-da4f-4ab6-8a9c-1446a6c46a40}</Project>
+      <Name>CHC Data Access</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

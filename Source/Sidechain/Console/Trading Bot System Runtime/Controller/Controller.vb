@@ -50,7 +50,7 @@ Namespace AreaCommon
                     httpConfig.Routes.MapHttpRoute(name:="AdministrationApi", routeTemplate:="api/" & serviceID & "administration/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="AdministrationDoActionApi", routeTemplate:="api/" & serviceID & "administration/doAction/{controller}")
 
-                    httpConfig.Routes.MapHttpRoute(name:="StateBaseApi", routeTemplate:="api/" & serviceID & "state/base/{controller}")
+                    httpConfig.Routes.MapHttpRoute(name:="StateBaseApi", routeTemplate:="api/" & serviceID & "state/trade/{controller}")
                 Else
                     httpConfig.Routes.MapHttpRoute(name:="ServiceApi", routeTemplate:="api/" & serviceID & "service/{controller}")
                     httpConfig.Routes.MapHttpRoute(name:="QoSTicketApi", routeTemplate:="api/" & serviceID & "qos/{controller}")

@@ -55,6 +55,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Models\Standard\CHCModelsLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CHCProtocolLibrary, Version=1.14.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Protocol\Standard\CHCProtocolLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="CHCSidechainServiceLibrary, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\Standard\CHCSidechainServiceLibrary.dll</HintPath>
@@ -67,9 +71,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="TradingBotSystemModelsLibrary">
-      <HintPath>..\..\..\Binary\Libraries\Applicative\Trading Bot System Models Library\Standard\TradingBotSystemModelsLibrary.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -84,7 +85,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\CommandProcessor.vb" />
+    <Compile Include="Command\CommandBarchAdv.vb" />
+    <Compile Include="Command\CommandCurrency.vb" />
     <Compile Include="Command\CommandExchange.vb" />
+    <Compile Include="Command\CommandExchangeReference.vb" />
     <Compile Include="Command\CommandHelpPlus.vb" />
     <Compile Include="Engines\IntegrityApplication.vb" />
     <Compile Include="Startup\Startup.vb" />
@@ -133,13 +137,13 @@
       <Project>{47bba986-9288-41c3-bb67-c5bf45573dee}</Project>
       <Name>CHC Common - Debug</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\3. CHC Protocol\CHC Protocol - Debug.vbproj">
-      <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
-      <Name>CHC Protocol - Debug</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\8. CHC Command Support\CHC Commandline Support - DEBUG.vbproj">
       <Project>{1d0ec78c-1ccb-47b3-a88f-c524618185b8}</Project>
       <Name>CHC Commandline Support - DEBUG</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Trading Bot System Models Library\Trading Bot System Models Library - Debug.vbproj">
+      <Project>{ad004081-0238-4121-b169-24bba321fb65}</Project>
+      <Name>Trading Bot System Models Library - Debug</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

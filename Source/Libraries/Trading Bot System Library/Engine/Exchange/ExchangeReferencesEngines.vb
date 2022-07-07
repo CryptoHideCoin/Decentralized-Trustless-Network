@@ -17,7 +17,7 @@ Namespace AreaBusiness
 
         Public Class ExchangeReferencesCache
 
-            Public Property exchange_id As Integer
+            Public Property exchangeId As Integer
             Public Property referenceData As New List(Of ExchangeReferenceStructure)
 
         End Class
@@ -30,6 +30,8 @@ Namespace AreaBusiness
 
         Public Property useCache As Boolean = False
 
+        Public Event AddScheduleJobCheckCurrencies(ByVal exchangeId As Integer)
+
 
 
         ''' <summary>
@@ -41,10 +43,10 @@ Namespace AreaBusiness
                 Dim sql As String = ""
 
                 sql += "CREATE TABLE exchangeReferences "
-                sql += " (exchange_id INTEGER, "
+                sql += " (exchangeId INTEGER, "
                 sql += "  urlType INTEGER, "
                 sql += "  url NVARCHAR(1024), "
-                sql += " PRIMARY KEY (exchange_id, urlType));"
+                sql += " PRIMARY KEY (exchangeId, urlType));"
 
                 Return _EngineDB.executeDataTable(sql)
             Catch ex As Exception
@@ -77,16 +79,16 @@ Namespace AreaBusiness
         ''' <summary>
         ''' This method provide to add a new exchange reference into table
         ''' </summary>
-        ''' <param name="exchange_id"></param>
+        ''' <param name="exchangeId"></param>
         ''' <param name="urlType"></param>
         ''' <param name="url"></param>
         ''' <param name="forceOwner"></param>
         ''' <returns></returns>
-        Private Function addNew(ByVal exchange_id As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, ByVal url As String, ByVal forceOwner As String) As Boolean
+        Private Function addNew(ByVal exchangeId As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, ByVal url As String, ByVal forceOwner As String) As Boolean
             Try
                 Dim sql As String
 
-                sql = $"INSERT INTO exchangeReferences (exchange_id, urlType, url) VALUES ({exchange_id}, {urlType}, '{url}')"
+                sql = $"INSERT INTO exchangeReferences (exchangeId, urlType, url) VALUES ({exchangeId}, {Val(urlType)}, '{url}')"
 
                 Return _EngineDB.executeDataTableAndReturnID(sql, forceOwner)
             Catch ex As Exception
@@ -99,16 +101,16 @@ Namespace AreaBusiness
         ''' <summary>
         ''' This method provide to update SQL
         ''' </summary>
-        ''' <param name="exchange_id"></param>
+        ''' <param name="exchangeId"></param>
         ''' <param name="urlType"></param>
         ''' <param name="url"></param>
         ''' <param name="forceOwner"></param>
         ''' <returns></returns>
-        Private Function updateSQL(ByVal exchange_id As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, ByVal url As String, ByVal forceOwner As String) As Boolean
+        Private Function updateSQL(ByVal exchangeId As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, ByVal url As String, ByVal forceOwner As String) As Boolean
             Try
                 Dim sql As String
 
-                sql = $"UPDATE exchangeReferences SET url = '{url}' WHERE exchange_id = {exchange_id} AND urlType = {urlType}"
+                sql = $"UPDATE exchangeReferences SET url = '{url}' WHERE exchangeId = {exchangeId} AND urlType = {Int(urlType)}"
 
                 Return _EngineDB.executeDataTable(sql, forceOwner)
             Catch ex As Exception
@@ -121,12 +123,12 @@ Namespace AreaBusiness
         ''' <summary>
         ''' This method Add or Get the Id of a name of the exchange reference
         ''' </summary>
-        ''' <param name="exchange_id"></param>
+        ''' <param name="exchangeId"></param>
         ''' <param name="urlType"></param>
         ''' <param name="url"></param>
         ''' <param name="forceOwner"></param>
         ''' <returns></returns>
-        Public Function addIfMissing(ByVal exchange_id As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, ByVal url As String, Optional ByVal forceOwner As String = "") As Boolean
+        Public Function addIfMissing(ByVal data As ExchangeReferenceStructure, Optional ByVal forceOwner As String = "") As Boolean
             If (forceOwner.Length = 0) Then
                 forceOwner = _OwnerId
             End If
@@ -140,7 +142,7 @@ Namespace AreaBusiness
 
                     If useCache Then
                         For Each item In _CacheInMemory
-                            If (item.exchange_id = exchange_id) Then
+                            If (item.exchangeId = data.exchangeId) Then
                                 exchangeData = item.referenceData
 
                                 Exit For
@@ -151,15 +153,13 @@ Namespace AreaBusiness
                         If Not IsNothing(exchangeData) Then
 #Enable Warning BC42104
                             For Each item In exchangeData
-                                If (item.urlType = urlType) Then
+                                If (item.urlType = data.urlType) Then
                                     foundReference = True
                                 End If
                             Next
 
                             If Not foundReference Then
-                                exchangeData.Add(New ExchangeReferenceStructure() With {.exchange_id = exchange_id, .urlType = urlType, .url = url})
-
-                                Return addNew(exchange_id, urlType, url, forceOwner)
+                                exchangeData.Add(New ExchangeReferenceStructure() With {.exchangeId = data.exchangeId, .urlType = data.urlType, .url = data.url})
                             Else
                                 Return True
                             End If
@@ -167,40 +167,52 @@ Namespace AreaBusiness
                             Dim newReference As New ExchangeReferenceStructure
                             Dim newItem As New ExchangeReferencesCache
 
-                            newReference.exchange_id = exchange_id
-                            newReference.urlType = urlType
-                            newReference.url = url
+                            newReference.exchangeId = data.exchangeId
+                            newReference.urlType = data.urlType
+                            newReference.url = data.url
 
-                            newItem.exchange_id = exchange_id
+                            newItem.exchangeId = data.exchangeId
                             newItem.referenceData.Add(newReference)
 
                             _CacheInMemory.Add(newItem)
-
-                            Return addNew(exchange_id, urlType, url, forceOwner)
                         End If
                     Else
                         Dim sql As String
                         Dim result As Object
                         Dim openDB As Object
 
-                        Sql = $"SELECT exchange_id FROM exchangeReferences WHERE exchange_id = {exchange_id} AND urlType = {urlType}"
+                        sql = $"SELECT exchangeId FROM exchangeReferences WHERE exchangeId = {data.exchangeId} AND urlType = {Int(data.urlType)}"
 
                         openDB = _EngineDB.openDatabase(forceOwner)
 
                         If Not IsNothing(openDB) Then
-                            result = _EngineDB.selectDataReader(openDB, Sql, forceOwner)
+                            Dim found As Boolean = False
+
+                            result = _EngineDB.selectDataReader(openDB, sql, forceOwner)
 
                             If Not IsNothing(result) Then
-                                openDB.close()
+                                While result.read()
+                                    found = (result.GetInt32(0) = data.exchangeId)
+                                End While
+                            End If
 
+                            openDB.close()
+
+                            If found Then
                                 Return True
-                            Else
-                                openDB.close()
                             End If
                         End If
                     End If
 
-                    Return addNew(exchange_id, urlType, url, forceOwner)
+                    If addNew(data.exchangeId, data.urlType, data.url, forceOwner) Then
+                        If (data.urlType = ExchangeReferenceStructure.TypeReferenceEnumeration.apiCurrencies) And AreaCommon.state.exchangesEngine.select(data.exchangeId).isActive Then
+                            RaiseEvent AddScheduleJobCheckCurrencies(data.exchangeId)
+                        End If
+
+                        Return AreaCommon.state.exchangesEngine.updateExchangeInUsed(data.exchangeId, forceOwner)
+                    Else
+                        Return False
+                    End If
                 Else
                     Return False
                 End If
@@ -219,7 +231,7 @@ Namespace AreaBusiness
         ''' <param name="id"></param>
         ''' <param name="newName"></param>
         ''' <returns></returns>
-        Public Function updateExchangeReference(ByVal exchange_id As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, ByVal url As String, Optional ByVal forceOwner As String = "") As Boolean
+        Public Function updateExchangeReference(ByVal exchangeId As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, ByVal url As String, Optional ByVal forceOwner As String = "") As Boolean
             If (forceOwner.Length = 0) Then
                 forceOwner = _OwnerId
             End If
@@ -233,7 +245,7 @@ Namespace AreaBusiness
 
                     If useCache Then
                         For Each item In _CacheInMemory
-                            If (item.exchange_id = exchange_id) Then
+                            If (item.exchangeId = exchangeId) Then
                                 exchangeData = item.referenceData
 
                                 Exit For
@@ -253,15 +265,13 @@ Namespace AreaBusiness
 
                             If Not foundReference Then
                                 Return False
-                            Else
-                                Return updateSQL(exchange_id, urlType, url, forceOwner)
                             End If
                         Else
                             Return False
                         End If
                     End If
 
-                    Return updateSQL(exchange_id, urlType, url, forceOwner)
+                    Return updateSQL(exchangeId, urlType, url, forceOwner)
                 End If
 
                 Return False
@@ -279,8 +289,8 @@ Namespace AreaBusiness
         ''' </summary>
         ''' <param name="id"></param>
         ''' <returns></returns>
-        Public Function [select](ByVal exchange_id As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, Optional ByVal forceOwner As String = "") As ExchangeReferenceStructure
-            Dim response As New ExchangeReferenceStructure With {.exchange_id = exchange_id, .urlType = urlType}
+        Public Function [select](ByVal exchangeId As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, Optional ByVal forceOwner As String = "") As ExchangeReferenceStructure
+            Dim response As New ExchangeReferenceStructure With {.exchangeId = exchangeId, .urlType = urlType}
 
             If (forceOwner.Length = 0) Then
                 forceOwner = _OwnerId
@@ -293,7 +303,7 @@ Namespace AreaBusiness
                         Dim exchangeData As List(Of ExchangeReferenceStructure)
 
                         For Each item In _CacheInMemory
-                            If (item.exchange_id = exchange_id) Then
+                            If (item.exchangeId = exchangeId) Then
                                 exchangeData = item.referenceData
 
                                 Exit For
@@ -315,7 +325,7 @@ Namespace AreaBusiness
                         Dim sql As String
                         Dim result As Object
 
-                        sql = $"SELECT url FROM exchangeReferences WHERE exchange_id = {exchange_id} and urlType = {urlType}"
+                        sql = $"SELECT url FROM exchangeReferences WHERE exchangeId = {exchangeId} AND urlType = {Val(urlType)}"
 
                         result = _EngineDB.selectResultDataTable(sql, forceOwner)
 
@@ -341,7 +351,7 @@ Namespace AreaBusiness
         ''' This method provide to return a count of a exchange reference table
         ''' </summary>
         ''' <returns></returns>
-        Public Function count(ByVal exchange_id As Integer, Optional ByVal forceOwner As String = "") As Integer
+        Public Function count(ByVal exchangeId As Integer, Optional ByVal forceOwner As String = "") As Integer
             If (forceOwner.Length = 0) Then
                 forceOwner = _OwnerId
             End If
@@ -351,7 +361,7 @@ Namespace AreaBusiness
                 If _Initialize Then
                     If useCache Then
                         For Each item In _CacheInMemory
-                            If (item.exchange_id = exchange_id) Then
+                            If (item.exchangeId = exchangeId) Then
                                 Return item.referenceData.Count
                             End If
                         Next
@@ -359,7 +369,7 @@ Namespace AreaBusiness
                         Dim sql As String
                         Dim result As Object
 
-                        sql = $"SELECT Count(id) as numExchange FROM exchangeReferences WHERE exchange_id = {exchange_id}"
+                        sql = $"SELECT Count(id) as numExchange FROM exchangeReferences WHERE exchangeId = {exchangeId}"
 
                         result = _EngineDB.selectResultDataTable(sql, forceOwner)
 
@@ -383,7 +393,7 @@ Namespace AreaBusiness
         ''' This method provide to get all reference of exchange
         ''' </summary>
         ''' <returns></returns>
-        Public Function listAll(Optional ByVal loadEntireCache As Boolean = False, Optional ByVal forceOwner As String = "") As List(Of ExchangeReferencesCache)
+        Public Function listAll(Optional ByVal loadEntireCache As Boolean = False, Optional ByVal forceOwner As String = "", Optional ByVal checkActive As Boolean = False) As List(Of ExchangeReferencesCache)
             If (forceOwner.Length = 0) Then
                 forceOwner = _OwnerId
             End If
@@ -401,12 +411,12 @@ Namespace AreaBusiness
                         Dim result As Object
                         Dim openDB As Object
 
-                        sql = $"SELECT exchange_id, urlType, url FROM exchangeReferences "
+                        sql = $"SELECT exchangeId, urlType, url FROM exchangeReferences ORDER BY exchangeId"
 
                         openDB = _EngineDB.openDatabase(forceOwner)
 
                         If Not IsNothing(openDB) Then
-                            result = _EngineDB.selectDataReader(openDB, Sql, forceOwner)
+                            result = _EngineDB.selectDataReader(openDB, sql, forceOwner)
 
                             If Not IsNothing(result) Then
                                 Dim item As ExchangeReferenceStructure
@@ -414,21 +424,37 @@ Namespace AreaBusiness
                                 While result.read()
                                     item = New ExchangeReferenceStructure
 
-                                    item.exchange_id = result.GetInt32(0)
+                                    item.exchangeId = result.GetInt32(0)
                                     item.urlType = result.GetInt32(1)
                                     item.url = result.GetString(2)
 
-                                    If (currentDataReference.exchange_id <> item.exchange_id) Then
-                                        item = New ExchangeReferenceStructure
-
-                                        currentDataReference.exchange_id = item.exchange_id
-                                        response.Add(currentDataReference)
-
-                                        If loadEntireCache Then
+                                    If (currentDataReference.exchangeId <> item.exchangeId) Then
+                                        If loadEntireCache And (currentDataReference.exchangeId <> 0) And useCache Then
                                             _CacheInMemory.Add(currentDataReference)
+                                        End If
+                                        If (currentDataReference.exchangeId <> 0) Then
+                                            response.Add(currentDataReference)
+                                        End If
+
+                                        currentDataReference = New ExchangeReferencesCache
+                                    End If
+
+                                    currentDataReference.exchangeId = item.exchangeId
+                                    currentDataReference.referenceData.Add(item)
+
+                                    If checkActive Then
+                                        If (item.urlType = ExchangeReferenceStructure.TypeReferenceEnumeration.apiCurrencies) Then
+                                            RaiseEvent AddScheduleJobCheckCurrencies(item.exchangeId)
                                         End If
                                     End If
                                 End While
+
+                                If loadEntireCache And (currentDataReference.exchangeId <> 0) And useCache Then
+                                    _CacheInMemory.Add(currentDataReference)
+                                End If
+                                If (currentDataReference.exchangeId <> 0) Then
+                                    response.Add(currentDataReference)
+                                End If
                             End If
 
                             openDB.close()
@@ -452,7 +478,7 @@ Namespace AreaBusiness
         ''' This method provide to get a list of a reference of an exchange
         ''' </summary>
         ''' <returns></returns>
-        Public Function list(ByVal exchange_id As Integer, Optional ByVal forceOwner As String = "") As List(Of ExchangeReferenceStructure)
+        Public Function list(ByVal exchangeId As Integer, Optional ByVal forceOwner As String = "") As List(Of ExchangeReferenceStructure)
             If (forceOwner.Length = 0) Then
                 forceOwner = _OwnerId
             End If
@@ -463,7 +489,7 @@ Namespace AreaBusiness
                 If _Initialize Then
                     If useCache Then
                         For Each item In _CacheInMemory
-                            If (item.exchange_id = exchange_id) Then
+                            If (item.exchangeId = exchangeId) Then
                                 Return item.referenceData
                             End If
                         Next
@@ -475,7 +501,7 @@ Namespace AreaBusiness
                         Dim result As Object
                         Dim openDB As Object
 
-                        sql = $"SELECT exchange_id, urlType, url FROM exchangeReferences WHERE exchange_id = {exchange_id}"
+                        sql = $"SELECT exchangeId, urlType, url FROM exchangeReferences WHERE exchangeId = {exchangeId}"
 
                         openDB = _EngineDB.openDatabase(forceOwner)
 
@@ -488,7 +514,7 @@ Namespace AreaBusiness
                                 While result.read()
                                     item = New ExchangeReferenceStructure
 
-                                    item.exchange_id = result.GetInt32(0)
+                                    item.exchangeId = result.GetInt32(0)
                                     item.urlType = result.GetInt32(1)
                                     item.url = result.GetString(2)
 
@@ -516,10 +542,10 @@ Namespace AreaBusiness
         ''' <summary>
         ''' This method provide to delete an unique id item's
         ''' </summary>
-        ''' <param name="exchange_id"></param>
+        ''' <param name="exchangeId"></param>
         ''' <param name="forceOwner"></param>
         ''' <returns></returns>
-        Public Function deleteExchange(ByVal exchange_id As Integer, Optional ByVal forceOwner As String = "") As Boolean
+        Public Function delete(ByVal exchangeId As Integer, Optional ByVal forceOwner As String = "") As Boolean
             If (forceOwner.Length = 0) Then
                 forceOwner = _OwnerId
             End If
@@ -531,7 +557,7 @@ Namespace AreaBusiness
                     Dim toDelete As ExchangeReferencesCache
 
                     For Each item In _CacheInMemory
-                        If (item.exchange_id = exchange_id) Then
+                        If (item.exchangeId = exchangeId) Then
                             toDelete = item
 
                             Exit For
@@ -545,7 +571,7 @@ Namespace AreaBusiness
                     End If
                 End If
 
-                Return _EngineDB.executeDataTable($"DELETE exchanges WHERE exchange_id = {exchange_id}", forceOwner)
+                Return _EngineDB.executeDataTable($"DELETE exchanges WHERE exchangeId = {exchangeId}", forceOwner)
             Catch ex As Exception
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeReferencesEngine.deleteExchange", forceOwner, ex.Message)
 
@@ -558,11 +584,11 @@ Namespace AreaBusiness
         ''' <summary>
         ''' This method provide to delete a singleReference
         ''' </summary>
-        ''' <param name="exchange_id"></param>
+        ''' <param name="exchangeId"></param>
         ''' <param name="urlType"></param>
         ''' <param name="forceOwner"></param>
         ''' <returns></returns>
-        Public Function delete(ByVal exchange_id As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, Optional ByVal forceOwner As String = "") As Boolean
+        Public Function delete(ByVal exchangeId As Integer, ByVal urlType As ExchangeReferenceStructure.TypeReferenceEnumeration, Optional ByVal forceOwner As String = "") As Boolean
             If (forceOwner.Length = 0) Then
                 forceOwner = _OwnerId
             End If
@@ -575,7 +601,7 @@ Namespace AreaBusiness
                     Dim toDelete As ExchangeReferenceStructure
 
                     For Each item In _CacheInMemory
-                        If (item.exchange_id = exchange_id) Then
+                        If (item.exchangeId = exchangeId) Then
                             exchangeData = item
 
                             Exit For
@@ -605,7 +631,7 @@ Namespace AreaBusiness
                     End If
                 End If
 
-                Return _EngineDB.executeDataTable($"DELETE exchangeReferences WHERE exchange_id = {exchange_id} AND typeUrl = {Val(urlType)}", forceOwner)
+                Return _EngineDB.executeDataTable($"DELETE FROM exchangeReferences WHERE exchangeId = {exchangeId} AND urlType = {Val(urlType)}", forceOwner)
             Catch ex As Exception
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeReferencesEngine.delete", forceOwner, ex.Message)
 
@@ -613,6 +639,29 @@ Namespace AreaBusiness
             Finally
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("ExchangeReferencesEngine.delete", forceOwner)
             End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to return the currency reference in the exchange id
+        ''' </summary>
+        ''' <param name="exchangeId"></param>
+        ''' <returns></returns>
+        Public Function currencyReferenceExist(ByVal exchangeId As Integer) As Boolean
+            Try
+                If _Initialize Then
+                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("ExchangeReferencesEngine.getCurrecyReferenceExist", _OwnerId)
+
+                    If ([select](exchangeId, ExchangeReferenceStructure.TypeReferenceEnumeration.apiCurrencies).exchangeId <> 0) Then
+                        Return True
+                    End If
+                End If
+            Catch ex As Exception
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeReferencesEngine.getCurrecyReferenceExist", _OwnerId, ex.Message)
+            Finally
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("ExchangeReferencesEngine.getCurrecyReferenceExist", _OwnerId)
+            End Try
+
+            Return False
         End Function
 
         ''' <summary>
@@ -635,6 +684,8 @@ Namespace AreaBusiness
 
                     CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("ExchangeReferencesEngine.init", _OwnerId)
 
+                    _Initialize = True
+
                     If Not _EngineDB.existTable("exchangeReferences", _OwnerId) Then
                         CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.track("ExchangeReferencesEngine.init", _OwnerId, "Exchange table not exist")
 
@@ -644,10 +695,8 @@ Namespace AreaBusiness
                             Return False
                         End If
                     ElseIf useCache Then
-                        listAll(True)
+                        listAll(True,, True)
                     End If
-
-                    _Initialize = True
 
                     Return True
                 Else

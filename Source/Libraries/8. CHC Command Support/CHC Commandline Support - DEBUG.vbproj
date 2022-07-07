@@ -188,7 +188,6 @@
     <Compile Include="Engines\DefaultParameters.vb" />
     <Compile Include="Engines\EnvironmentRepository.vb" />
     <Compile Include="Engines\Environments.vb" />
-    <Compile Include="Engines\Utils.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

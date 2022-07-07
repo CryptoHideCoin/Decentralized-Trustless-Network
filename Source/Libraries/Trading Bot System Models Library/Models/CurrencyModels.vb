@@ -19,22 +19,32 @@ Namespace AreaModel.Currency
     ''' </summary>
     Public Class CurrencyStructure
 
-        Public Enum typologyAsset
+        Public Enum tipologyAsset
             undefined
             fiat
             crypto
+        End Enum
+
+        Public Enum natureAsset
+            undefined
+            coin
+            token
+            stableCoin
         End Enum
 
         Public Property id As Integer = 0
         Public Property shortName As String = ""
         Public Property [name] As String = ""
         Public Property displayName As String = ""
-        Public Property tipology As typologyAsset = typologyAsset.undefined
+        Public Property tipology As tipologyAsset = tipologyAsset.undefined
         Public Property minSize As Integer = 0
         Public Property maxPrecision As Integer = 0
         Public Property symbol As String = ""
         Public Property source As String = ""
         Public Property supplier As String = ""
+        Public Property nature As natureAsset = natureAsset.undefined
+        Public Property networkReferement As String = ""
+        Public Property contractNetwork As String = ""
         Public Property acquireTimeStamp As Double = 0
         Public Property isUsed As Boolean = False
 

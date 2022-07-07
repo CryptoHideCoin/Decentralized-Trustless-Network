@@ -43,6 +43,17 @@ Namespace AreaCommon.Startup
         End Function
 
         ''' <summary>
+        ''' This method provide to add a new trade job
+        ''' </summary>
+        ''' <param name="item"></param>
+        ''' <returns></returns>
+        Public Function addTradeJob(ByVal item As CHCModelsLibrary.AreaModel.Service.Scheduler.JobSchedule) As Boolean
+            Return _Engine.addExternalJob(item)
+        End Function
+
+
+
+        ''' <summary>
         ''' This method provide to start all maintenance service
         ''' </summary>
         ''' <returns></returns>

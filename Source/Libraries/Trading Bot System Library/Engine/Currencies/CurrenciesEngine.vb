@@ -45,8 +45,30 @@ Namespace AreaBusiness
                 sql += "  symbol NVARCHAR(2),"
                 sql += "  source NVARCHAR(512),"
                 sql += "  supplier NVARCHAR(512),"
+                sql += "  nature INTEGER, "
+                sql += "  networkReferementId INTEGER,"
+                sql += "  networkContract NVARCHA(256),"
                 sql += "  acquireTimestamp REAL,"
                 sql += "  isUsed INTEGER);"
+
+                Return _EngineDB.executeDataTable(sql)
+            Catch ex As Exception
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("CurrencyEngine.createCurrenciesTable", _OwnerId, ex.Message)
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to create an index short name
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function createShortNameIndex() As Boolean
+            Try
+                Dim sql As String = ""
+
+                sql += " CREATE UNIQUE INDEX shortNameIndex "
+                sql += " ON Currencies(shortName)"
 
                 Return _EngineDB.executeDataTable(sql)
             Catch ex As Exception
@@ -67,6 +89,9 @@ Namespace AreaBusiness
                 If proceed Then
                     proceed = createCurrenciesTable()
                 End If
+                If proceed Then
+                    proceed = createShortNameIndex()
+                End If
 
                 Return proceed
             Catch ex As Exception
@@ -77,26 +102,53 @@ Namespace AreaBusiness
         End Function
 
         ''' <summary>
+        ''' This method provide to get a network referement id from a key currency
+        ''' </summary>
+        ''' <param name="networkReferement"></param>
+        ''' <returns></returns>
+        Private Function getNetworkReferement(ByVal networkReferement As String) As Integer
+            If (networkReferement.Trim.Length > 0) Then
+                Return [select](networkReferement).id
+            End If
+
+            Return 0
+        End Function
+
+        ''' <summary>
+        ''' This method provide to get a network referement from a Id currency
+        ''' </summary>
+        ''' <param name="networkReferementId"></param>
+        ''' <returns></returns>
+        Private Function getNetworkReferementFromId(ByVal networkReferementId As Integer) As String
+            If (networkReferementId > 0) Then
+                Return [select](networkReferementId).shortName
+            End If
+
+            Return 0
+        End Function
+
+        ''' <summary>
         ''' This method provide to add a new currency into table
         ''' </summary>
         ''' <param name="data"></param>
         ''' <param name="forceOwner"></param>
         ''' <returns></returns>
-        Private Function addNew(ByVal data As CurrencyStructure, ByVal forceOwner As String) As Boolean
+        Private Function addNew(ByVal data As CurrencyStructure, ByVal forceOwner As String) As Integer
             Try
                 Dim sql As String = ""
 
                 sql += $"INSERT INTO currencies "
-                sql += $"(shortName, [name], displayName, tipology, minSize, maxPrecision, symbol, source, supplier, acquireTimestamp, isUsed) "
+                sql += $"(shortName, [name], displayName, tipology, minSize, maxPrecision, symbol, source, supplier, nature, networkReferementId, networkContract, acquireTimestamp, isUsed) "
                 sql += $" VALUES "
-                sql += $"('{data.shortName}', '{data.name}', '{data.displayName}', {data.tipology}, {data.minSize}, {data.maxPrecision}, "
-                sql += $"'{data.symbol}', '{data.source}', '{data.supplier}', '{data.acquireTimeStamp}', 0) "
+                sql += $"('{data.shortName}', '{data.name}', '{data.displayName}', {Val(data.tipology)}, {data.minSize}, {data.maxPrecision}, "
+                sql += $"'{data.symbol}', '{data.source}', '{data.supplier}', {Val(data.nature)}, {getNetworkReferement(data.networkReferement)}, '{data.contractNetwork}', "
+                sql += $"'{data.acquireTimeStamp.ToString.Replace(",", ".")}', 0) "
 
                 Return _EngineDB.executeDataTableAndReturnID(sql, forceOwner)
             Catch ex As Exception
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("CurrencyEngine.addNew", forceOwner, ex.Message)
 
-                Return False
+                Return 0
             End Try
         End Function
 
@@ -120,9 +172,10 @@ Namespace AreaBusiness
 
                     If useCache Then
                         If Not _CacheByName.ContainsKey(data.shortName) Then
-                            response.id = addNew(data, forceOwner)
+                            data.id = addNew(data, forceOwner)
 
-                            _CacheByName.Add(data.shortName, response)
+                            _CacheByName.Add(data.shortName, data)
+                            _CacheById.Add(data.id, data)
                         End If
 
                         response = _CacheByName(data.shortName)
@@ -180,23 +233,11 @@ Namespace AreaBusiness
 
                     sql += $"UPDATE currencies SET "
                     sql += $"shortName = '{newData.shortName}', [name] = '{newData.name}',"
-                    sql += $"displayName = '{newData.displayName}', tipology = "
-
-                    If newData.tipology = CurrencyStructure.typologyAsset.fiat Then
-                        sql += "1,"
-                    Else
-                        sql += "2,"
-                    End If
-
+                    sql += $"displayName = '{newData.displayName}', tipology = {Val(newData.tipology)},"
                     sql += $"minSize = {newData.minSize}, maxPrecision = {newData.maxPrecision},"
-                    sql += $"symbol = '{newData.symbol}', source = '{newData.source}',"
-                    sql += $"supplier = '{newData.supplier}', acquireTimestamp = '{newData.acquireTimeStamp}',"
-
-                    If newData.isUsed Then
-                        sql += "1"
-                    Else
-                        sql += "0"
-                    End If
+                    sql += $"symbol = '{newData.symbol}', nature = {Val(newData.nature)}, "
+                    sql += $"networkReferement = {getNetworkReferement(newData.networkReferement)}, "
+                    sql += $"networkContract = '{newData.contractNetwork}'"
 
                     sql += " WHERE [id] = '{id}'"
 
@@ -218,32 +259,52 @@ Namespace AreaBusiness
         ''' </summary>
         ''' <param name="item"></param>
         ''' <returns></returns>
-        Private Function getDataFromRecordset(ByRef id As Integer, ByRef shortName As String, ByRef item As Object) As CurrencyStructure
-            Dim result As New CurrencyStructure
+        Private Function getDataFromRecordset(ByRef id As Integer, ByRef shortName As String, ByRef item As Object, ByVal forceOwner As String) As CurrencyStructure
+            Try
+                Dim result As New CurrencyStructure
 
-            id = item.getInt32(0)
-            shortName = item.getString(1)
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("CurrencyEngine.getSelectFrom", forceOwner)
 
-            result.id = id
-            result.shortName = shortName
-            result.name = item.getString(2)
-            result.displayName = item.getString(3)
+                id = item.getInt32(0)
+                shortName = item.getString(1)
 
-            Select Case item.getInt32(4)
-                Case 0 : result.tipology = CurrencyStructure.typologyAsset.undefined
-                Case 1 : result.tipology = CurrencyStructure.typologyAsset.fiat
-                Case 2 : result.tipology = CurrencyStructure.typologyAsset.crypto
-            End Select
+                result.id = id
+                result.shortName = shortName
+                result.name = item.getString(2)
+                result.displayName = item.getString(3)
 
-            result.minSize = item.getInt(5)
-            result.maxPrecision = item.getInt(6)
-            result.symbol = item.getString(7)
-            result.source = item.getString(8)
-            result.supplier = item.getString(9)
-            result.acquireTimeStamp = item.getDouble(10)
-            result.isUsed = (item.getInt32(11) <> 0)
+                Select Case item.getInt32(4)
+                    Case 0 : result.tipology = CurrencyStructure.tipologyAsset.undefined
+                    Case 1 : result.tipology = CurrencyStructure.tipologyAsset.fiat
+                    Case 2 : result.tipology = CurrencyStructure.tipologyAsset.crypto
+                End Select
 
-            Return result
+                result.minSize = item.getInt32(5)
+                result.maxPrecision = item.getInt32(6)
+                result.symbol = item.getString(7)
+                result.source = item.getString(8)
+                result.supplier = item.getString(9)
+
+                Select Case item.getInt32(10)
+                    Case 0 : result.nature = CurrencyStructure.natureAsset.undefined
+                    Case 1 : result.nature = CurrencyStructure.natureAsset.coin
+                    Case 2 : result.nature = CurrencyStructure.natureAsset.token
+                    Case 3 : result.nature = CurrencyStructure.natureAsset.stableCoin
+                End Select
+
+                result.networkReferement = getNetworkReferementFromId(item.getInt32(11))
+                result.contractNetwork = item.getString(12)
+                result.acquireTimeStamp = item.getDouble(13)
+                result.isUsed = (item.getInt32(14) <> 0)
+
+                Return result
+            Catch ex As Exception
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("CurrencyEngine.updateData", forceOwner, ex.Message & " - id = {id}")
+
+                Return New CurrencyStructure
+            Finally
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("CurrencyEngine.updateData", forceOwner)
+            End Try
         End Function
 
         ''' <summary>
@@ -259,13 +320,14 @@ Namespace AreaBusiness
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("CurrencyEngine.getSelectFrom", forceOwner)
 
                 Dim item As New CurrencyStructure
-                Dim sql As String
+                Dim sql As String = ""
                 Dim result As Object
 
                 openDB = _EngineDB.openDatabase(forceOwner)
                 dbOpened = True
 
-                sql = "SELECT id, shortName, [name], displayName, tipology, minSize, maxPrecision, symbol, source, supplier, acquireTimestamp, isUsed FROM assets WHERE "
+                sql += " SELECT id, shortName, [name], displayName, tipology, minSize, maxPrecision, symbol, source, supplier, nature, networkReferementId, networkContract, acquireTimestamp, isUsed "
+                sql += "FROM assets WHERE "
 
                 If (id <> 0) Then
                     sql += $"id = {id}"
@@ -279,7 +341,7 @@ Namespace AreaBusiness
                     result = _EngineDB.selectDataReader(openDB, sql, forceOwner)
 
                     If Not IsNothing(result) Then
-                        item = getDataFromRecordset(id, shortName, result.read())
+                        item = getDataFromRecordset(id, shortName, result.read(), forceOwner)
 
                         If Not _CacheById.ContainsKey(item.id) Then
                             _CacheById.Add(item.id, item)
@@ -358,7 +420,11 @@ Namespace AreaBusiness
 
                 If _Initialize Then
                     If useCache Then
-                        Return _CacheByName(shortName)
+                        If _CacheByName.ContainsKey(shortName.ToLower) Then
+                            Return _CacheByName(shortName.ToLower)
+                        Else
+                            Return New CurrencyStructure
+                        End If
                     Else
                         Return getSelectFrom(, shortName, forceOwner)
                     End If
@@ -436,7 +502,7 @@ Namespace AreaBusiness
                     If useCache And Not loadEntireCache Then
                         Return _CacheById.Values.ToList()
                     Else
-                        sql = $"SELECT id, name FROM currencies "
+                        sql = $"SELECT id, shortName, name, displayName, tipology, minSize, maxPrecision, symbol, source, supplier, nature, networkReferementId, networkContract, acquireTimeStamp, isUsed FROM currencies "
 
                         openDB = _EngineDB.openDatabase(forceOwner)
 
@@ -449,11 +515,11 @@ Namespace AreaBusiness
                                 Dim item As CurrencyStructure
 
                                 While dataReader.read()
-                                    item = getDataFromRecordset(id, shortName, dataReader)
+                                    item = getDataFromRecordset(id, shortName, dataReader, forceOwner)
 
                                     If loadEntireCache Then
                                         _CacheById.Add(item.id, item)
-                                        _CacheByName.Add(item.name, item)
+                                        _CacheByName.Add(item.shortName.ToLower, item)
                                     End If
                                 End While
                             End If
@@ -532,6 +598,8 @@ Namespace AreaBusiness
                     IO.Directory.CreateDirectory(_EngineDB.path)
                 End If
 
+                _Initialize = True
+
                 If _EngineDB.init("Evaluation", "Custom") Then
                     If Not _EngineDB.existTable("currencies", _OwnerId) Then
                         CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.track("CurrencyEngine.init", _OwnerId, "Currency table not exist")
@@ -544,8 +612,6 @@ Namespace AreaBusiness
                     ElseIf useCache Then
                         list(True)
                     End If
-
-                    _Initialize = True
 
                     Return True
                 Else

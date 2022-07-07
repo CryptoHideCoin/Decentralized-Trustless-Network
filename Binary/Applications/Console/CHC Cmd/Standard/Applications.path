@@ -22,5 +22,11 @@
     "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console\\CHC Cmd",
     "directoryName": "CHC Sidechain Service Runtime",
     "applicationName": "CHCSidechainServiceRuntime.exe"
+  },
+  {
+    "applicationReferement": 5,
+    "rootPath": "E:\CryptoHideCoinDTN\Binary\Sidechains\Console\Trading Bot System Service Runtime",
+    "directoryName": "x64",
+    "applicationName": "TradingBotSystemServiceRuntime.exe"
   }
 ]

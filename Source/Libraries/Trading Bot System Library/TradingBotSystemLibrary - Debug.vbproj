@@ -83,11 +83,6 @@
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64'">
-    <Reference Include="CHCDataAccess">
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Data Access\x64\CHCDataAccess.dll</HintPath>
-    </Reference>
-  </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86'">
     <Reference Include="CHCCommonLibrary">
       <SpecificVersion>False</SpecificVersion>
@@ -110,10 +105,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CHCDataAccess, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Binary\Libraries\Internal\CHC Data Access\Standard\CHCDataAccess.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web.Http">
@@ -143,7 +134,7 @@
   <ItemGroup>
     <Compile Include="Base\Common.vb" />
     <Compile Include="Base\Internal.vb" />
-    <Compile Include="Controllers\State\CurrenciesController.vb" />
+    <Compile Include="Controllers\State\CurrencyController.vb" />
     <Compile Include="Controllers\State\ExchangeController.vb" />
     <Compile Include="Controllers\State\ExchangeReferenceController.vb" />
     <Compile Include="Engine\Currencies\CurrenciesEngine.vb" />
@@ -151,6 +142,7 @@
     <Compile Include="Engine\Exchange\ExchangeReferencesEngines.vb" />
     <Compile Include="Engine\TBSS\TBSSEngine.vb" />
     <Compile Include="Engine\Exchange\ExchangeEngine.vb" />
+    <Compile Include="Jobs\DownloadCurrencyJob.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -201,6 +193,10 @@
     <ProjectReference Include="..\3. CHC Protocol\CHC Protocol - Debug.vbproj">
       <Project>{cf7b6bc6-e6ae-408f-b452-ce73a17941c2}</Project>
       <Name>CHC Protocol - Debug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\5. CHC Data Access\CHC Data Access.vbproj">
+      <Project>{a50bcd6a-da4f-4ab6-8a9c-1446a6c46a40}</Project>
+      <Name>CHC Data Access</Name>
     </ProjectReference>
     <ProjectReference Include="..\6. CHC Sidechain Service\CHC Sidechain Service - Debug.vbproj">
       <Project>{f586744f-8890-4341-8ae8-2583d5a4d084}</Project>

@@ -42,6 +42,16 @@ TradingBotSystemModelsLibrary
  This class contain the data of an Exchange
  </summary>
 </member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.NewExchangeStructure">
+ <summary>
+ This class contain the data of a new Exchange
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.UpdateExchangeStructure">
+ <summary>
+ This class contain the data of an update Exchange
+ </summary>
+</member>
 <member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeListResponseModel">
  <summary>
  This class contain the exchange list response

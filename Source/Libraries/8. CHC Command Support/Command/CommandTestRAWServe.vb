@@ -46,7 +46,7 @@ Namespace AreaCommon.Command
             Dim startProcedure As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(), endProcedure As Double, durate As Double
             Dim url = $"{_Address}/api/service/test/"
 
-            Dim options = New Utils.WebRequest.Options With {
+            Dim options = New CHCModelsLibrary.AreaModel.Network.Communication.Options With {
                 .UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101 Firefox/82.0",
                 .Headers = New Net.WebHeaderCollection From {
                     {"key", "value"}

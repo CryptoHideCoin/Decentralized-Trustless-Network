@@ -21,12 +21,13 @@ Namespace AreaModel.Exchange
 
         Public Enum TypeReferenceEnumeration
             undefined
+            homePage
             mainApiReferement
             apiCurrencies
             apiCurrenciesHelp
         End Enum
 
-        Public Property exchange_id As Integer = 0
+        Public Property exchangeId As Integer = 0
         Public Property urlType As TypeReferenceEnumeration = TypeReferenceEnumeration.undefined
         Public Property url As String = ""
 

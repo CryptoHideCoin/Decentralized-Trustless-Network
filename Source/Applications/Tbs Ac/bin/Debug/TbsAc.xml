@@ -27,10 +27,69 @@ TbsAc
  This class contain the processor of a command line
  </summary>
 </member>
-<member name="M:TbsAc.AreaCommon.CommandProcessor.run">
+<member name="M:TbsAc.AreaCommon.CommandProcessor.run(CHCCommonLibrary.AreaEngine.CommandLine.CommandStructure@)">
  <summary>
  This method provide to execute a command
  </summary>
+ <returns></returns>
+</member>
+<member name="T:TbsAc.AreaCommon.Command.CommandBarchAdv">
+ <summary>
+ This class manage the command info 
+ </summary>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandBarchAdv.processSingleCommand(System.String)">
+ <summary>
+ This method provide to process a single command
+ </summary>
+ <param name="singleCommand"></param>
+ <returns></returns>
+</member>
+<member name="T:TbsAc.AreaCommon.Command.CommandCurrency">
+ <summary>
+ This class manage the command currency
+ </summary>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandCurrency.getList">
+ <summary>
+ This method provide to get a list of a exchange
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandCurrency.addNew(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+ <summary>
+ This method provide to add a new currency
+ </summary>
+ <param name="nameValue"></param>
+ <param name="displayNameValue"></param>
+ <param name="tipologyValue"></param>
+ <param name="minSizeValue"></param>
+ <param name="maxPrecisionValue"></param>
+ <param name="symbolValue"></param>
+ <param name="sourceValue"></param>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandCurrency.update(System.Int32,System.String,System.String)">
+ <summary>
+ This method provide to update a name of exchange or isActive flag
+ </summary>
+ <param name="updateId"></param>
+ <param name="name"></param>
+ <param name="isActive"></param>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandCurrency.delete(System.Int32)">
+ <summary>
+ This method provide to delete a precisious id of unused exchange id
+ </summary>
+ <param name="id"></param>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandCurrency.getData(System.Int32)">
+ <summary>
+ This method provide to get a data from an exchange
+ </summary>
+ <param name="id"></param>
  <returns></returns>
 </member>
 <member name="T:TbsAc.AreaCommon.Command.CommandExchange">
@@ -44,21 +103,16 @@ TbsAc
  </summary>
  <returns></returns>
 </member>
-<member name="M:TbsAc.AreaCommon.Command.CommandExchange.addNew(System.String,System.String)">
+<member name="M:TbsAc.AreaCommon.Command.CommandExchange.addNew">
  <summary>
  This method provide to add a new exchange 
  </summary>
- <param name="name"></param>
- <param name="isActive"></param>
  <returns></returns>
 </member>
-<member name="M:TbsAc.AreaCommon.Command.CommandExchange.update(System.Int32,System.String,System.String)">
+<member name="M:TbsAc.AreaCommon.Command.CommandExchange.update">
  <summary>
- This method provide to update a name of exchange or isActive flag
+ This method provide to update data from a parameter's
  </summary>
- <param name="updateId"></param>
- <param name="name"></param>
- <param name="isActive"></param>
  <returns></returns>
 </member>
 <member name="M:TbsAc.AreaCommon.Command.CommandExchange.delete(System.Int32)">
@@ -74,6 +128,63 @@ TbsAc
  </summary>
  <param name="id"></param>
  <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchange.standardizeBooleanParameter(System.String)">
+ <summary>
+ This method provide to convert the value into standard value 0, 1 or ""
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchange.readAddNewParameter(TradingBotSystemModelsLibrary.AreaModel.Exchange.NewExchangeStructure@)">
+ <summary>
+ This method provide to execute add new command
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchange.readUpdateParameter(TradingBotSystemModelsLibrary.AreaModel.Exchange.UpdateExchangeStructure@)">
+ <summary>
+ This method provide to read update parameter's
+ </summary>
+ <param name="parameter"></param>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchange.getCurrentParameter(TradingBotSystemModelsLibrary.AreaModel.Exchange.UpdateExchangeStructure@)">
+ <summary>
+ This method provide to get a current parameter
+ </summary>
+ <param name="parameter"></param>
+ <returns></returns>
+</member>
+<member name="T:TbsAc.AreaCommon.Command.CommandExchangeReference">
+ <summary>
+ This class manage the command exchange references
+ </summary>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchangeReference.getList(System.Int32)">
+ <summary>
+ This method provide to get a list of a exchange references
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchangeReference.getData(System.Int32,System.String)">
+ <summary>
+ This method provide to get a data from an exchange
+ </summary>
+ <param name="exchangeId"></param>
+ <param name="urlType"></param>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchangeReference.readAddNewParameter(TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeReferenceStructure@,System.Boolean)">
+ <summary>
+ This method provide to execute add new command
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchangeReference.addNewUpdate(System.String)">
+ <summary>
+ This method provide to addNew / Update an exchange reference
+ </summary>
 </member>
 <member name="T:TbsAc.AreaCommon.Command.CommandHelpPlus">
  <summary>

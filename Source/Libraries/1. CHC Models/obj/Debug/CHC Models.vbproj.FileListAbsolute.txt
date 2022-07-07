@@ -11,3 +11,4 @@ E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\Debug\CHCModelsLibrary.R
 E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\Debug\CHC Models.vbproj.GenerateResource.cache
 E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\Debug\CHCModelsLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\Debug\CHCModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\1. CHC Models\obj\Debug\CHC Models.vbprojAssemblyReference.cache

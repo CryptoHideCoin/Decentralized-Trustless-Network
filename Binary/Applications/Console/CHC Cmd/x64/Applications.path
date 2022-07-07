@@ -35,5 +35,11 @@
     "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Applications\\Console\\CHC Show Performance",
     "directoryName": "x64",
     "applicationName": "CHCShowPerformance.exe"
+  },
+  {
+    "applicationReferement": 7,
+    "rootPath": "E:\\CryptoHideCoinDTN\\Binary\\Sidechains\\Console\\Trading Bot System Service Runtime",
+    "directoryName": "x64",
+    "applicationName": "TradingBotSystemServiceRuntime.exe"
   }
 ]
