@@ -9,3 +9,6 @@ E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Debu
 E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Debug\TradingBotSystemModelsLibrary.dll
 E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Debug\TradingBotSystemModelsLibrary.xml
 E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\obj\Debug\TradingBotSystemModelsLibrary.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Trading Bot System Models Library\bin\Debug\Newtonsoft.Json.xml

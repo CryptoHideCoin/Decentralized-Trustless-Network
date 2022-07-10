@@ -174,7 +174,7 @@ Namespace AreaCommon.Command
         ''' <returns></returns>
         Private Function delete(ByVal id As Integer) As Boolean
             Try
-                Dim remote As New ProxyWS(Of ExchangeListResponseModel)
+                Dim remote As New ProxyWS(Of BaseRemoteResponse)
                 Dim proceed As Boolean = True
                 Dim isActiveValue As Integer = 0
 

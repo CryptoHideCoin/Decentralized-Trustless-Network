@@ -94,6 +94,18 @@ Namespace AreaService.Runtime.Models
             End With
         End Sub
 
+        Private Sub exchangesEngine_UpdateExchangeCurrency(exchangeId As Integer, ByRef value As Boolean) Handles exchangesEngine.UpdateExchangeCurrency
+            If exchangeReferencesEngine.currencyReferenceExist(exchangeId) Then
+                value = True
+
+                currenciesDownloadEngine.downloadFromExchange(exchangeId, exchangesEngine.select(exchangeId).name, True)
+            End If
+        End Sub
+
+        Private Sub exchangesEngine_UpdateExchangeProducts(exchangeId As Integer, ByRef value As Boolean) Handles exchangesEngine.UpdateExchangeProducts
+
+        End Sub
+
     End Class
 
 End Namespace

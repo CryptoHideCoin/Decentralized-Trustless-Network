@@ -12,11 +12,6 @@ Imports TradingBotSystemModelsLibrary.AreaModel.Currency
 
 Namespace AreaCommon.Command
 
-    Public Class DataCurrency
-        Public Property description As String = ""
-        Public Property age As String = ""
-    End Class
-
     ''' <summary>
     ''' This class manage the command currency
     ''' </summary>
@@ -90,60 +85,94 @@ Namespace AreaCommon.Command
         End Function
 
         ''' <summary>
-        ''' This method provide to add a new currency
+        ''' This method provide to execute add new command
         ''' </summary>
-        ''' <param name="nameValue"></param>
-        ''' <param name="displayNameValue"></param>
-        ''' <param name="tipologyValue"></param>
-        ''' <param name="minSizeValue"></param>
-        ''' <param name="maxPrecisionValue"></param>
-        ''' <param name="symbolValue"></param>
-        ''' <param name="sourceValue"></param>
         ''' <returns></returns>
-        Private Function addNew(ByVal shortNameValue As String, ByVal nameValue As String, ByVal displayNameValue As String, ByVal tipologyValue As String, ByVal minSizeValue As String, ByVal maxPrecisionValue As String, ByVal symbolValue As String, ByVal sourceValue As String) As Boolean
+        Private Function readParameter(ByRef parameter As CurrencyStructure) As Boolean
             Try
-                Dim remote As New ProxyWS(Of DataCurrency) ', BaseRemoteResponse)
-                Dim data As New DataCurrency
+                If _Command.haveParameter("shortName") Then
+                    parameter.shortName = _Command.parameterValue("shortName").ToUpper
+                Else
+                    RaiseEvent RaiseError("Exchange short name parameter missing")
+
+                    Return False
+                End If
+
+                If _Command.haveParameter("name") Then
+                    parameter.name = StrConv(_Command.parameterValue("name"), VbStrConv.ProperCase)
+                End If
+                If _Command.haveParameter("displayName") Then
+                    parameter.displayName = StrConv(_Command.parameterValue("displayName"), VbStrConv.ProperCase)
+                End If
+                If _Command.haveParameter("tipology") Then
+                    Select Case _Command.parameterValue("tipology")
+                        Case "1", "fiat" : parameter.tipology = CurrencyStructure.tipologyAsset.fiat
+                        Case "2", "crypto" : parameter.tipology = CurrencyStructure.tipologyAsset.crypto
+                        Case Else : parameter.tipology = CurrencyStructure.tipologyAsset.undefined
+                    End Select
+                End If
+                If _Command.haveParameter("minSize") Then
+                    parameter.minSize = _Command.parameterValue("minSize")
+                End If
+                If _Command.haveParameter("maxPrecision") Then
+                    parameter.maxPrecision = _Command.parameterValue("maxPrecision")
+                End If
+                If _Command.haveParameter("symbol") Then
+                    parameter.symbol = _Command.parameterValue("symbol")
+                End If
+                If _Command.haveParameter("nature") Then
+                    Select Case _Command.parameterValue("nature").ToString()
+                        Case "1", "coin" : parameter.nature = CurrencyStructure.natureAsset.coin
+                        Case "2", "stablecoin" : parameter.nature = CurrencyStructure.natureAsset.stableCoin
+                        Case "3", "token" : parameter.nature = CurrencyStructure.natureAsset.token
+                        Case Else : parameter.nature = CurrencyStructure.natureAsset.undefined
+                    End Select
+                End If
+                If _Command.haveParameter("networkReferement") Then
+                    parameter.networkReferement = _Command.parameterValue("networkReferement")
+                End If
+                If _Command.haveParameter("contractNetwork") Then
+                    parameter.contractNetwork = _Command.parameterValue("contractNetwork")
+                End If
+
+                Return True
+            Catch ex As Exception
+                RaiseEvent RaiseError($"Error during readAddNewParameter - {ex.Message}")
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to add a new currency 
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function addNew() As Boolean
+            Try
+                Dim data As New CurrencyStructure
+                Dim remote As New ProxyWS(Of CurrencyStructure)
                 Dim proceed As Boolean = True
-                Dim isActiveValue As Integer = 0
 
-                'data.shortName = shortNameValue
-                'data.name = nameValue
-                'data.displayName = displayNameValue
+                If proceed Then
+                    proceed = readParameter(data)
 
-                'Select Case tipologyValue.ToLower
-                '    Case "crypto".ToLower : data.tipology = CurrencyStructure.typologyAsset.crypto
-                '    Case "fiat".ToLower : data.tipology = CurrencyStructure.typologyAsset.fiat
-                '    Case Else : data.tipology = CurrencyStructure.typologyAsset.undefined
-                'End Select
-
-                'data.minSize = Val(minSizeValue)
-                'data.maxPrecision = Val(maxPrecisionValue)
-                'data.symbol = symbolValue
-                'data.source = sourceValue
-
+                    data.codeSymbol()
+                End If
                 If proceed Then
                     remote.url = _EngineService.buildURL($"/state/trade/currency/?securityToken={_EngineService.securityToken}")
 
-                    'remote.options = New CHCModelsLibrary.AreaModel.Network.Communication.Options With {
-                    '            .UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101 Firefox/82.0",
-                    '            .Headers = New System.Net.WebHeaderCollection From {
-                    '                {"key", "value"}
-                    '            }
-                    '}
-
-                End If
-                If proceed Then
                     remote.data = data
 
-                    'proceed = (remote.sendData(CHCModelsLibrary.AreaModel.Network.Communication.Method.Post).Length = 0)
+                    remote.standardize()
+                End If
+                If proceed Then
                     proceed = (remote.sendData("POST").Length = 0)
                 End If
                 If proceed Then
                     proceed = (remote.remoteResponse.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
                 End If
                 If proceed Then
-                    RaiseEvent WriteLine($"Command addNew executed: {nameValue}")
+                    RaiseEvent WriteLine($"Command addNew executed: {data.shortName}")
                 End If
 
                 Return proceed
@@ -159,49 +188,105 @@ Namespace AreaCommon.Command
         End Function
 
         ''' <summary>
-        ''' This method provide to update a name of exchange or isActive flag
+        ''' This method provide to get a current parameter
         ''' </summary>
-        ''' <param name="updateId"></param>
-        ''' <param name="name"></param>
-        ''' <param name="isActive"></param>
+        ''' <param name="parameter"></param>
         ''' <returns></returns>
-        Private Function update(ByVal updateId As Integer, ByVal name As String, ByVal isActive As String) As Boolean
-            'Try
-            '    Dim remote As New ProxyWS(Of ExchangeListResponseModel)
-            '    Dim proceed As Boolean = True
-            '    Dim isActiveValue As Integer = 0
+        Private Function getCurrentParameter(ByRef parameter As CurrencyStructure) As Boolean
+            Try
+                Dim remote As New ProxyWS(Of CurrencyResponseModel)
+                Dim proceed As Boolean = True
 
-            '    If (isActive.ToLower.CompareTo("true") = 0) Or (isActive.CompareTo("1") = 0) Then
-            '        isActiveValue = 1
-            '    Else
-            '        isActiveValue = 0
-            '    End If
+                If _Command.haveParameter("id") Then
+                    parameter.id = _Command.parameterValue("id")
+                Else
+                    RaiseEvent RaiseError("Current id parameter missing")
 
-            '    If proceed Then
-            '        remote.url = _EngineService.buildURL($"/state/trade/exchange/?securityToken={_EngineService.securityToken}&id={updateId}&name={name}&isActive={isActiveValue}")
-            '    End If
-            '    If proceed Then
-            '        proceed = (remote.sendData("PUT").Length = 0)
-            '    End If
-            '    If proceed Then
-            '        proceed = (remote.remoteResponse.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
-            '    End If
-            '    If proceed Then
-            '        RaiseEvent WriteLine($"Command update executed: {name} - {isActive}")
-            '    Else
-            '        RaiseEvent WriteLine($"Command update failed")
-            '    End If
+                    Return False
+                End If
+                If proceed Then
+                    remote.url = _EngineService.buildURL($"/state/trade/currency/?securityToken={_EngineService.securityToken}&id={parameter.id}")
+                End If
+                If proceed Then
+                    proceed = (remote.getData.Length = 0)
+                End If
+                If proceed Then
+                    proceed = (remote.data.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+                End If
+                If proceed Then
+                    parameter.name = remote.data.value.name
+                    parameter.acquireTimeStamp = remote.data.value.acquireTimeStamp
+                    parameter.contractNetwork = remote.data.value.contractNetwork
+                    parameter.displayName = remote.data.value.displayName
+                    parameter.id = remote.data.value.id
+                    parameter.isUsed = remote.data.value.isUsed
+                    parameter.maxPrecision = remote.data.value.maxPrecision
+                    parameter.minSize = remote.data.value.minSize
+                    parameter.nature = remote.data.value.nature
+                    parameter.networkReferement = remote.data.value.networkReferement
+                    parameter.shortName = remote.data.value.shortName
+                    parameter.source = remote.data.value.source
+                    parameter.supplier = remote.data.value.supplier
+                    parameter.symbol = remote.data.value.symbol
+                    parameter.tipology = remote.data.value.tipology
+                    parameter.unitName = remote.data.value.unitName
+                Else
+                    RaiseEvent RaiseError($"Command getData failed")
+                End If
 
-            '    Return proceed
-            'Catch exFile As System.IO.FileLoadException
-            '    RaiseEvent IntegrityApplication(exFile.FileName)
+                Return proceed
+            Catch exFile As System.IO.FileLoadException
+                RaiseEvent IntegrityApplication(exFile.FileName)
 
-            '    Return False
-            'Catch ex As Exception
-            '    RaiseEvent RaiseError("Error during update - " & ex.Message)
+                Return False
+            Catch ex As Exception
+                RaiseEvent RaiseError("Error during getCurrentParameter - " & ex.Message)
 
-            '    Return False
-            'End Try
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to update data from a parameter's
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function update() As Boolean
+            Try
+                Dim data As New CurrencyStructure
+                Dim remote As New ProxyWS(Of CurrencyStructure)
+                Dim proceed As Boolean = True
+
+                If proceed Then
+                    proceed = getCurrentParameter(data)
+                End If
+                If proceed Then
+                    proceed = readParameter(data)
+                End If
+                If proceed Then
+                    remote.url = _EngineService.buildURL($"/state/trade/exchange/?securityToken={_EngineService.securityToken}")
+
+                    remote.data = data
+                End If
+                If proceed Then
+                    proceed = (remote.sendData("PUT").Length = 0)
+                End If
+                If proceed Then
+                    proceed = (remote.remoteResponse.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+                End If
+                If proceed Then
+                    RaiseEvent WriteLine($"Command update executed: {data.shortName}")
+                End If
+
+                Return proceed
+            Catch exFile As System.IO.FileLoadException
+                RaiseEvent IntegrityApplication(exFile.FileName)
+
+                Return False
+            Catch ex As Exception
+                RaiseEvent RaiseError("Error during update - " & ex.Message)
+
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -210,36 +295,36 @@ Namespace AreaCommon.Command
         ''' <param name="id"></param>
         ''' <returns></returns>
         Private Function delete(ByVal id As Integer) As Boolean
-            'Try
-            '    Dim remote As New ProxyWS(Of ExchangeListResponseModel)
-            '    Dim proceed As Boolean = True
-            '    Dim isActiveValue As Integer = 0
+            Try
+                Dim remote As New ProxyWS(Of BaseRemoteResponse)
+                Dim proceed As Boolean = True
+                Dim isActiveValue As Integer = 0
 
-            '    If proceed Then
-            '        remote.url = _EngineService.buildURL($"/state/trade/exchange/?securityToken={_EngineService.securityToken}&id={id}")
-            '    End If
-            '    If proceed Then
-            '        proceed = (remote.sendData("DELETE").Length = 0)
-            '    End If
-            '    If proceed Then
-            '        proceed = (remote.remoteResponse.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
-            '    End If
-            '    If proceed Then
-            '        RaiseEvent WriteLine($"Command delete executed: {id}")
-            '    Else
-            '        RaiseEvent WriteLine($"Command delete failed")
-            '    End If
+                If proceed Then
+                    remote.url = _EngineService.buildURL($"/state/trade/currency/?securityToken={_EngineService.securityToken}&id={id}")
+                End If
+                If proceed Then
+                    proceed = (remote.sendData("DELETE").Length = 0)
+                End If
+                If proceed Then
+                    proceed = (remote.remoteResponse.responseStatus = RemoteResponse.EnumResponseStatus.responseComplete)
+                End If
+                If proceed Then
+                    RaiseEvent WriteLine($"Command delete executed: {id}")
+                Else
+                    RaiseEvent WriteLine($"Command delete failed")
+                End If
 
-            '    Return proceed
-            'Catch exFile As System.IO.FileLoadException
-            '    RaiseEvent IntegrityApplication(exFile.FileName)
+                Return proceed
+            Catch exFile As System.IO.FileLoadException
+                RaiseEvent IntegrityApplication(exFile.FileName)
 
-            '    Return False
-            'Catch ex As Exception
-            '    RaiseEvent RaiseError("Error during delete - " & ex.Message)
+                Return False
+            Catch ex As Exception
+                RaiseEvent RaiseError("Error during delete - " & ex.Message)
 
-            '    Return False
-            'End Try
+                Return False
+            End Try
         End Function
 
         ''' <summary>
@@ -279,6 +364,9 @@ Namespace AreaCommon.Command
                     RaiseEvent WriteLine($"Symbol               : {data.value.symbol}")
                     RaiseEvent WriteLine($"Source               : {data.value.source}")
                     RaiseEvent WriteLine($"Supplier             : {data.value.supplier}")
+                    RaiseEvent WriteLine($"Crypto tipology      : {data.value.nature}")
+                    RaiseEvent WriteLine($"Network referement   : {data.value.networkReferement}")
+                    RaiseEvent WriteLine($"Contract             : {data.value.contractNetwork}")
                     RaiseEvent WriteLine($"Acquire timestamp    : {data.value.acquireTimeStamp}")
                     RaiseEvent WriteLine($"Is used              : {data.value.isUsed}")
 
@@ -346,61 +434,27 @@ Namespace AreaCommon.Command
 
                                 proceed = False
                             End If
-                        Case "addNew".ToLower()
-                            If _Command.haveParameter("shortName") Then
-                                shortNameValue = _Command.parameterValue("shortName")
-                            End If
-                            If _Command.haveParameter("name") Then
-                                nameValue = _Command.parameterValue("name")
-                            End If
-                            If _Command.haveParameter("displayName") Then
-                                displayNameValue = _Command.parameterValue("displayName")
-                            End If
-                            If _Command.haveParameter("tipology") Then
-                                tipologyValue = _Command.parameterValue("tipology")
-                            End If
-                            If _Command.haveParameter("minSize") Then
-                                minSizeValue = _Command.parameterValue("minSize")
-                            End If
-                            If _Command.haveParameter("maxPrecision") Then
-                                maxPrecisionValue = _Command.parameterValue("maxPrecision")
-                            End If
-                            If _Command.haveParameter("symbol") Then
-                                symbolValue = _Command.parameterValue("symbol")
-                            End If
-                            If _Command.haveParameter("source") Then
-                                sourceValue = _Command.parameterValue("source")
-                            End If
-
-                            If Not addNew(shortNameValue, nameValue, displayNameValue, tipologyValue, minSizeValue, maxPrecisionValue, symbolValue, sourceValue) Then
-                                RaiseEvent WriteLine("Problem during get a addNew of exchange")
-
-                                proceed = False
-                            End If
-                        Case "update"
-                            Dim name As String = ""
-                            Dim isActiveValue As String = "1"
-
-                            If _Command.haveParameter("isActive") Then
-                                isActiveValue = _Command.parameterValue("isActive")
-                            End If
-                            If _Command.haveParameter("name") Then
-                                name = _Command.parameterValue("name")
-                            End If
-                            If Not update(_Command.parameterValue("update"), name, isActiveValue) Then
-                                RaiseEvent WriteLine("Problem during get an update of exchange")
-
-                                proceed = False
-                            End If
+                        Case "addNew".ToLower() : Return addNew()
+                        Case "update" : Return update()
                         Case "delete"
-                            If Not delete(_Command.parameterValue("delete")) Then
-                                RaiseEvent WriteLine("Problem during get a delete of exchange")
+                            If Not _Command.haveParameter("id") Then
+                                RaiseEvent RaiseError("Id missing parameter's")
+
+                                proceed = False
+                            End If
+                            If Not delete(_Command.parameterValue("id")) Then
+                                RaiseEvent RaiseError("Problem during get a delete of currency")
 
                                 proceed = False
                             End If
                         Case "getData".ToLower()
-                            If Not getData(_Command.parameterValue("getData")) Then
-                                RaiseEvent WriteLine("Problem during get data of exchange")
+                            If Not _Command.haveParameter("id") Then
+                                RaiseEvent RaiseError("Id missing parameter's")
+
+                                proceed = False
+                            End If
+                            If Not getData(_Command.parameterValue("id")) Then
+                                RaiseEvent RaiseError("Problem during get data of currency")
 
                                 proceed = False
                             End If

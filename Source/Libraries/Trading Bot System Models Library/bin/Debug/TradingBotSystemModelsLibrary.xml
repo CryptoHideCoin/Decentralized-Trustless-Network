@@ -27,6 +27,16 @@ TradingBotSystemModelsLibrary
  This class contain the data of an Exchange
  </summary>
 </member>
+<member name="M:TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyStructure.codeSymbol">
+ <summary>
+ This method provide to code symbol to trasmit with a webservice
+ </summary>
+</member>
+<member name="M:TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyStructure.deCodeSymbol">
+ <summary>
+ This method provide to decoce symbol when receive a data with a webservice
+ </summary>
+</member>
 <member name="T:TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyListResponseModel">
  <summary>
  This class contain the currency list response model
@@ -75,6 +85,21 @@ TradingBotSystemModelsLibrary
 <member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeReferenceResponseModel">
  <summary>
  This class contain the exchange reference data response model
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeScheduleJobModels">
+ <summary>
+ This class contain the data of a schedule job models
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeActionModel">
+ <summary>
+ This method provide to determinate exchange action model
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeScheduleJobResponseModel">
+ <summary>
+ This class contain the exchange list response
  </summary>
 </member>
 </members>

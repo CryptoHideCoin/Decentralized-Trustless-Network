@@ -88,6 +88,7 @@
     <Compile Include="Command\CommandBarchAdv.vb" />
     <Compile Include="Command\CommandCurrency.vb" />
     <Compile Include="Command\CommandExchange.vb" />
+    <Compile Include="Command\CommandExchangeAction.vb" />
     <Compile Include="Command\CommandExchangeReference.vb" />
     <Compile Include="Command\CommandHelpPlus.vb" />
     <Compile Include="Engines\IntegrityApplication.vb" />

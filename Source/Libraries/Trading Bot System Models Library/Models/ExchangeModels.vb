@@ -9,6 +9,7 @@ Option Explicit On
 ' ****************************************
 
 Imports CHCModelsLibrary.AreaModel.Network.Response
+Imports CHCCommonLibrary.AreaEngine.Encryption
 
 
 
@@ -27,6 +28,29 @@ Namespace AreaModel.Exchange
         Public Property isCentralized As Boolean = False
         Public Property group As String = ""
         Public Property isUsed As Boolean = False
+
+        Public Overrides Function toString() As String
+            Dim tmp As String = ""
+
+            tmp += [name]
+            If isActive Then
+                tmp += "1"
+            Else
+                tmp += "0"
+            End If
+            If isCentralized Then
+                tmp += "1"
+            Else
+                tmp += "0"
+            End If
+            tmp += group
+
+            Return tmp
+        End Function
+
+        Public Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
 
     End Class
 

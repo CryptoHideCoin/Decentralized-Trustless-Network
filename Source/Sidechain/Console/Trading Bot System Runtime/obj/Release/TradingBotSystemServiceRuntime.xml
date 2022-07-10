@@ -67,6 +67,13 @@ TradingBotSystemServiceRuntime
  </summary>
  <returns></returns>
 </member>
+<member name="M:TradingBotSystemServiceRuntime.AreaCommon.Startup.Scheduler.addTradeJob(CHCModelsLibrary.AreaModel.Service.Scheduler.JobSchedule)">
+ <summary>
+ This method provide to add a new trade job
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
 <member name="M:TradingBotSystemServiceRuntime.AreaCommon.Startup.Scheduler.run">
  <summary>
  This method provide to start all maintenance service

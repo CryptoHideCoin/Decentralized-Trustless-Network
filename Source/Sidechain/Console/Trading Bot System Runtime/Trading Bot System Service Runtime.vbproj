@@ -112,6 +112,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\Standard\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="TradingBotSystemLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Binary\Libraries\Applicative\Trading Bot System\Standard\TradingBotSystemLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="TradingBotSystemModelsLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Binary\Libraries\Applicative\Trading Bot System Models Library\Standard\TradingBotSystemModelsLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64'">
     <Reference Include="CHCCommonLibrary">
@@ -129,6 +137,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x64\CHCSidechainServiceLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="TradingBotSystemLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Binary\Libraries\Applicative\Trading Bot System\x64\TradingBotSystemLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="TradingBotSystemModelsLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Binary\Libraries\Applicative\Trading Bot System Models Library\x64\TradingBotSystemModelsLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86'">
     <Reference Include="CHCCommonLibrary">
@@ -145,6 +161,14 @@
     <Reference Include="CHCSidechainServiceLibrary">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Binary\Libraries\Internal\CHC Sidechain Service\x86\CHCSidechainServiceLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="TradingBotSystemLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Binary\Libraries\Applicative\Trading Bot System\x86\TradingBotSystemLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="TradingBotSystemModelsLibrary">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Binary\Libraries\Applicative\Trading Bot System Models Library\x86\TradingBotSystemModelsLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -169,14 +193,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="TradingBotSystemLibrary, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Binary\Libraries\Applicative\Trading Bot System\Standard\TradingBotSystemLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="TradingBotSystemModelsLibrary, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Binary\Libraries\Applicative\Trading Bot System Models Library\Standard\TradingBotSystemModelsLibrary.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />

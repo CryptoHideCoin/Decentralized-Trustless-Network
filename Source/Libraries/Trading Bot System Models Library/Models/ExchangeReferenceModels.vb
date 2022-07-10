@@ -9,6 +9,7 @@ Option Explicit On
 ' ****************************************
 
 Imports CHCModelsLibrary.AreaModel.Network.Response
+Imports CHCCommonLibrary.AreaEngine.Encryption
 
 
 
@@ -30,6 +31,19 @@ Namespace AreaModel.Exchange
         Public Property exchangeId As Integer = 0
         Public Property urlType As TypeReferenceEnumeration = TypeReferenceEnumeration.undefined
         Public Property url As String = ""
+
+        Public Overrides Function toString() As String
+            Dim tmp As String = ""
+
+            tmp += urlType
+            tmp += url
+
+            Return tmp
+        End Function
+
+        Public Function getHash() As String
+            Return HashSHA.generateSHA256(Me.toString())
+        End Function
 
     End Class
 

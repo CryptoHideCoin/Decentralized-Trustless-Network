@@ -11,11 +11,6 @@ Imports CHCModelsLibrary.AreaModel.Information
 
 Namespace Controllers
 
-    Public Class DataCurrency
-        Public Property description As String = ""
-        Public Property age As String = ""
-    End Class
-
 
     ' GET: api/{GUID service}/state/trade/currencyController
     <Route("StateBaseApi")>
@@ -36,7 +31,7 @@ Namespace Controllers
             Dim enter As Boolean = False
             Try
                 If (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("CurrenciesController.GetValues", ownerId,, CHCModelsLibrary.AreaModel.Log.AccessTypeEnumeration.api)
+                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("CurrencyController.GetValues", ownerId,, CHCModelsLibrary.AreaModel.Log.AccessTypeEnumeration.api)
 
                     enter = True
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
@@ -56,10 +51,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("CurrenciesController.GetValues", ownerId, ex.Message)
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("CurrencyController.GetValues", ownerId, ex.Message)
             Finally
                 If enter Then
-                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("CurrenciesController.GetValues", ownerId)
+                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("CurrencyController.GetValues", ownerId)
                 End If
             End Try
 
@@ -81,13 +76,13 @@ Namespace Controllers
             Dim enter As Boolean = False
             Try
                 If (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("CurrenciesController.GetValue", ownerId,, CHCModelsLibrary.AreaModel.Log.AccessTypeEnumeration.api)
+                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("CurrencyController.GetValue", ownerId,, CHCModelsLibrary.AreaModel.Log.AccessTypeEnumeration.api)
 
                     enter = True
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        result.value = AreaCommon.state.currenciesEngine.select(id)
+                        result.value = AreaCommon.state.currenciesEngine.select(id, ownerId)
 
                         CHCSidechainServiceLibrary.AreaCommon.Main.updateLastGetServiceInformation = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                     Else
@@ -101,10 +96,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("CurrenciesController.GetValue", ownerId, ex.Message)
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("CurrencyController.GetValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("CurrenciesController.GetValue", ownerId)
+                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("CurrencyController.GetValue", ownerId)
                 End If
             End Try
 
@@ -119,22 +114,26 @@ Namespace Controllers
         ''' <param name="securityToken"></param>
         ''' <param name="newDataValue"></param>
         ''' <returns></returns>
-        Public Function postValue(ByVal securityToken As String, <FromBody()> ByVal data As DataCurrency) As BaseRemoteResponse
+        Public Function postValue(ByVal securityToken As String, <FromBody()> ByVal data As CurrencyStructure) As BaseRemoteResponse
             Dim ownerId As String = "CurrencyController-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
             Dim enter As Boolean = False
             Try
                 If (CHCSidechainServiceLibrary.AreaCommon.Main.serviceInformation.currentStatus = InternalServiceInformation.EnumInternalServiceState.started) Then
-                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("CurrenciesController.PostValue", ownerId,, CHCModelsLibrary.AreaModel.Log.AccessTypeEnumeration.api)
+                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("CurrencyController.PostValue", ownerId,, CHCModelsLibrary.AreaModel.Log.AccessTypeEnumeration.api)
 
                     enter = True
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        'If (AreaCommon.state.currenciesEngine.addOrGet(value).id = 0) Then
+                        data.deCodeSymbol()
 
-                        'End If
+                        If (AreaCommon.state.currenciesEngine.addOrGet(data, ownerId, True).id = 0) Then
+                            result.responseStatus = BaseRemoteResponse.EnumResponseStatus.inError
+
+                            result.errorDescription = "Problem during add a new currency"
+                        End If
 
                         CHCSidechainServiceLibrary.AreaCommon.Main.updateLastGetServiceInformation = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                     Else
@@ -148,10 +147,10 @@ Namespace Controllers
                 result.responseStatus = RemoteResponse.EnumResponseStatus.inError
                 result.errorDescription = "503 - Generic Error"
 
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("CurrenciesController.PostValue", ownerId, ex.Message)
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("CurrencyController.PostValue", ownerId, ex.Message)
             Finally
                 If enter Then
-                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("CurrenciesController.PostValue", ownerId)
+                    CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("CurrencyController.PostValue", ownerId)
                 End If
             End Try
 
@@ -163,7 +162,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="id"></param>
         ''' <param name="value"></param>
-        Public Function putValue(ByVal securityToken As String, <FromBody()> ByVal data As DataCurrency) As BaseRemoteResponse
+        Public Function putValue(ByVal securityToken As String, <FromBody()> ByVal data As CurrencyStructure) As BaseRemoteResponse
             Dim ownerId As String = "CurrenciesController-" & Guid.NewGuid.ToString
             Dim result As New BaseRemoteResponse
             Dim response As String = ""
@@ -176,11 +175,13 @@ Namespace Controllers
                     response = CHCSidechainServiceLibrary.AreaCommon.Main.environment.adminToken.check(securityToken)
 
                     If (response.Length = 0) Then
-                        'If Not AreaCommon.state.currenciesEngine.updateData(0, data) Then
-                        result.responseStatus = RemoteResponse.EnumResponseStatus.inError
+                        data.deCodeSymbol()
+
+                        If Not AreaCommon.state.currenciesEngine.updateData(data.id, data) Then
+                            result.responseStatus = RemoteResponse.EnumResponseStatus.inError
 
                             result.errorDescription = "999 - Cannot update data (check id)"
-                        'End If
+                        End If
 
                         CHCSidechainServiceLibrary.AreaCommon.Main.updateLastGetServiceInformation = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                     Else

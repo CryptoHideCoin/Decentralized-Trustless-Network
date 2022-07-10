@@ -136,6 +136,7 @@
     <Compile Include="Base\Internal.vb" />
     <Compile Include="Controllers\State\CurrencyController.vb" />
     <Compile Include="Controllers\State\ExchangeController.vb" />
+    <Compile Include="Controllers\State\ExchangeScheduleJobController.vb" />
     <Compile Include="Controllers\State\ExchangeReferenceController.vb" />
     <Compile Include="Engine\Currencies\CurrenciesEngine.vb" />
     <Compile Include="Engine\Currencies\GetCurrenciesFromWeb.vb" />

@@ -37,17 +37,18 @@ Namespace AreaBusiness
                 sql += "CREATE TABLE currencies "
                 sql += " ([id] INTEGER PRIMARY KEY AUTOINCREMENT, "
                 sql += "  shortName NVARCHAR(15),"
-                sql += "  [name] NVARCHAR(256),"
-                sql += "  displayName NVARCHAR(256),"
+                sql += "  [name] NVARCHAR(128),"
+                sql += "  displayName NVARCHAR(128),"
                 sql += "  tipology INTEGER,"
                 sql += "  minSize INTEGER,"
                 sql += "  maxPrecision INTEGER,"
                 sql += "  symbol NVARCHAR(2),"
-                sql += "  source NVARCHAR(512),"
-                sql += "  supplier NVARCHAR(512),"
+                sql += "  source NVARCHAR(256),"
+                sql += "  supplier NVARCHAR(256),"
                 sql += "  nature INTEGER, "
                 sql += "  networkReferementId INTEGER,"
-                sql += "  networkContract NVARCHA(256),"
+                sql += "  networkContract NVARCHAR(256),"
+                sql += "  unitName NVARCAR(32),"
                 sql += "  acquireTimestamp REAL,"
                 sql += "  isUsed INTEGER);"
 
@@ -124,7 +125,7 @@ Namespace AreaBusiness
                 Return [select](networkReferementId).shortName
             End If
 
-            Return 0
+            Return ""
         End Function
 
         ''' <summary>
@@ -138,11 +139,11 @@ Namespace AreaBusiness
                 Dim sql As String = ""
 
                 sql += $"INSERT INTO currencies "
-                sql += $"(shortName, [name], displayName, tipology, minSize, maxPrecision, symbol, source, supplier, nature, networkReferementId, networkContract, acquireTimestamp, isUsed) "
+                sql += $"(shortName, [name], displayName, tipology, minSize, maxPrecision, symbol, source, supplier, nature, networkReferementId, networkContract, unitName, acquireTimestamp, isUsed) "
                 sql += $" VALUES "
                 sql += $"('{data.shortName}', '{data.name}', '{data.displayName}', {Val(data.tipology)}, {data.minSize}, {data.maxPrecision}, "
                 sql += $"'{data.symbol}', '{data.source}', '{data.supplier}', {Val(data.nature)}, {getNetworkReferement(data.networkReferement)}, '{data.contractNetwork}', "
-                sql += $"'{data.acquireTimeStamp.ToString.Replace(",", ".")}', 0) "
+                sql += $"'{data.unitName}', '{data.acquireTimeStamp.ToString.Replace(",", ".")}', 0) "
 
                 Return _EngineDB.executeDataTableAndReturnID(sql, forceOwner)
             Catch ex As Exception
@@ -158,7 +159,7 @@ Namespace AreaBusiness
         ''' <param name="data"></param>
         ''' <param name="forceOwner"></param>
         ''' <returns></returns>
-        Public Function addOrGet(ByVal data As CurrencyStructure, Optional ByVal forceOwner As String = "") As CurrencyStructure
+        Public Function addOrGet(ByVal data As CurrencyStructure, Optional ByVal forceOwner As String = "", Optional ByVal manual As Boolean = False) As CurrencyStructure
             Dim response As New CurrencyStructure With {.shortName = data.shortName}
 
             If (forceOwner.Length = 0) Then
@@ -172,6 +173,13 @@ Namespace AreaBusiness
 
                     If useCache Then
                         If Not _CacheByName.ContainsKey(data.shortName) Then
+
+                            If manual Then
+                                data.source = "User"
+                                data.supplier = "Edit"
+                                data.acquireTimeStamp = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                            End If
+
                             data.id = addNew(data, forceOwner)
 
                             _CacheByName.Add(data.shortName, data)
@@ -237,7 +245,8 @@ Namespace AreaBusiness
                     sql += $"minSize = {newData.minSize}, maxPrecision = {newData.maxPrecision},"
                     sql += $"symbol = '{newData.symbol}', nature = {Val(newData.nature)}, "
                     sql += $"networkReferement = {getNetworkReferement(newData.networkReferement)}, "
-                    sql += $"networkContract = '{newData.contractNetwork}'"
+                    sql += $"networkContract = '{newData.contractNetwork}', "
+                    sql += $"unitName = '{newData.unitName}'"
 
                     sql += " WHERE [id] = '{id}'"
 

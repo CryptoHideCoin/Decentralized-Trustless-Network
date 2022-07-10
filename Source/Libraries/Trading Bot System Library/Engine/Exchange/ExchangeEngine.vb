@@ -25,6 +25,8 @@ Namespace AreaBusiness
         Public Property useCache As Boolean = False
 
         Public Event SetExchangeActive(ByVal exchangeId As Integer, ByVal lastCurrenciesUpdate As Double, ByVal lastProductsUpdate As Double)
+        Public Event UpdateExchangeCurrency(ByVal exchangeId As Integer, ByRef value As Boolean)
+        Public Event UpdateExchangeProducts(ByVal exchangeId As Integer, ByRef value As Boolean)
 
 
 
@@ -237,7 +239,7 @@ Namespace AreaBusiness
                     groupId = [select](data.group).id
 
                     If (groupId = 0) Then
-                        sql += $"       groupId = '{data.name}'"
+                        sql += $"       groupId = ''"
                     Else
                         sql += $"       groupId = {groupId}"
                     End If
@@ -317,16 +319,21 @@ Namespace AreaBusiness
 
                 If _Initialize Then
                     Dim sql As String
+                    Dim data As ExchangeStructure
 
                     If useCache Then
                         If _CacheExchangeById.ContainsKey(id) Then
                             _CacheExchangeById(id).isActive = True
+
+                            data = _CacheExchangeById(id)
                         Else
                             Return False
                         End If
+                    Else
+                        data = [select](id)
                     End If
 
-                    sql = $"UPDATE exchanges SET isActive = 1 WHERE [id] = '{id}'"
+                    sql = $"UPDATE exchanges SET isActive = 1, hash = '{data.getHash()}' WHERE [id] = '{id}'"
 
                     Return _EngineDB.executeDataTable(sql, forceOwner)
                 End If
@@ -519,6 +526,89 @@ Namespace AreaBusiness
                 Return response
             Finally
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("ExchangeEngine.[select]", forceOwner)
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to return the schedule job of exchange
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <param name="ownerId"></param>
+        ''' <returns></returns>
+        Public Function selectScheduleJob(ByVal id As Integer, ByVal forceOwner As String) As ExchangeScheduleJobModels
+            Dim result As New ExchangeScheduleJobModels With {.exchangeId = id}
+
+            Try
+                If (forceOwner.Length = 0) Then
+                    forceOwner = _OwnerId
+                End If
+
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("ExchangeEngine.selectScheduleJob", forceOwner)
+
+                If _Initialize Then
+                    With [select](id)
+                        result.lastCurrenciesCheck = .lastCurrenciesCheck
+                        result.lastProductsCheck = .lastProductsCheck
+
+                        If (.lastCurrenciesCheck = 0) Then
+                            result.nextCurrenciesCheck = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (24 * 60 * 60 * 1000)
+                        Else
+                            result.nextCurrenciesCheck = .lastCurrenciesCheck + (24 * 60 * 60 * 1000)
+                        End If
+
+                        If (.lastProductsCheck = 0) Then
+                            result.nextProductsCheck = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (24 * 60 * 60 * 1000)
+                        Else
+                            result.nextProductsCheck = .lastProductsCheck + (24 * 60 * 60 * 1000)
+                        End If
+                    End With
+                End If
+
+                Return result
+            Catch ex As Exception
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeEngine.selectScheduleJob", forceOwner, ex.Message)
+
+                Return result
+            Finally
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("ExchangeEngine.selectScheduleJob", forceOwner)
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to execute schedule command
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="ownerId"></param>
+        ''' <returns></returns>
+        Public Function executeCommand(ByRef data As ExchangeActionModel, ByVal forceOwner As String) As Boolean
+            Try
+                Dim executeCommandValue As Boolean = False
+
+                If (forceOwner.Length = 0) Then
+                    forceOwner = _OwnerId
+                End If
+
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackEnter("ExchangeEngine.executeScheduleCommand", forceOwner)
+
+                If _Initialize Then
+                    With [select](data.exchangeId)
+                        If (.id <> 0) And .isActive Then
+                            If data.command = ExchangeActionModel.ActionEnumeration.updateCurrencies Then
+                                RaiseEvent UpdateExchangeCurrency(data.exchangeId, executeCommandValue)
+                            ElseIf data.command = ExchangeActionModel.ActionEnumeration.updateProducts Then
+                                RaiseEvent UpdateExchangeProducts(data.exchangeId, executeCommandValue)
+                            End If
+                        End If
+                    End With
+                End If
+
+                Return executeCommandValue
+            Catch ex As Exception
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeEngine.executeScheduleCommand", forceOwner, ex.Message)
+
+                Return False
+            Finally
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackExit("ExchangeEngine.executeScheduleCommand", forceOwner)
             End Try
         End Function
 

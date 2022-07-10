@@ -56,26 +56,29 @@ TbsAc
  </summary>
  <returns></returns>
 </member>
-<member name="M:TbsAc.AreaCommon.Command.CommandCurrency.addNew(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+<member name="M:TbsAc.AreaCommon.Command.CommandCurrency.readParameter(TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyStructure@)">
  <summary>
- This method provide to add a new currency
+ This method provide to execute add new command
  </summary>
- <param name="nameValue"></param>
- <param name="displayNameValue"></param>
- <param name="tipologyValue"></param>
- <param name="minSizeValue"></param>
- <param name="maxPrecisionValue"></param>
- <param name="symbolValue"></param>
- <param name="sourceValue"></param>
  <returns></returns>
 </member>
-<member name="M:TbsAc.AreaCommon.Command.CommandCurrency.update(System.Int32,System.String,System.String)">
+<member name="M:TbsAc.AreaCommon.Command.CommandCurrency.addNew">
  <summary>
- This method provide to update a name of exchange or isActive flag
+ This method provide to add a new currency 
  </summary>
- <param name="updateId"></param>
- <param name="name"></param>
- <param name="isActive"></param>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandCurrency.getCurrentParameter(TradingBotSystemModelsLibrary.AreaModel.Currency.CurrencyStructure@)">
+ <summary>
+ This method provide to get a current parameter
+ </summary>
+ <param name="parameter"></param>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandCurrency.update">
+ <summary>
+ This method provide to update data from a parameter's
+ </summary>
  <returns></returns>
 </member>
 <member name="M:TbsAc.AreaCommon.Command.CommandCurrency.delete(System.Int32)">
@@ -154,6 +157,30 @@ TbsAc
  This method provide to get a current parameter
  </summary>
  <param name="parameter"></param>
+ <returns></returns>
+</member>
+<member name="T:TbsAc.AreaCommon.Command.CommandExchangeAction">
+ <summary>
+ This class manage the command exchange action
+ </summary>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchangeAction.readParameter(TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeActionModel@)">
+ <summary>
+ This method provide to read parameter
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchangeAction.updateList">
+ <summary>
+ This method provide to add a new exchange 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchangeAction.getData">
+ <summary>
+ This method provide to get a data from an exchange
+ </summary>
+ <param name="id"></param>
  <returns></returns>
 </member>
 <member name="T:TbsAc.AreaCommon.Command.CommandExchangeReference">
