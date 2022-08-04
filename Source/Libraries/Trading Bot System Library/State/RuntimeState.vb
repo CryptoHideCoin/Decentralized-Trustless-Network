@@ -24,6 +24,8 @@ Namespace AreaService.Runtime.Models
         Public WithEvents exchangesEngine As New AreaBusiness.ExchangeEngine
         Public WithEvents exchangeReferencesEngine As New AreaBusiness.ExchangeReferencesEngine
 
+        Public Property exchangeCurrenciesEngine As New AreaBusiness.ExchangeCurrenciesEngine
+
         Public Property currenciesEngine As New AreaBusiness.CurrenciesEngine
         Public Property currenciesDownloadEngine As New AreaJob.GetCurrenciesFromWEB
 

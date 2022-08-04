@@ -1,0 +1,286 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+StandaloneBot
+</name>
+</assembly>
+<members>
+<member name="T:StandaloneBot.My.Resources.Resources">
+<summary>
+  Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
+</summary>
+</member>
+<member name="P:StandaloneBot.My.Resources.Resources.ResourceManager">
+<summary>
+  Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
+</summary>
+</member>
+<member name="P:StandaloneBot.My.Resources.Resources.Culture">
+<summary>
+  Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
+  ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
+</summary>
+</member>
+<member name="M:StandaloneBot.AreaState.Common.getPairID(System.String)">
+ <summary>
+ This method provide to get the pair id
+ </summary>
+ <param name="pair"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaState.Common.getPairName(System.Int32)">
+ <summary>
+ This method provide to get a pair name from a id
+ </summary>
+ <param name="pairId"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.startUp(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to start the bot
+ </summary>
+ <param name="bot"></param>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.switchTradeToClose(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@,StandaloneBot.AreaCommon.Models.Bot.TradeModel@)">
+ <summary>
+ This method provide to move a trade from open to close
+ </summary>
+ <param name="botConfiguration"></param>
+ <param name="trade"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.createFileOrder(System.String,StandaloneBot.AreaCommon.Models.Bot.BotOrderModel@)">
+ <summary>
+ This method provide to create file order
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.startMonitorOrder(System.String,StandaloneBot.AreaCommon.Models.Bot.BotOrderModel@)">
+ <summary>
+ This method provide to check if the order is in 
+ </summary>
+ <param name="botId"></param>
+ <param name="order"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.createNewSellOrder(System.Double,StandaloneBot.AreaCommon.Models.Bot.TradeModel@)">
+ <summary>
+ This method provide to create new buy order
+ </summary>
+ <param name="spread"></param>
+ <param name="trade"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.manageOpenTrades(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to manage open trades
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.manageOrderStatus(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to manage order status
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.createNewBuyOrder(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to create new buy order
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.evaluateToBuy(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to evaluate to acquire another quantity
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.actionBot(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to work with action bot
+ </summary>
+ <param name="item"></param>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.process(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to process a pair
+ </summary>
+ <param name="bot"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.startServiceBot">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.start">
+ <summary>
+ This method provide to start a pair job
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Orders.OrderModule.verify(StandaloneBot.AreaCommon.Models.Order.SimplyOrderModel@)">
+ <summary>
+ This method provide to verify the order
+ </summary>
+ <param name="order"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Orders.OrderModule.startServiceBot">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Orders.OrderModule.start">
+ <summary>
+ This method provide to start a pair job
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Pairs.PairModule.updateTick(StandaloneBot.AreaCommon.Models.Pair.PairInformation)">
+ <summary>
+ This method provide to update tick pair
+ </summary>
+ <param name="pair"></param>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Pairs.PairModule.process(System.Int32)">
+ <summary>
+ This method provide to process a pair
+ </summary>
+ <param name="currentIndex"></param>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Pairs.PairModule.startServiceProcessor">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Pairs.PairModule.testPair(System.String)">
+ <summary>
+ This method provide to check if the pair exist
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Pairs.PairModule.start">
+ <summary>
+ This method provide to start a pair job
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel">
+ <summary>
+ This method provide to collect all configuration parameter of a bot
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotOrderModel">
+ <summary>
+ This class contain all data relative an order bot
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.TradeModel">
+ <summary>
+ This class provide to 
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotDataModel">
+ <summary>
+ This class contain all data relative of a bot data
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel">
+ <summary>
+ This class contain the bot parameter
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel.HeaderBotConfiguration">
+ <summary>
+ This class contain the header general information of bot
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel.FundBotConfiguration">
+ <summary>
+ This class contain the information reguard the source of investiment
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel.StartJobConfiguration">
+ <summary>
+ This class contain the information reguard the start of job
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel.AcquisitionValueConfiguration">
+ <summary>
+ This information contain the information reguard the future acquire of currency
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel.BearMarketConfiguration">
+ <summary>
+ This class contain the specification action during bear market
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel.BullRunConfiguration">
+ <summary>
+ This class contain the specification action during bull run market
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel.BotActivityConfiguration">
+ <summary>
+ This class contain the information relative the activity of the bot
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel.BotActivityConfiguration.ModeTradeConfigEnumeration">
+ <summary>
+ This enumeration contain the mode of trade configuration
+ 
+ undefined - Not define
+ continuousGain - use the job continuousely 
+ dayTrading - mean the work all day to enter and exit position
+ weekTrading - mean the work all week to enter and exit position
+ monthTrading - mean the work all month to enter and exit position
+ yearTradint - mean the work long time to enter and exit position
+ investiment - help to cumulate coin into account
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotUserAccountModel">
+ <summary>
+ This class contain all data relative of a bot data
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Order.SimplyOrderModel">
+ <summary>
+ This class contain all element of an order
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Pair.TickInformation">
+ <summary>
+ This class provide to tick information
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Pair.TrendData">
+ <summary>
+ This class contain all information of a trand of a pair
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Pair.PairInformation">
+ <summary>
+ This class contain all information of a pair
+ </summary>
+</member>
+<member name="M:StandaloneBot.SettingsBot.extractStartConfiguration">
+ <summary>
+ This method provide to extract start configuration
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.SettingsBot.checkExist">
+ <summary>
+ This method provide to check the pair exist
+ </summary>
+</member>
+</members>
+</doc>

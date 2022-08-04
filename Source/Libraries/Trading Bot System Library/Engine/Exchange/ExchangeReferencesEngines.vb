@@ -48,9 +48,28 @@ Namespace AreaBusiness
                 sql += "  url NVARCHAR(1024), "
                 sql += " PRIMARY KEY (exchangeId, urlType));"
 
-                Return _EngineDB.executeDataTable(sql)
+                Return _EngineDB.executeDataTable(sql, _OwnerId)
             Catch ex As Exception
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeReferencesEngine.createExchangeReferenceTable", _OwnerId, ex.Message)
+
+                Return False
+            End Try
+        End Function
+
+        ''' <summary>
+        ''' This method provide to create an index short name
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function createFirstIndex() As Boolean
+            Try
+                Dim sql As String = ""
+
+                sql += " CREATE UNIQUE INDEX firstIndex "
+                sql += " ON exchangeReferences(exchangeId, urlType)"
+
+                Return _EngineDB.executeDataTable(sql, _OwnerId)
+            Catch ex As Exception
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeReferencesEngine.createFirstIndex", _OwnerId, ex.Message)
 
                 Return False
             End Try
@@ -66,6 +85,9 @@ Namespace AreaBusiness
 
                 If proceed Then
                     proceed = createExchangeReferenceTable()
+                End If
+                If proceed Then
+                    proceed = createFirstIndex()
                 End If
 
                 Return proceed

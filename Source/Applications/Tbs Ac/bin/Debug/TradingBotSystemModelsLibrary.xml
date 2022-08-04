@@ -47,6 +47,31 @@ TradingBotSystemModelsLibrary
  This class contain the asset data response model
  </summary>
 </member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.ExchangeCurrencies.TypeSupportedEnumeration">
+ <summary>
+ This enumeration is relative a type of supported
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.ExchangeCurrencies.ExchangeCurrencySupportStructure">
+ <summary>
+ This class contain all properties relative a Exchange-Currency
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.ExchangeCurrencies.ModifyExchangeCurrencySupportStructure">
+ <summary>
+ This class contain all properties necessary to add a currency support to an exchange
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.ExchangeCurrencies.ExchangeCurrencyListResponseModel">
+ <summary>
+ This class contain the exchange currency list response
+ </summary>
+</member>
+<member name="T:TradingBotSystemModelsLibrary.AreaModel.ExchangeCurrencies.ExchangeCurrencyResponseModel">
+ <summary>
+ This class contain the exchange currency data response model
+ </summary>
+</member>
 <member name="T:TradingBotSystemModelsLibrary.AreaModel.Exchange.ExchangeStructure">
  <summary>
  This class contain the data of an Exchange

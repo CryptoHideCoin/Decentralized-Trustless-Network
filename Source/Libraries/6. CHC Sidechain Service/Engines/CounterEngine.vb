@@ -63,7 +63,7 @@ Namespace AreaEngine
                 sql += " ([id] INTEGER PRIMARY KEY AUTOINCREMENT, "
                 sql += "  [name] NVARCHAR(1024));"
 
-                Return _EngineDB.executeDataTable(sql)
+                Return _EngineDB.executeDataTable(sql, _OwnerId)
             Catch ex As Exception
                 Return False
             End Try
@@ -83,7 +83,7 @@ Namespace AreaEngine
                 sql += "  [isAPI] INTEGER, "
                 sql += "  [value] INTEGER);"
 
-                Return _EngineDB.executeDataTable(sql)
+                Return _EngineDB.executeDataTable(sql, _OwnerId)
             Catch ex As Exception
                 Return False
             End Try
@@ -100,7 +100,7 @@ Namespace AreaEngine
                 sql += "CREATE UNIQUE INDEX idx_Name "
                 sql += " ON entryPoints ([name])"
 
-                Return _EngineDB.executeDataTable(sql)
+                Return _EngineDB.executeDataTable(sql, _OwnerId)
             Catch ex As Exception
                 Return False
             End Try
@@ -117,7 +117,7 @@ Namespace AreaEngine
                 sql += "CREATE INDEX idx_Primary "
                 sql += " ON counters ([entryPoint_id])"
 
-                Return _EngineDB.executeDataTable(sql)
+                Return _EngineDB.executeDataTable(sql, _OwnerId)
             Catch ex As Exception
                 Return False
             End Try
@@ -134,7 +134,7 @@ Namespace AreaEngine
 
                 sql = $"INSERT INTO entryPoints ([name]) VALUES ('{apiName}')"
 
-                Return _EngineDB.executeDataTableAndReturnID(sql)
+                Return _EngineDB.executeDataTableAndReturnID(sql, _OwnerId)
             Catch ex As Exception
                 Return False
             End Try

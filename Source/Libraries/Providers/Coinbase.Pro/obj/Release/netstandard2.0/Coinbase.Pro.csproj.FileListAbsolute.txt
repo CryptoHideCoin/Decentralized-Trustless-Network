@@ -1,0 +1,11 @@
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\netstandard2.0\Coinbase.Pro.csprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\netstandard2.0\Coinbase.Pro.sourcelink.json
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\netstandard2.0\Coinbase.Pro.AssemblyInfoInputs.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\netstandard2.0\Coinbase.Pro.AssemblyInfo.cs
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\bin\Release\netstandard2.0\Coinbase.Pro.deps.json
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\bin\Release\netstandard2.0\Coinbase.Pro.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\bin\Release\netstandard2.0\Coinbase.Pro.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\bin\Release\netstandard2.0\Coinbase.Pro.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\netstandard2.0\Coinbase.Pro.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\netstandard2.0\Coinbase.Pro.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\netstandard2.0\Coinbase.Pro.pdb

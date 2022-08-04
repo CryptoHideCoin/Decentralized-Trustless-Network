@@ -52,7 +52,7 @@ Namespace AreaBusiness
                 sql += "  acquireTimestamp REAL,"
                 sql += "  isUsed INTEGER);"
 
-                Return _EngineDB.executeDataTable(sql)
+                Return _EngineDB.executeDataTable(sql, _OwnerId)
             Catch ex As Exception
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("CurrencyEngine.createCurrenciesTable", _OwnerId, ex.Message)
 
@@ -71,9 +71,9 @@ Namespace AreaBusiness
                 sql += " CREATE UNIQUE INDEX shortNameIndex "
                 sql += " ON Currencies(shortName)"
 
-                Return _EngineDB.executeDataTable(sql)
+                Return _EngineDB.executeDataTable(sql, _OwnerId)
             Catch ex As Exception
-                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("CurrencyEngine.createCurrenciesTable", _OwnerId, ex.Message)
+                CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("CurrencyEngine.createShortNameIndex", _OwnerId, ex.Message)
 
                 Return False
             End Try

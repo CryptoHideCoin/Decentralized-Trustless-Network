@@ -48,7 +48,7 @@ Namespace AreaBusiness
                 sql += "  groupId INTEGER, "
                 sql += "  isUsed INTEGER);"
 
-                Return _EngineDB.executeDataTable(sql)
+                Return _EngineDB.executeDataTable(sql, _OwnerId)
             Catch ex As Exception
                 CHCSidechainServiceLibrary.AreaCommon.Main.environment.log.trackException("ExchangeEngine.createExchangeTable", _OwnerId, ex.Message)
 

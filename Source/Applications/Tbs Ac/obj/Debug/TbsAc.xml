@@ -183,6 +183,17 @@ TbsAc
  <param name="id"></param>
  <returns></returns>
 </member>
+<member name="T:TbsAc.AreaCommon.Command.CommandExchangeCurrency">
+ <summary>
+ This class manage the command exchange currency
+ </summary>
+</member>
+<member name="M:TbsAc.AreaCommon.Command.CommandExchangeCurrency.getList">
+ <summary>
+ This method provide to get a data from an exchange
+ </summary>
+ <returns></returns>
+</member>
 <member name="T:TbsAc.AreaCommon.Command.CommandExchangeReference">
  <summary>
  This class manage the command exchange references

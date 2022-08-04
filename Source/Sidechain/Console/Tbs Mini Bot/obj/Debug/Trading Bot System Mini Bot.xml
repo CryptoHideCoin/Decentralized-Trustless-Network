@@ -1,0 +1,120 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Trading Bot System Mini Bot
+</name>
+</assembly>
+<members>
+<member name="T:Trading_Bot_System_Mini_Bot.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:Trading_Bot_System_Mini_Bot.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:Trading_Bot_System_Mini_Bot.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="M:Trading_Bot_System_Mini_Bot.AreaCommon.Engine.Bot.BotEngine.inBottonMarket">
+ <summary>
+ This method provide to return if the market is in the botton
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Trading_Bot_System_Mini_Bot.AreaCommon.Engine.Bot.BotEngine.inBearMarket">
+ <summary>
+ This method provide to return if the market is in the bear
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Trading_Bot_System_Mini_Bot.AreaCommon.Engine.Bot.BotEngine.inBullRun">
+ <summary>
+ This method provide 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Trading_Bot_System_Mini_Bot.AreaCommon.Engine.Bot.BotEngine.inTopMarket">
+ <summary>
+ This method provide to return if the market is in Top
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Trading_Bot_System_Mini_Bot.AreaCommon.Engine.Bot.BotEngine.inHalvingMarket">
+ <summary>
+ This method provide to return is the market is in halving state
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Trading_Bot_System_Mini_Bot.AreaCommon.Engine.Bot.BotEngine.addNewTick">
+ <summary>
+ This method provide to add new tick
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:Trading_Bot_System_Mini_Bot.AreaCommon.Models.Bots.BotDataMode">
+ <summary>
+ This class contain the bot parameter
+ </summary>
+</member>
+<member name="T:Trading_Bot_System_Mini_Bot.AreaCommon.Models.Bots.BotParameters">
+ <summary>
+ This class contain the bot parameter
+ </summary>
+</member>
+<member name="T:Trading_Bot_System_Mini_Bot.AreaCommon.Models.Bots.BotParameters.HeaderBotConfiguration">
+ <summary>
+ This class contain the header general information of bot
+ </summary>
+</member>
+<member name="T:Trading_Bot_System_Mini_Bot.AreaCommon.Models.Bots.BotParameters.FundBotConfiguration">
+ <summary>
+ This class contain the information reguard the source of investiment
+ </summary>
+</member>
+<member name="T:Trading_Bot_System_Mini_Bot.AreaCommon.Models.Bots.BotParameters.StartJobConfiguration">
+ <summary>
+ This class contain the information reguard the start of job
+ </summary>
+</member>
+<member name="T:Trading_Bot_System_Mini_Bot.AreaCommon.Models.Bots.BotParameters.AcquisitionValueConfiguration">
+ <summary>
+ This information contain the information reguard the future acquire of currency
+ </summary>
+</member>
+<member name="T:Trading_Bot_System_Mini_Bot.AreaCommon.Models.Bots.BotParameters.BearMarketConfiguration">
+ <summary>
+ This class contain the specification action during bear market
+ </summary>
+</member>
+<member name="T:Trading_Bot_System_Mini_Bot.AreaCommon.Models.Bots.BotParameters.BullRunConfiguration">
+ <summary>
+ This class contain the specification action during bull run market
+ </summary>
+</member>
+<member name="T:Trading_Bot_System_Mini_Bot.AreaCommon.Models.Bots.BotParameters.BotActivityConfiguration">
+ <summary>
+ This class contain the information relative the activity of the bot
+ </summary>
+</member>
+<member name="T:Trading_Bot_System_Mini_Bot.AreaCommon.Models.Bots.BotParameters.BotActivityConfiguration.ModeTradeConfigEnumeration">
+ <summary>
+ This enumeration contain the mode of trade configuration
+ 
+ undefined - Not define
+ continuousGain - use the job continuousely 
+ dayTrading - mean the work all day to enter and exit position
+ weekTrading - mean the work all week to enter and exit position
+ monthTrading - mean the work all month to enter and exit position
+ yearTradint - mean the work long time to enter and exit position
+ investiment - help to cumulate coin into account
+ </summary>
+</member>
+</members>
+</doc>

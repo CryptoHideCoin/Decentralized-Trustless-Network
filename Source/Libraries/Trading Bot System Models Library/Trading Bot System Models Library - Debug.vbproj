@@ -71,9 +71,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\CurrencyModels.vb" />
+    <Compile Include="Models\ExchangeCurrenciesSupportModels.vb" />
     <Compile Include="Models\ExchangeModels.vb" />
+    <Compile Include="Models\ExchangeProducts.vb" />
     <Compile Include="Models\ExchangeReferenceModels.vb" />
     <Compile Include="Models\ExchangeScheduleJobModels.vb" />
+    <Compile Include="Models\PairModels.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

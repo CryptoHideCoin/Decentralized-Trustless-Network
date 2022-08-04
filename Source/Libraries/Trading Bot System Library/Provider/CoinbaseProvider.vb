@@ -104,7 +104,15 @@ Namespace AreaProvider.CoinbaseProvider
                             newCurrency.networkReferement = ""
                             newCurrency.contractNetwork = ""
 
-                            AreaCommon.state.currenciesEngine.addOrGet(newCurrency, ownerId)
+                            Dim idCurrency As Integer = AreaCommon.state.currenciesEngine.addOrGet(newCurrency, ownerId).id
+
+                            Dim newExchangeCurrency As New TradingBotSystemModelsLibrary.AreaModel.ExchangeCurrencies.ExchangeCurrencySupportStructure
+
+                            newExchangeCurrency.currencyId = idCurrency
+                            newExchangeCurrency.exchangeId = exchangeId
+                            newExchangeCurrency.supportedType = TradingBotSystemModelsLibrary.AreaModel.ExchangeCurrencies.TypeSupportedEnumeration.undefined
+
+                            AreaCommon.state.exchangeCurrenciesEngine.addIfMissing(newExchangeCurrency, ownerId)
 
                             newCurrencyAdded = True
                         End If

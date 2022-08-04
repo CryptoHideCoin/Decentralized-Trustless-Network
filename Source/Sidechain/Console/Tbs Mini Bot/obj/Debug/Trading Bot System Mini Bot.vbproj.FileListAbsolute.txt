@@ -1,0 +1,22 @@
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\obj\Debug\Trading Bot System Mini Bot.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\obj\Debug\Trading_Bot_System_Mini_Bot.Resources.resources
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\obj\Debug\Trading Bot System Mini Bot.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\Trading Bot System Mini Bot.exe.config
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\Trading Bot System Mini Bot.exe
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\Trading Bot System Mini Bot.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\Trading Bot System Mini Bot.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\obj\Debug\Trading Bot System Mini Bot.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\obj\Debug\Trading Bot System Mini Bot.exe
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\obj\Debug\Trading Bot System Mini Bot.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\obj\Debug\Trading Bot System Mini Bot.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\Coinbase.Pro.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\Flurl.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\Flurl.Http.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\WebSocket4Net.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\SuperSocket.ClientEngine.dll
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\Coinbase.Pro.pdb
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\bin\Debug\Coinbase.Pro.xml
+E:\CryptoHideCoinDTN\Source\Sidechain\Console\Tbs Mini Bot\obj\Debug\Trading Bot System Mini Bot.exe.config

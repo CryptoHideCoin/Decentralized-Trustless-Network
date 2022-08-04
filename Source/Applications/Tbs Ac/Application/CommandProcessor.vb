@@ -20,6 +20,7 @@ Namespace AreaCommon
         Private Const _CommandBatch As String = "batchAdv"
         Private Const _CommandCurrency As String = "currency"
         Private Const _CommandExchangeAction As String = "exchangeAction"
+        Private Const _CommandExchangeCurrency As String = "exchangeCurrency"
 
         Private WithEvents _Executor As New CHCCommandlineSupport.AreaCommon.CommandExecutor
         Private WithEvents _ClassSupport As CommandModel
@@ -109,6 +110,7 @@ Namespace AreaCommon
                         Case _CommandBatch.ToLower : _ClassSupport = New Command.CommandBarchAdv
                         Case _CommandCurrency.ToLower : _ClassSupport = New Command.CommandCurrency
                         Case _CommandExchangeAction.ToLower : _ClassSupport = New Command.CommandExchangeAction
+                        Case _CommandExchangeCurrency.ToLower : _ClassSupport = New Command.CommandExchangeCurrency
                         Case Else
                             If (_Executor.command.code.Length > 0) Then
                                 Console.WriteLine(Chr(34) & _Executor.command.code & Chr(34) & " not recognized")

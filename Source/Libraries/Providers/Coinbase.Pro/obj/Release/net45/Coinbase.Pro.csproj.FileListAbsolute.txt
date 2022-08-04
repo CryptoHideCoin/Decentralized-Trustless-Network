@@ -1,0 +1,16 @@
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\net45\Coinbase.Pro.csprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\net45\Coinbase.Pro.sourcelink.json
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\net45\Coinbase.Pro.AssemblyInfoInputs.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\net45\Coinbase.Pro.AssemblyInfo.cs
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\bin\Release\net45\Coinbase.Pro.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\bin\Release\net45\Coinbase.Pro.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\bin\Release\net45\Coinbase.Pro.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\bin\Release\net45\Flurl.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\bin\Release\net45\Flurl.Http.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\bin\Release\net45\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\bin\Release\net45\SuperSocket.ClientEngine.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\bin\Release\net45\WebSocket4Net.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\net45\Coinbase.Pro.csproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\net45\Coinbase.Pro.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\net45\Coinbase.Pro.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Coinbase.Pro\obj\Release\net45\Coinbase.Pro.pdb
