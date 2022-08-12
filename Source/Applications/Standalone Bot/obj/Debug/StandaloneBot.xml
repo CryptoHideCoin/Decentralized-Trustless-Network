@@ -50,9 +50,35 @@ StandaloneBot
  <param name="trade"></param>
  <returns></returns>
 </member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.pathOrderToDelivery(System.String)">
+ <summary>
+ This method provide to return a path order to delivery
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.pathOrderToPlaced(System.String)">
+ <summary>
+ This method provide to return a path order to placed
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.pathOrderToClose(System.String)">
+ <summary>
+ This method provide to return a path order to close
+ </summary>
+ <param name="completeName"></param>
+ <returns></returns>
+</member>
 <member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.createFileOrder(System.String,StandaloneBot.AreaCommon.Models.Bot.BotOrderModel@)">
  <summary>
  This method provide to create file order
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.createFalseResponseOrder(StandaloneBot.AreaCommon.Models.Bot.BotOrderModel@)">
+ <summary>
+ This method provide to create a false response order
  </summary>
  <param name="item"></param>
  <returns></returns>
@@ -78,6 +104,13 @@ StandaloneBot
  This method provide to manage open trades
  </summary>
  <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.getOrderNumber(System.String)">
+ <summary>
+ This method provide to get an order number
+ </summary>
+ <param name="orderBuyId"></param>
  <returns></returns>
 </member>
 <member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.manageOrderStatus(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
@@ -270,6 +303,12 @@ StandaloneBot
  <summary>
  This class contain all information of a pair
  </summary>
+</member>
+<member name="M:StandaloneBot.SettingsBot.timeStartIsMajor">
+ <summary>
+ This method provide to check is time is major of now
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:StandaloneBot.SettingsBot.extractStartConfiguration">
  <summary>

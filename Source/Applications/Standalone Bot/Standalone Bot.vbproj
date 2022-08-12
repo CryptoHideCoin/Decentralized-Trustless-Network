@@ -99,6 +99,12 @@
     <Compile Include="Interface\DataBot.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Interface\DataTrade.Designer.vb">
+      <DependentUpon>DataTrade.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\DataTrade.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interface\SettingsBot.Designer.vb">
       <DependentUpon>SettingsBot.vb</DependentUpon>
     </Compile>
@@ -137,6 +143,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Interface\DataBot.resx">
       <DependentUpon>DataBot.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interface\DataTrade.resx">
+      <DependentUpon>DataTrade.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interface\SettingsBot.resx">
       <DependentUpon>SettingsBot.vb</DependentUpon>

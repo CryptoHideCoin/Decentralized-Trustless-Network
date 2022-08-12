@@ -48,6 +48,14 @@ Namespace AreaCommon.Engines.Pairs
             tick.time = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
             tick.value = market.Price
 
+            If (market.Price > pair.currentRelativeAverageValue) Then
+                tick.position = Models.Pair.TickInformation.tickPositionEnumeration.increase
+            ElseIf market.Price = pair.currentRelativeAverageValue Then
+                tick.position = Models.Pair.TickInformation.tickPositionEnumeration.same
+            Else
+                tick.position = Models.Pair.TickInformation.tickPositionEnumeration.decrease
+            End If
+
             pair.addNewItem(tick)
         End Sub
 

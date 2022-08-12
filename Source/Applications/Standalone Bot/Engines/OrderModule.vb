@@ -25,7 +25,8 @@ Namespace AreaCommon.Engines.Orders
                     If AreaState.bots.ContainsKey(order.botId) Then
                         For Each trade In AreaState.bots(order.botId).data.tradeOpen
                             If (trade.buy.id = order.internalOrderId) Then
-                                trade.buy.effectiveValue = (AreaState.bots(order.botId).common.currentValue * trade.buy.amount)
+                                trade.buy.feeCost = 0.6
+                                trade.buy.tco = (AreaState.bots(order.botId).common.currentValue * trade.buy.amount) + trade.buy.feeCost
                                 trade.buy.pairTradeValue = AreaState.bots(order.botId).common.currentValue
                                 trade.buy.fill = True
 
@@ -35,9 +36,8 @@ Namespace AreaCommon.Engines.Orders
                             End If
 
                             If (trade.sell.id = order.internalOrderId) Then
-                                If AreaState.bots(order.botId).common.currentValue >= (trade.sell.orderValue / trade.sell.amount) Then
-                                    trade.sell.effectiveValue = (AreaState.bots(order.botId).common.currentValue * trade.sell.amount)
-                                    trade.sell.pairTradeValue = AreaState.bots(order.botId).common.currentValue
+                                If AreaState.bots(order.botId).common.currentValue >= (trade.sell.pairTradeValue) Then
+                                    trade.sell.tco = (AreaState.bots(order.botId).common.currentValue * trade.sell.amount)
                                     trade.sell.fill = True
 
                                     AreaState.orders.Remove(order.internalOrderId)
@@ -74,7 +74,7 @@ Namespace AreaCommon.Engines.Orders
                             currentIndex = 0
                         End If
 
-                        If Not verify(AreaState.orders.ElementAt(currentIndex).Value) Then
+                        If verify(AreaState.orders.ElementAt(currentIndex).Value) Then
                             currentIndex += 1
                         End If
                     End If

@@ -24,37 +24,34 @@ Partial Class Manager
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
         Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Manager))
         Me.menuMain = New System.Windows.Forms.MenuStrip()
         Me.BotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddNewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.UpdateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.InformationsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.StartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.StopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.tabMain = New System.Windows.Forms.TabControl()
         Me.botPage = New System.Windows.Forms.TabPage()
         Me.botDataView = New System.Windows.Forms.DataGridView()
-        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.created = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.pair = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.isActive = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.marketPage = New System.Windows.Forms.TabPage()
+        Me.trendValue = New System.Windows.Forms.Label()
+        Me.spreadValue = New System.Windows.Forms.Label()
+        Me.spreadLabel = New System.Windows.Forms.Label()
+        Me.lastValue = New System.Windows.Forms.TextBox()
+        Me.lastLabel = New System.Windows.Forms.Label()
+        Me.firstValue = New System.Windows.Forms.TextBox()
+        Me.firstLabel = New System.Windows.Forms.Label()
         Me.mainChart = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.lastUpdateValue = New System.Windows.Forms.TextBox()
         Me.lastUpdateLabel = New System.Windows.Forms.Label()
-        Me.trendValue = New System.Windows.Forms.TextBox()
         Me.trendLabel = New System.Windows.Forms.Label()
         Me.averageRelativeValue = New System.Windows.Forms.TextBox()
         Me.averageRelativeLabel = New System.Windows.Forms.Label()
@@ -77,6 +74,13 @@ Partial Class Manager
         Me.currentValue = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.walletPage = New System.Windows.Forms.TabPage()
         Me.timerMain = New System.Windows.Forms.Timer(Me.components)
+        Me.updateBotsTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.created = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.pair = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.isActive = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.editBot = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.viewData = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.menuMain.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.botPage.SuspendLayout()
@@ -98,7 +102,7 @@ Partial Class Manager
         '
         'BotToolStripMenuItem
         '
-        Me.BotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddNewToolStripMenuItem, Me.UpdateToolStripMenuItem, Me.ToolStripSeparator2, Me.InformationsToolStripMenuItem, Me.ToolStripSeparator1, Me.StartToolStripMenuItem, Me.StopToolStripMenuItem})
+        Me.BotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddNewToolStripMenuItem})
         Me.BotToolStripMenuItem.Name = "BotToolStripMenuItem"
         Me.BotToolStripMenuItem.Size = New System.Drawing.Size(42, 20)
         Me.BotToolStripMenuItem.Text = "&Bots"
@@ -106,42 +110,8 @@ Partial Class Manager
         'AddNewToolStripMenuItem
         '
         Me.AddNewToolStripMenuItem.Name = "AddNewToolStripMenuItem"
-        Me.AddNewToolStripMenuItem.Size = New System.Drawing.Size(142, 22)
+        Me.AddNewToolStripMenuItem.Size = New System.Drawing.Size(121, 22)
         Me.AddNewToolStripMenuItem.Text = "Add new"
-        '
-        'UpdateToolStripMenuItem
-        '
-        Me.UpdateToolStripMenuItem.Name = "UpdateToolStripMenuItem"
-        Me.UpdateToolStripMenuItem.Size = New System.Drawing.Size(142, 22)
-        Me.UpdateToolStripMenuItem.Text = "Update"
-        '
-        'ToolStripSeparator2
-        '
-        Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(139, 6)
-        '
-        'InformationsToolStripMenuItem
-        '
-        Me.InformationsToolStripMenuItem.Name = "InformationsToolStripMenuItem"
-        Me.InformationsToolStripMenuItem.Size = New System.Drawing.Size(142, 22)
-        Me.InformationsToolStripMenuItem.Text = "Informations"
-        '
-        'ToolStripSeparator1
-        '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(139, 6)
-        '
-        'StartToolStripMenuItem
-        '
-        Me.StartToolStripMenuItem.Name = "StartToolStripMenuItem"
-        Me.StartToolStripMenuItem.Size = New System.Drawing.Size(142, 22)
-        Me.StartToolStripMenuItem.Text = "Start"
-        '
-        'StopToolStripMenuItem
-        '
-        Me.StopToolStripMenuItem.Name = "StopToolStripMenuItem"
-        Me.StopToolStripMenuItem.Size = New System.Drawing.Size(142, 22)
-        Me.StopToolStripMenuItem.Text = "Stop"
         '
         'tabMain
         '
@@ -185,7 +155,7 @@ Partial Class Manager
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.botDataView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.botDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.botDataView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id, Me.created, Me.pair, Me.isActive})
+        Me.botDataView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id, Me.created, Me.pair, Me.isActive, Me.editBot, Me.viewData})
         Me.botDataView.Location = New System.Drawing.Point(3, 3)
         Me.botDataView.MultiSelect = False
         Me.botDataView.Name = "botDataView"
@@ -193,44 +163,18 @@ Partial Class Manager
         Me.botDataView.Size = New System.Drawing.Size(849, 378)
         Me.botDataView.TabIndex = 1
         '
-        'id
-        '
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
-        Me.id.DefaultCellStyle = DataGridViewCellStyle2
-        Me.id.HeaderText = "ID"
-        Me.id.Name = "id"
-        Me.id.ReadOnly = True
-        Me.id.Width = 300
-        '
-        'created
-        '
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
-        Me.created.DefaultCellStyle = DataGridViewCellStyle3
-        Me.created.HeaderText = "Created"
-        Me.created.Name = "created"
-        Me.created.ReadOnly = True
-        Me.created.Width = 200
-        '
-        'pair
-        '
-        Me.pair.HeaderText = "Pair"
-        Me.pair.Name = "pair"
-        Me.pair.ReadOnly = True
-        '
-        'isActive
-        '
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        Me.isActive.DefaultCellStyle = DataGridViewCellStyle4
-        Me.isActive.HeaderText = "Is Active"
-        Me.isActive.Name = "isActive"
-        Me.isActive.ReadOnly = True
-        '
         'marketPage
         '
+        Me.marketPage.Controls.Add(Me.trendValue)
+        Me.marketPage.Controls.Add(Me.spreadValue)
+        Me.marketPage.Controls.Add(Me.spreadLabel)
+        Me.marketPage.Controls.Add(Me.lastValue)
+        Me.marketPage.Controls.Add(Me.lastLabel)
+        Me.marketPage.Controls.Add(Me.firstValue)
+        Me.marketPage.Controls.Add(Me.firstLabel)
         Me.marketPage.Controls.Add(Me.mainChart)
         Me.marketPage.Controls.Add(Me.lastUpdateValue)
         Me.marketPage.Controls.Add(Me.lastUpdateLabel)
-        Me.marketPage.Controls.Add(Me.trendValue)
         Me.marketPage.Controls.Add(Me.trendLabel)
         Me.marketPage.Controls.Add(Me.averageRelativeValue)
         Me.marketPage.Controls.Add(Me.averageRelativeLabel)
@@ -255,6 +199,79 @@ Partial Class Manager
         Me.marketPage.Text = "Markets"
         Me.marketPage.UseVisualStyleBackColor = True
         '
+        'trendValue
+        '
+        Me.trendValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.trendValue.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.trendValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.trendValue.Location = New System.Drawing.Point(697, 249)
+        Me.trendValue.Name = "trendValue"
+        Me.trendValue.Size = New System.Drawing.Size(149, 21)
+        Me.trendValue.TabIndex = 35
+        Me.trendValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'spreadValue
+        '
+        Me.spreadValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.spreadValue.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.spreadValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.spreadValue.Location = New System.Drawing.Point(697, 222)
+        Me.spreadValue.Name = "spreadValue"
+        Me.spreadValue.Size = New System.Drawing.Size(149, 21)
+        Me.spreadValue.TabIndex = 34
+        Me.spreadValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'spreadLabel
+        '
+        Me.spreadLabel.AutoSize = True
+        Me.spreadLabel.Location = New System.Drawing.Point(643, 226)
+        Me.spreadLabel.Name = "spreadLabel"
+        Me.spreadLabel.Size = New System.Drawing.Size(48, 13)
+        Me.spreadLabel.TabIndex = 33
+        Me.spreadLabel.Text = "Spread"
+        '
+        'lastValue
+        '
+        Me.lastValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lastValue.Location = New System.Drawing.Point(697, 196)
+        Me.lastValue.Name = "lastValue"
+        Me.lastValue.ReadOnly = True
+        Me.lastValue.Size = New System.Drawing.Size(149, 21)
+        Me.lastValue.TabIndex = 32
+        Me.lastValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'lastLabel
+        '
+        Me.lastLabel.AutoSize = True
+        Me.lastLabel.Location = New System.Drawing.Point(626, 199)
+        Me.lastLabel.Name = "lastLabel"
+        Me.lastLabel.Size = New System.Drawing.Size(65, 13)
+        Me.lastLabel.TabIndex = 31
+        Me.lastLabel.Text = "Last value"
+        '
+        'firstValue
+        '
+        Me.firstValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.firstValue.Location = New System.Drawing.Point(697, 169)
+        Me.firstValue.Name = "firstValue"
+        Me.firstValue.ReadOnly = True
+        Me.firstValue.Size = New System.Drawing.Size(149, 21)
+        Me.firstValue.TabIndex = 30
+        Me.firstValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'firstLabel
+        '
+        Me.firstLabel.AutoSize = True
+        Me.firstLabel.Location = New System.Drawing.Point(626, 172)
+        Me.firstLabel.Name = "firstLabel"
+        Me.firstLabel.Size = New System.Drawing.Size(66, 13)
+        Me.firstLabel.TabIndex = 29
+        Me.firstLabel.Text = "First value"
+        '
         'mainChart
         '
         Me.mainChart.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
@@ -265,9 +282,9 @@ Partial Class Manager
         Me.mainChart.ChartAreas.Add(ChartArea1)
         Legend1.Name = "Legend1"
         Me.mainChart.Legends.Add(Legend1)
-        Me.mainChart.Location = New System.Drawing.Point(563, 265)
+        Me.mainChart.Location = New System.Drawing.Point(563, 304)
         Me.mainChart.Name = "mainChart"
-        Me.mainChart.Size = New System.Drawing.Size(283, 116)
+        Me.mainChart.Size = New System.Drawing.Size(283, 77)
         Me.mainChart.TabIndex = 28
         Me.mainChart.Text = "Chart"
         '
@@ -277,7 +294,7 @@ Partial Class Manager
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lastUpdateValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lastUpdateValue.ForeColor = System.Drawing.Color.DarkOliveGreen
-        Me.lastUpdateValue.Location = New System.Drawing.Point(697, 233)
+        Me.lastUpdateValue.Location = New System.Drawing.Point(697, 277)
         Me.lastUpdateValue.Name = "lastUpdateValue"
         Me.lastUpdateValue.ReadOnly = True
         Me.lastUpdateValue.Size = New System.Drawing.Size(149, 21)
@@ -289,27 +306,16 @@ Partial Class Manager
         Me.lastUpdateLabel.AutoSize = True
         Me.lastUpdateLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lastUpdateLabel.ForeColor = System.Drawing.Color.DarkOliveGreen
-        Me.lastUpdateLabel.Location = New System.Drawing.Point(619, 236)
+        Me.lastUpdateLabel.Location = New System.Drawing.Point(619, 280)
         Me.lastUpdateLabel.Name = "lastUpdateLabel"
         Me.lastUpdateLabel.Size = New System.Drawing.Size(73, 13)
         Me.lastUpdateLabel.TabIndex = 26
         Me.lastUpdateLabel.Text = "Last update"
         '
-        'trendValue
-        '
-        Me.trendValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.trendValue.Location = New System.Drawing.Point(697, 206)
-        Me.trendValue.Name = "trendValue"
-        Me.trendValue.ReadOnly = True
-        Me.trendValue.Size = New System.Drawing.Size(149, 21)
-        Me.trendValue.TabIndex = 25
-        Me.trendValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
         'trendLabel
         '
         Me.trendLabel.AutoSize = True
-        Me.trendLabel.Location = New System.Drawing.Point(652, 209)
+        Me.trendLabel.Location = New System.Drawing.Point(652, 253)
         Me.trendLabel.Name = "trendLabel"
         Me.trendLabel.Size = New System.Drawing.Size(39, 13)
         Me.trendLabel.TabIndex = 24
@@ -319,7 +325,7 @@ Partial Class Manager
         '
         Me.averageRelativeValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.averageRelativeValue.Location = New System.Drawing.Point(697, 179)
+        Me.averageRelativeValue.Location = New System.Drawing.Point(697, 115)
         Me.averageRelativeValue.Name = "averageRelativeValue"
         Me.averageRelativeValue.ReadOnly = True
         Me.averageRelativeValue.Size = New System.Drawing.Size(149, 21)
@@ -329,7 +335,7 @@ Partial Class Manager
         'averageRelativeLabel
         '
         Me.averageRelativeLabel.AutoSize = True
-        Me.averageRelativeLabel.Location = New System.Drawing.Point(590, 182)
+        Me.averageRelativeLabel.Location = New System.Drawing.Point(590, 118)
         Me.averageRelativeLabel.Name = "averageRelativeLabel"
         Me.averageRelativeLabel.Size = New System.Drawing.Size(102, 13)
         Me.averageRelativeLabel.TabIndex = 22
@@ -339,7 +345,7 @@ Partial Class Manager
         '
         Me.averageValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.averageValue.Location = New System.Drawing.Point(697, 152)
+        Me.averageValue.Location = New System.Drawing.Point(697, 88)
         Me.averageValue.Name = "averageValue"
         Me.averageValue.ReadOnly = True
         Me.averageValue.Size = New System.Drawing.Size(149, 21)
@@ -349,7 +355,7 @@ Partial Class Manager
         'averageLabel
         '
         Me.averageLabel.AutoSize = True
-        Me.averageLabel.Location = New System.Drawing.Point(637, 155)
+        Me.averageLabel.Location = New System.Drawing.Point(637, 91)
         Me.averageLabel.Name = "averageLabel"
         Me.averageLabel.Size = New System.Drawing.Size(55, 13)
         Me.averageLabel.TabIndex = 20
@@ -359,7 +365,7 @@ Partial Class Manager
         '
         Me.maxValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.maxValue.Location = New System.Drawing.Point(697, 125)
+        Me.maxValue.Location = New System.Drawing.Point(697, 142)
         Me.maxValue.Name = "maxValue"
         Me.maxValue.ReadOnly = True
         Me.maxValue.Size = New System.Drawing.Size(149, 21)
@@ -369,7 +375,7 @@ Partial Class Manager
         'maxLabel
         '
         Me.maxLabel.AutoSize = True
-        Me.maxLabel.Location = New System.Drawing.Point(661, 128)
+        Me.maxLabel.Location = New System.Drawing.Point(661, 145)
         Me.maxLabel.Name = "maxLabel"
         Me.maxLabel.Size = New System.Drawing.Size(30, 13)
         Me.maxLabel.TabIndex = 18
@@ -379,7 +385,7 @@ Partial Class Manager
         '
         Me.minValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.minValue.Location = New System.Drawing.Point(697, 98)
+        Me.minValue.Location = New System.Drawing.Point(697, 61)
         Me.minValue.Name = "minValue"
         Me.minValue.ReadOnly = True
         Me.minValue.Size = New System.Drawing.Size(149, 21)
@@ -389,7 +395,7 @@ Partial Class Manager
         'minLabel
         '
         Me.minLabel.AutoSize = True
-        Me.minLabel.Location = New System.Drawing.Point(665, 101)
+        Me.minLabel.Location = New System.Drawing.Point(665, 64)
         Me.minLabel.Name = "minLabel"
         Me.minLabel.Size = New System.Drawing.Size(26, 13)
         Me.minLabel.TabIndex = 16
@@ -400,7 +406,7 @@ Partial Class Manager
         Me.pairValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pairValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.pairValue.Location = New System.Drawing.Point(697, 71)
+        Me.pairValue.Location = New System.Drawing.Point(697, 34)
         Me.pairValue.Name = "pairValue"
         Me.pairValue.ReadOnly = True
         Me.pairValue.Size = New System.Drawing.Size(149, 21)
@@ -410,7 +416,7 @@ Partial Class Manager
         'pairLabel
         '
         Me.pairLabel.AutoSize = True
-        Me.pairLabel.Location = New System.Drawing.Point(662, 74)
+        Me.pairLabel.Location = New System.Drawing.Point(662, 37)
         Me.pairLabel.Name = "pairLabel"
         Me.pairLabel.Size = New System.Drawing.Size(29, 13)
         Me.pairLabel.TabIndex = 14
@@ -449,16 +455,17 @@ Partial Class Manager
         'tickValues
         '
         Me.tickValues.AllowUserToAddRows = False
+        Me.tickValues.AllowUserToDeleteRows = False
         Me.tickValues.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.tickValues.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.tickValues.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.tickValues.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.tickValues.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.time, Me.value})
         Me.tickValues.Location = New System.Drawing.Point(283, 31)
@@ -478,8 +485,8 @@ Partial Class Manager
         '
         'value
         '
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.value.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.value.DefaultCellStyle = DataGridViewCellStyle7
         Me.value.HeaderText = "Value"
         Me.value.Name = "value"
         Me.value.ReadOnly = True
@@ -491,14 +498,14 @@ Partial Class Manager
         Me.marketDataView.AllowUserToOrderColumns = True
         Me.marketDataView.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.marketDataView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.marketDataView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle8
         Me.marketDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.marketDataView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn3, Me.currentValue})
         Me.marketDataView.Location = New System.Drawing.Point(3, 3)
@@ -516,8 +523,8 @@ Partial Class Manager
         '
         'currentValue
         '
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.currentValue.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.currentValue.DefaultCellStyle = DataGridViewCellStyle9
         Me.currentValue.HeaderText = "Current value"
         Me.currentValue.Name = "currentValue"
         Me.currentValue.ReadOnly = True
@@ -534,6 +541,67 @@ Partial Class Manager
         'timerMain
         '
         Me.timerMain.Interval = 30000
+        '
+        'updateBotsTimer
+        '
+        Me.updateBotsTimer.Enabled = True
+        Me.updateBotsTimer.Interval = 1000
+        '
+        'id
+        '
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
+        Me.id.DefaultCellStyle = DataGridViewCellStyle2
+        Me.id.HeaderText = "ID"
+        Me.id.Name = "id"
+        Me.id.ReadOnly = True
+        Me.id.Width = 300
+        '
+        'created
+        '
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
+        Me.created.DefaultCellStyle = DataGridViewCellStyle3
+        Me.created.HeaderText = "Created"
+        Me.created.Name = "created"
+        Me.created.ReadOnly = True
+        Me.created.Width = 150
+        '
+        'pair
+        '
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        Me.pair.DefaultCellStyle = DataGridViewCellStyle4
+        Me.pair.HeaderText = "Pair"
+        Me.pair.Name = "pair"
+        Me.pair.ReadOnly = True
+        '
+        'isActive
+        '
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        Me.isActive.DefaultCellStyle = DataGridViewCellStyle5
+        Me.isActive.HeaderText = "Command"
+        Me.isActive.Name = "isActive"
+        Me.isActive.ReadOnly = True
+        Me.isActive.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.isActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.isActive.Text = "ACTIVE"
+        Me.isActive.Width = 70
+        '
+        'editBot
+        '
+        Me.editBot.HeaderText = "Edit"
+        Me.editBot.Name = "editBot"
+        Me.editBot.Text = "..."
+        Me.editBot.UseColumnTextForButtonValue = True
+        Me.editBot.Width = 50
+        '
+        'viewData
+        '
+        Me.viewData.HeaderText = "Data"
+        Me.viewData.Name = "viewData"
+        Me.viewData.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.viewData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.viewData.Text = "..."
+        Me.viewData.UseColumnTextForButtonValue = True
+        Me.viewData.Width = 50
         '
         'Manager
         '
@@ -565,23 +633,13 @@ Partial Class Manager
     Friend WithEvents menuMain As MenuStrip
     Friend WithEvents BotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AddNewToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents InformationsToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents UpdateToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents StartToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents StopToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
-    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents tabMain As TabControl
     Friend WithEvents botPage As TabPage
     Friend WithEvents botDataView As DataGridView
     Friend WithEvents marketPage As TabPage
     Friend WithEvents walletPage As TabPage
-    Friend WithEvents id As DataGridViewTextBoxColumn
 #Disable Warning BC40004 ' Il membro è in conflitto con il membro nel tipo di base, quindi deve essere dichiarato come 'Shadows'
-    Friend WithEvents created As DataGridViewTextBoxColumn
 #Enable Warning BC40004 ' Il membro è in conflitto con il membro nel tipo di base, quindi deve essere dichiarato come 'Shadows'
-    Friend WithEvents pair As DataGridViewTextBoxColumn
-    Friend WithEvents isActive As DataGridViewTextBoxColumn
     Friend WithEvents marketDataView As DataGridView
     Friend WithEvents tickValues As DataGridView
     Friend WithEvents filterDetails As ComboBox
@@ -598,13 +656,26 @@ Partial Class Manager
     Friend WithEvents averageLabel As Label
     Friend WithEvents averageRelativeValue As TextBox
     Friend WithEvents averageRelativeLabel As Label
-    Friend WithEvents trendValue As TextBox
     Friend WithEvents trendLabel As Label
     Friend WithEvents lastUpdateValue As TextBox
     Friend WithEvents lastUpdateLabel As Label
     Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
     Friend WithEvents currentValue As DataGridViewTextBoxColumn
+    Friend WithEvents mainChart As DataVisualization.Charting.Chart
+    Friend WithEvents spreadLabel As Label
+    Friend WithEvents lastValue As TextBox
+    Friend WithEvents lastLabel As Label
+    Friend WithEvents firstValue As TextBox
+    Friend WithEvents firstLabel As Label
+    Friend WithEvents spreadValue As Label
+    Friend WithEvents trendValue As Label
     Friend WithEvents time As DataGridViewTextBoxColumn
     Friend WithEvents value As DataGridViewTextBoxColumn
-    Friend WithEvents mainChart As DataVisualization.Charting.Chart
+    Friend WithEvents updateBotsTimer As Timer
+    Friend WithEvents id As DataGridViewTextBoxColumn
+    Friend WithEvents created As DataGridViewTextBoxColumn
+    Friend WithEvents pair As DataGridViewTextBoxColumn
+    Friend WithEvents isActive As DataGridViewButtonColumn
+    Friend WithEvents editBot As DataGridViewButtonColumn
+    Friend WithEvents viewData As DataGridViewButtonColumn
 End Class

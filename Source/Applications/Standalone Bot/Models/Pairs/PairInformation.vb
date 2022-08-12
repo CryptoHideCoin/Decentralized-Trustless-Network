@@ -9,8 +9,15 @@ Namespace AreaCommon.Models.Pair
     ''' </summary>
     Public Class TickInformation
 
+        Public Enum tickPositionEnumeration
+            increase
+            decrease
+            same
+        End Enum
+
         Public Property time As Double = 0
         Public Property value As Double = 0
+        Public Property position As tickPositionEnumeration = tickPositionEnumeration.same
 
     End Class
 
@@ -48,6 +55,30 @@ Namespace AreaCommon.Models.Pair
         Public Property average As Double = 0
         Public Property relativeAverage As Double = 0
         Public Property ticks As New List(Of TickInformation)
+
+        Public ReadOnly Property firstValue As Double
+            Get
+                Return ticks.First.value
+            End Get
+        End Property
+
+        Public ReadOnly Property lastValue As Double
+            Get
+                Return ticks.Last.value
+            End Get
+        End Property
+
+        Public ReadOnly Property spread() As Double
+            Get
+                Return (ticks.Last.value - ticks.First.value) / ticks.First.value * 100
+            End Get
+        End Property
+
+        Public ReadOnly Property spreadValue() As Double
+            Get
+                Return (ticks.Last.value - ticks.First.value)
+            End Get
+        End Property
 
     End Class
 

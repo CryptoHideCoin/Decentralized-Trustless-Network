@@ -56,7 +56,7 @@ Namespace AreaCommon.Engines.Bots
                 botConfiguration.data.tradeOpen.Remove(trade)
                 botConfiguration.data.tradeClose.Add(trade)
 
-                trade.earn = CDec(trade.sell.effectiveValue) - trade.buy.effectiveValue
+                trade.earn = CDec(trade.sell.tco) - trade.buy.tco
 
                 botConfiguration.data.earn += trade.earn
 
@@ -67,12 +67,37 @@ Namespace AreaCommon.Engines.Bots
         End Function
 
         ''' <summary>
+        ''' This method provide to return a path order to delivery
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function pathOrderToDelivery(ByVal fileName As String) As String
+            Return IO.Path.Combine(Environment.GetCommandLineArgs(1), "To delivery", fileName & ".order")
+        End Function
+
+        ''' <summary>
+        ''' This method provide to return a path order to placed
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function pathOrderToPlaced(ByVal fileName As String) As String
+            Return IO.Path.Combine(Environment.GetCommandLineArgs(1), "Placed", fileName & ".confirm")
+        End Function
+
+        ''' <summary>
+        ''' This method provide to return a path order to close
+        ''' </summary>
+        ''' <param name="completeName"></param>
+        ''' <returns></returns>
+        Private Function pathOrderToClose(ByVal completeName As String) As String
+            Return IO.Path.Combine(Environment.GetCommandLineArgs(1), "Closed", completeName)
+        End Function
+
+        ''' <summary>
         ''' This method provide to create file order
         ''' </summary>
         ''' <param name="item"></param>
         ''' <returns></returns>
         Private Function createFileOrder(ByVal pair As String, ByRef item As Models.Bot.BotOrderModel) As Boolean
-            Dim content As String = ""
+            Dim content As String = $"Release=1.0{vbNewLine}"
 
             If item.buy Then
                 content += $"Mode=Buy{vbNewLine}"
@@ -87,16 +112,38 @@ Namespace AreaCommon.Engines.Bots
             content += $"Amount={item.amount}{vbNewLine}"
             content += $"LimitPrice={item.orderValue}{vbNewLine}"
 
-            'Dim FILE_NAME As String = $"C:\Users\Owner\Documents\{orderID}.order"
+            Dim fileName As String = pathOrderToDelivery(item.id)
 
-            'If IO.File.Exists(FILE_NAME) = True Then
+            If Not IO.File.Exists(fileName) Then
+                Dim objWriter As New System.IO.StreamWriter(fileName)
 
-            '   Dim objWriter As New System.IO.StreamWriter(FILE_NAME)
+                objWriter.Write(content)
+                objWriter.Close()
+            End If
 
-            '   objWriter.Write(content)
-            '   objWriter.Close()
+            Return True
+        End Function
 
-            'End If
+        ''' <summary>
+        ''' This method provide to create a false response order
+        ''' </summary>
+        ''' <param name="item"></param>
+        ''' <returns></returns>
+        Private Function createFalseResponseOrder(ByRef item As Models.Bot.BotOrderModel) As Boolean
+            Dim content As String = $"Release=1.0{vbNewLine}"
+
+            content += $"OrderNumber={Guid.NewGuid.ToString()}{vbNewLine}"
+
+            Dim fileName As String = pathOrderToPlaced(item.id)
+
+            If Not IO.File.Exists(fileName) Then
+                Dim objWriter As New System.IO.StreamWriter(fileName)
+
+                objWriter.Write(content)
+                objWriter.Close()
+            End If
+
+            IO.File.Move(pathOrderToDelivery(item.id), pathOrderToClose(item.id & ".order"))
 
             Return True
         End Function
@@ -136,7 +183,10 @@ Namespace AreaCommon.Engines.Bots
 
             trade.sell.timeAcquire = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
-            trade.sell.orderValue = trade.buy.orderValue + (trade.buy.orderValue * spread) / 100
+            trade.sell.orderValue = trade.buy.tco - trade.buy.feeCost
+            trade.sell.orderValue += (trade.sell.orderValue * spread) / 100
+
+            trade.sell.pairTradeValue = trade.buy.pairTradeValue + (trade.buy.pairTradeValue * spread) / 100
 
             Return True
         End Function
@@ -153,7 +203,7 @@ Namespace AreaCommon.Engines.Bots
                         If trade.buy.fill And trade.sell.fill Then
                             switchTradeToClose(item, trade)
 
-                            If (item.parameters.workConfiguration.mode = Models.Bot.BotParametersModel.BotActivityConfiguration.ModeTradeConfigEnumeration.simpleAct) Then
+                            If (item.parameters.workConfiguration.mode = Models.Bot.BotParametersModel.BotActivityConfiguration.ModeTradeConfigEnumeration.oneshot) Then
                                 item.parameters.header.isActive = False
                             End If
 
@@ -165,6 +215,7 @@ Namespace AreaCommon.Engines.Bots
                         End If
                     Else
                         createFileOrder(item.data.pair, trade.buy)
+                        createFalseResponseOrder(trade.buy)
 
                         trade.buy.sent = True
 
@@ -174,10 +225,12 @@ Namespace AreaCommon.Engines.Bots
                     If trade.buy.fill And Not trade.sell.sent Then
                         If (trade.sell.timeAcquire > 0) Then
                             item.data.lastBuyTime = trade.buy.timeAcquire
-                            item.data.lastBuyValue = trade.buy.pairTradeValue
-                            item.data.usedPlafond += trade.buy.effectiveValue
+                            item.data.lastBuyValue = trade.buy.tco - trade.buy.feeCost
+                            item.data.lastBuyChange = trade.buy.pairTradeValue
+                            item.data.usedPlafond += trade.buy.tco
 
                             createFileOrder(item.data.pair, trade.sell)
+                            createFalseResponseOrder(trade.sell)
 
                             trade.sell.sent = True
 
@@ -193,6 +246,33 @@ Namespace AreaCommon.Engines.Bots
         End Function
 
         ''' <summary>
+        ''' This method provide to get an order number
+        ''' </summary>
+        ''' <param name="orderBuyId"></param>
+        ''' <returns></returns>
+        Private Function getOrderNumber(ByVal orderBuyId As String) As String
+            Dim filePath = pathOrderToPlaced(orderBuyId)
+
+            Dim streamFile As IO.StreamReader = IO.File.OpenText(filePath)
+
+            Try
+                Dim orderData = streamFile.ReadLine()
+
+                Do While (orderData.Split("=")(0).CompareTo("OrderNumber") > 0)
+                    orderData = streamFile.ReadLine()
+                Loop
+
+                Return orderData.Split("=")(1)
+            Catch ex As Exception
+                Return ""
+            Finally
+                streamFile.Close()
+
+                IO.File.Move(filePath, pathOrderToClose(orderBuyId & ".confirm"))
+            End Try
+        End Function
+
+        ''' <summary>
         ''' This method provide to manage order status
         ''' </summary>
         ''' <param name="item"></param>
@@ -201,17 +281,20 @@ Namespace AreaCommon.Engines.Bots
             If (item.data.tradeOpen.Count > 0) Then
                 For Each trade In item.data.tradeOpen
                     If trade.buy.sent And Not trade.buy.placed Then
-                        ' Cerco il file con id e .placed
+                        If IO.File.Exists(pathOrderToPlaced(trade.buy.id)) Then
+                            trade.buy.number = getOrderNumber(trade.buy.id)
+                            trade.buy.placed = True
 
-                        trade.buy.placed = True
+                            Return True
+                        End If
 
-                        Return True
                     ElseIf trade.sell.sent And Not trade.sell.placed Then
-                        ' Cerco il file con id e .placed
+                        If IO.File.Exists(pathOrderToPlaced(trade.sell.id)) Then
+                            trade.sell.number = getOrderNumber(trade.sell.id)
+                            trade.sell.placed = True
 
-                        trade.sell.placed = True
-
-                        Return True
+                            Return True
+                        End If
                     End If
                 Next
             End If
@@ -225,13 +308,13 @@ Namespace AreaCommon.Engines.Bots
         ''' <param name="item"></param>
         ''' <returns></returns>
         Private Function createNewBuyOrder(ByRef item As Models.Bot.BotConfigurationsModel) As Boolean
+            If item.common.currentValue = 0 Then Return False
+
             Dim trade As New Models.Bot.TradeModel
 
             trade.buy.buy = True
             trade.buy.amount = item.parameters.fundConfiguration.unitStep / item.common.currentValue
-
             trade.buy.timeAcquire = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-
             trade.buy.orderValue = item.parameters.fundConfiguration.unitStep + (item.parameters.fundConfiguration.unitStep * 2 / 100)
 
             item.data.tradeOpen.Add(trade)
@@ -318,7 +401,7 @@ Namespace AreaCommon.Engines.Bots
                             currentIndex = 0
                         End If
 
-                        If Not process(AreaState.bots.ElementAt(currentIndex).Value) Then
+                        If process(AreaState.bots.ElementAt(currentIndex).Value) Then
                             currentIndex += 1
                         End If
                     End If

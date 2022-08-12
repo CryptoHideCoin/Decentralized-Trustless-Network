@@ -23,3 +23,4 @@ E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\Debug\Coinbase.Pro.x
 E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.exe.config
 E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.SettingsBot.resources
 E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.DataBot.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.DataTrade.resources

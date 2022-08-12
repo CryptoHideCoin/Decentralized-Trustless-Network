@@ -11,6 +11,26 @@ Public Class Manager
         Dim rowItem As New ArrayList
         Dim execute As Boolean = True
 
+        If botDataView.Rows.Count = AreaState.bots.Count Then
+            Do While execute
+                execute = False
+
+                Try
+                    For index As Integer = 0 To AreaState.bots.ToList.Count - 1
+                        If AreaState.bots.ToList(index).Value.parameters.header.isActive Then
+                            botDataView.Rows(index).Cells(3).Value = "OFF"
+                        Else
+                            botDataView.Rows(index).Cells(3).Value = "ON"
+                        End If
+                    Next
+                Catch ex As Exception
+                    execute = True
+                End Try
+            Loop
+
+            Return
+        End If
+
         Do While execute
             execute = False
 
@@ -23,7 +43,12 @@ Public Class Manager
                     rowItem.Add(item.Value.parameters.header.id)
                     rowItem.Add(CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(item.Value.parameters.header.created), True))
                     rowItem.Add(item.Value.data.pair)
-                    rowItem.Add(item.Value.parameters.header.isActive)
+
+                    If item.Value.parameters.header.isActive Then
+                        rowItem.Add("OFF")
+                    Else
+                        rowItem.Add("ON")
+                    End If
 
                     botDataView.Rows.Add(rowItem.ToArray)
                 Next
@@ -46,6 +71,8 @@ Public Class Manager
             rowItem.Add(item.currentValue.ToString("#,##0.00000"))
 
             marketDataView.Rows.Add(rowItem.ToArray)
+
+            marketDataView.Rows(marketDataView.Rows.Count - 1).DefaultCellStyle.BackColor = Color.LightGray
         Next
     End Sub
 
@@ -76,8 +103,8 @@ Public Class Manager
             Return
         End If
 
-        For position = market.ticks.Count - 1 To 0 Step -1
-            singleTick = market.ticks(position)
+        For pos = market.ticks.Count - 1 To 0 Step -1
+            singleTick = market.ticks(pos)
 
             rowItem.Clear()
 
@@ -85,6 +112,17 @@ Public Class Manager
             rowItem.Add(singleTick.value.ToString("#,##0.00000"))
 
             tickValues.Rows.Add(rowItem.ToArray)
+
+            Select Case singleTick.position
+                Case AreaCommon.Models.Pair.TickInformation.tickPositionEnumeration.decrease
+                    tickValues.Rows(tickValues.Rows.Count - 1).DefaultCellStyle.ForeColor = Color.DarkRed
+                Case AreaCommon.Models.Pair.TickInformation.tickPositionEnumeration.increase
+                    tickValues.Rows(tickValues.Rows.Count - 1).DefaultCellStyle.ForeColor = Color.DarkGreen
+                Case AreaCommon.Models.Pair.TickInformation.tickPositionEnumeration.same
+                    tickValues.Rows(tickValues.Rows.Count - 1).DefaultCellStyle.ForeColor = Color.Black
+            End Select
+
+            tickValues.Rows(tickValues.Rows.Count - 1).DefaultCellStyle.BackColor = Color.LightGray
         Next
     End Sub
 
@@ -130,6 +168,8 @@ Public Class Manager
 
         mainChart.ChartAreas(0).AxisX.MajorGrid.Enabled = False
         mainChart.ChartAreas(0).AxisX.MinorGrid.Enabled = False
+        'mainChart.ChartAreas(0).AxisX.Minimum = market.min
+        'mainChart.ChartAreas(0).AxisX.Maximum = market.max
     End Sub
 
     Sub updateDataMarket()
@@ -144,50 +184,15 @@ Public Class Manager
 
     Private Sub AddNewToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AddNewToolStripMenuItem.Click
         Dim addNewForm As New SettingsBot
-        Dim newJob As New AreaCommon.Models.Bot.BotConfigurationsModel
 
-        If (addNewForm.ShowDialog() = DialogResult.OK) Then
-            newJob.parameters = addNewForm.DATA
-            newJob.data.pair = addNewForm.pair()
-
-            newJob.userAccount = AreaState.defaultGenericAccount
-
-            AreaState.bots.Add(newJob.parameters.header.id, newJob)
-
-            AreaCommon.Engines.Bots.start()
-
-            refreshDataBot()
-
-            timerMain.Enabled = True
-
-            updateAllDataMarkets()
-        End If
-
-        addNewForm.Close()
-    End Sub
-
-    Private Sub BotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BotToolStripMenuItem.Click
-        UpdateToolStripMenuItem.Enabled = Not IsNothing(botDataView.CurrentRow)
-        InformationsToolStripMenuItem.Enabled = UpdateToolStripMenuItem.Enabled
-        StartToolStripMenuItem.Enabled = UpdateToolStripMenuItem.Enabled
-        StopToolStripMenuItem.Enabled = UpdateToolStripMenuItem.Enabled
+        addNewForm.Show()
     End Sub
 
     Private Sub loadBotParameters(ByRef jobParameters As AreaCommon.Models.Bot.BotParametersModel, ByVal pair As String)
-        Dim addNewForm As New SettingsBot
 
-        addNewForm.DATA = jobParameters
-        addNewForm.pair = pair
-        addNewForm.insertMode = False
-
-        If (addNewForm.ShowDialog() = DialogResult.OK) Then
-            refreshDataBot()
-        End If
-
-        addNewForm.Close()
     End Sub
 
-    Private Sub UpdateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateToolStripMenuItem.Click
+    Private Sub UpdateToolStripMenuItem_Click(sender As Object, e As EventArgs)
         If Not IsNothing(botDataView.CurrentRow) Then
             Dim id As String = botDataView.CurrentRow.Cells.Item(0).Value
 
@@ -230,6 +235,9 @@ Public Class Manager
             averageRelativeValue.Text = ""
             trendValue.Text = ""
             lastUpdateValue.Text = ""
+            firstValue.Text = ""
+            lastValue.Text = ""
+            spreadValue.Text = ""
 
             Return
         End If
@@ -238,16 +246,54 @@ Public Class Manager
         maxValue.Text = market.max.ToString("#,##0.00000")
         averageValue.Text = market.average.ToString("#,##0.00000")
         averageRelativeValue.Text = market.relativeAverage.ToString("#,##0.00000")
+        firstValue.Text = market.firstValue.ToString("#,##0.00000")
+        lastValue.Text = market.lastValue.ToString("#,##0.00000")
+        spreadValue.Text = market.spread.ToString("#,##0.00") & " % (" & market.spreadValue.ToString("#,##0.00") & " " & pairData.key.Split("-")(1) & ")"
+
+        If (market.spread > 0) Then
+            spreadValue.ForeColor = Color.Green
+            spreadLabel.ForeColor = Color.Green
+        ElseIf (market.spread < 0) Then
+            spreadValue.ForeColor = Color.DarkRed
+            spreadLabel.ForeColor = Color.DarkRed
+        ElseIf (market.spread = 0) Then
+            spreadValue.ForeColor = Color.Black
+            spreadLabel.ForeColor = Color.Black
+        End If
 
         Select Case market.trend
-            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.decrease : trendValue.Text = "Decrease"
-            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.increase : trendValue.Text = "Increase"
-            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.deep : trendValue.Text = "Deep"
-            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.inBearMarket : trendValue.Text = "In bear market"
-            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.inBullRun : trendValue.Text = "In bullrun"
-            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.inHalving : trendValue.Text = "In halving"
-            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.inTop : trendValue.Text = "Top"
-            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.undefined : trendValue.Text = "Undefined"
+            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.decrease
+                trendValue.Text = "Decrease"
+                trendValue.ForeColor = Color.DarkRed
+                trendLabel.ForeColor = Color.DarkRed
+            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.increase
+                trendValue.ForeColor = Color.Green
+                trendLabel.ForeColor = Color.Green
+                trendValue.Text = "Increase"
+            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.deep
+                trendValue.Text = "Deep"
+                trendValue.ForeColor = Color.DarkRed
+                trendLabel.ForeColor = Color.DarkRed
+            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.inBearMarket
+                trendValue.Text = "In bear market"
+                trendValue.ForeColor = Color.DarkRed
+                trendLabel.ForeColor = Color.DarkRed
+            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.inBullRun
+                trendValue.ForeColor = Color.Green
+                trendLabel.ForeColor = Color.Green
+                trendValue.Text = "In bullrun"
+            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.inHalving
+                trendValue.Text = "In halving"
+                trendValue.ForeColor = Color.Green
+                trendLabel.ForeColor = Color.Green
+            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.inTop
+                trendValue.Text = "Top"
+                trendValue.ForeColor = Color.Green
+                trendLabel.ForeColor = Color.Green
+            Case AreaCommon.Models.Pair.TrendData.StatusValueEnumeration.undefined
+                trendValue.Text = "Undefined"
+                trendValue.ForeColor = Color.Black
+                trendLabel.ForeColor = Color.Black
         End Select
 
         lastUpdateValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(pairData.lastUpdateTick), True)
@@ -294,6 +340,8 @@ Public Class Manager
             .secret = "PWgu2Ssj/O6dZZA9PGjYqqOrLjWKX4Ek6bRPHzDKLYajgiYaBDfdQv5WBuTwcW6ezuYOF6XKpx0q4eyBQTCThA=="
             .apiURL = "https://api.pro.coinbase.com"
         End With
+
+        Me.Text = $"Simulator - Standard Bot - rel.{Application.ProductVersion}"
     End Sub
 
     Private Sub marketDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles marketDataView.CellContentClick
@@ -327,27 +375,13 @@ Public Class Manager
         End Select
     End Sub
 
-    Private Sub InformationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InformationsToolStripMenuItem.Click
-        Dim informationForm As New DataBot
-
-        If Not IsNothing(botDataView.CurrentRow) Then
-            Dim id As String = botDataView.CurrentRow.Cells.Item(0).Value
-
-            informationForm.idReferement = id
-
-            informationForm.TopMost = True
-
-            informationForm.Show()
-        End If
-    End Sub
-
-    Private Sub activeBot(ByVal value As Boolean)
+    Private Sub activeBot()
         If Not IsNothing(botDataView.CurrentRow) Then
             Dim id As String = botDataView.CurrentRow.Cells.Item(0).Value
 
             For Each item In AreaState.bots
                 If item.Value.parameters.header.id.CompareTo(id) = 0 Then
-                    item.Value.parameters.header.isActive = value
+                    item.Value.parameters.header.isActive = Not item.Value.parameters.header.isActive
 
                     botDataView.CurrentRow.SetValues(id, CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(item.Value.parameters.header.created), True), item.Value.data.pair, value)
 
@@ -357,35 +391,37 @@ Public Class Manager
         End If
     End Sub
 
-    Private Sub StartToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles StartToolStripMenuItem.Click
-        activeBot(True)
+    Private Sub updateBotsTimer_Tick(sender As Object, e As EventArgs) Handles updateBotsTimer.Tick
+        refreshDataBot()
+
+        If (AreaState.bots.Count > 0) And Not timerMain.Enabled Then
+            timerMain.Enabled = True
+
+            updateAllDataMarkets()
+        End If
     End Sub
 
-    Private Sub StopToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles StopToolStripMenuItem.Click
-        activeBot(False)
+    Private Sub botDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles botDataView.CellContentClick
+        Select Case e.ColumnIndex
+            Case 3
+                activeBot()
+            Case 4
+                Dim addNewForm As New SettingsBot
+
+                addNewForm.currentID = botDataView.Rows.Item(e.RowIndex).Cells(0).Value
+                addNewForm.pair = botDataView.Rows.Item(e.RowIndex).Cells(2).Value
+
+                addNewForm.Show()
+            Case 5
+                Dim informationForm As New DataBot
+
+                If Not IsNothing(botDataView.CurrentRow) Then
+                    Dim id As String = botDataView.CurrentRow.Cells.Item(0).Value
+
+                    informationForm.idReferement = id
+
+                    informationForm.Show()
+                End If
+        End Select
     End Sub
-
-    Private Sub showChart(ByVal value As Boolean)
-        mainChart.Visible = value
-
-        mainChart.BringToFront()
-
-        hourGridLabel.Visible = Not value
-        tickValues.Visible = Not value
-        pairValue.Visible = Not value
-        pairLabel.Visible = Not value
-        minValue.Visible = Not value
-        minLabel.Visible = Not value
-        maxValue.Visible = Not value
-        maxLabel.Visible = Not value
-        averageValue.Visible = Not value
-        averageLabel.Visible = Not value
-        averageRelativeValue.Visible = Not value
-        averageRelativeLabel.Visible = Not value
-        trendValue.Visible = Not value
-        trendLabel.Visible = Not value
-        lastUpdateValue.Visible = Not value
-        lastUpdateLabel.Visible = Not value
-    End Sub
-
 End Class

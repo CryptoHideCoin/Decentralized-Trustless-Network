@@ -101,7 +101,7 @@ Namespace AreaCommon.Models.Bot
             ''' </summary>
             Public Enum ModeTradeConfigEnumeration
                 undefined
-                simpleAct
+                oneshot
                 continuosGain
                 DCA
                 onlyDeal

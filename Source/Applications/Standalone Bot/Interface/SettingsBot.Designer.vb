@@ -57,11 +57,42 @@ Partial Class SettingsBot
         Me.dealIntervalValue = New System.Windows.Forms.TextBox()
         Me.dealIntervalLabel = New System.Windows.Forms.Label()
         Me.dealAcquireOnAcquireLabel = New System.Windows.Forms.Label()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.dealAcquireValue = New System.Windows.Forms.TextBox()
+        Me.dealAcquireLabel = New System.Windows.Forms.Label()
         Me.otherStepIntervalLabel = New System.Windows.Forms.Label()
         Me.stepIntervalValue = New System.Windows.Forms.TextBox()
         Me.stepIntervalLabel = New System.Windows.Forms.Label()
+        Me.bearMarketPage = New System.Windows.Forms.TabPage()
+        Me.percentageSymbol3Label = New System.Windows.Forms.Label()
+        Me.maximumExposurePercentageValue = New System.Windows.Forms.TextBox()
+        Me.maximumExposurePercentageLabel = New System.Windows.Forms.Label()
+        Me.percentageSymbol2Label = New System.Windows.Forms.Label()
+        Me.bottomReboundPercentageValue = New System.Windows.Forms.TextBox()
+        Me.bottomReboundPercentageLabel = New System.Windows.Forms.Label()
+        Me.percentageSymbolLabel = New System.Windows.Forms.Label()
+        Me.degradePercentageValue = New System.Windows.Forms.TextBox()
+        Me.degradePercentageLabel = New System.Windows.Forms.Label()
+        Me.minuteSymbolObservationLabel = New System.Windows.Forms.Label()
+        Me.observationTimeBearMarketValue = New System.Windows.Forms.TextBox()
+        Me.observationTimeLabel = New System.Windows.Forms.Label()
+        Me.saveFoundValue = New System.Windows.Forms.CheckBox()
+        Me.bullRunPage = New System.Windows.Forms.TabPage()
+        Me.percentageSymbol6Label = New System.Windows.Forms.Label()
+        Me.topReboundPercentageValue = New System.Windows.Forms.TextBox()
+        Me.topReboundPercentageLabel = New System.Windows.Forms.Label()
+        Me.percentageSymbol5Label = New System.Windows.Forms.Label()
+        Me.increasePercentageBullRunValue = New System.Windows.Forms.TextBox()
+        Me.increasePercentageLabel = New System.Windows.Forms.Label()
+        Me.minute2Label = New System.Windows.Forms.Label()
+        Me.observationTimeValue = New System.Windows.Forms.TextBox()
+        Me.observationTimeBullRunLabel = New System.Windows.Forms.Label()
+        Me.percentageSymbol4Label = New System.Windows.Forms.Label()
+        Me.halvingPercentageValue = New System.Windows.Forms.TextBox()
+        Me.halvingPercentageLabel = New System.Windows.Forms.Label()
+        Me.minute1Label = New System.Windows.Forms.Label()
+        Me.halvingMinuteWhenInValue = New System.Windows.Forms.TextBox()
+        Me.halvingMinuteWhenInLabel = New System.Windows.Forms.Label()
+        Me.exploreBullrun = New System.Windows.Forms.CheckBox()
         Me.idValue = New System.Windows.Forms.TextBox()
         Me.createdValue = New System.Windows.Forms.TextBox()
         Me.createdLabel = New System.Windows.Forms.Label()
@@ -75,6 +106,8 @@ Partial Class SettingsBot
         Me.dateStartGroupBox.SuspendLayout()
         Me.configuration.SuspendLayout()
         Me.acquisitionValue.SuspendLayout()
+        Me.bearMarketPage.SuspendLayout()
+        Me.bullRunPage.SuspendLayout()
         Me.SuspendLayout()
         '
         'idLabel
@@ -92,6 +125,8 @@ Partial Class SettingsBot
         Me.tabMain.Controls.Add(Me.startPage)
         Me.tabMain.Controls.Add(Me.configuration)
         Me.tabMain.Controls.Add(Me.acquisitionValue)
+        Me.tabMain.Controls.Add(Me.bearMarketPage)
+        Me.tabMain.Controls.Add(Me.bullRunPage)
         Me.tabMain.Location = New System.Drawing.Point(12, 106)
         Me.tabMain.Name = "tabMain"
         Me.tabMain.SelectedIndex = 0
@@ -154,6 +189,7 @@ Partial Class SettingsBot
         Me.pairIdValue.Name = "pairIdValue"
         Me.pairIdValue.Size = New System.Drawing.Size(117, 21)
         Me.pairIdValue.TabIndex = 4
+        Me.pairIdValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'pairIdLabel
         '
@@ -355,8 +391,8 @@ Partial Class SettingsBot
         Me.acquisitionValue.Controls.Add(Me.dealIntervalValue)
         Me.acquisitionValue.Controls.Add(Me.dealIntervalLabel)
         Me.acquisitionValue.Controls.Add(Me.dealAcquireOnAcquireLabel)
-        Me.acquisitionValue.Controls.Add(Me.TextBox2)
-        Me.acquisitionValue.Controls.Add(Me.Label4)
+        Me.acquisitionValue.Controls.Add(Me.dealAcquireValue)
+        Me.acquisitionValue.Controls.Add(Me.dealAcquireLabel)
         Me.acquisitionValue.Controls.Add(Me.otherStepIntervalLabel)
         Me.acquisitionValue.Controls.Add(Me.stepIntervalValue)
         Me.acquisitionValue.Controls.Add(Me.stepIntervalLabel)
@@ -364,7 +400,7 @@ Partial Class SettingsBot
         Me.acquisitionValue.Name = "acquisitionValue"
         Me.acquisitionValue.Size = New System.Drawing.Size(652, 306)
         Me.acquisitionValue.TabIndex = 2
-        Me.acquisitionValue.Text = "Increase value"
+        Me.acquisitionValue.Text = "Restocking"
         Me.acquisitionValue.UseVisualStyleBackColor = True
         '
         'duringBottonBearMarketValue
@@ -434,22 +470,22 @@ Partial Class SettingsBot
         Me.dealAcquireOnAcquireLabel.TabIndex = 20
         Me.dealAcquireOnAcquireLabel.Text = "%"
         '
-        'TextBox2
+        'dealAcquireValue
         '
-        Me.TextBox2.Location = New System.Drawing.Point(99, 52)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(117, 21)
-        Me.TextBox2.TabIndex = 19
-        Me.TextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.dealAcquireValue.Location = New System.Drawing.Point(99, 52)
+        Me.dealAcquireValue.Name = "dealAcquireValue"
+        Me.dealAcquireValue.Size = New System.Drawing.Size(117, 21)
+        Me.dealAcquireValue.TabIndex = 19
+        Me.dealAcquireValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label4
+        'dealAcquireLabel
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(13, 55)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(79, 13)
-        Me.Label4.TabIndex = 18
-        Me.Label4.Text = "Deal acquire"
+        Me.dealAcquireLabel.AutoSize = True
+        Me.dealAcquireLabel.Location = New System.Drawing.Point(13, 55)
+        Me.dealAcquireLabel.Name = "dealAcquireLabel"
+        Me.dealAcquireLabel.Size = New System.Drawing.Size(79, 13)
+        Me.dealAcquireLabel.TabIndex = 18
+        Me.dealAcquireLabel.Text = "Deal acquire"
         '
         'otherStepIntervalLabel
         '
@@ -477,6 +513,343 @@ Partial Class SettingsBot
         Me.stepIntervalLabel.Size = New System.Drawing.Size(80, 13)
         Me.stepIntervalLabel.TabIndex = 15
         Me.stepIntervalLabel.Text = "Step interval"
+        '
+        'bearMarketPage
+        '
+        Me.bearMarketPage.Controls.Add(Me.percentageSymbol3Label)
+        Me.bearMarketPage.Controls.Add(Me.maximumExposurePercentageValue)
+        Me.bearMarketPage.Controls.Add(Me.maximumExposurePercentageLabel)
+        Me.bearMarketPage.Controls.Add(Me.percentageSymbol2Label)
+        Me.bearMarketPage.Controls.Add(Me.bottomReboundPercentageValue)
+        Me.bearMarketPage.Controls.Add(Me.bottomReboundPercentageLabel)
+        Me.bearMarketPage.Controls.Add(Me.percentageSymbolLabel)
+        Me.bearMarketPage.Controls.Add(Me.degradePercentageValue)
+        Me.bearMarketPage.Controls.Add(Me.degradePercentageLabel)
+        Me.bearMarketPage.Controls.Add(Me.minuteSymbolObservationLabel)
+        Me.bearMarketPage.Controls.Add(Me.observationTimeBearMarketValue)
+        Me.bearMarketPage.Controls.Add(Me.observationTimeLabel)
+        Me.bearMarketPage.Controls.Add(Me.saveFoundValue)
+        Me.bearMarketPage.Location = New System.Drawing.Point(4, 22)
+        Me.bearMarketPage.Name = "bearMarketPage"
+        Me.bearMarketPage.Size = New System.Drawing.Size(652, 306)
+        Me.bearMarketPage.TabIndex = 4
+        Me.bearMarketPage.Text = "Bear market"
+        Me.bearMarketPage.UseVisualStyleBackColor = True
+        '
+        'percentageSymbol3Label
+        '
+        Me.percentageSymbol3Label.AutoSize = True
+        Me.percentageSymbol3Label.Enabled = False
+        Me.percentageSymbol3Label.ForeColor = System.Drawing.Color.ForestGreen
+        Me.percentageSymbol3Label.Location = New System.Drawing.Point(303, 135)
+        Me.percentageSymbol3Label.Name = "percentageSymbol3Label"
+        Me.percentageSymbol3Label.Size = New System.Drawing.Size(19, 13)
+        Me.percentageSymbol3Label.TabIndex = 27
+        Me.percentageSymbol3Label.Text = "%"
+        '
+        'maximumExposurePercentageValue
+        '
+        Me.maximumExposurePercentageValue.Enabled = False
+        Me.maximumExposurePercentageValue.Location = New System.Drawing.Point(216, 132)
+        Me.maximumExposurePercentageValue.Name = "maximumExposurePercentageValue"
+        Me.maximumExposurePercentageValue.Size = New System.Drawing.Size(81, 21)
+        Me.maximumExposurePercentageValue.TabIndex = 26
+        Me.maximumExposurePercentageValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'maximumExposurePercentageLabel
+        '
+        Me.maximumExposurePercentageLabel.AutoSize = True
+        Me.maximumExposurePercentageLabel.Enabled = False
+        Me.maximumExposurePercentageLabel.Location = New System.Drawing.Point(24, 135)
+        Me.maximumExposurePercentageLabel.Name = "maximumExposurePercentageLabel"
+        Me.maximumExposurePercentageLabel.Size = New System.Drawing.Size(187, 13)
+        Me.maximumExposurePercentageLabel.TabIndex = 25
+        Me.maximumExposurePercentageLabel.Text = "Maximum exposure percentage"
+        '
+        'percentageSymbol2Label
+        '
+        Me.percentageSymbol2Label.AutoSize = True
+        Me.percentageSymbol2Label.Enabled = False
+        Me.percentageSymbol2Label.ForeColor = System.Drawing.Color.ForestGreen
+        Me.percentageSymbol2Label.Location = New System.Drawing.Point(303, 108)
+        Me.percentageSymbol2Label.Name = "percentageSymbol2Label"
+        Me.percentageSymbol2Label.Size = New System.Drawing.Size(19, 13)
+        Me.percentageSymbol2Label.TabIndex = 24
+        Me.percentageSymbol2Label.Text = "%"
+        '
+        'bottomReboundPercentageValue
+        '
+        Me.bottomReboundPercentageValue.Enabled = False
+        Me.bottomReboundPercentageValue.Location = New System.Drawing.Point(216, 105)
+        Me.bottomReboundPercentageValue.Name = "bottomReboundPercentageValue"
+        Me.bottomReboundPercentageValue.Size = New System.Drawing.Size(81, 21)
+        Me.bottomReboundPercentageValue.TabIndex = 23
+        Me.bottomReboundPercentageValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'bottomReboundPercentageLabel
+        '
+        Me.bottomReboundPercentageLabel.AutoSize = True
+        Me.bottomReboundPercentageLabel.Enabled = False
+        Me.bottomReboundPercentageLabel.Location = New System.Drawing.Point(43, 108)
+        Me.bottomReboundPercentageLabel.Name = "bottomReboundPercentageLabel"
+        Me.bottomReboundPercentageLabel.Size = New System.Drawing.Size(167, 13)
+        Me.bottomReboundPercentageLabel.TabIndex = 22
+        Me.bottomReboundPercentageLabel.Text = "Bottom rebound percentage"
+        '
+        'percentageSymbolLabel
+        '
+        Me.percentageSymbolLabel.AutoSize = True
+        Me.percentageSymbolLabel.Enabled = False
+        Me.percentageSymbolLabel.ForeColor = System.Drawing.Color.ForestGreen
+        Me.percentageSymbolLabel.Location = New System.Drawing.Point(303, 81)
+        Me.percentageSymbolLabel.Name = "percentageSymbolLabel"
+        Me.percentageSymbolLabel.Size = New System.Drawing.Size(19, 13)
+        Me.percentageSymbolLabel.TabIndex = 21
+        Me.percentageSymbolLabel.Text = "%"
+        '
+        'degradePercentageValue
+        '
+        Me.degradePercentageValue.Enabled = False
+        Me.degradePercentageValue.Location = New System.Drawing.Point(216, 78)
+        Me.degradePercentageValue.Name = "degradePercentageValue"
+        Me.degradePercentageValue.Size = New System.Drawing.Size(81, 21)
+        Me.degradePercentageValue.TabIndex = 20
+        Me.degradePercentageValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'degradePercentageLabel
+        '
+        Me.degradePercentageLabel.AutoSize = True
+        Me.degradePercentageLabel.Enabled = False
+        Me.degradePercentageLabel.Location = New System.Drawing.Point(86, 81)
+        Me.degradePercentageLabel.Name = "degradePercentageLabel"
+        Me.degradePercentageLabel.Size = New System.Drawing.Size(124, 13)
+        Me.degradePercentageLabel.TabIndex = 19
+        Me.degradePercentageLabel.Text = "Degrade percentage"
+        '
+        'minuteSymbolObservationLabel
+        '
+        Me.minuteSymbolObservationLabel.AutoSize = True
+        Me.minuteSymbolObservationLabel.Enabled = False
+        Me.minuteSymbolObservationLabel.ForeColor = System.Drawing.Color.ForestGreen
+        Me.minuteSymbolObservationLabel.Location = New System.Drawing.Point(303, 54)
+        Me.minuteSymbolObservationLabel.Name = "minuteSymbolObservationLabel"
+        Me.minuteSymbolObservationLabel.Size = New System.Drawing.Size(54, 13)
+        Me.minuteSymbolObservationLabel.TabIndex = 18
+        Me.minuteSymbolObservationLabel.Text = "(Minute)"
+        '
+        'observationTimeBearMarketValue
+        '
+        Me.observationTimeBearMarketValue.Enabled = False
+        Me.observationTimeBearMarketValue.Location = New System.Drawing.Point(216, 51)
+        Me.observationTimeBearMarketValue.Name = "observationTimeBearMarketValue"
+        Me.observationTimeBearMarketValue.Size = New System.Drawing.Size(81, 21)
+        Me.observationTimeBearMarketValue.TabIndex = 2
+        Me.observationTimeBearMarketValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'observationTimeLabel
+        '
+        Me.observationTimeLabel.AutoSize = True
+        Me.observationTimeLabel.Enabled = False
+        Me.observationTimeLabel.Location = New System.Drawing.Point(105, 54)
+        Me.observationTimeLabel.Name = "observationTimeLabel"
+        Me.observationTimeLabel.Size = New System.Drawing.Size(105, 13)
+        Me.observationTimeLabel.TabIndex = 1
+        Me.observationTimeLabel.Text = "Observation time"
+        '
+        'saveFoundValue
+        '
+        Me.saveFoundValue.AutoSize = True
+        Me.saveFoundValue.Location = New System.Drawing.Point(216, 18)
+        Me.saveFoundValue.Name = "saveFoundValue"
+        Me.saveFoundValue.Size = New System.Drawing.Size(132, 17)
+        Me.saveFoundValue.TabIndex = 0
+        Me.saveFoundValue.Text = "Auto protect found"
+        Me.saveFoundValue.UseVisualStyleBackColor = True
+        '
+        'bullRunPage
+        '
+        Me.bullRunPage.Controls.Add(Me.percentageSymbol6Label)
+        Me.bullRunPage.Controls.Add(Me.topReboundPercentageValue)
+        Me.bullRunPage.Controls.Add(Me.topReboundPercentageLabel)
+        Me.bullRunPage.Controls.Add(Me.percentageSymbol5Label)
+        Me.bullRunPage.Controls.Add(Me.increasePercentageBullRunValue)
+        Me.bullRunPage.Controls.Add(Me.increasePercentageLabel)
+        Me.bullRunPage.Controls.Add(Me.minute2Label)
+        Me.bullRunPage.Controls.Add(Me.observationTimeValue)
+        Me.bullRunPage.Controls.Add(Me.observationTimeBullRunLabel)
+        Me.bullRunPage.Controls.Add(Me.percentageSymbol4Label)
+        Me.bullRunPage.Controls.Add(Me.halvingPercentageValue)
+        Me.bullRunPage.Controls.Add(Me.halvingPercentageLabel)
+        Me.bullRunPage.Controls.Add(Me.minute1Label)
+        Me.bullRunPage.Controls.Add(Me.halvingMinuteWhenInValue)
+        Me.bullRunPage.Controls.Add(Me.halvingMinuteWhenInLabel)
+        Me.bullRunPage.Controls.Add(Me.exploreBullrun)
+        Me.bullRunPage.Location = New System.Drawing.Point(4, 22)
+        Me.bullRunPage.Name = "bullRunPage"
+        Me.bullRunPage.Size = New System.Drawing.Size(652, 306)
+        Me.bullRunPage.TabIndex = 5
+        Me.bullRunPage.Text = "Bull run"
+        Me.bullRunPage.UseVisualStyleBackColor = True
+        '
+        'percentageSymbol6Label
+        '
+        Me.percentageSymbol6Label.AutoSize = True
+        Me.percentageSymbol6Label.Enabled = False
+        Me.percentageSymbol6Label.ForeColor = System.Drawing.Color.ForestGreen
+        Me.percentageSymbol6Label.Location = New System.Drawing.Point(303, 162)
+        Me.percentageSymbol6Label.Name = "percentageSymbol6Label"
+        Me.percentageSymbol6Label.Size = New System.Drawing.Size(19, 13)
+        Me.percentageSymbol6Label.TabIndex = 43
+        Me.percentageSymbol6Label.Text = "%"
+        '
+        'topReboundPercentageValue
+        '
+        Me.topReboundPercentageValue.Enabled = False
+        Me.topReboundPercentageValue.Location = New System.Drawing.Point(216, 159)
+        Me.topReboundPercentageValue.Name = "topReboundPercentageValue"
+        Me.topReboundPercentageValue.Size = New System.Drawing.Size(81, 21)
+        Me.topReboundPercentageValue.TabIndex = 42
+        Me.topReboundPercentageValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'topReboundPercentageLabel
+        '
+        Me.topReboundPercentageLabel.AutoSize = True
+        Me.topReboundPercentageLabel.Enabled = False
+        Me.topReboundPercentageLabel.Location = New System.Drawing.Point(64, 162)
+        Me.topReboundPercentageLabel.Name = "topReboundPercentageLabel"
+        Me.topReboundPercentageLabel.Size = New System.Drawing.Size(146, 13)
+        Me.topReboundPercentageLabel.TabIndex = 41
+        Me.topReboundPercentageLabel.Text = "Top rebound percentage"
+        '
+        'percentageSymbol5Label
+        '
+        Me.percentageSymbol5Label.AutoSize = True
+        Me.percentageSymbol5Label.Enabled = False
+        Me.percentageSymbol5Label.ForeColor = System.Drawing.Color.ForestGreen
+        Me.percentageSymbol5Label.Location = New System.Drawing.Point(303, 135)
+        Me.percentageSymbol5Label.Name = "percentageSymbol5Label"
+        Me.percentageSymbol5Label.Size = New System.Drawing.Size(19, 13)
+        Me.percentageSymbol5Label.TabIndex = 40
+        Me.percentageSymbol5Label.Text = "%"
+        '
+        'increasePercentageBullRunValue
+        '
+        Me.increasePercentageBullRunValue.Enabled = False
+        Me.increasePercentageBullRunValue.Location = New System.Drawing.Point(216, 132)
+        Me.increasePercentageBullRunValue.Name = "increasePercentageBullRunValue"
+        Me.increasePercentageBullRunValue.Size = New System.Drawing.Size(81, 21)
+        Me.increasePercentageBullRunValue.TabIndex = 39
+        Me.increasePercentageBullRunValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'increasePercentageLabel
+        '
+        Me.increasePercentageLabel.AutoSize = True
+        Me.increasePercentageLabel.Enabled = False
+        Me.increasePercentageLabel.Location = New System.Drawing.Point(85, 135)
+        Me.increasePercentageLabel.Name = "increasePercentageLabel"
+        Me.increasePercentageLabel.Size = New System.Drawing.Size(125, 13)
+        Me.increasePercentageLabel.TabIndex = 38
+        Me.increasePercentageLabel.Text = "Increase percentage"
+        '
+        'minute2Label
+        '
+        Me.minute2Label.AutoSize = True
+        Me.minute2Label.Enabled = False
+        Me.minute2Label.ForeColor = System.Drawing.Color.ForestGreen
+        Me.minute2Label.Location = New System.Drawing.Point(303, 108)
+        Me.minute2Label.Name = "minute2Label"
+        Me.minute2Label.Size = New System.Drawing.Size(54, 13)
+        Me.minute2Label.TabIndex = 37
+        Me.minute2Label.Text = "(Minute)"
+        '
+        'observationTimeValue
+        '
+        Me.observationTimeValue.Enabled = False
+        Me.observationTimeValue.Location = New System.Drawing.Point(216, 105)
+        Me.observationTimeValue.Name = "observationTimeValue"
+        Me.observationTimeValue.Size = New System.Drawing.Size(81, 21)
+        Me.observationTimeValue.TabIndex = 36
+        Me.observationTimeValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'observationTimeBullRunLabel
+        '
+        Me.observationTimeBullRunLabel.AutoSize = True
+        Me.observationTimeBullRunLabel.Enabled = False
+        Me.observationTimeBullRunLabel.Location = New System.Drawing.Point(105, 108)
+        Me.observationTimeBullRunLabel.Name = "observationTimeBullRunLabel"
+        Me.observationTimeBullRunLabel.Size = New System.Drawing.Size(105, 13)
+        Me.observationTimeBullRunLabel.TabIndex = 35
+        Me.observationTimeBullRunLabel.Text = "Observation time"
+        '
+        'percentageSymbol4Label
+        '
+        Me.percentageSymbol4Label.AutoSize = True
+        Me.percentageSymbol4Label.Enabled = False
+        Me.percentageSymbol4Label.ForeColor = System.Drawing.Color.ForestGreen
+        Me.percentageSymbol4Label.Location = New System.Drawing.Point(303, 81)
+        Me.percentageSymbol4Label.Name = "percentageSymbol4Label"
+        Me.percentageSymbol4Label.Size = New System.Drawing.Size(19, 13)
+        Me.percentageSymbol4Label.TabIndex = 34
+        Me.percentageSymbol4Label.Text = "%"
+        '
+        'halvingPercentageValue
+        '
+        Me.halvingPercentageValue.Enabled = False
+        Me.halvingPercentageValue.Location = New System.Drawing.Point(216, 78)
+        Me.halvingPercentageValue.Name = "halvingPercentageValue"
+        Me.halvingPercentageValue.Size = New System.Drawing.Size(81, 21)
+        Me.halvingPercentageValue.TabIndex = 33
+        Me.halvingPercentageValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'halvingPercentageLabel
+        '
+        Me.halvingPercentageLabel.AutoSize = True
+        Me.halvingPercentageLabel.Enabled = False
+        Me.halvingPercentageLabel.Location = New System.Drawing.Point(93, 81)
+        Me.halvingPercentageLabel.Name = "halvingPercentageLabel"
+        Me.halvingPercentageLabel.Size = New System.Drawing.Size(117, 13)
+        Me.halvingPercentageLabel.TabIndex = 32
+        Me.halvingPercentageLabel.Text = "Halving percentage"
+        '
+        'minute1Label
+        '
+        Me.minute1Label.AutoSize = True
+        Me.minute1Label.Enabled = False
+        Me.minute1Label.ForeColor = System.Drawing.Color.ForestGreen
+        Me.minute1Label.Location = New System.Drawing.Point(303, 54)
+        Me.minute1Label.Name = "minute1Label"
+        Me.minute1Label.Size = New System.Drawing.Size(54, 13)
+        Me.minute1Label.TabIndex = 31
+        Me.minute1Label.Text = "(Minute)"
+        '
+        'halvingMinuteWhenInValue
+        '
+        Me.halvingMinuteWhenInValue.Enabled = False
+        Me.halvingMinuteWhenInValue.Location = New System.Drawing.Point(216, 51)
+        Me.halvingMinuteWhenInValue.Name = "halvingMinuteWhenInValue"
+        Me.halvingMinuteWhenInValue.Size = New System.Drawing.Size(81, 21)
+        Me.halvingMinuteWhenInValue.TabIndex = 30
+        Me.halvingMinuteWhenInValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'halvingMinuteWhenInLabel
+        '
+        Me.halvingMinuteWhenInLabel.AutoSize = True
+        Me.halvingMinuteWhenInLabel.Enabled = False
+        Me.halvingMinuteWhenInLabel.Location = New System.Drawing.Point(70, 54)
+        Me.halvingMinuteWhenInLabel.Name = "halvingMinuteWhenInLabel"
+        Me.halvingMinuteWhenInLabel.Size = New System.Drawing.Size(140, 13)
+        Me.halvingMinuteWhenInLabel.TabIndex = 29
+        Me.halvingMinuteWhenInLabel.Text = "Halving minute when in"
+        '
+        'exploreBullrun
+        '
+        Me.exploreBullrun.AutoSize = True
+        Me.exploreBullrun.Location = New System.Drawing.Point(216, 18)
+        Me.exploreBullrun.Name = "exploreBullrun"
+        Me.exploreBullrun.Size = New System.Drawing.Size(112, 17)
+        Me.exploreBullrun.TabIndex = 28
+        Me.exploreBullrun.Text = "Explore bullrun"
+        Me.exploreBullrun.UseVisualStyleBackColor = True
         '
         'idValue
         '
@@ -559,7 +932,7 @@ Partial Class SettingsBot
         Me.MaximumSize = New System.Drawing.Size(778, 486)
         Me.MinimumSize = New System.Drawing.Size(778, 486)
         Me.Name = "SettingsBot"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Bot parameters"
         Me.tabMain.ResumeLayout(False)
         Me.fundConfigurationPage.ResumeLayout(False)
@@ -572,6 +945,10 @@ Partial Class SettingsBot
         Me.configuration.PerformLayout()
         Me.acquisitionValue.ResumeLayout(False)
         Me.acquisitionValue.PerformLayout()
+        Me.bearMarketPage.ResumeLayout(False)
+        Me.bearMarketPage.PerformLayout()
+        Me.bullRunPage.ResumeLayout(False)
+        Me.bullRunPage.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -615,8 +992,8 @@ Partial Class SettingsBot
     Friend WithEvents dealIntervalValue As TextBox
     Friend WithEvents dealIntervalLabel As Label
     Friend WithEvents dealAcquireOnAcquireLabel As Label
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents Label4 As Label
+    Friend WithEvents dealAcquireValue As TextBox
+    Friend WithEvents dealAcquireLabel As Label
     Friend WithEvents otherStepIntervalLabel As Label
     Friend WithEvents stepIntervalValue As TextBox
     Friend WithEvents stepIntervalLabel As Label
@@ -626,4 +1003,35 @@ Partial Class SettingsBot
     Friend WithEvents spreadValue As TextBox
     Friend WithEvents spreadLabel As Label
     Friend WithEvents Label1 As Label
+    Friend WithEvents bearMarketPage As TabPage
+    Friend WithEvents bullRunPage As TabPage
+    Friend WithEvents saveFoundValue As CheckBox
+    Friend WithEvents percentageSymbolLabel As Label
+    Friend WithEvents degradePercentageValue As TextBox
+    Friend WithEvents degradePercentageLabel As Label
+    Friend WithEvents minuteSymbolObservationLabel As Label
+    Friend WithEvents observationTimeBearMarketValue As TextBox
+    Friend WithEvents observationTimeLabel As Label
+    Friend WithEvents percentageSymbol3Label As Label
+    Friend WithEvents maximumExposurePercentageValue As TextBox
+    Friend WithEvents maximumExposurePercentageLabel As Label
+    Friend WithEvents percentageSymbol2Label As Label
+    Friend WithEvents bottomReboundPercentageValue As TextBox
+    Friend WithEvents bottomReboundPercentageLabel As Label
+    Friend WithEvents percentageSymbol6Label As Label
+    Friend WithEvents topReboundPercentageValue As TextBox
+    Friend WithEvents topReboundPercentageLabel As Label
+    Friend WithEvents percentageSymbol5Label As Label
+    Friend WithEvents increasePercentageBullRunValue As TextBox
+    Friend WithEvents increasePercentageLabel As Label
+    Friend WithEvents minute2Label As Label
+    Friend WithEvents observationTimeValue As TextBox
+    Friend WithEvents observationTimeBullRunLabel As Label
+    Friend WithEvents percentageSymbol4Label As Label
+    Friend WithEvents halvingPercentageValue As TextBox
+    Friend WithEvents halvingPercentageLabel As Label
+    Friend WithEvents minute1Label As Label
+    Friend WithEvents halvingMinuteWhenInValue As TextBox
+    Friend WithEvents halvingMinuteWhenInLabel As Label
+    Friend WithEvents exploreBullrun As CheckBox
 End Class

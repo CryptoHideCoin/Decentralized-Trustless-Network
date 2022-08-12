@@ -14,7 +14,9 @@ Namespace AreaCommon.Models.Bot
         Public Property buy As Boolean = False
         Public Property orderValue As Double = 0
         Public Property pairTradeValue As Double = 0
-        Public Property effectiveValue As Double = 0
+
+        Public Property feeCost As Double = 0
+        Public Property tco As Double = 0
         Public Property amount As Double = 0
 
         Public Property number As String = ""
@@ -49,8 +51,8 @@ Namespace AreaCommon.Models.Bot
 
         Public Property pair As String = ""
 
-        Public Property bootStrapInitial As Boolean = False
-        Public Property bootStrapComplete As Boolean = False
+        Public Property bootstrapInitial As Boolean = False
+        Public Property bootstrapComplete As Boolean = False
         Public Property examTimeLimit As Double = 0
 
         Public Property timeStart As Double = 0
@@ -58,6 +60,7 @@ Namespace AreaCommon.Models.Bot
         Public Property usedPlafond As Double = 0
         Public Property earn As Double = 0
         Public Property lastBuyTime As Double = 0
+        Public Property lastBuyChange As Double = 0
         Public Property lastBuyValue As Double = 0
 
         Public Property tradeOpen As New List(Of TradeModel)
