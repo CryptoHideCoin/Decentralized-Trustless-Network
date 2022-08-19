@@ -32,31 +32,37 @@ Namespace AreaCommon.Engines.Pairs
         ''' </summary>
         ''' <param name="pair"></param>
         Private Async Sub updateTick(ByVal pair As Models.Pair.PairInformation)
-            pair.lastUpdateTick = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+            Try
+                pair.lastUpdateTick = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
-            Dim market = Await _ClientPro.MarketData.GetTickerAsync(pair.key)
-            Dim tick As New Models.Pair.TickInformation
+                Dim market = Await _ClientPro.MarketData.GetTickerAsync(pair.key)
+                Dim tick As New Models.Pair.TickInformation
 
-            pair.currentValue = market.Price
+                pair.currentValue = market.Price
 
-            If (pair.currentRelativeAverageValue = 0) Then
-                pair.currentRelativeAverageValue = market.Price
-            Else
-                pair.currentRelativeAverageValue = (pair.currentRelativeAverageValue + market.Price) / 2
-            End If
+                AreaState.updateChange(pair.key, pair.currentValue)
 
-            tick.time = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            tick.value = market.Price
+                If (pair.currentRelativeAverageValue = 0) Then
+                    pair.currentRelativeAverageValue = market.Price
+                Else
+                    pair.currentRelativeAverageValue = (pair.currentRelativeAverageValue + market.Price) / 2
+                End If
 
-            If (market.Price > pair.currentRelativeAverageValue) Then
-                tick.position = Models.Pair.TickInformation.tickPositionEnumeration.increase
-            ElseIf market.Price = pair.currentRelativeAverageValue Then
-                tick.position = Models.Pair.TickInformation.tickPositionEnumeration.same
-            Else
-                tick.position = Models.Pair.TickInformation.tickPositionEnumeration.decrease
-            End If
+                tick.time = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                tick.value = market.Price
 
-            pair.addNewItem(tick)
+                If (market.Price > pair.currentRelativeAverageValue) Then
+                    tick.position = Models.Pair.TickInformation.tickPositionEnumeration.increase
+                ElseIf market.Price = pair.currentRelativeAverageValue Then
+                    tick.position = Models.Pair.TickInformation.tickPositionEnumeration.same
+                Else
+                    tick.position = Models.Pair.TickInformation.tickPositionEnumeration.decrease
+                End If
+
+                pair.addNewItem(tick)
+            Catch ex As Exception
+                MessageBox.Show("Problem during updateTick - " & ex.Message)
+            End Try
         End Sub
 
 

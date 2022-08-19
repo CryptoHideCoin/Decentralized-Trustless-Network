@@ -11,6 +11,99 @@ Namespace AreaCommon.Engines.Orders
 
         Private Property _InWorkJob As Boolean = False
 
+        ''' <summary>
+        ''' This method provide to calculate fee cost of a transaction
+        ''' </summary>
+        ''' <param name="totalValue"></param>
+        ''' <returns></returns>
+        Private Function calculateFeeCost(ByVal totalValue As Double) As Double
+            Dim feePercentage As Double = 0
+
+            Select Case New Random().Next(0, 1)
+                Case 0 : feePercentage = 0.6
+                Case Else : feePercentage = 0.4
+            End Select
+
+            Return totalValue * feePercentage / 100
+        End Function
+
+        ''' <summary>
+        ''' This method provide to test if exist the condition to buy
+        ''' </summary>
+        ''' <param name="tradeBuy"></param>
+        ''' <param name="pairKey"></param>
+        ''' <returns></returns>
+        Private Function testConditionBuy(ByRef tradeBuy As Models.Bot.BotOrderModel, ByVal pairKey As String) As Boolean
+            If (tradeBuy.notBeforeThat > 0) Then
+                If (tradeBuy.notBeforeThat >= CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) Then
+                    Return False
+                End If
+            End If
+
+            If (AreaState.accounts(pairKey.Split("-")(1).ToLower()).amount >= tradeBuy.orderValue) Then
+                tradeBuy.notBeforeThat = 0
+
+                Return True
+            Else
+                tradeBuy.notBeforeThat = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 10000
+
+                Return False
+            End If
+        End Function
+
+        ''' <summary>
+        ''' This method provide to make order to buy 
+        ''' </summary>
+        ''' <param name="botId"></param>
+        ''' <param name="internalOrderId"></param>
+        ''' <param name="tradeBuy"></param>
+        ''' <returns></returns>
+        Private Function makeOrderBuy(ByVal botId As String, ByVal internalOrderId As String, ByRef tradeBuy As Models.Bot.BotOrderModel) As Boolean
+            Dim weightValue As Double = AreaState.bots(botId).common.currentValue * tradeBuy.amount
+
+            tradeBuy.feeCost = calculateFeeCost(weightValue)
+            tradeBuy.tco = weightValue + tradeBuy.feeCost
+            tradeBuy.pairTradeValue = AreaState.bots(botId).common.currentValue
+            tradeBuy.timeCompleted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+            tradeBuy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
+
+            AreaState.addIntoAccount(AreaState.bots(botId).common.key.Split("-")(1), (-1) * tradeBuy.tco)
+            AreaState.addIntoAccount(AreaState.bots(botId).common.key, tradeBuy.amount)
+
+            AreaState.orders.Remove(internalOrderId)
+
+            AreaState.totalFeeTrade += CDec(tradeBuy.feeCost)
+            AreaState.totalVolumeTrade += CDec(weightValue)
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' This method provide to make and order to sell
+        ''' </summary>
+        ''' <param name="botId"></param>
+        ''' <param name="internalOrderId"></param>
+        ''' <param name="tradeSell"></param>
+        ''' <returns></returns>
+        Private Function makeOrderSell(ByVal botId As String, ByVal internalOrderId As String, ByRef tradeSell As Models.Bot.BotOrderModel) As Boolean
+            Dim weightValue As Double = AreaState.bots(botId).common.currentValue * tradeSell.amount
+
+            tradeSell.feeCost = calculateFeeCost(weightValue)
+            tradeSell.tco = weightValue + tradeSell.feeCost
+            tradeSell.pairTradeValue = AreaState.bots(botId).common.currentValue
+            tradeSell.timeCompleted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+            tradeSell.state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
+
+            AreaState.addIntoAccount(AreaState.bots(botId).common.key, (-1) * tradeSell.amount)
+            AreaState.addIntoAccount(AreaState.bots(botId).common.key.Split("-")(1), (tradeSell.tco - tradeSell.feeCost))
+
+            AreaState.orders.Remove(internalOrderId)
+
+            AreaState.totalFeeTrade += tradeSell.feeCost
+            AreaState.totalVolumeTrade += weightValue
+
+            Return True
+        End Function
 
         ''' <summary>
         ''' This method provide to verify the order
@@ -25,25 +118,15 @@ Namespace AreaCommon.Engines.Orders
                     If AreaState.bots.ContainsKey(order.botId) Then
                         For Each trade In AreaState.bots(order.botId).data.tradeOpen
                             If (trade.buy.id = order.internalOrderId) Then
-                                trade.buy.feeCost = 0.6
-                                trade.buy.tco = (AreaState.bots(order.botId).common.currentValue * trade.buy.amount) + trade.buy.feeCost
-                                trade.buy.pairTradeValue = AreaState.bots(order.botId).common.currentValue
-                                trade.buy.fill = True
-
-                                AreaState.orders.Remove(order.internalOrderId)
-
-                                Return True
+                                If testConditionBuy(trade.buy, AreaState.bots(order.botId).common.key) Then
+                                    Return makeOrderBuy(order.botId, order.internalOrderId, trade.buy)
+                                End If
                             End If
 
                             If (trade.sell.id = order.internalOrderId) Then
                                 If AreaState.bots(order.botId).common.currentValue >= (trade.sell.pairTradeValue) Then
-                                    trade.sell.tco = (AreaState.bots(order.botId).common.currentValue * trade.sell.amount)
-                                    trade.sell.fill = True
-
-                                    AreaState.orders.Remove(order.internalOrderId)
+                                    Return makeOrderSell(order.botId, order.internalOrderId, trade.sell)
                                 End If
-
-                                Return True
                             End If
                         Next
                     End If

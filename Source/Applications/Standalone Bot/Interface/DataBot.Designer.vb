@@ -29,6 +29,8 @@ Partial Class DataBot
         Me.mainTimer = New System.Windows.Forms.Timer(Me.components)
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.mainTab = New System.Windows.Forms.TabPage()
+        Me.timeEndValue = New System.Windows.Forms.TextBox()
+        Me.timeEndLabel = New System.Windows.Forms.Label()
         Me.lastBuyValue = New System.Windows.Forms.TextBox()
         Me.lastBuyValueLabel = New System.Windows.Forms.Label()
         Me.lastBuyTimeValue = New System.Windows.Forms.TextBox()
@@ -78,11 +80,13 @@ Partial Class DataBot
         Me.TabControl1.Location = New System.Drawing.Point(12, 12)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(594, 297)
+        Me.TabControl1.Size = New System.Drawing.Size(594, 316)
         Me.TabControl1.TabIndex = 0
         '
         'mainTab
         '
+        Me.mainTab.Controls.Add(Me.timeEndValue)
+        Me.mainTab.Controls.Add(Me.timeEndLabel)
         Me.mainTab.Controls.Add(Me.lastBuyValue)
         Me.mainTab.Controls.Add(Me.lastBuyValueLabel)
         Me.mainTab.Controls.Add(Me.lastBuyTimeValue)
@@ -104,24 +108,42 @@ Partial Class DataBot
         Me.mainTab.Location = New System.Drawing.Point(4, 22)
         Me.mainTab.Name = "mainTab"
         Me.mainTab.Padding = New System.Windows.Forms.Padding(3)
-        Me.mainTab.Size = New System.Drawing.Size(586, 271)
+        Me.mainTab.Size = New System.Drawing.Size(586, 290)
         Me.mainTab.TabIndex = 0
         Me.mainTab.Text = "Main"
         Me.mainTab.UseVisualStyleBackColor = True
         '
+        'timeEndValue
+        '
+        Me.timeEndValue.Location = New System.Drawing.Point(107, 150)
+        Me.timeEndValue.Name = "timeEndValue"
+        Me.timeEndValue.ReadOnly = True
+        Me.timeEndValue.Size = New System.Drawing.Size(457, 21)
+        Me.timeEndValue.TabIndex = 6
+        Me.timeEndValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'timeEndLabel
+        '
+        Me.timeEndLabel.AutoSize = True
+        Me.timeEndLabel.Location = New System.Drawing.Point(41, 154)
+        Me.timeEndLabel.Name = "timeEndLabel"
+        Me.timeEndLabel.Size = New System.Drawing.Size(60, 13)
+        Me.timeEndLabel.TabIndex = 39
+        Me.timeEndLabel.Text = "Time end"
+        '
         'lastBuyValue
         '
-        Me.lastBuyValue.Location = New System.Drawing.Point(107, 230)
+        Me.lastBuyValue.Location = New System.Drawing.Point(107, 259)
         Me.lastBuyValue.Name = "lastBuyValue"
         Me.lastBuyValue.ReadOnly = True
         Me.lastBuyValue.Size = New System.Drawing.Size(457, 21)
-        Me.lastBuyValue.TabIndex = 38
+        Me.lastBuyValue.TabIndex = 10
         Me.lastBuyValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'lastBuyValueLabel
         '
         Me.lastBuyValueLabel.AutoSize = True
-        Me.lastBuyValueLabel.Location = New System.Drawing.Point(11, 233)
+        Me.lastBuyValueLabel.Location = New System.Drawing.Point(11, 262)
         Me.lastBuyValueLabel.Name = "lastBuyValueLabel"
         Me.lastBuyValueLabel.Size = New System.Drawing.Size(90, 13)
         Me.lastBuyValueLabel.TabIndex = 37
@@ -129,17 +151,17 @@ Partial Class DataBot
         '
         'lastBuyTimeValue
         '
-        Me.lastBuyTimeValue.Location = New System.Drawing.Point(107, 203)
+        Me.lastBuyTimeValue.Location = New System.Drawing.Point(107, 232)
         Me.lastBuyTimeValue.Name = "lastBuyTimeValue"
         Me.lastBuyTimeValue.ReadOnly = True
         Me.lastBuyTimeValue.Size = New System.Drawing.Size(457, 21)
-        Me.lastBuyTimeValue.TabIndex = 36
+        Me.lastBuyTimeValue.TabIndex = 9
         Me.lastBuyTimeValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'lastBuyTimeLabel
         '
         Me.lastBuyTimeLabel.AutoSize = True
-        Me.lastBuyTimeLabel.Location = New System.Drawing.Point(17, 206)
+        Me.lastBuyTimeLabel.Location = New System.Drawing.Point(17, 235)
         Me.lastBuyTimeLabel.Name = "lastBuyTimeLabel"
         Me.lastBuyTimeLabel.Size = New System.Drawing.Size(84, 13)
         Me.lastBuyTimeLabel.TabIndex = 35
@@ -147,17 +169,17 @@ Partial Class DataBot
         '
         'earnValue
         '
-        Me.earnValue.Location = New System.Drawing.Point(107, 176)
+        Me.earnValue.Location = New System.Drawing.Point(107, 205)
         Me.earnValue.Name = "earnValue"
         Me.earnValue.ReadOnly = True
         Me.earnValue.Size = New System.Drawing.Size(457, 21)
-        Me.earnValue.TabIndex = 34
+        Me.earnValue.TabIndex = 8
         Me.earnValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'earnLabel
         '
         Me.earnLabel.AutoSize = True
-        Me.earnLabel.Location = New System.Drawing.Point(68, 179)
+        Me.earnLabel.Location = New System.Drawing.Point(68, 208)
         Me.earnLabel.Name = "earnLabel"
         Me.earnLabel.Size = New System.Drawing.Size(33, 13)
         Me.earnLabel.TabIndex = 33
@@ -165,17 +187,17 @@ Partial Class DataBot
         '
         'plafondValue
         '
-        Me.plafondValue.Location = New System.Drawing.Point(107, 149)
+        Me.plafondValue.Location = New System.Drawing.Point(107, 178)
         Me.plafondValue.Name = "plafondValue"
         Me.plafondValue.ReadOnly = True
         Me.plafondValue.Size = New System.Drawing.Size(457, 21)
-        Me.plafondValue.TabIndex = 32
+        Me.plafondValue.TabIndex = 7
         Me.plafondValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'plafondLabel
         '
         Me.plafondLabel.AutoSize = True
-        Me.plafondLabel.Location = New System.Drawing.Point(20, 152)
+        Me.plafondLabel.Location = New System.Drawing.Point(20, 181)
         Me.plafondLabel.Name = "plafondLabel"
         Me.plafondLabel.Size = New System.Drawing.Size(81, 13)
         Me.plafondLabel.TabIndex = 31
@@ -187,7 +209,7 @@ Partial Class DataBot
         Me.timeStartValue.Name = "timeStartValue"
         Me.timeStartValue.ReadOnly = True
         Me.timeStartValue.Size = New System.Drawing.Size(457, 21)
-        Me.timeStartValue.TabIndex = 30
+        Me.timeStartValue.TabIndex = 5
         Me.timeStartValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label3
@@ -206,7 +228,7 @@ Partial Class DataBot
         Me.bootstrapCompleteValue.Location = New System.Drawing.Point(316, 72)
         Me.bootstrapCompleteValue.Name = "bootstrapCompleteValue"
         Me.bootstrapCompleteValue.Size = New System.Drawing.Size(130, 17)
-        Me.bootstrapCompleteValue.TabIndex = 28
+        Me.bootstrapCompleteValue.TabIndex = 3
         Me.bootstrapCompleteValue.Text = "Botstrap complete"
         Me.bootstrapCompleteValue.UseVisualStyleBackColor = True
         '
@@ -217,7 +239,7 @@ Partial Class DataBot
         Me.bootstrapInitialValue.Location = New System.Drawing.Point(107, 72)
         Me.bootstrapInitialValue.Name = "bootstrapInitialValue"
         Me.bootstrapInitialValue.Size = New System.Drawing.Size(115, 17)
-        Me.bootstrapInitialValue.TabIndex = 27
+        Me.bootstrapInitialValue.TabIndex = 2
         Me.bootstrapInitialValue.Text = "Bootstrap initial"
         Me.bootstrapInitialValue.UseVisualStyleBackColor = True
         '
@@ -227,7 +249,7 @@ Partial Class DataBot
         Me.examLimitValue.Name = "examLimitValue"
         Me.examLimitValue.ReadOnly = True
         Me.examLimitValue.Size = New System.Drawing.Size(457, 21)
-        Me.examLimitValue.TabIndex = 26
+        Me.examLimitValue.TabIndex = 4
         Me.examLimitValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label2
@@ -245,7 +267,7 @@ Partial Class DataBot
         Me.pairValue.Name = "pairValue"
         Me.pairValue.ReadOnly = True
         Me.pairValue.Size = New System.Drawing.Size(457, 21)
-        Me.pairValue.TabIndex = 24
+        Me.pairValue.TabIndex = 1
         '
         'Label1
         '
@@ -262,7 +284,7 @@ Partial Class DataBot
         Me.idValue.Name = "idValue"
         Me.idValue.ReadOnly = True
         Me.idValue.Size = New System.Drawing.Size(457, 21)
-        Me.idValue.TabIndex = 22
+        Me.idValue.TabIndex = 0
         '
         'idLabel
         '
@@ -279,7 +301,7 @@ Partial Class DataBot
         Me.tradePage.Location = New System.Drawing.Point(4, 22)
         Me.tradePage.Name = "tradePage"
         Me.tradePage.Padding = New System.Windows.Forms.Padding(3)
-        Me.tradePage.Size = New System.Drawing.Size(586, 271)
+        Me.tradePage.Size = New System.Drawing.Size(586, 290)
         Me.tradePage.TabIndex = 1
         Me.tradePage.Text = "Trade opened"
         Me.tradePage.UseVisualStyleBackColor = True
@@ -334,7 +356,7 @@ Partial Class DataBot
         Me.closedPage.Controls.Add(Me.tradeClosedDataView)
         Me.closedPage.Location = New System.Drawing.Point(4, 22)
         Me.closedPage.Name = "closedPage"
-        Me.closedPage.Size = New System.Drawing.Size(586, 271)
+        Me.closedPage.Size = New System.Drawing.Size(586, 290)
         Me.closedPage.TabIndex = 2
         Me.closedPage.Text = "Trade closed"
         Me.closedPage.UseVisualStyleBackColor = True
@@ -367,32 +389,34 @@ Partial Class DataBot
         '
         Me.DataGridViewTextBoxColumn1.HeaderText = "Acquire"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.Width = 225
+        Me.DataGridViewTextBoxColumn1.Width = 255
         '
         'DataGridViewTextBoxColumn2
         '
         Me.DataGridViewTextBoxColumn2.HeaderText = "Dismiss"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.Width = 225
+        Me.DataGridViewTextBoxColumn2.Width = 255
         '
         'DataGridViewButtonColumn1
         '
         Me.DataGridViewButtonColumn1.HeaderText = "View"
         Me.DataGridViewButtonColumn1.Name = "DataGridViewButtonColumn1"
         Me.DataGridViewButtonColumn1.Text = "..."
+        Me.DataGridViewButtonColumn1.UseColumnTextForButtonValue = True
+        Me.DataGridViewButtonColumn1.Width = 50
         '
         'DataBot
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(612, 319)
+        Me.ClientSize = New System.Drawing.Size(612, 340)
         Me.Controls.Add(Me.TabControl1)
         Me.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
-        Me.MaximumSize = New System.Drawing.Size(628, 358)
+        Me.MaximumSize = New System.Drawing.Size(628, 379)
         Me.MinimizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(628, 358)
+        Me.MinimumSize = New System.Drawing.Size(628, 379)
         Me.Name = "DataBot"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Monitor selected Bot data"
@@ -431,10 +455,12 @@ Partial Class DataBot
     Friend WithEvents closedPage As TabPage
     Friend WithEvents tradeOpenedDataView As DataGridView
     Friend WithEvents tradeClosedDataView As DataGridView
-    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewButtonColumn1 As DataGridViewButtonColumn
     Friend WithEvents Acquire As DataGridViewTextBoxColumn
     Friend WithEvents Dismiss As DataGridViewTextBoxColumn
     Friend WithEvents viewButton As DataGridViewButtonColumn
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewButtonColumn1 As DataGridViewButtonColumn
+    Friend WithEvents timeEndValue As TextBox
+    Friend WithEvents timeEndLabel As Label
 End Class

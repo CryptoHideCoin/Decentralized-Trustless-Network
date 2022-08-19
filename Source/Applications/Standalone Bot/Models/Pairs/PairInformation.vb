@@ -26,7 +26,7 @@ Namespace AreaCommon.Models.Pair
     ''' </summary>
     Public Class TrendData
 
-        Public Enum periodTypeEnumeration
+        Public Enum PeriodTypeEnumeration
             lastHour
             lastDay
             lastWeek

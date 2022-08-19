@@ -7,26 +7,60 @@ Option Explicit On
 
 Public Class Manager
 
+    Sub printTotBots(ByVal totActiveBot As Integer, ByVal dateFirstBot As Double, ByVal totOpenOrder As Integer, ByVal totCloseOrder As Integer)
+        numBotValue.Text = AreaState.bots.Count
+        numActiveBotValue.Text = totActiveBot
+
+        If (dateFirstBot > 0) Then
+            firstDateBotValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(dateFirstBot), True)
+        Else
+            firstDateBotValue.Text = "---"
+        End If
+
+        numOpenBotsValue.Text = totOpenOrder
+        numCloseBotsValue.Text = totCloseOrder
+    End Sub
+
     Sub refreshDataBot()
         Dim rowItem As New ArrayList
         Dim execute As Boolean = True
+        Dim totActiveBot As Integer = 0
+        Dim dateFirstBot As Double = 0
+        Dim totOpenOrder As Integer = 0, totCloseOrder As Integer = 0
 
-        If botDataView.Rows.Count = AreaState.bots.Count Then
+        If (botDataView.Rows.Count = AreaState.bots.Count) Then
             Do While execute
                 execute = False
 
                 Try
-                    For index As Integer = 0 To AreaState.bots.ToList.Count - 1
-                        If AreaState.bots.ToList(index).Value.parameters.header.isActive Then
-                            botDataView.Rows(index).Cells(3).Value = "OFF"
-                        Else
-                            botDataView.Rows(index).Cells(3).Value = "ON"
-                        End If
-                    Next
+                    With AreaState.bots.ToList
+                        For index As Integer = 0 To AreaState.bots.ToList.Count - 1
+                            If .Item(index).Value.parameters.header.isActive Then
+                                totActiveBot += 1
+                            End If
+
+                            If (dateFirstBot >= .Item(index).Value.data.timeStart) Or (dateFirstBot = 0) Then
+                                dateFirstBot = .Item(index).Value.data.timeStart
+                            End If
+
+                            totOpenOrder += .Item(index).Value.data.tradeOpen.Count
+                            totCloseOrder += .Item(index).Value.data.tradeClose.Count
+
+                            botDataView.Rows(index).Cells(3).Value = .Item(index).Value.data.tradeOpen.Count
+                            botDataView.Rows(index).Cells(4).Value = .Item(index).Value.data.tradeClose.Count
+                            If .Item(index).Value.parameters.header.isActive Then
+                                botDataView.Rows(index).Cells(5).Value = "OFF"
+                            Else
+                                botDataView.Rows(index).Cells(5).Value = "ON"
+                            End If
+                        Next
+                    End With
                 Catch ex As Exception
                     execute = True
                 End Try
             Loop
+
+            printTotBots(totActiveBot, dateFirstBot, totOpenOrder, totCloseOrder)
 
             Return
         End If
@@ -40,9 +74,22 @@ Public Class Manager
                 For Each item In AreaState.bots.ToList
                     rowItem.Clear()
 
+                    If item.Value.parameters.header.isActive Then
+                        totActiveBot += 1
+                    End If
+
+                    If (dateFirstBot >= item.Value.data.timeStart) Or (dateFirstBot = 0) Then
+                        dateFirstBot = item.Value.data.timeStart
+                    End If
+
+                    totOpenOrder += item.Value.data.tradeOpen.Count
+                    totCloseOrder += item.Value.data.tradeClose.Count
+
                     rowItem.Add(item.Value.parameters.header.id)
                     rowItem.Add(CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(item.Value.parameters.header.created), True))
                     rowItem.Add(item.Value.data.pair)
+                    rowItem.Add(item.Value.data.tradeOpen.Count)
+                    rowItem.Add(item.Value.data.tradeClose.Count)
 
                     If item.Value.parameters.header.isActive Then
                         rowItem.Add("OFF")
@@ -57,6 +104,97 @@ Public Class Manager
             End Try
         Loop
 
+        printTotBots(totActiveBot, dateFirstBot, totOpenOrder, totCloseOrder)
+    End Sub
+
+    Sub refreshDataAccount()
+        Dim rowItem As New ArrayList
+        Dim execute As Boolean = True
+        Dim USDTValue As Double = 0
+
+        If (accountsGridView.Rows.Count = AreaState.accounts.Count) Then
+            Do While execute
+                execute = False
+
+                Try
+                    With AreaState.accounts.ToList
+                        For index As Integer = 0 To AreaState.accounts.ToList.Count - 1
+                            accountsGridView.Rows(index).Cells(1).Value = .Item(index).Value.amount.ToString("#,##0.00000")
+                            accountsGridView.Rows(index).Cells(2).Value = .Item(index).Value.change.ToString("#,##0.00000")
+                            accountsGridView.Rows(index).Cells(3).Value = .Item(index).Value.valueUSDT.ToString("#,##0.00000")
+
+                            USDTValue += .Item(index).Value.valueUSDT
+                        Next
+                    End With
+                Catch ex As Exception
+                    execute = True
+                End Try
+            Loop
+
+            totAccountValue.Text = AreaState.accounts.Count
+            totUSDTValue.Text = USDTValue.ToString("#,##0.00000")
+
+            totalFeesValue.Text = AreaState.totalFeeTrade.ToString("#,##0.00000") & " USDT"
+            totalVolumesValue.Text = AreaState.totalVolumeTrade.ToString("#,##0.00000") & " USDT"
+
+            If (initialUSDTValue.Text.Length = 0) And (USDTValue <> 0) Then
+                initialUSDTValue.Text = totUSDTValue.Text
+            End If
+
+            If initialUSDTValue.Text.Length > 0 Then
+                earnValue.Text = (Val(totUSDTValue.Text.Replace(".", "").Replace(",", ".")) - Val(initialUSDTValue.Text.Replace(".", "").Replace(",", "."))).ToString("#,##0.00000")
+            End If
+
+            If (USDTValue - Val(initialUSDTValue.Text.Replace(".", "").Replace(",", "."))) >= 0 Then
+                earnValue.ForeColor = Color.Black
+            Else
+                earnValue.ForeColor = Color.Red
+            End If
+
+            totUSDTValue.ForeColor = earnValue.ForeColor
+
+            Return
+        End If
+
+        Do While execute
+            execute = False
+
+            accountsGridView.Rows.Clear()
+
+            Try
+                For Each item In AreaState.accounts.ToList
+                    rowItem.Clear()
+
+                    rowItem.Add(item.Value.id)
+                    rowItem.Add(item.Value.amount.ToString("#,##0.00000"))
+                    rowItem.Add(item.Value.change.ToString("#,##0.00000"))
+                    rowItem.Add(item.Value.valueUSDT.ToString("#,##0.00000"))
+
+                    accountsGridView.Rows.Add(rowItem.ToArray)
+                Next
+            Catch ex As Exception
+                execute = True
+            End Try
+        Loop
+
+        totAccountValue.Text = AreaState.accounts.Count
+        totUSDTValue.Text = USDTValue.ToString("#,##0.00000")
+
+        If (initialUSDTValue.Text.Length = 0) And (USDTValue <> 0) Then
+            initialUSDTValue.Text = totUSDTValue.Text
+        End If
+
+        If initialUSDTValue.Text.Length > 0 Then
+            earnValue.Text = (Val(totUSDTValue.Text.Replace(".", "").Replace(",", ".")) - Val(initialUSDTValue.Text.Replace(".", "").Replace(",", "."))).ToString("#,##0.00000")
+        End If
+
+        If (USDTValue - Val(initialUSDTValue.Text.Replace(".", "").Replace(",", "."))) >= 0 Then
+            earnValue.ForeColor = Color.Black
+        Else
+            earnValue.ForeColor = Color.Red
+        End If
+
+        totUSDTValue.ForeColor = earnValue.ForeColor
     End Sub
 
     Sub refreshDataMarket()
@@ -341,7 +479,13 @@ Public Class Manager
             .apiURL = "https://api.pro.coinbase.com"
         End With
 
+        AreaState.addIntoAccount("USDT", 1522)
+
         Me.Text = $"Simulator - Standard Bot - rel.{Application.ProductVersion}"
+
+        If (Environment.GetCommandLineArgs.Count = 1) Then
+            MessageBox.Show("No path defined", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
     End Sub
 
     Private Sub marketDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles marketDataView.CellContentClick
@@ -354,6 +498,8 @@ Public Class Manager
     End Sub
 
     Private Sub Manager_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
+        AreaState.closeApplication = True
+
         AreaCommon.Engines.Bots.stop()
         AreaCommon.Engines.Pairs.stop()
         AreaCommon.Engines.Orders.stop()
@@ -393,6 +539,7 @@ Public Class Manager
 
     Private Sub updateBotsTimer_Tick(sender As Object, e As EventArgs) Handles updateBotsTimer.Tick
         refreshDataBot()
+        refreshDataAccount()
 
         If (AreaState.bots.Count > 0) And Not timerMain.Enabled Then
             timerMain.Enabled = True
@@ -403,16 +550,16 @@ Public Class Manager
 
     Private Sub botDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles botDataView.CellContentClick
         Select Case e.ColumnIndex
-            Case 3
+            Case 5
                 activeBot()
-            Case 4
+            Case 6
                 Dim addNewForm As New SettingsBot
 
                 addNewForm.currentID = botDataView.Rows.Item(e.RowIndex).Cells(0).Value
                 addNewForm.pair = botDataView.Rows.Item(e.RowIndex).Cells(2).Value
 
                 addNewForm.Show()
-            Case 5
+            Case 7
                 Dim informationForm As New DataBot
 
                 If Not IsNothing(botDataView.CurrentRow) Then
@@ -423,5 +570,59 @@ Public Class Manager
                     informationForm.Show()
                 End If
         End Select
+    End Sub
+
+    Private Sub SetNameToolStripMenuItem_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
+        About.Show()
+    End Sub
+
+    Private Sub StartMultipleBotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles StartMultipleBotToolStripMenuItem.Click
+        MultipleBot.Show()
+    End Sub
+
+    Private Sub Manager_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        Dim execute As Boolean = True
+
+        Do While execute
+            execute = False
+
+            Try
+                For Each item In AreaState.bots
+                    If item.Value.parameters.header.isActive Then
+                        If (MessageBox.Show("Do you want to exit?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel) Then
+                            e.Cancel = True
+
+                            Return
+                        End If
+
+                        Return
+                    End If
+                Next
+            Catch ex As Exception
+                execute = True
+            End Try
+        Loop
+    End Sub
+
+    Private Sub Manager_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Me.MouseDoubleClick
+
+    End Sub
+
+    Private Sub PersonalToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles PersonalToolStripMenuItem1.Click
+        Dim tempForm As New PersonalData
+
+        If (tempForm.ShowDialog() = DialogResult.OK) Then
+            If (AreaState.Common.nameArea.CompareTo("default") <> 0) Then
+                Me.Text = AreaState.Common.nameArea
+            End If
+
+            If (AreaState.accounts.Count = 1) Then
+                initialUSDTValue.Text = ""
+            End If
+        End If
     End Sub
 End Class

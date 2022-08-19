@@ -158,6 +158,39 @@ StandaloneBot
  </summary>
  <returns></returns>
 </member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Orders.OrderModule.calculateFeeCost(System.Double)">
+ <summary>
+ This method provide to calculate fee cost of a transaction
+ </summary>
+ <param name="totalValue"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Orders.OrderModule.testConditionBuy(StandaloneBot.AreaCommon.Models.Bot.BotOrderModel@,System.String)">
+ <summary>
+ This method provide to test if exist the condition to buy
+ </summary>
+ <param name="tradeBuy"></param>
+ <param name="pairKey"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Orders.OrderModule.makeOrderBuy(System.String,System.String,StandaloneBot.AreaCommon.Models.Bot.BotOrderModel@)">
+ <summary>
+ This method provide to make order to buy 
+ </summary>
+ <param name="botId"></param>
+ <param name="internalOrderId"></param>
+ <param name="tradeBuy"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Orders.OrderModule.makeOrderSell(System.String,System.String,StandaloneBot.AreaCommon.Models.Bot.BotOrderModel@)">
+ <summary>
+ This method provide to make and order to sell
+ </summary>
+ <param name="botId"></param>
+ <param name="internalOrderId"></param>
+ <param name="tradeSell"></param>
+ <returns></returns>
+</member>
 <member name="M:StandaloneBot.AreaCommon.Engines.Orders.OrderModule.verify(StandaloneBot.AreaCommon.Models.Order.SimplyOrderModel@)">
  <summary>
  This method provide to verify the order

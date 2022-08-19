@@ -100,6 +100,7 @@ Partial Class SettingsBot
         Me.confirmButton = New System.Windows.Forms.Button()
         Me.cancelButton = New System.Windows.Forms.Button()
         Me.defaultButton = New System.Windows.Forms.Button()
+        Me.setAsDefault = New System.Windows.Forms.Button()
         Me.tabMain.SuspendLayout()
         Me.fundConfigurationPage.SuspendLayout()
         Me.startPage.SuspendLayout()
@@ -857,7 +858,7 @@ Partial Class SettingsBot
         Me.idValue.Name = "idValue"
         Me.idValue.ReadOnly = True
         Me.idValue.Size = New System.Drawing.Size(590, 21)
-        Me.idValue.TabIndex = 2
+        Me.idValue.TabIndex = 0
         '
         'createdValue
         '
@@ -865,7 +866,7 @@ Partial Class SettingsBot
         Me.createdValue.Name = "createdValue"
         Me.createdValue.ReadOnly = True
         Me.createdValue.Size = New System.Drawing.Size(590, 21)
-        Me.createdValue.TabIndex = 4
+        Me.createdValue.TabIndex = 1
         '
         'createdLabel
         '
@@ -882,7 +883,7 @@ Partial Class SettingsBot
         Me.isActiveValue.Location = New System.Drawing.Point(78, 71)
         Me.isActiveValue.Name = "isActiveValue"
         Me.isActiveValue.Size = New System.Drawing.Size(75, 17)
-        Me.isActiveValue.TabIndex = 5
+        Me.isActiveValue.TabIndex = 2
         Me.isActiveValue.Text = "Is active"
         Me.isActiveValue.UseVisualStyleBackColor = True
         '
@@ -906,12 +907,21 @@ Partial Class SettingsBot
         '
         'defaultButton
         '
-        Me.defaultButton.Location = New System.Drawing.Point(678, 386)
+        Me.defaultButton.Location = New System.Drawing.Point(678, 175)
         Me.defaultButton.Name = "defaultButton"
-        Me.defaultButton.Size = New System.Drawing.Size(75, 23)
+        Me.defaultButton.Size = New System.Drawing.Size(75, 36)
         Me.defaultButton.TabIndex = 8
-        Me.defaultButton.Text = "Default"
+        Me.defaultButton.Text = "Use default"
         Me.defaultButton.UseVisualStyleBackColor = True
+        '
+        'setAsDefault
+        '
+        Me.setAsDefault.Location = New System.Drawing.Point(678, 128)
+        Me.setAsDefault.Name = "setAsDefault"
+        Me.setAsDefault.Size = New System.Drawing.Size(75, 41)
+        Me.setAsDefault.TabIndex = 9
+        Me.setAsDefault.Text = "Set as default"
+        Me.setAsDefault.UseVisualStyleBackColor = True
         '
         'SettingsBot
         '
@@ -919,6 +929,7 @@ Partial Class SettingsBot
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(762, 447)
         Me.ControlBox = False
+        Me.Controls.Add(Me.setAsDefault)
         Me.Controls.Add(Me.defaultButton)
         Me.Controls.Add(Me.cancelButton)
         Me.Controls.Add(Me.confirmButton)
@@ -1034,4 +1045,5 @@ Partial Class SettingsBot
     Friend WithEvents halvingMinuteWhenInValue As TextBox
     Friend WithEvents halvingMinuteWhenInLabel As Label
     Friend WithEvents exploreBullrun As CheckBox
+    Friend WithEvents setAsDefault As Button
 End Class

@@ -72,59 +72,115 @@ Public Class DataTrade
     End Function
 
     Private Sub updateTimer_Tick(sender As Object, e As EventArgs) Handles updateTimer.Tick
+        Dim firstCurrency As String = $" {common.key.Split("-")(0)}"
+        Dim secondCurrency As String = $" {common.key.Split("-")(1)}"
 
         With data.buy
             idBuyValue.Text = .id
             numberBuy.Text = .number
 
-            timeAcquireBuyValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(.timeAcquire), True)
+            timeAcquireBuyValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(.timeStart), True)
 
-            orderValueBuy.Text = .orderValue.ToString("#,##0.00000") & " " & common.key.Split("-")(1)
-            pairTradeBuyValue.Text = .pairTradeValue.ToString("#,##0.00000") & " " & common.key.Split("-")(1)
-            effectiveBuyValue.Text = .tco.ToString("#,##0.00000") & " " & common.key.Split("-")(1)
-            amountBuy.Text = .amount.ToString("#,##0.00000")
-            feeBuyValue.Text = .feeCost.ToString("#,##0.00000") & " " & common.key.Split("-")(1)
+            If (.timeCompleted = 0) Then
+                timeBuyValue.Text = "---"
+            Else
+                timeBuyValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(.timeCompleted), True)
+            End If
 
-            orderSentBuyValue.Checked = .sent
-            orderPlacedBuyValue.Checked = .placed
-            orderFillBuyValue.Checked = .fill
+            orderValueBuy.Text = .orderValue.ToString("#,##0.00000") & secondCurrency
+            pairTradeBuyValue.Text = .pairTradeValue.ToString("#,##0.00000") & secondCurrency
+
+            If (.tco = 0) Then
+                effectiveBuyValue.Text = "---"
+            Else
+                effectiveBuyValue.Text = .tco.ToString("#,##0.00000") & secondCurrency
+            End If
+
+            amountBuy.Text = .amount.ToString("#,##0.00000") & firstCurrency
+
+            If (.feeCost = 0) Then
+                feeBuyValue.Text = "---"
+            Else
+                feeBuyValue.Text = .feeCost.ToString("#,##0.00000") & secondCurrency
+            End If
+
+            Select Case .state
+                Case AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.sented : stateBuyValue.Text = "Sented"
+                Case AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.placed : stateBuyValue.Text = "Placed"
+                Case AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.filled : stateBuyValue.Text = "Filled"
+            End Select
+
+            waitFundValue.Checked = (.notBeforeThat > 0)
         End With
 
         With data.sell
             idSellValue.Text = .id
             numberSell.Text = .number
 
-            timeAcquireSellValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(.timeAcquire), True)
+            timeAcquireSellValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(.timeStart), True)
 
-            orderValueSell.Text = .orderValue.ToString("#,##0.00000") & " " & common.key.Split("-")(1)
-            pairTradeSellValue.Text = .pairTradeValue.ToString("#,##0.00000") & " " & common.key.Split("-")(1)
-            effectiveSellValue.Text = .tco.ToString("#,##0.00000") & " " & common.key.Split("-")(1)
-            amountSell.Text = .amount.ToString("#,##0.00000")
-            feeSellValue.Text = .feeCost.ToString("#,##0.00000") & " " & common.key.Split("-")(1)
+            If (.timeCompleted = 0) Then
+                timeSellValue.Text = "---"
+            Else
+                timeSellValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(.timeCompleted), True)
+            End If
 
-            orderSentSellValue.Checked = .sent
-            orderPlacedSellValue.Checked = .placed
-            orderFillSellValue.Checked = .fill
+            orderValueSell.Text = .orderValue.ToString("#,##0.00000") & secondCurrency
+            pairTradeSellValue.Text = .pairTradeValue.ToString("#,##0.00000") & secondCurrency
+
+            If (.tco = 0) Then
+                effectiveSellValue.Text = "---"
+            Else
+                effectiveSellValue.Text = .tco.ToString("#,##0.00000") & secondCurrency
+            End If
+
+            amountSell.Text = .amount.ToString("#,##0.00000") & firstCurrency
+
+            If (.feeCost = 0) Then
+                feeSellValue.Text = "---"
+            Else
+                feeSellValue.Text = .feeCost.ToString("#,##0.00000") & secondCurrency
+            End If
+
+            tradeClosedValue.Checked = False
+
+            Select Case .state
+                Case AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.sented : stateSellValue.Text = "Sented"
+                Case AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.placed : stateSellValue.Text = "Placed"
+                Case AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.filled
+                    stateSellValue.Text = "Filled"
+                    tradeClosedValue.Checked = True
+            End Select
         End With
 
         Dim difference As Double = (common.currentValue * data.sell.amount) - (data.buy.tco - data.buy.feeCost)
-        Dim percentage As Double = difference / (data.buy.tco - data.buy.feeCost)
+        Dim percentage As Double = 0
 
-        earnValue.Text = data.earn & " " & common.key.Split("-")(1)
+        If (data.sell.state = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.filled) Then
+            difference = data.sell.tco - data.buy.tco - data.buy.feeCost - data.sell.feeCost
+        End If
 
-        If data.sell.fill Then
+        If (data.buy.tco - data.buy.feeCost) > 0 Then
+            percentage = difference / (data.buy.tco - data.buy.feeCost)
+        End If
+
+        If (data.sell.state = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.filled) Then
+            earnValue.Text = $"{data.earn.ToString("#,##0.00")} {common.key.Split("-")(1)} ({percentage.ToString("#,##0.00")} %)"
+        Else
+            earnValue.Text = "---"
+        End If
+
+        totalFeesValue.Text = (data.buy.feeCost + data.sell.feeCost).ToString("#,##0.00") & secondCurrency
+
+        If (data.sell.state = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.filled) Then
             currentEarnValue.Text = earnValue.Text
 
-            durateValue.Text = durate(data.sell.timeAcquire - data.buy.timeAcquire) ' ((data.sell.timeAcquire - data.buy.timeAcquire) \ 1000).ToString & " sec."
+            durateValue.Text = durate(data.sell.timeCompleted - data.buy.timeCompleted)
         Else
             currentEarnValue.Text = $"{(difference).ToString("#,##0.00")} {common.key.Split("-")(1)} ({percentage.ToString("#,##0.00")} %)"
 
-            durateValue.Text = durate(CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - data.buy.timeAcquire) '((CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - data.buy.timeAcquire) \ 1000).ToString & " sec."
+            durateValue.Text = durate(CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - data.buy.timeStart)
         End If
-
-    End Sub
-
-    Private Sub DataTrade_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
 

@@ -9,8 +9,19 @@ Namespace AreaCommon.Models.Bot
     ''' </summary>
     Public Class BotOrderModel
 
+        Public Enum OrderStateEnumeration
+            undefined
+            sented
+            placed
+            filled
+        End Enum
+
         Public Property id As String
-        Public Property timeAcquire As Double = 0
+        Public Property timeStart As Double = 0
+        Public Property timeCompleted As Double = 0
+
+        Public Property notBeforeThat As Double = 0
+
         Public Property buy As Boolean = False
         Public Property orderValue As Double = 0
         Public Property pairTradeValue As Double = 0
@@ -21,9 +32,7 @@ Namespace AreaCommon.Models.Bot
 
         Public Property number As String = ""
 
-        Public Property fill As Boolean = False
-        Public Property sent As Boolean = False
-        Public Property placed As Boolean = False
+        Public Property state As OrderStateEnumeration = OrderStateEnumeration.undefined
 
         Public Sub New()
             id = Guid.NewGuid.ToString()
@@ -42,6 +51,12 @@ Namespace AreaCommon.Models.Bot
         Public Property [close] As Boolean = False
         Public Property earn As Double = 0
 
+        Public ReadOnly Property totalFee As Double
+            Get
+                Return buy.feeCost + sell.feeCost
+            End Get
+        End Property
+
     End Class
 
     ''' <summary>
@@ -56,6 +71,7 @@ Namespace AreaCommon.Models.Bot
         Public Property examTimeLimit As Double = 0
 
         Public Property timeStart As Double = 0
+        Public Property timeEnd As Double = 0
 
         Public Property usedPlafond As Double = 0
         Public Property earn As Double = 0

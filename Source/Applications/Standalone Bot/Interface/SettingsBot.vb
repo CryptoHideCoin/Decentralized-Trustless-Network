@@ -14,7 +14,7 @@ Public Class SettingsBot
 
 
 
-
+    Public Property defaultMode As Boolean = False
 
     Public Property pair() As String
         Get
@@ -78,6 +78,10 @@ Public Class SettingsBot
                 MessageBox.Show("Insert Minute exam numeric.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
                 Return False
+            ElseIf (Val(minuteExamValue.text) > 60) Then
+                MessageBox.Show("The Minute exam is too expansive.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                Return False
             End If
         End If
         If (triggerValue.Text.Trim().Length > 0) Then
@@ -108,7 +112,7 @@ Public Class SettingsBot
 
             Return False
         End If
-        If _ThreadInExecution Then
+        If Not _ThreadInExecution Then
             If Not _PairExist Then
                 MessageBox.Show("The pair specificate not exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
@@ -254,7 +258,7 @@ Public Class SettingsBot
         End If
     End Function
 
-    Private Sub confirmButton_Click(sender As Object, e As EventArgs) Handles confirmButton.Click
+    Private Sub confirmData()
         Do While (_SetPair + 1000 > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
             Threading.Thread.Sleep(100)
         Loop
@@ -294,7 +298,7 @@ Public Class SettingsBot
         With newJob.parameters.workConfiguration
             .mode = modeValue.SelectedIndex + 1
             If spreadValue.Text.Trim.Length > 0 Then
-                .spread = CDbl(Val(spreadValue.Text))
+                .spread = CDbl(Val(spreadValue.Text.Replace(",", ".")))
             End If
         End With
 
@@ -343,6 +347,16 @@ Public Class SettingsBot
         Me.Close()
     End Sub
 
+    Private Sub confirmButton_Click(sender As Object, e As EventArgs) Handles confirmButton.Click
+        If defaultMode Then
+            saveDefaultData()
+
+            Me.Close()
+        Else
+            confirmData()
+        End If
+    End Sub
+
     Private Sub cancelButton_Click(sender As Object, e As EventArgs) Handles cancelButton.Click
         Me.Close()
     End Sub
@@ -369,7 +383,7 @@ Public Class SettingsBot
                 minuteExamValue.Text = .startConfiguration.minuteExam
                 triggerValue.Text = .startConfiguration.triggerValue
 
-                modeValue.SelectedIndex = .workConfiguration.mode
+                modeValue.SelectedIndex = .workConfiguration.mode - 1
                 spreadValue.Text = .workConfiguration.spread
 
                 stepIntervalValue.Text = .workConfiguration.buyConfiguration.stepInterval
@@ -394,20 +408,37 @@ Public Class SettingsBot
                 pairIdLabel.Enabled = False
                 pairIdValue.Enabled = False
             End With
+        ElseIf defaultMode Then
+            getDefaultData()
+
+            Me.Text = "Default settings bot"
+
+            defaultButton.Visible = False
+            setAsDefault.Visible = False
         End If
     End Sub
 
+    Private Sub getDefaultData()
+        Dim prop = AreaState.Common.defaultSettings.Split("&")
+        Dim commands
+
+        For Each singleCommand In prop
+            commands = singleCommand.Split("=")
+
+            Select Case commands(0).ToString.ToLower()
+                Case "isActive".ToLower() : isActiveValue.Checked = (commands(1).ToString.CompareTo("1") = 0)
+                Case "pairId".ToLower() : pairIdValue.Text = commands(1).ToString()
+                Case "plafond".ToLower() : plafondValue.Text = commands(1).ToString()
+                Case "unitStep".ToLower() : unitStepValue.Text = commands(1).ToString()
+                Case "minuteExam".ToLower() : minuteExamValue.Text = commands(1).ToString()
+                Case "mode".ToLower() : modeValue.SelectedIndex = Val(commands(1).ToString())
+                Case "spread".ToLower() : spreadValue.Text = commands(1).ToString()
+            End Select
+        Next
+    End Sub
+
     Private Sub defaultButton_Click(sender As Object, e As EventArgs) Handles defaultButton.Click
-        isActiveValue.Checked = True
-
-        pairIdValue.Text = "KRL-USDT"
-        plafondValue.Text = "100"
-        unitStepValue.Text = "1"
-
-        minuteExamValue.Text = "6"
-
-        modeValue.SelectedIndex = 0
-        spreadValue.Text = "5"
+        getDefaultData()
     End Sub
 
     Private Sub activeDateStartValue_CheckedChanged(sender As Object, e As EventArgs) Handles activeDateStartValue.CheckedChanged
@@ -501,6 +532,39 @@ Public Class SettingsBot
             topReboundPercentageValue.Text = ""
         End If
 
+    End Sub
+
+    Private Sub saveDefaultData()
+        Dim temp As String = "isActive=%isActive%&pairId=%pairId%&plafond=%plafond%&unitStep=%unitStep%&minuteExam=%minuteExam%&mode=%mode%&spread=%spread%"
+
+        If isActiveValue.Checked Then
+            temp = temp.Replace("%isActive%", "1")
+        Else
+            temp = temp.Replace("%isActive%", "0")
+        End If
+
+        temp = temp.Replace("%pairId%", pairIdValue.Text)
+        temp = temp.Replace("%plafond%", plafondValue.Text)
+        temp = temp.Replace("%unitStep%", unitStepValue.Text)
+        temp = temp.Replace("%minuteExam%", minuteExamValue.Text)
+        temp = temp.Replace("%mode%", modeValue.SelectedIndex.ToString())
+        temp = temp.Replace("%spread%", spreadValue.Text)
+
+        AreaState.Common.defaultSettings = temp
+    End Sub
+
+    Private Sub setAsDefault_Click(sender As Object, e As EventArgs) Handles setAsDefault.Click
+        saveDefaultData()
+
+        MessageBox.Show("Default updated")
+    End Sub
+
+    Public Sub createNewBot(ByVal pairKey As String)
+        getDefaultData()
+
+        pairIdValue.Text = pairKey
+
+        confirmData()
     End Sub
 
 End Class

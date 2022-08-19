@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Controllare i valori degli attributi degli assembly
 
 <Assembly: AssemblyTitle("Standalone Bot")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyDescription("Automatic Software Bot")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("Standalone Bot")>
 <Assembly: AssemblyCopyright("Copyright ©  2022")>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' usando l'asterisco '*' come illustrato di seguito:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("0.5.0.0")>
-<Assembly: AssemblyFileVersion("0.5.0.0")>
+<Assembly: AssemblyVersion("0.11.0.0")>
+<Assembly: AssemblyFileVersion("0.11.0.0")>

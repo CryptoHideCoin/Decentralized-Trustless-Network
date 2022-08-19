@@ -26,9 +26,12 @@ Partial Class DataTrade
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DataTrade))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.buyOrderPage = New System.Windows.Forms.TabPage()
-        Me.orderPlacedBuyValue = New System.Windows.Forms.CheckBox()
-        Me.orderSentBuyValue = New System.Windows.Forms.CheckBox()
-        Me.orderFillBuyValue = New System.Windows.Forms.CheckBox()
+        Me.stateBuyValue = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.timeBuyValue = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.feeBuyValue = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.numberBuy = New System.Windows.Forms.Label()
         Me.numberBuyLabel = New System.Windows.Forms.Label()
         Me.amountBuy = New System.Windows.Forms.Label()
@@ -44,9 +47,12 @@ Partial Class DataTrade
         Me.idBuyValue = New System.Windows.Forms.Label()
         Me.idBuyLabel = New System.Windows.Forms.Label()
         Me.sellOrderPage = New System.Windows.Forms.TabPage()
-        Me.orderPlacedSellValue = New System.Windows.Forms.CheckBox()
-        Me.orderSentSellValue = New System.Windows.Forms.CheckBox()
-        Me.orderFillSellValue = New System.Windows.Forms.CheckBox()
+        Me.stateSellValue = New System.Windows.Forms.Label()
+        Me.Label16 = New System.Windows.Forms.Label()
+        Me.timeSellValue = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.feeSellValue = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
         Me.numberSell = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.amountSell = New System.Windows.Forms.Label()
@@ -68,10 +74,10 @@ Partial Class DataTrade
         Me.Label1 = New System.Windows.Forms.Label()
         Me.durateValue = New System.Windows.Forms.TextBox()
         Me.currentDurateLabel = New System.Windows.Forms.Label()
-        Me.feeBuyValue = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.feeSellValue = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
+        Me.totalFeesValue = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.tradeClosedValue = New System.Windows.Forms.CheckBox()
+        Me.waitFundValue = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.buyOrderPage.SuspendLayout()
         Me.sellOrderPage.SuspendLayout()
@@ -81,19 +87,20 @@ Partial Class DataTrade
         '
         Me.TabControl1.Controls.Add(Me.buyOrderPage)
         Me.TabControl1.Controls.Add(Me.sellOrderPage)
-        Me.TabControl1.Location = New System.Drawing.Point(14, 98)
+        Me.TabControl1.Location = New System.Drawing.Point(14, 152)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(377, 340)
+        Me.TabControl1.Size = New System.Drawing.Size(377, 358)
         Me.TabControl1.TabIndex = 0
         '
         'buyOrderPage
         '
+        Me.buyOrderPage.Controls.Add(Me.stateBuyValue)
+        Me.buyOrderPage.Controls.Add(Me.Label15)
+        Me.buyOrderPage.Controls.Add(Me.timeBuyValue)
+        Me.buyOrderPage.Controls.Add(Me.Label11)
         Me.buyOrderPage.Controls.Add(Me.feeBuyValue)
         Me.buyOrderPage.Controls.Add(Me.Label5)
-        Me.buyOrderPage.Controls.Add(Me.orderPlacedBuyValue)
-        Me.buyOrderPage.Controls.Add(Me.orderSentBuyValue)
-        Me.buyOrderPage.Controls.Add(Me.orderFillBuyValue)
         Me.buyOrderPage.Controls.Add(Me.numberBuy)
         Me.buyOrderPage.Controls.Add(Me.numberBuyLabel)
         Me.buyOrderPage.Controls.Add(Me.amountBuy)
@@ -111,43 +118,67 @@ Partial Class DataTrade
         Me.buyOrderPage.Location = New System.Drawing.Point(4, 22)
         Me.buyOrderPage.Name = "buyOrderPage"
         Me.buyOrderPage.Padding = New System.Windows.Forms.Padding(3)
-        Me.buyOrderPage.Size = New System.Drawing.Size(369, 314)
+        Me.buyOrderPage.Size = New System.Drawing.Size(369, 332)
         Me.buyOrderPage.TabIndex = 0
         Me.buyOrderPage.Text = "Buy Order"
         Me.buyOrderPage.UseVisualStyleBackColor = True
         '
-        'orderPlacedBuyValue
+        'stateBuyValue
         '
-        Me.orderPlacedBuyValue.AutoSize = True
-        Me.orderPlacedBuyValue.Enabled = False
-        Me.orderPlacedBuyValue.Location = New System.Drawing.Point(215, 248)
-        Me.orderPlacedBuyValue.Name = "orderPlacedBuyValue"
-        Me.orderPlacedBuyValue.Size = New System.Drawing.Size(100, 17)
-        Me.orderPlacedBuyValue.TabIndex = 16
-        Me.orderPlacedBuyValue.Text = "Order placed"
-        Me.orderPlacedBuyValue.UseVisualStyleBackColor = True
+        Me.stateBuyValue.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.stateBuyValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.stateBuyValue.Location = New System.Drawing.Point(106, 291)
+        Me.stateBuyValue.Name = "stateBuyValue"
+        Me.stateBuyValue.Size = New System.Drawing.Size(244, 21)
+        Me.stateBuyValue.TabIndex = 22
+        Me.stateBuyValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
-        'orderSentBuyValue
+        'Label15
         '
-        Me.orderSentBuyValue.AutoSize = True
-        Me.orderSentBuyValue.Enabled = False
-        Me.orderSentBuyValue.Location = New System.Drawing.Point(105, 248)
-        Me.orderSentBuyValue.Name = "orderSentBuyValue"
-        Me.orderSentBuyValue.Size = New System.Drawing.Size(87, 17)
-        Me.orderSentBuyValue.TabIndex = 15
-        Me.orderSentBuyValue.Text = "Order sent"
-        Me.orderSentBuyValue.UseVisualStyleBackColor = True
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(65, 295)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(37, 13)
+        Me.Label15.TabIndex = 21
+        Me.Label15.Text = "State"
         '
-        'orderFillBuyValue
+        'timeBuyValue
         '
-        Me.orderFillBuyValue.AutoSize = True
-        Me.orderFillBuyValue.Enabled = False
-        Me.orderFillBuyValue.Location = New System.Drawing.Point(106, 276)
-        Me.orderFillBuyValue.Name = "orderFillBuyValue"
-        Me.orderFillBuyValue.Size = New System.Drawing.Size(76, 17)
-        Me.orderFillBuyValue.TabIndex = 14
-        Me.orderFillBuyValue.Text = "Order fill"
-        Me.orderFillBuyValue.UseVisualStyleBackColor = True
+        Me.timeBuyValue.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.timeBuyValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.timeBuyValue.Location = New System.Drawing.Point(106, 110)
+        Me.timeBuyValue.Name = "timeBuyValue"
+        Me.timeBuyValue.Size = New System.Drawing.Size(244, 21)
+        Me.timeBuyValue.TabIndex = 20
+        Me.timeBuyValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(41, 114)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(60, 13)
+        Me.Label11.TabIndex = 19
+        Me.Label11.Text = "Time buy"
+        '
+        'feeBuyValue
+        '
+        Me.feeBuyValue.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.feeBuyValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.feeBuyValue.Location = New System.Drawing.Point(106, 249)
+        Me.feeBuyValue.Name = "feeBuyValue"
+        Me.feeBuyValue.Size = New System.Drawing.Size(244, 21)
+        Me.feeBuyValue.TabIndex = 18
+        Me.feeBuyValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(75, 253)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(27, 13)
+        Me.Label5.TabIndex = 17
+        Me.Label5.Text = "Fee"
         '
         'numberBuy
         '
@@ -172,7 +203,7 @@ Partial Class DataTrade
         '
         Me.amountBuy.BackColor = System.Drawing.Color.WhiteSmoke
         Me.amountBuy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.amountBuy.Location = New System.Drawing.Point(106, 195)
+        Me.amountBuy.Location = New System.Drawing.Point(106, 224)
         Me.amountBuy.Name = "amountBuy"
         Me.amountBuy.Size = New System.Drawing.Size(244, 21)
         Me.amountBuy.TabIndex = 11
@@ -181,7 +212,7 @@ Partial Class DataTrade
         'amountLabel
         '
         Me.amountLabel.AutoSize = True
-        Me.amountLabel.Location = New System.Drawing.Point(49, 199)
+        Me.amountLabel.Location = New System.Drawing.Point(51, 228)
         Me.amountLabel.Name = "amountLabel"
         Me.amountLabel.Size = New System.Drawing.Size(51, 13)
         Me.amountLabel.TabIndex = 10
@@ -191,7 +222,7 @@ Partial Class DataTrade
         '
         Me.effectiveBuyValue.BackColor = System.Drawing.Color.WhiteSmoke
         Me.effectiveBuyValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.effectiveBuyValue.Location = New System.Drawing.Point(106, 170)
+        Me.effectiveBuyValue.Location = New System.Drawing.Point(106, 199)
         Me.effectiveBuyValue.Name = "effectiveBuyValue"
         Me.effectiveBuyValue.Size = New System.Drawing.Size(244, 21)
         Me.effectiveBuyValue.TabIndex = 9
@@ -200,7 +231,7 @@ Partial Class DataTrade
         'effectiveValueLabel
         '
         Me.effectiveValueLabel.AutoSize = True
-        Me.effectiveValueLabel.Location = New System.Drawing.Point(68, 174)
+        Me.effectiveValueLabel.Location = New System.Drawing.Point(70, 203)
         Me.effectiveValueLabel.Name = "effectiveValueLabel"
         Me.effectiveValueLabel.Size = New System.Drawing.Size(32, 13)
         Me.effectiveValueLabel.TabIndex = 8
@@ -210,7 +241,7 @@ Partial Class DataTrade
         '
         Me.pairTradeBuyValue.BackColor = System.Drawing.Color.WhiteSmoke
         Me.pairTradeBuyValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pairTradeBuyValue.Location = New System.Drawing.Point(106, 145)
+        Me.pairTradeBuyValue.Location = New System.Drawing.Point(106, 174)
         Me.pairTradeBuyValue.Name = "pairTradeBuyValue"
         Me.pairTradeBuyValue.Size = New System.Drawing.Size(244, 21)
         Me.pairTradeBuyValue.TabIndex = 7
@@ -219,7 +250,7 @@ Partial Class DataTrade
         'pairTradeValueLabel
         '
         Me.pairTradeValueLabel.AutoSize = True
-        Me.pairTradeValueLabel.Location = New System.Drawing.Point(2, 149)
+        Me.pairTradeValueLabel.Location = New System.Drawing.Point(4, 178)
         Me.pairTradeValueLabel.Name = "pairTradeValueLabel"
         Me.pairTradeValueLabel.Size = New System.Drawing.Size(98, 13)
         Me.pairTradeValueLabel.TabIndex = 6
@@ -229,7 +260,7 @@ Partial Class DataTrade
         '
         Me.orderValueBuy.BackColor = System.Drawing.Color.WhiteSmoke
         Me.orderValueBuy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.orderValueBuy.Location = New System.Drawing.Point(106, 120)
+        Me.orderValueBuy.Location = New System.Drawing.Point(106, 149)
         Me.orderValueBuy.Name = "orderValueBuy"
         Me.orderValueBuy.Size = New System.Drawing.Size(244, 21)
         Me.orderValueBuy.TabIndex = 5
@@ -238,11 +269,11 @@ Partial Class DataTrade
         'orderValueBuyLabel
         '
         Me.orderValueBuyLabel.AutoSize = True
-        Me.orderValueBuyLabel.Location = New System.Drawing.Point(62, 124)
+        Me.orderValueBuyLabel.Location = New System.Drawing.Point(21, 153)
         Me.orderValueBuyLabel.Name = "orderValueBuyLabel"
-        Me.orderValueBuyLabel.Size = New System.Drawing.Size(38, 13)
+        Me.orderValueBuyLabel.Size = New System.Drawing.Size(80, 13)
         Me.orderValueBuyLabel.TabIndex = 4
-        Me.orderValueBuyLabel.Text = "Value"
+        Me.orderValueBuyLabel.Text = "Max propose"
         '
         'timeAcquireBuyValue
         '
@@ -257,11 +288,11 @@ Partial Class DataTrade
         'timeAcquireBuyLabel
         '
         Me.timeAcquireBuyLabel.AutoSize = True
-        Me.timeAcquireBuyLabel.Location = New System.Drawing.Point(19, 86)
+        Me.timeAcquireBuyLabel.Location = New System.Drawing.Point(35, 86)
         Me.timeAcquireBuyLabel.Name = "timeAcquireBuyLabel"
-        Me.timeAcquireBuyLabel.Size = New System.Drawing.Size(81, 13)
+        Me.timeAcquireBuyLabel.Size = New System.Drawing.Size(65, 13)
         Me.timeAcquireBuyLabel.TabIndex = 2
-        Me.timeAcquireBuyLabel.Text = "Time acquire"
+        Me.timeAcquireBuyLabel.Text = "Time start"
         '
         'idBuyValue
         '
@@ -284,11 +315,12 @@ Partial Class DataTrade
         '
         'sellOrderPage
         '
+        Me.sellOrderPage.Controls.Add(Me.stateSellValue)
+        Me.sellOrderPage.Controls.Add(Me.Label16)
+        Me.sellOrderPage.Controls.Add(Me.timeSellValue)
+        Me.sellOrderPage.Controls.Add(Me.Label9)
         Me.sellOrderPage.Controls.Add(Me.feeSellValue)
         Me.sellOrderPage.Controls.Add(Me.Label7)
-        Me.sellOrderPage.Controls.Add(Me.orderPlacedSellValue)
-        Me.sellOrderPage.Controls.Add(Me.orderSentSellValue)
-        Me.sellOrderPage.Controls.Add(Me.orderFillSellValue)
         Me.sellOrderPage.Controls.Add(Me.numberSell)
         Me.sellOrderPage.Controls.Add(Me.Label2)
         Me.sellOrderPage.Controls.Add(Me.amountSell)
@@ -306,43 +338,67 @@ Partial Class DataTrade
         Me.sellOrderPage.Location = New System.Drawing.Point(4, 22)
         Me.sellOrderPage.Name = "sellOrderPage"
         Me.sellOrderPage.Padding = New System.Windows.Forms.Padding(3)
-        Me.sellOrderPage.Size = New System.Drawing.Size(369, 314)
+        Me.sellOrderPage.Size = New System.Drawing.Size(369, 332)
         Me.sellOrderPage.TabIndex = 1
         Me.sellOrderPage.Text = "Sell Order"
         Me.sellOrderPage.UseVisualStyleBackColor = True
         '
-        'orderPlacedSellValue
+        'stateSellValue
         '
-        Me.orderPlacedSellValue.AutoSize = True
-        Me.orderPlacedSellValue.Enabled = False
-        Me.orderPlacedSellValue.Location = New System.Drawing.Point(242, 252)
-        Me.orderPlacedSellValue.Name = "orderPlacedSellValue"
-        Me.orderPlacedSellValue.Size = New System.Drawing.Size(100, 17)
-        Me.orderPlacedSellValue.TabIndex = 33
-        Me.orderPlacedSellValue.Text = "Order placed"
-        Me.orderPlacedSellValue.UseVisualStyleBackColor = True
+        Me.stateSellValue.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.stateSellValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.stateSellValue.Location = New System.Drawing.Point(106, 291)
+        Me.stateSellValue.Name = "stateSellValue"
+        Me.stateSellValue.Size = New System.Drawing.Size(244, 21)
+        Me.stateSellValue.TabIndex = 39
+        Me.stateSellValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
-        'orderSentSellValue
+        'Label16
         '
-        Me.orderSentSellValue.AutoSize = True
-        Me.orderSentSellValue.Enabled = False
-        Me.orderSentSellValue.Location = New System.Drawing.Point(106, 252)
-        Me.orderSentSellValue.Name = "orderSentSellValue"
-        Me.orderSentSellValue.Size = New System.Drawing.Size(87, 17)
-        Me.orderSentSellValue.TabIndex = 32
-        Me.orderSentSellValue.Text = "Order sent"
-        Me.orderSentSellValue.UseVisualStyleBackColor = True
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(65, 295)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(37, 13)
+        Me.Label16.TabIndex = 38
+        Me.Label16.Text = "State"
         '
-        'orderFillSellValue
+        'timeSellValue
         '
-        Me.orderFillSellValue.AutoSize = True
-        Me.orderFillSellValue.Enabled = False
-        Me.orderFillSellValue.Location = New System.Drawing.Point(106, 276)
-        Me.orderFillSellValue.Name = "orderFillSellValue"
-        Me.orderFillSellValue.Size = New System.Drawing.Size(76, 17)
-        Me.orderFillSellValue.TabIndex = 31
-        Me.orderFillSellValue.Text = "Order fill"
-        Me.orderFillSellValue.UseVisualStyleBackColor = True
+        Me.timeSellValue.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.timeSellValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.timeSellValue.Location = New System.Drawing.Point(106, 110)
+        Me.timeSellValue.Name = "timeSellValue"
+        Me.timeSellValue.Size = New System.Drawing.Size(244, 21)
+        Me.timeSellValue.TabIndex = 37
+        Me.timeSellValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Location = New System.Drawing.Point(42, 114)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(58, 13)
+        Me.Label9.TabIndex = 36
+        Me.Label9.Text = "Time sell"
+        '
+        'feeSellValue
+        '
+        Me.feeSellValue.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.feeSellValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.feeSellValue.Location = New System.Drawing.Point(106, 249)
+        Me.feeSellValue.Name = "feeSellValue"
+        Me.feeSellValue.Size = New System.Drawing.Size(244, 21)
+        Me.feeSellValue.TabIndex = 35
+        Me.feeSellValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(75, 253)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(27, 13)
+        Me.Label7.TabIndex = 34
+        Me.Label7.Text = "Fee"
         '
         'numberSell
         '
@@ -367,7 +423,7 @@ Partial Class DataTrade
         '
         Me.amountSell.BackColor = System.Drawing.Color.WhiteSmoke
         Me.amountSell.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.amountSell.Location = New System.Drawing.Point(106, 195)
+        Me.amountSell.Location = New System.Drawing.Point(106, 224)
         Me.amountSell.Name = "amountSell"
         Me.amountSell.Size = New System.Drawing.Size(244, 21)
         Me.amountSell.TabIndex = 28
@@ -376,7 +432,7 @@ Partial Class DataTrade
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(49, 199)
+        Me.Label4.Location = New System.Drawing.Point(51, 228)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(51, 13)
         Me.Label4.TabIndex = 27
@@ -386,7 +442,7 @@ Partial Class DataTrade
         '
         Me.effectiveSellValue.BackColor = System.Drawing.Color.WhiteSmoke
         Me.effectiveSellValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.effectiveSellValue.Location = New System.Drawing.Point(106, 170)
+        Me.effectiveSellValue.Location = New System.Drawing.Point(106, 199)
         Me.effectiveSellValue.Name = "effectiveSellValue"
         Me.effectiveSellValue.Size = New System.Drawing.Size(244, 21)
         Me.effectiveSellValue.TabIndex = 26
@@ -395,7 +451,7 @@ Partial Class DataTrade
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(68, 174)
+        Me.Label6.Location = New System.Drawing.Point(70, 203)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(32, 13)
         Me.Label6.TabIndex = 25
@@ -405,7 +461,7 @@ Partial Class DataTrade
         '
         Me.pairTradeSellValue.BackColor = System.Drawing.Color.WhiteSmoke
         Me.pairTradeSellValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.pairTradeSellValue.Location = New System.Drawing.Point(106, 145)
+        Me.pairTradeSellValue.Location = New System.Drawing.Point(106, 174)
         Me.pairTradeSellValue.Name = "pairTradeSellValue"
         Me.pairTradeSellValue.Size = New System.Drawing.Size(244, 21)
         Me.pairTradeSellValue.TabIndex = 24
@@ -414,7 +470,7 @@ Partial Class DataTrade
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(2, 149)
+        Me.Label8.Location = New System.Drawing.Point(4, 178)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(98, 13)
         Me.Label8.TabIndex = 23
@@ -424,7 +480,7 @@ Partial Class DataTrade
         '
         Me.orderValueSell.BackColor = System.Drawing.Color.WhiteSmoke
         Me.orderValueSell.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.orderValueSell.Location = New System.Drawing.Point(106, 120)
+        Me.orderValueSell.Location = New System.Drawing.Point(106, 149)
         Me.orderValueSell.Name = "orderValueSell"
         Me.orderValueSell.Size = New System.Drawing.Size(244, 21)
         Me.orderValueSell.TabIndex = 22
@@ -433,11 +489,11 @@ Partial Class DataTrade
         'Label10
         '
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(62, 124)
+        Me.Label10.Location = New System.Drawing.Point(25, 153)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(38, 13)
+        Me.Label10.Size = New System.Drawing.Size(76, 13)
         Me.Label10.TabIndex = 21
-        Me.Label10.Text = "Value"
+        Me.Label10.Text = "Min propose"
         '
         'timeAcquireSellValue
         '
@@ -452,11 +508,11 @@ Partial Class DataTrade
         'Label12
         '
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(19, 86)
+        Me.Label12.Location = New System.Drawing.Point(35, 86)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(81, 13)
+        Me.Label12.Size = New System.Drawing.Size(65, 13)
         Me.Label12.TabIndex = 19
-        Me.Label12.Text = "Time acquire"
+        Me.Label12.Text = "Time start"
         '
         'idSellValue
         '
@@ -480,7 +536,7 @@ Partial Class DataTrade
         'updateTimer
         '
         Me.updateTimer.Enabled = True
-        Me.updateTimer.Interval = 10000
+        Me.updateTimer.Interval = 5000
         '
         'earnValue
         '
@@ -537,49 +593,55 @@ Partial Class DataTrade
         Me.currentDurateLabel.TabIndex = 39
         Me.currentDurateLabel.Text = "Durate"
         '
-        'feeBuyValue
+        'totalFeesValue
         '
-        Me.feeBuyValue.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.feeBuyValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.feeBuyValue.Location = New System.Drawing.Point(106, 220)
-        Me.feeBuyValue.Name = "feeBuyValue"
-        Me.feeBuyValue.Size = New System.Drawing.Size(244, 21)
-        Me.feeBuyValue.TabIndex = 18
-        Me.feeBuyValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.totalFeesValue.Location = New System.Drawing.Point(124, 97)
+        Me.totalFeesValue.Name = "totalFeesValue"
+        Me.totalFeesValue.ReadOnly = True
+        Me.totalFeesValue.Size = New System.Drawing.Size(236, 21)
+        Me.totalFeesValue.TabIndex = 42
+        Me.totalFeesValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label5
+        'Label3
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(73, 224)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(27, 13)
-        Me.Label5.TabIndex = 17
-        Me.Label5.Text = "Fee"
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(57, 100)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(62, 13)
+        Me.Label3.TabIndex = 41
+        Me.Label3.Text = "Total fees"
         '
-        'feeSellValue
+        'tradeClosedValue
         '
-        Me.feeSellValue.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.feeSellValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.feeSellValue.Location = New System.Drawing.Point(106, 220)
-        Me.feeSellValue.Name = "feeSellValue"
-        Me.feeSellValue.Size = New System.Drawing.Size(244, 21)
-        Me.feeSellValue.TabIndex = 35
-        Me.feeSellValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.tradeClosedValue.AutoSize = True
+        Me.tradeClosedValue.Enabled = False
+        Me.tradeClosedValue.Location = New System.Drawing.Point(124, 127)
+        Me.tradeClosedValue.Name = "tradeClosedValue"
+        Me.tradeClosedValue.Size = New System.Drawing.Size(98, 17)
+        Me.tradeClosedValue.TabIndex = 43
+        Me.tradeClosedValue.Text = "Trade closed"
+        Me.tradeClosedValue.UseVisualStyleBackColor = True
         '
-        'Label7
+        'waitFundValue
         '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(74, 224)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(27, 13)
-        Me.Label7.TabIndex = 34
-        Me.Label7.Text = "Fee"
+        Me.waitFundValue.AutoSize = True
+        Me.waitFundValue.Enabled = False
+        Me.waitFundValue.Location = New System.Drawing.Point(289, 129)
+        Me.waitFundValue.Name = "waitFundValue"
+        Me.waitFundValue.Size = New System.Drawing.Size(79, 17)
+        Me.waitFundValue.TabIndex = 44
+        Me.waitFundValue.Text = "Wait fund"
+        Me.waitFundValue.UseVisualStyleBackColor = True
         '
         'DataTrade
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(403, 463)
+        Me.ClientSize = New System.Drawing.Size(403, 522)
+        Me.Controls.Add(Me.waitFundValue)
+        Me.Controls.Add(Me.tradeClosedValue)
+        Me.Controls.Add(Me.totalFeesValue)
+        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.durateValue)
         Me.Controls.Add(Me.currentDurateLabel)
         Me.Controls.Add(Me.currentEarnValue)
@@ -613,9 +675,6 @@ Partial Class DataTrade
     Friend WithEvents timeAcquireBuyLabel As Label
     Friend WithEvents orderValueBuy As Label
     Friend WithEvents orderValueBuyLabel As Label
-    Friend WithEvents orderPlacedBuyValue As CheckBox
-    Friend WithEvents orderSentBuyValue As CheckBox
-    Friend WithEvents orderFillBuyValue As CheckBox
     Friend WithEvents numberBuy As Label
     Friend WithEvents numberBuyLabel As Label
     Friend WithEvents amountBuy As Label
@@ -624,9 +683,6 @@ Partial Class DataTrade
     Friend WithEvents effectiveValueLabel As Label
     Friend WithEvents pairTradeBuyValue As Label
     Friend WithEvents pairTradeValueLabel As Label
-    Friend WithEvents orderPlacedSellValue As CheckBox
-    Friend WithEvents orderSentSellValue As CheckBox
-    Friend WithEvents orderFillSellValue As CheckBox
     Friend WithEvents numberSell As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents amountSell As Label
@@ -652,4 +708,16 @@ Partial Class DataTrade
     Friend WithEvents Label5 As Label
     Friend WithEvents feeSellValue As Label
     Friend WithEvents Label7 As Label
+    Friend WithEvents timeBuyValue As Label
+    Friend WithEvents Label11 As Label
+    Friend WithEvents timeSellValue As Label
+    Friend WithEvents Label9 As Label
+    Friend WithEvents totalFeesValue As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents stateBuyValue As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents stateSellValue As Label
+    Friend WithEvents Label16 As Label
+    Friend WithEvents tradeClosedValue As CheckBox
+    Friend WithEvents waitFundValue As CheckBox
 End Class

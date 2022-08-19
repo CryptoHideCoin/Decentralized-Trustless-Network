@@ -93,6 +93,12 @@
     <Compile Include="Engines\BotModule.vb" />
     <Compile Include="Engines\OrderModule.vb" />
     <Compile Include="Engines\PairModule.vb" />
+    <Compile Include="Interface\About.Designer.vb">
+      <DependentUpon>About.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\About.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interface\DataBot.Designer.vb">
       <DependentUpon>DataBot.vb</DependentUpon>
     </Compile>
@@ -103,6 +109,18 @@
       <DependentUpon>DataTrade.vb</DependentUpon>
     </Compile>
     <Compile Include="Interface\DataTrade.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface\MultipleBot.Designer.vb">
+      <DependentUpon>MultipleBot.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\MultipleBot.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Interface\PersonalData.Designer.vb">
+      <DependentUpon>PersonalData.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\PersonalData.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Interface\SettingsBot.Designer.vb">
@@ -118,6 +136,7 @@
       <DependentUpon>Manager.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Models\Accounts\AccountModel.vb" />
     <Compile Include="Models\Bots\BotConfigurationsModel.vb" />
     <Compile Include="Models\Bots\BotDataModel.vb" />
     <Compile Include="Models\Bots\BotParametersModel.vb" />
@@ -141,11 +160,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Interface\About.resx">
+      <DependentUpon>About.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Interface\DataBot.resx">
       <DependentUpon>DataBot.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interface\DataTrade.resx">
       <DependentUpon>DataTrade.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interface\MultipleBot.resx">
+      <DependentUpon>MultipleBot.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interface\PersonalData.resx">
+      <DependentUpon>PersonalData.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interface\SettingsBot.resx">
       <DependentUpon>SettingsBot.vb</DependentUpon>

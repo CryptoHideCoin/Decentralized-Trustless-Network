@@ -24,3 +24,6 @@ E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.
 E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.SettingsBot.resources
 E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.DataBot.resources
 E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.DataTrade.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.About.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.MultipleBot.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.PersonalData.resources

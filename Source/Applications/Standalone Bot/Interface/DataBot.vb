@@ -55,6 +55,12 @@ Public Class DataBot
                             timeStartValue.Text = "---"
                         End If
 
+                        If (.data.timeEnd > 0) Then
+                            timeEndValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(.data.timeEnd), True)
+                        Else
+                            timeEndValue.Text = "---"
+                        End If
+
                         If (.data.usedPlafond = 0) Then
                             plafondValue.Text = "---"
                         Else
