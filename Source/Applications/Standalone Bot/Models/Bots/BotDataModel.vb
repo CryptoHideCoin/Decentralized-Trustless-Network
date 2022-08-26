@@ -20,6 +20,7 @@ Namespace AreaCommon.Models.Bot
         Public Property timeStart As Double = 0
         Public Property timeCompleted As Double = 0
 
+        Public Property notBeforeThatBegin As Double = 0
         Public Property notBeforeThat As Double = 0
 
         Public Property buy As Boolean = False
@@ -45,6 +46,12 @@ Namespace AreaCommon.Models.Bot
     ''' </summary>
     Public Class TradeModel
 
+        Public ReadOnly Property id As String
+            Get
+                Return buy.timeStart.ToString
+            End Get
+        End Property
+
         Public Property buy As New BotOrderModel
         Public Property sell As New BotOrderModel
 
@@ -64,10 +71,17 @@ Namespace AreaCommon.Models.Bot
     ''' </summary>
     Public Class BotDataModel
 
+        Public Enum BotStateEnumeration
+            undefined
+            inBootstrap
+            inWork
+            ultimate
+        End Enum
+
         Public Property pair As String = ""
 
-        Public Property bootstrapInitial As Boolean = False
-        Public Property bootstrapComplete As Boolean = False
+        Public Property state As BotStateEnumeration = BotStateEnumeration.undefined
+        Public Property inRecharge As Boolean = False
         Public Property examTimeLimit As Double = 0
 
         Public Property timeStart As Double = 0
@@ -80,7 +94,8 @@ Namespace AreaCommon.Models.Bot
         Public Property lastBuyValue As Double = 0
 
         Public Property tradeOpen As New List(Of TradeModel)
-        Public Property tradeClose As New List(Of TradeModel)
+        'Public Property tradeClose As New List(Of TradeModel)
+        Public Property tradeClose As New List(Of String)
 
     End Class
 

@@ -15,6 +15,8 @@ Namespace AreaCommon.Models.Bot
         Public Class HeaderBotConfiguration
 
             Public Property id As String = ""
+            Public Property releaseTimestamp As Double = 0
+            Public Property configurationRelease As Integer = 0
             Public Property created As Double = 0
             Public Property isActive As Boolean = False
 
@@ -25,6 +27,27 @@ Namespace AreaCommon.Models.Bot
         ''' </summary>
         Public Class FundBotConfiguration
 
+            ''' <summary>
+            ''' This enumeration contain the mode of trade configuration
+            ''' 
+            ''' undefined - Not define
+            ''' continuousGain - use the job continuousely 
+            ''' continuousGainAlternate - use the job continuousely alternate from one bot and another
+            ''' DCA - Acquire in any moment during normal moment and the reduce market
+            ''' onlyDeal - Only acquire in deal price
+            ''' </summary>
+            Public Enum ModeTradeConfigEnumeration
+                undefined
+                oneshot
+                continuousGain
+                continuousGainAlternate
+                DCA
+                onlyDeal
+            End Enum
+
+            Public Property mode As ModeTradeConfigEnumeration = ModeTradeConfigEnumeration.undefined
+            Public Property spread As Double = 0
+            Public Property pairKey As String = ""
             Public Property pairId As Integer = 0
             Public Property plafond As Double = 0
             Public Property unitStep As Double = 0
@@ -34,11 +57,13 @@ Namespace AreaCommon.Models.Bot
         ''' <summary>
         ''' This class contain the information reguard the start of job
         ''' </summary>
-        Public Class StartJobConfiguration
+        Public Class StartStopJobConfiguration
 
             Public Property timeStart As Double = 0
-            Public Property minuteExam As Integer = 0
-            Public Property triggerValue As Double = 0
+            Public Property activateTriggerValue As Double = 0
+
+            Public Property timeStop As Double = 0
+            Public Property disableTriggerValue As Double = 0
 
         End Class
 
@@ -53,6 +78,8 @@ Namespace AreaCommon.Models.Bot
             Public Property onlyInDeal As Boolean = False
             Public Property notInBearMarket As Boolean = False
             Public Property duringBottonBearMarket As Boolean = False
+            Public Property minuteExam As Integer = 0
+            Public Property minuteExamReduce As Integer = 0
 
         End Class
 
@@ -61,6 +88,7 @@ Namespace AreaCommon.Models.Bot
         ''' </summary>
         Public Class BearMarketConfiguration
 
+            Public Property useDefaultConfiguration As Boolean = False
             Public Property saveFoundActive As Boolean = False
             Public Property duringMinuteWhenIn As Integer = 0
             Public Property degradePercentage As Double = 0
@@ -74,6 +102,7 @@ Namespace AreaCommon.Models.Bot
         ''' </summary>
         Public Class BullRunConfiguration
 
+            Public Property useDefaultConfiguration As Boolean = False
             Public Property exploreBullRun As Boolean = False
             Public Property halvingMinuteWhenIn As Integer = 0
             Public Property halvingPercentage As Double = 0
@@ -88,27 +117,6 @@ Namespace AreaCommon.Models.Bot
         ''' </summary>
         Public Class BotActivityConfiguration
 
-            ''' <summary>
-            ''' This enumeration contain the mode of trade configuration
-            ''' 
-            ''' undefined - Not define
-            ''' continuousGain - use the job continuousely 
-            ''' dayTrading - mean the work all day to enter and exit position
-            ''' weekTrading - mean the work all week to enter and exit position
-            ''' monthTrading - mean the work all month to enter and exit position
-            ''' yearTradint - mean the work long time to enter and exit position
-            ''' investiment - help to cumulate coin into account
-            ''' </summary>
-            Public Enum ModeTradeConfigEnumeration
-                undefined
-                oneshot
-                continuosGain
-                DCA
-                onlyDeal
-            End Enum
-
-            Public Property mode As ModeTradeConfigEnumeration = ModeTradeConfigEnumeration.undefined
-            Public Property spread As Double = 0
             Public Property buyConfiguration As New AcquisitionValueConfiguration
             Public Property bearMarket As New BearMarketConfiguration
             Public Property bullRunMarket As New BullRunConfiguration
@@ -116,11 +124,9 @@ Namespace AreaCommon.Models.Bot
         End Class
 
         Public Property header As New HeaderBotConfiguration
-        Public Property fundConfiguration As New FundBotConfiguration
-        Public Property startConfiguration As New StartJobConfiguration
+        Public Property configuration As New FundBotConfiguration
+        Public Property startStopConfiguration As New StartStopJobConfiguration
         Public Property workConfiguration As New BotActivityConfiguration
-
-        Public Property accountOutId As Integer = 0
 
     End Class
 

@@ -89,8 +89,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Common.vb" />
+    <Compile Include="Common\State.vb" />
+    <Compile Include="Common\Engine.vb" />
     <Compile Include="Engines\BotModule.vb" />
+    <Compile Include="Engines\IOEngine.vb" />
     <Compile Include="Engines\OrderModule.vb" />
     <Compile Include="Engines\PairModule.vb" />
     <Compile Include="Interface\About.Designer.vb">
@@ -123,6 +125,12 @@
     <Compile Include="Interface\PersonalData.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Interface\SelectPath.Designer.vb">
+      <DependentUpon>SelectPath.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\SelectPath.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interface\SettingsBot.Designer.vb">
       <DependentUpon>SettingsBot.vb</DependentUpon>
     </Compile>
@@ -137,10 +145,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Models\Accounts\AccountModel.vb" />
+    <Compile Include="Models\Accounts\SummaryModel.vb" />
     <Compile Include="Models\Bots\BotConfigurationsModel.vb" />
     <Compile Include="Models\Bots\BotDataModel.vb" />
+    <Compile Include="Models\Bots\BotListModel.vb" />
     <Compile Include="Models\Bots\BotParametersModel.vb" />
-    <Compile Include="Models\Bots\BotUserAccountModel.vb" />
+    <Compile Include="Models\Tenant\TenantAccountModel.vb" />
     <Compile Include="Models\Orders\SimplyOrderMode.vb" />
     <Compile Include="Models\Pairs\PairInformation.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -174,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Interface\PersonalData.resx">
       <DependentUpon>PersonalData.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Interface\SelectPath.resx">
+      <DependentUpon>SelectPath.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Interface\SettingsBot.resx">
       <DependentUpon>SettingsBot.vb</DependentUpon>

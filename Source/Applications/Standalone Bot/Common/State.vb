@@ -12,12 +12,10 @@ Namespace AreaState
         Public Property pairs As New Dictionary(Of String, AreaCommon.Models.Pair.PairInformation)
         Public Property orders As New Dictionary(Of String, AreaCommon.Models.Order.SimplyOrderModel)
         Public Property accounts As New Dictionary(Of String, AreaCommon.Models.Account.AccountModel)
-        Public Property defaultGenericAccount As New AreaCommon.Models.Bot.BotUserAccountModel
-        Public Property nameArea As String = "default"
+        Public Property botList As New AreaCommon.Models.Bot.BotListModel
+        Public Property defaultUserDataAccount As New AreaCommon.Models.User.UserDataPersonalModel
+        Public Property summary As New AreaCommon.Models.Account.SummaryModel
         Public Property closeApplication As Boolean = False
-
-        Public Property totalVolumeTrade As Double = 0
-        Public Property totalFeeTrade As Double = 0
 
         Public Property defaultSettings As String = "isActive=1&pairId=BTC-USDT&plafond=100&unitStep=1&minuteExam=6&mode=0&spread=5"
 

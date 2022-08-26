@@ -29,6 +29,8 @@ Partial Class DataBot
         Me.mainTimer = New System.Windows.Forms.Timer(Me.components)
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.mainTab = New System.Windows.Forms.TabPage()
+        Me.stateValue = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.timeEndValue = New System.Windows.Forms.TextBox()
         Me.timeEndLabel = New System.Windows.Forms.Label()
         Me.lastBuyValue = New System.Windows.Forms.TextBox()
@@ -41,8 +43,6 @@ Partial Class DataBot
         Me.plafondLabel = New System.Windows.Forms.Label()
         Me.timeStartValue = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.bootstrapCompleteValue = New System.Windows.Forms.CheckBox()
-        Me.bootstrapInitialValue = New System.Windows.Forms.CheckBox()
         Me.examLimitValue = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.pairValue = New System.Windows.Forms.TextBox()
@@ -57,7 +57,6 @@ Partial Class DataBot
         Me.closedPage = New System.Windows.Forms.TabPage()
         Me.tradeClosedDataView = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewButtonColumn1 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.TabControl1.SuspendLayout()
         Me.mainTab.SuspendLayout()
@@ -85,6 +84,8 @@ Partial Class DataBot
         '
         'mainTab
         '
+        Me.mainTab.Controls.Add(Me.stateValue)
+        Me.mainTab.Controls.Add(Me.Label4)
         Me.mainTab.Controls.Add(Me.timeEndValue)
         Me.mainTab.Controls.Add(Me.timeEndLabel)
         Me.mainTab.Controls.Add(Me.lastBuyValue)
@@ -97,8 +98,6 @@ Partial Class DataBot
         Me.mainTab.Controls.Add(Me.plafondLabel)
         Me.mainTab.Controls.Add(Me.timeStartValue)
         Me.mainTab.Controls.Add(Me.Label3)
-        Me.mainTab.Controls.Add(Me.bootstrapCompleteValue)
-        Me.mainTab.Controls.Add(Me.bootstrapInitialValue)
         Me.mainTab.Controls.Add(Me.examLimitValue)
         Me.mainTab.Controls.Add(Me.Label2)
         Me.mainTab.Controls.Add(Me.pairValue)
@@ -112,6 +111,23 @@ Partial Class DataBot
         Me.mainTab.TabIndex = 0
         Me.mainTab.Text = "Main"
         Me.mainTab.UseVisualStyleBackColor = True
+        '
+        'stateValue
+        '
+        Me.stateValue.Location = New System.Drawing.Point(107, 69)
+        Me.stateValue.Name = "stateValue"
+        Me.stateValue.ReadOnly = True
+        Me.stateValue.Size = New System.Drawing.Size(457, 21)
+        Me.stateValue.TabIndex = 40
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(64, 72)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(37, 13)
+        Me.Label4.TabIndex = 41
+        Me.Label4.Text = "State"
         '
         'timeEndValue
         '
@@ -221,28 +237,6 @@ Partial Class DataBot
         Me.Label3.TabIndex = 29
         Me.Label3.Text = "Time start"
         '
-        'bootstrapCompleteValue
-        '
-        Me.bootstrapCompleteValue.AutoSize = True
-        Me.bootstrapCompleteValue.Enabled = False
-        Me.bootstrapCompleteValue.Location = New System.Drawing.Point(316, 72)
-        Me.bootstrapCompleteValue.Name = "bootstrapCompleteValue"
-        Me.bootstrapCompleteValue.Size = New System.Drawing.Size(130, 17)
-        Me.bootstrapCompleteValue.TabIndex = 3
-        Me.bootstrapCompleteValue.Text = "Botstrap complete"
-        Me.bootstrapCompleteValue.UseVisualStyleBackColor = True
-        '
-        'bootstrapInitialValue
-        '
-        Me.bootstrapInitialValue.AutoSize = True
-        Me.bootstrapInitialValue.Enabled = False
-        Me.bootstrapInitialValue.Location = New System.Drawing.Point(107, 72)
-        Me.bootstrapInitialValue.Name = "bootstrapInitialValue"
-        Me.bootstrapInitialValue.Size = New System.Drawing.Size(115, 17)
-        Me.bootstrapInitialValue.TabIndex = 2
-        Me.bootstrapInitialValue.Text = "Bootstrap initial"
-        Me.bootstrapInitialValue.UseVisualStyleBackColor = True
-        '
         'examLimitValue
         '
         Me.examLimitValue.Location = New System.Drawing.Point(107, 95)
@@ -263,6 +257,7 @@ Partial Class DataBot
         '
         'pairValue
         '
+        Me.pairValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.pairValue.Location = New System.Drawing.Point(107, 44)
         Me.pairValue.Name = "pairValue"
         Me.pairValue.ReadOnly = True
@@ -280,6 +275,7 @@ Partial Class DataBot
         '
         'idValue
         '
+        Me.idValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.idValue.Location = New System.Drawing.Point(107, 17)
         Me.idValue.Name = "idValue"
         Me.idValue.ReadOnly = True
@@ -376,7 +372,7 @@ Partial Class DataBot
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.tradeClosedDataView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
         Me.tradeClosedDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.tradeClosedDataView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewButtonColumn1})
+        Me.tradeClosedDataView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewButtonColumn1})
         Me.tradeClosedDataView.Location = New System.Drawing.Point(0, 0)
         Me.tradeClosedDataView.MultiSelect = False
         Me.tradeClosedDataView.Name = "tradeClosedDataView"
@@ -389,13 +385,7 @@ Partial Class DataBot
         '
         Me.DataGridViewTextBoxColumn1.HeaderText = "Acquire"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.Width = 255
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Dismiss"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.Width = 255
+        Me.DataGridViewTextBoxColumn1.Width = 510
         '
         'DataGridViewButtonColumn1
         '
@@ -443,8 +433,6 @@ Partial Class DataBot
     Friend WithEvents plafondLabel As Label
     Friend WithEvents timeStartValue As TextBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents bootstrapCompleteValue As CheckBox
-    Friend WithEvents bootstrapInitialValue As CheckBox
     Friend WithEvents examLimitValue As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents pairValue As TextBox
@@ -458,9 +446,10 @@ Partial Class DataBot
     Friend WithEvents Acquire As DataGridViewTextBoxColumn
     Friend WithEvents Dismiss As DataGridViewTextBoxColumn
     Friend WithEvents viewButton As DataGridViewButtonColumn
-    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewButtonColumn1 As DataGridViewButtonColumn
     Friend WithEvents timeEndValue As TextBox
     Friend WithEvents timeEndLabel As Label
+    Friend WithEvents stateValue As TextBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewButtonColumn1 As DataGridViewButtonColumn
 End Class

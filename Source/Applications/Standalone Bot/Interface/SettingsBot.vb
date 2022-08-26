@@ -278,31 +278,30 @@ Public Class SettingsBot
 
         newJob.parameters.header.isActive = isActiveValue.Checked
 
-        With newJob.parameters.fundConfiguration
+        With newJob.parameters.configuration
             .pairId = AreaState.Common.getPairID(pairIdValue.Text)
+            .pairKey = pairIdValue.Text
             .plafond = plafondValue.Text
             .unitStep = unitStepValue.Text
-        End With
-
-        With newJob.parameters.startConfiguration
-            .timeStart = extractStartConfiguration()
-
-            If (minuteExamValue.Text.Trim.Length > 0) Then
-                .minuteExam = minuteExamValue.Text
-            End If
-            If (triggerValue.Text.Trim.Length > 0) Then
-                .triggerValue = triggerValue.Text
-            End If
-        End With
-
-        With newJob.parameters.workConfiguration
             .mode = modeValue.SelectedIndex + 1
             If spreadValue.Text.Trim.Length > 0 Then
                 .spread = CDbl(Val(spreadValue.Text.Replace(",", ".")))
             End If
         End With
 
+        With newJob.parameters.startStopConfiguration
+            .timeStart = extractStartConfiguration()
+
+            If (triggerValue.Text.Trim.Length > 0) Then
+                .activateTriggerValue = triggerValue.Text
+            End If
+        End With
+
         With newJob.parameters.workConfiguration.buyConfiguration
+            If (minuteExamValue.Text.Trim.Length > 0) Then
+                .minuteExam = minuteExamValue.Text
+            End If
+
             If (stepIntervalValue.Text.Trim.Length > 0) Then
                 .stepInterval = stepIntervalValue.Text
             End If
@@ -336,10 +335,9 @@ Public Class SettingsBot
         End With
 
         newJob.data.pair = pair
-        newJob.userAccount = AreaState.defaultGenericAccount
 
         If (currentID.Length = 0) Then
-            AreaState.bots.Add(newJob.parameters.header.id, newJob)
+            AreaEngine.IO.updateBotSetting(newJob)
         End If
 
         AreaCommon.Engines.Bots.start()
@@ -369,22 +367,22 @@ Public Class SettingsBot
 
                 isActiveValue.Checked = .header.isActive
 
-                plafondValue.Text = .fundConfiguration.plafond
-                unitStepValue.Text = .fundConfiguration.unitStep
+                plafondValue.Text = .configuration.plafond
+                unitStepValue.Text = .configuration.unitStep
 
-                If (.startConfiguration.timeStart > 0) Then
+                If (.startStopConfiguration.timeStart > 0) Then
                     activeDateStartValue.Checked = True
 
-                    dateStartValue.Value = CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(.startConfiguration.timeStart)
+                    dateStartValue.Value = CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(.startStopConfiguration.timeStart)
 
-                    timeStartValue.Value = CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(.startConfiguration.timeStart)
+                    timeStartValue.Value = CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(.startStopConfiguration.timeStart)
                 End If
 
-                minuteExamValue.Text = .startConfiguration.minuteExam
-                triggerValue.Text = .startConfiguration.triggerValue
+                minuteExamValue.Text = .workConfiguration.buyConfiguration.minuteExam
+                triggerValue.Text = .startStopConfiguration.activateTriggerValue
 
-                modeValue.SelectedIndex = .workConfiguration.mode - 1
-                spreadValue.Text = .workConfiguration.spread
+                modeValue.SelectedIndex = .configuration.mode - 1
+                spreadValue.Text = .configuration.spread
 
                 stepIntervalValue.Text = .workConfiguration.buyConfiguration.stepInterval
                 dealAcquireValue.Text = .workConfiguration.buyConfiguration.dealAcquireOnPercentage
@@ -433,6 +431,12 @@ Public Class SettingsBot
                 Case "minuteExam".ToLower() : minuteExamValue.Text = commands(1).ToString()
                 Case "mode".ToLower() : modeValue.SelectedIndex = Val(commands(1).ToString())
                 Case "spread".ToLower() : spreadValue.Text = commands(1).ToString()
+                Case "stepInterval".ToLower() : stepIntervalValue.Text = commands(1).ToString()
+                Case "dealAcquire".ToLower() : dealAcquireValue.Text = commands(1).ToString()
+                Case "dealInterval".ToLower() : dealIntervalValue.Text = commands(1).ToString()
+                Case "onlyInDeal".ToLower() : onlyDealAcquireValue.Checked = (commands(1).ToString() = "1")
+                Case "notInBearMarketValue".ToLower() : notInBearMarketValue.Checked = (commands(1).ToString() = "1")
+                Case "duringBottonBearMarketValue".ToLower() : duringBottonBearMarketValue.Checked = (commands(1).ToString() = "1")
             End Select
         Next
     End Sub
@@ -535,7 +539,7 @@ Public Class SettingsBot
     End Sub
 
     Private Sub saveDefaultData()
-        Dim temp As String = "isActive=%isActive%&pairId=%pairId%&plafond=%plafond%&unitStep=%unitStep%&minuteExam=%minuteExam%&mode=%mode%&spread=%spread%"
+        Dim temp As String = "isActive=%isActive%&pairId=%pairId%&plafond=%plafond%&unitStep=%unitStep%&minuteExam=%minuteExam%&mode=%mode%&spread=%spread%&stepInterval=%stepInterval%&dealAcquire=%dealAcquire%&dealInterval=%dealInterval%&onlyInDeal=%onlyInDeal%&notInBearMarket=%notInBearMarket%&duringBottomBearMarket=%duringBottomBearMarket%"
 
         If isActiveValue.Checked Then
             temp = temp.Replace("%isActive%", "1")
@@ -549,6 +553,27 @@ Public Class SettingsBot
         temp = temp.Replace("%minuteExam%", minuteExamValue.Text)
         temp = temp.Replace("%mode%", modeValue.SelectedIndex.ToString())
         temp = temp.Replace("%spread%", spreadValue.Text)
+        temp = temp.Replace("%stepInterval%", stepIntervalValue.Text)
+        temp = temp.Replace("%dealAcquire%", dealAcquireValue.Text)
+        temp = temp.Replace("%dealInterval%", dealIntervalValue.Text)
+
+        If onlyDealAcquireValue.Checked Then
+            temp = temp.Replace("%onlyInDeal%", "1")
+        Else
+            temp = temp.Replace("%onlyInDeal%", "0")
+        End If
+
+        If notInBearMarketValue.Checked Then
+            temp = temp.Replace("%notInBearMarketValue%", "1")
+        Else
+            temp = temp.Replace("%notInBearMarketValue%", "0")
+        End If
+
+        If duringBottonBearMarketValue.Checked Then
+            temp = temp.Replace("%duringBottonBearMarketValue%", "1")
+        Else
+            temp = temp.Replace("%duringBottonBearMarketValue%", "0")
+        End If
 
         AreaState.Common.defaultSettings = temp
     End Sub

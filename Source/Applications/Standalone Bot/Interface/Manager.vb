@@ -134,11 +134,15 @@ Public Class Manager
             totAccountValue.Text = AreaState.accounts.Count
             totUSDTValue.Text = USDTValue.ToString("#,##0.00000")
 
-            totalFeesValue.Text = AreaState.totalFeeTrade.ToString("#,##0.00000") & " USDT"
-            totalVolumesValue.Text = AreaState.totalVolumeTrade.ToString("#,##0.00000") & " USDT"
+            totalFeesValue.Text = AreaState.summary.totalFeesValue.ToString("#,##0.00000") & " USDT"
+            totalVolumesValue.Text = AreaState.summary.totalVolumeValue.ToString("#,##0.00000") & " USDT"
 
-            If (initialUSDTValue.Text.Length = 0) And (USDTValue <> 0) Then
-                initialUSDTValue.Text = totUSDTValue.Text
+            If (AreaState.summary.initialValue = 0) And (USDTValue <> 0) Then
+                AreaState.summary.initialValue = USDTValue
+
+                initialUSDTValue.Text = USDTValue.ToString("#,##0.00000") & " USDT"
+            ElseIf (AreaState.summary.initialValue <> 0) And (initialUSDTValue.Text.trim().Length = 0) Then
+                initialUSDTValue.Text = USDTValue.ToString("#,##0.00000") & " USDT"
             End If
 
             If initialUSDTValue.Text.Length > 0 Then
@@ -469,23 +473,48 @@ Public Class Manager
     End Sub
 
     Private Sub Manager_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        filterDetails.SelectedIndex = 0
+        Dim pathBase As String = ""
 
-        With AreaState.defaultGenericAccount
-            .exchange = AreaCommon.Models.Bot.BotUserAccountModel.ExchangeEnumeration.coinbasePro
-            .APIKey = "0056fd332d3742fe03e23611e458f5f6"
-            .passphrase = "7453tzgjyvo"
-            .secret = "PWgu2Ssj/O6dZZA9PGjYqqOrLjWKX4Ek6bRPHzDKLYajgiYaBDfdQv5WBuTwcW6ezuYOF6XKpx0q4eyBQTCThA=="
-            .apiURL = "https://api.pro.coinbase.com"
-        End With
+        filterDetails.SelectedIndex = 0
 
         AreaState.addIntoAccount("USDT", 1522)
 
         Me.Text = $"Simulator - Standard Bot - rel.{Application.ProductVersion}"
 
         If (Environment.GetCommandLineArgs.Count = 1) Then
-            MessageBox.Show("No path defined", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Dim selectorPath As New SelectPath
+
+            If (selectorPath.ShowDialog = DialogResult.OK) Then
+                pathBase = selectorPath.completePath
+            Else
+                MessageBox.Show("No path defined", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                End
+            End If
+
+            selectorPath.Close()
+        Else
+            pathBase = Environment.CommandLine.Replace(Environment.GetCommandLineArgs(0), "").Trim()
         End If
+
+        If Not AreaEngine.IO.init(pathBase) Then
+            MessageBox.Show("Problem during IO.init", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+        If AreaEngine.IO.newTenant Then
+            If Not openPersonalData() Then
+                End
+            End If
+        End If
+
+        If (AreaState.accounts.Count = 1) Then
+            If (AreaState.defaultUserDataAccount.initialBaseFund <> AreaState.accounts("USDT".ToLower()).valueUSDT) Then
+                AreaState.accounts.Remove("USDT".ToLower())
+
+                AreaState.addIntoAccount("USDT", AreaState.defaultUserDataAccount.initialBaseFund.ToString())
+            End If
+        End If
+
     End Sub
 
     Private Sub marketDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles marketDataView.CellContentClick
@@ -524,16 +553,17 @@ Public Class Manager
     Private Sub activeBot()
         If Not IsNothing(botDataView.CurrentRow) Then
             Dim id As String = botDataView.CurrentRow.Cells.Item(0).Value
+            Dim continueActivity As Boolean = False
 
-            For Each item In AreaState.bots
-                If item.Value.parameters.header.id.CompareTo(id) = 0 Then
-                    item.Value.parameters.header.isActive = Not item.Value.parameters.header.isActive
+            If AreaState.bots(id).parameters.header.isActive Then
+                continueActivity = (MessageBox.Show("Do you want to stop the bot activity?", "Confirm", MessageBoxButtons.OKCancel) = DialogResult.OK)
+            Else
+                continueActivity = (MessageBox.Show("Do you want to start the bot activity?", "Confirm", MessageBoxButtons.OKCancel) = DialogResult.OK)
+            End If
 
-                    botDataView.CurrentRow.SetValues(id, CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(item.Value.parameters.header.created), True), item.Value.data.pair, value)
-
-                    Return
-                End If
-            Next
+            If continueActivity Then
+                AreaState.bots(id).parameters.header.isActive = Not AreaState.bots(id).parameters.header.isActive
+            End If
         End If
     End Sub
 
@@ -599,30 +629,46 @@ Public Class Manager
                             Return
                         End If
 
-                        Return
+                        Exit For
                     End If
                 Next
             Catch ex As Exception
                 execute = True
             End Try
         Loop
+
+        For Each item In AreaState.bots
+            AreaEngine.IO.updateBotData(item.Value.parameters.header.id, item.Value.data)
+        Next
+
+        AreaEngine.IO.updateSummary()
     End Sub
 
     Private Sub Manager_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Me.MouseDoubleClick
 
     End Sub
 
-    Private Sub PersonalToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles PersonalToolStripMenuItem1.Click
+    ''' <summary>
+    ''' This method show the personal data
+    ''' </summary>
+    Private Function openPersonalData() As Boolean
         Dim tempForm As New PersonalData
 
         If (tempForm.ShowDialog() = DialogResult.OK) Then
-            If (AreaState.Common.nameArea.CompareTo("default") <> 0) Then
-                Me.Text = AreaState.Common.nameArea
-            End If
+            Me.Text = AreaState.Common.defaultUserDataAccount.tenantName
 
             If (AreaState.accounts.Count = 1) Then
                 initialUSDTValue.Text = ""
             End If
+
+            Return True
+        Else
+            Return False
         End If
+    End Function
+
+    Private Sub PersonalToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles PersonalToolStripMenuItem1.Click
+        openPersonalData()
     End Sub
+
 End Class

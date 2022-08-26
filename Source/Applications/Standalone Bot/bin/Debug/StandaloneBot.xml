@@ -127,6 +127,13 @@ StandaloneBot
  <param name="item"></param>
  <returns></returns>
 </member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.haveFund(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to check if in the account is the fund
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
 <member name="M:StandaloneBot.AreaCommon.Engines.Bots.BotModule.evaluateToBuy(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
  <summary>
  This method provide to evaluate to acquire another quantity
@@ -156,6 +163,66 @@ StandaloneBot
  <summary>
  This method provide to start a pair job
  </summary>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.checkAndMakeOrderPath">
+ <summary>
+ This method provide to create order path
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.updatePersonaData">
+ <summary>
+ This method provide to update a user personal data of the tenant
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.updateBotList">
+ <summary>
+ This method provide to update the botlist into the tenant
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.updateSummary">
+ <summary>
+ This method provide to save into file the summary
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.updateTradeClose(System.String,StandaloneBot.AreaCommon.Models.Bot.TradeModel@)">
+ <summary>
+ This method provide to update the trade close
+ </summary>
+ <param name="botId"></param>
+ <param name="data"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.updateBotData(System.String,StandaloneBot.AreaCommon.Models.Bot.BotDataModel@)">
+ <summary>
+ This method provide to save the data trade into the file
+ </summary>
+ <param name="botId"></param>
+ <param name="data"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.getTradeClose(System.String,System.String)">
+ <summary>
+ This method provide to get a trade close from a db
+ </summary>
+ <param name="tradeId"></param>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.updateBotSetting(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to update the bot settings
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.init(System.String)">
+ <summary>
+ This method provide to initialize the engine
+ </summary>
+ <param name="path"></param>
  <returns></returns>
 </member>
 <member name="M:StandaloneBot.AreaCommon.Engines.Orders.OrderModule.calculateFeeCost(System.Double)">
@@ -259,6 +326,11 @@ StandaloneBot
  This class contain all data relative of a bot data
  </summary>
 </member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotListModel">
+ <summary>
+ This class contain the bot list (GUID)
+ </summary>
+</member>
 <member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel">
  <summary>
  This class contain the bot parameter
@@ -274,7 +346,18 @@ StandaloneBot
  This class contain the information reguard the source of investiment
  </summary>
 </member>
-<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel.StartJobConfiguration">
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel.FundBotConfiguration.ModeTradeConfigEnumeration">
+ <summary>
+ This enumeration contain the mode of trade configuration
+ 
+ undefined - Not define
+ continuousGain - use the job continuousely 
+ continuousGainAlternate - use the job continuousely alternate from one bot and another
+ DCA - Acquire in any moment during normal moment and the reduce market
+ onlyDeal - Only acquire in deal price
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel.StartStopJobConfiguration">
  <summary>
  This class contain the information reguard the start of job
  </summary>
@@ -299,22 +382,14 @@ StandaloneBot
  This class contain the information relative the activity of the bot
  </summary>
 </member>
-<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotParametersModel.BotActivityConfiguration.ModeTradeConfigEnumeration">
- <summary>
- This enumeration contain the mode of trade configuration
- 
- undefined - Not define
- continuousGain - use the job continuousely 
- dayTrading - mean the work all day to enter and exit position
- weekTrading - mean the work all week to enter and exit position
- monthTrading - mean the work all month to enter and exit position
- yearTradint - mean the work long time to enter and exit position
- investiment - help to cumulate coin into account
- </summary>
-</member>
-<member name="T:StandaloneBot.AreaCommon.Models.Bot.BotUserAccountModel">
+<member name="T:StandaloneBot.AreaCommon.Models.User.UserDataPersonalModel">
  <summary>
  This class contain all data relative of a bot data
+ </summary>
+</member>
+<member name="T:StandaloneBot.AreaCommon.Models.User.UserDataPersonalModel.ExchangeCredentialUserAccess">
+ <summary>
+ This class contain all information to access into user account exchange
  </summary>
 </member>
 <member name="T:StandaloneBot.AreaCommon.Models.Order.SimplyOrderModel">
@@ -352,6 +427,11 @@ StandaloneBot
 <member name="M:StandaloneBot.SettingsBot.checkExist">
  <summary>
  This method provide to check the pair exist
+ </summary>
+</member>
+<member name="M:StandaloneBot.Manager.openPersonalData">
+ <summary>
+ This method show the personal data
  </summary>
 </member>
 </members>

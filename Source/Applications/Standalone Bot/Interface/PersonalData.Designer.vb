@@ -36,7 +36,9 @@ Partial Class PersonalData
         Me.Label6 = New System.Windows.Forms.Label()
         Me.confirmButton = New System.Windows.Forms.Button()
         Me.baseFundValue = New System.Windows.Forms.TextBox()
-        Me.Label7 = New System.Windows.Forms.Label()
+        Me.baseFundLabel = New System.Windows.Forms.Label()
+        Me.useVirtualAccount = New System.Windows.Forms.CheckBox()
+        Me.currencyBaseFundValue = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -61,7 +63,7 @@ Partial Class PersonalData
         Me.exchangeValue.Name = "exchangeValue"
         Me.exchangeValue.ReadOnly = True
         Me.exchangeValue.Size = New System.Drawing.Size(362, 21)
-        Me.exchangeValue.TabIndex = 3
+        Me.exchangeValue.TabIndex = 1
         Me.exchangeValue.Text = "Coinbase Pro"
         '
         'Label2
@@ -79,7 +81,7 @@ Partial Class PersonalData
         Me.APIKeyValue.Name = "APIKeyValue"
         Me.APIKeyValue.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.APIKeyValue.Size = New System.Drawing.Size(362, 21)
-        Me.APIKeyValue.TabIndex = 1
+        Me.APIKeyValue.TabIndex = 2
         Me.APIKeyValue.Text = "0056fd332d3742fe03e23611e458f5f6"
         '
         'Label3
@@ -97,7 +99,7 @@ Partial Class PersonalData
         Me.passphraseValue.Name = "passphraseValue"
         Me.passphraseValue.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.passphraseValue.Size = New System.Drawing.Size(362, 21)
-        Me.passphraseValue.TabIndex = 2
+        Me.passphraseValue.TabIndex = 3
         Me.passphraseValue.Text = "7453tzgjyvo"
         '
         'Label4
@@ -115,7 +117,7 @@ Partial Class PersonalData
         Me.secretValue.Name = "secretValue"
         Me.secretValue.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.secretValue.Size = New System.Drawing.Size(362, 21)
-        Me.secretValue.TabIndex = 3
+        Me.secretValue.TabIndex = 4
         Me.secretValue.Text = "PWgu2Ssj/O6dZZA9PGjYqqOrLjWKX4Ek6bRPHzDKLYajgiYaBDfdQv5WBuTwcW6ezuYOF6XKpx0q4eyBQ" &
     "TCThA=="
         '
@@ -133,7 +135,7 @@ Partial Class PersonalData
         Me.apiURLValue.Location = New System.Drawing.Point(12, 254)
         Me.apiURLValue.Name = "apiURLValue"
         Me.apiURLValue.Size = New System.Drawing.Size(362, 21)
-        Me.apiURLValue.TabIndex = 4
+        Me.apiURLValue.TabIndex = 5
         Me.apiURLValue.Text = "https://api.pro.coinbase.com"
         '
         'Label6
@@ -147,38 +149,62 @@ Partial Class PersonalData
         '
         'confirmButton
         '
-        Me.confirmButton.Location = New System.Drawing.Point(299, 360)
+        Me.confirmButton.Location = New System.Drawing.Point(299, 380)
         Me.confirmButton.Name = "confirmButton"
         Me.confirmButton.Size = New System.Drawing.Size(75, 27)
-        Me.confirmButton.TabIndex = 6
+        Me.confirmButton.TabIndex = 7
         Me.confirmButton.Text = "Confirm"
         Me.confirmButton.UseVisualStyleBackColor = True
         '
         'baseFundValue
         '
-        Me.baseFundValue.Location = New System.Drawing.Point(12, 321)
+        Me.baseFundValue.Location = New System.Drawing.Point(33, 336)
         Me.baseFundValue.Name = "baseFundValue"
-        Me.baseFundValue.Size = New System.Drawing.Size(362, 21)
-        Me.baseFundValue.TabIndex = 5
+        Me.baseFundValue.Size = New System.Drawing.Size(279, 21)
+        Me.baseFundValue.TabIndex = 6
         Me.baseFundValue.Text = "1522"
         Me.baseFundValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
-        'Label7
+        'baseFundLabel
         '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(12, 304)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(66, 13)
-        Me.Label7.TabIndex = 13
-        Me.Label7.Text = "Base Fund"
+        Me.baseFundLabel.AutoSize = True
+        Me.baseFundLabel.Location = New System.Drawing.Point(33, 319)
+        Me.baseFundLabel.Name = "baseFundLabel"
+        Me.baseFundLabel.Size = New System.Drawing.Size(99, 13)
+        Me.baseFundLabel.TabIndex = 13
+        Me.baseFundLabel.Text = "Initial base fund"
+        '
+        'useVirtualAccount
+        '
+        Me.useVirtualAccount.AutoSize = True
+        Me.useVirtualAccount.Checked = True
+        Me.useVirtualAccount.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.useVirtualAccount.Enabled = False
+        Me.useVirtualAccount.Location = New System.Drawing.Point(12, 294)
+        Me.useVirtualAccount.Name = "useVirtualAccount"
+        Me.useVirtualAccount.Size = New System.Drawing.Size(135, 17)
+        Me.useVirtualAccount.TabIndex = 14
+        Me.useVirtualAccount.Text = "Use virtual account"
+        Me.useVirtualAccount.UseVisualStyleBackColor = True
+        '
+        'currencyBaseFundValue
+        '
+        Me.currencyBaseFundValue.Location = New System.Drawing.Point(318, 336)
+        Me.currencyBaseFundValue.Name = "currencyBaseFundValue"
+        Me.currencyBaseFundValue.ReadOnly = True
+        Me.currencyBaseFundValue.Size = New System.Drawing.Size(55, 21)
+        Me.currencyBaseFundValue.TabIndex = 15
+        Me.currencyBaseFundValue.Text = "USDT"
         '
         'PersonalData
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(385, 399)
+        Me.ClientSize = New System.Drawing.Size(385, 420)
+        Me.Controls.Add(Me.currencyBaseFundValue)
+        Me.Controls.Add(Me.useVirtualAccount)
         Me.Controls.Add(Me.baseFundValue)
-        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.baseFundLabel)
         Me.Controls.Add(Me.confirmButton)
         Me.Controls.Add(Me.apiURLValue)
         Me.Controls.Add(Me.Label6)
@@ -195,10 +221,12 @@ Partial Class PersonalData
         Me.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(401, 459)
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(401, 459)
         Me.Name = "PersonalData"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Personal Data"
+        Me.Text = "Data Configuration"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -218,5 +246,7 @@ Partial Class PersonalData
     Friend WithEvents Label6 As Label
     Friend WithEvents confirmButton As Button
     Friend WithEvents baseFundValue As TextBox
-    Friend WithEvents Label7 As Label
+    Friend WithEvents baseFundLabel As Label
+    Friend WithEvents useVirtualAccount As CheckBox
+    Friend WithEvents currencyBaseFundValue As TextBox
 End Class

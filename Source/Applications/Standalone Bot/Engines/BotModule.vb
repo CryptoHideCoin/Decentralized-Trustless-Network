@@ -17,47 +17,53 @@ Namespace AreaCommon.Engines.Bots
         ''' </summary>
         ''' <param name="bot"></param>
         Private Sub startUp(ByRef bot As Models.Bot.BotConfigurationsModel)
-            If bot.data.bootstrapInitial Then
+            If (bot.data.state >= Models.Bot.BotDataModel.BotStateEnumeration.inBootstrap) Then
 
-                bot.data.bootstrapComplete = True
+                bot.data.state = Models.Bot.BotDataModel.BotStateEnumeration.inWork
 
-                If bot.data.bootstrapComplete Then
-                    If (bot.parameters.startConfiguration.timeStart > 0) Then
-                        bot.data.bootstrapComplete = (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > bot.parameters.startConfiguration.timeStart)
+                If (bot.data.state = Models.Bot.BotDataModel.BotStateEnumeration.inWork) Then
+                    If (bot.parameters.startStopConfiguration.timeStart > 0) Then
+                        If (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() <= bot.parameters.startStopConfiguration.timeStart) Then
+                            bot.data.state = Models.Bot.BotDataModel.BotStateEnumeration.inBootstrap
+                        End If
                     End If
                 End If
 
-                If bot.data.bootstrapComplete Then
+                If (bot.data.state = Models.Bot.BotDataModel.BotStateEnumeration.inWork) Then
                     If (bot.data.examTimeLimit > 0) Then
-                        bot.data.bootstrapComplete = (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > bot.data.examTimeLimit)
+                        If (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() <= bot.data.examTimeLimit) Then
+                            bot.data.state = Models.Bot.BotDataModel.BotStateEnumeration.inBootstrap
+                        End If
                     End If
                 End If
 
-                If bot.data.bootstrapComplete Then
-                    If (bot.parameters.startConfiguration.triggerValue > 0) Then
-                        bot.data.bootstrapComplete = (AreaState.pairs(bot.data.pair).currentValue > bot.parameters.startConfiguration.triggerValue)
+                If (bot.data.state = Models.Bot.BotDataModel.BotStateEnumeration.inWork) Then
+                    If (bot.parameters.startStopConfiguration.activateTriggerValue > 0) Then
+                        If (AreaState.pairs(bot.data.pair).currentValue <= bot.parameters.startStopConfiguration.activateTriggerValue) Then
+                            bot.data.state = Models.Bot.BotDataModel.BotStateEnumeration.inBootstrap
+                        End If
                     End If
                 End If
             Else
-                bot.data.pair = AreaState.getPairName(bot.parameters.fundConfiguration.pairId)
+                bot.data.pair = AreaState.getPairName(bot.parameters.configuration.pairId)
                 bot.common = AreaState.pairs(bot.data.pair)
 
-                bot.data.bootstrapInitial = True
+                bot.data.state = Models.Bot.BotDataModel.BotStateEnumeration.inBootstrap
 
-                If (bot.parameters.startConfiguration.minuteExam > 0) Then
+                If (bot.parameters.workConfiguration.buyConfiguration.minuteExam > 0) Then
 
                     If AreaState.pairs.ContainsKey(bot.data.pair) Then
                         If AreaState.pairs(bot.data.pair).marketData.ContainsKey(Models.Pair.TrendData.PeriodTypeEnumeration.lastHour) Then
-                            If (AreaState.pairs(bot.data.pair).marketData(Models.Pair.TrendData.PeriodTypeEnumeration.lastHour).ticks.Count >= bot.parameters.startConfiguration.minuteExam) Then
+                            If (AreaState.pairs(bot.data.pair).marketData(Models.Pair.TrendData.PeriodTypeEnumeration.lastHour).ticks.Count >= bot.parameters.workConfiguration.buyConfiguration.minuteExam) Then
                                 Return
                             Else
-                                bot.data.examTimeLimit = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + ((bot.parameters.startConfiguration.minuteExam - AreaState.pairs(bot.data.pair).marketData(Models.Pair.TrendData.PeriodTypeEnumeration.lastHour).ticks.Count) * 60 * 1000)
+                                bot.data.examTimeLimit = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + ((bot.parameters.workConfiguration.buyConfiguration.minuteExam - AreaState.pairs(bot.data.pair).marketData(Models.Pair.TrendData.PeriodTypeEnumeration.lastHour).ticks.Count) * 60 * 1000)
                             End If
                         End If
                     End If
 
                     If (bot.data.examTimeLimit = 0) Then
-                        bot.data.examTimeLimit = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (bot.parameters.startConfiguration.minuteExam * 60 * 1000)
+                        bot.data.examTimeLimit = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + (bot.parameters.workConfiguration.buyConfiguration.minuteExam * 60 * 1000)
                     End If
                 End If
             End If
@@ -72,7 +78,9 @@ Namespace AreaCommon.Engines.Bots
         Private Function switchTradeToClose(ByRef botConfiguration As Models.Bot.BotConfigurationsModel, ByRef trade As Models.Bot.TradeModel) As Boolean
             Try
                 botConfiguration.data.tradeOpen.Remove(trade)
-                botConfiguration.data.tradeClose.Add(trade)
+                botConfiguration.data.tradeClose.Add(trade.id)
+
+                AreaEngine.IO.updateTradeClose(botConfiguration.parameters.header.id, trade)
 
                 trade.earn = CDec(trade.sell.tco) - trade.buy.tco
                 botConfiguration.data.usedPlafond -= trade.buy.tco - trade.buy.feeCost
@@ -123,9 +131,9 @@ Namespace AreaCommon.Engines.Bots
                 content += $"Mode=Sell{vbNewLine}"
             End If
 
-            content += $"Passphrase={AreaState.defaultGenericAccount.passphrase}{vbNewLine}"
-            content += $"Secret={AreaState.defaultGenericAccount.secret}{vbNewLine}"
-            content += $"API key={AreaState.defaultGenericAccount.APIKey}{vbNewLine}"
+            content += $"Passphrase={AreaState.defaultUserDataAccount.exchangeAccess.passphrase}{vbNewLine}"
+            content += $"Secret={AreaState.defaultUserDataAccount.exchangeAccess.secret}{vbNewLine}"
+            content += $"API key={AreaState.defaultUserDataAccount.exchangeAccess.APIKey}{vbNewLine}"
             content += $"Pair={pair}{vbNewLine}"
             content += $"Amount={item.amount}{vbNewLine}"
             content += $"LimitPrice={item.orderValue}{vbNewLine}"
@@ -176,7 +184,7 @@ Namespace AreaCommon.Engines.Bots
             If Not AreaState.orders.ContainsKey(order.id) Then
                 Dim newSimply As New Models.Order.SimplyOrderModel
 
-                newSimply.accountCredentials = AreaState.defaultGenericAccount
+                newSimply.accountCredentials = AreaState.defaultUserDataAccount.exchangeAccess
                 newSimply.botId = botId
                 newSimply.internalOrderId = order.id
                 newSimply.publicOrderId = order.number
@@ -218,10 +226,10 @@ Namespace AreaCommon.Engines.Bots
             If (item.data.tradeOpen.Count > 0) Then
                 For Each trade In item.data.tradeOpen
                     If (trade.buy.state <> Models.Bot.BotOrderModel.OrderStateEnumeration.undefined) Then
-                        If trade.buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled And trade.sell.state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled Then
+                        If (trade.buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled And trade.sell.state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled) Then
                             switchTradeToClose(item, trade)
 
-                            If (item.parameters.workConfiguration.mode = Models.Bot.BotParametersModel.BotActivityConfiguration.ModeTradeConfigEnumeration.oneshot) Then
+                            If (item.parameters.configuration.mode = Models.Bot.BotParametersModel.FundBotConfiguration.ModeTradeConfigEnumeration.oneshot) Then
                                 item.parameters.header.isActive = False
                                 item.data.timeEnd = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                             End If
@@ -247,6 +255,7 @@ Namespace AreaCommon.Engines.Bots
                             item.data.lastBuyValue = trade.buy.tco - trade.buy.feeCost
                             item.data.lastBuyChange = trade.buy.pairTradeValue
                             item.data.usedPlafond += item.data.lastBuyValue
+                            item.data.inRecharge = False
 
                             createFileOrder(item.data.pair, trade.sell)
                             createFalseResponseOrder(trade.sell)
@@ -255,7 +264,7 @@ Namespace AreaCommon.Engines.Bots
 
                             Return True
                         Else
-                            createNewSellOrder(item.parameters.workConfiguration.spread, trade)
+                            createNewSellOrder(item.parameters.configuration.spread, trade)
                         End If
                     End If
                 Next
@@ -332,13 +341,49 @@ Namespace AreaCommon.Engines.Bots
             Dim trade As New Models.Bot.TradeModel
 
             trade.buy.buy = True
-            trade.buy.amount = item.parameters.fundConfiguration.unitStep / item.common.currentValue
+            trade.buy.amount = item.parameters.configuration.unitStep / item.common.currentValue
             trade.buy.timeStart = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-            trade.buy.orderValue = item.parameters.fundConfiguration.unitStep + (item.parameters.fundConfiguration.unitStep * 2 / 100)
+            trade.buy.orderValue = item.parameters.configuration.unitStep + (item.parameters.configuration.unitStep * 2 / 100)
 
             item.data.tradeOpen.Add(trade)
 
             Return True
+        End Function
+
+        Private Function extremeForRestocking(ByRef item As Models.Bot.BotConfigurationsModel) As Boolean
+            If (item.data.lastBuyTime = 0) Then
+                Return False
+            End If
+
+            If item.data.lastBuyTime + (item.parameters.workConfiguration.buyConfiguration.dealMinimalStep * 60000) < CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() Then
+                If (item.common.currentValue <= item.data.lastBuyChange - (item.data.lastBuyChange * item.parameters.workConfiguration.buyConfiguration.dealAcquireOnPercentage / 100)) Then
+
+                    For Each singleOrder In item.data.tradeOpen
+                        If (singleOrder.buy.notBeforeThat > 0) Then
+                            If (singleOrder.buy.notBeforeThatBegin + 60000 > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) Then
+                                item.data.tradeOpen.Remove(singleOrder)
+
+                                Return True
+                            Else
+                                Return False
+                            End If
+                        End If
+                    Next
+
+                    Return True
+                End If
+            End If
+
+            Return False
+        End Function
+
+        ''' <summary>
+        ''' This method provide to check if in the account is the fund
+        ''' </summary>
+        ''' <param name="item"></param>
+        ''' <returns></returns>
+        Private Function haveFund(ByRef item As Models.Bot.BotConfigurationsModel) As Boolean
+            Return (AreaState.accounts(item.common.key.Split("-")(1).ToLower()).amount >= item.parameters.configuration.unitStep)
         End Function
 
         ''' <summary>
@@ -347,14 +392,26 @@ Namespace AreaCommon.Engines.Bots
         ''' <param name="item"></param>
         ''' <returns></returns>
         Private Function evaluateToBuy(ByRef item As Models.Bot.BotConfigurationsModel) As Boolean
-            If (item.parameters.fundConfiguration.plafond >= item.data.usedPlafond) Then
+            If (item.parameters.configuration.plafond >= item.data.usedPlafond) And haveFund(item) Then
                 If (item.data.lastBuyTime = 0) And (item.data.tradeOpen.Count = 0) Then
                     If Not item.parameters.workConfiguration.buyConfiguration.onlyInDeal Then
                         Return createNewBuyOrder(item)
                     End If
-                ElseIf (item.data.tradeOpen.Count = 0) And (item.parameters.workConfiguration.mode = Models.Bot.BotParametersModel.BotActivityConfiguration.ModeTradeConfigEnumeration.continuosGain) Then
+                ElseIf (item.data.tradeOpen.Count = 0) And (item.parameters.configuration.mode = Models.Bot.BotParametersModel.FundBotConfiguration.ModeTradeConfigEnumeration.continuousGain) Then
                     If Not item.parameters.workConfiguration.buyConfiguration.onlyInDeal Then
                         Return createNewBuyOrder(item)
+                    End If
+                ElseIf (item.parameters.configuration.mode = Models.Bot.BotParametersModel.FundBotConfiguration.ModeTradeConfigEnumeration.DCA) Then
+                    If Not item.parameters.workConfiguration.buyConfiguration.onlyInDeal Then
+
+                        If (item.data.tradeOpen.Count = 0) Then
+                            Return createNewBuyOrder(item)
+                        ElseIf extremeForRestocking(item) And Not item.data.inRecharge Then
+                            item.data.inRecharge = True
+
+                            Return createNewBuyOrder(item)
+                        End If
+
                     End If
                 End If
             End If
@@ -398,7 +455,7 @@ Namespace AreaCommon.Engines.Bots
                     proceed = bot.parameters.header.isActive
                 End If
                 If proceed Then
-                    If bot.data.bootStrapComplete Then
+                    If (bot.data.state > Models.Bot.BotDataModel.BotStateEnumeration.inBootstrap) Then
                         actionBot(bot)
                     Else
                         startUp(bot)

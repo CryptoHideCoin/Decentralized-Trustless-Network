@@ -42,10 +42,15 @@ Namespace AreaCommon.Engines.Orders
 
             If (AreaState.accounts(pairKey.Split("-")(1).ToLower()).amount >= tradeBuy.orderValue) Then
                 tradeBuy.notBeforeThat = 0
+                tradeBuy.notBeforeThatBegin = 0
 
                 Return True
             Else
                 tradeBuy.notBeforeThat = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() + 10000
+
+                If (tradeBuy.notBeforeThatBegin = 0) Then
+                    tradeBuy.notBeforeThatBegin = tradeBuy.notBeforeThat
+                End If
 
                 Return False
             End If
@@ -72,8 +77,8 @@ Namespace AreaCommon.Engines.Orders
 
             AreaState.orders.Remove(internalOrderId)
 
-            AreaState.totalFeeTrade += CDec(tradeBuy.feeCost)
-            AreaState.totalVolumeTrade += CDec(weightValue)
+            AreaState.summary.totalFeesValue += CDec(tradeBuy.feeCost)
+            AreaState.summary.totalVolumeValue += CDec(weightValue)
 
             Return True
         End Function
@@ -99,8 +104,8 @@ Namespace AreaCommon.Engines.Orders
 
             AreaState.orders.Remove(internalOrderId)
 
-            AreaState.totalFeeTrade += tradeSell.feeCost
-            AreaState.totalVolumeTrade += weightValue
+            AreaState.summary.totalFeesValue += CDec(tradeSell.feeCost)
+            AreaState.summary.totalVolumeValue += CDec(weightValue)
 
             Return True
         End Function
@@ -120,6 +125,12 @@ Namespace AreaCommon.Engines.Orders
                             If (trade.buy.id = order.internalOrderId) Then
                                 If testConditionBuy(trade.buy, AreaState.bots(order.botId).common.key) Then
                                     Return makeOrderBuy(order.botId, order.internalOrderId, trade.buy)
+                                End If
+
+                                If (trade.buy.notBeforeThatBegin > 0) Then
+                                    AreaState.bots(order.botId).data.tradeOpen.Remove(trade)
+
+                                    Return True
                                 End If
                             End If
 

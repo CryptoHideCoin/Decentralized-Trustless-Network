@@ -9,7 +9,6 @@ Namespace AreaCommon.Models.Bot
     ''' </summary>
     Public Class BotConfigurationsModel
 
-        Public Property userAccount As New BotUserAccountModel
         Public Property parameters As New BotParametersModel
         Public Property data As New BotDataModel
         'Public Property registry as 

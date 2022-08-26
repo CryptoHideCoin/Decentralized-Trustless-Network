@@ -7,17 +7,36 @@ Public Class DataBot
     Public Property idReferement As String = ""
 
 
-    Private Sub showTrade(ByRef trade As List(Of AreaCommon.Models.Bot.TradeModel), ByRef gridView As DataGridView)
+    Private Sub showTrade(ByRef trades As List(Of AreaCommon.Models.Bot.TradeModel), ByRef gridView As DataGridView)
         Try
             Dim rowItem As New ArrayList
 
             gridView.Rows.Clear()
 
-            For Each item In trade
+            For Each item In trades
                 rowItem.Clear()
 
                 rowItem.Add(item.buy.id)
                 rowItem.Add(item.sell.id)
+
+                gridView.Rows.Add(rowItem.ToArray)
+
+                gridView.Rows(gridView.Rows.Count - 1).DefaultCellStyle.BackColor = Color.LightGray
+            Next
+        Catch ex As Exception
+        End Try
+    End Sub
+
+    Private Sub showTradeList(ByRef trades As List(Of String), ByRef gridView As DataGridView)
+        Try
+            Dim rowItem As New ArrayList
+
+            gridView.Rows.Clear()
+
+            For Each item In trades
+                rowItem.Clear()
+
+                rowItem.Add(item)
 
                 gridView.Rows.Add(rowItem.ToArray)
 
@@ -40,8 +59,17 @@ Public Class DataBot
                     With AreaState.bots(idReferement)
                         idValue.Text = idReferement
                         pairValue.Text = .data.pair
-                        bootstrapInitialValue.Checked = .data.bootStrapInitial
-                        bootstrapCompleteValue.Checked = .data.bootStrapComplete
+
+                        If Not .parameters.header.isActive Then
+                            stateValue.Text = "In Pause"
+                        Else
+                            Select Case .data.state
+                                Case AreaCommon.Models.Bot.BotDataModel.BotStateEnumeration.inBootstrap : stateValue.Text = "In Bootstrap"
+                                Case AreaCommon.Models.Bot.BotDataModel.BotStateEnumeration.inWork : stateValue.Text = "In Work"
+                                Case AreaCommon.Models.Bot.BotDataModel.BotStateEnumeration.ultimate : stateValue.Text = "Ultimate"
+                                Case Else : stateValue.Text = "Undefined"
+                            End Select
+                        End If
 
                         If (.data.examTimeLimit > 0) Then
                             examLimitValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(.data.examTimeLimit), True)
@@ -85,7 +113,7 @@ Public Class DataBot
                         End If
 
                         showTrade(.data.tradeOpen, tradeOpenedDataView)
-                        showTrade(.data.tradeClose, tradeClosedDataView)
+                        showTradeList(.data.tradeClose, tradeClosedDataView)
                     End With
 
                 End If
@@ -109,6 +137,15 @@ Public Class DataBot
         item.Show()
     End Sub
 
+    Private Sub openCloseTrade(ByRef common As AreaCommon.Models.Pair.PairInformation, ByVal tradeId As String)
+        Dim item As New DataTrade
+
+        item.data = AreaEngine.IO.getTradeClose(AreaState.bots(idReferement).parameters.header.id, tradeId)
+        item.common = common
+
+        item.Show()
+    End Sub
+
     Private Sub tradeOpenedDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles tradeOpenedDataView.CellContentClick
         If (e.ColumnIndex = 2) Then
             openTrade(AreaState.bots(idReferement).common, AreaState.bots(idReferement).data.tradeOpen.ElementAt(e.RowIndex))
@@ -116,8 +153,8 @@ Public Class DataBot
     End Sub
 
     Private Sub tradeClosedDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles tradeClosedDataView.CellContentClick
-        If (e.ColumnIndex = 2) Then
-            openTrade(AreaState.bots(idReferement).common, AreaState.bots(idReferement).data.tradeClose.ElementAt(e.RowIndex))
+        If (e.ColumnIndex = 1) Then
+            openCloseTrade(AreaState.bots(idReferement).common, AreaState.bots(idReferement).data.tradeClose.ElementAt(e.RowIndex))
         End If
     End Sub
 End Class

@@ -52,6 +52,10 @@ Partial Class Manager
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.tabMain = New System.Windows.Forms.TabControl()
         Me.walletPage = New System.Windows.Forms.TabPage()
+        Me.totalFeesValue = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.totalVolumesValue = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
         Me.earnValue = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.initialUSDTValue = New System.Windows.Forms.Label()
@@ -118,10 +122,6 @@ Partial Class Manager
         Me.currentValue = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.timerMain = New System.Windows.Forms.Timer(Me.components)
         Me.updateBotsTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.totalFeesValue = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.totalVolumesValue = New System.Windows.Forms.Label()
-        Me.Label12 = New System.Windows.Forms.Label()
         Me.menuMain.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.walletPage.SuspendLayout()
@@ -136,7 +136,7 @@ Partial Class Manager
         '
         'menuMain
         '
-        Me.menuMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PersonalToolStripMenuItem, Me.BotToolStripMenuItem, Me.ToolStripMenuItem1})
+        Me.menuMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.BotToolStripMenuItem, Me.PersonalToolStripMenuItem, Me.ToolStripMenuItem1})
         Me.menuMain.Location = New System.Drawing.Point(0, 0)
         Me.menuMain.Name = "menuMain"
         Me.menuMain.Size = New System.Drawing.Size(888, 24)
@@ -155,8 +155,8 @@ Partial Class Manager
         '
         Me.PersonalToolStripMenuItem1.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PersonalToolStripMenuItem1.Name = "PersonalToolStripMenuItem1"
-        Me.PersonalToolStripMenuItem1.Size = New System.Drawing.Size(129, 22)
-        Me.PersonalToolStripMenuItem1.Text = "Personal"
+        Me.PersonalToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
+        Me.PersonalToolStripMenuItem1.Text = "Configuration"
         '
         'BotToolStripMenuItem
         '
@@ -170,14 +170,14 @@ Partial Class Manager
         '
         Me.AddNewToolStripMenuItem.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AddNewToolStripMenuItem.Name = "AddNewToolStripMenuItem"
-        Me.AddNewToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.AddNewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.AddNewToolStripMenuItem.Text = "Add new"
         '
         'StartMultipleBotToolStripMenuItem
         '
         Me.StartMultipleBotToolStripMenuItem.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.StartMultipleBotToolStripMenuItem.Name = "StartMultipleBotToolStripMenuItem"
-        Me.StartMultipleBotToolStripMenuItem.Size = New System.Drawing.Size(147, 22)
+        Me.StartMultipleBotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.StartMultipleBotToolStripMenuItem.Text = "Multiple Bot"
         '
         'ToolStripMenuItem1
@@ -191,7 +191,7 @@ Partial Class Manager
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.AboutToolStripMenuItem.Text = "&About"
         '
         'tabMain
@@ -229,6 +229,48 @@ Partial Class Manager
         Me.walletPage.TabIndex = 2
         Me.walletPage.Text = "Wallet"
         Me.walletPage.UseVisualStyleBackColor = True
+        '
+        'totalFeesValue
+        '
+        Me.totalFeesValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.totalFeesValue.BackColor = System.Drawing.Color.LightGray
+        Me.totalFeesValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.totalFeesValue.Location = New System.Drawing.Point(458, 327)
+        Me.totalFeesValue.Name = "totalFeesValue"
+        Me.totalFeesValue.Size = New System.Drawing.Size(148, 18)
+        Me.totalFeesValue.TabIndex = 23
+        Me.totalFeesValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label10
+        '
+        Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label10.AutoSize = True
+        Me.Label10.Location = New System.Drawing.Point(390, 330)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(62, 13)
+        Me.Label10.TabIndex = 22
+        Me.Label10.Text = "Total fees"
+        '
+        'totalVolumesValue
+        '
+        Me.totalVolumesValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.totalVolumesValue.BackColor = System.Drawing.Color.LightGray
+        Me.totalVolumesValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.totalVolumesValue.Location = New System.Drawing.Point(231, 327)
+        Me.totalVolumesValue.Name = "totalVolumesValue"
+        Me.totalVolumesValue.Size = New System.Drawing.Size(148, 18)
+        Me.totalVolumesValue.TabIndex = 21
+        Me.totalVolumesValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label12
+        '
+        Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(141, 330)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(86, 13)
+        Me.Label12.TabIndex = 20
+        Me.Label12.Text = "Total volumes"
         '
         'earnValue
         '
@@ -992,48 +1034,6 @@ Partial Class Manager
         '
         Me.updateBotsTimer.Enabled = True
         Me.updateBotsTimer.Interval = 1000
-        '
-        'totalFeesValue
-        '
-        Me.totalFeesValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.totalFeesValue.BackColor = System.Drawing.Color.LightGray
-        Me.totalFeesValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.totalFeesValue.Location = New System.Drawing.Point(458, 327)
-        Me.totalFeesValue.Name = "totalFeesValue"
-        Me.totalFeesValue.Size = New System.Drawing.Size(148, 18)
-        Me.totalFeesValue.TabIndex = 23
-        Me.totalFeesValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label10
-        '
-        Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(390, 330)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(62, 13)
-        Me.Label10.TabIndex = 22
-        Me.Label10.Text = "Total fees"
-        '
-        'totalVolumesValue
-        '
-        Me.totalVolumesValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.totalVolumesValue.BackColor = System.Drawing.Color.LightGray
-        Me.totalVolumesValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.totalVolumesValue.Location = New System.Drawing.Point(231, 327)
-        Me.totalVolumesValue.Name = "totalVolumesValue"
-        Me.totalVolumesValue.Size = New System.Drawing.Size(148, 18)
-        Me.totalVolumesValue.TabIndex = 21
-        Me.totalVolumesValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'Label12
-        '
-        Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(141, 330)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(86, 13)
-        Me.Label12.TabIndex = 20
-        Me.Label12.Text = "Total volumes"
         '
         'Manager
         '

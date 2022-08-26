@@ -9,7 +9,7 @@ Namespace AreaCommon.Models.Order
     ''' </summary>
     Public Class SimplyOrderModel
 
-        Public Property accountCredentials As Bot.BotUserAccountModel
+        Public Property accountCredentials As User.UserDataPersonalModel.ExchangeCredentialUserAccess
         Public Property botId As String
         Public Property internalOrderId As String
         Public Property publicOrderId As String

@@ -135,7 +135,7 @@ Namespace AreaCommon.Engines.Pairs
 
         Private Function init() As Boolean
             Try
-                _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultGenericAccount.APIKey, .Passphrase = AreaState.defaultGenericAccount.passphrase, .Secret = AreaState.defaultGenericAccount.secret, .ApiUrl = AreaState.defaultGenericAccount.apiURL})
+                _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
 
                 _Init = True
 
