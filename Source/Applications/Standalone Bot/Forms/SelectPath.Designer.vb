@@ -43,6 +43,8 @@ Partial Class SelectPath
         '
         'dataPathValue
         '
+        Me.dataPathValue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dataPathValue.Location = New System.Drawing.Point(16, 30)
         Me.dataPathValue.Name = "dataPathValue"
         Me.dataPathValue.Size = New System.Drawing.Size(451, 21)
@@ -50,7 +52,8 @@ Partial Class SelectPath
         '
         'browsePath
         '
-        Me.browsePath.Location = New System.Drawing.Point(473, 28)
+        Me.browsePath.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.browsePath.Location = New System.Drawing.Point(473, 29)
         Me.browsePath.Name = "browsePath"
         Me.browsePath.Size = New System.Drawing.Size(33, 23)
         Me.browsePath.TabIndex = 2
@@ -59,6 +62,8 @@ Partial Class SelectPath
         '
         'tenantName
         '
+        Me.tenantName.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tenantName.Location = New System.Drawing.Point(16, 87)
         Me.tenantName.Name = "tenantName"
         Me.tenantName.Size = New System.Drawing.Size(490, 21)
@@ -75,6 +80,7 @@ Partial Class SelectPath
         '
         'confirmButton
         '
+        Me.confirmButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.confirmButton.Enabled = False
         Me.confirmButton.Location = New System.Drawing.Point(431, 124)
         Me.confirmButton.Name = "confirmButton"
@@ -87,7 +93,7 @@ Partial Class SelectPath
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(513, 155)
+        Me.ClientSize = New System.Drawing.Size(517, 158)
         Me.Controls.Add(Me.confirmButton)
         Me.Controls.Add(Me.tenantName)
         Me.Controls.Add(Me.Label2)
@@ -98,6 +104,7 @@ Partial Class SelectPath
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(533, 197)
         Me.Name = "SelectPath"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Select Data Path"

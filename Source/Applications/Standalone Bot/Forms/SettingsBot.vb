@@ -306,7 +306,7 @@ Public Class SettingsBot
                 .stepInterval = stepIntervalValue.Text
             End If
             If (dealAcquireValue.Text.Trim.Length > 0) Then
-                .dealAcquireOnPercentage = dealAcquireValue.Text
+                .dealAcquireOnPercentage = CDbl(Val(dealAcquireValue.Text.Replace(",", ".")))
             End If
             If (dealIntervalValue.Text.Trim.Length > 0) Then
                 .dealMinimalStep = dealIntervalValue.Text

@@ -9,6 +9,7 @@ Namespace AreaCommon.Models.Account
         Public Property totalVolumeValue As Double = 0
         Public Property totalFeesValue As Double = 0
         Public Property initialValue As Double = 0
+        Public Property increaseValue As Double = 0
 
     End Class
 

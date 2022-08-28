@@ -135,6 +135,7 @@ Public Class Manager
             totUSDTValue.Text = USDTValue.ToString("#,##0.00000")
 
             totalFeesValue.Text = AreaState.summary.totalFeesValue.ToString("#,##0.00000") & " USDT"
+            totalIncreaseValue.Text = AreaState.summary.increaseValue.ToString("#,##0.00000") & " USDT"
             totalVolumesValue.Text = AreaState.summary.totalVolumeValue.ToString("#,##0.00000") & " USDT"
 
             If (AreaState.summary.initialValue = 0) And (USDTValue <> 0) Then
@@ -499,6 +500,12 @@ Public Class Manager
 
         If Not AreaEngine.IO.init(pathBase) Then
             MessageBox.Show("Problem during IO.init", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Else
+            If (AreaState.summary.initialValue <> 0) Then
+                initialUSDTValue.Text = AreaState.summary.initialValue.ToString("#,##0.00000") & " USDT"
+            End If
+
+            Me.Text = AreaState.Common.defaultUserDataAccount.tenantName
         End If
 
         If AreaEngine.IO.newTenant Then
@@ -527,6 +534,13 @@ Public Class Manager
     End Sub
 
     Private Sub Manager_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
+        For Each item In AreaState.bots
+            AreaEngine.IO.updateBotData(item.Value.parameters.header.id, item.Value.data)
+        Next
+
+        AreaEngine.IO.updateSummary()
+        AreaEngine.IO.updateWallet()
+
         AreaState.closeApplication = True
 
         AreaCommon.Engines.Bots.stop()
@@ -577,6 +591,8 @@ Public Class Manager
             updateAllDataMarkets()
         End If
     End Sub
+
+
 
     Private Sub botDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles botDataView.CellContentClick
         Select Case e.ColumnIndex
@@ -636,12 +652,6 @@ Public Class Manager
                 execute = True
             End Try
         Loop
-
-        For Each item In AreaState.bots
-            AreaEngine.IO.updateBotData(item.Value.parameters.header.id, item.Value.data)
-        Next
-
-        AreaEngine.IO.updateSummary()
     End Sub
 
     Private Sub Manager_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Me.MouseDoubleClick
@@ -669,6 +679,20 @@ Public Class Manager
 
     Private Sub PersonalToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles PersonalToolStripMenuItem1.Click
         openPersonalData()
+    End Sub
+
+    Private Sub ArchiveSelectedBotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ArchiveSelectedBotToolStripMenuItem.Click
+        If Not IsNothing(botDataView.CurrentRow) Then
+            Dim id As String = botDataView.CurrentRow.Cells.Item(0).Value
+
+            If (MessageBox.Show("Do you want to archive this bot?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) = DialogResult.Yes) Then
+                AreaEngine.IO.archiveBot(id)
+            End If
+        End If
+    End Sub
+
+    Private Sub BotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BotToolStripMenuItem.Click
+        ArchiveSelectedBotToolStripMenuItem.Enabled = Not IsNothing(botDataView.CurrentRow)
     End Sub
 
 End Class

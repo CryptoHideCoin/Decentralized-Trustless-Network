@@ -86,6 +86,8 @@ Namespace AreaCommon.Engines.Bots
                 botConfiguration.data.usedPlafond -= trade.buy.tco - trade.buy.feeCost
                 botConfiguration.data.earn += trade.earn
 
+                AreaState.summary.increaseValue += trade.earn
+
                 Return True
             Catch ex As Exception
                 Return False
@@ -97,7 +99,7 @@ Namespace AreaCommon.Engines.Bots
         ''' </summary>
         ''' <returns></returns>
         Private Function pathOrderToDelivery(ByVal fileName As String) As String
-            Return IO.Path.Combine(Environment.GetCommandLineArgs(1), "To delivery", fileName & ".order")
+            Return IO.Path.Combine(AreaEngine.IO.orderToDeliveryPath, fileName & ".order")
         End Function
 
         ''' <summary>
@@ -105,7 +107,7 @@ Namespace AreaCommon.Engines.Bots
         ''' </summary>
         ''' <returns></returns>
         Private Function pathOrderToPlaced(ByVal fileName As String) As String
-            Return IO.Path.Combine(Environment.GetCommandLineArgs(1), "Placed", fileName & ".confirm")
+            Return IO.Path.Combine(AreaEngine.IO.orderPlacedPath, fileName & ".confirm")
         End Function
 
         ''' <summary>
@@ -114,7 +116,7 @@ Namespace AreaCommon.Engines.Bots
         ''' <param name="completeName"></param>
         ''' <returns></returns>
         Private Function pathOrderToClose(ByVal completeName As String) As String
-            Return IO.Path.Combine(Environment.GetCommandLineArgs(1), "Closed", completeName)
+            Return IO.Path.Combine(AreaEngine.IO.orderClosePath, completeName)
         End Function
 
         ''' <summary>

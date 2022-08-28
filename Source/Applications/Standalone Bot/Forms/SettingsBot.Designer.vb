@@ -368,7 +368,7 @@ Partial Class SettingsBot
         '
         Me.modeValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.modeValue.FormattingEnabled = True
-        Me.modeValue.Items.AddRange(New Object() {"One shot", "Continuous gain", "DCA", "Only deal"})
+        Me.modeValue.Items.AddRange(New Object() {"One shot", "Continuous gain", "Continuous gain alternate", "DCA", "Only deal"})
         Me.modeValue.Location = New System.Drawing.Point(71, 22)
         Me.modeValue.Name = "modeValue"
         Me.modeValue.Size = New System.Drawing.Size(162, 21)

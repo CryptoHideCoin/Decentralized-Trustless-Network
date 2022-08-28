@@ -29,25 +29,25 @@ Partial Class Manager
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
         Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Manager))
         Me.menuMain = New System.Windows.Forms.MenuStrip()
-        Me.PersonalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PersonalToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.BotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddNewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StartMultipleBotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PersonalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PersonalToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.tabMain = New System.Windows.Forms.TabControl()
@@ -81,14 +81,6 @@ Partial Class Manager
         Me.numBotValue = New System.Windows.Forms.Label()
         Me.numBotLabel = New System.Windows.Forms.Label()
         Me.botDataView = New System.Windows.Forms.DataGridView()
-        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.created = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.pair = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.openOrdersColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.closeOrderButton = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.isActive = New System.Windows.Forms.DataGridViewButtonColumn()
-        Me.editBot = New System.Windows.Forms.DataGridViewButtonColumn()
-        Me.viewData = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.marketPage = New System.Windows.Forms.TabPage()
         Me.trendValue = New System.Windows.Forms.Label()
         Me.spreadValue = New System.Windows.Forms.Label()
@@ -122,6 +114,18 @@ Partial Class Manager
         Me.currentValue = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.timerMain = New System.Windows.Forms.Timer(Me.components)
         Me.updateBotsTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.totalIncreaseValue = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.ArchiveSelectedBotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.created = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.pair = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.openOrdersColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.closeOrderButton = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.isActive = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.editBot = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.viewData = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.menuMain.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.walletPage.SuspendLayout()
@@ -143,6 +147,28 @@ Partial Class Manager
         Me.menuMain.TabIndex = 1
         Me.menuMain.Text = "MenuStrip1"
         '
+        'BotToolStripMenuItem
+        '
+        Me.BotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddNewToolStripMenuItem, Me.StartMultipleBotToolStripMenuItem, Me.ToolStripSeparator1, Me.ArchiveSelectedBotToolStripMenuItem})
+        Me.BotToolStripMenuItem.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.BotToolStripMenuItem.Name = "BotToolStripMenuItem"
+        Me.BotToolStripMenuItem.Size = New System.Drawing.Size(40, 20)
+        Me.BotToolStripMenuItem.Text = "&Bot"
+        '
+        'AddNewToolStripMenuItem
+        '
+        Me.AddNewToolStripMenuItem.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.AddNewToolStripMenuItem.Name = "AddNewToolStripMenuItem"
+        Me.AddNewToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
+        Me.AddNewToolStripMenuItem.Text = "Add new"
+        '
+        'StartMultipleBotToolStripMenuItem
+        '
+        Me.StartMultipleBotToolStripMenuItem.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.StartMultipleBotToolStripMenuItem.Name = "StartMultipleBotToolStripMenuItem"
+        Me.StartMultipleBotToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
+        Me.StartMultipleBotToolStripMenuItem.Text = "Multiple Bot"
+        '
         'PersonalToolStripMenuItem
         '
         Me.PersonalToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PersonalToolStripMenuItem1})
@@ -155,30 +181,8 @@ Partial Class Manager
         '
         Me.PersonalToolStripMenuItem1.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PersonalToolStripMenuItem1.Name = "PersonalToolStripMenuItem1"
-        Me.PersonalToolStripMenuItem1.Size = New System.Drawing.Size(180, 22)
+        Me.PersonalToolStripMenuItem1.Size = New System.Drawing.Size(159, 22)
         Me.PersonalToolStripMenuItem1.Text = "Configuration"
-        '
-        'BotToolStripMenuItem
-        '
-        Me.BotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddNewToolStripMenuItem, Me.StartMultipleBotToolStripMenuItem})
-        Me.BotToolStripMenuItem.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BotToolStripMenuItem.Name = "BotToolStripMenuItem"
-        Me.BotToolStripMenuItem.Size = New System.Drawing.Size(40, 20)
-        Me.BotToolStripMenuItem.Text = "&Bot"
-        '
-        'AddNewToolStripMenuItem
-        '
-        Me.AddNewToolStripMenuItem.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.AddNewToolStripMenuItem.Name = "AddNewToolStripMenuItem"
-        Me.AddNewToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.AddNewToolStripMenuItem.Text = "Add new"
-        '
-        'StartMultipleBotToolStripMenuItem
-        '
-        Me.StartMultipleBotToolStripMenuItem.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.StartMultipleBotToolStripMenuItem.Name = "StartMultipleBotToolStripMenuItem"
-        Me.StartMultipleBotToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.StartMultipleBotToolStripMenuItem.Text = "Multiple Bot"
         '
         'ToolStripMenuItem1
         '
@@ -191,7 +195,7 @@ Partial Class Manager
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
         Me.AboutToolStripMenuItem.Text = "&About"
         '
         'tabMain
@@ -210,6 +214,8 @@ Partial Class Manager
         '
         'walletPage
         '
+        Me.walletPage.Controls.Add(Me.totalIncreaseValue)
+        Me.walletPage.Controls.Add(Me.Label11)
         Me.walletPage.Controls.Add(Me.totalFeesValue)
         Me.walletPage.Controls.Add(Me.Label10)
         Me.walletPage.Controls.Add(Me.totalVolumesValue)
@@ -235,7 +241,7 @@ Partial Class Manager
         Me.totalFeesValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.totalFeesValue.BackColor = System.Drawing.Color.LightGray
         Me.totalFeesValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.totalFeesValue.Location = New System.Drawing.Point(458, 327)
+        Me.totalFeesValue.Location = New System.Drawing.Point(458, 325)
         Me.totalFeesValue.Name = "totalFeesValue"
         Me.totalFeesValue.Size = New System.Drawing.Size(148, 18)
         Me.totalFeesValue.TabIndex = 23
@@ -245,7 +251,7 @@ Partial Class Manager
         '
         Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label10.AutoSize = True
-        Me.Label10.Location = New System.Drawing.Point(390, 330)
+        Me.Label10.Location = New System.Drawing.Point(390, 328)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(62, 13)
         Me.Label10.TabIndex = 22
@@ -256,7 +262,7 @@ Partial Class Manager
         Me.totalVolumesValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.totalVolumesValue.BackColor = System.Drawing.Color.LightGray
         Me.totalVolumesValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.totalVolumesValue.Location = New System.Drawing.Point(231, 327)
+        Me.totalVolumesValue.Location = New System.Drawing.Point(231, 325)
         Me.totalVolumesValue.Name = "totalVolumesValue"
         Me.totalVolumesValue.Size = New System.Drawing.Size(148, 18)
         Me.totalVolumesValue.TabIndex = 21
@@ -266,7 +272,7 @@ Partial Class Manager
         '
         Me.Label12.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(141, 330)
+        Me.Label12.Location = New System.Drawing.Point(139, 328)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(86, 13)
         Me.Label12.TabIndex = 20
@@ -341,9 +347,9 @@ Partial Class Manager
         Me.totAccountValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.totAccountValue.BackColor = System.Drawing.Color.LightGray
         Me.totAccountValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.totAccountValue.Location = New System.Drawing.Point(756, 327)
+        Me.totAccountValue.Location = New System.Drawing.Point(771, 295)
         Me.totAccountValue.Name = "totAccountValue"
-        Me.totAccountValue.Size = New System.Drawing.Size(93, 18)
+        Me.totAccountValue.Size = New System.Drawing.Size(78, 18)
         Me.totAccountValue.TabIndex = 13
         Me.totAccountValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
@@ -351,7 +357,7 @@ Partial Class Manager
         '
         Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(665, 330)
+        Me.Label8.Location = New System.Drawing.Point(680, 298)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(85, 13)
         Me.Label8.TabIndex = 12
@@ -380,7 +386,7 @@ Partial Class Manager
         Me.accountsGridView.Name = "accountsGridView"
         Me.accountsGridView.RowHeadersVisible = False
         Me.accountsGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.accountsGridView.Size = New System.Drawing.Size(849, 312)
+        Me.accountsGridView.Size = New System.Drawing.Size(849, 286)
         Me.accountsGridView.TabIndex = 2
         '
         'DataGridViewTextBoxColumn1
@@ -578,87 +584,6 @@ Partial Class Manager
         Me.botDataView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.botDataView.Size = New System.Drawing.Size(849, 312)
         Me.botDataView.TabIndex = 1
-        '
-        'id
-        '
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Verdana", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.id.DefaultCellStyle = DataGridViewCellStyle7
-        Me.id.HeaderText = "ID"
-        Me.id.Name = "id"
-        Me.id.ReadOnly = True
-        Me.id.Width = 250
-        '
-        'created
-        '
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Verdana", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.created.DefaultCellStyle = DataGridViewCellStyle8
-        Me.created.HeaderText = "Created"
-        Me.created.Name = "created"
-        Me.created.ReadOnly = True
-        Me.created.Width = 150
-        '
-        'pair
-        '
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle9.BackColor = System.Drawing.Color.Wheat
-        Me.pair.DefaultCellStyle = DataGridViewCellStyle9
-        Me.pair.HeaderText = "Pair"
-        Me.pair.Name = "pair"
-        Me.pair.ReadOnly = True
-        '
-        'openOrdersColumn
-        '
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle10.BackColor = System.Drawing.Color.LightGray
-        Me.openOrdersColumn.DefaultCellStyle = DataGridViewCellStyle10
-        Me.openOrdersColumn.HeaderText = "Open"
-        Me.openOrdersColumn.Name = "openOrdersColumn"
-        Me.openOrdersColumn.ReadOnly = True
-        Me.openOrdersColumn.Width = 75
-        '
-        'closeOrderButton
-        '
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.LightGray
-        Me.closeOrderButton.DefaultCellStyle = DataGridViewCellStyle11
-        Me.closeOrderButton.HeaderText = "Close"
-        Me.closeOrderButton.Name = "closeOrderButton"
-        Me.closeOrderButton.ReadOnly = True
-        Me.closeOrderButton.Width = 75
-        '
-        'isActive
-        '
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        Me.isActive.DefaultCellStyle = DataGridViewCellStyle12
-        Me.isActive.HeaderText = "Command"
-        Me.isActive.Name = "isActive"
-        Me.isActive.ReadOnly = True
-        Me.isActive.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.isActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.isActive.Text = "ACTIVE"
-        Me.isActive.Width = 70
-        '
-        'editBot
-        '
-        Me.editBot.HeaderText = "Edit"
-        Me.editBot.Name = "editBot"
-        Me.editBot.Text = "..."
-        Me.editBot.UseColumnTextForButtonValue = True
-        Me.editBot.Width = 50
-        '
-        'viewData
-        '
-        Me.viewData.HeaderText = "Data"
-        Me.viewData.Name = "viewData"
-        Me.viewData.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.viewData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.viewData.Text = "..."
-        Me.viewData.UseColumnTextForButtonValue = True
-        Me.viewData.Width = 50
         '
         'marketPage
         '
@@ -1035,6 +960,119 @@ Partial Class Manager
         Me.updateBotsTimer.Enabled = True
         Me.updateBotsTimer.Interval = 1000
         '
+        'totalIncreaseValue
+        '
+        Me.totalIncreaseValue.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.totalIncreaseValue.BackColor = System.Drawing.Color.LightGray
+        Me.totalIncreaseValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.totalIncreaseValue.Location = New System.Drawing.Point(701, 325)
+        Me.totalIncreaseValue.Name = "totalIncreaseValue"
+        Me.totalIncreaseValue.Size = New System.Drawing.Size(148, 18)
+        Me.totalIncreaseValue.TabIndex = 25
+        Me.totalIncreaseValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label11
+        '
+        Me.Label11.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(638, 328)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(57, 13)
+        Me.Label11.TabIndex = 24
+        Me.Label11.Text = "Increase"
+        '
+        'ArchiveSelectedBotToolStripMenuItem
+        '
+        Me.ArchiveSelectedBotToolStripMenuItem.Name = "ArchiveSelectedBotToolStripMenuItem"
+        Me.ArchiveSelectedBotToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
+        Me.ArchiveSelectedBotToolStripMenuItem.Text = "Archive selected bot"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(198, 6)
+        '
+        'id
+        '
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.Color.LightGray
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Verdana", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.id.DefaultCellStyle = DataGridViewCellStyle7
+        Me.id.HeaderText = "ID"
+        Me.id.Name = "id"
+        Me.id.ReadOnly = True
+        Me.id.Width = 250
+        '
+        'created
+        '
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.LightGray
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Verdana", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.created.DefaultCellStyle = DataGridViewCellStyle8
+        Me.created.HeaderText = "Created"
+        Me.created.Name = "created"
+        Me.created.ReadOnly = True
+        Me.created.Width = 150
+        '
+        'pair
+        '
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle9.BackColor = System.Drawing.Color.Wheat
+        Me.pair.DefaultCellStyle = DataGridViewCellStyle9
+        Me.pair.HeaderText = "Pair"
+        Me.pair.Name = "pair"
+        Me.pair.ReadOnly = True
+        '
+        'openOrdersColumn
+        '
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle10.BackColor = System.Drawing.Color.LightGray
+        Me.openOrdersColumn.DefaultCellStyle = DataGridViewCellStyle10
+        Me.openOrdersColumn.HeaderText = "Open"
+        Me.openOrdersColumn.Name = "openOrdersColumn"
+        Me.openOrdersColumn.ReadOnly = True
+        Me.openOrdersColumn.Width = 75
+        '
+        'closeOrderButton
+        '
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.LightGray
+        Me.closeOrderButton.DefaultCellStyle = DataGridViewCellStyle11
+        Me.closeOrderButton.HeaderText = "Close"
+        Me.closeOrderButton.Name = "closeOrderButton"
+        Me.closeOrderButton.ReadOnly = True
+        Me.closeOrderButton.Width = 75
+        '
+        'isActive
+        '
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        Me.isActive.DefaultCellStyle = DataGridViewCellStyle12
+        Me.isActive.HeaderText = "Command"
+        Me.isActive.Name = "isActive"
+        Me.isActive.ReadOnly = True
+        Me.isActive.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.isActive.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.isActive.Text = "ACTIVE"
+        Me.isActive.Width = 70
+        '
+        'editBot
+        '
+        Me.editBot.HeaderText = "Edit"
+        Me.editBot.Name = "editBot"
+        Me.editBot.Text = "..."
+        Me.editBot.UseColumnTextForButtonValue = True
+        Me.editBot.Width = 50
+        '
+        'viewData
+        '
+        Me.viewData.HeaderText = "Data"
+        Me.viewData.Name = "viewData"
+        Me.viewData.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.viewData.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.viewData.Text = "..."
+        Me.viewData.UseColumnTextForButtonValue = True
+        Me.viewData.Width = 50
+        '
         'Manager
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -1134,6 +1172,16 @@ Partial Class Manager
     Friend WithEvents valueColumn As DataGridViewTextBoxColumn
     Friend WithEvents changeUSDT As DataGridViewTextBoxColumn
     Friend WithEvents valueUSDTColumn As DataGridViewTextBoxColumn
+    Friend WithEvents PersonalToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents PersonalToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents totalFeesValue As Label
+    Friend WithEvents Label10 As Label
+    Friend WithEvents totalVolumesValue As Label
+    Friend WithEvents Label12 As Label
+    Friend WithEvents totalIncreaseValue As Label
+    Friend WithEvents Label11 As Label
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents ArchiveSelectedBotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents id As DataGridViewTextBoxColumn
     Friend WithEvents created As DataGridViewTextBoxColumn
     Friend WithEvents pair As DataGridViewTextBoxColumn
@@ -1142,10 +1190,4 @@ Partial Class Manager
     Friend WithEvents isActive As DataGridViewButtonColumn
     Friend WithEvents editBot As DataGridViewButtonColumn
     Friend WithEvents viewData As DataGridViewButtonColumn
-    Friend WithEvents PersonalToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents PersonalToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents totalFeesValue As Label
-    Friend WithEvents Label10 As Label
-    Friend WithEvents totalVolumesValue As Label
-    Friend WithEvents Label12 As Label
 End Class

@@ -19,6 +19,7 @@ Namespace AreaCommon.Engines
         Public Property configurationPath As String = ""
         Public Property botListPath As String = ""
         Public Property summaryPath As String = ""
+        Public Property accountPath As String = ""
 
         Public Property newTenant As Boolean = False
 
@@ -75,6 +76,20 @@ Namespace AreaCommon.Engines
         ''' <returns></returns>
         Public Function updateSummary() As Boolean
             Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Account.SummaryModel).save(summaryPath, AreaState.summary)
+        End Function
+
+        ''' <summary>
+        ''' This method provide to update the data into the wallet
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function updateWallet() As Boolean
+            Dim accounts As New Models.Account.AccountsModel
+
+            For Each account In AreaState.accounts
+                accounts.wallet.Add(New Models.Account.AccountBaseForSerializationModel With {.key = account.Key, .id = account.Value.id, .amount = account.Value.amount})
+            Next
+
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Account.AccountsModel).save(accountPath, accounts)
         End Function
 
         ''' <summary>
@@ -142,6 +157,50 @@ Namespace AreaCommon.Engines
         End Function
 
         ''' <summary>
+        ''' This method provide to archive Bot into DB
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <returns></returns>
+        Public Function archiveBot(ByVal id As String) As Boolean
+            AreaState.bots(id).parameters.header.isActive = False
+
+            For Each item In AreaState.bots
+                If (item.Value.parameters.header.id.CompareTo(id) = 0) Then
+                    AreaEngine.IO.updateBotData(item.Value.parameters.header.id, item.Value.data)
+
+                    AreaState.bots.Remove(id)
+
+                    Exit For
+                End If
+            Next
+
+            For Each item In AreaState.botList.ActiveBots
+                If (item = id) Then
+                    AreaState.botList.ActiveBots.Remove(item)
+
+                    Exit For
+                End If
+            Next
+
+            If (AreaState.botList.ActiveBots.Count = 0) Then
+                IO.File.Delete(botListPath)
+            Else
+                updateBotList()
+            End If
+
+            Dim pathBot As String = IO.Path.Combine(AreaEngine.IO.tenantRootPath, "Bot-" & id)
+            Dim pathArchived As String = IO.Path.Combine(AreaEngine.IO.tenantRootPath, "Archived", "Bot-" & id)
+
+            IO.Directory.CreateDirectory(pathArchived)
+
+            My.Computer.FileSystem.CopyDirectory(pathBot, pathArchived, True)
+
+            IO.Directory.Delete(pathBot, True)
+
+            Return True
+        End Function
+
+        ''' <summary>
         ''' This method provide to initialize the engine
         ''' </summary>
         ''' <param name="path"></param>
@@ -151,18 +210,24 @@ Namespace AreaCommon.Engines
             Dim newBot As Models.Bot.BotConfigurationsModel
 
             path = path.Replace(Chr(34) & Chr(34), "").Trim()
+
+            If Not IO.Directory.Exists(path) Then
+                IO.Directory.CreateDirectory(path)
+            End If
+
             tenantRootPath = path
             AreaState.defaultUserDataAccount.tenantName = IO.Path.GetFileName(path)
             orderRootPath = IO.Path.Combine(IO.Directory.GetParent(path).Parent.FullName, "Orders")
             configurationPath = IO.Path.Combine(path, "Configuration.json")
             botListPath = IO.Path.Combine(path, "Botlist.json")
             summaryPath = IO.Path.Combine(path, "Summary.json")
+            accountPath = IO.Path.Combine(path, "Accounts.json")
 
             checkAndMakeOrderPath()
 
-            botArchivePath = IO.Path.Combine(IO.Directory.GetParent(path).Parent.FullName, "Archived")
+            botArchivePath = IO.Path.Combine(path, "Archived")
 
-            If IO.Directory.Exists(botArchivePath) Then
+            If Not IO.Directory.Exists(botArchivePath) Then
                 IO.Directory.CreateDirectory(botArchivePath)
             End If
 
@@ -197,6 +262,19 @@ Namespace AreaCommon.Engines
 
             If IO.File.Exists(summaryPath) Then
                 AreaState.summary = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Account.SummaryModel).read(summaryPath)
+            End If
+
+            If IO.File.Exists(accountPath) Then
+                AreaState.accounts = New Dictionary(Of String, Models.Account.AccountModel)
+
+                For Each account In CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Account.AccountsModel).read(accountPath).wallet
+                    AreaState.accounts.Add(account.key, New Models.Account.AccountModel With {.id = account.id, .amount = account.amount, .change = 0, .valueUSDT = 0})
+                Next
+
+                With AreaState.accounts("USDT".ToLower())
+                    .change = 1
+                    .valueUSDT = .amount
+                End With
             End If
 
             Return True

@@ -11,10 +11,24 @@
 
     End Sub
 
+    Private Function itemCheckedCount() As Integer
+        Dim count As Integer = 0
+
+        For i As Integer = 0 To productList.Items.Count - 1
+            If productList.GetItemChecked(i) Then
+                count += 1
+            End If
+        Next
+
+        Return count
+    End Function
+
     Private Sub selectAllProcedure(ByVal value As Boolean)
         For i As Integer = 0 To productList.Items.Count - 1
             productList.SetItemChecked(i, value)
         Next
+
+        productsLabel.Text = $"Select the products to use ({itemCheckedCount()}/{productList.Items.Count})"
     End Sub
 
     Private Sub MultipleBot_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -30,6 +44,7 @@
                 Return
             End If
 
+            Threading.Thread.Sleep(10)
             Application.DoEvents()
         Loop
     End Sub
@@ -46,7 +61,7 @@
                 waitTime = Val(delayDuringAdd.Text) * 1000
             End If
         Else
-            waitTime = 65
+            waitTime = 100
         End If
 
         For i = 0 To productList.Items.Count - 1
@@ -84,6 +99,14 @@
         defaultForm.defaultMode = True
 
         defaultForm.ShowDialog()
+    End Sub
+
+    Private Sub productList_SelectedIndexChanged(sender As Object, e As EventArgs) Handles productList.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub productList_GotFocus(sender As Object, e As EventArgs) Handles productList.GotFocus
+        productsLabel.Text = $"Select the products to use ({itemCheckedCount()}/{productList.Items.Count})"
     End Sub
 
 End Class

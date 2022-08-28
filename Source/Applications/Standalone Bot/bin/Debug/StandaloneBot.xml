@@ -189,6 +189,12 @@ StandaloneBot
  </summary>
  <returns></returns>
 </member>
+<member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.updateWallet">
+ <summary>
+ This method provide to update the data into the wallet
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.updateTradeClose(System.String,StandaloneBot.AreaCommon.Models.Bot.TradeModel@)">
  <summary>
  This method provide to update the trade close
@@ -216,6 +222,13 @@ StandaloneBot
  <summary>
  This method provide to update the bot settings
  </summary>
+ <returns></returns>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.archiveBot(System.String)">
+ <summary>
+ This method provide to archive Bot into DB
+ </summary>
+ <param name="id"></param>
  <returns></returns>
 </member>
 <member name="M:StandaloneBot.AreaCommon.Engines.IOEngine.init(System.String)">

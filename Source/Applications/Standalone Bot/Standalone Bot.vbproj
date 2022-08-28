@@ -95,52 +95,52 @@
     <Compile Include="Engines\IOEngine.vb" />
     <Compile Include="Engines\OrderModule.vb" />
     <Compile Include="Engines\PairModule.vb" />
-    <Compile Include="Interface\About.Designer.vb">
+    <Compile Include="Forms\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
-    <Compile Include="Interface\About.vb">
+    <Compile Include="Forms\About.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\DataBot.Designer.vb">
+    <Compile Include="Forms\DataBot.Designer.vb">
       <DependentUpon>DataBot.vb</DependentUpon>
     </Compile>
-    <Compile Include="Interface\DataBot.vb">
+    <Compile Include="Forms\DataBot.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\DataTrade.Designer.vb">
+    <Compile Include="Forms\DataTrade.Designer.vb">
       <DependentUpon>DataTrade.vb</DependentUpon>
     </Compile>
-    <Compile Include="Interface\DataTrade.vb">
+    <Compile Include="Forms\DataTrade.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\MultipleBot.Designer.vb">
+    <Compile Include="Forms\MultipleBot.Designer.vb">
       <DependentUpon>MultipleBot.vb</DependentUpon>
     </Compile>
-    <Compile Include="Interface\MultipleBot.vb">
+    <Compile Include="Forms\MultipleBot.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\PersonalData.Designer.vb">
+    <Compile Include="Forms\PersonalData.Designer.vb">
       <DependentUpon>PersonalData.vb</DependentUpon>
     </Compile>
-    <Compile Include="Interface\PersonalData.vb">
+    <Compile Include="Forms\PersonalData.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\SelectPath.Designer.vb">
+    <Compile Include="Forms\SelectPath.Designer.vb">
       <DependentUpon>SelectPath.vb</DependentUpon>
     </Compile>
-    <Compile Include="Interface\SelectPath.vb">
+    <Compile Include="Forms\SelectPath.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\SettingsBot.Designer.vb">
+    <Compile Include="Forms\SettingsBot.Designer.vb">
       <DependentUpon>SettingsBot.vb</DependentUpon>
     </Compile>
-    <Compile Include="Interface\SettingsBot.vb">
+    <Compile Include="Forms\SettingsBot.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\Manager.vb">
+    <Compile Include="Forms\Manager.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Interface\Manager.Designer.vb">
+    <Compile Include="Forms\Manager.Designer.vb">
       <DependentUpon>Manager.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
@@ -170,29 +170,30 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Interface\About.resx">
+    <EmbeddedResource Include="Forms\About.resx">
       <DependentUpon>About.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interface\DataBot.resx">
+    <EmbeddedResource Include="Forms\DataBot.resx">
       <DependentUpon>DataBot.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interface\DataTrade.resx">
+    <EmbeddedResource Include="Forms\DataTrade.resx">
       <DependentUpon>DataTrade.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interface\MultipleBot.resx">
+    <EmbeddedResource Include="Forms\MultipleBot.resx">
       <DependentUpon>MultipleBot.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interface\PersonalData.resx">
+    <EmbeddedResource Include="Forms\PersonalData.resx">
       <DependentUpon>PersonalData.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interface\SelectPath.resx">
+    <EmbeddedResource Include="Forms\SelectPath.resx">
       <DependentUpon>SelectPath.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interface\SettingsBot.resx">
+    <EmbeddedResource Include="Forms\SettingsBot.resx">
       <DependentUpon>SettingsBot.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Interface\Manager.resx">
+    <EmbeddedResource Include="Forms\Manager.resx">
       <DependentUpon>Manager.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

@@ -23,7 +23,7 @@ Partial Class MultipleBot
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MultipleBot))
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.productsLabel = New System.Windows.Forms.Label()
         Me.productList = New System.Windows.Forms.CheckedListBox()
         Me.confirmButton = New System.Windows.Forms.Button()
         Me.addNewButton = New System.Windows.Forms.Button()
@@ -34,14 +34,14 @@ Partial Class MultipleBot
         Me.defaultSettings = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
-        'Label1
+        'productsLabel
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(15, 18)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(156, 13)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Select the products to use"
+        Me.productsLabel.AutoSize = True
+        Me.productsLabel.Location = New System.Drawing.Point(15, 18)
+        Me.productsLabel.Name = "productsLabel"
+        Me.productsLabel.Size = New System.Drawing.Size(156, 13)
+        Me.productsLabel.TabIndex = 0
+        Me.productsLabel.Text = "Select the products to use"
         '
         'productList
         '
@@ -131,7 +131,7 @@ Partial Class MultipleBot
         Me.Controls.Add(Me.addNewButton)
         Me.Controls.Add(Me.confirmButton)
         Me.Controls.Add(Me.productList)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.productsLabel)
         Me.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -147,7 +147,7 @@ Partial Class MultipleBot
 
     End Sub
 
-    Friend WithEvents Label1 As Label
+    Friend WithEvents productsLabel As Label
     Friend WithEvents productList As CheckedListBox
     Friend WithEvents confirmButton As Button
     Friend WithEvents addNewButton As Button
