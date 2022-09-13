@@ -179,7 +179,6 @@ Partial Class PersonalData
         Me.useVirtualAccount.AutoSize = True
         Me.useVirtualAccount.Checked = True
         Me.useVirtualAccount.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.useVirtualAccount.Enabled = False
         Me.useVirtualAccount.Location = New System.Drawing.Point(12, 294)
         Me.useVirtualAccount.Name = "useVirtualAccount"
         Me.useVirtualAccount.Size = New System.Drawing.Size(135, 17)

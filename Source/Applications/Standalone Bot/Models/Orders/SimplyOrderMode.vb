@@ -14,6 +14,8 @@ Namespace AreaCommon.Models.Order
         Public Property internalOrderId As String
         Public Property publicOrderId As String
 
+        Public Property productId As String = ""
+
     End Class
 
 End Namespace

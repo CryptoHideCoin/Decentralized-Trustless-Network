@@ -28,3 +28,6 @@ E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.
 E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.MultipleBot.resources
 E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.PersonalData.resources
 E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.SelectPath.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.EditProduct.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.AutomaticBotSetting.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.ShowOrder.resources

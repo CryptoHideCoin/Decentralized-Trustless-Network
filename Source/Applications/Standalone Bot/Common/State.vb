@@ -8,6 +8,8 @@ Namespace AreaState
 
     Module Common
 
+        Public Property automaticBot As New AreaCommon.Models.Bot.BotAutomatic
+        Public Property products As New AreaCommon.Models.Products.ProductsModel
         Public Property bots As New Dictionary(Of String, AreaCommon.Models.Bot.BotConfigurationsModel)
         Public Property pairs As New Dictionary(Of String, AreaCommon.Models.Pair.PairInformation)
         Public Property orders As New Dictionary(Of String, AreaCommon.Models.Order.SimplyOrderModel)
@@ -57,17 +59,31 @@ Namespace AreaState
             Return ""
         End Function
 
-        Public Function addIntoAccount(ByVal Id As String, ByVal value As Double) As Boolean
+        Public Function addIntoAccount(ByVal Id As String, ByVal value As Double, ByVal mainValue As Boolean) As Boolean
             Dim dataAccount As AreaCommon.Models.Account.AccountModel
+            Dim indexCurrency As Integer = 0
+            Dim currencyKey As String
 
-            If accounts.ContainsKey(Id.ToLower()) Then
-                dataAccount = accounts(Id.ToLower())
+            If Not defaultUserDataAccount.useVirtualAccount Then
+                Return True
+            End If
+
+            If mainValue Then
+                indexCurrency = 1
+            End If
+
+            currencyKey = Id.Split("-")(indexCurrency).Trim.ToLower
+
+            If accounts.ContainsKey(currencyKey) Then
+                dataAccount = accounts(currencyKey)
             Else
                 dataAccount = New AreaCommon.Models.Account.AccountModel
 
-                dataAccount.id = Id.Split("-")(0)
+                dataAccount.id = currencyKey.ToUpper
 
-                accounts.Add(Id.ToLower(), dataAccount)
+                accounts.Add(currencyKey, dataAccount)
+
+                Debug.Print(currencyKey)
             End If
 
             dataAccount.amount += value
@@ -81,7 +97,7 @@ Namespace AreaState
             End If
 
             If (dataAccount.amount = 0) Then
-                accounts.Remove(Id.ToLower())
+                accounts.Remove(currencyKey)
             End If
 
             Return True
@@ -90,8 +106,10 @@ Namespace AreaState
         Public Function updateChange(ByVal Id As String, ByVal value As Double) As Boolean
             Dim dataAccount As AreaCommon.Models.Account.AccountModel
 
-            If accounts.ContainsKey(Id.ToLower) Then
-                dataAccount = accounts(Id.ToLower)
+            Dim currencyKey As String = Id.Split("-")(0).ToLower
+
+            If accounts.ContainsKey(currencyKey) Then
+                dataAccount = accounts(currencyKey)
 
                 dataAccount.change = value
                 dataAccount.valueUSDT = value * dataAccount.amount

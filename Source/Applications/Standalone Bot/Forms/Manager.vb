@@ -112,6 +112,10 @@ Public Class Manager
         Dim execute As Boolean = True
         Dim USDTValue As Double = 0
 
+        If Not AreaState.defaultUserDataAccount.useVirtualAccount Then
+            AreaCommon.Engines.Accounts.start()
+        End If
+
         If (accountsGridView.Rows.Count = AreaState.accounts.Count) Then
             Do While execute
                 execute = False
@@ -217,6 +221,83 @@ Public Class Manager
 
             marketDataView.Rows(marketDataView.Rows.Count - 1).DefaultCellStyle.BackColor = Color.LightGray
         Next
+    End Sub
+
+    Sub refreshDataCurrencies()
+        Dim rowItem As New ArrayList
+
+        If (AreaState.products.items.Count <> CurrenciesDataView.Rows.Count) Then
+            CurrenciesDataView.Rows.Clear()
+
+            For Each item In AreaState.products.items
+                rowItem.Clear()
+
+                rowItem.Add(item.header.key)
+                rowItem.Add(item.header.name)
+
+                Select Case item.userData.preference
+                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore : rowItem.Add("Ignore")
+                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.prefered : rowItem.Add("Prefered")
+                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.toWork : rowItem.Add("To work")
+                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.undefined : rowItem.Add("Undefined")
+                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.userOnly : rowItem.Add("User Only")
+                End Select
+
+                If item.userData.isCustomized Then
+                    rowItem.Add(1)
+                Else
+                    rowItem.Add(0)
+                End If
+
+                If (item.currentValue = 0) Then
+                    rowItem.Add("---")
+                Else
+                    rowItem.Add(item.currentValue.ToString("#,##0.00000"))
+                End If
+
+                CurrenciesDataView.Rows.Add(rowItem.ToArray)
+            Next
+        Else
+            Dim item As AreaCommon.Models.Products.ProductModel
+
+            For index As Integer = 0 To AreaState.products.items.Count - 1
+                item = AreaState.products.items(index)
+
+                If Not AreaState.pairs.ContainsKey(item.pairID) Then
+                    If item.userData.isCustomized And (item.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore) Then
+                        AreaState.getPairID(item.pairID)
+                    End If
+                Else
+                    item.value.current = AreaState.pairs(item.pairID).currentValue
+                End If
+
+                Select Case item.userData.preference
+                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore : CurrenciesDataView.Rows(index).Cells(2).Value = "Ignore"
+                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.prefered : CurrenciesDataView.Rows(index).Cells(2).Value = "Prefered"
+                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.toWork : CurrenciesDataView.Rows(index).Cells(2).Value = "To work"
+                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.undefined : CurrenciesDataView.Rows(index).Cells(2).Value = "Undefined"
+                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.userOnly : CurrenciesDataView.Rows(index).Cells(2).Value = "User Only"
+                End Select
+
+                If item.userData.isCustomized Then
+                    CurrenciesDataView.Rows(index).Cells(3).Value = 1
+                Else
+                    CurrenciesDataView.Rows(index).Cells(3).Value = 0
+                End If
+
+                If (item.value.current = 0) Or Not item.userData.isCustomized Then
+                    CurrenciesDataView.Rows(index).Cells(4).Value = "---"
+                Else
+                    CurrenciesDataView.Rows(index).Cells(4).Value = item.value.current.ToString("#,##0.00000")
+                End If
+
+                If (item.currentValue = 0) Then
+                    CurrenciesDataView.Rows(index).Cells(5).Value = "---"
+                Else
+                    CurrenciesDataView.Rows(index).Cells(5).Value = item.currentValue.ToString("#,##0.00000")
+                End If
+            Next
+        End If
     End Sub
 
     Sub refreshTickValue()
@@ -473,12 +554,26 @@ Public Class Manager
         updateAllDataMarkets()
     End Sub
 
+    Private Sub manageVirtualAccount()
+        If Not AreaState.defaultUserDataAccount.useVirtualAccount Then
+            AreaCommon.Engines.Accounts.start()
+        ElseIf (AreaState.accounts.Count = 1) Then
+            AreaCommon.Engines.Accounts.stop()
+
+            If (AreaState.defaultUserDataAccount.initialBaseFund <> AreaState.accounts("USDT".ToLower()).valueUSDT) Then
+                AreaState.accounts.Remove("USDT".ToLower())
+
+                AreaState.addIntoAccount("USDT", AreaState.defaultUserDataAccount.initialBaseFund.ToString(), False)
+            End If
+        End If
+    End Sub
+
     Private Sub Manager_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim pathBase As String = ""
 
         filterDetails.SelectedIndex = 0
 
-        AreaState.addIntoAccount("USDT", 1522)
+        AreaState.addIntoAccount("USDT", 1522, False)
 
         Me.Text = $"Simulator - Standard Bot - rel.{Application.ProductVersion}"
 
@@ -498,7 +593,7 @@ Public Class Manager
             pathBase = Environment.CommandLine.Replace(Environment.GetCommandLineArgs(0), "").Trim()
         End If
 
-        If Not AreaEngine.IO.init(pathBase) Then
+        If Not AreaCommon.Engine.IO.init(pathBase) Then
             MessageBox.Show("Problem during IO.init", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Else
             If (AreaState.summary.initialValue <> 0) Then
@@ -508,20 +603,13 @@ Public Class Manager
             Me.Text = AreaState.Common.defaultUserDataAccount.tenantName
         End If
 
-        If AreaEngine.IO.newTenant Then
+        If AreaCommon.Engine.IO.newTenant Then
             If Not openPersonalData() Then
                 End
             End If
         End If
 
-        If (AreaState.accounts.Count = 1) Then
-            If (AreaState.defaultUserDataAccount.initialBaseFund <> AreaState.accounts("USDT".ToLower()).valueUSDT) Then
-                AreaState.accounts.Remove("USDT".ToLower())
-
-                AreaState.addIntoAccount("USDT", AreaState.defaultUserDataAccount.initialBaseFund.ToString())
-            End If
-        End If
-
+        manageVirtualAccount()
     End Sub
 
     Private Sub marketDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles marketDataView.CellContentClick
@@ -535,15 +623,18 @@ Public Class Manager
 
     Private Sub Manager_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
         For Each item In AreaState.bots
-            AreaEngine.IO.updateBotData(item.Value.parameters.header.id, item.Value.data)
+            AreaCommon.Engine.IO.updateBotData(item.Value.parameters.header.id, item.Value.data)
         Next
 
-        AreaEngine.IO.updateSummary()
-        AreaEngine.IO.updateWallet()
+        AreaCommon.Engine.IO.updateSummary()
+        AreaCommon.Engine.IO.updateWallet()
+        AreaCommon.Engine.IO.updateCryptocurrency()
+        AreaCommon.Engine.IO.updateAutomaticBot()
 
         AreaState.closeApplication = True
 
-        AreaCommon.Engines.Bots.stop()
+        AreaCommon.Engines.Bots.BotModule.stop()
+        AreaCommon.Engines.Bots.AutomaticBotModule.stop()
         AreaCommon.Engines.Pairs.stop()
         AreaCommon.Engines.Orders.stop()
     End Sub
@@ -584,8 +675,9 @@ Public Class Manager
     Private Sub updateBotsTimer_Tick(sender As Object, e As EventArgs) Handles updateBotsTimer.Tick
         refreshDataBot()
         refreshDataAccount()
+        refreshDataCurrencies()
 
-        If (AreaState.bots.Count > 0) And Not timerMain.Enabled Then
+        If ((AreaState.bots.Count > 0) Or Not AreaState.defaultUserDataAccount.useVirtualAccount) And Not timerMain.Enabled Then
             timerMain.Enabled = True
 
             updateAllDataMarkets()
@@ -648,6 +740,14 @@ Public Class Manager
                         Exit For
                     End If
                 Next
+
+                If AreaState.automaticBot.isActive Then
+                    If (MessageBox.Show("Do you want to exit?", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) = DialogResult.Cancel) Then
+                        e.Cancel = True
+
+                        Return
+                    End If
+                End If
             Catch ex As Exception
                 execute = True
             End Try
@@ -667,8 +767,14 @@ Public Class Manager
         If (tempForm.ShowDialog() = DialogResult.OK) Then
             Me.Text = AreaState.Common.defaultUserDataAccount.tenantName
 
-            If (AreaState.accounts.Count = 1) Then
+            If tempForm.changeMode Then
                 initialUSDTValue.Text = ""
+
+                manageVirtualAccount()
+            Else
+                If (AreaState.accounts.Count = 1) Then
+                    initialUSDTValue.Text = ""
+                End If
             End If
 
             Return True
@@ -686,7 +792,7 @@ Public Class Manager
             Dim id As String = botDataView.CurrentRow.Cells.Item(0).Value
 
             If (MessageBox.Show("Do you want to archive this bot?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) = DialogResult.Yes) Then
-                AreaEngine.IO.archiveBot(id)
+                AreaCommon.IO.archiveBot(id)
             End If
         End If
     End Sub
@@ -695,4 +801,107 @@ Public Class Manager
         ArchiveSelectedBotToolStripMenuItem.Enabled = Not IsNothing(botDataView.CurrentRow)
     End Sub
 
+    Private Sub CryptocurrenciesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CryptocurrenciesToolStripMenuItem.Click
+        AreaCommon.Engines.Currencies.quoteCurrency = InputBox("Insert a quote currency", "Request", "USDT")
+
+        If (AreaCommon.Engines.Currencies.quoteCurrency.Trim.Length > 0) Then
+            AreaCommon.Engines.Currencies.start()
+        End If
+    End Sub
+
+    Private Sub CurrenciesDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles CurrenciesDataView.CellContentClick
+        Select Case e.ColumnIndex
+            Case 6
+                Dim editService As EditProduct
+
+                If Not IsNothing(CurrenciesDataView.CurrentRow) Then
+                    editService = New EditProduct
+
+                    editService.currencyID = CurrenciesDataView.CurrentRow.Cells.Item(0).Value
+
+                    editService.Show()
+                End If
+        End Select
+    End Sub
+
+    Private Sub AutomaticBotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutomaticBotToolStripMenuItem.Click
+    End Sub
+
+    Private Sub ConfigurationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConfigurationToolStripMenuItem.Click
+        Dim automaticBot As New AutomaticBotSetting
+
+        automaticBot.Show()
+    End Sub
+
+    Private Sub RestartVirtualToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RestartVirtualToolStripMenuItem.Click
+        Dim proceed As Boolean = True
+
+        If proceed Then
+            If AreaState.automaticBot.isActive Then
+                proceed = (MessageBox.Show("Do you want to stop the automatic bot?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes)
+            End If
+        End If
+        If proceed Then
+            proceed = (MessageBox.Show("Do you want to restart automatic bot data?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes)
+        End If
+        If proceed Then
+            If AreaState.automaticBot.resetData() Then
+                For Each product In AreaState.products.items
+                    product.resetData()
+                Next
+
+                AreaState.automaticBot.lastWorkAction = 0
+
+                AreaState.accounts.Clear()
+
+                AreaState.addIntoAccount("USDT", AreaState.defaultUserDataAccount.initialBaseFund, False)
+
+                AreaState.summary.totalFeesValue = 0
+                AreaState.summary.totalVolumeValue = 0
+                AreaState.summary.increaseValue = 0
+
+                initialUSDTValue.Text = ""
+            End If
+        End If
+        If proceed Then
+            MessageBox.Show("Automatic bot data is restarted.")
+        End If
+
+    End Sub
+
+    Private Sub ActionAutomaticBotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ActionAutomaticBotToolStripMenuItem.Click
+        If (ActionAutomaticBotToolStripMenuItem.Text.ToLower.CompareTo("start") = 0) Then
+            If (MessageBox.Show("Do you want to start the automatic bot?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.No) Then
+                Return
+            End If
+
+            For Each item In AreaState.products.items
+                If item.userData.isCustomized Then
+                    AreaState.automaticBot.isActive = True
+
+                    AreaCommon.Engines.Bots.AutomaticBotModule.start()
+
+                    Return
+                End If
+            Next
+        Else
+            If (MessageBox.Show("Do you want to stop the automatic bot?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.No) Then
+                Return
+            End If
+
+            AreaState.automaticBot.isActive = False
+
+            AreaCommon.Engines.Bots.AutomaticBotModule.stop()
+        End If
+    End Sub
+
+    Private Sub AutomaticBotToolStripMenuItem_DropDownOpening(sender As Object, e As EventArgs) Handles AutomaticBotToolStripMenuItem.DropDownOpening
+        RestartVirtualToolStripMenuItem.Enabled = AreaState.defaultUserDataAccount.useVirtualAccount
+
+        If AreaState.automaticBot.isActive Then
+            ActionAutomaticBotToolStripMenuItem.Text = "Stop"
+        Else
+            ActionAutomaticBotToolStripMenuItem.Text = "Start"
+        End If
+    End Sub
 End Class

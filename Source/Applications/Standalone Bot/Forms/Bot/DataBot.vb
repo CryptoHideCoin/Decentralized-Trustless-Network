@@ -140,7 +140,7 @@ Public Class DataBot
     Private Sub openCloseTrade(ByRef common As AreaCommon.Models.Pair.PairInformation, ByVal tradeId As String)
         Dim item As New DataTrade
 
-        item.data = AreaEngine.IO.getTradeClose(AreaState.bots(idReferement).parameters.header.id, tradeId)
+        item.data = AreaCommon.Engine.IO.getTradeClose(AreaState.bots(idReferement).parameters.header.id, tradeId)
         item.common = common
 
         item.Show()

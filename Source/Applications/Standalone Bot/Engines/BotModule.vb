@@ -80,9 +80,10 @@ Namespace AreaCommon.Engines.Bots
                 botConfiguration.data.tradeOpen.Remove(trade)
                 botConfiguration.data.tradeClose.Add(trade.id)
 
-                AreaEngine.IO.updateTradeClose(botConfiguration.parameters.header.id, trade)
-
                 trade.earn = CDec(trade.sell.tco) - trade.buy.tco
+
+                AreaCommon.Engine.IO.updateTradeClose(botConfiguration.parameters.header.id, trade)
+
                 botConfiguration.data.usedPlafond -= trade.buy.tco - trade.buy.feeCost
                 botConfiguration.data.earn += trade.earn
 
@@ -99,7 +100,7 @@ Namespace AreaCommon.Engines.Bots
         ''' </summary>
         ''' <returns></returns>
         Private Function pathOrderToDelivery(ByVal fileName As String) As String
-            Return IO.Path.Combine(AreaEngine.IO.orderToDeliveryPath, fileName & ".order")
+            Return System.IO.Path.Combine(AreaCommon.Engine.IO.orderToDeliveryPath, fileName & ".order")
         End Function
 
         ''' <summary>
@@ -107,7 +108,7 @@ Namespace AreaCommon.Engines.Bots
         ''' </summary>
         ''' <returns></returns>
         Private Function pathOrderToPlaced(ByVal fileName As String) As String
-            Return IO.Path.Combine(AreaEngine.IO.orderPlacedPath, fileName & ".confirm")
+            Return System.IO.Path.Combine(AreaCommon.Engine.IO.orderPlacedPath, fileName & ".confirm")
         End Function
 
         ''' <summary>
@@ -116,7 +117,7 @@ Namespace AreaCommon.Engines.Bots
         ''' <param name="completeName"></param>
         ''' <returns></returns>
         Private Function pathOrderToClose(ByVal completeName As String) As String
-            Return IO.Path.Combine(AreaEngine.IO.orderClosePath, completeName)
+            Return System.IO.Path.Combine(AreaCommon.Engine.IO.orderClosePath, completeName)
         End Function
 
         ''' <summary>
@@ -142,7 +143,7 @@ Namespace AreaCommon.Engines.Bots
 
             Dim fileName As String = pathOrderToDelivery(item.id)
 
-            If Not IO.File.Exists(fileName) Then
+            If Not System.IO.File.Exists(fileName) Then
                 Dim objWriter As New System.IO.StreamWriter(fileName)
 
                 objWriter.Write(content)
@@ -164,14 +165,14 @@ Namespace AreaCommon.Engines.Bots
 
             Dim fileName As String = pathOrderToPlaced(item.id)
 
-            If Not IO.File.Exists(fileName) Then
+            If Not System.IO.File.Exists(fileName) Then
                 Dim objWriter As New System.IO.StreamWriter(fileName)
 
                 objWriter.Write(content)
                 objWriter.Close()
             End If
 
-            IO.File.Move(pathOrderToDelivery(item.id), pathOrderToClose(item.id & ".order"))
+            System.IO.File.Move(pathOrderToDelivery(item.id), pathOrderToClose(item.id & ".order"))
 
             Return True
         End Function
@@ -283,7 +284,7 @@ Namespace AreaCommon.Engines.Bots
         Private Function getOrderNumber(ByVal orderBuyId As String) As String
             Dim filePath = pathOrderToPlaced(orderBuyId)
 
-            Dim streamFile As IO.StreamReader = IO.File.OpenText(filePath)
+            Dim streamFile As IO.StreamReader = System.IO.File.OpenText(filePath)
 
             Try
                 Dim orderData = streamFile.ReadLine()
@@ -298,7 +299,7 @@ Namespace AreaCommon.Engines.Bots
             Finally
                 streamFile.Close()
 
-                IO.File.Move(filePath, pathOrderToClose(orderBuyId & ".confirm"))
+                System.IO.File.Move(filePath, pathOrderToClose(orderBuyId & ".confirm"))
             End Try
         End Function
 
@@ -311,7 +312,7 @@ Namespace AreaCommon.Engines.Bots
             If (item.data.tradeOpen.Count > 0) Then
                 For Each trade In item.data.tradeOpen
                     If trade.buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented Then
-                        If IO.File.Exists(pathOrderToPlaced(trade.buy.id)) Then
+                        If System.IO.File.Exists(pathOrderToPlaced(trade.buy.id)) Then
                             trade.buy.number = getOrderNumber(trade.buy.id)
                             trade.buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.placed
 
@@ -319,7 +320,7 @@ Namespace AreaCommon.Engines.Bots
                         End If
 
                     ElseIf trade.sell.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented Then
-                        If IO.File.Exists(pathOrderToPlaced(trade.sell.id)) Then
+                        If System.IO.File.Exists(pathOrderToPlaced(trade.sell.id)) Then
                             trade.sell.number = getOrderNumber(trade.sell.id)
                             trade.sell.state = Models.Bot.BotOrderModel.OrderStateEnumeration.placed
 

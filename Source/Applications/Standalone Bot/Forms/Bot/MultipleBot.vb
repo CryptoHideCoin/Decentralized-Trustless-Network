@@ -106,7 +106,10 @@
     End Sub
 
     Private Sub productList_GotFocus(sender As Object, e As EventArgs) Handles productList.GotFocus
-        productsLabel.Text = $"Select the products to use ({itemCheckedCount()}/{productList.Items.Count})"
+
     End Sub
 
+    Private Sub productList_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles productList.ItemCheck
+        productsLabel.Text = $"Select the products to use ({itemCheckedCount()}/{productList.Items.Count})"
+    End Sub
 End Class

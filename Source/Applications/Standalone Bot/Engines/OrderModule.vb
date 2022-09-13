@@ -72,8 +72,8 @@ Namespace AreaCommon.Engines.Orders
             tradeBuy.timeCompleted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
             tradeBuy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
 
-            AreaState.addIntoAccount(AreaState.bots(botId).common.key.Split("-")(1), (-1) * tradeBuy.tco)
-            AreaState.addIntoAccount(AreaState.bots(botId).common.key, tradeBuy.amount)
+            AreaState.addIntoAccount(AreaState.bots(botId).common.key, (-1) * tradeBuy.tco, True)
+            AreaState.addIntoAccount(AreaState.bots(botId).common.key, tradeBuy.amount, False)
 
             AreaState.orders.Remove(internalOrderId)
 
@@ -99,8 +99,8 @@ Namespace AreaCommon.Engines.Orders
             tradeSell.timeCompleted = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
             tradeSell.state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
 
-            AreaState.addIntoAccount(AreaState.bots(botId).common.key, (-1) * tradeSell.amount)
-            AreaState.addIntoAccount(AreaState.bots(botId).common.key.Split("-")(1), (tradeSell.tco - tradeSell.feeCost))
+            AreaState.addIntoAccount(AreaState.bots(botId).common.key, (-1) * tradeSell.amount, False)
+            AreaState.addIntoAccount(AreaState.bots(botId).common.key, (tradeSell.tco - tradeSell.feeCost), True)
 
             AreaState.orders.Remove(internalOrderId)
 
@@ -120,7 +120,9 @@ Namespace AreaCommon.Engines.Orders
                 Dim proceed As Boolean = True
 
                 If proceed Then
-                    If AreaState.bots.ContainsKey(order.botId) Then
+                    If (order.productId.Length > 0) Then
+                        Return AreaCommon.Engines.Bots.AutomaticBotModule.manageOrderProduct(order.productId, order.internalOrderId)
+                    ElseIf AreaState.bots.ContainsKey(order.botId) Then
                         For Each trade In AreaState.bots(order.botId).data.tradeOpen
                             If (trade.buy.id = order.internalOrderId) Then
                                 If testConditionBuy(trade.buy, AreaState.bots(order.botId).common.key) Then
@@ -147,11 +149,6 @@ Namespace AreaCommon.Engines.Orders
                 Return True
             Catch ex As Exception
                 Return False
-            Finally
-                If (AreaState.orders.Count = 0) Then
-                    _InWorkJob = False
-                End If
-
             End Try
         End Function
 
@@ -171,6 +168,10 @@ Namespace AreaCommon.Engines.Orders
                         If verify(AreaState.orders.ElementAt(currentIndex).Value) Then
                             currentIndex += 1
                         End If
+                    Else
+                        _InWorkJob = False
+
+                        Return
                     End If
 
                     Threading.Thread.Sleep(100)
@@ -186,9 +187,9 @@ Namespace AreaCommon.Engines.Orders
         ''' <returns></returns>
         Public Function [start]() As Boolean
             If Not _InWorkJob Then
-                Dim objWS As Threading.Thread
-
                 _InWorkJob = True
+
+                Dim objWS As Threading.Thread
 
                 objWS = New Threading.Thread(AddressOf startServiceBot)
 

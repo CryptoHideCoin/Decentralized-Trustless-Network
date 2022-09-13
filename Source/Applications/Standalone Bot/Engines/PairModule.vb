@@ -15,16 +15,11 @@ Namespace AreaCommon.Engines.Pairs
         Private Const c_Minute As Double = c_Second * 60
         Private Const c_Hour As Double = c_Minute * 60
         Private Const c_Day As Double = c_Hour * 24
-        Private Const c_Week As Double = c_Day * 7
-        Private Const c_Month As Double = c_Day * 30
-        Private Const c_Year As Double = c_Month * 12
 
 
         Private Property _InWorkJob As Boolean = False
         Private Property _Init As Boolean = False
         Private Property _ClientPro As CoinbaseProClient
-
-
 
 
         ''' <summary>

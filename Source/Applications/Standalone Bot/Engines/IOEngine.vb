@@ -3,7 +3,7 @@ Option Explicit On
 
 
 
-Namespace AreaCommon.Engines
+Namespace AreaEngine.IO
 
     Public Class IOEngine
 
@@ -20,6 +20,8 @@ Namespace AreaCommon.Engines
         Public Property botListPath As String = ""
         Public Property summaryPath As String = ""
         Public Property accountPath As String = ""
+        Public Property productsPath As String = ""
+        Public Property automaticBotPath As String = ""
 
         Public Property newTenant As Boolean = False
 
@@ -29,26 +31,26 @@ Namespace AreaCommon.Engines
         ''' </summary>
         ''' <returns></returns>
         Private Function checkAndMakeOrderPath() As Boolean
-            If Not IO.Directory.Exists(orderRootPath) Then
-                IO.Directory.CreateDirectory(orderRootPath)
+            If Not System.IO.Directory.Exists(orderRootPath) Then
+                System.IO.Directory.CreateDirectory(orderRootPath)
             End If
 
-            orderClosePath = IO.Path.Combine(orderRootPath, "Closed")
+            orderClosePath = System.IO.Path.Combine(orderRootPath, "Closed")
 
-            If Not IO.Directory.Exists(orderClosePath) Then
-                IO.Directory.CreateDirectory(orderClosePath)
+            If Not System.IO.Directory.Exists(orderClosePath) Then
+                System.IO.Directory.CreateDirectory(orderClosePath)
             End If
 
-            orderPlacedPath = IO.Path.Combine(orderRootPath, "Placed")
+            orderPlacedPath = System.IO.Path.Combine(orderRootPath, "Placed")
 
-            If Not IO.Directory.Exists(orderPlacedPath) Then
-                IO.Directory.CreateDirectory(orderPlacedPath)
+            If Not System.IO.Directory.Exists(orderPlacedPath) Then
+                System.IO.Directory.CreateDirectory(orderPlacedPath)
             End If
 
-            orderToDeliveryPath = IO.Path.Combine(orderRootPath, "To Delivery")
+            orderToDeliveryPath = System.IO.Path.Combine(orderRootPath, "To Delivery")
 
-            If Not IO.Directory.Exists(orderToDeliveryPath) Then
-                IO.Directory.CreateDirectory(orderToDeliveryPath)
+            If Not System.IO.Directory.Exists(orderToDeliveryPath) Then
+                System.IO.Directory.CreateDirectory(orderToDeliveryPath)
             End If
 
             Return True
@@ -59,7 +61,7 @@ Namespace AreaCommon.Engines
         ''' </summary>
         ''' <returns></returns>
         Public Function updatePersonaData() As Boolean
-            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.User.UserDataPersonalModel).save(configurationPath, AreaState.defaultUserDataAccount)
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.User.UserDataPersonalModel).save(configurationPath, AreaState.defaultUserDataAccount)
         End Function
 
         ''' <summary>
@@ -67,7 +69,7 @@ Namespace AreaCommon.Engines
         ''' </summary>
         ''' <returns></returns>
         Public Function updateBotList() As Boolean
-            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Bot.BotListModel).save(botListPath, AreaState.botList)
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.BotListModel).save(botListPath, AreaState.botList)
         End Function
 
         ''' <summary>
@@ -75,7 +77,15 @@ Namespace AreaCommon.Engines
         ''' </summary>
         ''' <returns></returns>
         Public Function updateSummary() As Boolean
-            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Account.SummaryModel).save(summaryPath, AreaState.summary)
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Account.SummaryModel).save(summaryPath, AreaState.summary)
+        End Function
+
+        Public Function updateCryptocurrency() As Boolean
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Products.ProductsModel).save(productsPath, AreaState.products)
+        End Function
+
+        Public Function updateAutomaticBot() As Boolean
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.BotAutomatic).save(automaticBotPath, AreaState.automaticBot)
         End Function
 
         ''' <summary>
@@ -83,13 +93,22 @@ Namespace AreaCommon.Engines
         ''' </summary>
         ''' <returns></returns>
         Public Function updateWallet() As Boolean
-            Dim accounts As New Models.Account.AccountsModel
+            If Not AreaState.defaultUserDataAccount.useVirtualAccount Then
+                Try
+                    System.IO.File.Delete(accountPath)
+                Catch ex As Exception
+                End Try
+
+                Return True
+            End If
+
+            Dim accounts As New AreaCommon.Models.Account.AccountsModel
 
             For Each account In AreaState.accounts
-                accounts.wallet.Add(New Models.Account.AccountBaseForSerializationModel With {.key = account.Key, .id = account.Value.id, .amount = account.Value.amount})
+                accounts.wallet.Add(New AreaCommon.Models.Account.AccountBaseForSerializationModel With {.key = account.Key, .id = account.Value.id, .amount = account.Value.amount})
             Next
 
-            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Account.AccountsModel).save(accountPath, accounts)
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Account.AccountsModel).save(accountPath, accounts)
         End Function
 
         ''' <summary>
@@ -98,10 +117,10 @@ Namespace AreaCommon.Engines
         ''' <param name="botId"></param>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Function updateTradeClose(ByVal botId As String, ByRef data As Models.Bot.TradeModel) As Boolean
-            Dim pathComplete As String = IO.Path.Combine(tenantRootPath, "Bot-" & botId, "Trade Close", data.id & ".json")
+        Public Function updateTradeClose(ByVal botId As String, ByRef data As AreaCommon.Models.Bot.TradeModel) As Boolean
+            Dim pathComplete As String = System.IO.Path.Combine(tenantRootPath, "Bot-" & botId, "Trade Close", data.id & ".json")
 
-            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Bot.TradeModel).save(pathComplete, data)
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.TradeModel).save(pathComplete, data)
         End Function
 
         ''' <summary>
@@ -110,10 +129,10 @@ Namespace AreaCommon.Engines
         ''' <param name="botId"></param>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Function updateBotData(ByVal botId As String, ByRef data As Models.Bot.BotDataModel) As Boolean
-            Dim pathComplete As String = IO.Path.Combine(tenantRootPath, "Bot-" & botId, "data.json")
+        Public Function updateBotData(ByVal botId As String, ByRef data As AreaCommon.Models.Bot.BotDataModel) As Boolean
+            Dim pathComplete As String = System.IO.Path.Combine(tenantRootPath, "Bot-" & botId, "data.json")
 
-            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Bot.BotDataModel).save(pathComplete, data)
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.BotDataModel).save(pathComplete, data)
         End Function
 
         ''' <summary>
@@ -121,35 +140,35 @@ Namespace AreaCommon.Engines
         ''' </summary>
         ''' <param name="tradeId"></param>
         ''' <returns></returns>
-        Public Function getTradeClose(ByVal botId As String, ByVal tradeId As String) As Models.Bot.TradeModel
-            Dim pathComplete As String = IO.Path.Combine(tenantRootPath, "Bot-" & botId, "Trade Close", tradeId & ".json")
+        Public Function getTradeClose(ByVal botId As String, ByVal tradeId As String) As AreaCommon.Models.Bot.TradeModel
+            Dim pathComplete As String = System.IO.Path.Combine(tenantRootPath, "Bot-" & botId, "Trade Close", tradeId & ".json")
 
-            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Bot.TradeModel).read(pathComplete)
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.TradeModel).read(pathComplete)
         End Function
 
         ''' <summary>
         ''' This method provide to update the bot settings
         ''' </summary>
         ''' <returns></returns>
-        Public Function updateBotSetting(ByRef data As Models.Bot.BotConfigurationsModel) As Boolean
-            Dim pathComplete As String = IO.Path.Combine(tenantRootPath, "Bot-" & data.parameters.header.id)
-            Dim fileName As String = IO.Path.Combine(pathComplete, "Settings.json")
+        Public Function updateBotSetting(ByRef data As AreaCommon.Models.Bot.BotConfigurationsModel) As Boolean
+            Dim pathComplete As String = System.IO.Path.Combine(tenantRootPath, "Bot-" & data.parameters.header.id)
+            Dim fileName As String = System.IO.Path.Combine(pathComplete, "Settings.json")
 
             AreaState.bots.Add(data.parameters.header.id, data)
 
             AreaState.botList.ActiveBots.Add(data.parameters.header.id)
 
-            If Not IO.Directory.Exists(pathComplete) Then
-                IO.Directory.CreateDirectory(pathComplete)
+            If Not System.IO.Directory.Exists(pathComplete) Then
+                System.IO.Directory.CreateDirectory(pathComplete)
             End If
 
-            pathComplete = IO.Path.Combine(pathComplete, "Trade Close")
+            pathComplete = System.IO.Path.Combine(pathComplete, "Trade Close")
 
-            If Not IO.Directory.Exists(pathComplete) Then
-                IO.Directory.CreateDirectory(pathComplete)
+            If Not System.IO.Directory.Exists(pathComplete) Then
+                System.IO.Directory.CreateDirectory(pathComplete)
             End If
 
-            If CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Bot.BotParametersModel).save(fileName, data.parameters) Then
+            If CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.BotParametersModel).save(fileName, data.parameters) Then
                 Return updateBotList()
             End If
 
@@ -166,7 +185,7 @@ Namespace AreaCommon.Engines
 
             For Each item In AreaState.bots
                 If (item.Value.parameters.header.id.CompareTo(id) = 0) Then
-                    AreaEngine.IO.updateBotData(item.Value.parameters.header.id, item.Value.data)
+                    updateBotData(item.Value.parameters.header.id, item.Value.data)
 
                     AreaState.bots.Remove(id)
 
@@ -183,19 +202,19 @@ Namespace AreaCommon.Engines
             Next
 
             If (AreaState.botList.ActiveBots.Count = 0) Then
-                IO.File.Delete(botListPath)
+                System.IO.File.Delete(botListPath)
             Else
                 updateBotList()
             End If
 
-            Dim pathBot As String = IO.Path.Combine(AreaEngine.IO.tenantRootPath, "Bot-" & id)
-            Dim pathArchived As String = IO.Path.Combine(AreaEngine.IO.tenantRootPath, "Archived", "Bot-" & id)
+            Dim pathBot As String = System.IO.Path.Combine(tenantRootPath, "Bot-" & id)
+            Dim pathArchived As String = System.IO.Path.Combine(tenantRootPath, "Archived", "Bot-" & id)
 
-            IO.Directory.CreateDirectory(pathArchived)
+            System.IO.Directory.CreateDirectory(pathArchived)
 
             My.Computer.FileSystem.CopyDirectory(pathBot, pathArchived, True)
 
-            IO.Directory.Delete(pathBot, True)
+            System.IO.Directory.Delete(pathBot, True)
 
             Return True
         End Function
@@ -207,74 +226,88 @@ Namespace AreaCommon.Engines
         ''' <returns></returns>
         Public Function init(ByVal path As String) As Boolean
             Dim botPath As String = ""
-            Dim newBot As Models.Bot.BotConfigurationsModel
+            Dim newBot As AreaCommon.Models.Bot.BotConfigurationsModel
 
             path = path.Replace(Chr(34) & Chr(34), "").Trim()
 
-            If Not IO.Directory.Exists(path) Then
-                IO.Directory.CreateDirectory(path)
+            If Not System.IO.Directory.Exists(path) Then
+                System.IO.Directory.CreateDirectory(path)
             End If
 
             tenantRootPath = path
-            AreaState.defaultUserDataAccount.tenantName = IO.Path.GetFileName(path)
-            orderRootPath = IO.Path.Combine(IO.Directory.GetParent(path).Parent.FullName, "Orders")
-            configurationPath = IO.Path.Combine(path, "Configuration.json")
-            botListPath = IO.Path.Combine(path, "Botlist.json")
-            summaryPath = IO.Path.Combine(path, "Summary.json")
-            accountPath = IO.Path.Combine(path, "Accounts.json")
+            AreaState.defaultUserDataAccount.tenantName = System.IO.Path.GetFileName(path)
+            orderRootPath = System.IO.Path.Combine(System.IO.Directory.GetParent(path).Parent.FullName, "Orders")
+            configurationPath = System.IO.Path.Combine(path, "Configuration.json")
+            botListPath = System.IO.Path.Combine(path, "Botlist.json")
+            summaryPath = System.IO.Path.Combine(path, "Summary.json")
+            accountPath = System.IO.Path.Combine(path, "Accounts.json")
+            productsPath = System.IO.Path.Combine(path, "Products.json")
+            automaticBotPath = System.IO.Path.Combine(path, "AutomaticBot.json")
 
             checkAndMakeOrderPath()
 
-            botArchivePath = IO.Path.Combine(path, "Archived")
+            botArchivePath = System.IO.Path.Combine(path, "Archived")
 
-            If Not IO.Directory.Exists(botArchivePath) Then
-                IO.Directory.CreateDirectory(botArchivePath)
+            If Not System.IO.Directory.Exists(botArchivePath) Then
+                System.IO.Directory.CreateDirectory(botArchivePath)
             End If
 
-            If IO.File.Exists(configurationPath) Then
-                AreaState.defaultUserDataAccount = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.User.UserDataPersonalModel).read(configurationPath)
+            If System.IO.File.Exists(configurationPath) Then
+                AreaState.defaultUserDataAccount = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.User.UserDataPersonalModel).read(configurationPath)
             Else
                 newTenant = True
 
                 Return True
             End If
 
-            If IO.File.Exists(botListPath) Then
-                AreaState.botList = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Bot.BotListModel).read(botListPath)
+            If System.IO.File.Exists(botListPath) Then
+                AreaState.botList = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.BotListModel).read(botListPath)
 
                 For Each botItem In AreaState.botList.ActiveBots
-                    botPath = IO.Path.Combine(tenantRootPath, "Bot-" & botItem, "Settings.json")
+                    botPath = System.IO.Path.Combine(tenantRootPath, "Bot-" & botItem, "Settings.json")
 
-                    newBot = New Models.Bot.BotConfigurationsModel
+                    newBot = New AreaCommon.Models.Bot.BotConfigurationsModel
 
-                    newBot.parameters = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Bot.BotParametersModel).read(botPath)
+                    newBot.parameters = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.BotParametersModel).read(botPath)
 
                     AreaState.bots.Add(botItem, newBot)
 
                     newBot.parameters.configuration.pairId = AreaState.Common.getPairID(newBot.parameters.configuration.pairKey)
-                    newBot.data = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Bot.BotDataModel).read(IO.Path.Combine(tenantRootPath, "Bot-" & botItem, "data.json"))
+                    newBot.data = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.BotDataModel).read(System.IO.Path.Combine(tenantRootPath, "Bot-" & botItem, "data.json"))
 
                     If newBot.parameters.header.isActive Then
-                        Bots.start()
+                        AreaCommon.Engines.Bots.BotModule.start()
                     End If
                 Next
             End If
 
-            If IO.File.Exists(summaryPath) Then
-                AreaState.summary = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Account.SummaryModel).read(summaryPath)
+            If System.IO.File.Exists(summaryPath) Then
+                AreaState.summary = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Account.SummaryModel).read(summaryPath)
             End If
 
-            If IO.File.Exists(accountPath) Then
-                AreaState.accounts = New Dictionary(Of String, Models.Account.AccountModel)
+            If System.IO.File.Exists(accountPath) Then
+                AreaState.accounts = New Dictionary(Of String, AreaCommon.Models.Account.AccountModel)
 
-                For Each account In CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of Models.Account.AccountsModel).read(accountPath).wallet
-                    AreaState.accounts.Add(account.key, New Models.Account.AccountModel With {.id = account.id, .amount = account.amount, .change = 0, .valueUSDT = 0})
+                For Each account In CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Account.AccountsModel).read(accountPath).wallet
+                    AreaState.accounts.Add(account.key, New AreaCommon.Models.Account.AccountModel With {.id = account.id, .amount = account.amount, .change = 0, .valueUSDT = 0})
                 Next
 
-                With AreaState.accounts("USDT".ToLower())
-                    .change = 1
-                    .valueUSDT = .amount
-                End With
+                If AreaState.accounts.ContainsKey("USDT".ToLower()) Then
+                    With AreaState.accounts("USDT".ToLower())
+                        .change = 1
+                        .valueUSDT = .amount
+                    End With
+                End If
+            End If
+
+            If System.IO.File.Exists(productsPath) Then
+                For Each currency In CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Products.ProductsModel).read(productsPath).items
+                    AreaState.products.addNew(currency.header.key, currency)
+                Next
+            End If
+
+            If System.IO.File.Exists(automaticBotPath) Then
+                AreaState.automaticBot = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.BotAutomatic).read(automaticBotPath)
             End If
 
             Return True

@@ -4,11 +4,11 @@ Option Explicit On
 
 
 
-Namespace AreaEngine
+Namespace AreaCommon
 
-    Module Common
+    Module Engine
 
-        Public Property IO As New AreaCommon.Engines.IOEngine
+        Public Property IO As New AreaEngine.IO.IOEngine
 
     End Module
 

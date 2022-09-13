@@ -91,50 +91,71 @@
   <ItemGroup>
     <Compile Include="Common\State.vb" />
     <Compile Include="Common\Engine.vb" />
+    <Compile Include="Engines\AccountModule.vb" />
+    <Compile Include="Engines\AutomaticBotModule.vb" />
     <Compile Include="Engines\BotModule.vb" />
+    <Compile Include="Engines\ProductsModule.vb" />
     <Compile Include="Engines\IOEngine.vb" />
     <Compile Include="Engines\OrderModule.vb" />
     <Compile Include="Engines\PairModule.vb" />
-    <Compile Include="Forms\About.Designer.vb">
+    <Compile Include="Forms\Bot\AutomaticBotSetting.Designer.vb">
+      <DependentUpon>AutomaticBotSetting.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bot\AutomaticBotSetting.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Generic\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\About.vb">
+    <Compile Include="Forms\Generic\About.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DataBot.Designer.vb">
+    <Compile Include="Forms\Bot\DataBot.Designer.vb">
       <DependentUpon>DataBot.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DataBot.vb">
+    <Compile Include="Forms\Bot\DataBot.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DataTrade.Designer.vb">
+    <Compile Include="Forms\Bot\DataTrade.Designer.vb">
       <DependentUpon>DataTrade.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\DataTrade.vb">
+    <Compile Include="Forms\Bot\DataTrade.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MultipleBot.Designer.vb">
+    <Compile Include="Forms\Products\EditProduct.Designer.vb">
+      <DependentUpon>EditProduct.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Products\EditProduct.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Bot\MultipleBot.Designer.vb">
       <DependentUpon>MultipleBot.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MultipleBot.vb">
+    <Compile Include="Forms\Bot\MultipleBot.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\PersonalData.Designer.vb">
+    <Compile Include="Forms\Products\ShowOrder.Designer.vb">
+      <DependentUpon>ShowOrder.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Products\ShowOrder.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UserProfile\PersonalData.Designer.vb">
       <DependentUpon>PersonalData.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\PersonalData.vb">
+    <Compile Include="Forms\UserProfile\PersonalData.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SelectPath.Designer.vb">
+    <Compile Include="Forms\Generic\SelectPath.Designer.vb">
       <DependentUpon>SelectPath.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SelectPath.vb">
+    <Compile Include="Forms\Generic\SelectPath.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SettingsBot.Designer.vb">
+    <Compile Include="Forms\Bot\SettingsBot.Designer.vb">
       <DependentUpon>SettingsBot.vb</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SettingsBot.vb">
+    <Compile Include="Forms\Bot\SettingsBot.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Manager.vb">
@@ -146,10 +167,12 @@
     </Compile>
     <Compile Include="Models\Accounts\AccountModel.vb" />
     <Compile Include="Models\Accounts\SummaryModel.vb" />
+    <Compile Include="Models\Bots\BotAutomaticModel.vb" />
     <Compile Include="Models\Bots\BotConfigurationsModel.vb" />
     <Compile Include="Models\Bots\BotDataModel.vb" />
     <Compile Include="Models\Bots\BotListModel.vb" />
     <Compile Include="Models\Bots\BotParametersModel.vb" />
+    <Compile Include="Models\Cryptocurrencies\CryptocurrencyModel.vb" />
     <Compile Include="Models\Tenant\TenantAccountModel.vb" />
     <Compile Include="Models\Orders\SimplyOrderMode.vb" />
     <Compile Include="Models\Pairs\PairInformation.vb" />
@@ -170,25 +193,34 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\About.resx">
+    <EmbeddedResource Include="Forms\Bot\AutomaticBotSetting.resx">
+      <DependentUpon>AutomaticBotSetting.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Generic\About.resx">
       <DependentUpon>About.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DataBot.resx">
+    <EmbeddedResource Include="Forms\Bot\DataBot.resx">
       <DependentUpon>DataBot.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\DataTrade.resx">
+    <EmbeddedResource Include="Forms\Bot\DataTrade.resx">
       <DependentUpon>DataTrade.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MultipleBot.resx">
+    <EmbeddedResource Include="Forms\Products\EditProduct.resx">
+      <DependentUpon>EditProduct.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Bot\MultipleBot.resx">
       <DependentUpon>MultipleBot.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\PersonalData.resx">
+    <EmbeddedResource Include="Forms\Products\ShowOrder.resx">
+      <DependentUpon>ShowOrder.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserProfile\PersonalData.resx">
       <DependentUpon>PersonalData.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SelectPath.resx">
+    <EmbeddedResource Include="Forms\Generic\SelectPath.resx">
       <DependentUpon>SelectPath.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SettingsBot.resx">
+    <EmbeddedResource Include="Forms\Bot\SettingsBot.resx">
       <DependentUpon>SettingsBot.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Manager.resx">

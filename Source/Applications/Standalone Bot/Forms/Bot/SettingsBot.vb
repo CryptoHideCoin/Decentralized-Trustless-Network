@@ -337,10 +337,10 @@ Public Class SettingsBot
         newJob.data.pair = pair
 
         If (currentID.Length = 0) Then
-            AreaEngine.IO.updateBotSetting(newJob)
+            AreaCommon.Engine.IO.updateBotSetting(newJob)
         End If
 
-        AreaCommon.Engines.Bots.start()
+        AreaCommon.Engines.Bots.BotModule.start()
 
         Me.Close()
     End Sub
