@@ -45,8 +45,9 @@ Namespace AreaCommon.Models.Bot
 
         Public Enum WorkStateEnumeration
             undefined
+            completeRemoveActiveProducts
             checkBalance
-            distressedInvestment
+            checkAllSellDailyProduct
             reorderProducts
             investProducts
             completeWork

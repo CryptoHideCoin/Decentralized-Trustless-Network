@@ -71,13 +71,30 @@ Namespace AreaCommon.Engines.Bots
             Try
                 For Each product In AreaState.products.items
                     If product.userData.isCustomized Then
-                        If product.targetReached() Then
-                            ' Qua devo effettuare la cancellazione dell'ordine di vendita
+                        If (product.value.current >= product.minTarget) And (product.minTarget > 0) Then
+                            If (product.activity.sell.internalOrderId.Length > 0) Then
+                                removeOrder(product.activity.sell.internalOrderId)
+                            End If
 
-                            ' E il piazzamento del nuovo ordine al valore attuale con il valore attuale giusto per cambiare la somma
+                            createNewOrder(product, 0, True, product.activity.totalAmount())
 
-                            ' Così recupero la somma
+                            Return False
+                        End If
+                    End If
+                Next
 
+                Return True
+            Catch ex As Exception
+            End Try
+
+            Return False
+        End Function
+
+        Private Function checkAllSellProduct() As Boolean
+            Try
+                For Each product In AreaState.products.items
+                    If product.userData.isCustomized Then
+                        If (product.value.current >= product.minTarget) And (product.minTarget > 0) Then
                             Return False
                         End If
                     End If
@@ -97,43 +114,6 @@ Namespace AreaCommon.Engines.Bots
             temp = temp * unitStep / 100
 
             Return temp
-        End Function
-
-        Private Function restockProduct(ByRef value As AreaCommon.Models.Products.ProductModel) As Boolean
-            Dim orderValue As Double = 0
-
-            orderValue = determinateOrderValue(value.value.bottomPercentPosition, AreaState.automaticBot.settings.unitStep)
-
-            ' piazzo l'ordine
-
-            ' Che faccio ?!?
-
-            ' Prendo lo unit step
-
-            ' Cerco di capire la percentuale di rischio
-
-            ' Determino quanto devo investire
-
-            ' Quindi faccio un nuovo ordine e lo aggiungo a quelli esistenti
-        End Function
-
-        Private Function completeDistressedInvestment() As Boolean
-            Try
-                For Each product In AreaState.products.items
-                    If product.userData.isCustomized Then
-                        If product.inDeal(AreaState.automaticBot.settings.dealAcquireOnPercentage) Then
-                            restockProduct(product)
-
-                            Return False
-                        End If
-                    End If
-                Next
-
-                Return True
-            Catch ex As Exception
-            End Try
-
-            Return False
         End Function
 
         Private Function completeReorderProducts() As Boolean
@@ -282,6 +262,7 @@ Namespace AreaCommon.Engines.Bots
                     buy.tcoQuote = orderValue
                     buy.amount = orderValue / product.value.current
                     buy.tcoQuote = product.value.current * buy.amount
+                    buy.ordinary = True
 
                     product.activity.buys.Add(buy)
 
@@ -301,7 +282,7 @@ Namespace AreaCommon.Engines.Bots
             Return True
         End Function
 
-        Private Function createNewOrder(ByRef product As Models.Products.ProductModel, ByVal spread As Double, Optional ByVal forceAmount As Double = 0) As Boolean
+        Private Function createNewOrder(ByRef product As Models.Products.ProductModel, ByVal spread As Double, ByVal ordinary As Boolean, Optional ByVal forceAmount As Double = 0) As Boolean
             Dim order As Models.Products.ProductOrderModel
             Dim orderNumber As String = ""
             Dim orderValue As Double = 0
@@ -313,18 +294,24 @@ Namespace AreaCommon.Engines.Bots
 
             orderValue = determinateOrderValue(product.value.bottomPercentPosition(futureValue), AreaState.automaticBot.settings.unitStep)
 
-            If (AreaState.accounts("USDT".ToLower()).valueUSDT >= orderValue) Then
+            If (AreaState.accounts("USDT".ToLower()).valueUSDT >= orderValue) Or (forceAmount > 0) Then
                 order.dateAcquire = 0
                 order.internalOrderId = Guid.NewGuid.ToString
                 order.tcoQuote = orderValue
 
-                If forceAmount = 0 Then
+                If (forceAmount = 0) Then
                     order.amount = order.tcoQuote / futureValue
                 Else
                     order.amount = forceAmount
                 End If
 
-                order.tcoQuote = futureValue * order.amount
+                If (spread > 0) Then
+                    order.tcoQuote = product.activity.totalInvestment + (product.activity.totalInvestment * spread / 100)
+                Else
+                    order.tcoQuote = futureValue * order.amount
+                End If
+
+                order.ordinary = ordinary
 
                 If (spread > 0) Then
                     product.activity.sell = order
@@ -347,6 +334,48 @@ Namespace AreaCommon.Engines.Bots
             Return True
         End Function
 
+        Public Function updateJournalCounter() As Boolean
+            AreaState.journal.currentFund = AreaState.accounts("USDT".ToLower()).valueUSDT
+            AreaState.journal.futureGain = 0
+            AreaState.journal.currentDayCounters.earn = 0
+
+            For Each product In AreaState.products.items
+                If product.activity.inUse Then
+                    AreaState.journal.currentFund += product.activity.totalAmount * product.value.current
+                    AreaState.journal.futureGain += product.activity.target
+                    AreaState.journal.currentDayCounters.earn += product.currentSpread
+                End If
+            Next
+
+            Return True
+        End Function
+
+        Private Function openNewJournal() As Boolean
+            If (AreaState.journal.currentDayCounters.day > 0) Then
+                updateJournalCounter()
+
+                AreaState.journal.totalEarn += AreaState.journal.currentDayCounters.earn
+
+                IO.saveCurrentCounterDay()
+            End If
+
+            AreaState.journal.currentDayCounters = New Models.Journal.DayCounterModel
+
+            AreaState.journal.currentDayCounters.day = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
+
+            AreaState.journal.currentDayCounters.initialFundFree = AreaState.accounts("USDT".ToLower()).valueUSDT
+            AreaState.journal.currentDayCounters.initialFundManage = 0
+
+            For Each product In AreaState.products.items
+                If product.activity.inUse Then
+                    AreaState.journal.currentDayCounters.initialFundManage += CDec(product.activity.totalAmount) * product.value.current
+                End If
+            Next
+
+            AreaState.journal.lastUpdate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+
+            Return True
+        End Function
 
         ''' <summary>
         ''' This method provide to process a pair
@@ -360,42 +389,41 @@ Namespace AreaCommon.Engines.Bots
                     proceed = AreaState.automaticBot.isActive
                 End If
                 If proceed Then
-                    If (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > (AreaState.automaticBot.lastWorkAction + 24 * 60 * 60 * 1000)) Then
-                        Select Case AreaState.automaticBot.workAction
-                            Case Models.Bot.BotAutomatic.WorkStateEnumeration.undefined
-                                If completeRemoveActiveProducts() Then
-                                    AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.checkBalance
-                                End If
-                            Case Models.Bot.BotAutomatic.WorkStateEnumeration.checkBalance
-                                If AreaState.accounts.ContainsKey("USDT".ToLower()) Then
-                                    If (AreaState.accounts("USDT".ToLower()).valueUSDT >= AreaState.automaticBot.settings.unitStep) Then
-                                        AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.distressedInvestment
-                                    End If
-                                End If
-                            Case Models.Bot.BotAutomatic.WorkStateEnumeration.distressedInvestment
-                                If completeDistressedInvestment() Then
+                    proceed = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > (AreaState.automaticBot.lastWorkAction + 24 * 60 * 60 * 1000)
+                End If
+                If proceed Then
+                    Select Case AreaState.automaticBot.workAction
+                        Case Models.Bot.BotAutomatic.WorkStateEnumeration.undefined
+                            If openNewJournal() Then
+                                AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.completeRemoveActiveProducts
+                            End If
+                        Case Models.Bot.BotAutomatic.WorkStateEnumeration.completeRemoveActiveProducts
+                            If completeRemoveActiveProducts() Then
+                                AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.checkAllSellDailyProduct
+                            End If
+                        Case Models.Bot.BotAutomatic.WorkStateEnumeration.checkAllSellDailyProduct
+                            If checkAllSellProduct() Then
+                                AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.checkBalance
+                            End If
+                        Case Models.Bot.BotAutomatic.WorkStateEnumeration.checkBalance
+                            If AreaState.accounts.ContainsKey("USDT".ToLower()) Then
+                                If (AreaState.accounts("USDT".ToLower()).valueUSDT >= AreaState.automaticBot.settings.unitStep) Then
                                     AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.reorderProducts
                                 End If
-                            Case Models.Bot.BotAutomatic.WorkStateEnumeration.reorderProducts
-                                If completeReorderProducts() Then
-                                    AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.investProducts
-                                End If
-                            Case Models.Bot.BotAutomatic.WorkStateEnumeration.investProducts
-                                If completeInvestProducts() Then
-                                    AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.completeWork
-                                End If
-                            Case Models.Bot.BotAutomatic.WorkStateEnumeration.completeWork
-                                AreaState.automaticBot.lastWorkAction = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                            End If
+                        Case Models.Bot.BotAutomatic.WorkStateEnumeration.reorderProducts
+                            If completeReorderProducts() Then
+                                AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.investProducts
+                            End If
+                        Case Models.Bot.BotAutomatic.WorkStateEnumeration.investProducts
+                            If completeInvestProducts() Then
+                                AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.completeWork
+                            End If
+                        Case Models.Bot.BotAutomatic.WorkStateEnumeration.completeWork
+                            AreaState.automaticBot.lastWorkAction = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
-                                ' Change current page
-
-                                AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.undefined
-                        End Select
-                    Else
-                        ' guardo se gli ordini sono stati piazzati e quindi ....
-
-                        ' eventualmente aggiorno la posizione del singolo ordine... 
-                    End If
+                            AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.undefined
+                    End Select
                 End If
 
                 Return True
@@ -410,6 +438,14 @@ Namespace AreaCommon.Engines.Bots
         Private Sub startServiceBot()
             Try
                 Dim currentIndex As Integer = 0
+
+                With AreaState.journal
+                    If (.initialDay = 0) Then
+                        .initialDay = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
+                        .initialFund = AreaState.accounts("USDT".ToLower()).valueUSDT
+                        .lastUpdate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    End If
+                End With
 
                 Do While _InWorkJob
                     process()
@@ -445,7 +481,11 @@ Namespace AreaCommon.Engines.Bots
 
                     If (buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.placed) Then
 
-                        If (product.value.current * buy.amount <= buy.tcoQuote) Then
+                        If (AreaState.accounts("USDT".ToLower()).valueUSDT < buy.tcoQuote) Then
+                            Return False
+                        End If
+
+                        If (product.value.current > 0) And (product.value.current * buy.amount <= buy.tcoQuote) Then
                             buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
                             buy.dateAcquire = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                             buy.feeCost = calculateFeeCost(buy.tcoQuote)
@@ -453,22 +493,47 @@ Namespace AreaCommon.Engines.Bots
                             AreaState.summary.totalFeesValue += CDec(buy.feeCost)
                             AreaState.summary.totalVolumeValue += CDec(buy.tcoQuote)
 
+                            AreaState.journal.currentDayCounters.buyNumber += 1
+                            AreaState.journal.currentDayCounters.feePayed += buy.feeCost
+                            AreaState.journal.currentDayCounters.volumes += CDec(buy.tcoQuote)
+
+                            AreaState.journal.totalFee += buy.feeCost
+                            AreaState.journal.totalVolume += CDec(buy.tcoQuote)
+
+                            If buy.ordinary Then
+                                AreaState.journal.currentDayCounters.dailyBuy += CDec(buy.tcoQuote)
+                            Else
+                                AreaState.journal.currentDayCounters.extraBuy += CDec(buy.tcoQuote)
+                            End If
+
+                            With AreaState.journal.currentDayCounters.addNewTransaction()
+                                .amount = buy.amount
+                                .buy = True
+                                .daily = buy.ordinary
+                                .dateCompletate = buy.dateAcquire
+                                .orderNumber = internalOrderId
+                                .pairID = product.header.key
+                                .value = buy.tcoQuote
+                            End With
+
                             buy.tcoQuote += buy.feeCost
 
-                            AreaState.orders.Remove(internalOrderId)
+                            product.minTarget = product.activity.totalInvestment + (product.activity.totalInvestment * AreaState.automaticBot.settings.minDailyEarn / 100)
 
-                            System.IO.File.Delete(pathOrderToPlaced(internalOrderId))
+                            removeOrder(internalOrderId)
 
                             AreaState.addIntoAccount(product.pairID, (-1) * buy.tcoQuote, True)
                             AreaState.addIntoAccount(product.pairID, buy.amount, False)
 
-                            createNewOrder(product, (-1) * AreaState.automaticBot.settings.dealAcquireOnPercentage)
+                            createNewOrder(product, (-1) * AreaState.automaticBot.settings.dealAcquireOnPercentage, False)
 
                             If (product.activity.sell.internalOrderId.Length > 0) Then
                                 removeOrder(product.activity.sell.internalOrderId)
                             End If
 
-                            createNewOrder(product, AreaState.automaticBot.settings.maxDailyEarn, product.activity.totalAmount())
+                            createNewOrder(product, AreaState.automaticBot.settings.maxDailyEarn, False, product.activity.totalAmount())
+
+                            AreaState.journal.lastUpdate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
                             Return False
                         End If
@@ -477,8 +542,62 @@ Namespace AreaCommon.Engines.Bots
                 End If
             Next
 
-            ' Controllo anche la vendita
-            ' Se il target è stata raggiunta... allora cancello l'ordine di deal
+            If (product.activity.sell.internalOrderId.CompareTo(internalOrderId) = 0) Then
+
+                If (product.value.current > 0) And (product.value.current * product.activity.sell.amount >= product.activity.sell.tcoQuote) Then
+                    product.activity.sell.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
+                    product.activity.sell.dateAcquire = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    product.activity.sell.feeCost = calculateFeeCost(product.activity.sell.tcoQuote)
+
+                    AreaState.journal.currentDayCounters.sellNumber += 1
+
+                    If product.activity.sell.ordinary Then
+                        AreaState.journal.currentDayCounters.dailySell += product.activity.sell.tcoQuote
+                    Else
+                        AreaState.journal.currentDayCounters.extraSell += product.activity.sell.tcoQuote
+                    End If
+
+                    AreaState.journal.currentDayCounters.earn += product.activity.earn
+                    AreaState.journal.currentDayCounters.feePayed += product.activity.sell.feeCost
+
+                    With AreaState.journal.currentDayCounters.addNewTransaction()
+                        .amount = product.activity.sell.amount
+                        .buy = True
+                        .daily = product.activity.sell.ordinary
+                        .dateCompletate = product.activity.sell.dateAcquire
+                        .orderNumber = internalOrderId
+                        .pairID = product.header.key
+                        .value = product.activity.sell.tcoQuote
+                    End With
+
+                    AreaState.summary.totalFeesValue += CDec(product.activity.sell.feeCost)
+                    AreaState.summary.totalVolumeValue += CDec(product.activity.sell.tcoQuote)
+
+                    AreaState.journal.totalFee += product.activity.sell.feeCost
+                    AreaState.journal.totalVolume += CDec(product.activity.sell.tcoQuote)
+
+                    removeOrder(internalOrderId)
+
+                    If (product.activity.openBuy.internalOrderId = 0) Then
+                        removeOrder(product.activity.openBuy.internalOrderId)
+                    End If
+
+                    AreaState.addIntoAccount(product.pairID, product.activity.sell.tcoQuote, True)
+                    AreaState.addIntoAccount(product.pairID, (-1) * product.activity.sell.amount, False)
+
+                    AreaState.summary.increaseValue += product.activity.earn
+                    AreaState.journal.increaseValue += product.activity.earn
+
+                    product.activity.sell.tcoQuote += product.activity.sell.feeCost
+
+                    product.resetData()
+
+                    AreaState.journal.lastUpdate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+
+                    Return False
+                End If
+
+            End If
 
             Return True
         End Function

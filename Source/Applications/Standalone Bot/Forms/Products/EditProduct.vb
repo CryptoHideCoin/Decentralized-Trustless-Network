@@ -25,6 +25,7 @@ Public Class EditProduct
         totalAmountCurrency.Text = currentData.header.baseCurrency
         totalInvestmentCurrency.Text = currentData.header.quoteCurrency
         spreadCurrency.Text = currentData.header.quoteCurrency
+        currentTotalCurrencyLabel.Text = currentData.header.quoteCurrency
 
         minValue.ReadOnly = currentData.value.automaticValue
         dateLastValue.Enabled = Not currentData.value.automaticValue
@@ -127,6 +128,25 @@ Public Class EditProduct
                 spreadValue.ForeColor = Color.DarkRed
             End If
         End If
+
+        If (currentData.activity.sell.internalOrderId.CompareTo("0") = 0) Then
+            targetLabel.Enabled = False
+        End If
+
+        If (currentData.activity.totalAmount > 0) And (currentData.value.current > 0) Then
+            currentTotalValue.Text = currentData.activity.totalAmount * currentData.value.current
+        Else
+            currentTotalValue.Text = "---"
+        End If
+    End Sub
+
+    Private Sub startPairId()
+        If (currentData.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore) And
+               (currentData.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.undefined) Then
+
+            AreaState.getPairID(currentData.pairID)
+
+        End If
     End Sub
 
 
@@ -134,8 +154,6 @@ Public Class EditProduct
         currentData = AreaState.products.getCurrency(currencyID)
 
         If (currentData.header.key.Length > 0) Then
-            AreaState.getPairID(currentData.pairID)
-
             loadData()
         End If
 
@@ -256,6 +274,10 @@ Public Class EditProduct
         order.sellSide = True
 
         order.Show()
+    End Sub
+
+    Private Sub preferenceValue_SelectedIndexChanged(sender As Object, e As EventArgs) Handles preferenceValue.SelectedIndexChanged
+        startPairId()
     End Sub
 
 End Class

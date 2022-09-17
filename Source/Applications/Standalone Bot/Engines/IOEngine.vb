@@ -22,6 +22,8 @@ Namespace AreaEngine.IO
         Public Property accountPath As String = ""
         Public Property productsPath As String = ""
         Public Property automaticBotPath As String = ""
+        Public Property dayCounterPath As String = ""
+        Public Property JournalPath As String = ""
 
         Public Property newTenant As Boolean = False
 
@@ -111,6 +113,14 @@ Namespace AreaEngine.IO
             Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Account.AccountsModel).save(accountPath, accounts)
         End Function
 
+        Public Function saveCurrentCounterDay() As Boolean
+            Dim filePath As String = ""
+
+            filePath = System.IO.Path.Combine(dayCounterPath, AreaState.journal.currentDayCounters.day.ToString() & ".CurrentCounterDay")
+
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Journal.DayCounterModel).save(filePath, AreaState.journal.currentDayCounters)
+        End Function
+
         ''' <summary>
         ''' This method provide to update the trade close
         ''' </summary>
@@ -175,6 +185,10 @@ Namespace AreaEngine.IO
             Return False
         End Function
 
+        Public Function updateJournal() As Boolean
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Journal.CumulativeModel).save(JournalPath, AreaState.journal)
+        End Function
+
         ''' <summary>
         ''' This method provide to archive Bot into DB
         ''' </summary>
@@ -220,6 +234,51 @@ Namespace AreaEngine.IO
         End Function
 
         ''' <summary>
+        ''' This method provide to add a new order to the service
+        ''' </summary>
+        ''' <param name="productId"></param>
+        ''' <param name="orderId"></param>
+        ''' <param name="orderNumber"></param>
+        ''' <returns></returns>
+        Private Function startMonitorOrder(ByVal productId As String, ByVal orderId As String, ByVal orderNumber As String) As Boolean
+            If Not AreaState.orders.ContainsKey(orderId) Then
+                Dim newSimply As New AreaCommon.Models.Order.SimplyOrderModel
+
+                newSimply.accountCredentials = AreaState.defaultUserDataAccount.exchangeAccess
+                newSimply.productId = productId
+                newSimply.internalOrderId = orderId
+                newSimply.publicOrderId = orderNumber
+
+                AreaState.orders.Add(orderId, newSimply)
+            End If
+
+            Return True
+        End Function
+
+        Private Sub loadOrderPlaced()
+            Try
+                For Each product In AreaState.products.items
+                    With product.activity.openBuy
+                        If (.orderState = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.placed) Then
+
+                            startMonitorOrder(product.header.key, .internalOrderId, .orderNumber)
+
+                        End If
+                    End With
+
+                    If (product.activity.sell.orderState = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.placed) Then
+
+                        startMonitorOrder(product.header.key, product.activity.sell.internalOrderId, product.activity.sell.orderNumber)
+
+                    End If
+                Next
+
+                AreaCommon.Engines.Orders.start()
+            Catch ex As Exception
+            End Try
+        End Sub
+
+        ''' <summary>
         ''' This method provide to initialize the engine
         ''' </summary>
         ''' <param name="path"></param>
@@ -245,6 +304,13 @@ Namespace AreaEngine.IO
             automaticBotPath = System.IO.Path.Combine(path, "AutomaticBot.json")
 
             checkAndMakeOrderPath()
+
+            dayCounterPath = System.IO.Path.Combine(path, "DayCounters")
+            JournalPath = System.IO.Path.Combine(path, "Journal.json")
+
+            If Not System.IO.Directory.Exists(dayCounterPath) Then
+                System.IO.Directory.CreateDirectory(dayCounterPath)
+            End If
 
             botArchivePath = System.IO.Path.Combine(path, "Archived")
 
@@ -304,10 +370,16 @@ Namespace AreaEngine.IO
                 For Each currency In CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Products.ProductsModel).read(productsPath).items
                     AreaState.products.addNew(currency.header.key, currency)
                 Next
+
+                loadOrderPlaced()
             End If
 
             If System.IO.File.Exists(automaticBotPath) Then
                 AreaState.automaticBot = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.BotAutomatic).read(automaticBotPath)
+            End If
+
+            If System.IO.File.Exists(JournalPath) Then
+                AreaState.journal = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Journal.CumulativeModel).read(JournalPath)
             End If
 
             Return True

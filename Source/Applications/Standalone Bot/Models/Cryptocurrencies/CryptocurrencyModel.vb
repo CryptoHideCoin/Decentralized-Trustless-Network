@@ -81,6 +81,8 @@ Namespace AreaCommon.Models.Products
 
         Public Property internalOrderId As String = 0
 
+        Public Property ordinary As Boolean = False
+
     End Class
 
     Public Class ProductActivityModel
@@ -95,6 +97,12 @@ Namespace AreaCommon.Models.Products
         Public ReadOnly Property target As Double
             Get
                 Return sell.tcoQuote
+            End Get
+        End Property
+
+        Public ReadOnly Property earn As Double
+            Get
+                Return sell.tcoQuote - totalInvestment - totalFee
             End Get
         End Property
 
@@ -126,6 +134,32 @@ Namespace AreaCommon.Models.Products
             End Get
         End Property
 
+        Public ReadOnly Property totalFee As Double
+            Get
+                Dim total As Double = 0
+
+                For Each buy In buys
+                    If (buy.orderState = Bot.BotOrderModel.OrderStateEnumeration.filled) Then
+                        total += CDec(buy.feeCost)
+                    End If
+                Next
+
+                Return total
+            End Get
+        End Property
+
+        Public ReadOnly Property openBuy() As ProductOrderModel
+            Get
+                For Each buy In buys
+                    If (buy.orderState = Bot.BotOrderModel.OrderStateEnumeration.placed) Then
+                        Return buy
+                    End If
+                Next
+
+                Return New ProductOrderModel
+            End Get
+        End Property
+
     End Class
 
 
@@ -135,6 +169,8 @@ Namespace AreaCommon.Models.Products
         Public Property value As New ProductValueModel
         Public Property userData As New ProductUserDataModel
         Public Property activity As New ProductActivityModel
+
+        Public Property minTarget As Double
 
         Public ReadOnly Property pairID As String
             Get
@@ -154,7 +190,7 @@ Namespace AreaCommon.Models.Products
             End Get
         End Property
 
-        Public ReadOnly Property targetReached() As Boolean
+        Public ReadOnly Property maxTargetReached() As Boolean
             Get
                 Return (currentValue > activity.target)
             End Get
@@ -182,6 +218,8 @@ Namespace AreaCommon.Models.Products
 
                 activity.dateLastCheck = 0
                 activity.inUse = False
+
+                minTarget = 0
             End If
 
             Return True

@@ -53,11 +53,14 @@ Public Class ShowOrder
 
             quoteCurrencyValue.Text = pairID.Split("-")(0)
             baseCurrencyValue.Text = pairID.Split("-")(1)
+            priceCurrencyLabel.Text = baseCurrencyValue.Text
+
+            priceValue.Text = currentOrder.tcoQuote / currentOrder.amount
 
             If (currentOrder.feeCost = 0) Then
                 feeValue.Text = "---"
             Else
-                feeValue.Text = currentOrder.feeCost
+                feeValue.Text = $"{currentOrder.feeCost.ToString("0.00")} {baseCurrencyValue.Text} ({(currentOrder.feeCost / (currentOrder.tcoQuote - currentOrder.feeCost) * 100).ToString("0.00")}%)"
             End If
 
         Catch ex As Exception

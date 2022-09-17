@@ -14,6 +14,7 @@ Namespace AreaState
         Public Property pairs As New Dictionary(Of String, AreaCommon.Models.Pair.PairInformation)
         Public Property orders As New Dictionary(Of String, AreaCommon.Models.Order.SimplyOrderModel)
         Public Property accounts As New Dictionary(Of String, AreaCommon.Models.Account.AccountModel)
+        Public Property journal As New AreaCommon.Models.Journal.CumulativeModel
         Public Property botList As New AreaCommon.Models.Bot.BotListModel
         Public Property defaultUserDataAccount As New AreaCommon.Models.User.UserDataPersonalModel
         Public Property summary As New AreaCommon.Models.Account.SummaryModel

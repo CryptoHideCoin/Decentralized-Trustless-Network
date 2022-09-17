@@ -510,6 +510,15 @@ StandaloneBot
  <param name="id"></param>
  <returns></returns>
 </member>
+<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.startMonitorOrder(System.String,System.String,System.String)">
+ <summary>
+ This method provide to add a new order to the service
+ </summary>
+ <param name="productId"></param>
+ <param name="orderId"></param>
+ <param name="orderNumber"></param>
+ <returns></returns>
+</member>
 <member name="M:StandaloneBot.AreaEngine.IO.IOEngine.init(System.String)">
  <summary>
  This method provide to initialize the engine

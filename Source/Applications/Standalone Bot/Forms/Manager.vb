@@ -300,6 +300,42 @@ Public Class Manager
         End If
     End Sub
 
+    Sub loadDataDailyOrderGrid()
+        Dim rowItem As New ArrayList
+
+        If (AreaState.journal.currentDayCounters.transactions.Count <> dayTransactionDataView.Rows.Count) Then
+            dayTransactionDataView.Rows.Clear()
+
+            Dim item As AreaCommon.Models.Journal.DayCounterModel.TransactionModel
+
+            For count As Integer = AreaState.journal.currentDayCounters.transactions.Count - 1 To 0 Step -1
+
+                item = AreaState.journal.currentDayCounters.transactions(count)
+
+                rowItem.Clear()
+
+                If item.buy Then
+                    rowItem.Add(1)
+                Else
+                    rowItem.Add(0)
+                End If
+
+                rowItem.Add(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(item.dateCompletate))
+                rowItem.Add(item.pairID)
+                rowItem.Add(item.amount.ToString("#,##0.00000"))
+                rowItem.Add(item.value.ToString("#,##0.00000"))
+
+                If item.daily Then
+                    rowItem.Add(1)
+                Else
+                    rowItem.Add(0)
+                End If
+
+                dayTransactionDataView.Rows.Add(rowItem.ToArray)
+            Next
+        End If
+    End Sub
+
     Sub refreshTickValue()
         Dim rowItem As New ArrayList
         Dim pairData As AreaCommon.Models.Pair.PairInformation
@@ -523,6 +559,59 @@ Public Class Manager
         lastUpdateValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(pairData.lastUpdateTick), True)
     End Sub
 
+    Private Sub formatValue(ByRef control As Object, ByVal value As Double, Optional ByVal colorValue As Boolean = False)
+        If (value = 0) Then
+            control.Text = "---"
+
+            control.ForeColor = Color.Black
+        Else
+            control.Text = value.ToString("#,##0.00")
+
+            If colorValue Then
+                If (value < 0) Then
+                    control.ForeColor = Color.Red
+                Else
+                    control.ForeColor = Color.DarkGreen
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub refreshJournalValue()
+        AreaCommon.Engines.Bots.updateJournalCounter()
+
+        startDateJournalDate.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.initialDay), True)
+        currentDateValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.currentDayCounters.day), True)
+
+        If (AreaState.journal.lastUpdate = 0) Then
+            updateDate.Text = "---"
+        Else
+            updateDate.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.lastUpdate), True)
+        End If
+
+        formatValue(initialFundValue, AreaState.journal.initialFund)
+        formatValue(currentFundValue, AreaState.journal.currentFund)
+        formatValue(futureGainValue, AreaState.journal.futureGain)
+        formatValue(increaseValue, AreaState.journal.increaseValue)
+        formatValue(feeValue, AreaState.journal.totalFee)
+        formatValue(volumeValue, AreaState.journal.totalVolume)
+        formatValue(totalEarnValue, AreaState.journal.totalEarn + AreaState.journal.currentDayCounters.earn, True)
+
+        currentDayValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.currentDayCounters.day), True)
+
+        formatValue(earnDayValue, AreaState.journal.currentDayCounters.earn, True)
+        formatValue(initialDayFundStableValue, AreaState.journal.currentDayCounters.initialFundFree)
+        formatValue(initialOtherFundDayValue, AreaState.journal.currentDayCounters.initialFundManage)
+        formatValue(extraBuyDayValue, AreaState.journal.currentDayCounters.extraBuy)
+        formatValue(dailyBuyDayValue, AreaState.journal.currentDayCounters.dailyBuy)
+        formatValue(extraSellDayValue, AreaState.journal.currentDayCounters.extraSell)
+        formatValue(dailySellDayValue, AreaState.journal.currentDayCounters.dailySell)
+        formatValue(feeDayValue, AreaState.journal.currentDayCounters.feePayed)
+        formatValue(volumesDayValue, AreaState.journal.currentDayCounters.volumes)
+
+        loadDataDailyOrderGrid()
+    End Sub
+
     Private Sub updateAllDataMarkets()
         Dim rowIndexPair As Integer
 
@@ -631,6 +720,10 @@ Public Class Manager
         AreaCommon.Engine.IO.updateCryptocurrency()
         AreaCommon.Engine.IO.updateAutomaticBot()
 
+        If AreaCommon.Engines.Bots.AutomaticBotModule.updateJournalCounter() Then
+            AreaCommon.Engine.IO.updateJournal()
+        End If
+
         AreaState.closeApplication = True
 
         AreaCommon.Engines.Bots.BotModule.stop()
@@ -676,6 +769,7 @@ Public Class Manager
         refreshDataBot()
         refreshDataAccount()
         refreshDataCurrencies()
+        refreshJournalValue()
 
         If ((AreaState.bots.Count > 0) Or Not AreaState.defaultUserDataAccount.useVirtualAccount) And Not timerMain.Enabled Then
             timerMain.Enabled = True
@@ -860,6 +954,10 @@ Public Class Manager
                 AreaState.summary.totalVolumeValue = 0
                 AreaState.summary.increaseValue = 0
 
+                AreaState.orders.Clear()
+
+                AreaState.journal = New AreaCommon.Models.Journal.CumulativeModel
+
                 initialUSDTValue.Text = ""
             End If
         End If
@@ -904,4 +1002,49 @@ Public Class Manager
             ActionAutomaticBotToolStripMenuItem.Text = "Start"
         End If
     End Sub
+
+    Private Sub summaryButton_CheckedChanged(sender As Object, e As EventArgs) Handles summaryButton.CheckedChanged
+        If summaryButton.Checked Then
+            If IsNothing(daySummaryButton.Tag) Then
+                summaryButton.Tag = "Inchange"
+                daySummaryButton.Checked = False
+                summaryButton.Tag = Nothing
+
+                SummaryPanel.BringToFront()
+            End If
+        Else
+            If IsNothing(daySummaryButton.Tag) Then
+                summaryButton.Tag = "Inchange"
+                daySummaryButton.Checked = True
+                summaryButton.Tag = Nothing
+            End If
+        End If
+    End Sub
+
+    Private Sub daySummaryButton_CheckedChanged(sender As Object, e As EventArgs) Handles daySummaryButton.CheckedChanged
+        If daySummaryButton.Checked Then
+            If IsNothing(summaryButton.Tag) Then
+                daySummaryButton.Tag = "Inchange"
+                summaryButton.Checked = False
+                daySummaryButton.Tag = Nothing
+
+                dayPanel.BringToFront()
+            End If
+        Else
+            If IsNothing(summaryButton.Tag) Then
+                daySummaryButton.Tag = "Inchange"
+                summaryButton.Checked = True
+                daySummaryButton.Tag = Nothing
+            End If
+        End If
+    End Sub
+
+    Private Sub Label35_Click(sender As Object, e As EventArgs) Handles totalEarnValue.Click
+
+    End Sub
+
+    Private Sub dayTransactionDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dayTransactionDataView.CellContentClick
+
+    End Sub
+
 End Class

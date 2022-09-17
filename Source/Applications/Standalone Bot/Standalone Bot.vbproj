@@ -173,6 +173,7 @@
     <Compile Include="Models\Bots\BotListModel.vb" />
     <Compile Include="Models\Bots\BotParametersModel.vb" />
     <Compile Include="Models\Cryptocurrencies\CryptocurrencyModel.vb" />
+    <Compile Include="Models\Journal\JournalModel.vb" />
     <Compile Include="Models\Tenant\TenantAccountModel.vb" />
     <Compile Include="Models\Orders\SimplyOrderMode.vb" />
     <Compile Include="Models\Pairs\PairInformation.vb" />
