@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class EditProduct
     Inherits System.Windows.Forms.Form
 
     'Form esegue l'override del metodo Dispose per pulire l'elenco dei componenti.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class EditProduct
     'NOTA: la procedura che segue è richiesta da Progettazione Windows Form
     'Può essere modificata in Progettazione Windows Form.  
     'Non modificarla mediante l'editor del codice.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -62,6 +62,9 @@ Partial Class EditProduct
         Me.Acquire = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.viewButton = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.activityPage = New System.Windows.Forms.TabPage()
+        Me.currentTotalCurrencyLabel = New System.Windows.Forms.Label()
+        Me.currentTotalValue = New System.Windows.Forms.TextBox()
+        Me.currentTotalValueLabel = New System.Windows.Forms.Label()
         Me.targetLabel = New System.Windows.Forms.LinkLabel()
         Me.spreadValue = New System.Windows.Forms.Label()
         Me.spreadCurrency = New System.Windows.Forms.Label()
@@ -79,9 +82,6 @@ Partial Class EditProduct
         Me.Label9 = New System.Windows.Forms.Label()
         Me.confirmButton = New System.Windows.Forms.Button()
         Me.updateMainTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.currentTotalCurrencyLabel = New System.Windows.Forms.Label()
-        Me.currentTotalValue = New System.Windows.Forms.TextBox()
-        Me.currentTotalValueLabel = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.mainTab.SuspendLayout()
         Me.valuePage.SuspendLayout()
@@ -491,15 +491,43 @@ Partial Class EditProduct
         Me.activityPage.Text = "Counters"
         Me.activityPage.UseVisualStyleBackColor = True
         '
+        'currentTotalCurrencyLabel
+        '
+        Me.currentTotalCurrencyLabel.AutoSize = True
+        Me.currentTotalCurrencyLabel.Location = New System.Drawing.Point(301, 173)
+        Me.currentTotalCurrencyLabel.Name = "currentTotalCurrencyLabel"
+        Me.currentTotalCurrencyLabel.Size = New System.Drawing.Size(39, 13)
+        Me.currentTotalCurrencyLabel.TabIndex = 45
+        Me.currentTotalCurrencyLabel.Text = "USDT"
+        '
+        'currentTotalValue
+        '
+        Me.currentTotalValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.currentTotalValue.Location = New System.Drawing.Point(116, 170)
+        Me.currentTotalValue.Name = "currentTotalValue"
+        Me.currentTotalValue.ReadOnly = True
+        Me.currentTotalValue.Size = New System.Drawing.Size(179, 21)
+        Me.currentTotalValue.TabIndex = 43
+        Me.currentTotalValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'currentTotalValueLabel
+        '
+        Me.currentTotalValueLabel.AutoSize = True
+        Me.currentTotalValueLabel.Location = New System.Drawing.Point(24, 173)
+        Me.currentTotalValueLabel.Name = "currentTotalValueLabel"
+        Me.currentTotalValueLabel.Size = New System.Drawing.Size(86, 13)
+        Me.currentTotalValueLabel.TabIndex = 44
+        Me.currentTotalValueLabel.Text = "Current value"
+        '
         'targetLabel
         '
         Me.targetLabel.AutoSize = True
-        Me.targetLabel.Location = New System.Drawing.Point(34, 92)
+        Me.targetLabel.Location = New System.Drawing.Point(44, 92)
         Me.targetLabel.Name = "targetLabel"
-        Me.targetLabel.Size = New System.Drawing.Size(76, 13)
+        Me.targetLabel.Size = New System.Drawing.Size(66, 13)
         Me.targetLabel.TabIndex = 42
         Me.targetLabel.TabStop = True
-        Me.targetLabel.Text = "Daily Target"
+        Me.targetLabel.Text = "Min Target"
         '
         'spreadValue
         '
@@ -561,11 +589,11 @@ Partial Class EditProduct
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(62, 211)
+        Me.Label13.Location = New System.Drawing.Point(77, 211)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(48, 13)
+        Me.Label13.Size = New System.Drawing.Size(33, 13)
         Me.Label13.TabIndex = 35
-        Me.Label13.Text = "Spread"
+        Me.Label13.Text = "Earn"
         '
         'totalInvestmentValue
         '
@@ -645,34 +673,6 @@ Partial Class EditProduct
         '
         'updateMainTimer
         '
-        '
-        'currentTotalCurrencyLabel
-        '
-        Me.currentTotalCurrencyLabel.AutoSize = True
-        Me.currentTotalCurrencyLabel.Location = New System.Drawing.Point(301, 173)
-        Me.currentTotalCurrencyLabel.Name = "currentTotalCurrencyLabel"
-        Me.currentTotalCurrencyLabel.Size = New System.Drawing.Size(39, 13)
-        Me.currentTotalCurrencyLabel.TabIndex = 45
-        Me.currentTotalCurrencyLabel.Text = "USDT"
-        '
-        'currentTotalValue
-        '
-        Me.currentTotalValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.currentTotalValue.Location = New System.Drawing.Point(116, 170)
-        Me.currentTotalValue.Name = "currentTotalValue"
-        Me.currentTotalValue.ReadOnly = True
-        Me.currentTotalValue.Size = New System.Drawing.Size(179, 21)
-        Me.currentTotalValue.TabIndex = 43
-        Me.currentTotalValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'currentTotalValueLabel
-        '
-        Me.currentTotalValueLabel.AutoSize = True
-        Me.currentTotalValueLabel.Location = New System.Drawing.Point(24, 173)
-        Me.currentTotalValueLabel.Name = "currentTotalValueLabel"
-        Me.currentTotalValueLabel.Size = New System.Drawing.Size(86, 13)
-        Me.currentTotalValueLabel.TabIndex = 44
-        Me.currentTotalValueLabel.Text = "Current value"
         '
         'EditProduct
         '

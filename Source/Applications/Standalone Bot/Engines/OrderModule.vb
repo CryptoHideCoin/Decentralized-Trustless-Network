@@ -9,7 +9,7 @@ Namespace AreaCommon.Engines.Orders
 
         Private Const c_Second As Double = 1000
 
-        Private Property _InWorkJob As Boolean = False
+        Public Property stateOn As Boolean = False
 
         ''' <summary>
         ''' This method provide to calculate fee cost of a transaction
@@ -148,6 +148,8 @@ Namespace AreaCommon.Engines.Orders
 
                 Return True
             Catch ex As Exception
+                MessageBox.Show("Problem during verify the order " & ex.Message)
+
                 Return False
             End Try
         End Function
@@ -159,7 +161,7 @@ Namespace AreaCommon.Engines.Orders
             Try
                 Dim currentIndex As Integer = 0
 
-                Do While _InWorkJob
+                Do While stateOn
                     If (AreaState.orders.Count > 0) Then
                         If (currentIndex + 1 > AreaState.orders.Count) Then
                             currentIndex = 0
@@ -169,7 +171,7 @@ Namespace AreaCommon.Engines.Orders
                             currentIndex += 1
                         End If
                     Else
-                        _InWorkJob = False
+                        stateOn = False
 
                         Return
                     End If
@@ -177,7 +179,9 @@ Namespace AreaCommon.Engines.Orders
                     Threading.Thread.Sleep(100)
                 Loop
             Catch ex As Exception
-                _InWorkJob = False
+                stateOn = False
+
+                MessageBox.Show("An error occurrent during StartServiceBot - " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
         End Sub
 
@@ -186,8 +190,8 @@ Namespace AreaCommon.Engines.Orders
         ''' </summary>
         ''' <returns></returns>
         Public Function [start]() As Boolean
-            If Not _InWorkJob Then
-                _InWorkJob = True
+            If Not stateOn Then
+                stateOn = True
 
                 Dim objWS As Threading.Thread
 
@@ -200,7 +204,7 @@ Namespace AreaCommon.Engines.Orders
         End Function
 
         Public Function [stop]() As Boolean
-            _InWorkJob = False
+            stateOn = False
 
             Return True
         End Function

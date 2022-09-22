@@ -71,7 +71,7 @@ Namespace AreaCommon.Engines.Bots
             Try
                 For Each product In AreaState.products.items
                     If product.userData.isCustomized Then
-                        If (product.value.current >= product.minTarget) And (product.minTarget > 0) Then
+                        If (product.value.current * product.activity.totalAmount >= product.minTarget) And (product.minTarget > 0) Then
                             If (product.activity.sell.internalOrderId.Length > 0) Then
                                 removeOrder(product.activity.sell.internalOrderId)
                             End If
@@ -347,6 +347,69 @@ Namespace AreaCommon.Engines.Bots
                 End If
             Next
 
+            If (AreaState.journal.currentDayCounters.earn = 0) Or (AreaState.journal.currentDayCounters.initialFundFree + AreaState.journal.currentDayCounters.initialFundManage = 0) Then
+                AreaState.journal.currentDayCounters.apy = 0
+            Else
+                AreaState.journal.currentDayCounters.apy = AreaState.journal.currentDayCounters.earn / (AreaState.journal.currentDayCounters.initialFundFree + AreaState.journal.currentDayCounters.initialFundManage) * 100
+            End If
+
+            If ((AreaState.journal.totalEarn = 0) And (AreaState.journal.currentDayCounters.earn = 0)) Or (AreaState.journal.currentDayCounters.initialFundFree + AreaState.journal.currentDayCounters.initialFundManage = 0) Then
+                AreaState.journal.apy = 0
+            Else
+                AreaState.journal.apy = ((AreaState.journal.totalEarn + AreaState.journal.currentDayCounters.earn) / (AreaState.journal.currentDayCounters.initialFundFree + AreaState.journal.currentDayCounters.initialFundManage) * 100).ToString("#,##0.00")
+            End If
+
+            If (AreaState.journal.numPages = 0) Then
+                AreaState.journal.averageApy = 0
+            Else
+                AreaState.journal.averageApy = AreaState.journal.apy / AreaState.journal.numPages
+            End If
+
+            AreaState.journal.lastUpdate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+
+            Return True
+        End Function
+
+        Private Function checkProductInformation() As Boolean
+            For Each product In AreaState.products.items
+                If product.activity.inUse Then
+
+                    If (product.value.current > product.value.maxValue) Then
+                        product.value.maxValue = product.value.current
+                        product.value.automaticMaxValue = True
+                        product.value.dateMax = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    End If
+
+                    If (product.value.dateMax < CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - (CLng(1000) * 60 * 60 * 24 * 365 * 2)) Then
+                        product.value.automaticMaxValue = False
+                        AreaState.journal.alert = $"The Date max value of a product {product.header.key} is out a date"
+                    End If
+
+                    If (product.value.dateLast < CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - (CLng(1000) * 60 * 60 * 24 * 365 * 2)) Then
+                        product.value.automaticMinValue = False
+                        AreaState.journal.alert = $"The Date min value of a product {product.header.key} is out a date"
+                    End If
+
+                    If (product.value.current < product.value.minValue) And (product.value.current > 0) Then
+                        product.value.minValue = product.value.current
+                        product.value.automaticMinValue = True
+                        product.value.dateLast = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    End If
+
+                    If (product.activity.openBuy.orderNumber.Length = 0) Then
+                        If CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime > product.activity.lastBuy.dateAcquire + (AreaState.automaticBot.settings.dealIntervalMinute * 60000) Then
+                            If (AreaState.automaticBot.settings.plafondOperation = 0) Or (AreaState.automaticBot.settings.dealIntervalMinute = 0) Then
+                                createNewOrder(product, (-1) * AreaState.automaticBot.settings.dealAcquireOnPercentage, False)
+                            Else
+                                If (product.activity.totalInvestment < AreaState.automaticBot.settings.plafondOperation) Then
+                                    createNewOrder(product, (-1) * AreaState.automaticBot.settings.dealAcquireOnPercentage, False)
+                                End If
+                            End If
+                        End If
+                    End If
+                End If
+            Next
+
             Return True
         End Function
 
@@ -358,6 +421,8 @@ Namespace AreaCommon.Engines.Bots
 
                 IO.saveCurrentCounterDay()
             End If
+
+            AreaState.journal.numPages += 1
 
             AreaState.journal.currentDayCounters = New Models.Journal.DayCounterModel
 
@@ -390,6 +455,9 @@ Namespace AreaCommon.Engines.Bots
                 End If
                 If proceed Then
                     proceed = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > (AreaState.automaticBot.lastWorkAction + 24 * 60 * 60 * 1000)
+                    'proceed = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > (AreaState.automaticBot.lastWorkAction + 5 * 60 * 1000)
+                Else
+                    Return True
                 End If
                 If proceed Then
                     Select Case AreaState.automaticBot.workAction
@@ -408,8 +476,12 @@ Namespace AreaCommon.Engines.Bots
                         Case Models.Bot.BotAutomatic.WorkStateEnumeration.checkBalance
                             If AreaState.accounts.ContainsKey("USDT".ToLower()) Then
                                 If (AreaState.accounts("USDT".ToLower()).valueUSDT >= AreaState.automaticBot.settings.unitStep) Then
-                                    AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.reorderProducts
+                                    AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.restockProducts
                                 End If
+                            End If
+                        Case Models.Bot.BotAutomatic.WorkStateEnumeration.restockProducts
+                            If checkProductInformation() Then
+                                AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.reorderProducts
                             End If
                         Case Models.Bot.BotAutomatic.WorkStateEnumeration.reorderProducts
                             If completeReorderProducts() Then
@@ -424,6 +496,8 @@ Namespace AreaCommon.Engines.Bots
 
                             AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.undefined
                     End Select
+                Else
+                    checkProductInformation()
                 End If
 
                 Return True
@@ -474,132 +548,155 @@ Namespace AreaCommon.Engines.Bots
         End Function
 
         Public Function manageOrderProduct(ByVal productId As String, ByVal internalOrderId As String) As Boolean
-            Dim product = AreaState.products.getCurrency(productId)
+            Try
+                Dim product = AreaState.products.getCurrency(productId)
+                Dim repeat As Boolean = True
 
-            For Each buy In product.activity.buys
-                If (buy.internalOrderId.CompareTo(internalOrderId) = 0) Then
+                Do While repeat
+                    repeat = False
 
-                    If (buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.placed) Then
+                    Try
+                        For Each buy In product.activity.buys
+                            If (buy.internalOrderId.CompareTo(internalOrderId) = 0) Then
 
-                        If (AreaState.accounts("USDT".ToLower()).valueUSDT < buy.tcoQuote) Then
-                            Return False
+                                If (buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.placed) Then
+
+                                    If (AreaState.accounts("USDT".ToLower()).valueUSDT < buy.tcoQuote) Then
+                                        Return True
+                                    End If
+
+                                    If (product.value.current > 0) And (product.value.current * buy.amount <= buy.tcoQuote) Then
+                                        buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
+                                        buy.dateAcquire = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                                        buy.feeCost = calculateFeeCost(buy.tcoQuote)
+
+                                        AreaState.summary.totalFeesValue += CDec(buy.feeCost)
+                                        AreaState.summary.totalVolumeValue += CDec(buy.tcoQuote)
+
+                                        AreaState.journal.currentDayCounters.buyNumber += 1
+                                        AreaState.journal.currentDayCounters.feePayed += buy.feeCost
+                                        AreaState.journal.currentDayCounters.volumes += CDec(buy.tcoQuote)
+
+                                        AreaState.journal.totalFee += buy.feeCost
+                                        AreaState.journal.totalVolume += CDec(buy.tcoQuote)
+
+                                        If buy.ordinary Then
+                                            AreaState.journal.currentDayCounters.dailyBuy += CDec(buy.tcoQuote)
+                                        Else
+                                            AreaState.journal.currentDayCounters.extraBuy += CDec(buy.tcoQuote)
+                                        End If
+
+                                        With AreaState.journal.currentDayCounters.addNewTransaction()
+                                            .amount = buy.amount
+                                            .buy = True
+                                            .daily = buy.ordinary
+                                            .dateCompletate = buy.dateAcquire
+                                            .orderNumber = internalOrderId
+                                            .pairID = product.header.key
+                                            .value = buy.tcoQuote
+                                        End With
+
+                                        buy.tcoQuote += buy.feeCost
+
+                                        product.minTarget = product.activity.totalInvestment + (product.activity.totalInvestment * AreaState.automaticBot.settings.minDailyEarn / 100)
+
+                                        removeOrder(internalOrderId)
+
+                                        AreaState.addIntoAccount(product.pairID, (-1) * buy.tcoQuote, True)
+                                        AreaState.addIntoAccount(product.pairID, buy.amount, False)
+
+                                        If (AreaState.automaticBot.settings.dealIntervalMinute = 0) Then
+                                            If (AreaState.automaticBot.settings.plafondOperation = 0) Then
+                                                createNewOrder(product, (-1) * AreaState.automaticBot.settings.dealAcquireOnPercentage, False)
+                                            Else
+                                                If (product.activity.totalInvestment < AreaState.automaticBot.settings.plafondOperation) Then
+                                                    createNewOrder(product, (-1) * AreaState.automaticBot.settings.dealAcquireOnPercentage, False)
+                                                End If
+                                            End If
+                                        End If
+
+                                        If (product.activity.sell.internalOrderId.Length > 0) Then
+                                            removeOrder(product.activity.sell.internalOrderId)
+                                        End If
+
+                                        createNewOrder(product, AreaState.automaticBot.settings.maxDailyEarn, False, product.activity.totalAmount())
+
+                                        AreaState.journal.lastUpdate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+
+                                        Return False
+                                    End If
+                                End If
+
+                            End If
+                        Next
+                    Catch ex As Exception
+                        repeat = True
+                    End Try
+                Loop
+
+                If (product.activity.sell.internalOrderId.CompareTo(internalOrderId) = 0) Then
+
+                    If (product.value.current > 0) And (product.value.current * product.activity.sell.amount >= product.activity.sell.tcoQuote) Then
+                        product.activity.sell.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
+                        product.activity.sell.dateAcquire = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                        product.activity.sell.feeCost = calculateFeeCost(product.activity.sell.tcoQuote)
+
+                        AreaState.journal.currentDayCounters.sellNumber += 1
+
+                        If product.activity.sell.ordinary Then
+                            AreaState.journal.currentDayCounters.dailySell += product.activity.sell.tcoQuote
+                        Else
+                            AreaState.journal.currentDayCounters.extraSell += product.activity.sell.tcoQuote
                         End If
 
-                        If (product.value.current > 0) And (product.value.current * buy.amount <= buy.tcoQuote) Then
-                            buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
-                            buy.dateAcquire = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                            buy.feeCost = calculateFeeCost(buy.tcoQuote)
+                        AreaState.journal.currentDayCounters.earn += product.activity.earn
+                        AreaState.journal.currentDayCounters.feePayed += product.activity.sell.feeCost
 
-                            AreaState.summary.totalFeesValue += CDec(buy.feeCost)
-                            AreaState.summary.totalVolumeValue += CDec(buy.tcoQuote)
+                        With AreaState.journal.currentDayCounters.addNewTransaction()
+                            .amount = product.activity.sell.amount
+                            .buy = False
+                            .daily = product.activity.sell.ordinary
+                            .dateCompletate = product.activity.sell.dateAcquire
+                            .orderNumber = internalOrderId
+                            .pairID = product.header.key
+                            .value = product.activity.sell.tcoQuote
+                        End With
 
-                            AreaState.journal.currentDayCounters.buyNumber += 1
-                            AreaState.journal.currentDayCounters.feePayed += buy.feeCost
-                            AreaState.journal.currentDayCounters.volumes += CDec(buy.tcoQuote)
+                        AreaState.summary.totalFeesValue += CDec(product.activity.sell.feeCost)
+                        AreaState.summary.totalVolumeValue += CDec(product.activity.sell.tcoQuote)
 
-                            AreaState.journal.totalFee += buy.feeCost
-                            AreaState.journal.totalVolume += CDec(buy.tcoQuote)
+                        AreaState.journal.totalFee += product.activity.sell.feeCost
+                        AreaState.journal.totalVolume += CDec(product.activity.sell.tcoQuote)
 
-                            If buy.ordinary Then
-                                AreaState.journal.currentDayCounters.dailyBuy += CDec(buy.tcoQuote)
-                            Else
-                                AreaState.journal.currentDayCounters.extraBuy += CDec(buy.tcoQuote)
-                            End If
+                        removeOrder(internalOrderId)
 
-                            With AreaState.journal.currentDayCounters.addNewTransaction()
-                                .amount = buy.amount
-                                .buy = True
-                                .daily = buy.ordinary
-                                .dateCompletate = buy.dateAcquire
-                                .orderNumber = internalOrderId
-                                .pairID = product.header.key
-                                .value = buy.tcoQuote
-                            End With
-
-                            buy.tcoQuote += buy.feeCost
-
-                            product.minTarget = product.activity.totalInvestment + (product.activity.totalInvestment * AreaState.automaticBot.settings.minDailyEarn / 100)
-
-                            removeOrder(internalOrderId)
-
-                            AreaState.addIntoAccount(product.pairID, (-1) * buy.tcoQuote, True)
-                            AreaState.addIntoAccount(product.pairID, buy.amount, False)
-
-                            createNewOrder(product, (-1) * AreaState.automaticBot.settings.dealAcquireOnPercentage, False)
-
-                            If (product.activity.sell.internalOrderId.Length > 0) Then
-                                removeOrder(product.activity.sell.internalOrderId)
-                            End If
-
-                            createNewOrder(product, AreaState.automaticBot.settings.maxDailyEarn, False, product.activity.totalAmount())
-
-                            AreaState.journal.lastUpdate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-
-                            Return False
+                        If (product.activity.openBuy.internalOrderId.Length > 0) Then
+                            removeOrder(product.activity.openBuy.internalOrderId)
                         End If
+
+                        AreaState.addIntoAccount(product.pairID, product.activity.sell.tcoQuote, True)
+                        AreaState.addIntoAccount(product.pairID, (-1) * product.activity.sell.amount, False)
+
+                        AreaState.summary.increaseValue += product.activity.earn
+                        AreaState.journal.increaseValue += product.activity.earn
+
+                        product.activity.sell.tcoQuote += product.activity.sell.feeCost
+
+                        product.resetData()
+
+                        AreaState.journal.lastUpdate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+
+                        Return False
                     End If
 
                 End If
-            Next
 
-            If (product.activity.sell.internalOrderId.CompareTo(internalOrderId) = 0) Then
+                Return True
+            Catch ex As Exception
+                MessageBox.Show("An error occurrent during manageOrderProduct - " & ex.Message)
 
-                If (product.value.current > 0) And (product.value.current * product.activity.sell.amount >= product.activity.sell.tcoQuote) Then
-                    product.activity.sell.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
-                    product.activity.sell.dateAcquire = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                    product.activity.sell.feeCost = calculateFeeCost(product.activity.sell.tcoQuote)
-
-                    AreaState.journal.currentDayCounters.sellNumber += 1
-
-                    If product.activity.sell.ordinary Then
-                        AreaState.journal.currentDayCounters.dailySell += product.activity.sell.tcoQuote
-                    Else
-                        AreaState.journal.currentDayCounters.extraSell += product.activity.sell.tcoQuote
-                    End If
-
-                    AreaState.journal.currentDayCounters.earn += product.activity.earn
-                    AreaState.journal.currentDayCounters.feePayed += product.activity.sell.feeCost
-
-                    With AreaState.journal.currentDayCounters.addNewTransaction()
-                        .amount = product.activity.sell.amount
-                        .buy = True
-                        .daily = product.activity.sell.ordinary
-                        .dateCompletate = product.activity.sell.dateAcquire
-                        .orderNumber = internalOrderId
-                        .pairID = product.header.key
-                        .value = product.activity.sell.tcoQuote
-                    End With
-
-                    AreaState.summary.totalFeesValue += CDec(product.activity.sell.feeCost)
-                    AreaState.summary.totalVolumeValue += CDec(product.activity.sell.tcoQuote)
-
-                    AreaState.journal.totalFee += product.activity.sell.feeCost
-                    AreaState.journal.totalVolume += CDec(product.activity.sell.tcoQuote)
-
-                    removeOrder(internalOrderId)
-
-                    If (product.activity.openBuy.internalOrderId = 0) Then
-                        removeOrder(product.activity.openBuy.internalOrderId)
-                    End If
-
-                    AreaState.addIntoAccount(product.pairID, product.activity.sell.tcoQuote, True)
-                    AreaState.addIntoAccount(product.pairID, (-1) * product.activity.sell.amount, False)
-
-                    AreaState.summary.increaseValue += product.activity.earn
-                    AreaState.journal.increaseValue += product.activity.earn
-
-                    product.activity.sell.tcoQuote += product.activity.sell.feeCost
-
-                    product.resetData()
-
-                    AreaState.journal.lastUpdate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-
-                    Return False
-                End If
-
-            End If
-
-            Return True
+                Return False
+            End Try
         End Function
 
         ''' <summary>

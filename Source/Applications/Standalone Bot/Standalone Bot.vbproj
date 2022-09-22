@@ -104,6 +104,18 @@
     <Compile Include="Forms\Bot\AutomaticBotSetting.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\DataPages\DataPageDetail.Designer.vb">
+      <DependentUpon>DataPageDetail.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DataPages\DataPageDetail.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DataPages\DataPageList.Designer.vb">
+      <DependentUpon>DataPageList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DataPages\DataPageList.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\Generic\About.Designer.vb">
       <DependentUpon>About.vb</DependentUpon>
     </Compile>
@@ -197,6 +209,12 @@
     <EmbeddedResource Include="Forms\Bot\AutomaticBotSetting.resx">
       <DependentUpon>AutomaticBotSetting.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DataPages\DataPageDetail.resx">
+      <DependentUpon>DataPageDetail.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DataPages\DataPageList.resx">
+      <DependentUpon>DataPageList.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Generic\About.resx">
       <DependentUpon>About.vb</DependentUpon>
     </EmbeddedResource>
@@ -250,5 +268,6 @@
   <ItemGroup>
     <Content Include="64.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

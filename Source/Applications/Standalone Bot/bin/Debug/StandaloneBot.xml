@@ -444,37 +444,37 @@ StandaloneBot
  This class contain all information of a pair
  </summary>
 </member>
-<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.checkAndMakeOrderPath">
+<member name="M:StandaloneBot.AreaEngines.IO.IOEngine.checkAndMakeOrderPath">
  <summary>
  This method provide to create order path
  </summary>
  <returns></returns>
 </member>
-<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.updatePersonaData">
+<member name="M:StandaloneBot.AreaEngines.IO.IOEngine.updatePersonaData">
  <summary>
  This method provide to update a user personal data of the tenant
  </summary>
  <returns></returns>
 </member>
-<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.updateBotList">
+<member name="M:StandaloneBot.AreaEngines.IO.IOEngine.updateBotList">
  <summary>
  This method provide to update the botlist into the tenant
  </summary>
  <returns></returns>
 </member>
-<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.updateSummary">
+<member name="M:StandaloneBot.AreaEngines.IO.IOEngine.updateSummary">
  <summary>
  This method provide to save into file the summary
  </summary>
  <returns></returns>
 </member>
-<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.updateWallet">
+<member name="M:StandaloneBot.AreaEngines.IO.IOEngine.updateWallet">
  <summary>
  This method provide to update the data into the wallet
  </summary>
  <returns></returns>
 </member>
-<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.updateTradeClose(System.String,StandaloneBot.AreaCommon.Models.Bot.TradeModel@)">
+<member name="M:StandaloneBot.AreaEngines.IO.IOEngine.updateTradeClose(System.String,StandaloneBot.AreaCommon.Models.Bot.TradeModel@)">
  <summary>
  This method provide to update the trade close
  </summary>
@@ -482,7 +482,7 @@ StandaloneBot
  <param name="data"></param>
  <returns></returns>
 </member>
-<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.updateBotData(System.String,StandaloneBot.AreaCommon.Models.Bot.BotDataModel@)">
+<member name="M:StandaloneBot.AreaEngines.IO.IOEngine.updateBotData(System.String,StandaloneBot.AreaCommon.Models.Bot.BotDataModel@)">
  <summary>
  This method provide to save the data trade into the file
  </summary>
@@ -490,27 +490,27 @@ StandaloneBot
  <param name="data"></param>
  <returns></returns>
 </member>
-<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.getTradeClose(System.String,System.String)">
+<member name="M:StandaloneBot.AreaEngines.IO.IOEngine.getTradeClose(System.String,System.String)">
  <summary>
  This method provide to get a trade close from a db
  </summary>
  <param name="tradeId"></param>
  <returns></returns>
 </member>
-<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.updateBotSetting(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+<member name="M:StandaloneBot.AreaEngines.IO.IOEngine.updateBotSetting(StandaloneBot.AreaCommon.Models.Bot.BotConfigurationsModel@)">
  <summary>
  This method provide to update the bot settings
  </summary>
  <returns></returns>
 </member>
-<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.archiveBot(System.String)">
+<member name="M:StandaloneBot.AreaEngines.IO.IOEngine.archiveBot(System.String)">
  <summary>
  This method provide to archive Bot into DB
  </summary>
  <param name="id"></param>
  <returns></returns>
 </member>
-<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.startMonitorOrder(System.String,System.String,System.String)">
+<member name="M:StandaloneBot.AreaEngines.IO.IOEngine.startMonitorOrder(System.String,System.String,System.String)">
  <summary>
  This method provide to add a new order to the service
  </summary>
@@ -519,7 +519,7 @@ StandaloneBot
  <param name="orderNumber"></param>
  <returns></returns>
 </member>
-<member name="M:StandaloneBot.AreaEngine.IO.IOEngine.init(System.String)">
+<member name="M:StandaloneBot.AreaEngines.IO.IOEngine.init(System.String)">
  <summary>
  This method provide to initialize the engine
  </summary>

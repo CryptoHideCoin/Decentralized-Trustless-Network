@@ -12,6 +12,7 @@ Public Class AutomaticBotSetting
         maxDailyEarnValue.Text = AreaState.automaticBot.settings.maxDailyEarn
 
         dealRestockValue.Text = AreaState.automaticBot.settings.dealAcquireOnPercentage
+        dealIntervalValue.Text = AreaState.automaticBot.settings.dealIntervalMinute
 
         earnConfigurationValue.SelectedIndex = AreaState.automaticBot.settings.backConfiguration
         backValue.Text = AreaState.automaticBot.settings.backValue
@@ -97,7 +98,7 @@ Public Class AutomaticBotSetting
 
             Return False
         End If
-        If (Val(field.Text.Trim()) = 0) Then
+        If (Val(field.Text.Trim().Replace(".", "").Replace(",", ".")) = 0) Then
             MessageBox.Show($"The {nameField} is not value", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             Return False
@@ -148,6 +149,7 @@ Public Class AutomaticBotSetting
                 .minDailyEarn = Val(minDailyEarnValue.Text.Replace(".", "").Replace(",", "."))
                 .maxDailyEarn = Val(maxDailyEarnValue.Text.Replace(".", "").Replace(",", "."))
                 .dealAcquireOnPercentage = Val(dealRestockValue.Text.Replace(".", "").Replace(",", "."))
+                .dealIntervalMinute = Val(dealIntervalValue.Text.Replace(".", "").Replace(",", "."))
                 .backConfiguration = earnConfigurationValue.SelectedIndex
                 .backValue = Val(earnConfigurationValue.Text.Replace(".", "").Replace(",", "."))
             End If

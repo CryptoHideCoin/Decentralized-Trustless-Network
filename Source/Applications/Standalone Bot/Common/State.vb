@@ -97,7 +97,7 @@ Namespace AreaState
                 dataAccount.change = pairs(Id).currentValue
             End If
 
-            If (dataAccount.amount = 0) Then
+            If (dataAccount.amount <= 0) Then
                 accounts.Remove(currencyKey)
             End If
 

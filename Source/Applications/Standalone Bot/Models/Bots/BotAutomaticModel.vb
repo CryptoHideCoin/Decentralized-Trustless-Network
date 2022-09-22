@@ -20,6 +20,7 @@ Namespace AreaCommon.Models.Bot
         Public Property minDailyEarn As Double = 0
         Public Property maxDailyEarn As Double = 0
         Public Property dealAcquireOnPercentage As Double = 0
+        Public Property dealIntervalMinute As Double = 0
 
         Public Property backConfiguration As BackConfigurationEnum = BackConfigurationEnum.undefined
         Public Property backValue As Double = 0
@@ -48,8 +49,10 @@ Namespace AreaCommon.Models.Bot
             completeRemoveActiveProducts
             checkBalance
             checkAllSellDailyProduct
+            restockProducts
             reorderProducts
             investProducts
+            checkAllBuyDailyProduct
             completeWork
         End Enum
 

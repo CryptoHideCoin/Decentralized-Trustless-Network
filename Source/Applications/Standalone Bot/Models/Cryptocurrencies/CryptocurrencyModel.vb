@@ -16,7 +16,8 @@ Namespace AreaCommon.Models.Products
 
     Public Class ProductValueModel
 
-        Public Property automaticValue As Boolean = False
+        Public Property automaticMinValue As Boolean = False
+        Public Property automaticMaxValue As Boolean = False
 
         Public Property minValue As Double = 0
         Public Property dateLast As Double = 0
@@ -160,6 +161,22 @@ Namespace AreaCommon.Models.Products
             End Get
         End Property
 
+        Public ReadOnly Property lastBuy() As ProductOrderModel
+            Get
+                Dim lastOrderBuy As New ProductOrderModel
+
+                For Each buy In buys
+                    If (buy.orderState = Bot.BotOrderModel.OrderStateEnumeration.filled) Then
+                        If (lastOrderBuy.dateAcquire < buy.dateAcquire) Then
+                            lastOrderBuy = buy
+                        End If
+                    End If
+                Next
+
+                Return lastOrderBuy
+            End Get
+        End Property
+
     End Class
 
 
@@ -187,6 +204,18 @@ Namespace AreaCommon.Models.Products
         Public ReadOnly Property currentSpread() As Double
             Get
                 Return CDec(currentValue) - activity.totalInvestment
+            End Get
+        End Property
+
+        Public ReadOnly Property currentSpreadPerc() As Double
+            Get
+                Return currentSpread / activity.totalInvestment * 100
+            End Get
+        End Property
+
+        Public ReadOnly Property maxTarget() As Double
+            Get
+                Return activity.target
             End Get
         End Property
 

@@ -145,9 +145,13 @@ Public Class Manager
             If (AreaState.summary.initialValue = 0) And (USDTValue <> 0) Then
                 AreaState.summary.initialValue = USDTValue
 
-                initialUSDTValue.Text = USDTValue.ToString("#,##0.00000") & " USDT"
+                initialUSDTValue.Text = USDTValue.ToString("#,##0.00") & " USDT"
+
+                AreaState.summary.initialValue = USDTValue
             ElseIf (AreaState.summary.initialValue <> 0) And (initialUSDTValue.Text.trim().Length = 0) Then
-                initialUSDTValue.Text = USDTValue.ToString("#,##0.00000") & " USDT"
+                initialUSDTValue.Text = USDTValue.ToString("#,##0.00") & " USDT"
+
+                AreaState.summary.initialValue = USDTValue
             End If
 
             If initialUSDTValue.Text.Length > 0 Then
@@ -255,7 +259,32 @@ Public Class Manager
                     rowItem.Add(item.currentValue.ToString("#,##0.00000"))
                 End If
 
+                If (item.currentSpread = 0) Then
+                    rowItem.Add("---")
+                    rowItem.Add("---")
+                Else
+                    rowItem.Add(item.currentSpread.ToString("#,##0.00"))
+                    rowItem.Add(item.currentSpreadPerc.ToString("#,##0.00") & " %")
+                End If
+
+                If (item.maxTarget = 0) Then
+                    rowItem.Add("---")
+                Else
+                    rowItem.Add(item.maxTarget.ToString("#,##0.00000"))
+                End If
+
                 CurrenciesDataView.Rows.Add(rowItem.ToArray)
+
+                If (item.currentSpread > 0) Then
+                    CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(6).Style.ForeColor = Color.DarkGreen
+                    CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(7).Style.ForeColor = Color.DarkGreen
+                ElseIf (item.currentSpread = 0) Then
+                    CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(6).Style.ForeColor = Color.Black
+                    CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(7).Style.ForeColor = Color.Black
+                Else
+                    CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(6).Style.ForeColor = Color.Red
+                    CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(7).Style.ForeColor = Color.Red
+                End If
             Next
         Else
             Dim item As AreaCommon.Models.Products.ProductModel
@@ -296,11 +325,36 @@ Public Class Manager
                 Else
                     CurrenciesDataView.Rows(index).Cells(5).Value = item.currentValue.ToString("#,##0.00000")
                 End If
+
+                If (item.currentSpread = 0) Then
+                    CurrenciesDataView.Rows(index).Cells(6).Value = "---"
+                    CurrenciesDataView.Rows(index).Cells(7).Value = "---"
+                Else
+                    CurrenciesDataView.Rows(index).Cells(6).Value = item.currentSpread.ToString("#,##0.00")
+                    CurrenciesDataView.Rows(index).Cells(7).Value = item.currentSpreadPerc.ToString("#,##0.00") & " %"
+                End If
+
+                If (item.maxTarget = 0) Then
+                    CurrenciesDataView.Rows(index).Cells(8).Value = "---"
+                Else
+                    CurrenciesDataView.Rows(index).Cells(8).Value = item.maxTarget.ToString("#,##0.00000")
+                End If
+
+                If (item.currentSpread > 0) Then
+                    CurrenciesDataView.Rows(index).Cells(6).Style.ForeColor = Color.DarkGreen
+                    CurrenciesDataView.Rows(index).Cells(7).Style.ForeColor = Color.DarkGreen
+                ElseIf (item.currentSpread = 0) Then
+                    CurrenciesDataView.Rows(index).Cells(6).Style.ForeColor = Color.Black
+                    CurrenciesDataView.Rows(index).Cells(7).Style.ForeColor = Color.Black
+                Else
+                    CurrenciesDataView.Rows(index).Cells(6).Style.ForeColor = Color.Red
+                    CurrenciesDataView.Rows(index).Cells(7).Style.ForeColor = Color.Red
+                End If
             Next
         End If
     End Sub
 
-    Sub loadDataDailyOrderGrid()
+    Sub refreshDailyOrderGrid()
         Dim rowItem As New ArrayList
 
         If (AreaState.journal.currentDayCounters.transactions.Count <> dayTransactionDataView.Rows.Count) Then
@@ -320,7 +374,7 @@ Public Class Manager
                     rowItem.Add(0)
                 End If
 
-                rowItem.Add(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(item.dateCompletate))
+                rowItem.Add(CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(item.dateCompletate), True))
                 rowItem.Add(item.pairID)
                 rowItem.Add(item.amount.ToString("#,##0.00000"))
                 rowItem.Add(item.value.ToString("#,##0.00000"))
@@ -580,8 +634,17 @@ Public Class Manager
     Private Sub refreshJournalValue()
         AreaCommon.Engines.Bots.updateJournalCounter()
 
-        startDateJournalDate.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.initialDay), True)
-        currentDateValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.currentDayCounters.day), True)
+        If (AreaState.journal.initialDay = 0) Then
+            startDateJournalDate.Text = "---"
+        Else
+            startDateJournalDate.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.initialDay), True)
+        End If
+
+        If (AreaState.journal.currentDayCounters.day = 0) Then
+            currentDateValue.Text = "---"
+        Else
+            currentDateValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.currentDayCounters.day).ToShortDateString
+        End If
 
         If (AreaState.journal.lastUpdate = 0) Then
             updateDate.Text = "---"
@@ -597,7 +660,41 @@ Public Class Manager
         formatValue(volumeValue, AreaState.journal.totalVolume)
         formatValue(totalEarnValue, AreaState.journal.totalEarn + AreaState.journal.currentDayCounters.earn, True)
 
-        currentDayValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.currentDayCounters.day), True)
+        If (AreaState.journal.apy = 0) Then
+            apyValue.Text = "---"
+
+            apyValue.ForeColor = Color.Black
+        Else
+            apyValue.Text = (AreaState.journal.apy).ToString("#,##0.00") & " %"
+
+            apyValue.ForeColor = totalEarnValue.ForeColor
+        End If
+
+        If (AreaState.journal.numPages = 0) Then
+            numDaysValue.Text = "---"
+        Else
+            numDaysValue.Text = AreaState.journal.numPages
+        End If
+
+        If (AreaState.journal.averageApy = 0) Then
+            averageAPYValue.Text = "---"
+
+            averageAPYValue.ForeColor = Color.Black
+        Else
+            averageAPYValue.Text = AreaState.journal.averageApy.ToString("#,##0.00") & " %"
+
+            If (AreaState.journal.averageApy < 0) Then
+                averageAPYValue.ForeColor = Color.Red
+            Else
+                averageAPYValue.ForeColor = Color.DarkGreen
+            End If
+        End If
+
+        If (AreaState.journal.currentDayCounters.day = 0) Then
+            currentDayValue.Text = "---"
+        Else
+            currentDayValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.currentDayCounters.day), True)
+        End If
 
         formatValue(earnDayValue, AreaState.journal.currentDayCounters.earn, True)
         formatValue(initialDayFundStableValue, AreaState.journal.currentDayCounters.initialFundFree)
@@ -609,7 +706,19 @@ Public Class Manager
         formatValue(feeDayValue, AreaState.journal.currentDayCounters.feePayed)
         formatValue(volumesDayValue, AreaState.journal.currentDayCounters.volumes)
 
-        loadDataDailyOrderGrid()
+        If (AreaState.journal.currentDayCounters.apy = 0) Then
+            apyDayValue.Text = "---"
+
+            apyDayValue.ForeColor = Color.Black
+        Else
+            apyDayValue.Text = (AreaState.journal.currentDayCounters.apy).ToString("#,##0.00") & " %"
+
+            apyDayValue.ForeColor = earnDayValue.ForeColor
+        End If
+
+        alertValue.Text = AreaState.journal.alert
+
+        refreshDailyOrderGrid()
     End Sub
 
     Private Sub updateAllDataMarkets()
@@ -905,7 +1014,7 @@ Public Class Manager
 
     Private Sub CurrenciesDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles CurrenciesDataView.CellContentClick
         Select Case e.ColumnIndex
-            Case 6
+            Case 9
                 Dim editService As EditProduct
 
                 If Not IsNothing(CurrenciesDataView.CurrentRow) Then
@@ -936,7 +1045,7 @@ Public Class Manager
             End If
         End If
         If proceed Then
-            proceed = (MessageBox.Show("Do you want to restart automatic bot data?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes)
+            proceed = (MessageBox.Show("Do you want to reset automatic bot data?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes)
         End If
         If proceed Then
             If AreaState.automaticBot.resetData() Then
@@ -945,6 +1054,7 @@ Public Class Manager
                 Next
 
                 AreaState.automaticBot.lastWorkAction = 0
+                AreaCommon.Engines.Bots.AutomaticBotModule.stop()
 
                 AreaState.accounts.Clear()
 
@@ -962,7 +1072,7 @@ Public Class Manager
             End If
         End If
         If proceed Then
-            MessageBox.Show("Automatic bot data is restarted.")
+            MessageBox.Show("Automatic bot data is reset.")
         End If
 
     End Sub
@@ -1045,6 +1155,16 @@ Public Class Manager
 
     Private Sub dayTransactionDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dayTransactionDataView.CellContentClick
 
+    End Sub
+
+    Private Sub clearButton_Click(sender As Object, e As EventArgs) Handles clearButton.Click
+        AreaState.journal.alert = ""
+    End Sub
+
+    Private Sub DailyReportToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DailyReportToolStripMenuItem.Click
+        Dim dailyReport As New DataPageList
+
+        dailyReport.Show()
     End Sub
 
 End Class

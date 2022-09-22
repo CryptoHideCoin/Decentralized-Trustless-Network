@@ -13,13 +13,13 @@ Namespace AreaCommon.Engines.Pairs
 
         Private Const c_Second As Double = 1000
         Private Const c_Minute As Double = c_Second * 60
-        Private Const c_Hour As Double = c_Minute * 60
-        Private Const c_Day As Double = c_Hour * 24
 
 
         Private Property _InWorkJob As Boolean = False
         Private Property _Init As Boolean = False
         Private Property _ClientPro As CoinbaseProClient
+
+        Private Property _LastUpdateTick As Double = 0
 
 
         ''' <summary>
@@ -28,10 +28,11 @@ Namespace AreaCommon.Engines.Pairs
         ''' <param name="pair"></param>
         Private Async Sub updateTick(ByVal pair As Models.Pair.PairInformation)
             Try
-                pair.lastUpdateTick = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-
                 Dim market = Await _ClientPro.MarketData.GetTickerAsync(pair.key)
                 Dim tick As New Models.Pair.TickInformation
+
+                pair.lastUpdateTick = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                _LastUpdateTick = pair.lastUpdateTick
 
                 pair.currentValue = market.Price
 
@@ -68,9 +69,12 @@ Namespace AreaCommon.Engines.Pairs
         Private Function process(ByVal currentIndex As Integer) As Boolean
             Try
                 Dim pair As Models.Pair.PairInformation = AreaState.pairs.ElementAt(currentIndex).Value
+                Dim currentTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
-                If ((pair.lastUpdateTick + c_Minute) < CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) Then
-                    Task.Run(Sub() updateTick(pair)).Start()
+                If ((pair.lastUpdateTick + c_Minute) < currentTime) Then
+                    If (currentTime > _LastUpdateTick + 100) Then
+                        Task.Run(Sub() updateTick(pair)).Start()
+                    End If
                 Else
                     Return False
                 End If

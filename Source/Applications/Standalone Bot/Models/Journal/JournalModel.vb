@@ -30,6 +30,7 @@ Namespace AreaCommon.Models.Journal
         Public Property feePayed As Double = 0
         Public Property volumes As Double = 0
         Public Property earn As Double = 0
+        Public Property apy As Double = 0
 
         Public Property sellNumber As Integer = 0
         Public Property buyNumber As Integer = 0
@@ -60,8 +61,13 @@ Namespace AreaCommon.Models.Journal
         Public Property totalVolume As Double = 0
         Public Property totalEarn As Double = 0
 
+        Public Property apy As Double = 0
+        Public Property numPages As Integer = 0
+        Public Property averageApy As Double = 0
+
         Public Property currentDayCounters As New DayCounterModel
 
+        Public Property alert As String = ""
     End Class
 
 End Namespace

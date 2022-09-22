@@ -49,12 +49,15 @@ Partial Class AutomaticBotSetting
         Me.maxDailyEarnCurrency = New System.Windows.Forms.Label()
         Me.dealRestockCurrency = New System.Windows.Forms.Label()
         Me.backValueCurrency = New System.Windows.Forms.Label()
+        Me.otherDealIntervalStep = New System.Windows.Forms.Label()
+        Me.dealIntervalValue = New System.Windows.Forms.TextBox()
+        Me.dealIntervalLabel = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'stateValue
         '
         Me.stateValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.stateValue.Location = New System.Drawing.Point(158, 268)
+        Me.stateValue.Location = New System.Drawing.Point(158, 290)
         Me.stateValue.Name = "stateValue"
         Me.stateValue.ReadOnly = True
         Me.stateValue.Size = New System.Drawing.Size(205, 21)
@@ -64,7 +67,7 @@ Partial Class AutomaticBotSetting
         'keyLabel
         '
         Me.keyLabel.AutoSize = True
-        Me.keyLabel.Location = New System.Drawing.Point(115, 271)
+        Me.keyLabel.Location = New System.Drawing.Point(115, 293)
         Me.keyLabel.Name = "keyLabel"
         Me.keyLabel.Size = New System.Drawing.Size(37, 13)
         Me.keyLabel.TabIndex = 23
@@ -72,7 +75,7 @@ Partial Class AutomaticBotSetting
         '
         'actionButton
         '
-        Me.actionButton.Location = New System.Drawing.Point(435, 278)
+        Me.actionButton.Location = New System.Drawing.Point(435, 300)
         Me.actionButton.Name = "actionButton"
         Me.actionButton.Size = New System.Drawing.Size(84, 38)
         Me.actionButton.TabIndex = 7
@@ -136,11 +139,11 @@ Partial Class AutomaticBotSetting
         'minDailyEarnLabel
         '
         Me.minDailyEarnLabel.AutoSize = True
-        Me.minDailyEarnLabel.Location = New System.Drawing.Point(59, 96)
+        Me.minDailyEarnLabel.Location = New System.Drawing.Point(35, 96)
         Me.minDailyEarnLabel.Name = "minDailyEarnLabel"
-        Me.minDailyEarnLabel.Size = New System.Drawing.Size(93, 13)
+        Me.minDailyEarnLabel.Size = New System.Drawing.Size(119, 13)
         Me.minDailyEarnLabel.TabIndex = 31
-        Me.minDailyEarnLabel.Text = "Min. Daily Earn"
+        Me.minDailyEarnLabel.Text = "Min. Recurring Earn"
         '
         'maxDailyEarnValue
         '
@@ -154,11 +157,11 @@ Partial Class AutomaticBotSetting
         'maxDailyEarnLabel
         '
         Me.maxDailyEarnLabel.AutoSize = True
-        Me.maxDailyEarnLabel.Location = New System.Drawing.Point(59, 123)
+        Me.maxDailyEarnLabel.Location = New System.Drawing.Point(35, 123)
         Me.maxDailyEarnLabel.Name = "maxDailyEarnLabel"
-        Me.maxDailyEarnLabel.Size = New System.Drawing.Size(93, 13)
+        Me.maxDailyEarnLabel.Size = New System.Drawing.Size(119, 13)
         Me.maxDailyEarnLabel.TabIndex = 33
-        Me.maxDailyEarnLabel.Text = "Max Daily Earn"
+        Me.maxDailyEarnLabel.Text = "Max Recurring Earn"
         '
         'dealRestockValue
         '
@@ -183,7 +186,7 @@ Partial Class AutomaticBotSetting
         Me.earnConfigurationValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.earnConfigurationValue.FormattingEnabled = True
         Me.earnConfigurationValue.Items.AddRange(New Object() {"Restock entire amount", "Back entire amount", "Back fix amount", "Back percentage amount"})
-        Me.earnConfigurationValue.Location = New System.Drawing.Point(158, 203)
+        Me.earnConfigurationValue.Location = New System.Drawing.Point(158, 225)
         Me.earnConfigurationValue.Name = "earnConfigurationValue"
         Me.earnConfigurationValue.Size = New System.Drawing.Size(179, 21)
         Me.earnConfigurationValue.TabIndex = 5
@@ -191,7 +194,7 @@ Partial Class AutomaticBotSetting
         'earnConfigurationLabel
         '
         Me.earnConfigurationLabel.AutoSize = True
-        Me.earnConfigurationLabel.Location = New System.Drawing.Point(41, 206)
+        Me.earnConfigurationLabel.Location = New System.Drawing.Point(41, 228)
         Me.earnConfigurationLabel.Name = "earnConfigurationLabel"
         Me.earnConfigurationLabel.Size = New System.Drawing.Size(111, 13)
         Me.earnConfigurationLabel.TabIndex = 36
@@ -201,7 +204,7 @@ Partial Class AutomaticBotSetting
         '
         Me.backValue.Enabled = False
         Me.backValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.backValue.Location = New System.Drawing.Point(158, 230)
+        Me.backValue.Location = New System.Drawing.Point(158, 252)
         Me.backValue.Name = "backValue"
         Me.backValue.Size = New System.Drawing.Size(179, 21)
         Me.backValue.TabIndex = 6
@@ -211,7 +214,7 @@ Partial Class AutomaticBotSetting
         '
         Me.backLabel.AutoSize = True
         Me.backLabel.Enabled = False
-        Me.backLabel.Location = New System.Drawing.Point(82, 233)
+        Me.backLabel.Location = New System.Drawing.Point(82, 255)
         Me.backLabel.Name = "backLabel"
         Me.backLabel.Size = New System.Drawing.Size(70, 13)
         Me.backLabel.TabIndex = 39
@@ -220,7 +223,7 @@ Partial Class AutomaticBotSetting
         'lastActivityValue
         '
         Me.lastActivityValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lastActivityValue.Location = New System.Drawing.Point(158, 295)
+        Me.lastActivityValue.Location = New System.Drawing.Point(158, 317)
         Me.lastActivityValue.Name = "lastActivityValue"
         Me.lastActivityValue.ReadOnly = True
         Me.lastActivityValue.Size = New System.Drawing.Size(205, 21)
@@ -230,7 +233,7 @@ Partial Class AutomaticBotSetting
         'lastActivityLabel
         '
         Me.lastActivityLabel.AutoSize = True
-        Me.lastActivityLabel.Location = New System.Drawing.Point(77, 298)
+        Me.lastActivityLabel.Location = New System.Drawing.Point(77, 320)
         Me.lastActivityLabel.Name = "lastActivityLabel"
         Me.lastActivityLabel.Size = New System.Drawing.Size(75, 13)
         Me.lastActivityLabel.TabIndex = 41
@@ -290,11 +293,41 @@ Partial Class AutomaticBotSetting
         Me.backValueCurrency.Size = New System.Drawing.Size(0, 13)
         Me.backValueCurrency.TabIndex = 47
         '
+        'otherDealIntervalStep
+        '
+        Me.otherDealIntervalStep.AutoSize = True
+        Me.otherDealIntervalStep.ForeColor = System.Drawing.Color.ForestGreen
+        Me.otherDealIntervalStep.Location = New System.Drawing.Point(343, 188)
+        Me.otherDealIntervalStep.Name = "otherDealIntervalStep"
+        Me.otherDealIntervalStep.Size = New System.Drawing.Size(54, 13)
+        Me.otherDealIntervalStep.TabIndex = 50
+        Me.otherDealIntervalStep.Text = "(Minute)"
+        '
+        'dealIntervalValue
+        '
+        Me.dealIntervalValue.Location = New System.Drawing.Point(158, 185)
+        Me.dealIntervalValue.Name = "dealIntervalValue"
+        Me.dealIntervalValue.Size = New System.Drawing.Size(179, 21)
+        Me.dealIntervalValue.TabIndex = 49
+        Me.dealIntervalValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'dealIntervalLabel
+        '
+        Me.dealIntervalLabel.AutoSize = True
+        Me.dealIntervalLabel.Location = New System.Drawing.Point(74, 188)
+        Me.dealIntervalLabel.Name = "dealIntervalLabel"
+        Me.dealIntervalLabel.Size = New System.Drawing.Size(80, 13)
+        Me.dealIntervalLabel.TabIndex = 48
+        Me.dealIntervalLabel.Text = "Deal interval"
+        '
         'AutomaticBotSetting
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(531, 330)
+        Me.ClientSize = New System.Drawing.Size(531, 354)
+        Me.Controls.Add(Me.otherDealIntervalStep)
+        Me.Controls.Add(Me.dealIntervalValue)
+        Me.Controls.Add(Me.dealIntervalLabel)
         Me.Controls.Add(Me.backValueCurrency)
         Me.Controls.Add(Me.dealRestockCurrency)
         Me.Controls.Add(Me.maxDailyEarnCurrency)
@@ -360,4 +393,7 @@ Partial Class AutomaticBotSetting
     Friend WithEvents maxDailyEarnCurrency As Label
     Friend WithEvents dealRestockCurrency As Label
     Friend WithEvents backValueCurrency As Label
+    Friend WithEvents otherDealIntervalStep As Label
+    Friend WithEvents dealIntervalValue As TextBox
+    Friend WithEvents dealIntervalLabel As Label
 End Class

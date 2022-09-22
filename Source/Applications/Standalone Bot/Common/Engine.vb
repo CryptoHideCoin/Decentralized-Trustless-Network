@@ -8,7 +8,7 @@ Namespace AreaCommon
 
     Module Engine
 
-        Public Property IO As New AreaEngine.IO.IOEngine
+        Public Property IO As New AreaEngines.IO.IOEngine
 
     End Module
 

@@ -3,7 +3,7 @@ Option Explicit On
 
 
 
-Namespace AreaEngine.IO
+Namespace AreaEngines.IO
 
     Public Class IOEngine
 
@@ -231,6 +231,39 @@ Namespace AreaEngine.IO
             System.IO.Directory.Delete(pathBot, True)
 
             Return True
+        End Function
+
+
+        Public Function getPageCounters() As List(Of String)
+            Dim files() As String = System.IO.Directory.GetFiles(dayCounterPath)
+            Dim fileList As New List(Of String)
+            Dim returnList As New List(Of String)
+            Dim majorFile As String
+
+            For Each file As String In files
+                fileList.Add(file)
+            Next
+
+            Do While (fileList.Count > 1)
+                majorFile = fileList(0)
+
+                For count = 1 To fileList.Count - 1
+                    If fileList(count) > majorFile Then
+                        majorFile = fileList(count)
+                    End If
+                Next
+
+                returnList.Add(majorFile)
+                fileList.Remove(majorFile)
+            Loop
+
+            If (fileList.Count > 0) Then
+                majorFile = fileList(0)
+
+                returnList.Add(majorFile)
+            End If
+
+            Return returnList
         End Function
 
         ''' <summary>

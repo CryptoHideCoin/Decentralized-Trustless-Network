@@ -27,12 +27,12 @@ Public Class EditProduct
         spreadCurrency.Text = currentData.header.quoteCurrency
         currentTotalCurrencyLabel.Text = currentData.header.quoteCurrency
 
-        minValue.ReadOnly = currentData.value.automaticValue
-        dateLastValue.Enabled = Not currentData.value.automaticValue
-        maxValue.ReadOnly = currentData.value.automaticValue
-        dateMaxValue.Enabled = Not currentData.value.automaticValue
+        minValue.ReadOnly = currentData.value.automaticMinValue
+        dateLastValue.Enabled = Not currentData.value.automaticMinValue
+        maxValue.ReadOnly = currentData.value.automaticMaxValue
+        dateMaxValue.Enabled = Not currentData.value.automaticMaxValue
 
-        If currentData.value.automaticValue Or (Not currentData.value.automaticValue And showAll) Then
+        If currentData.value.automaticMinValue Or currentData.value.automaticMaxValue Or (Not (currentData.value.automaticMinValue Or currentData.value.automaticMaxValue) And showAll) Then
             If currentData.value.minValue = 0 Then
                 minValue.Text = "---"
             Else
@@ -220,23 +220,28 @@ Public Class EditProduct
         If Not verifyData() Then
             Return
         End If
-        If Not currentData.value.automaticValue Then
-            If IsNumeric(minValue.Text) Then
-                currentData.value.minValue = Val(minValue.Text.Trim.Replace(".", "").Replace(",", "."))
-                currentData.value.dateLast = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(dateLastValue.Value.ToUniversalTime)
-
-                currentData.value.maxValue = Val(maxValue.Text.Trim.Replace(".", "").Replace(",", "."))
-                currentData.value.dateMax = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(dateMaxValue.Value.ToUniversalTime)
+        If Not currentData.value.automaticMinValue Or Not currentData.value.automaticMinValue Then
+            If Not currentData.value.automaticMinValue Then
+                If IsNumeric(minValue.Text) Then
+                    currentData.value.minValue = Val(minValue.Text.Trim.Replace(".", "").Replace(",", "."))
+                    currentData.value.dateLast = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(dateLastValue.Value.ToUniversalTime)
+                End If
             End If
+            If Not currentData.value.automaticMaxValue Then
+                If IsNumeric(maxValue.Text) Then
+                    currentData.value.maxValue = Val(maxValue.Text.Trim.Replace(".", "").Replace(",", "."))
+                    currentData.value.dateMax = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(dateMaxValue.Value.ToUniversalTime)
+                End If
 
-            currentData.userData.state = stateValue.SelectedIndex
-            currentData.userData.preference = preferenceValue.SelectedIndex
+                currentData.userData.state = stateValue.SelectedIndex
+                currentData.userData.preference = preferenceValue.SelectedIndex
 
-            If Not currentData.userData.isCustomized Then
-                currentData.userData.isCustomized = True
+                If Not currentData.userData.isCustomized Then
+                    currentData.userData.isCustomized = True
+                End If
+
+                Close()
             End If
-
-            Close()
         End If
     End Sub
 
@@ -279,5 +284,6 @@ Public Class EditProduct
     Private Sub preferenceValue_SelectedIndexChanged(sender As Object, e As EventArgs) Handles preferenceValue.SelectedIndexChanged
         startPairId()
     End Sub
+
 
 End Class

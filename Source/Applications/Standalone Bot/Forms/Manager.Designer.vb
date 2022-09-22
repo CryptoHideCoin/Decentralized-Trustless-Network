@@ -31,6 +31,14 @@ Partial Class Manager
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -43,20 +51,15 @@ Partial Class Manager
         Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle31 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim DataGridViewCellStyle32 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle33 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle34 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle35 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Manager))
         Me.menuMain = New System.Windows.Forms.MenuStrip()
         Me.BotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -67,6 +70,8 @@ Partial Class Manager
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.ActionAutomaticBotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RestartVirtualToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.DailyReportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ArchiveSelectedBotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PersonalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -84,13 +89,24 @@ Partial Class Manager
         Me.customizedDataView = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.priceDataColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.spreadProductColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.SpreadPercColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TargetColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.editDataColumn = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.journalPage = New System.Windows.Forms.TabPage()
         Me.journalSplit = New System.Windows.Forms.SplitContainer()
         Me.daySummaryButton = New System.Windows.Forms.CheckBox()
         Me.summaryButton = New System.Windows.Forms.CheckBox()
         Me.SummaryPanel = New System.Windows.Forms.Panel()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.averageAPYValue = New System.Windows.Forms.Label()
+        Me.Label39 = New System.Windows.Forms.Label()
+        Me.numDaysValue = New System.Windows.Forms.Label()
+        Me.Label43 = New System.Windows.Forms.Label()
+        Me.apyValue = New System.Windows.Forms.Label()
+        Me.Label40 = New System.Windows.Forms.Label()
+        Me.clearButton = New System.Windows.Forms.Button()
+        Me.totalEarnValue = New System.Windows.Forms.Label()
+        Me.alertValue = New System.Windows.Forms.TextBox()
         Me.alertLabel = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.earnLabel = New System.Windows.Forms.Label()
@@ -119,6 +135,10 @@ Partial Class Manager
         Me.currentDateJournalLabel = New System.Windows.Forms.Label()
         Me.initialDateLabel = New System.Windows.Forms.Label()
         Me.dayPanel = New System.Windows.Forms.Panel()
+        Me.apyDayValue = New System.Windows.Forms.Label()
+        Me.Label38 = New System.Windows.Forms.Label()
+        Me.apyDayLabel = New System.Windows.Forms.Label()
+        Me.earnDayValue = New System.Windows.Forms.Label()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.volumesDayValue = New System.Windows.Forms.TextBox()
         Me.volumeDayLabel = New System.Windows.Forms.Label()
@@ -147,6 +167,14 @@ Partial Class Manager
         Me.Label21 = New System.Windows.Forms.Label()
         Me.currentDayValue = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
+        Me.dayTransactionDataView = New System.Windows.Forms.DataGridView()
+        Me.buyColumnName = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.dateColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.pairIDColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.amountColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dailyColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
+        Me.DataGridViewButtonColumn1 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.walletPage = New System.Windows.Forms.TabPage()
         Me.totalIncreaseValue = New System.Windows.Forms.Label()
         Me.Label11 = New System.Windows.Forms.Label()
@@ -220,16 +248,6 @@ Partial Class Manager
         Me.currentValue = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.timerMain = New System.Windows.Forms.Timer(Me.components)
         Me.updateBotsTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.totalEarnValue = New System.Windows.Forms.Label()
-        Me.earnDayValue = New System.Windows.Forms.Label()
-        Me.dayTransactionDataView = New System.Windows.Forms.DataGridView()
-        Me.buyColumnName = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.dateColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.pairIDColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.amountColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dailyColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.DataGridViewButtonColumn1 = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.menuMain.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.currenciesPage.SuspendLayout()
@@ -241,6 +259,7 @@ Partial Class Manager
         Me.journalSplit.SuspendLayout()
         Me.SummaryPanel.SuspendLayout()
         Me.dayPanel.SuspendLayout()
+        CType(Me.dayTransactionDataView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.walletPage.SuspendLayout()
         CType(Me.accountsGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.botPage.SuspendLayout()
@@ -249,7 +268,6 @@ Partial Class Manager
         CType(Me.mainChart, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tickValues, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.marketDataView, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dayTransactionDataView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'menuMain
@@ -285,7 +303,7 @@ Partial Class Manager
         '
         'AutomaticBotToolStripMenuItem
         '
-        Me.AutomaticBotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfigurationToolStripMenuItem, Me.ToolStripSeparator3, Me.ActionAutomaticBotToolStripMenuItem, Me.RestartVirtualToolStripMenuItem})
+        Me.AutomaticBotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfigurationToolStripMenuItem, Me.ToolStripSeparator3, Me.ActionAutomaticBotToolStripMenuItem, Me.RestartVirtualToolStripMenuItem, Me.ToolStripSeparator4, Me.DailyReportToolStripMenuItem})
         Me.AutomaticBotToolStripMenuItem.Name = "AutomaticBotToolStripMenuItem"
         Me.AutomaticBotToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
         Me.AutomaticBotToolStripMenuItem.Text = "Automatic Bot"
@@ -293,25 +311,36 @@ Partial Class Manager
         'ConfigurationToolStripMenuItem
         '
         Me.ConfigurationToolStripMenuItem.Name = "ConfigurationToolStripMenuItem"
-        Me.ConfigurationToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.ConfigurationToolStripMenuItem.Size = New System.Drawing.Size(215, 22)
         Me.ConfigurationToolStripMenuItem.Text = "Configuration"
         '
         'ToolStripSeparator3
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(183, 6)
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(212, 6)
         '
         'ActionAutomaticBotToolStripMenuItem
         '
         Me.ActionAutomaticBotToolStripMenuItem.Name = "ActionAutomaticBotToolStripMenuItem"
-        Me.ActionAutomaticBotToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.ActionAutomaticBotToolStripMenuItem.Size = New System.Drawing.Size(215, 22)
         Me.ActionAutomaticBotToolStripMenuItem.Text = "Start"
         '
         'RestartVirtualToolStripMenuItem
         '
         Me.RestartVirtualToolStripMenuItem.Name = "RestartVirtualToolStripMenuItem"
-        Me.RestartVirtualToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
+        Me.RestartVirtualToolStripMenuItem.Size = New System.Drawing.Size(215, 22)
         Me.RestartVirtualToolStripMenuItem.Text = "Reset virtual data"
+        '
+        'ToolStripSeparator4
+        '
+        Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(212, 6)
+        '
+        'DailyReportToolStripMenuItem
+        '
+        Me.DailyReportToolStripMenuItem.Name = "DailyReportToolStripMenuItem"
+        Me.DailyReportToolStripMenuItem.Size = New System.Drawing.Size(215, 22)
+        Me.DailyReportToolStripMenuItem.Text = "Recurring Page Report"
         '
         'ToolStripSeparator1
         '
@@ -407,7 +436,7 @@ Partial Class Manager
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.CurrenciesDataView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.CurrenciesDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.CurrenciesDataView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.currencyDataColumn, Me.nameDataColumn, Me.preferenceDataColumn, Me.customizedDataView, Me.priceDataColumn, Me.DataGridViewTextBoxColumn6, Me.editDataColumn})
+        Me.CurrenciesDataView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.currencyDataColumn, Me.nameDataColumn, Me.preferenceDataColumn, Me.customizedDataView, Me.priceDataColumn, Me.DataGridViewTextBoxColumn6, Me.spreadProductColumn, Me.SpreadPercColumn, Me.TargetColumn, Me.editDataColumn})
         Me.CurrenciesDataView.Location = New System.Drawing.Point(0, 0)
         Me.CurrenciesDataView.MultiSelect = False
         Me.CurrenciesDataView.Name = "CurrenciesDataView"
@@ -425,6 +454,7 @@ Partial Class Manager
         Me.currencyDataColumn.HeaderText = "Currency"
         Me.currencyDataColumn.Name = "currencyDataColumn"
         Me.currencyDataColumn.ReadOnly = True
+        Me.currencyDataColumn.Width = 75
         '
         'nameDataColumn
         '
@@ -451,9 +481,10 @@ Partial Class Manager
         DataGridViewCellStyle5.BackColor = System.Drawing.Color.LightGray
         DataGridViewCellStyle5.NullValue = False
         Me.customizedDataView.DefaultCellStyle = DataGridViewCellStyle5
-        Me.customizedDataView.HeaderText = "Customized"
+        Me.customizedDataView.HeaderText = "Custom"
         Me.customizedDataView.Name = "customizedDataView"
         Me.customizedDataView.ReadOnly = True
+        Me.customizedDataView.Width = 60
         '
         'priceDataColumn
         '
@@ -470,16 +501,43 @@ Partial Class Manager
         DataGridViewCellStyle7.BackColor = System.Drawing.Color.LightGray
         DataGridViewCellStyle7.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle7
-        Me.DataGridViewTextBoxColumn6.HeaderText = "Value"
+        Me.DataGridViewTextBoxColumn6.HeaderText = "Acquire USDT"
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
         Me.DataGridViewTextBoxColumn6.ReadOnly = True
-        Me.DataGridViewTextBoxColumn6.Width = 150
+        Me.DataGridViewTextBoxColumn6.Width = 120
+        '
+        'spreadProductColumn
+        '
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.LightGray
+        Me.spreadProductColumn.DefaultCellStyle = DataGridViewCellStyle8
+        Me.spreadProductColumn.HeaderText = "Difference USDT"
+        Me.spreadProductColumn.Name = "spreadProductColumn"
+        Me.spreadProductColumn.Width = 70
+        '
+        'SpreadPercColumn
+        '
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle9.BackColor = System.Drawing.Color.LightGray
+        Me.SpreadPercColumn.DefaultCellStyle = DataGridViewCellStyle9
+        Me.SpreadPercColumn.HeaderText = "%"
+        Me.SpreadPercColumn.Name = "SpreadPercColumn"
+        Me.SpreadPercColumn.ReadOnly = True
+        Me.SpreadPercColumn.Width = 75
+        '
+        'TargetColumn
+        '
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle10.BackColor = System.Drawing.Color.LightGray
+        Me.TargetColumn.DefaultCellStyle = DataGridViewCellStyle10
+        Me.TargetColumn.HeaderText = "Target USDT"
+        Me.TargetColumn.Name = "TargetColumn"
         '
         'editDataColumn
         '
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.LightGray
-        Me.editDataColumn.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.LightGray
+        Me.editDataColumn.DefaultCellStyle = DataGridViewCellStyle11
         Me.editDataColumn.HeaderText = "Edit"
         Me.editDataColumn.Name = "editDataColumn"
         Me.editDataColumn.ReadOnly = True
@@ -515,18 +573,18 @@ Partial Class Manager
         '
         Me.journalSplit.Panel2.Controls.Add(Me.dayTransactionDataView)
         Me.journalSplit.Size = New System.Drawing.Size(855, 384)
-        Me.journalSplit.SplitterDistance = 219
+        Me.journalSplit.SplitterDistance = 258
         Me.journalSplit.TabIndex = 0
         '
         'daySummaryButton
         '
         Me.daySummaryButton.Appearance = System.Windows.Forms.Appearance.Button
         Me.daySummaryButton.AutoSize = True
-        Me.daySummaryButton.Location = New System.Drawing.Point(93, 10)
+        Me.daySummaryButton.Location = New System.Drawing.Point(745, 10)
         Me.daySummaryButton.Name = "daySummaryButton"
-        Me.daySummaryButton.Size = New System.Drawing.Size(40, 23)
+        Me.daySummaryButton.Size = New System.Drawing.Size(93, 23)
         Me.daySummaryButton.TabIndex = 32
-        Me.daySummaryButton.Text = "Day"
+        Me.daySummaryButton.Text = "Current Page"
         Me.daySummaryButton.UseVisualStyleBackColor = True
         '
         'summaryButton
@@ -535,7 +593,7 @@ Partial Class Manager
         Me.summaryButton.AutoSize = True
         Me.summaryButton.Checked = True
         Me.summaryButton.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.summaryButton.Location = New System.Drawing.Point(14, 10)
+        Me.summaryButton.Location = New System.Drawing.Point(666, 10)
         Me.summaryButton.Name = "summaryButton"
         Me.summaryButton.Size = New System.Drawing.Size(73, 23)
         Me.summaryButton.TabIndex = 30
@@ -544,8 +602,15 @@ Partial Class Manager
         '
         'SummaryPanel
         '
+        Me.SummaryPanel.Controls.Add(Me.averageAPYValue)
+        Me.SummaryPanel.Controls.Add(Me.Label39)
+        Me.SummaryPanel.Controls.Add(Me.numDaysValue)
+        Me.SummaryPanel.Controls.Add(Me.Label43)
+        Me.SummaryPanel.Controls.Add(Me.apyValue)
+        Me.SummaryPanel.Controls.Add(Me.Label40)
+        Me.SummaryPanel.Controls.Add(Me.clearButton)
         Me.SummaryPanel.Controls.Add(Me.totalEarnValue)
-        Me.SummaryPanel.Controls.Add(Me.TextBox1)
+        Me.SummaryPanel.Controls.Add(Me.alertValue)
         Me.SummaryPanel.Controls.Add(Me.alertLabel)
         Me.SummaryPanel.Controls.Add(Me.Label15)
         Me.SummaryPanel.Controls.Add(Me.earnLabel)
@@ -575,23 +640,99 @@ Partial Class Manager
         Me.SummaryPanel.Controls.Add(Me.initialDateLabel)
         Me.SummaryPanel.Location = New System.Drawing.Point(14, 39)
         Me.SummaryPanel.Name = "SummaryPanel"
-        Me.SummaryPanel.Size = New System.Drawing.Size(838, 162)
+        Me.SummaryPanel.Size = New System.Drawing.Size(838, 199)
         Me.SummaryPanel.TabIndex = 31
         '
-        'TextBox1
+        'averageAPYValue
         '
-        Me.TextBox1.BackColor = System.Drawing.SystemColors.Info
-        Me.TextBox1.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.TextBox1.Location = New System.Drawing.Point(83, 124)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ReadOnly = True
-        Me.TextBox1.Size = New System.Drawing.Size(738, 21)
-        Me.TextBox1.TabIndex = 58
+        Me.averageAPYValue.BackColor = System.Drawing.SystemColors.Control
+        Me.averageAPYValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.averageAPYValue.Location = New System.Drawing.Point(371, 123)
+        Me.averageAPYValue.Name = "averageAPYValue"
+        Me.averageAPYValue.Size = New System.Drawing.Size(132, 21)
+        Me.averageAPYValue.TabIndex = 68
+        Me.averageAPYValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label39
+        '
+        Me.Label39.AutoSize = True
+        Me.Label39.Location = New System.Drawing.Point(254, 126)
+        Me.Label39.Name = "Label39"
+        Me.Label39.Size = New System.Drawing.Size(111, 13)
+        Me.Label39.TabIndex = 67
+        Me.Label39.Text = "Average Earn (%)"
+        '
+        'numDaysValue
+        '
+        Me.numDaysValue.BackColor = System.Drawing.SystemColors.Control
+        Me.numDaysValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.numDaysValue.Location = New System.Drawing.Point(83, 123)
+        Me.numDaysValue.Name = "numDaysValue"
+        Me.numDaysValue.Size = New System.Drawing.Size(132, 21)
+        Me.numDaysValue.TabIndex = 66
+        Me.numDaysValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label43
+        '
+        Me.Label43.AutoSize = True
+        Me.Label43.Location = New System.Drawing.Point(3, 126)
+        Me.Label43.Name = "Label43"
+        Me.Label43.Size = New System.Drawing.Size(75, 13)
+        Me.Label43.TabIndex = 64
+        Me.Label43.Text = "Num. pages"
+        '
+        'apyValue
+        '
+        Me.apyValue.BackColor = System.Drawing.SystemColors.Control
+        Me.apyValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.apyValue.Location = New System.Drawing.Point(371, 96)
+        Me.apyValue.Name = "apyValue"
+        Me.apyValue.Size = New System.Drawing.Size(132, 21)
+        Me.apyValue.TabIndex = 63
+        Me.apyValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label40
+        '
+        Me.Label40.AutoSize = True
+        Me.Label40.Location = New System.Drawing.Point(306, 99)
+        Me.Label40.Name = "Label40"
+        Me.Label40.Size = New System.Drawing.Size(59, 13)
+        Me.Label40.TabIndex = 61
+        Me.Label40.Text = "Earn (%)"
+        '
+        'clearButton
+        '
+        Me.clearButton.Location = New System.Drawing.Point(749, 148)
+        Me.clearButton.Name = "clearButton"
+        Me.clearButton.Size = New System.Drawing.Size(75, 23)
+        Me.clearButton.TabIndex = 60
+        Me.clearButton.Text = "Clear"
+        Me.clearButton.UseVisualStyleBackColor = True
+        '
+        'totalEarnValue
+        '
+        Me.totalEarnValue.BackColor = System.Drawing.SystemColors.Control
+        Me.totalEarnValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.totalEarnValue.Location = New System.Drawing.Point(83, 96)
+        Me.totalEarnValue.Name = "totalEarnValue"
+        Me.totalEarnValue.Size = New System.Drawing.Size(132, 21)
+        Me.totalEarnValue.TabIndex = 59
+        Me.totalEarnValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'alertValue
+        '
+        Me.alertValue.BackColor = System.Drawing.SystemColors.Info
+        Me.alertValue.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.alertValue.Location = New System.Drawing.Point(83, 150)
+        Me.alertValue.Name = "alertValue"
+        Me.alertValue.ReadOnly = True
+        Me.alertValue.Size = New System.Drawing.Size(660, 21)
+        Me.alertValue.TabIndex = 58
         '
         'alertLabel
         '
         Me.alertLabel.AutoSize = True
-        Me.alertLabel.Location = New System.Drawing.Point(44, 127)
+        Me.alertLabel.Location = New System.Drawing.Point(44, 153)
         Me.alertLabel.Name = "alertLabel"
         Me.alertLabel.Size = New System.Drawing.Size(34, 13)
         Me.alertLabel.TabIndex = 57
@@ -722,11 +863,11 @@ Partial Class Manager
         'futureGainLabel
         '
         Me.futureGainLabel.AutoSize = True
-        Me.futureGainLabel.Location = New System.Drawing.Point(560, 45)
+        Me.futureGainLabel.Location = New System.Drawing.Point(588, 45)
         Me.futureGainLabel.Name = "futureGainLabel"
-        Me.futureGainLabel.Size = New System.Drawing.Size(71, 13)
+        Me.futureGainLabel.Size = New System.Drawing.Size(43, 13)
         Me.futureGainLabel.TabIndex = 42
-        Me.futureGainLabel.Text = "Future gain"
+        Me.futureGainLabel.Text = "Target"
         '
         'Label1
         '
@@ -841,6 +982,9 @@ Partial Class Manager
         '
         'dayPanel
         '
+        Me.dayPanel.Controls.Add(Me.apyDayValue)
+        Me.dayPanel.Controls.Add(Me.Label38)
+        Me.dayPanel.Controls.Add(Me.apyDayLabel)
         Me.dayPanel.Controls.Add(Me.earnDayValue)
         Me.dayPanel.Controls.Add(Me.Label34)
         Me.dayPanel.Controls.Add(Me.volumesDayValue)
@@ -872,8 +1016,47 @@ Partial Class Manager
         Me.dayPanel.Controls.Add(Me.Label17)
         Me.dayPanel.Location = New System.Drawing.Point(14, 39)
         Me.dayPanel.Name = "dayPanel"
-        Me.dayPanel.Size = New System.Drawing.Size(838, 162)
+        Me.dayPanel.Size = New System.Drawing.Size(838, 201)
         Me.dayPanel.TabIndex = 33
+        '
+        'apyDayValue
+        '
+        Me.apyDayValue.BackColor = System.Drawing.SystemColors.Control
+        Me.apyDayValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.apyDayValue.Location = New System.Drawing.Point(499, 148)
+        Me.apyDayValue.Name = "apyDayValue"
+        Me.apyDayValue.Size = New System.Drawing.Size(132, 21)
+        Me.apyDayValue.TabIndex = 69
+        Me.apyDayValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label38
+        '
+        Me.Label38.AutoSize = True
+        Me.Label38.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label38.Location = New System.Drawing.Point(638, 151)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(37, 13)
+        Me.Label38.TabIndex = 68
+        Me.Label38.Text = "USDT"
+        '
+        'apyDayLabel
+        '
+        Me.apyDayLabel.AutoSize = True
+        Me.apyDayLabel.Location = New System.Drawing.Point(436, 151)
+        Me.apyDayLabel.Name = "apyDayLabel"
+        Me.apyDayLabel.Size = New System.Drawing.Size(59, 13)
+        Me.apyDayLabel.TabIndex = 67
+        Me.apyDayLabel.Text = "Earn (%)"
+        '
+        'earnDayValue
+        '
+        Me.earnDayValue.BackColor = System.Drawing.SystemColors.Control
+        Me.earnDayValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.earnDayValue.Location = New System.Drawing.Point(164, 148)
+        Me.earnDayValue.Name = "earnDayValue"
+        Me.earnDayValue.Size = New System.Drawing.Size(132, 21)
+        Me.earnDayValue.TabIndex = 66
+        Me.earnDayValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label34
         '
@@ -925,7 +1108,7 @@ Partial Class Manager
         'Label37
         '
         Me.Label37.AutoSize = True
-        Me.Label37.Location = New System.Drawing.Point(120, 126)
+        Me.Label37.Location = New System.Drawing.Point(125, 126)
         Me.Label37.Name = "Label37"
         Me.Label37.Size = New System.Drawing.Size(33, 13)
         Me.Label37.TabIndex = 60
@@ -935,7 +1118,7 @@ Partial Class Manager
         '
         Me.Label32.AutoSize = True
         Me.Label32.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label32.Location = New System.Drawing.Point(638, 18)
+        Me.Label32.Location = New System.Drawing.Point(303, 151)
         Me.Label32.Name = "Label32"
         Me.Label32.Size = New System.Drawing.Size(37, 13)
         Me.Label32.TabIndex = 59
@@ -944,7 +1127,7 @@ Partial Class Manager
         'Label33
         '
         Me.Label33.AutoSize = True
-        Me.Label33.Location = New System.Drawing.Point(462, 18)
+        Me.Label33.Location = New System.Drawing.Point(125, 151)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(33, 13)
         Me.Label33.TabIndex = 57
@@ -972,11 +1155,11 @@ Partial Class Manager
         'Label29
         '
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(436, 99)
+        Me.Label29.Location = New System.Drawing.Point(415, 99)
         Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(59, 13)
+        Me.Label29.Size = New System.Drawing.Size(80, 13)
         Me.Label29.TabIndex = 54
-        Me.Label29.Text = "Daily sell"
+        Me.Label29.Text = "Ordinary sell"
         '
         'Label30
         '
@@ -1028,11 +1211,11 @@ Partial Class Manager
         'Label25
         '
         Me.Label25.AutoSize = True
-        Me.Label25.Location = New System.Drawing.Point(434, 72)
+        Me.Label25.Location = New System.Drawing.Point(413, 72)
         Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(61, 13)
+        Me.Label25.Size = New System.Drawing.Size(82, 13)
         Me.Label25.TabIndex = 48
-        Me.Label25.Text = "Daily buy"
+        Me.Label25.Text = "Ordinary buy"
         '
         'Label26
         '
@@ -1135,6 +1318,111 @@ Partial Class Manager
         Me.Label17.Size = New System.Drawing.Size(80, 13)
         Me.Label17.TabIndex = 33
         Me.Label17.Text = "Current date"
+        '
+        'dayTransactionDataView
+        '
+        Me.dayTransactionDataView.AllowUserToAddRows = False
+        Me.dayTransactionDataView.AllowUserToDeleteRows = False
+        Me.dayTransactionDataView.AllowUserToOrderColumns = True
+        Me.dayTransactionDataView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dayTransactionDataView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle12
+        Me.dayTransactionDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dayTransactionDataView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.buyColumnName, Me.dateColumn, Me.pairIDColumn, Me.amountColumn, Me.DataGridViewTextBoxColumn7, Me.dailyColumn, Me.DataGridViewButtonColumn1})
+        Me.dayTransactionDataView.Location = New System.Drawing.Point(0, 3)
+        Me.dayTransactionDataView.MultiSelect = False
+        Me.dayTransactionDataView.Name = "dayTransactionDataView"
+        Me.dayTransactionDataView.RowHeadersVisible = False
+        Me.dayTransactionDataView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dayTransactionDataView.Size = New System.Drawing.Size(854, 119)
+        Me.dayTransactionDataView.TabIndex = 4
+        '
+        'buyColumnName
+        '
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle13.BackColor = System.Drawing.Color.LightGray
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Verdana", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle13.NullValue = False
+        Me.buyColumnName.DefaultCellStyle = DataGridViewCellStyle13
+        Me.buyColumnName.HeaderText = "Buy"
+        Me.buyColumnName.Name = "buyColumnName"
+        Me.buyColumnName.ReadOnly = True
+        Me.buyColumnName.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.buyColumnName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        Me.buyColumnName.Width = 50
+        '
+        'dateColumn
+        '
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle14.BackColor = System.Drawing.Color.LightGray
+        Me.dateColumn.DefaultCellStyle = DataGridViewCellStyle14
+        Me.dateColumn.HeaderText = "Date"
+        Me.dateColumn.Name = "dateColumn"
+        Me.dateColumn.ReadOnly = True
+        Me.dateColumn.Width = 180
+        '
+        'pairIDColumn
+        '
+        Me.pairIDColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        DataGridViewCellStyle15.BackColor = System.Drawing.Color.Wheat
+        Me.pairIDColumn.DefaultCellStyle = DataGridViewCellStyle15
+        Me.pairIDColumn.HeaderText = "Pair ID"
+        Me.pairIDColumn.Name = "pairIDColumn"
+        Me.pairIDColumn.ReadOnly = True
+        Me.pairIDColumn.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.pairIDColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'amountColumn
+        '
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle16.BackColor = System.Drawing.Color.LightGray
+        DataGridViewCellStyle16.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.amountColumn.DefaultCellStyle = DataGridViewCellStyle16
+        Me.amountColumn.HeaderText = "Amount"
+        Me.amountColumn.Name = "amountColumn"
+        Me.amountColumn.ReadOnly = True
+        Me.amountColumn.Width = 150
+        '
+        'DataGridViewTextBoxColumn7
+        '
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle17.BackColor = System.Drawing.Color.LightGray
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle17
+        Me.DataGridViewTextBoxColumn7.HeaderText = "Value in USDT"
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.ReadOnly = True
+        '
+        'dailyColumn
+        '
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle18.BackColor = System.Drawing.Color.LightGray
+        DataGridViewCellStyle18.NullValue = False
+        Me.dailyColumn.DefaultCellStyle = DataGridViewCellStyle18
+        Me.dailyColumn.HeaderText = "Recurring"
+        Me.dailyColumn.Name = "dailyColumn"
+        Me.dailyColumn.ReadOnly = True
+        Me.dailyColumn.Width = 75
+        '
+        'DataGridViewButtonColumn1
+        '
+        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle19.BackColor = System.Drawing.Color.LightGray
+        Me.DataGridViewButtonColumn1.DefaultCellStyle = DataGridViewCellStyle19
+        Me.DataGridViewButtonColumn1.HeaderText = "Edit"
+        Me.DataGridViewButtonColumn1.Name = "DataGridViewButtonColumn1"
+        Me.DataGridViewButtonColumn1.ReadOnly = True
+        Me.DataGridViewButtonColumn1.Text = "..."
+        Me.DataGridViewButtonColumn1.UseColumnTextForButtonValue = True
+        Me.DataGridViewButtonColumn1.Visible = False
+        Me.DataGridViewButtonColumn1.Width = 50
         '
         'walletPage
         '
@@ -1316,14 +1604,14 @@ Partial Class Manager
         Me.accountsGridView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle17.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.accountsGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle20.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.accountsGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle20
         Me.accountsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.accountsGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.valueColumn, Me.changeUSDT, Me.valueUSDTColumn})
         Me.accountsGridView.Location = New System.Drawing.Point(3, 3)
@@ -1336,10 +1624,10 @@ Partial Class Manager
         '
         'DataGridViewTextBoxColumn1
         '
-        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
-        DataGridViewCellStyle18.BackColor = System.Drawing.Color.Wheat
-        DataGridViewCellStyle18.Font = New System.Drawing.Font("Verdana", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
+        DataGridViewCellStyle21.BackColor = System.Drawing.Color.Wheat
+        DataGridViewCellStyle21.Font = New System.Drawing.Font("Verdana", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle21
         Me.DataGridViewTextBoxColumn1.HeaderText = "Account"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
         Me.DataGridViewTextBoxColumn1.ReadOnly = True
@@ -1347,10 +1635,10 @@ Partial Class Manager
         '
         'valueColumn
         '
-        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle19.BackColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle19.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.valueColumn.DefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle22.BackColor = System.Drawing.Color.LightGray
+        DataGridViewCellStyle22.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.valueColumn.DefaultCellStyle = DataGridViewCellStyle22
         Me.valueColumn.HeaderText = "Amount"
         Me.valueColumn.Name = "valueColumn"
         Me.valueColumn.ReadOnly = True
@@ -1358,10 +1646,10 @@ Partial Class Manager
         '
         'changeUSDT
         '
-        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle20.BackColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle20.Font = New System.Drawing.Font("Courier New", 8.25!)
-        Me.changeUSDT.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle23.BackColor = System.Drawing.Color.LightGray
+        DataGridViewCellStyle23.Font = New System.Drawing.Font("Courier New", 8.25!)
+        Me.changeUSDT.DefaultCellStyle = DataGridViewCellStyle23
         Me.changeUSDT.HeaderText = "Change"
         Me.changeUSDT.Name = "changeUSDT"
         Me.changeUSDT.ReadOnly = True
@@ -1369,10 +1657,10 @@ Partial Class Manager
         '
         'valueUSDTColumn
         '
-        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle21.BackColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle21.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.valueUSDTColumn.DefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle24.BackColor = System.Drawing.Color.LightGray
+        DataGridViewCellStyle24.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.valueUSDTColumn.DefaultCellStyle = DataGridViewCellStyle24
         Me.valueUSDTColumn.HeaderText = "Value USDT"
         Me.valueUSDTColumn.Name = "valueUSDTColumn"
         Me.valueUSDTColumn.ReadOnly = True
@@ -1512,14 +1800,14 @@ Partial Class Manager
         Me.botDataView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle22.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.botDataView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle22
+        DataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle25.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle25.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle25.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle25.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.botDataView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle25
         Me.botDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.botDataView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.id, Me.created, Me.pair, Me.openOrdersColumn, Me.closeOrderButton, Me.isActive, Me.editBot, Me.viewData})
         Me.botDataView.Location = New System.Drawing.Point(3, 3)
@@ -1532,10 +1820,10 @@ Partial Class Manager
         '
         'id
         '
-        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
-        DataGridViewCellStyle23.BackColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle23.Font = New System.Drawing.Font("Verdana", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.id.DefaultCellStyle = DataGridViewCellStyle23
+        DataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
+        DataGridViewCellStyle26.BackColor = System.Drawing.Color.LightGray
+        DataGridViewCellStyle26.Font = New System.Drawing.Font("Verdana", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.id.DefaultCellStyle = DataGridViewCellStyle26
         Me.id.HeaderText = "ID"
         Me.id.Name = "id"
         Me.id.ReadOnly = True
@@ -1543,10 +1831,10 @@ Partial Class Manager
         '
         'created
         '
-        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
-        DataGridViewCellStyle24.BackColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle24.Font = New System.Drawing.Font("Verdana", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.created.DefaultCellStyle = DataGridViewCellStyle24
+        DataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopLeft
+        DataGridViewCellStyle27.BackColor = System.Drawing.Color.LightGray
+        DataGridViewCellStyle27.Font = New System.Drawing.Font("Verdana", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.created.DefaultCellStyle = DataGridViewCellStyle27
         Me.created.HeaderText = "Created"
         Me.created.Name = "created"
         Me.created.ReadOnly = True
@@ -1554,18 +1842,18 @@ Partial Class Manager
         '
         'pair
         '
-        DataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle25.BackColor = System.Drawing.Color.Wheat
-        Me.pair.DefaultCellStyle = DataGridViewCellStyle25
+        DataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle28.BackColor = System.Drawing.Color.Wheat
+        Me.pair.DefaultCellStyle = DataGridViewCellStyle28
         Me.pair.HeaderText = "Pair"
         Me.pair.Name = "pair"
         Me.pair.ReadOnly = True
         '
         'openOrdersColumn
         '
-        DataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle26.BackColor = System.Drawing.Color.LightGray
-        Me.openOrdersColumn.DefaultCellStyle = DataGridViewCellStyle26
+        DataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle29.BackColor = System.Drawing.Color.LightGray
+        Me.openOrdersColumn.DefaultCellStyle = DataGridViewCellStyle29
         Me.openOrdersColumn.HeaderText = "Open"
         Me.openOrdersColumn.Name = "openOrdersColumn"
         Me.openOrdersColumn.ReadOnly = True
@@ -1573,9 +1861,9 @@ Partial Class Manager
         '
         'closeOrderButton
         '
-        DataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle27.BackColor = System.Drawing.Color.LightGray
-        Me.closeOrderButton.DefaultCellStyle = DataGridViewCellStyle27
+        DataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        DataGridViewCellStyle30.BackColor = System.Drawing.Color.LightGray
+        Me.closeOrderButton.DefaultCellStyle = DataGridViewCellStyle30
         Me.closeOrderButton.HeaderText = "Close"
         Me.closeOrderButton.Name = "closeOrderButton"
         Me.closeOrderButton.ReadOnly = True
@@ -1583,8 +1871,8 @@ Partial Class Manager
         '
         'isActive
         '
-        DataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        Me.isActive.DefaultCellStyle = DataGridViewCellStyle28
+        DataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        Me.isActive.DefaultCellStyle = DataGridViewCellStyle31
         Me.isActive.HeaderText = "Command"
         Me.isActive.Name = "isActive"
         Me.isActive.ReadOnly = True
@@ -1906,14 +2194,14 @@ Partial Class Manager
         Me.tickValues.AllowUserToDeleteRows = False
         Me.tickValues.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        DataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle29.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.tickValues.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle29
+        DataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle32.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle32.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle32.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle32.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle32.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.tickValues.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle32
         Me.tickValues.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.tickValues.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.time, Me.value})
         Me.tickValues.Location = New System.Drawing.Point(283, 31)
@@ -1933,8 +2221,8 @@ Partial Class Manager
         '
         'value
         '
-        DataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.value.DefaultCellStyle = DataGridViewCellStyle30
+        DataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.value.DefaultCellStyle = DataGridViewCellStyle33
         Me.value.HeaderText = "Value"
         Me.value.Name = "value"
         Me.value.ReadOnly = True
@@ -1946,14 +2234,14 @@ Partial Class Manager
         Me.marketDataView.AllowUserToOrderColumns = True
         Me.marketDataView.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        DataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle31.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle31.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle31.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle31.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.marketDataView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle31
+        DataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
+        DataGridViewCellStyle34.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle34.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.marketDataView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle34
         Me.marketDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.marketDataView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn3, Me.currentValue})
         Me.marketDataView.Location = New System.Drawing.Point(3, 3)
@@ -1971,8 +2259,8 @@ Partial Class Manager
         '
         'currentValue
         '
-        DataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        Me.currentValue.DefaultCellStyle = DataGridViewCellStyle32
+        DataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
+        Me.currentValue.DefaultCellStyle = DataGridViewCellStyle35
         Me.currentValue.HeaderText = "Current value"
         Me.currentValue.Name = "currentValue"
         Me.currentValue.ReadOnly = True
@@ -1985,131 +2273,6 @@ Partial Class Manager
         '
         Me.updateBotsTimer.Enabled = True
         Me.updateBotsTimer.Interval = 1000
-        '
-        'totalEarnValue
-        '
-        Me.totalEarnValue.BackColor = System.Drawing.SystemColors.Control
-        Me.totalEarnValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.totalEarnValue.Location = New System.Drawing.Point(83, 96)
-        Me.totalEarnValue.Name = "totalEarnValue"
-        Me.totalEarnValue.Size = New System.Drawing.Size(132, 21)
-        Me.totalEarnValue.TabIndex = 59
-        Me.totalEarnValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'earnDayValue
-        '
-        Me.earnDayValue.BackColor = System.Drawing.SystemColors.Control
-        Me.earnDayValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.earnDayValue.Location = New System.Drawing.Point(499, 15)
-        Me.earnDayValue.Name = "earnDayValue"
-        Me.earnDayValue.Size = New System.Drawing.Size(132, 21)
-        Me.earnDayValue.TabIndex = 66
-        Me.earnDayValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'dayTransactionDataView
-        '
-        Me.dayTransactionDataView.AllowUserToAddRows = False
-        Me.dayTransactionDataView.AllowUserToDeleteRows = False
-        Me.dayTransactionDataView.AllowUserToOrderColumns = True
-        Me.dayTransactionDataView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dayTransactionDataView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle9
-        Me.dayTransactionDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dayTransactionDataView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.buyColumnName, Me.dateColumn, Me.pairIDColumn, Me.amountColumn, Me.DataGridViewTextBoxColumn7, Me.dailyColumn, Me.DataGridViewButtonColumn1})
-        Me.dayTransactionDataView.Location = New System.Drawing.Point(0, 3)
-        Me.dayTransactionDataView.MultiSelect = False
-        Me.dayTransactionDataView.Name = "dayTransactionDataView"
-        Me.dayTransactionDataView.RowHeadersVisible = False
-        Me.dayTransactionDataView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dayTransactionDataView.Size = New System.Drawing.Size(854, 274)
-        Me.dayTransactionDataView.TabIndex = 4
-        '
-        'buyColumnName
-        '
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle10.BackColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Verdana", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle10.NullValue = False
-        Me.buyColumnName.DefaultCellStyle = DataGridViewCellStyle10
-        Me.buyColumnName.HeaderText = "Buy"
-        Me.buyColumnName.Name = "buyColumnName"
-        Me.buyColumnName.ReadOnly = True
-        Me.buyColumnName.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.buyColumnName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.buyColumnName.Width = 50
-        '
-        'dateColumn
-        '
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.LightGray
-        Me.dateColumn.DefaultCellStyle = DataGridViewCellStyle11
-        Me.dateColumn.HeaderText = "Date"
-        Me.dateColumn.Name = "dateColumn"
-        Me.dateColumn.ReadOnly = True
-        Me.dateColumn.Width = 180
-        '
-        'pairIDColumn
-        '
-        Me.pairIDColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        DataGridViewCellStyle12.BackColor = System.Drawing.Color.Wheat
-        Me.pairIDColumn.DefaultCellStyle = DataGridViewCellStyle12
-        Me.pairIDColumn.HeaderText = "Pair ID"
-        Me.pairIDColumn.Name = "pairIDColumn"
-        Me.pairIDColumn.ReadOnly = True
-        Me.pairIDColumn.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.pairIDColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'amountColumn
-        '
-        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle13.BackColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle13.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.amountColumn.DefaultCellStyle = DataGridViewCellStyle13
-        Me.amountColumn.HeaderText = "Amount"
-        Me.amountColumn.Name = "amountColumn"
-        Me.amountColumn.ReadOnly = True
-        Me.amountColumn.Width = 150
-        '
-        'DataGridViewTextBoxColumn7
-        '
-        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
-        DataGridViewCellStyle14.BackColor = System.Drawing.Color.LightGray
-        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle14
-        Me.DataGridViewTextBoxColumn7.HeaderText = "Value in USDT"
-        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
-        Me.DataGridViewTextBoxColumn7.ReadOnly = True
-        '
-        'dailyColumn
-        '
-        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle15.BackColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle15.NullValue = False
-        Me.dailyColumn.DefaultCellStyle = DataGridViewCellStyle15
-        Me.dailyColumn.HeaderText = "Daily"
-        Me.dailyColumn.Name = "dailyColumn"
-        Me.dailyColumn.ReadOnly = True
-        Me.dailyColumn.Width = 50
-        '
-        'DataGridViewButtonColumn1
-        '
-        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle16.BackColor = System.Drawing.Color.LightGray
-        Me.DataGridViewButtonColumn1.DefaultCellStyle = DataGridViewCellStyle16
-        Me.DataGridViewButtonColumn1.HeaderText = "Edit"
-        Me.DataGridViewButtonColumn1.Name = "DataGridViewButtonColumn1"
-        Me.DataGridViewButtonColumn1.ReadOnly = True
-        Me.DataGridViewButtonColumn1.Text = "..."
-        Me.DataGridViewButtonColumn1.UseColumnTextForButtonValue = True
-        Me.DataGridViewButtonColumn1.Visible = False
-        Me.DataGridViewButtonColumn1.Width = 50
         '
         'Manager
         '
@@ -2139,6 +2302,7 @@ Partial Class Manager
         Me.SummaryPanel.PerformLayout()
         Me.dayPanel.ResumeLayout(False)
         Me.dayPanel.PerformLayout()
+        CType(Me.dayTransactionDataView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.walletPage.ResumeLayout(False)
         Me.walletPage.PerformLayout()
         CType(Me.accountsGridView, System.ComponentModel.ISupportInitialize).EndInit()
@@ -2150,7 +2314,6 @@ Partial Class Manager
         CType(Me.mainChart, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tickValues, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.marketDataView, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dayTransactionDataView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2245,13 +2408,6 @@ Partial Class Manager
     Friend WithEvents CryptocurrenciesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents currenciesPage As TabPage
     Friend WithEvents CurrenciesDataView As DataGridView
-    Friend WithEvents currencyDataColumn As DataGridViewTextBoxColumn
-    Friend WithEvents nameDataColumn As DataGridViewTextBoxColumn
-    Friend WithEvents preferenceDataColumn As DataGridViewTextBoxColumn
-    Friend WithEvents customizedDataView As DataGridViewCheckBoxColumn
-    Friend WithEvents priceDataColumn As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
-    Friend WithEvents editDataColumn As DataGridViewButtonColumn
     Friend WithEvents AutomaticBotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ConfigurationToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents RestartVirtualToolStripMenuItem As ToolStripMenuItem
@@ -2261,7 +2417,7 @@ Partial Class Manager
     Friend WithEvents journalSplit As SplitContainer
     Friend WithEvents daySummaryButton As CheckBox
     Friend WithEvents SummaryPanel As Panel
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents alertValue As TextBox
     Friend WithEvents alertLabel As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents earnLabel As Label
@@ -2322,6 +2478,18 @@ Partial Class Manager
     Friend WithEvents totalEarnValue As Label
     Friend WithEvents earnDayValue As Label
     Friend WithEvents dayTransactionDataView As DataGridView
+    Friend WithEvents clearButton As Button
+    Friend WithEvents apyDayValue As Label
+    Friend WithEvents Label38 As Label
+    Friend WithEvents apyDayLabel As Label
+    Friend WithEvents apyValue As Label
+    Friend WithEvents Label40 As Label
+    Friend WithEvents averageAPYValue As Label
+    Friend WithEvents Label39 As Label
+    Friend WithEvents numDaysValue As Label
+    Friend WithEvents Label43 As Label
+    Friend WithEvents ToolStripSeparator4 As ToolStripSeparator
+    Friend WithEvents DailyReportToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents buyColumnName As DataGridViewCheckBoxColumn
     Friend WithEvents dateColumn As DataGridViewTextBoxColumn
     Friend WithEvents pairIDColumn As DataGridViewTextBoxColumn
@@ -2329,4 +2497,14 @@ Partial Class Manager
     Friend WithEvents DataGridViewTextBoxColumn7 As DataGridViewTextBoxColumn
     Friend WithEvents dailyColumn As DataGridViewCheckBoxColumn
     Friend WithEvents DataGridViewButtonColumn1 As DataGridViewButtonColumn
+    Friend WithEvents currencyDataColumn As DataGridViewTextBoxColumn
+    Friend WithEvents nameDataColumn As DataGridViewTextBoxColumn
+    Friend WithEvents preferenceDataColumn As DataGridViewTextBoxColumn
+    Friend WithEvents customizedDataView As DataGridViewCheckBoxColumn
+    Friend WithEvents priceDataColumn As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
+    Friend WithEvents spreadProductColumn As DataGridViewTextBoxColumn
+    Friend WithEvents SpreadPercColumn As DataGridViewTextBoxColumn
+    Friend WithEvents TargetColumn As DataGridViewTextBoxColumn
+    Friend WithEvents editDataColumn As DataGridViewButtonColumn
 End Class
