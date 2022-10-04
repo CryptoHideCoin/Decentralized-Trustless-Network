@@ -24,6 +24,7 @@ Namespace AreaEngines.IO
         Public Property automaticBotPath As String = ""
         Public Property dayCounterPath As String = ""
         Public Property JournalPath As String = ""
+        Public Property logPath As String = ""
 
         Public Property newTenant As Boolean = False
 
@@ -234,6 +235,11 @@ Namespace AreaEngines.IO
         End Function
 
 
+        Public Sub logAction(ByVal message As String)
+            System.IO.File.AppendAllText(logPath, message & vbCrLf)
+        End Sub
+
+
         Public Function getPageCounters() As List(Of String)
             Dim files() As String = System.IO.Directory.GetFiles(dayCounterPath)
             Dim fileList As New List(Of String)
@@ -335,6 +341,14 @@ Namespace AreaEngines.IO
             accountPath = System.IO.Path.Combine(path, "Accounts.json")
             productsPath = System.IO.Path.Combine(path, "Products.json")
             automaticBotPath = System.IO.Path.Combine(path, "AutomaticBot.json")
+
+            logPath = System.IO.Path.Combine(path, "Logs")
+
+            If Not System.IO.Directory.Exists(logPath) Then
+                System.IO.Directory.CreateDirectory(logPath)
+            End If
+
+            logPath = System.IO.Path.Combine(logPath, CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime().ToString.Replace(",", "") & ".log")
 
             checkAndMakeOrderPath()
 

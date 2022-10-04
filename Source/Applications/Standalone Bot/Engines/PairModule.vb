@@ -57,7 +57,10 @@ Namespace AreaCommon.Engines.Pairs
 
                 pair.addNewItem(tick)
             Catch ex As Exception
-                MessageBox.Show("Problem during updateTick - " & ex.Message)
+                If Not ex.Message Like "*Call timed out*" Then
+                    MessageBox.Show("Problem during updateTick - " & ex.Message)
+                End If
+
             End Try
         End Sub
 

@@ -80,9 +80,8 @@ Namespace AreaCommon.Models.Products
         Public Property feeCost As Double = 0
         Public Property orderState As Models.Bot.BotOrderModel.OrderStateEnumeration = Bot.BotOrderModel.OrderStateEnumeration.undefined
 
-        Public Property internalOrderId As String = 0
-
-        Public Property ordinary As Boolean = False
+        Public Property internalOrderId As String = ""
+        'Public Property ordinary As Boolean = False
 
     End Class
 
@@ -103,19 +102,28 @@ Namespace AreaCommon.Models.Products
 
         Public ReadOnly Property earn As Double
             Get
-                Return sell.tcoQuote - totalInvestment - totalFee
+                Return sell.tcoQuote - totalInvestment
             End Get
         End Property
 
         Public ReadOnly Property totalAmount As Double
             Get
                 Dim total As Double = 0
+                Dim repeat As Boolean = True
 
-                For Each buy In buys
-                    If (buy.orderState = Bot.BotOrderModel.OrderStateEnumeration.filled) Then
-                        total += CDec(buy.amount)
-                    End If
-                Next
+                Do While repeat
+                    repeat = False
+
+                    Try
+                        For Each buy In buys
+                            If (buy.orderState = Bot.BotOrderModel.OrderStateEnumeration.filled) Then
+                                total += CDec(buy.amount)
+                            End If
+                        Next
+                    Catch ex As Exception
+                        repeat = True
+                    End Try
+                Loop
 
                 Return total
             End Get

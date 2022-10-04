@@ -63,15 +63,20 @@ Public Class DataPageDetail
     Private Sub refreshJournalValue()
         currentDayValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(datePage.day), True)
 
-        formatValue(earnDayValue, datePage.earn, True)
         formatValue(initialDayFundStableValue, datePage.initialFundFree)
         formatValue(initialOtherFundDayValue, datePage.initialFundManage)
-        formatValue(extraBuyDayValue, datePage.extraBuy)
-        formatValue(dailyBuyDayValue, datePage.dailyBuy)
-        formatValue(extraSellDayValue, datePage.extraSell)
-        formatValue(dailySellDayValue, datePage.dailySell)
+        formatValue(targetValue, datePage.target)
+
+        formatValue(endFund, datePage.currentFund)
+        formatValue(freeFundValue, datePage.freeFund)
+        formatValue(lockedFundValue, datePage.lockedFund)
         formatValue(feeDayValue, datePage.feePayed)
         formatValue(volumesDayValue, datePage.volumes)
+        formatValue(earnDayValue, datePage.earn, True)
+        formatValue(totalFundValue, datePage.currentFund + datePage.freeFund)
+
+        formatValue(numBuyValue, datePage.buyNumber)
+        formatValue(numSellValue, datePage.sellNumber)
 
         If (datePage.apy = 0) Then
             apyDayValue.Text = "---"
@@ -80,6 +85,41 @@ Public Class DataPageDetail
 
             apyDayValue.ForeColor = earnDayValue.ForeColor
         End If
+
+        If (datePage.averageApy = 0) Then
+            averageApyValue.Text = "---"
+        Else
+            averageApyValue.Text = (datePage.averageApy).ToString("#,##0.00") & " %"
+
+            averageApyValue.ForeColor = earnDayValue.ForeColor
+        End If
+
+        formatValue(increaseValue, datePage.increase, True)
+
+        If (datePage.increasePerc = 0) Then
+            increasePercValue.Text = "---"
+        Else
+            increasePercValue.Text = (datePage.increasePerc).ToString("#,##0.00") & " %"
+
+            increasePercValue.ForeColor = increaseValue.ForeColor
+        End If
+
+        If (datePage.averageIncrease = 0) Then
+            averageIncreaseValue.Text = "---"
+        Else
+            averageIncreaseValue.Text = (datePage.averageIncrease).ToString("#,##0.00") & " %"
+
+            averageIncreaseValue.ForeColor = increaseValue.ForeColor
+        End If
+
+        formatValue(extraBuyDayValue, datePage.extraBuy)
+        formatValue(dailyBuyDayValue, datePage.dailyBuy)
+        formatValue(extraSellDayValue, datePage.extraSell)
+        formatValue(dailySellDayValue, datePage.dailySell)
+
+        formatValue(powerValue, datePage.power)
+        formatValue(totalPowerValue, datePage.totalPower)
+
     End Sub
 
 

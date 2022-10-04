@@ -95,19 +95,40 @@ Partial Class Manager
         Me.editDataColumn = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.journalPage = New System.Windows.Forms.TabPage()
         Me.journalSplit = New System.Windows.Forms.SplitContainer()
+        Me.warningButton = New System.Windows.Forms.CheckBox()
         Me.daySummaryButton = New System.Windows.Forms.CheckBox()
         Me.summaryButton = New System.Windows.Forms.CheckBox()
+        Me.warningPanel = New System.Windows.Forms.Panel()
+        Me.workActionValue = New System.Windows.Forms.TextBox()
+        Me.Label61 = New System.Windows.Forms.Label()
+        Me.clearButton = New System.Windows.Forms.Button()
+        Me.alertValue = New System.Windows.Forms.TextBox()
+        Me.alertLabel = New System.Windows.Forms.Label()
         Me.SummaryPanel = New System.Windows.Forms.Panel()
+        Me.Label65 = New System.Windows.Forms.Label()
+        Me.powerTotalValue = New System.Windows.Forms.TextBox()
+        Me.Label66 = New System.Windows.Forms.Label()
+        Me.Label53 = New System.Windows.Forms.Label()
+        Me.Label54 = New System.Windows.Forms.Label()
+        Me.averageIncreaseTotalPercentage = New System.Windows.Forms.Label()
+        Me.Label56 = New System.Windows.Forms.Label()
+        Me.increasePercentualTotal = New System.Windows.Forms.Label()
+        Me.Label58 = New System.Windows.Forms.Label()
+        Me.Label46 = New System.Windows.Forms.Label()
+        Me.Label45 = New System.Windows.Forms.Label()
+        Me.Label42 = New System.Windows.Forms.Label()
+        Me.lockedFundSummaryValue = New System.Windows.Forms.TextBox()
+        Me.Label44 = New System.Windows.Forms.Label()
+        Me.Label35 = New System.Windows.Forms.Label()
+        Me.freeFundSummaryValue = New System.Windows.Forms.TextBox()
+        Me.Label41 = New System.Windows.Forms.Label()
         Me.averageAPYValue = New System.Windows.Forms.Label()
         Me.Label39 = New System.Windows.Forms.Label()
         Me.numDaysValue = New System.Windows.Forms.Label()
         Me.Label43 = New System.Windows.Forms.Label()
         Me.apyValue = New System.Windows.Forms.Label()
         Me.Label40 = New System.Windows.Forms.Label()
-        Me.clearButton = New System.Windows.Forms.Button()
         Me.totalEarnValue = New System.Windows.Forms.Label()
-        Me.alertValue = New System.Windows.Forms.TextBox()
-        Me.alertLabel = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.earnLabel = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
@@ -135,6 +156,22 @@ Partial Class Manager
         Me.currentDateJournalLabel = New System.Windows.Forms.Label()
         Me.initialDateLabel = New System.Windows.Forms.Label()
         Me.dayPanel = New System.Windows.Forms.Panel()
+        Me.numBuyValue = New System.Windows.Forms.TextBox()
+        Me.Label59 = New System.Windows.Forms.Label()
+        Me.numSellValue = New System.Windows.Forms.TextBox()
+        Me.Label60 = New System.Windows.Forms.Label()
+        Me.Label55 = New System.Windows.Forms.Label()
+        Me.increaseCurrentValue = New System.Windows.Forms.TextBox()
+        Me.Label57 = New System.Windows.Forms.Label()
+        Me.Label51 = New System.Windows.Forms.Label()
+        Me.currentPageValue = New System.Windows.Forms.TextBox()
+        Me.Label52 = New System.Windows.Forms.Label()
+        Me.Label47 = New System.Windows.Forms.Label()
+        Me.lockedFundCurrentValue = New System.Windows.Forms.TextBox()
+        Me.Label48 = New System.Windows.Forms.Label()
+        Me.Label49 = New System.Windows.Forms.Label()
+        Me.freeFundCurrentValue = New System.Windows.Forms.TextBox()
+        Me.Label50 = New System.Windows.Forms.Label()
         Me.apyDayValue = New System.Windows.Forms.Label()
         Me.Label38 = New System.Windows.Forms.Label()
         Me.apyDayLabel = New System.Windows.Forms.Label()
@@ -257,6 +294,7 @@ Partial Class Manager
         Me.journalSplit.Panel1.SuspendLayout()
         Me.journalSplit.Panel2.SuspendLayout()
         Me.journalSplit.SuspendLayout()
+        Me.warningPanel.SuspendLayout()
         Me.SummaryPanel.SuspendLayout()
         Me.dayPanel.SuspendLayout()
         CType(Me.dayTransactionDataView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -564,23 +602,36 @@ Partial Class Manager
         '
         'journalSplit.Panel1
         '
+        Me.journalSplit.Panel1.Controls.Add(Me.warningButton)
         Me.journalSplit.Panel1.Controls.Add(Me.daySummaryButton)
         Me.journalSplit.Panel1.Controls.Add(Me.summaryButton)
         Me.journalSplit.Panel1.Controls.Add(Me.SummaryPanel)
         Me.journalSplit.Panel1.Controls.Add(Me.dayPanel)
+        Me.journalSplit.Panel1.Controls.Add(Me.warningPanel)
         '
         'journalSplit.Panel2
         '
         Me.journalSplit.Panel2.Controls.Add(Me.dayTransactionDataView)
         Me.journalSplit.Size = New System.Drawing.Size(855, 384)
-        Me.journalSplit.SplitterDistance = 258
+        Me.journalSplit.SplitterDistance = 289
         Me.journalSplit.TabIndex = 0
+        '
+        'warningButton
+        '
+        Me.warningButton.Appearance = System.Windows.Forms.Appearance.Button
+        Me.warningButton.AutoSize = True
+        Me.warningButton.Location = New System.Drawing.Point(755, 10)
+        Me.warningButton.Name = "warningButton"
+        Me.warningButton.Size = New System.Drawing.Size(69, 23)
+        Me.warningButton.TabIndex = 34
+        Me.warningButton.Text = "Warnings"
+        Me.warningButton.UseVisualStyleBackColor = True
         '
         'daySummaryButton
         '
         Me.daySummaryButton.Appearance = System.Windows.Forms.Appearance.Button
         Me.daySummaryButton.AutoSize = True
-        Me.daySummaryButton.Location = New System.Drawing.Point(745, 10)
+        Me.daySummaryButton.Location = New System.Drawing.Point(656, 10)
         Me.daySummaryButton.Name = "daySummaryButton"
         Me.daySummaryButton.Size = New System.Drawing.Size(93, 23)
         Me.daySummaryButton.TabIndex = 32
@@ -593,25 +644,96 @@ Partial Class Manager
         Me.summaryButton.AutoSize = True
         Me.summaryButton.Checked = True
         Me.summaryButton.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.summaryButton.Location = New System.Drawing.Point(666, 10)
+        Me.summaryButton.Location = New System.Drawing.Point(577, 10)
         Me.summaryButton.Name = "summaryButton"
         Me.summaryButton.Size = New System.Drawing.Size(73, 23)
         Me.summaryButton.TabIndex = 30
         Me.summaryButton.Text = "Summary"
         Me.summaryButton.UseVisualStyleBackColor = True
         '
+        'warningPanel
+        '
+        Me.warningPanel.Controls.Add(Me.workActionValue)
+        Me.warningPanel.Controls.Add(Me.Label61)
+        Me.warningPanel.Controls.Add(Me.clearButton)
+        Me.warningPanel.Controls.Add(Me.alertValue)
+        Me.warningPanel.Controls.Add(Me.alertLabel)
+        Me.warningPanel.Location = New System.Drawing.Point(15, 39)
+        Me.warningPanel.Name = "warningPanel"
+        Me.warningPanel.Size = New System.Drawing.Size(837, 232)
+        Me.warningPanel.TabIndex = 35
+        '
+        'workActionValue
+        '
+        Me.workActionValue.Location = New System.Drawing.Point(100, 143)
+        Me.workActionValue.Name = "workActionValue"
+        Me.workActionValue.Size = New System.Drawing.Size(628, 21)
+        Me.workActionValue.TabIndex = 65
+        '
+        'Label61
+        '
+        Me.Label61.AutoSize = True
+        Me.Label61.Location = New System.Drawing.Point(17, 148)
+        Me.Label61.Name = "Label61"
+        Me.Label61.Size = New System.Drawing.Size(75, 13)
+        Me.Label61.TabIndex = 64
+        Me.Label61.Text = "Work Action"
+        '
+        'clearButton
+        '
+        Me.clearButton.Location = New System.Drawing.Point(734, 29)
+        Me.clearButton.Name = "clearButton"
+        Me.clearButton.Size = New System.Drawing.Size(75, 23)
+        Me.clearButton.TabIndex = 63
+        Me.clearButton.Text = "Clear"
+        Me.clearButton.UseVisualStyleBackColor = True
+        '
+        'alertValue
+        '
+        Me.alertValue.BackColor = System.Drawing.SystemColors.Info
+        Me.alertValue.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.alertValue.Location = New System.Drawing.Point(15, 31)
+        Me.alertValue.Multiline = True
+        Me.alertValue.Name = "alertValue"
+        Me.alertValue.ReadOnly = True
+        Me.alertValue.Size = New System.Drawing.Size(713, 81)
+        Me.alertValue.TabIndex = 62
+        '
+        'alertLabel
+        '
+        Me.alertLabel.AutoSize = True
+        Me.alertLabel.Location = New System.Drawing.Point(12, 15)
+        Me.alertLabel.Name = "alertLabel"
+        Me.alertLabel.Size = New System.Drawing.Size(34, 13)
+        Me.alertLabel.TabIndex = 61
+        Me.alertLabel.Text = "Alert"
+        '
         'SummaryPanel
         '
+        Me.SummaryPanel.Controls.Add(Me.Label65)
+        Me.SummaryPanel.Controls.Add(Me.powerTotalValue)
+        Me.SummaryPanel.Controls.Add(Me.Label66)
+        Me.SummaryPanel.Controls.Add(Me.Label53)
+        Me.SummaryPanel.Controls.Add(Me.Label54)
+        Me.SummaryPanel.Controls.Add(Me.averageIncreaseTotalPercentage)
+        Me.SummaryPanel.Controls.Add(Me.Label56)
+        Me.SummaryPanel.Controls.Add(Me.increasePercentualTotal)
+        Me.SummaryPanel.Controls.Add(Me.Label58)
+        Me.SummaryPanel.Controls.Add(Me.Label46)
+        Me.SummaryPanel.Controls.Add(Me.Label45)
+        Me.SummaryPanel.Controls.Add(Me.Label42)
+        Me.SummaryPanel.Controls.Add(Me.lockedFundSummaryValue)
+        Me.SummaryPanel.Controls.Add(Me.Label44)
+        Me.SummaryPanel.Controls.Add(Me.Label35)
+        Me.SummaryPanel.Controls.Add(Me.freeFundSummaryValue)
+        Me.SummaryPanel.Controls.Add(Me.Label41)
         Me.SummaryPanel.Controls.Add(Me.averageAPYValue)
         Me.SummaryPanel.Controls.Add(Me.Label39)
         Me.SummaryPanel.Controls.Add(Me.numDaysValue)
         Me.SummaryPanel.Controls.Add(Me.Label43)
         Me.SummaryPanel.Controls.Add(Me.apyValue)
         Me.SummaryPanel.Controls.Add(Me.Label40)
-        Me.SummaryPanel.Controls.Add(Me.clearButton)
         Me.SummaryPanel.Controls.Add(Me.totalEarnValue)
-        Me.SummaryPanel.Controls.Add(Me.alertValue)
-        Me.SummaryPanel.Controls.Add(Me.alertLabel)
         Me.SummaryPanel.Controls.Add(Me.Label15)
         Me.SummaryPanel.Controls.Add(Me.earnLabel)
         Me.SummaryPanel.Controls.Add(Me.Label14)
@@ -640,42 +762,206 @@ Partial Class Manager
         Me.SummaryPanel.Controls.Add(Me.initialDateLabel)
         Me.SummaryPanel.Location = New System.Drawing.Point(14, 39)
         Me.SummaryPanel.Name = "SummaryPanel"
-        Me.SummaryPanel.Size = New System.Drawing.Size(838, 199)
+        Me.SummaryPanel.Size = New System.Drawing.Size(838, 232)
         Me.SummaryPanel.TabIndex = 31
+        '
+        'Label65
+        '
+        Me.Label65.AutoSize = True
+        Me.Label65.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label65.Location = New System.Drawing.Point(209, 180)
+        Me.Label65.Name = "Label65"
+        Me.Label65.Size = New System.Drawing.Size(37, 13)
+        Me.Label65.TabIndex = 85
+        Me.Label65.Text = "USDT"
+        '
+        'powerTotalValue
+        '
+        Me.powerTotalValue.Location = New System.Drawing.Point(83, 177)
+        Me.powerTotalValue.Name = "powerTotalValue"
+        Me.powerTotalValue.ReadOnly = True
+        Me.powerTotalValue.Size = New System.Drawing.Size(120, 21)
+        Me.powerTotalValue.TabIndex = 84
+        Me.powerTotalValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label66
+        '
+        Me.Label66.AutoSize = True
+        Me.Label66.Location = New System.Drawing.Point(34, 180)
+        Me.Label66.Name = "Label66"
+        Me.Label66.Size = New System.Drawing.Size(42, 13)
+        Me.Label66.TabIndex = 83
+        Me.Label66.Text = "Power"
+        '
+        'Label53
+        '
+        Me.Label53.AutoSize = True
+        Me.Label53.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label53.Location = New System.Drawing.Point(769, 153)
+        Me.Label53.Name = "Label53"
+        Me.Label53.Size = New System.Drawing.Size(19, 13)
+        Me.Label53.TabIndex = 82
+        Me.Label53.Text = "%"
+        '
+        'Label54
+        '
+        Me.Label54.AutoSize = True
+        Me.Label54.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label54.Location = New System.Drawing.Point(486, 152)
+        Me.Label54.Name = "Label54"
+        Me.Label54.Size = New System.Drawing.Size(19, 13)
+        Me.Label54.TabIndex = 81
+        Me.Label54.Text = "%"
+        '
+        'averageIncreaseTotalPercentage
+        '
+        Me.averageIncreaseTotalPercentage.BackColor = System.Drawing.SystemColors.Control
+        Me.averageIncreaseTotalPercentage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.averageIncreaseTotalPercentage.Location = New System.Drawing.Point(637, 149)
+        Me.averageIncreaseTotalPercentage.Name = "averageIncreaseTotalPercentage"
+        Me.averageIncreaseTotalPercentage.Size = New System.Drawing.Size(126, 21)
+        Me.averageIncreaseTotalPercentage.TabIndex = 80
+        Me.averageIncreaseTotalPercentage.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label56
+        '
+        Me.Label56.AutoSize = True
+        Me.Label56.Location = New System.Drawing.Point(523, 152)
+        Me.Label56.Name = "Label56"
+        Me.Label56.Size = New System.Drawing.Size(109, 13)
+        Me.Label56.TabIndex = 79
+        Me.Label56.Text = "Average Increase"
+        '
+        'increasePercentualTotal
+        '
+        Me.increasePercentualTotal.BackColor = System.Drawing.SystemColors.Control
+        Me.increasePercentualTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.increasePercentualTotal.Location = New System.Drawing.Point(371, 149)
+        Me.increasePercentualTotal.Name = "increasePercentualTotal"
+        Me.increasePercentualTotal.Size = New System.Drawing.Size(107, 21)
+        Me.increasePercentualTotal.TabIndex = 78
+        Me.increasePercentualTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'Label58
+        '
+        Me.Label58.AutoSize = True
+        Me.Label58.Location = New System.Drawing.Point(308, 152)
+        Me.Label58.Name = "Label58"
+        Me.Label58.Size = New System.Drawing.Size(57, 13)
+        Me.Label58.TabIndex = 77
+        Me.Label58.Text = "Increase"
+        '
+        'Label46
+        '
+        Me.Label46.AutoSize = True
+        Me.Label46.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label46.Location = New System.Drawing.Point(769, 127)
+        Me.Label46.Name = "Label46"
+        Me.Label46.Size = New System.Drawing.Size(19, 13)
+        Me.Label46.TabIndex = 76
+        Me.Label46.Text = "%"
+        '
+        'Label45
+        '
+        Me.Label45.AutoSize = True
+        Me.Label45.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label45.Location = New System.Drawing.Point(486, 126)
+        Me.Label45.Name = "Label45"
+        Me.Label45.Size = New System.Drawing.Size(19, 13)
+        Me.Label45.TabIndex = 75
+        Me.Label45.Text = "%"
+        '
+        'Label42
+        '
+        Me.Label42.AutoSize = True
+        Me.Label42.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label42.Location = New System.Drawing.Point(773, 72)
+        Me.Label42.Name = "Label42"
+        Me.Label42.Size = New System.Drawing.Size(37, 13)
+        Me.Label42.TabIndex = 74
+        Me.Label42.Text = "USDT"
+        '
+        'lockedFundSummaryValue
+        '
+        Me.lockedFundSummaryValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lockedFundSummaryValue.Location = New System.Drawing.Point(637, 69)
+        Me.lockedFundSummaryValue.Name = "lockedFundSummaryValue"
+        Me.lockedFundSummaryValue.ReadOnly = True
+        Me.lockedFundSummaryValue.Size = New System.Drawing.Size(126, 21)
+        Me.lockedFundSummaryValue.TabIndex = 73
+        Me.lockedFundSummaryValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label44
+        '
+        Me.Label44.AutoSize = True
+        Me.Label44.Location = New System.Drawing.Point(556, 72)
+        Me.Label44.Name = "Label44"
+        Me.Label44.Size = New System.Drawing.Size(76, 13)
+        Me.Label44.TabIndex = 72
+        Me.Label44.Text = "Locked fund"
+        '
+        'Label35
+        '
+        Me.Label35.AutoSize = True
+        Me.Label35.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label35.Location = New System.Drawing.Point(484, 72)
+        Me.Label35.Name = "Label35"
+        Me.Label35.Size = New System.Drawing.Size(37, 13)
+        Me.Label35.TabIndex = 71
+        Me.Label35.Text = "USDT"
+        '
+        'freeFundSummaryValue
+        '
+        Me.freeFundSummaryValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.freeFundSummaryValue.Location = New System.Drawing.Point(371, 69)
+        Me.freeFundSummaryValue.Name = "freeFundSummaryValue"
+        Me.freeFundSummaryValue.ReadOnly = True
+        Me.freeFundSummaryValue.Size = New System.Drawing.Size(107, 21)
+        Me.freeFundSummaryValue.TabIndex = 70
+        Me.freeFundSummaryValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label41
+        '
+        Me.Label41.AutoSize = True
+        Me.Label41.Location = New System.Drawing.Point(304, 72)
+        Me.Label41.Name = "Label41"
+        Me.Label41.Size = New System.Drawing.Size(61, 13)
+        Me.Label41.TabIndex = 69
+        Me.Label41.Text = "Free fund"
         '
         'averageAPYValue
         '
         Me.averageAPYValue.BackColor = System.Drawing.SystemColors.Control
         Me.averageAPYValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.averageAPYValue.Location = New System.Drawing.Point(371, 123)
+        Me.averageAPYValue.Location = New System.Drawing.Point(637, 123)
         Me.averageAPYValue.Name = "averageAPYValue"
-        Me.averageAPYValue.Size = New System.Drawing.Size(132, 21)
+        Me.averageAPYValue.Size = New System.Drawing.Size(126, 21)
         Me.averageAPYValue.TabIndex = 68
         Me.averageAPYValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label39
         '
         Me.Label39.AutoSize = True
-        Me.Label39.Location = New System.Drawing.Point(254, 126)
+        Me.Label39.Location = New System.Drawing.Point(546, 126)
         Me.Label39.Name = "Label39"
-        Me.Label39.Size = New System.Drawing.Size(111, 13)
+        Me.Label39.Size = New System.Drawing.Size(85, 13)
         Me.Label39.TabIndex = 67
-        Me.Label39.Text = "Average Earn (%)"
+        Me.Label39.Text = "Average Earn"
         '
         'numDaysValue
         '
         Me.numDaysValue.BackColor = System.Drawing.SystemColors.Control
         Me.numDaysValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.numDaysValue.Location = New System.Drawing.Point(83, 123)
+        Me.numDaysValue.Location = New System.Drawing.Point(637, 97)
         Me.numDaysValue.Name = "numDaysValue"
-        Me.numDaysValue.Size = New System.Drawing.Size(132, 21)
+        Me.numDaysValue.Size = New System.Drawing.Size(126, 21)
         Me.numDaysValue.TabIndex = 66
         Me.numDaysValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label43
         '
         Me.Label43.AutoSize = True
-        Me.Label43.Location = New System.Drawing.Point(3, 126)
+        Me.Label43.Location = New System.Drawing.Point(557, 100)
         Me.Label43.Name = "Label43"
         Me.Label43.Size = New System.Drawing.Size(75, 13)
         Me.Label43.TabIndex = 64
@@ -685,64 +971,36 @@ Partial Class Manager
         '
         Me.apyValue.BackColor = System.Drawing.SystemColors.Control
         Me.apyValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.apyValue.Location = New System.Drawing.Point(371, 96)
+        Me.apyValue.Location = New System.Drawing.Point(371, 123)
         Me.apyValue.Name = "apyValue"
-        Me.apyValue.Size = New System.Drawing.Size(132, 21)
+        Me.apyValue.Size = New System.Drawing.Size(107, 21)
         Me.apyValue.TabIndex = 63
         Me.apyValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Label40
         '
         Me.Label40.AutoSize = True
-        Me.Label40.Location = New System.Drawing.Point(306, 99)
+        Me.Label40.Location = New System.Drawing.Point(332, 126)
         Me.Label40.Name = "Label40"
-        Me.Label40.Size = New System.Drawing.Size(59, 13)
+        Me.Label40.Size = New System.Drawing.Size(33, 13)
         Me.Label40.TabIndex = 61
-        Me.Label40.Text = "Earn (%)"
-        '
-        'clearButton
-        '
-        Me.clearButton.Location = New System.Drawing.Point(749, 148)
-        Me.clearButton.Name = "clearButton"
-        Me.clearButton.Size = New System.Drawing.Size(75, 23)
-        Me.clearButton.TabIndex = 60
-        Me.clearButton.Text = "Clear"
-        Me.clearButton.UseVisualStyleBackColor = True
+        Me.Label40.Text = "Earn"
         '
         'totalEarnValue
         '
         Me.totalEarnValue.BackColor = System.Drawing.SystemColors.Control
         Me.totalEarnValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.totalEarnValue.Location = New System.Drawing.Point(83, 96)
+        Me.totalEarnValue.Location = New System.Drawing.Point(83, 123)
         Me.totalEarnValue.Name = "totalEarnValue"
-        Me.totalEarnValue.Size = New System.Drawing.Size(132, 21)
+        Me.totalEarnValue.Size = New System.Drawing.Size(120, 21)
         Me.totalEarnValue.TabIndex = 59
         Me.totalEarnValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'alertValue
-        '
-        Me.alertValue.BackColor = System.Drawing.SystemColors.Info
-        Me.alertValue.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.alertValue.Location = New System.Drawing.Point(83, 150)
-        Me.alertValue.Name = "alertValue"
-        Me.alertValue.ReadOnly = True
-        Me.alertValue.Size = New System.Drawing.Size(660, 21)
-        Me.alertValue.TabIndex = 58
-        '
-        'alertLabel
-        '
-        Me.alertLabel.AutoSize = True
-        Me.alertLabel.Location = New System.Drawing.Point(44, 153)
-        Me.alertLabel.Name = "alertLabel"
-        Me.alertLabel.Size = New System.Drawing.Size(34, 13)
-        Me.alertLabel.TabIndex = 57
-        Me.alertLabel.Text = "Alert"
         '
         'Label15
         '
         Me.Label15.AutoSize = True
         Me.Label15.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.Location = New System.Drawing.Point(222, 99)
+        Me.Label15.Location = New System.Drawing.Point(209, 126)
         Me.Label15.Name = "Label15"
         Me.Label15.Size = New System.Drawing.Size(37, 13)
         Me.Label15.TabIndex = 56
@@ -751,7 +1009,7 @@ Partial Class Manager
         'earnLabel
         '
         Me.earnLabel.AutoSize = True
-        Me.earnLabel.Location = New System.Drawing.Point(44, 99)
+        Me.earnLabel.Location = New System.Drawing.Point(44, 126)
         Me.earnLabel.Name = "earnLabel"
         Me.earnLabel.Size = New System.Drawing.Size(33, 13)
         Me.earnLabel.TabIndex = 54
@@ -761,7 +1019,7 @@ Partial Class Manager
         '
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(785, 72)
+        Me.Label14.Location = New System.Drawing.Point(484, 99)
         Me.Label14.Name = "Label14"
         Me.Label14.Size = New System.Drawing.Size(37, 13)
         Me.Label14.TabIndex = 53
@@ -769,17 +1027,17 @@ Partial Class Manager
         '
         'volumeValue
         '
-        Me.volumeValue.Location = New System.Drawing.Point(637, 69)
+        Me.volumeValue.Location = New System.Drawing.Point(371, 96)
         Me.volumeValue.Name = "volumeValue"
         Me.volumeValue.ReadOnly = True
-        Me.volumeValue.Size = New System.Drawing.Size(142, 21)
+        Me.volumeValue.Size = New System.Drawing.Size(107, 21)
         Me.volumeValue.TabIndex = 52
         Me.volumeValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'volumeLabel
         '
         Me.volumeLabel.AutoSize = True
-        Me.volumeLabel.Location = New System.Drawing.Point(582, 72)
+        Me.volumeLabel.Location = New System.Drawing.Point(316, 99)
         Me.volumeLabel.Name = "volumeLabel"
         Me.volumeLabel.Size = New System.Drawing.Size(49, 13)
         Me.volumeLabel.TabIndex = 51
@@ -789,7 +1047,7 @@ Partial Class Manager
         '
         Me.Label16.AutoSize = True
         Me.Label16.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(510, 72)
+        Me.Label16.Location = New System.Drawing.Point(208, 99)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(37, 13)
         Me.Label16.TabIndex = 50
@@ -797,17 +1055,17 @@ Partial Class Manager
         '
         'feeValue
         '
-        Me.feeValue.Location = New System.Drawing.Point(371, 69)
+        Me.feeValue.Location = New System.Drawing.Point(83, 96)
         Me.feeValue.Name = "feeValue"
         Me.feeValue.ReadOnly = True
-        Me.feeValue.Size = New System.Drawing.Size(132, 21)
+        Me.feeValue.Size = New System.Drawing.Size(120, 21)
         Me.feeValue.TabIndex = 49
         Me.feeValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'feeLabel
         '
         Me.feeLabel.AutoSize = True
-        Me.feeLabel.Location = New System.Drawing.Point(338, 72)
+        Me.feeLabel.Location = New System.Drawing.Point(49, 99)
         Me.feeLabel.Name = "feeLabel"
         Me.feeLabel.Size = New System.Drawing.Size(27, 13)
         Me.feeLabel.TabIndex = 48
@@ -817,7 +1075,7 @@ Partial Class Manager
         '
         Me.Label18.AutoSize = True
         Me.Label18.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label18.Location = New System.Drawing.Point(222, 72)
+        Me.Label18.Location = New System.Drawing.Point(209, 152)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(37, 13)
         Me.Label18.TabIndex = 47
@@ -825,17 +1083,17 @@ Partial Class Manager
         '
         'increaseValue
         '
-        Me.increaseValue.Location = New System.Drawing.Point(83, 69)
+        Me.increaseValue.Location = New System.Drawing.Point(83, 149)
         Me.increaseValue.Name = "increaseValue"
         Me.increaseValue.ReadOnly = True
-        Me.increaseValue.Size = New System.Drawing.Size(132, 21)
+        Me.increaseValue.Size = New System.Drawing.Size(120, 21)
         Me.increaseValue.TabIndex = 46
         Me.increaseValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(20, 72)
+        Me.Label19.Location = New System.Drawing.Point(20, 152)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(57, 13)
         Me.Label19.TabIndex = 45
@@ -845,7 +1103,7 @@ Partial Class Manager
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(785, 45)
+        Me.Label13.Location = New System.Drawing.Point(773, 45)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(37, 13)
         Me.Label13.TabIndex = 44
@@ -856,7 +1114,7 @@ Partial Class Manager
         Me.futureGainValue.Location = New System.Drawing.Point(637, 42)
         Me.futureGainValue.Name = "futureGainValue"
         Me.futureGainValue.ReadOnly = True
-        Me.futureGainValue.Size = New System.Drawing.Size(142, 21)
+        Me.futureGainValue.Size = New System.Drawing.Size(126, 21)
         Me.futureGainValue.TabIndex = 43
         Me.futureGainValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -873,7 +1131,7 @@ Partial Class Manager
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(510, 45)
+        Me.Label1.Location = New System.Drawing.Point(484, 45)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(37, 13)
         Me.Label1.TabIndex = 41
@@ -885,7 +1143,7 @@ Partial Class Manager
         Me.currentFundValue.Location = New System.Drawing.Point(371, 42)
         Me.currentFundValue.Name = "currentFundValue"
         Me.currentFundValue.ReadOnly = True
-        Me.currentFundValue.Size = New System.Drawing.Size(132, 21)
+        Me.currentFundValue.Size = New System.Drawing.Size(107, 21)
         Me.currentFundValue.TabIndex = 40
         Me.currentFundValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -902,7 +1160,7 @@ Partial Class Manager
         '
         Me.initialFundCurrencyLabel.AutoSize = True
         Me.initialFundCurrencyLabel.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.initialFundCurrencyLabel.Location = New System.Drawing.Point(222, 45)
+        Me.initialFundCurrencyLabel.Location = New System.Drawing.Point(209, 45)
         Me.initialFundCurrencyLabel.Name = "initialFundCurrencyLabel"
         Me.initialFundCurrencyLabel.Size = New System.Drawing.Size(37, 13)
         Me.initialFundCurrencyLabel.TabIndex = 38
@@ -913,7 +1171,7 @@ Partial Class Manager
         Me.initialFundValue.Location = New System.Drawing.Point(83, 42)
         Me.initialFundValue.Name = "initialFundValue"
         Me.initialFundValue.ReadOnly = True
-        Me.initialFundValue.Size = New System.Drawing.Size(132, 21)
+        Me.initialFundValue.Size = New System.Drawing.Size(120, 21)
         Me.initialFundValue.TabIndex = 37
         Me.initialFundValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
@@ -931,7 +1189,7 @@ Partial Class Manager
         Me.updateDate.Location = New System.Drawing.Point(637, 15)
         Me.updateDate.Name = "updateDate"
         Me.updateDate.ReadOnly = True
-        Me.updateDate.Size = New System.Drawing.Size(187, 21)
+        Me.updateDate.Size = New System.Drawing.Size(173, 21)
         Me.updateDate.TabIndex = 35
         Me.updateDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -949,7 +1207,7 @@ Partial Class Manager
         Me.startDateJournalDate.Location = New System.Drawing.Point(83, 15)
         Me.startDateJournalDate.Name = "startDateJournalDate"
         Me.startDateJournalDate.ReadOnly = True
-        Me.startDateJournalDate.Size = New System.Drawing.Size(178, 21)
+        Me.startDateJournalDate.Size = New System.Drawing.Size(163, 21)
         Me.startDateJournalDate.TabIndex = 33
         Me.startDateJournalDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -958,7 +1216,7 @@ Partial Class Manager
         Me.currentDateValue.Location = New System.Drawing.Point(371, 15)
         Me.currentDateValue.Name = "currentDateValue"
         Me.currentDateValue.ReadOnly = True
-        Me.currentDateValue.Size = New System.Drawing.Size(178, 21)
+        Me.currentDateValue.Size = New System.Drawing.Size(160, 21)
         Me.currentDateValue.TabIndex = 32
         Me.currentDateValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -982,6 +1240,22 @@ Partial Class Manager
         '
         'dayPanel
         '
+        Me.dayPanel.Controls.Add(Me.numBuyValue)
+        Me.dayPanel.Controls.Add(Me.Label59)
+        Me.dayPanel.Controls.Add(Me.numSellValue)
+        Me.dayPanel.Controls.Add(Me.Label60)
+        Me.dayPanel.Controls.Add(Me.Label55)
+        Me.dayPanel.Controls.Add(Me.increaseCurrentValue)
+        Me.dayPanel.Controls.Add(Me.Label57)
+        Me.dayPanel.Controls.Add(Me.Label51)
+        Me.dayPanel.Controls.Add(Me.currentPageValue)
+        Me.dayPanel.Controls.Add(Me.Label52)
+        Me.dayPanel.Controls.Add(Me.Label47)
+        Me.dayPanel.Controls.Add(Me.lockedFundCurrentValue)
+        Me.dayPanel.Controls.Add(Me.Label48)
+        Me.dayPanel.Controls.Add(Me.Label49)
+        Me.dayPanel.Controls.Add(Me.freeFundCurrentValue)
+        Me.dayPanel.Controls.Add(Me.Label50)
         Me.dayPanel.Controls.Add(Me.apyDayValue)
         Me.dayPanel.Controls.Add(Me.Label38)
         Me.dayPanel.Controls.Add(Me.apyDayLabel)
@@ -1016,14 +1290,162 @@ Partial Class Manager
         Me.dayPanel.Controls.Add(Me.Label17)
         Me.dayPanel.Location = New System.Drawing.Point(14, 39)
         Me.dayPanel.Name = "dayPanel"
-        Me.dayPanel.Size = New System.Drawing.Size(838, 201)
+        Me.dayPanel.Size = New System.Drawing.Size(838, 232)
         Me.dayPanel.TabIndex = 33
+        '
+        'numBuyValue
+        '
+        Me.numBuyValue.Location = New System.Drawing.Point(714, 118)
+        Me.numBuyValue.Name = "numBuyValue"
+        Me.numBuyValue.ReadOnly = True
+        Me.numBuyValue.Size = New System.Drawing.Size(111, 21)
+        Me.numBuyValue.TabIndex = 85
+        Me.numBuyValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label59
+        '
+        Me.Label59.AutoSize = True
+        Me.Label59.Location = New System.Drawing.Point(646, 120)
+        Me.Label59.Name = "Label59"
+        Me.Label59.Size = New System.Drawing.Size(62, 13)
+        Me.Label59.TabIndex = 84
+        Me.Label59.Text = "Num. buy"
+        '
+        'numSellValue
+        '
+        Me.numSellValue.Location = New System.Drawing.Point(714, 145)
+        Me.numSellValue.Name = "numSellValue"
+        Me.numSellValue.ReadOnly = True
+        Me.numSellValue.Size = New System.Drawing.Size(111, 21)
+        Me.numSellValue.TabIndex = 83
+        Me.numSellValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label60
+        '
+        Me.Label60.AutoSize = True
+        Me.Label60.Location = New System.Drawing.Point(648, 148)
+        Me.Label60.Name = "Label60"
+        Me.Label60.Size = New System.Drawing.Size(60, 13)
+        Me.Label60.TabIndex = 82
+        Me.Label60.Text = "Num. sell"
+        '
+        'Label55
+        '
+        Me.Label55.AutoSize = True
+        Me.Label55.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label55.Location = New System.Drawing.Point(556, 97)
+        Me.Label55.Name = "Label55"
+        Me.Label55.Size = New System.Drawing.Size(37, 13)
+        Me.Label55.TabIndex = 81
+        Me.Label55.Text = "USDT"
+        '
+        'increaseCurrentValue
+        '
+        Me.increaseCurrentValue.Location = New System.Drawing.Point(417, 95)
+        Me.increaseCurrentValue.Name = "increaseCurrentValue"
+        Me.increaseCurrentValue.ReadOnly = True
+        Me.increaseCurrentValue.Size = New System.Drawing.Size(132, 21)
+        Me.increaseCurrentValue.TabIndex = 80
+        Me.increaseCurrentValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label57
+        '
+        Me.Label57.AutoSize = True
+        Me.Label57.Location = New System.Drawing.Point(358, 97)
+        Me.Label57.Name = "Label57"
+        Me.Label57.Size = New System.Drawing.Size(55, 13)
+        Me.Label57.TabIndex = 79
+        Me.Label57.Text = "increase"
+        '
+        'Label51
+        '
+        Me.Label51.AutoSize = True
+        Me.Label51.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label51.Location = New System.Drawing.Point(238, 97)
+        Me.Label51.Name = "Label51"
+        Me.Label51.Size = New System.Drawing.Size(37, 13)
+        Me.Label51.TabIndex = 78
+        Me.Label51.Text = "USDT"
+        '
+        'currentPageValue
+        '
+        Me.currentPageValue.Location = New System.Drawing.Point(99, 95)
+        Me.currentPageValue.Name = "currentPageValue"
+        Me.currentPageValue.ReadOnly = True
+        Me.currentPageValue.Size = New System.Drawing.Size(132, 21)
+        Me.currentPageValue.TabIndex = 77
+        Me.currentPageValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label52
+        '
+        Me.Label52.AutoSize = True
+        Me.Label52.Location = New System.Drawing.Point(8, 97)
+        Me.Label52.Name = "Label52"
+        Me.Label52.Size = New System.Drawing.Size(86, 13)
+        Me.Label52.TabIndex = 76
+        Me.Label52.Text = "Current value"
+        '
+        'Label47
+        '
+        Me.Label47.AutoSize = True
+        Me.Label47.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label47.Location = New System.Drawing.Point(556, 72)
+        Me.Label47.Name = "Label47"
+        Me.Label47.Size = New System.Drawing.Size(37, 13)
+        Me.Label47.TabIndex = 75
+        Me.Label47.Text = "USDT"
+        '
+        'lockedFundCurrentValue
+        '
+        Me.lockedFundCurrentValue.Location = New System.Drawing.Point(417, 69)
+        Me.lockedFundCurrentValue.Name = "lockedFundCurrentValue"
+        Me.lockedFundCurrentValue.ReadOnly = True
+        Me.lockedFundCurrentValue.Size = New System.Drawing.Size(132, 21)
+        Me.lockedFundCurrentValue.TabIndex = 74
+        Me.lockedFundCurrentValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label48
+        '
+        Me.Label48.AutoSize = True
+        Me.Label48.Location = New System.Drawing.Point(337, 72)
+        Me.Label48.Name = "Label48"
+        Me.Label48.Size = New System.Drawing.Size(76, 13)
+        Me.Label48.TabIndex = 73
+        Me.Label48.Text = "Locked fund"
+        '
+        'Label49
+        '
+        Me.Label49.AutoSize = True
+        Me.Label49.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label49.Location = New System.Drawing.Point(238, 72)
+        Me.Label49.Name = "Label49"
+        Me.Label49.Size = New System.Drawing.Size(37, 13)
+        Me.Label49.TabIndex = 72
+        Me.Label49.Text = "USDT"
+        '
+        'freeFundCurrentValue
+        '
+        Me.freeFundCurrentValue.Location = New System.Drawing.Point(99, 69)
+        Me.freeFundCurrentValue.Name = "freeFundCurrentValue"
+        Me.freeFundCurrentValue.ReadOnly = True
+        Me.freeFundCurrentValue.Size = New System.Drawing.Size(132, 21)
+        Me.freeFundCurrentValue.TabIndex = 71
+        Me.freeFundCurrentValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'Label50
+        '
+        Me.Label50.AutoSize = True
+        Me.Label50.Location = New System.Drawing.Point(33, 72)
+        Me.Label50.Name = "Label50"
+        Me.Label50.Size = New System.Drawing.Size(61, 13)
+        Me.Label50.TabIndex = 70
+        Me.Label50.Text = "Free fund"
         '
         'apyDayValue
         '
         Me.apyDayValue.BackColor = System.Drawing.SystemColors.Control
         Me.apyDayValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.apyDayValue.Location = New System.Drawing.Point(499, 148)
+        Me.apyDayValue.Location = New System.Drawing.Point(417, 200)
         Me.apyDayValue.Name = "apyDayValue"
         Me.apyDayValue.Size = New System.Drawing.Size(132, 21)
         Me.apyDayValue.TabIndex = 69
@@ -1033,26 +1455,26 @@ Partial Class Manager
         '
         Me.Label38.AutoSize = True
         Me.Label38.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label38.Location = New System.Drawing.Point(638, 151)
+        Me.Label38.Location = New System.Drawing.Point(556, 203)
         Me.Label38.Name = "Label38"
-        Me.Label38.Size = New System.Drawing.Size(37, 13)
+        Me.Label38.Size = New System.Drawing.Size(19, 13)
         Me.Label38.TabIndex = 68
-        Me.Label38.Text = "USDT"
+        Me.Label38.Text = "%"
         '
         'apyDayLabel
         '
         Me.apyDayLabel.AutoSize = True
-        Me.apyDayLabel.Location = New System.Drawing.Point(436, 151)
+        Me.apyDayLabel.Location = New System.Drawing.Point(380, 203)
         Me.apyDayLabel.Name = "apyDayLabel"
-        Me.apyDayLabel.Size = New System.Drawing.Size(59, 13)
+        Me.apyDayLabel.Size = New System.Drawing.Size(33, 13)
         Me.apyDayLabel.TabIndex = 67
-        Me.apyDayLabel.Text = "Earn (%)"
+        Me.apyDayLabel.Text = "Earn"
         '
         'earnDayValue
         '
         Me.earnDayValue.BackColor = System.Drawing.SystemColors.Control
         Me.earnDayValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.earnDayValue.Location = New System.Drawing.Point(164, 148)
+        Me.earnDayValue.Location = New System.Drawing.Point(99, 201)
         Me.earnDayValue.Name = "earnDayValue"
         Me.earnDayValue.Size = New System.Drawing.Size(132, 21)
         Me.earnDayValue.TabIndex = 66
@@ -1062,7 +1484,7 @@ Partial Class Manager
         '
         Me.Label34.AutoSize = True
         Me.Label34.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label34.Location = New System.Drawing.Point(638, 126)
+        Me.Label34.Location = New System.Drawing.Point(556, 177)
         Me.Label34.Name = "Label34"
         Me.Label34.Size = New System.Drawing.Size(37, 13)
         Me.Label34.TabIndex = 65
@@ -1070,7 +1492,7 @@ Partial Class Manager
         '
         'volumesDayValue
         '
-        Me.volumesDayValue.Location = New System.Drawing.Point(499, 123)
+        Me.volumesDayValue.Location = New System.Drawing.Point(417, 174)
         Me.volumesDayValue.Name = "volumesDayValue"
         Me.volumesDayValue.ReadOnly = True
         Me.volumesDayValue.Size = New System.Drawing.Size(132, 21)
@@ -1080,7 +1502,7 @@ Partial Class Manager
         'volumeDayLabel
         '
         Me.volumeDayLabel.AutoSize = True
-        Me.volumeDayLabel.Location = New System.Drawing.Point(440, 126)
+        Me.volumeDayLabel.Location = New System.Drawing.Point(358, 177)
         Me.volumeDayLabel.Name = "volumeDayLabel"
         Me.volumeDayLabel.Size = New System.Drawing.Size(55, 13)
         Me.volumeDayLabel.TabIndex = 63
@@ -1090,7 +1512,7 @@ Partial Class Manager
         '
         Me.Label36.AutoSize = True
         Me.Label36.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label36.Location = New System.Drawing.Point(303, 126)
+        Me.Label36.Location = New System.Drawing.Point(238, 178)
         Me.Label36.Name = "Label36"
         Me.Label36.Size = New System.Drawing.Size(37, 13)
         Me.Label36.TabIndex = 62
@@ -1098,7 +1520,7 @@ Partial Class Manager
         '
         'feeDayValue
         '
-        Me.feeDayValue.Location = New System.Drawing.Point(164, 123)
+        Me.feeDayValue.Location = New System.Drawing.Point(99, 175)
         Me.feeDayValue.Name = "feeDayValue"
         Me.feeDayValue.ReadOnly = True
         Me.feeDayValue.Size = New System.Drawing.Size(132, 21)
@@ -1108,7 +1530,7 @@ Partial Class Manager
         'Label37
         '
         Me.Label37.AutoSize = True
-        Me.Label37.Location = New System.Drawing.Point(125, 126)
+        Me.Label37.Location = New System.Drawing.Point(61, 178)
         Me.Label37.Name = "Label37"
         Me.Label37.Size = New System.Drawing.Size(33, 13)
         Me.Label37.TabIndex = 60
@@ -1118,7 +1540,7 @@ Partial Class Manager
         '
         Me.Label32.AutoSize = True
         Me.Label32.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label32.Location = New System.Drawing.Point(303, 151)
+        Me.Label32.Location = New System.Drawing.Point(238, 204)
         Me.Label32.Name = "Label32"
         Me.Label32.Size = New System.Drawing.Size(37, 13)
         Me.Label32.TabIndex = 59
@@ -1127,7 +1549,7 @@ Partial Class Manager
         'Label33
         '
         Me.Label33.AutoSize = True
-        Me.Label33.Location = New System.Drawing.Point(125, 151)
+        Me.Label33.Location = New System.Drawing.Point(61, 204)
         Me.Label33.Name = "Label33"
         Me.Label33.Size = New System.Drawing.Size(33, 13)
         Me.Label33.TabIndex = 57
@@ -1137,7 +1559,7 @@ Partial Class Manager
         '
         Me.Label28.AutoSize = True
         Me.Label28.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label28.Location = New System.Drawing.Point(638, 99)
+        Me.Label28.Location = New System.Drawing.Point(556, 151)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(37, 13)
         Me.Label28.TabIndex = 56
@@ -1145,7 +1567,7 @@ Partial Class Manager
         '
         'dailySellDayValue
         '
-        Me.dailySellDayValue.Location = New System.Drawing.Point(499, 96)
+        Me.dailySellDayValue.Location = New System.Drawing.Point(417, 148)
         Me.dailySellDayValue.Name = "dailySellDayValue"
         Me.dailySellDayValue.ReadOnly = True
         Me.dailySellDayValue.Size = New System.Drawing.Size(132, 21)
@@ -1155,7 +1577,7 @@ Partial Class Manager
         'Label29
         '
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(415, 99)
+        Me.Label29.Location = New System.Drawing.Point(333, 151)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(80, 13)
         Me.Label29.TabIndex = 54
@@ -1165,7 +1587,7 @@ Partial Class Manager
         '
         Me.Label30.AutoSize = True
         Me.Label30.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label30.Location = New System.Drawing.Point(303, 99)
+        Me.Label30.Location = New System.Drawing.Point(238, 152)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(37, 13)
         Me.Label30.TabIndex = 53
@@ -1173,7 +1595,7 @@ Partial Class Manager
         '
         'extraSellDayValue
         '
-        Me.extraSellDayValue.Location = New System.Drawing.Point(164, 96)
+        Me.extraSellDayValue.Location = New System.Drawing.Point(99, 149)
         Me.extraSellDayValue.Name = "extraSellDayValue"
         Me.extraSellDayValue.ReadOnly = True
         Me.extraSellDayValue.Size = New System.Drawing.Size(132, 21)
@@ -1183,7 +1605,7 @@ Partial Class Manager
         'Label31
         '
         Me.Label31.AutoSize = True
-        Me.Label31.Location = New System.Drawing.Point(98, 99)
+        Me.Label31.Location = New System.Drawing.Point(34, 152)
         Me.Label31.Name = "Label31"
         Me.Label31.Size = New System.Drawing.Size(60, 13)
         Me.Label31.TabIndex = 51
@@ -1193,7 +1615,7 @@ Partial Class Manager
         '
         Me.Label24.AutoSize = True
         Me.Label24.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label24.Location = New System.Drawing.Point(638, 72)
+        Me.Label24.Location = New System.Drawing.Point(556, 124)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(37, 13)
         Me.Label24.TabIndex = 50
@@ -1201,7 +1623,7 @@ Partial Class Manager
         '
         'dailyBuyDayValue
         '
-        Me.dailyBuyDayValue.Location = New System.Drawing.Point(499, 69)
+        Me.dailyBuyDayValue.Location = New System.Drawing.Point(417, 121)
         Me.dailyBuyDayValue.Name = "dailyBuyDayValue"
         Me.dailyBuyDayValue.ReadOnly = True
         Me.dailyBuyDayValue.Size = New System.Drawing.Size(132, 21)
@@ -1211,7 +1633,7 @@ Partial Class Manager
         'Label25
         '
         Me.Label25.AutoSize = True
-        Me.Label25.Location = New System.Drawing.Point(413, 72)
+        Me.Label25.Location = New System.Drawing.Point(331, 124)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(82, 13)
         Me.Label25.TabIndex = 48
@@ -1221,7 +1643,7 @@ Partial Class Manager
         '
         Me.Label26.AutoSize = True
         Me.Label26.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label26.Location = New System.Drawing.Point(303, 72)
+        Me.Label26.Location = New System.Drawing.Point(238, 125)
         Me.Label26.Name = "Label26"
         Me.Label26.Size = New System.Drawing.Size(37, 13)
         Me.Label26.TabIndex = 47
@@ -1229,7 +1651,7 @@ Partial Class Manager
         '
         'extraBuyDayValue
         '
-        Me.extraBuyDayValue.Location = New System.Drawing.Point(164, 69)
+        Me.extraBuyDayValue.Location = New System.Drawing.Point(99, 122)
         Me.extraBuyDayValue.Name = "extraBuyDayValue"
         Me.extraBuyDayValue.ReadOnly = True
         Me.extraBuyDayValue.Size = New System.Drawing.Size(132, 21)
@@ -1239,7 +1661,7 @@ Partial Class Manager
         'Label27
         '
         Me.Label27.AutoSize = True
-        Me.Label27.Location = New System.Drawing.Point(96, 72)
+        Me.Label27.Location = New System.Drawing.Point(32, 125)
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(62, 13)
         Me.Label27.TabIndex = 45
@@ -1249,7 +1671,7 @@ Partial Class Manager
         '
         Me.Label22.AutoSize = True
         Me.Label22.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label22.Location = New System.Drawing.Point(638, 45)
+        Me.Label22.Location = New System.Drawing.Point(556, 45)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(37, 13)
         Me.Label22.TabIndex = 44
@@ -1257,7 +1679,7 @@ Partial Class Manager
         '
         'initialOtherFundDayValue
         '
-        Me.initialOtherFundDayValue.Location = New System.Drawing.Point(499, 42)
+        Me.initialOtherFundDayValue.Location = New System.Drawing.Point(417, 42)
         Me.initialOtherFundDayValue.Name = "initialOtherFundDayValue"
         Me.initialOtherFundDayValue.ReadOnly = True
         Me.initialOtherFundDayValue.Size = New System.Drawing.Size(132, 21)
@@ -1267,7 +1689,7 @@ Partial Class Manager
         'Label23
         '
         Me.Label23.AutoSize = True
-        Me.Label23.Location = New System.Drawing.Point(387, 45)
+        Me.Label23.Location = New System.Drawing.Point(305, 45)
         Me.Label23.Name = "Label23"
         Me.Label23.Size = New System.Drawing.Size(108, 13)
         Me.Label23.TabIndex = 42
@@ -1277,7 +1699,7 @@ Partial Class Manager
         '
         Me.Label20.AutoSize = True
         Me.Label20.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label20.Location = New System.Drawing.Point(303, 45)
+        Me.Label20.Location = New System.Drawing.Point(238, 45)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(37, 13)
         Me.Label20.TabIndex = 41
@@ -1285,7 +1707,7 @@ Partial Class Manager
         '
         'initialDayFundStableValue
         '
-        Me.initialDayFundStableValue.Location = New System.Drawing.Point(164, 42)
+        Me.initialDayFundStableValue.Location = New System.Drawing.Point(99, 42)
         Me.initialDayFundStableValue.Name = "initialDayFundStableValue"
         Me.initialDayFundStableValue.ReadOnly = True
         Me.initialDayFundStableValue.Size = New System.Drawing.Size(132, 21)
@@ -1295,15 +1717,15 @@ Partial Class Manager
         'Label21
         '
         Me.Label21.AutoSize = True
-        Me.Label21.Location = New System.Drawing.Point(52, 45)
+        Me.Label21.Location = New System.Drawing.Point(-2, 45)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(106, 13)
+        Me.Label21.Size = New System.Drawing.Size(95, 13)
         Me.Label21.TabIndex = 39
-        Me.Label21.Text = "Initial fund stable"
+        Me.Label21.Text = "Initial fund free"
         '
         'currentDayValue
         '
-        Me.currentDayValue.Location = New System.Drawing.Point(164, 15)
+        Me.currentDayValue.Location = New System.Drawing.Point(99, 15)
         Me.currentDayValue.Name = "currentDayValue"
         Me.currentDayValue.ReadOnly = True
         Me.currentDayValue.Size = New System.Drawing.Size(178, 21)
@@ -1313,20 +1735,17 @@ Partial Class Manager
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(78, 18)
+        Me.Label17.Location = New System.Drawing.Point(29, 18)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(80, 13)
+        Me.Label17.Size = New System.Drawing.Size(64, 13)
         Me.Label17.TabIndex = 33
-        Me.Label17.Text = "Current date"
+        Me.Label17.Text = "Page date"
         '
         'dayTransactionDataView
         '
         Me.dayTransactionDataView.AllowUserToAddRows = False
         Me.dayTransactionDataView.AllowUserToDeleteRows = False
         Me.dayTransactionDataView.AllowUserToOrderColumns = True
-        Me.dayTransactionDataView.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter
         DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle12.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -1337,12 +1756,13 @@ Partial Class Manager
         Me.dayTransactionDataView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle12
         Me.dayTransactionDataView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dayTransactionDataView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.buyColumnName, Me.dateColumn, Me.pairIDColumn, Me.amountColumn, Me.DataGridViewTextBoxColumn7, Me.dailyColumn, Me.DataGridViewButtonColumn1})
-        Me.dayTransactionDataView.Location = New System.Drawing.Point(0, 3)
+        Me.dayTransactionDataView.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dayTransactionDataView.Location = New System.Drawing.Point(0, 0)
         Me.dayTransactionDataView.MultiSelect = False
         Me.dayTransactionDataView.Name = "dayTransactionDataView"
         Me.dayTransactionDataView.RowHeadersVisible = False
         Me.dayTransactionDataView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dayTransactionDataView.Size = New System.Drawing.Size(854, 119)
+        Me.dayTransactionDataView.Size = New System.Drawing.Size(855, 91)
         Me.dayTransactionDataView.TabIndex = 4
         '
         'buyColumnName
@@ -2298,6 +2718,8 @@ Partial Class Manager
         Me.journalSplit.Panel2.ResumeLayout(False)
         CType(Me.journalSplit, System.ComponentModel.ISupportInitialize).EndInit()
         Me.journalSplit.ResumeLayout(False)
+        Me.warningPanel.ResumeLayout(False)
+        Me.warningPanel.PerformLayout()
         Me.SummaryPanel.ResumeLayout(False)
         Me.SummaryPanel.PerformLayout()
         Me.dayPanel.ResumeLayout(False)
@@ -2417,8 +2839,6 @@ Partial Class Manager
     Friend WithEvents journalSplit As SplitContainer
     Friend WithEvents daySummaryButton As CheckBox
     Friend WithEvents SummaryPanel As Panel
-    Friend WithEvents alertValue As TextBox
-    Friend WithEvents alertLabel As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents earnLabel As Label
     Friend WithEvents Label14 As Label
@@ -2478,7 +2898,6 @@ Partial Class Manager
     Friend WithEvents totalEarnValue As Label
     Friend WithEvents earnDayValue As Label
     Friend WithEvents dayTransactionDataView As DataGridView
-    Friend WithEvents clearButton As Button
     Friend WithEvents apyDayValue As Label
     Friend WithEvents Label38 As Label
     Friend WithEvents apyDayLabel As Label
@@ -2507,4 +2926,44 @@ Partial Class Manager
     Friend WithEvents SpreadPercColumn As DataGridViewTextBoxColumn
     Friend WithEvents TargetColumn As DataGridViewTextBoxColumn
     Friend WithEvents editDataColumn As DataGridViewButtonColumn
+    Friend WithEvents Label46 As Label
+    Friend WithEvents Label45 As Label
+    Friend WithEvents Label42 As Label
+    Friend WithEvents lockedFundSummaryValue As TextBox
+    Friend WithEvents Label44 As Label
+    Friend WithEvents Label35 As Label
+    Friend WithEvents freeFundSummaryValue As TextBox
+    Friend WithEvents Label41 As Label
+    Friend WithEvents Label47 As Label
+    Friend WithEvents lockedFundCurrentValue As TextBox
+    Friend WithEvents Label48 As Label
+    Friend WithEvents Label49 As Label
+    Friend WithEvents freeFundCurrentValue As TextBox
+    Friend WithEvents Label50 As Label
+    Friend WithEvents Label51 As Label
+    Friend WithEvents currentPageValue As TextBox
+    Friend WithEvents Label52 As Label
+    Friend WithEvents warningButton As CheckBox
+    Friend WithEvents Label65 As Label
+    Friend WithEvents powerTotalValue As TextBox
+    Friend WithEvents Label66 As Label
+    Friend WithEvents Label53 As Label
+    Friend WithEvents Label54 As Label
+    Friend WithEvents averageIncreaseTotalPercentage As Label
+    Friend WithEvents Label56 As Label
+    Friend WithEvents increasePercentualTotal As Label
+    Friend WithEvents Label58 As Label
+    Friend WithEvents warningPanel As Panel
+    Friend WithEvents clearButton As Button
+    Friend WithEvents alertValue As TextBox
+    Friend WithEvents alertLabel As Label
+    Friend WithEvents Label55 As Label
+    Friend WithEvents increaseCurrentValue As TextBox
+    Friend WithEvents Label57 As Label
+    Friend WithEvents numBuyValue As TextBox
+    Friend WithEvents Label59 As Label
+    Friend WithEvents numSellValue As TextBox
+    Friend WithEvents Label60 As Label
+    Friend WithEvents workActionValue As TextBox
+    Friend WithEvents Label61 As Label
 End Class

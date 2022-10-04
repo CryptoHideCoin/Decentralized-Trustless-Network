@@ -655,9 +655,18 @@ Public Class Manager
         formatValue(initialFundValue, AreaState.journal.initialFund)
         formatValue(currentFundValue, AreaState.journal.currentFund)
         formatValue(futureGainValue, AreaState.journal.futureGain)
-        formatValue(increaseValue, AreaState.journal.increaseValue)
+
+        formatValue(freeFundSummaryValue, AreaState.journal.freeFund)
+        formatValue(lockedFundSummaryValue, AreaState.journal.lockedFund)
+
         formatValue(feeValue, AreaState.journal.totalFee)
         formatValue(volumeValue, AreaState.journal.totalVolume)
+        If (AreaState.journal.numPages = 0) Then
+            numDaysValue.Text = "---"
+        Else
+            numDaysValue.Text = AreaState.journal.numPages
+        End If
+
         formatValue(totalEarnValue, AreaState.journal.totalEarn + AreaState.journal.currentDayCounters.earn, True)
 
         If (AreaState.journal.apy = 0) Then
@@ -665,15 +674,9 @@ Public Class Manager
 
             apyValue.ForeColor = Color.Black
         Else
-            apyValue.Text = (AreaState.journal.apy).ToString("#,##0.00") & " %"
+            apyValue.Text = AreaState.journal.apy
 
             apyValue.ForeColor = totalEarnValue.ForeColor
-        End If
-
-        If (AreaState.journal.numPages = 0) Then
-            numDaysValue.Text = "---"
-        Else
-            numDaysValue.Text = AreaState.journal.numPages
         End If
 
         If (AreaState.journal.averageApy = 0) Then
@@ -681,7 +684,7 @@ Public Class Manager
 
             averageAPYValue.ForeColor = Color.Black
         Else
-            averageAPYValue.Text = AreaState.journal.averageApy.ToString("#,##0.00") & " %"
+            averageAPYValue.Text = AreaState.journal.averageApy.ToString("#,##0.00")
 
             If (AreaState.journal.averageApy < 0) Then
                 averageAPYValue.ForeColor = Color.Red
@@ -690,33 +693,54 @@ Public Class Manager
             End If
         End If
 
+        formatValue(increaseValue, AreaState.journal.totalIncrease)
+        formatValue(increasePercentualTotal, AreaState.journal.increasePercentual)
+        formatValue(averageIncreaseTotalPercentage, AreaState.journal.averageIncrease)
+
+        formatValue(powerTotalValue, AreaState.journal.totalPower)
+
         If (AreaState.journal.currentDayCounters.day = 0) Then
             currentDayValue.Text = "---"
         Else
             currentDayValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.currentDayCounters.day), True)
         End If
 
-        formatValue(earnDayValue, AreaState.journal.currentDayCounters.earn, True)
         formatValue(initialDayFundStableValue, AreaState.journal.currentDayCounters.initialFundFree)
         formatValue(initialOtherFundDayValue, AreaState.journal.currentDayCounters.initialFundManage)
+
+        numSellValue.Text = AreaState.journal.currentDayCounters.sellNumber
+
+        formatValue(freeFundCurrentValue, AreaState.journal.currentDayCounters.freeFund)
+        formatValue(lockedFundCurrentValue, AreaState.journal.currentDayCounters.lockedFund)
+
+        numBuyValue.Text = AreaState.journal.currentDayCounters.buyNumber
+
+        formatValue(currentPageValue, AreaState.journal.currentDayCounters.currentFund)
+        formatValue(increaseCurrentValue, AreaState.journal.currentDayCounters.increase)
+
         formatValue(extraBuyDayValue, AreaState.journal.currentDayCounters.extraBuy)
         formatValue(dailyBuyDayValue, AreaState.journal.currentDayCounters.dailyBuy)
+
         formatValue(extraSellDayValue, AreaState.journal.currentDayCounters.extraSell)
         formatValue(dailySellDayValue, AreaState.journal.currentDayCounters.dailySell)
+
         formatValue(feeDayValue, AreaState.journal.currentDayCounters.feePayed)
         formatValue(volumesDayValue, AreaState.journal.currentDayCounters.volumes)
+
+        formatValue(earnDayValue, AreaState.journal.currentDayCounters.earn, True)
 
         If (AreaState.journal.currentDayCounters.apy = 0) Then
             apyDayValue.Text = "---"
 
             apyDayValue.ForeColor = Color.Black
         Else
-            apyDayValue.Text = (AreaState.journal.currentDayCounters.apy).ToString("#,##0.00") & " %"
+            apyDayValue.Text = (AreaState.journal.currentDayCounters.apy).ToString("#,##0.00")
 
             apyDayValue.ForeColor = earnDayValue.ForeColor
         End If
 
         alertValue.Text = AreaState.journal.alert
+        workActionValue.Text = AreaState.automaticBot.workAction
 
         refreshDailyOrderGrid()
     End Sub
@@ -1069,6 +1093,10 @@ Public Class Manager
                 AreaState.journal = New AreaCommon.Models.Journal.CumulativeModel
 
                 initialUSDTValue.Text = ""
+
+                refreshJournalValue()
+
+                AreaState.automaticBot.lastWorkAction = 0
             End If
         End If
         If proceed Then
@@ -1086,6 +1114,8 @@ Public Class Manager
             For Each item In AreaState.products.items
                 If item.userData.isCustomized Then
                     AreaState.automaticBot.isActive = True
+                    AreaState.automaticBot.lastWorkAction = 0
+                    AreaState.automaticBot.workAction = AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.undefined
 
                     AreaCommon.Engines.Bots.AutomaticBotModule.start()
 
@@ -1115,49 +1145,30 @@ Public Class Manager
 
     Private Sub summaryButton_CheckedChanged(sender As Object, e As EventArgs) Handles summaryButton.CheckedChanged
         If summaryButton.Checked Then
-            If IsNothing(daySummaryButton.Tag) Then
-                summaryButton.Tag = "Inchange"
-                daySummaryButton.Checked = False
-                summaryButton.Tag = Nothing
-
-                SummaryPanel.BringToFront()
-            End If
+            SummaryPanel.BringToFront()
+            daySummaryButton.Checked = False
+            warningButton.Checked = False
         Else
-            If IsNothing(daySummaryButton.Tag) Then
-                summaryButton.Tag = "Inchange"
-                daySummaryButton.Checked = True
-                summaryButton.Tag = Nothing
-            End If
+            SummaryPanel.SendToBack()
         End If
     End Sub
 
     Private Sub daySummaryButton_CheckedChanged(sender As Object, e As EventArgs) Handles daySummaryButton.CheckedChanged
         If daySummaryButton.Checked Then
-            If IsNothing(summaryButton.Tag) Then
-                daySummaryButton.Tag = "Inchange"
-                summaryButton.Checked = False
-                daySummaryButton.Tag = Nothing
-
-                dayPanel.BringToFront()
-            End If
+            dayPanel.BringToFront()
+            summaryButton.Checked = False
+            warningButton.Checked = False
         Else
-            If IsNothing(summaryButton.Tag) Then
-                daySummaryButton.Tag = "Inchange"
-                summaryButton.Checked = True
-                daySummaryButton.Tag = Nothing
-            End If
+            dayPanel.SendToBack()
         End If
     End Sub
 
-    Private Sub Label35_Click(sender As Object, e As EventArgs) Handles totalEarnValue.Click
-
-    End Sub
 
     Private Sub dayTransactionDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dayTransactionDataView.CellContentClick
 
     End Sub
 
-    Private Sub clearButton_Click(sender As Object, e As EventArgs) Handles clearButton.Click
+    Private Sub clearButton_Click(sender As Object, e As EventArgs)
         AreaState.journal.alert = ""
     End Sub
 
@@ -1167,4 +1178,13 @@ Public Class Manager
         dailyReport.Show()
     End Sub
 
+    Private Sub warningButton_CheckedChanged(sender As Object, e As EventArgs) Handles warningButton.CheckedChanged
+        If warningButton.Checked Then
+            warningPanel.BringToFront()
+            summaryButton.Checked = False
+            daySummaryButton.Checked = False
+        Else
+            warningPanel.SendToBack()
+        End If
+    End Sub
 End Class

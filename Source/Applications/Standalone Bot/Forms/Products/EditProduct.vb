@@ -129,7 +129,7 @@ Public Class EditProduct
             End If
         End If
 
-        If (currentData.activity.sell.internalOrderId.CompareTo("0") = 0) Then
+        If (currentData.activity.sell.internalOrderId.Length = 0) Then
             targetLabel.Enabled = False
         End If
 

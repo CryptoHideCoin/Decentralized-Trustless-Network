@@ -47,7 +47,6 @@ Namespace AreaCommon.Models.Bot
         Public Enum WorkStateEnumeration
             undefined
             completeRemoveActiveProducts
-            checkBalance
             checkAllSellDailyProduct
             restockProducts
             reorderProducts

@@ -83,8 +83,6 @@ Namespace AreaState
                 dataAccount.id = currencyKey.ToUpper
 
                 accounts.Add(currencyKey, dataAccount)
-
-                Debug.Print(currencyKey)
             End If
 
             dataAccount.amount += value
@@ -97,7 +95,7 @@ Namespace AreaState
                 dataAccount.change = pairs(Id).currentValue
             End If
 
-            If (dataAccount.amount <= 0) Then
+            If (Val(dataAccount.amount.ToString("0.00000").Replace(",", ".")) <= 0) Then
                 accounts.Remove(currencyKey)
             End If
 
