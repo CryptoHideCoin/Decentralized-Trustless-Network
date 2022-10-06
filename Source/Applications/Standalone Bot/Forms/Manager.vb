@@ -740,7 +740,17 @@ Public Class Manager
         End If
 
         alertValue.Text = AreaState.journal.alert
-        workActionValue.Text = AreaState.automaticBot.workAction
+
+        Select Case AreaState.automaticBot.workAction
+            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.checkAllBuyDailyProduct : workActionValue.Text = "Check all buy daily"
+            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.checkAllSellDailyProduct : workActionValue.Text = "Check all sell daily"
+            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.completeRemoveActiveProducts : workActionValue.Text = "Complete remove active products"
+            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.completeWork : workActionValue.Text = "Complete work"
+            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.investProducts : workActionValue.Text = "Invest work"
+            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.reorderProducts : workActionValue.Text = "Reorder products"
+            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.restockProducts : workActionValue.Text = "Restock products"
+            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.undefined : workActionValue.Text = ""
+        End Select
 
         refreshDailyOrderGrid()
     End Sub
@@ -1187,4 +1197,13 @@ Public Class Manager
             warningPanel.SendToBack()
         End If
     End Sub
+
+    Private Sub SaveProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveProductsToolStripMenuItem.Click
+        AreaCommon.Engine.IO.updateCryptocurrency()
+    End Sub
+
+    Private Sub clearButton_Click_1(sender As Object, e As EventArgs) Handles clearButton.Click
+        AreaState.journal.alert = ""
+    End Sub
+
 End Class

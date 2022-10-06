@@ -71,7 +71,7 @@ Namespace AreaCommon.Models.Journal
 
         Public ReadOnly Property averageApy As Double
             Get
-                If (apy = 0) Then
+                If (apy = 0) Or (numPage = 0) Then
                     Return 0
                 Else
                     Return (apy / numPage)

@@ -496,8 +496,8 @@ Namespace AreaCommon.Engines.Bots
                     proceed = AreaState.automaticBot.isActive
                 End If
                 If proceed Then
-                    'proceed = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > (AreaState.automaticBot.lastWorkAction + 24 * 60 * 60 * 1000)
-                    proceed = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > (AreaState.automaticBot.lastWorkAction + 15 * 60 * 1000)
+                    proceed = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > (AreaState.automaticBot.lastWorkAction + 24 * 60 * 60 * 1000)
+                    'proceed = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > (AreaState.automaticBot.lastWorkAction + 15 * 60 * 1000)
                 Else
                     Return True
                 End If

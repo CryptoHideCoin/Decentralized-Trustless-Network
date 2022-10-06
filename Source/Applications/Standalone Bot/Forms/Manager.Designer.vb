@@ -71,6 +71,8 @@ Partial Class Manager
         Me.ActionAutomaticBotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.RestartVirtualToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.SaveProductsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.DailyReportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ArchiveSelectedBotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -341,7 +343,7 @@ Partial Class Manager
         '
         'AutomaticBotToolStripMenuItem
         '
-        Me.AutomaticBotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfigurationToolStripMenuItem, Me.ToolStripSeparator3, Me.ActionAutomaticBotToolStripMenuItem, Me.RestartVirtualToolStripMenuItem, Me.ToolStripSeparator4, Me.DailyReportToolStripMenuItem})
+        Me.AutomaticBotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfigurationToolStripMenuItem, Me.ToolStripSeparator3, Me.ActionAutomaticBotToolStripMenuItem, Me.RestartVirtualToolStripMenuItem, Me.ToolStripSeparator4, Me.SaveProductsToolStripMenuItem, Me.ToolStripSeparator5, Me.DailyReportToolStripMenuItem})
         Me.AutomaticBotToolStripMenuItem.Name = "AutomaticBotToolStripMenuItem"
         Me.AutomaticBotToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
         Me.AutomaticBotToolStripMenuItem.Text = "Automatic Bot"
@@ -373,6 +375,17 @@ Partial Class Manager
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
         Me.ToolStripSeparator4.Size = New System.Drawing.Size(212, 6)
+        '
+        'SaveProductsToolStripMenuItem
+        '
+        Me.SaveProductsToolStripMenuItem.Name = "SaveProductsToolStripMenuItem"
+        Me.SaveProductsToolStripMenuItem.Size = New System.Drawing.Size(215, 22)
+        Me.SaveProductsToolStripMenuItem.Text = "Update Products"
+        '
+        'ToolStripSeparator5
+        '
+        Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(212, 6)
         '
         'DailyReportToolStripMenuItem
         '
@@ -667,6 +680,7 @@ Partial Class Manager
         '
         Me.workActionValue.Location = New System.Drawing.Point(100, 143)
         Me.workActionValue.Name = "workActionValue"
+        Me.workActionValue.ReadOnly = True
         Me.workActionValue.Size = New System.Drawing.Size(628, 21)
         Me.workActionValue.TabIndex = 65
         '
@@ -2966,4 +2980,6 @@ Partial Class Manager
     Friend WithEvents Label60 As Label
     Friend WithEvents workActionValue As TextBox
     Friend WithEvents Label61 As Label
+    Friend WithEvents SaveProductsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
 End Class
