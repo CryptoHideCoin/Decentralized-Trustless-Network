@@ -1206,4 +1206,29 @@ Public Class Manager
         AreaState.journal.alert = ""
     End Sub
 
+    Private Sub FundReservationToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FundReservationToolStripMenuItem.Click
+        FundReservations.Show()
+    End Sub
+
+    Private Sub PersonalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PersonalToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub PersonalToolStripMenuItem_Paint(sender As Object, e As PaintEventArgs) Handles PersonalToolStripMenuItem.Paint
+        VirtualDepositUSDTToolStripMenuItem.Enabled = AreaState.Common.defaultUserDataAccount.useVirtualAccount
+    End Sub
+
+    Private Sub VirtualDepositUSDTToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VirtualDepositUSDTToolStripMenuItem.Click
+        Dim quantity As String = ""
+
+        quantity = InputBox("Insert the amount", "Quantity", "0")
+
+        If IsNumeric(quantity) Then
+            If (Val(quantity) <> 0) Then
+                AreaState.addIntoAccount("USDT", Val(quantity), False)
+            End If
+        End If
+
+    End Sub
+
 End Class

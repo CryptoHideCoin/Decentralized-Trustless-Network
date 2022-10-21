@@ -33,3 +33,4 @@ E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.
 E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.ShowOrder.resources
 E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.DataPageList.resources
 E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.DataPageDetail.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\Debug\StandaloneBot.FundReservations.resources

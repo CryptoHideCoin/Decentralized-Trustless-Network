@@ -290,7 +290,7 @@ Namespace AreaCommon.Engines.Bots
 
                 investProductNumber = 0
 
-                totalValue = AreaState.accounts("USDT".ToLower()).valueUSDT
+                totalValue = fundAvailable()
 
                 For Each product In _InvestmentList
                     buy = New Models.Products.ProductOrderModel
@@ -346,7 +346,7 @@ Namespace AreaCommon.Engines.Bots
 
             orderValue = determinateOrderValue(product.value.bottomPercentPosition(futureValue), AreaState.automaticBot.settings.unitStep)
 
-            If (AreaState.accounts("USDT".ToLower()).valueUSDT >= orderValue) Or (forceAmount > 0) Then
+            If (fundAvailable() >= orderValue) Or (forceAmount > 0) Then
                 order.dateAcquire = 0
                 order.internalOrderId = Guid.NewGuid.ToString
                 order.tcoQuote = orderValue
@@ -386,7 +386,13 @@ Namespace AreaCommon.Engines.Bots
 
         Public Function updateJournalCounter() As Boolean
             AreaState.journal.currentFund = 0
-            AreaState.journal.freeFund = AreaState.accounts("USDT".ToLower()).valueUSDT
+
+            If AreaState.accounts.ContainsKey("USDT".ToLower()) Then
+                AreaState.journal.freeFund = AreaState.accounts("USDT".ToLower()).valueUSDT
+            Else
+                AreaState.journal.freeFund = 0
+            End If
+
             AreaState.journal.futureGain = 0
 
             For Each product In AreaState.products.items
@@ -497,7 +503,6 @@ Namespace AreaCommon.Engines.Bots
                 End If
                 If proceed Then
                     proceed = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > (AreaState.automaticBot.lastWorkAction + 24 * 60 * 60 * 1000)
-                    'proceed = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() > (AreaState.automaticBot.lastWorkAction + 15 * 60 * 1000)
                 Else
                     Return True
                 End If
@@ -601,6 +606,77 @@ Namespace AreaCommon.Engines.Bots
             Return totalValue * feePercentage / 100
         End Function
 
+        Private Function quoteReservation(ByVal value As Double) As Double
+            Dim dayRemain As Integer = DateDiff("d", Now.ToUniversalTime, CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.gainFund.nextTargetDay).ToUniversalTime)
+            Dim singleQuote As Double = (AreaState.gainFund.targetLockedFund - AreaState.gainFund.currentLockedFund) / dayRemain
+
+            If (value > singleQuote) Then
+                Return value
+            Else
+                Return singleQuote
+            End If
+        End Function
+
+        Private Sub manageQuoteReservation(ByVal quoteValue As Double)
+            Dim dayRemain As Integer = DateDiff("d", Now.ToUniversalTime, CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.gainFund.nextTargetDay).ToUniversalTime)
+            Dim singleQuote As Double = (AreaState.gainFund.targetLockedFund - AreaState.gainFund.currentLockedFund) / dayRemain
+            Dim dayQuoteRemain As Double = singleQuote - AreaState.journal.currentDayCounters.lockedFund
+            Dim quoteLock As Double = 0
+
+            If (dayQuoteRemain > 0) Then
+                If (quoteValue > dayQuoteRemain) Then
+                    quoteLock = dayQuoteRemain
+                Else
+                    quoteLock = quoteValue
+                End If
+            End If
+
+            AreaState.journal.currentDayCounters.lockedFund += quoteLock
+            AreaState.journal.lockedFund += quoteLock
+            AreaState.gainFund.currentLockedFund += quoteLock
+        End Sub
+
+        Private Function nextTargetDay() As Double
+            Dim dateDay As DateTime
+
+            dateDay = DateAdd("M", 1, CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.gainFund.nextTargetDay).ToUniversalTime)
+
+            Return CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(dateDay)
+        End Function
+
+        Private Function manageFundReservation(ByVal pairID As String, ByVal totalInvestment As Double, ByVal tcoQuote As Double) As Boolean
+            Select Case AreaState.gainFund.mode
+                Case Models.Journal.FundReservationModel.ModeReservationEnumeration.urgent
+                    AreaState.gainFund.currentLockedFund += tcoQuote
+                Case Models.Journal.FundReservationModel.ModeReservationEnumeration.immediate
+                    AreaState.gainFund.currentLockedFund += tcoQuote - totalInvestment
+                Case Models.Journal.FundReservationModel.ModeReservationEnumeration.booking
+                    manageQuoteReservation(tcoQuote - totalInvestment)
+            End Select
+
+            If (AreaState.gainFund.currentLockedFund > AreaState.gainFund.targetLockedFund) Then
+
+                AreaState.addIntoAccount(pairID, (-1) * AreaState.gainFund.currentLockedFund, True)
+                AreaState.addIntoAccount(AreaState.gainFund.targetCurrency, AreaState.gainFund.currentLockedFund, False)
+
+                AreaState.gainFund.currentLockedFund = 0
+
+                If (AreaState.gainFund.mode = Models.Journal.FundReservationModel.ModeReservationEnumeration.booking) Then
+                    AreaState.gainFund.nextTargetDay = nextTargetDay()
+                End If
+            End If
+
+            Return True
+        End Function
+
+        Private Function fundAvailable() As Double
+            If AreaState.gainFund.currentLockedFund > 0 Then
+                Return AreaState.accounts("USDT".ToLower()).valueUSDT - AreaState.gainFund.currentLockedFund
+            Else
+                Return AreaState.accounts("USDT".ToLower()).valueUSDT
+            End If
+        End Function
+
         Public Function manageOrderProduct(ByVal productId As String, ByVal internalOrderId As String) As Boolean
             Try
                 Dim product = AreaState.products.getCurrency(productId)
@@ -614,14 +690,15 @@ Namespace AreaCommon.Engines.Bots
                             If (buy.internalOrderId.CompareTo(internalOrderId) = 0) Then
 
                                 If (buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.placed) Then
-
-                                    If (AreaState.accounts("USDT".ToLower()).valueUSDT < buy.tcoQuote) Then
+                                    If (fundAvailable() < (product.value.current * buy.amount + calculateFeeCost(product.value.current * buy.amount))) Then
                                         Return True
                                     End If
 
                                     If (product.value.current > 0) And (product.value.current * buy.amount <= buy.tcoQuote) Then
                                         buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
                                         buy.dateAcquire = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+
+                                        buy.tcoQuote = product.value.current * buy.amount
                                         buy.feeCost = calculateFeeCost(buy.tcoQuote)
 
                                         AreaState.summary.totalFeesValue += CDec(buy.feeCost)
@@ -728,6 +805,8 @@ Namespace AreaCommon.Engines.Bots
 
                         AreaState.addIntoAccount(product.pairID, product.activity.sell.tcoQuote, True)
                         AreaState.addIntoAccount(product.pairID, (-1) * product.activity.sell.amount, False)
+
+                        manageFundReservation(product.pairID, product.activity.totalInvestment, product.activity.sell.tcoQuote)
 
                         AreaState.summary.increaseValue += product.activity.earn
                         AreaState.journal.totalIncrease += product.activity.earn

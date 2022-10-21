@@ -414,6 +414,11 @@ StandaloneBot
  This class contain the information relative the activity of the bot
  </summary>
 </member>
+<member name="T:StandaloneBot.AreaCommon.Models.Journal.FundReservationModel">
+ <summary>
+ This class contain all data relative of a fund reservation
+ </summary>
+</member>
 <member name="T:StandaloneBot.AreaCommon.Models.User.UserDataPersonalModel">
  <summary>
  This class contain all data relative of a bot data

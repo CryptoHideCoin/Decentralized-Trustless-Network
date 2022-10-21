@@ -65,6 +65,8 @@ Partial Class Manager
         Me.BotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AddNewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StartMultipleBotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ArchiveSelectedBotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
         Me.AutomaticBotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConfigurationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
@@ -74,12 +76,14 @@ Partial Class Manager
         Me.SaveProductsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.DailyReportToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ArchiveSelectedBotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator7 = New System.Windows.Forms.ToolStripSeparator()
+        Me.FundReservationToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PersonalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PersonalToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.CryptocurrenciesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
+        Me.VirtualDepositUSDTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.tabMain = New System.Windows.Forms.TabControl()
@@ -100,12 +104,6 @@ Partial Class Manager
         Me.warningButton = New System.Windows.Forms.CheckBox()
         Me.daySummaryButton = New System.Windows.Forms.CheckBox()
         Me.summaryButton = New System.Windows.Forms.CheckBox()
-        Me.warningPanel = New System.Windows.Forms.Panel()
-        Me.workActionValue = New System.Windows.Forms.TextBox()
-        Me.Label61 = New System.Windows.Forms.Label()
-        Me.clearButton = New System.Windows.Forms.Button()
-        Me.alertValue = New System.Windows.Forms.TextBox()
-        Me.alertLabel = New System.Windows.Forms.Label()
         Me.SummaryPanel = New System.Windows.Forms.Panel()
         Me.Label65 = New System.Windows.Forms.Label()
         Me.powerTotalValue = New System.Windows.Forms.TextBox()
@@ -206,6 +204,12 @@ Partial Class Manager
         Me.Label21 = New System.Windows.Forms.Label()
         Me.currentDayValue = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
+        Me.warningPanel = New System.Windows.Forms.Panel()
+        Me.workActionValue = New System.Windows.Forms.TextBox()
+        Me.Label61 = New System.Windows.Forms.Label()
+        Me.clearButton = New System.Windows.Forms.Button()
+        Me.alertValue = New System.Windows.Forms.TextBox()
+        Me.alertLabel = New System.Windows.Forms.Label()
         Me.dayTransactionDataView = New System.Windows.Forms.DataGridView()
         Me.buyColumnName = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.dateColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -296,9 +300,9 @@ Partial Class Manager
         Me.journalSplit.Panel1.SuspendLayout()
         Me.journalSplit.Panel2.SuspendLayout()
         Me.journalSplit.SuspendLayout()
-        Me.warningPanel.SuspendLayout()
         Me.SummaryPanel.SuspendLayout()
         Me.dayPanel.SuspendLayout()
+        Me.warningPanel.SuspendLayout()
         CType(Me.dayTransactionDataView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.walletPage.SuspendLayout()
         CType(Me.accountsGridView, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -321,7 +325,7 @@ Partial Class Manager
         '
         'BotToolStripMenuItem
         '
-        Me.BotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddNewToolStripMenuItem, Me.StartMultipleBotToolStripMenuItem, Me.AutomaticBotToolStripMenuItem, Me.ToolStripSeparator1, Me.ArchiveSelectedBotToolStripMenuItem})
+        Me.BotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AddNewToolStripMenuItem, Me.StartMultipleBotToolStripMenuItem, Me.ArchiveSelectedBotToolStripMenuItem, Me.ToolStripSeparator8, Me.AutomaticBotToolStripMenuItem})
         Me.BotToolStripMenuItem.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BotToolStripMenuItem.Name = "BotToolStripMenuItem"
         Me.BotToolStripMenuItem.Size = New System.Drawing.Size(40, 20)
@@ -341,9 +345,20 @@ Partial Class Manager
         Me.StartMultipleBotToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
         Me.StartMultipleBotToolStripMenuItem.Text = "Multiple Bot"
         '
+        'ArchiveSelectedBotToolStripMenuItem
+        '
+        Me.ArchiveSelectedBotToolStripMenuItem.Name = "ArchiveSelectedBotToolStripMenuItem"
+        Me.ArchiveSelectedBotToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
+        Me.ArchiveSelectedBotToolStripMenuItem.Text = "Archive selected bot"
+        '
+        'ToolStripSeparator8
+        '
+        Me.ToolStripSeparator8.Name = "ToolStripSeparator8"
+        Me.ToolStripSeparator8.Size = New System.Drawing.Size(198, 6)
+        '
         'AutomaticBotToolStripMenuItem
         '
-        Me.AutomaticBotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfigurationToolStripMenuItem, Me.ToolStripSeparator3, Me.ActionAutomaticBotToolStripMenuItem, Me.RestartVirtualToolStripMenuItem, Me.ToolStripSeparator4, Me.SaveProductsToolStripMenuItem, Me.ToolStripSeparator5, Me.DailyReportToolStripMenuItem})
+        Me.AutomaticBotToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConfigurationToolStripMenuItem, Me.ToolStripSeparator3, Me.ActionAutomaticBotToolStripMenuItem, Me.RestartVirtualToolStripMenuItem, Me.ToolStripSeparator4, Me.SaveProductsToolStripMenuItem, Me.ToolStripSeparator5, Me.DailyReportToolStripMenuItem, Me.ToolStripSeparator7, Me.FundReservationToolStripMenuItem})
         Me.AutomaticBotToolStripMenuItem.Name = "AutomaticBotToolStripMenuItem"
         Me.AutomaticBotToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
         Me.AutomaticBotToolStripMenuItem.Text = "Automatic Bot"
@@ -393,20 +408,20 @@ Partial Class Manager
         Me.DailyReportToolStripMenuItem.Size = New System.Drawing.Size(215, 22)
         Me.DailyReportToolStripMenuItem.Text = "Recurring Page Report"
         '
-        'ToolStripSeparator1
+        'ToolStripSeparator7
         '
-        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(198, 6)
+        Me.ToolStripSeparator7.Name = "ToolStripSeparator7"
+        Me.ToolStripSeparator7.Size = New System.Drawing.Size(212, 6)
         '
-        'ArchiveSelectedBotToolStripMenuItem
+        'FundReservationToolStripMenuItem
         '
-        Me.ArchiveSelectedBotToolStripMenuItem.Name = "ArchiveSelectedBotToolStripMenuItem"
-        Me.ArchiveSelectedBotToolStripMenuItem.Size = New System.Drawing.Size(201, 22)
-        Me.ArchiveSelectedBotToolStripMenuItem.Text = "Archive selected bot"
+        Me.FundReservationToolStripMenuItem.Name = "FundReservationToolStripMenuItem"
+        Me.FundReservationToolStripMenuItem.Size = New System.Drawing.Size(215, 22)
+        Me.FundReservationToolStripMenuItem.Text = "Fund Reservation"
         '
         'PersonalToolStripMenuItem
         '
-        Me.PersonalToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PersonalToolStripMenuItem1, Me.ToolStripSeparator2, Me.CryptocurrenciesToolStripMenuItem})
+        Me.PersonalToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PersonalToolStripMenuItem1, Me.ToolStripSeparator2, Me.CryptocurrenciesToolStripMenuItem, Me.ToolStripSeparator6, Me.VirtualDepositUSDTToolStripMenuItem})
         Me.PersonalToolStripMenuItem.Font = New System.Drawing.Font("Verdana", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.PersonalToolStripMenuItem.Name = "PersonalToolStripMenuItem"
         Me.PersonalToolStripMenuItem.Size = New System.Drawing.Size(49, 20)
@@ -429,6 +444,17 @@ Partial Class Manager
         Me.CryptocurrenciesToolStripMenuItem.Name = "CryptocurrenciesToolStripMenuItem"
         Me.CryptocurrenciesToolStripMenuItem.Size = New System.Drawing.Size(279, 22)
         Me.CryptocurrenciesToolStripMenuItem.Text = "Update Cryptocurrencies Archive"
+        '
+        'ToolStripSeparator6
+        '
+        Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(276, 6)
+        '
+        'VirtualDepositUSDTToolStripMenuItem
+        '
+        Me.VirtualDepositUSDTToolStripMenuItem.Name = "VirtualDepositUSDTToolStripMenuItem"
+        Me.VirtualDepositUSDTToolStripMenuItem.Size = New System.Drawing.Size(279, 22)
+        Me.VirtualDepositUSDTToolStripMenuItem.Text = "Virtual Deposit USDT"
         '
         'ToolStripMenuItem1
         '
@@ -663,64 +689,6 @@ Partial Class Manager
         Me.summaryButton.TabIndex = 30
         Me.summaryButton.Text = "Summary"
         Me.summaryButton.UseVisualStyleBackColor = True
-        '
-        'warningPanel
-        '
-        Me.warningPanel.Controls.Add(Me.workActionValue)
-        Me.warningPanel.Controls.Add(Me.Label61)
-        Me.warningPanel.Controls.Add(Me.clearButton)
-        Me.warningPanel.Controls.Add(Me.alertValue)
-        Me.warningPanel.Controls.Add(Me.alertLabel)
-        Me.warningPanel.Location = New System.Drawing.Point(15, 39)
-        Me.warningPanel.Name = "warningPanel"
-        Me.warningPanel.Size = New System.Drawing.Size(837, 232)
-        Me.warningPanel.TabIndex = 35
-        '
-        'workActionValue
-        '
-        Me.workActionValue.Location = New System.Drawing.Point(100, 143)
-        Me.workActionValue.Name = "workActionValue"
-        Me.workActionValue.ReadOnly = True
-        Me.workActionValue.Size = New System.Drawing.Size(628, 21)
-        Me.workActionValue.TabIndex = 65
-        '
-        'Label61
-        '
-        Me.Label61.AutoSize = True
-        Me.Label61.Location = New System.Drawing.Point(17, 148)
-        Me.Label61.Name = "Label61"
-        Me.Label61.Size = New System.Drawing.Size(75, 13)
-        Me.Label61.TabIndex = 64
-        Me.Label61.Text = "Work Action"
-        '
-        'clearButton
-        '
-        Me.clearButton.Location = New System.Drawing.Point(734, 29)
-        Me.clearButton.Name = "clearButton"
-        Me.clearButton.Size = New System.Drawing.Size(75, 23)
-        Me.clearButton.TabIndex = 63
-        Me.clearButton.Text = "Clear"
-        Me.clearButton.UseVisualStyleBackColor = True
-        '
-        'alertValue
-        '
-        Me.alertValue.BackColor = System.Drawing.SystemColors.Info
-        Me.alertValue.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.alertValue.Location = New System.Drawing.Point(15, 31)
-        Me.alertValue.Multiline = True
-        Me.alertValue.Name = "alertValue"
-        Me.alertValue.ReadOnly = True
-        Me.alertValue.Size = New System.Drawing.Size(713, 81)
-        Me.alertValue.TabIndex = 62
-        '
-        'alertLabel
-        '
-        Me.alertLabel.AutoSize = True
-        Me.alertLabel.Location = New System.Drawing.Point(12, 15)
-        Me.alertLabel.Name = "alertLabel"
-        Me.alertLabel.Size = New System.Drawing.Size(34, 13)
-        Me.alertLabel.TabIndex = 61
-        Me.alertLabel.Text = "Alert"
         '
         'SummaryPanel
         '
@@ -1755,6 +1723,64 @@ Partial Class Manager
         Me.Label17.TabIndex = 33
         Me.Label17.Text = "Page date"
         '
+        'warningPanel
+        '
+        Me.warningPanel.Controls.Add(Me.workActionValue)
+        Me.warningPanel.Controls.Add(Me.Label61)
+        Me.warningPanel.Controls.Add(Me.clearButton)
+        Me.warningPanel.Controls.Add(Me.alertValue)
+        Me.warningPanel.Controls.Add(Me.alertLabel)
+        Me.warningPanel.Location = New System.Drawing.Point(15, 39)
+        Me.warningPanel.Name = "warningPanel"
+        Me.warningPanel.Size = New System.Drawing.Size(837, 232)
+        Me.warningPanel.TabIndex = 35
+        '
+        'workActionValue
+        '
+        Me.workActionValue.Location = New System.Drawing.Point(100, 143)
+        Me.workActionValue.Name = "workActionValue"
+        Me.workActionValue.ReadOnly = True
+        Me.workActionValue.Size = New System.Drawing.Size(628, 21)
+        Me.workActionValue.TabIndex = 65
+        '
+        'Label61
+        '
+        Me.Label61.AutoSize = True
+        Me.Label61.Location = New System.Drawing.Point(17, 148)
+        Me.Label61.Name = "Label61"
+        Me.Label61.Size = New System.Drawing.Size(75, 13)
+        Me.Label61.TabIndex = 64
+        Me.Label61.Text = "Work Action"
+        '
+        'clearButton
+        '
+        Me.clearButton.Location = New System.Drawing.Point(734, 29)
+        Me.clearButton.Name = "clearButton"
+        Me.clearButton.Size = New System.Drawing.Size(75, 23)
+        Me.clearButton.TabIndex = 63
+        Me.clearButton.Text = "Clear"
+        Me.clearButton.UseVisualStyleBackColor = True
+        '
+        'alertValue
+        '
+        Me.alertValue.BackColor = System.Drawing.SystemColors.Info
+        Me.alertValue.ForeColor = System.Drawing.SystemColors.WindowText
+        Me.alertValue.Location = New System.Drawing.Point(15, 31)
+        Me.alertValue.Multiline = True
+        Me.alertValue.Name = "alertValue"
+        Me.alertValue.ReadOnly = True
+        Me.alertValue.Size = New System.Drawing.Size(713, 81)
+        Me.alertValue.TabIndex = 62
+        '
+        'alertLabel
+        '
+        Me.alertLabel.AutoSize = True
+        Me.alertLabel.Location = New System.Drawing.Point(12, 15)
+        Me.alertLabel.Name = "alertLabel"
+        Me.alertLabel.Size = New System.Drawing.Size(34, 13)
+        Me.alertLabel.TabIndex = 61
+        Me.alertLabel.Text = "Alert"
+        '
         'dayTransactionDataView
         '
         Me.dayTransactionDataView.AllowUserToAddRows = False
@@ -2732,12 +2758,12 @@ Partial Class Manager
         Me.journalSplit.Panel2.ResumeLayout(False)
         CType(Me.journalSplit, System.ComponentModel.ISupportInitialize).EndInit()
         Me.journalSplit.ResumeLayout(False)
-        Me.warningPanel.ResumeLayout(False)
-        Me.warningPanel.PerformLayout()
         Me.SummaryPanel.ResumeLayout(False)
         Me.SummaryPanel.PerformLayout()
         Me.dayPanel.ResumeLayout(False)
         Me.dayPanel.PerformLayout()
+        Me.warningPanel.ResumeLayout(False)
+        Me.warningPanel.PerformLayout()
         CType(Me.dayTransactionDataView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.walletPage.ResumeLayout(False)
         Me.walletPage.PerformLayout()
@@ -2830,7 +2856,6 @@ Partial Class Manager
     Friend WithEvents Label12 As Label
     Friend WithEvents totalIncreaseValue As Label
     Friend WithEvents Label11 As Label
-    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents ArchiveSelectedBotToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents id As DataGridViewTextBoxColumn
     Friend WithEvents created As DataGridViewTextBoxColumn
@@ -2982,4 +3007,9 @@ Partial Class Manager
     Friend WithEvents Label61 As Label
     Friend WithEvents SaveProductsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator5 As ToolStripSeparator
+    Friend WithEvents ToolStripSeparator8 As ToolStripSeparator
+    Friend WithEvents ToolStripSeparator7 As ToolStripSeparator
+    Friend WithEvents FundReservationToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator6 As ToolStripSeparator
+    Friend WithEvents VirtualDepositUSDTToolStripMenuItem As ToolStripMenuItem
 End Class

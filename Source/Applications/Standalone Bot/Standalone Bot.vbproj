@@ -152,6 +152,12 @@
     <Compile Include="Forms\Products\ShowOrder.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\UserProfile\FundReservations.Designer.vb">
+      <DependentUpon>FundReservations.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UserProfile\FundReservations.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\UserProfile\PersonalData.Designer.vb">
       <DependentUpon>PersonalData.vb</DependentUpon>
     </Compile>
@@ -186,6 +192,7 @@
     <Compile Include="Models\Bots\BotParametersModel.vb" />
     <Compile Include="Models\Cryptocurrencies\CryptocurrencyModel.vb" />
     <Compile Include="Models\Journal\JournalModel.vb" />
+    <Compile Include="Models\Tenant\FundReservationModel.vb" />
     <Compile Include="Models\Tenant\TenantAccountModel.vb" />
     <Compile Include="Models\Orders\SimplyOrderMode.vb" />
     <Compile Include="Models\Pairs\PairInformation.vb" />
@@ -232,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Products\ShowOrder.resx">
       <DependentUpon>ShowOrder.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserProfile\FundReservations.resx">
+      <DependentUpon>FundReservations.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserProfile\PersonalData.resx">
       <DependentUpon>PersonalData.vb</DependentUpon>
