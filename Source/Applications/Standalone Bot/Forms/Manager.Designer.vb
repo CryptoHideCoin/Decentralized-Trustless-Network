@@ -291,6 +291,8 @@ Partial Class Manager
         Me.currentValue = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.timerMain = New System.Windows.Forms.Timer(Me.components)
         Me.updateBotsTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.ServiceMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ConvertToUSDTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuMain.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.currenciesPage.SuspendLayout()
@@ -312,6 +314,7 @@ Partial Class Manager
         CType(Me.mainChart, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tickValues, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.marketDataView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ServiceMenu.SuspendLayout()
         Me.SuspendLayout()
         '
         'menuMain
@@ -2074,6 +2077,7 @@ Partial Class Manager
         Me.accountsGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle20
         Me.accountsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.accountsGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.valueColumn, Me.changeUSDT, Me.valueUSDTColumn})
+        Me.accountsGridView.ContextMenuStrip = Me.ServiceMenu
         Me.accountsGridView.Location = New System.Drawing.Point(3, 3)
         Me.accountsGridView.MultiSelect = False
         Me.accountsGridView.Name = "accountsGridView"
@@ -2734,6 +2738,18 @@ Partial Class Manager
         Me.updateBotsTimer.Enabled = True
         Me.updateBotsTimer.Interval = 1000
         '
+        'ServiceMenu
+        '
+        Me.ServiceMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConvertToUSDTToolStripMenuItem})
+        Me.ServiceMenu.Name = "ServiceMenu"
+        Me.ServiceMenu.Size = New System.Drawing.Size(181, 48)
+        '
+        'ConvertToUSDTToolStripMenuItem
+        '
+        Me.ConvertToUSDTToolStripMenuItem.Name = "ConvertToUSDTToolStripMenuItem"
+        Me.ConvertToUSDTToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ConvertToUSDTToolStripMenuItem.Text = "Convert to USDT"
+        '
         'Manager
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -2776,6 +2792,7 @@ Partial Class Manager
         CType(Me.mainChart, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tickValues, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.marketDataView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ServiceMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -3012,4 +3029,6 @@ Partial Class Manager
     Friend WithEvents FundReservationToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator6 As ToolStripSeparator
     Friend WithEvents VirtualDepositUSDTToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ServiceMenu As ContextMenuStrip
+    Friend WithEvents ConvertToUSDTToolStripMenuItem As ToolStripMenuItem
 End Class

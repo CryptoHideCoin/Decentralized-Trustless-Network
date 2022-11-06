@@ -24,6 +24,7 @@ Namespace AreaEngines.IO
         Public Property automaticBotPath As String = ""
         Public Property dayCounterPath As String = ""
         Public Property JournalPath As String = ""
+        Public Property fundReservationPath As String = ""
         Public Property logPath As String = ""
 
         Public Property newTenant As Boolean = False
@@ -89,6 +90,10 @@ Namespace AreaEngines.IO
 
         Public Function updateAutomaticBot() As Boolean
             Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.BotAutomatic).save(automaticBotPath, AreaState.automaticBot)
+        End Function
+
+        Public Function updateFundReservation() As Boolean
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Journal.FundReservationModel).save(fundReservationPath, AreaState.gainFund)
         End Function
 
         ''' <summary>
@@ -341,6 +346,7 @@ Namespace AreaEngines.IO
             accountPath = System.IO.Path.Combine(path, "Accounts.json")
             productsPath = System.IO.Path.Combine(path, "Products.json")
             automaticBotPath = System.IO.Path.Combine(path, "AutomaticBot.json")
+            fundReservationPath = System.IO.Path.Combine(path, "FundReservation.json")
 
             logPath = System.IO.Path.Combine(path, "Logs")
 
@@ -427,6 +433,10 @@ Namespace AreaEngines.IO
 
             If System.IO.File.Exists(JournalPath) Then
                 AreaState.journal = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Journal.CumulativeModel).read(JournalPath)
+            End If
+
+            If System.IO.File.Exists(fundReservationPath) Then
+                AreaState.gainFund = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Journal.FundReservationModel).read(fundReservationPath)
             End If
 
             Return True

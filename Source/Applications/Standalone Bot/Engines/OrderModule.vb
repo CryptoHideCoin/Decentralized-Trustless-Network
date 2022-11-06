@@ -1,6 +1,9 @@
 ﻿Option Compare Text
 Option Explicit On
 
+Imports Coinbase.Pro
+
+
 
 
 Namespace AreaCommon.Engines.Orders
@@ -8,6 +11,8 @@ Namespace AreaCommon.Engines.Orders
     Module OrderModule
 
         Private Const c_Second As Double = 1000
+
+        Private Property _ClientPro As CoinbaseProClient
 
         Public Property stateOn As Boolean = False
 
@@ -160,29 +165,115 @@ Namespace AreaCommon.Engines.Orders
         Private Sub startServiceBot()
             Try
                 Dim currentIndex As Integer = 0
+                Dim repeat As Boolean = True
 
-                Do While stateOn
-                    If (AreaState.orders.Count > 0) Then
-                        If (currentIndex + 1 > AreaState.orders.Count) Then
-                            currentIndex = 0
-                        End If
+                Do While repeat
+                    Try
+                        repeat = False
 
-                        If verify(AreaState.orders.ElementAt(currentIndex).Value) Then
-                            currentIndex += 1
-                        End If
-                    Else
-                        stateOn = False
+                        Do While stateOn
+                            If (AreaState.orders.Count > 0) Then
+                                If (currentIndex + 1 > AreaState.orders.Count) Then
+                                    currentIndex = 0
+                                End If
 
-                        Return
-                    End If
+                                If verify(AreaState.orders.ElementAt(currentIndex).Value) Then
+                                    currentIndex += 1
+                                End If
+                            Else
+                                stateOn = False
 
-                    Threading.Thread.Sleep(100)
+                                Return
+                            End If
+
+                            Threading.Thread.Sleep(100)
+                        Loop
+                    Catch ex As Exception
+                        repeat = True
+
+                        currentIndex = 0
+                    End Try
                 Loop
+
             Catch ex As Exception
                 stateOn = False
 
                 MessageBox.Show("An error occurrent during StartServiceBot - " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
+        End Sub
+
+
+        ''' <summary>
+        ''' This method provide to check into all active orders the pair
+        ''' </summary>
+        ''' <param name="pair"></param>
+        Public Async Sub closeAllOrders(ByVal pair As String)
+            If IsNothing(_ClientPro) Then
+                _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
+            End If
+
+            Try
+                Await _ClientPro.Orders.CancelAllOrdersAsync(pair)
+            Catch ex As Exception
+                MessageBox.Show("Problem during closeAllOrders - " & ex.Message)
+            End Try
+
+        End Sub
+
+        Public Async Function openOrders(ByVal pair As String) As Task(Of Boolean)
+            If IsNothing(_ClientPro) Then
+                _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
+            End If
+
+            Try
+                Return (_ClientPro.Orders.GetAllOrdersAsync("open", pair).Result.Data.Count > 0)
+            Catch ex As Exception
+                MessageBox.Show("Problem during openOrders - " & ex.Message)
+
+                Return False
+            End Try
+        End Function
+
+        Private Async Sub placeLimitOrder(ByVal obj As Object)
+            Try
+                Dim order = Await _ClientPro.Orders.PlaceLimitOrderAsync(Coinbase.Pro.Models.OrderSide.Sell, obj.pair, obj.sizeround, obj.limitPriceRound, Coinbase.Pro.Models.TimeInForce.ImmediateOrCancel)
+
+                MessageBox.Show("Conversion in progress", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Catch ex As Exception
+                MessageBox.Show("Problem during sellAll - " & ex.Message)
+            End Try
+        End Sub
+
+        Public Sub sellAll(ByVal pair As String, ByVal amount As Decimal, ByVal marketPlaceUSDT As Decimal)
+            If IsNothing(_ClientPro) Then
+                _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
+            End If
+
+            Dim ordertype As String = "Sell"
+            Dim limitPrice As Decimal = marketPlaceUSDT - (marketPlaceUSDT * 2) / 100
+            Dim sizeround As Decimal = Decimal.Round(amount, 8)
+            Dim limitPriceRound As Decimal = Decimal.Round(limitPrice, 2)
+
+            Try
+                Dim asynchThread As System.Threading.Thread
+                Dim placeObject As New Models.Order.PlaceOrderModel
+
+                placeObject.pair = pair
+                placeObject.limitPriceRound = limitPriceRound
+                placeObject.sizeround = sizeround
+
+                asynchThread = New System.Threading.Thread(AddressOf placeLimitOrder)
+
+                asynchThread.Start(placeObject)
+            Catch ex As Exception
+            End Try
+
+
+            'Dim parameterData As Object
+            'Dim task As New Task(AddressOf placeLimitOrder, parameterData)
+
+            'task.Start()
+
         End Sub
 
         ''' <summary>

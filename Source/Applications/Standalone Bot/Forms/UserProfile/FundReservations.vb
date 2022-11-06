@@ -131,6 +131,8 @@ Public Class FundReservations
             End If
 
             .whenInEarn = onlyInEarnValue.Checked
+
+            .targetLockedFund = .targetValue
         End With
 
         If (AreaState.gainFund.mode = AreaCommon.Models.Journal.FundReservationModel.ModeReservationEnumeration.allNow) Then

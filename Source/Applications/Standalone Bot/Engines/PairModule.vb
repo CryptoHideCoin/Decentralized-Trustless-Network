@@ -28,11 +28,11 @@ Namespace AreaCommon.Engines.Pairs
         ''' <param name="pair"></param>
         Private Async Sub updateTick(ByVal pair As Models.Pair.PairInformation)
             Try
-                Dim market = Await _ClientPro.MarketData.GetTickerAsync(pair.key)
-                Dim tick As New Models.Pair.TickInformation
-
                 pair.lastUpdateTick = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                 _LastUpdateTick = pair.lastUpdateTick
+
+                Dim market = Await _ClientPro.MarketData.GetTickerAsync(pair.key)
+                Dim tick As New Models.Pair.TickInformation
 
                 pair.currentValue = market.Price
 
@@ -57,7 +57,13 @@ Namespace AreaCommon.Engines.Pairs
 
                 pair.addNewItem(tick)
             Catch ex As Exception
-                If Not ex.Message Like "*Call timed out*" Then
+                If ex.Message Like "*Bad request*" Then
+                    AreaState.products.getCurrency(pair.key.Split("-")(0)).userData.preference = Models.Products.ProductUserDataModel.PreferenceEnumeration.automaticDisabled
+
+                    AreaState.pairs.Remove(pair.key)
+
+                    MessageBox.Show($"Problem during updateTick ({pair.id}) - " & ex.Message)
+                ElseIf Not ex.Message Like "*Call timed out*" Then
                     MessageBox.Show("Problem during updateTick - " & ex.Message)
                 End If
 
@@ -105,7 +111,7 @@ Namespace AreaCommon.Engines.Pairs
                         End If
                     End If
 
-                    Threading.Thread.Sleep(10)
+                    Threading.Thread.Sleep(100)
                 Loop
             Catch ex As Exception
                 _InWorkJob = False

@@ -215,16 +215,26 @@ Public Class Manager
 
         marketDataView.Rows.Clear()
 
-        For Each item In AreaState.pairs.Values
-            rowItem.Clear()
+        Dim repeatCicle As Boolean = True
 
-            rowItem.Add(item.key)
-            rowItem.Add(item.currentValue.ToString("#,##0.00000"))
+        Do While repeatCicle
+            Try
+                repeatCicle = False
 
-            marketDataView.Rows.Add(rowItem.ToArray)
+                For Each item In AreaState.pairs.Values
+                    rowItem.Clear()
 
-            marketDataView.Rows(marketDataView.Rows.Count - 1).DefaultCellStyle.BackColor = Color.LightGray
-        Next
+                    rowItem.Add(item.key)
+                    rowItem.Add(item.currentValue.ToString("#,##0.00000"))
+
+                    marketDataView.Rows.Add(rowItem.ToArray)
+
+                    marketDataView.Rows(marketDataView.Rows.Count - 1).DefaultCellStyle.BackColor = Color.LightGray
+                Next
+            Catch ex As Exception
+                repeatCicle = True
+            End Try
+        Loop
     End Sub
 
     Sub refreshDataCurrencies()
@@ -240,6 +250,7 @@ Public Class Manager
                 rowItem.Add(item.header.name)
 
                 Select Case item.userData.preference
+                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.automaticDisabled : rowItem.Add("Automatic disabled")
                     Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore : rowItem.Add("Ignore")
                     Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.prefered : rowItem.Add("Prefered")
                     Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.toWork : rowItem.Add("To work")
@@ -293,7 +304,9 @@ Public Class Manager
                 item = AreaState.products.items(index)
 
                 If Not AreaState.pairs.ContainsKey(item.pairID) Then
-                    If item.userData.isCustomized And (item.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore) Then
+                    If item.userData.isCustomized And
+                       (item.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore) And
+                       (item.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.automaticDisabled) Then
                         AreaState.getPairID(item.pairID)
                     End If
                 Else
@@ -862,6 +875,7 @@ Public Class Manager
         AreaCommon.Engine.IO.updateWallet()
         AreaCommon.Engine.IO.updateCryptocurrency()
         AreaCommon.Engine.IO.updateAutomaticBot()
+        AreaCommon.Engine.IO.updateFundReservation()
 
         If AreaCommon.Engines.Bots.AutomaticBotModule.updateJournalCounter() Then
             AreaCommon.Engine.IO.updateJournal()
@@ -1107,6 +1121,7 @@ Public Class Manager
                 refreshJournalValue()
 
                 AreaState.automaticBot.lastWorkAction = 0
+                AreaState.gainFund.currentLockedFund = 0
             End If
         End If
         If proceed Then
@@ -1226,7 +1241,64 @@ Public Class Manager
         If IsNumeric(quantity) Then
             If (Val(quantity) <> 0) Then
                 AreaState.addIntoAccount("USDT", Val(quantity), False)
+
+                AreaState.summary.initialValue += quantity
+                AreaState.journal.initialFund += quantity
+                AreaState.journal.currentDayCounters.initialFundManage += quantity
             End If
+        End If
+
+    End Sub
+
+    Private Sub processConvertAccountToUSDT(ByVal account As String)
+        Dim keyPair As String = account & "-USDT"
+
+        AreaCommon.Engines.Orders.closeAllOrders(keyPair)
+
+        Threading.Thread.Sleep(5000)
+
+        If Not AreaCommon.Engines.Orders.openOrders(keyPair).Result Then
+            AreaCommon.Engines.Orders.sellAll(keyPair, AreaState.accounts(account.ToLower & "-usdt").amount, AreaState.products.getCurrency(account).value.current)
+        Else
+            MessageBox.Show("Problem during close all orders", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return
+        End If
+
+    End Sub
+
+    Private Sub ConvertToUSDTToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConvertToUSDTToolStripMenuItem.Click
+        Dim proceed As Boolean = True
+        Dim account As String = ""
+
+        If proceed Then
+            proceed = (accountsGridView.Rows.Count > 0)
+        End If
+        If proceed Then
+            proceed = (accountsGridView.Rows.GetRowCount(DataGridViewElementStates.Selected) > 0)
+        End If
+        If proceed Then
+            account = accountsGridView.SelectedRows(0).Cells(0).Value
+
+            proceed = (account.ToUpper.CompareTo("USDT") <> 0)
+        Else
+            MessageBox.Show("There are not row selected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return
+        End If
+        If proceed Then
+            proceed = Not AreaState.defaultUserDataAccount.useVirtualAccount
+        Else
+            MessageBox.Show("Cannot convert USDT into USDT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return
+        End If
+        If proceed Then
+            processConvertAccountToUSDT(account)
+        Else
+            MessageBox.Show("Cannot convert into Virtual Mode", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            Return
         End If
 
     End Sub

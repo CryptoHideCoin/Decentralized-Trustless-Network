@@ -142,7 +142,8 @@ Public Class EditProduct
 
     Private Sub startPairId()
         If (currentData.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore) And
-               (currentData.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.undefined) Then
+           (currentData.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.undefined) And
+           (currentData.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.automaticDisabled) Then
 
             AreaState.getPairID(currentData.pairID)
 

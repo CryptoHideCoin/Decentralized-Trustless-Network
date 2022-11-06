@@ -62,6 +62,7 @@ Namespace AreaCommon.Models.Products
             userOnly = 1
             toWork = 2
             prefered = 3
+            automaticDisabled = 4
         End Enum
 
         Public Property state As StateEnumeration = StateEnumeration.undefined

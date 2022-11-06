@@ -607,17 +607,27 @@ Namespace AreaCommon.Engines.Bots
         End Function
 
         Private Function quoteReservation(ByVal value As Double) As Double
-            Dim dayRemain As Integer = DateDiff("d", Now.ToUniversalTime, CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.gainFund.nextTargetDay).ToUniversalTime)
-            Dim singleQuote As Double = (AreaState.gainFund.targetLockedFund - AreaState.gainFund.currentLockedFund) / dayRemain
+            Dim singleQuote As Double = (AreaState.gainFund.targetLockedFund - AreaState.gainFund.currentLockedFund)
+            Dim used As Double = 0
 
-            If (value > singleQuote) Then
-                Return value
+            If (singleQuote > value) Then
+                used = value
             Else
-                Return singleQuote
+                used = singleQuote
             End If
+
+            AreaState.journal.currentDayCounters.lockedFund += used
+            AreaState.journal.lockedFund += used
+            AreaState.gainFund.currentLockedFund += used
+
+            Return used
         End Function
 
         Private Sub manageQuoteReservation(ByVal quoteValue As Double)
+            If (AreaState.gainFund.nextTargetDay < CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) Then
+                AreaState.gainFund.nextTargetDay = nextTargetDay()
+            End If
+
             Dim dayRemain As Integer = DateDiff("d", Now.ToUniversalTime, CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.gainFund.nextTargetDay).ToUniversalTime)
             Dim singleQuote As Double = (AreaState.gainFund.targetLockedFund - AreaState.gainFund.currentLockedFund) / dayRemain
             Dim dayQuoteRemain As Double = singleQuote - AreaState.journal.currentDayCounters.lockedFund
@@ -645,28 +655,38 @@ Namespace AreaCommon.Engines.Bots
         End Function
 
         Private Function manageFundReservation(ByVal pairID As String, ByVal totalInvestment As Double, ByVal tcoQuote As Double) As Boolean
-            Select Case AreaState.gainFund.mode
-                Case Models.Journal.FundReservationModel.ModeReservationEnumeration.urgent
-                    AreaState.gainFund.currentLockedFund += tcoQuote
-                Case Models.Journal.FundReservationModel.ModeReservationEnumeration.immediate
-                    AreaState.gainFund.currentLockedFund += tcoQuote - totalInvestment
-                Case Models.Journal.FundReservationModel.ModeReservationEnumeration.booking
-                    manageQuoteReservation(tcoQuote - totalInvestment)
-            End Select
-
-            If (AreaState.gainFund.currentLockedFund > AreaState.gainFund.targetLockedFund) Then
-
-                AreaState.addIntoAccount(pairID, (-1) * AreaState.gainFund.currentLockedFund, True)
-                AreaState.addIntoAccount(AreaState.gainFund.targetCurrency, AreaState.gainFund.currentLockedFund, False)
-
-                AreaState.gainFund.currentLockedFund = 0
-
-                If (AreaState.gainFund.mode = Models.Journal.FundReservationModel.ModeReservationEnumeration.booking) Then
-                    AreaState.gainFund.nextTargetDay = nextTargetDay()
+            Try
+                If (AreaState.gainFund.currentLockedFund < AreaState.gainFund.targetLockedFund) Then
+                    Select Case AreaState.gainFund.mode
+                        Case Models.Journal.FundReservationModel.ModeReservationEnumeration.urgent : quoteReservation(tcoQuote)
+                        Case Models.Journal.FundReservationModel.ModeReservationEnumeration.immediate : quoteReservation(tcoQuote - totalInvestment)
+                        Case Models.Journal.FundReservationModel.ModeReservationEnumeration.booking : manageQuoteReservation(tcoQuote - totalInvestment)
+                    End Select
                 End If
-            End If
 
-            Return True
+                If (AreaState.gainFund.currentLockedFund >= AreaState.gainFund.targetLockedFund) And (AreaState.gainFund.currentLockedFund + AreaState.gainFund.targetLockedFund <> 0) Then
+                    AreaState.addIntoAccount("USDT", (-1) * AreaState.gainFund.currentLockedFund, False)
+                    AreaState.addIntoAccount(AreaState.gainFund.targetCurrency, AreaState.gainFund.currentLockedFund, False)
+
+                    AreaState.gainFund.currentLockedFund = 0
+                    AreaState.journal.lockedFund = 0
+                    AreaState.journal.currentDayCounters.lockedFund = 0
+
+                    If (AreaState.gainFund.mode = Models.Journal.FundReservationModel.ModeReservationEnumeration.urgent) Or
+                   (AreaState.gainFund.mode = Models.Journal.FundReservationModel.ModeReservationEnumeration.immediate) Then
+
+                        AreaState.gainFund.targetLockedFund = 0
+
+                    End If
+
+                End If
+
+                Return True
+            Catch ex As Exception
+                MessageBox.Show("An error occurrent during manageFundReservation - " & ex.Message)
+
+                Return False
+            End Try
         End Function
 
         Private Function fundAvailable() As Double

@@ -381,7 +381,7 @@ Partial Class EditProduct
         '
         Me.preferenceValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.preferenceValue.FormattingEnabled = True
-        Me.preferenceValue.Items.AddRange(New Object() {"Ignore", "User only", "To Work", "Prefered"})
+        Me.preferenceValue.Items.AddRange(New Object() {"Ignore", "User only", "To Work", "Prefered", "Automatic disabled"})
         Me.preferenceValue.Location = New System.Drawing.Point(116, 44)
         Me.preferenceValue.Name = "preferenceValue"
         Me.preferenceValue.Size = New System.Drawing.Size(224, 21)

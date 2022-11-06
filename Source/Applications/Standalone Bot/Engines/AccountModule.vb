@@ -14,6 +14,8 @@ Namespace AreaCommon.Engines.Accounts
         Private Property _InWorkJob As Boolean = False
         Private Property _Init As Boolean = False
         Private Property _ClientPro As CoinbaseProClient
+        Private Property _InUnauthorized As Boolean = False
+        Private Property _ShowInUnauthorizedMessage As Boolean = False
 
 
 
@@ -23,6 +25,9 @@ Namespace AreaCommon.Engines.Accounts
                 Dim newAccounts As New Dictionary(Of String, Models.Account.AccountModel)
                 Dim singleNewAccount As Models.Account.AccountModel
                 Dim pairKey As String = ""
+
+                _InUnauthorized = False
+                _ShowInUnauthorizedMessage = False
 
                 For Each account In accounts
                     If (account.Balance > 0) Then
@@ -55,7 +60,15 @@ Namespace AreaCommon.Engines.Accounts
 
                 AreaState.accounts = newAccounts
             Catch ex As Exception
-                MessageBox.Show("Problem during updateDataAccounts - " & ex.Message)
+                _InWorkJob = False
+
+                _InUnauthorized = (ex.Message Like "*Unauthorized*")
+
+                If Not _ShowInUnauthorizedMessage And _InUnauthorized Then
+                    _ShowInUnauthorizedMessage = True
+
+                    MessageBox.Show("Problem during updateDataAccounts - " & ex.Message)
+                End If
             End Try
         End Sub
 

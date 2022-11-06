@@ -4,6 +4,12 @@ Option Explicit On
 
 Namespace AreaCommon.Models.Order
 
+    Public Class PlaceOrderModel
+        Public pair As String
+        Public sizeround As Decimal
+        Public limitPriceRound As Decimal
+    End Class
+
     ''' <summary>
     ''' This class contain all element of an order
     ''' </summary>

@@ -39,7 +39,7 @@ Public Class AutomaticBotSetting
 
     Private Sub actionButton_Click(sender As Object, e As EventArgs) Handles actionButton.Click
         If Not AreaState.automaticBot.isActive Then
-            If (MessageBox.Show("Do you want to stop the automatic bot?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.No) Then
+            If (MessageBox.Show("Do you want to start the automatic bot?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.No) Then
                 Return
             End If
             If (AreaState.products.items.Count = 0) Then
@@ -67,6 +67,18 @@ Public Class AutomaticBotSetting
 
                 Return
             End If
+        Else
+            If (MessageBox.Show("Do you want to stop the automatic bot?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.No) Then
+                Return
+            End If
+
+            AreaState.automaticBot.isActive = False
+
+            AreaCommon.Engines.Bots.AutomaticBotModule.stop()
+
+            Close()
+
+            Return
         End If
     End Sub
 
