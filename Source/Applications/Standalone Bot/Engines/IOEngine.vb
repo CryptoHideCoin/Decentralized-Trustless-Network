@@ -26,6 +26,7 @@ Namespace AreaEngines.IO
         Public Property JournalPath As String = ""
         Public Property fundReservationPath As String = ""
         Public Property logPath As String = ""
+        Public Property tickerPath As String = ""
 
         Public Property newTenant As Boolean = False
 
@@ -94,6 +95,23 @@ Namespace AreaEngines.IO
 
         Public Function updateFundReservation() As Boolean
             Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Journal.FundReservationModel).save(fundReservationPath, AreaState.gainFund)
+        End Function
+
+        Public Function updateTickValue(ByVal pairName As String, ByRef tickData As AreaCommon.Models.Pair.TickInformation) As Boolean
+            Dim pathName As String = System.IO.Path.Combine(tickerPath, pairName & ".tick")
+
+            Return CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Pair.TickInformation).save(pathName, tickData)
+        End Function
+
+        Public Function readTickValue(ByVal pairName As String) As AreaCommon.Models.Pair.TickInformation
+            Dim pathName As String = System.IO.Path.Combine(tickerPath, pairName & ".tick")
+            Dim data As New AreaCommon.Models.Pair.TickInformation
+
+            If System.IO.File.Exists(pathName) Then
+                data = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Pair.TickInformation).read(pathName)
+            End If
+
+            Return data
         End Function
 
         ''' <summary>
@@ -338,6 +356,15 @@ Namespace AreaEngines.IO
             End If
 
             tenantRootPath = path
+
+            tickerPath = System.IO.Directory.GetParent(path).FullName
+            tickerPath = System.IO.Directory.GetParent(tickerPath).FullName
+            tickerPath = System.IO.Path.Combine(tickerPath, "Tickers")
+
+            If Not System.IO.Directory.Exists(tickerPath) Then
+                System.IO.Directory.CreateDirectory(tickerPath)
+            End If
+
             AreaState.defaultUserDataAccount.tenantName = System.IO.Path.GetFileName(path)
             orderRootPath = System.IO.Path.Combine(System.IO.Directory.GetParent(path).Parent.FullName, "Orders")
             configurationPath = System.IO.Path.Combine(path, "Configuration.json")

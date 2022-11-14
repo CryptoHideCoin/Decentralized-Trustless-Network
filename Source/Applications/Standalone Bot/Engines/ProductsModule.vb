@@ -26,14 +26,15 @@ Namespace AreaCommon.Engines.Currencies
                     If (product.QuoteCurrency.ToLower.CompareTo(quoteCurrency.ToLower) = 0) Then
 
                         If (AreaState.products.getCurrency(product.QuoteCurrency).header.key.Length = 0) Then
-                            With AreaState.products.addNew(product.BaseCurrency).header
-                                .quoteCurrency = product.QuoteCurrency
-                                .key = product.BaseCurrency
-                                .baseCurrency = .key
-                                .name = product.DisplayName
-                            End With
+                            If Not AreaState.products.exist(product.BaseCurrency) Then
+                                With AreaState.products.addNew(product.BaseCurrency).header
+                                    .quoteCurrency = product.QuoteCurrency
+                                    .key = product.BaseCurrency
+                                    .baseCurrency = .key
+                                    .name = product.DisplayName
+                                End With
+                            End If
                         End If
-
                     End If
                 Next
             Catch ex As Exception
@@ -83,6 +84,45 @@ Namespace AreaCommon.Engines.Currencies
             objWS.Start()
 
             Return True
+        End Function
+
+        Private Sub checkAndRemoveNullProduct(ByVal key As String)
+            Try
+                For Each product In AreaState.products.items
+                    If (product.header.key.CompareTo(key) = 0) Then
+                        If (product.userData.preference = Models.Products.ProductUserDataModel.PreferenceEnumeration.undefined) Then
+                            AreaState.products.items.Remove(product)
+
+                            Return
+                        End If
+                    End If
+                Next
+            Catch ex As Exception
+            End Try
+        End Sub
+
+        Public Function removeDuplicate() As Boolean
+            If Not _Init Then
+                Dim duplicateExist As Boolean = True
+
+                Do While duplicateExist
+                    duplicateExist = False
+
+                    Try
+                        For Each product In AreaState.products.items
+                            If (product.userData.preference <> Models.Products.ProductUserDataModel.PreferenceEnumeration.undefined) Then
+                                checkAndRemoveNullProduct(product.header.key)
+                            End If
+                        Next
+                    Catch ex As Exception
+                        duplicateExist = True
+                    End Try
+                Loop
+
+                Return True
+            Else
+                Return False
+            End If
         End Function
 
     End Module

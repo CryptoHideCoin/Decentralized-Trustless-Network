@@ -298,6 +298,10 @@ Namespace AreaCommon.Models.Products
             End Try
         End Function
 
+        Public Function exist(ByVal key As String) As Boolean
+            Return _Index.ContainsKey(key)
+        End Function
+
         Public Function getCurrency(ByVal key As String) As ProductModel
             If _Index.ContainsKey(key) Then
                 Return _Index(key)

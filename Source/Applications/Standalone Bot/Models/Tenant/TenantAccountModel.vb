@@ -31,6 +31,11 @@ Namespace AreaCommon.Models.User
 
         Public Property exchangeAccess As New ExchangeCredentialUserAccess
 
+        Public Property useSubscription As Boolean = False
+
+        Public Property readTickFromFile As Boolean = False
+        Public Property saveTickToFile As Boolean = False
+
         Public Property useVirtualAccount As Boolean = True
         Public Property initialBaseFund As Double = 0
         Public Property initialBaseFundCurrencyKey As String = ""

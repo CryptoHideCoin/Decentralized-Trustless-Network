@@ -45,9 +45,16 @@ Public Class PersonalData
             AreaState.defaultUserDataAccount.initialBaseFund = 0
         End If
 
+        AreaState.defaultUserDataAccount.useSubscription = useSubscriptionTicker.Checked
+
+        AreaState.defaultUserDataAccount.readTickFromFile = readTickerFromFileValue.Checked
+        AreaState.defaultUserDataAccount.saveTickToFile = saveTickerToFileValue.Checked
+
         DialogResult = DialogResult.OK
 
         AreaCommon.Engine.IO.updatePersonaData()
+        AreaCommon.Engines.Pairs.tryReset()
+
     End Sub
 
     Private Sub PersonalData_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -69,9 +76,14 @@ Public Class PersonalData
         If (AreaState.accounts.Count = 1) Then
             baseFundValue.Text = AreaState.accounts("USDT".ToLower()).amount
         End If
+
+        useSubscriptionTicker.Checked = AreaState.defaultUserDataAccount.useSubscription
+
+        saveTickerToFileValue.Checked = AreaState.defaultUserDataAccount.saveTickToFile
+        readTickerFromFileValue.Checked = AreaState.defaultUserDataAccount.readTickFromFile
     End Sub
 
-    Private Sub useVirtualAccount_CheckedChanged(sender As Object, e As EventArgs) Handles useVirtualAccount.CheckedChanged
+    Private Sub useVirtualAccount_CheckedChanged(sender As Object, e As EventArgs)
         baseFundLabel.Enabled = useVirtualAccount.Checked
         baseFundValue.Enabled = useVirtualAccount.Checked
 
@@ -80,4 +92,15 @@ Public Class PersonalData
         End If
     End Sub
 
+    Private Sub readTickerFromFileValue_CheckedChanged(sender As Object, e As EventArgs) Handles readTickerFromFileValue.CheckedChanged
+        If readTickerFromFileValue.Checked Then
+            saveTickerToFileValue.Checked = False
+        End If
+    End Sub
+
+    Private Sub saveTickerToFileValue_CheckedChanged(sender As Object, e As EventArgs) Handles saveTickerToFileValue.CheckedChanged
+        If saveTickerToFileValue.Checked Then
+            readTickerFromFileValue.Checked = False
+        End If
+    End Sub
 End Class

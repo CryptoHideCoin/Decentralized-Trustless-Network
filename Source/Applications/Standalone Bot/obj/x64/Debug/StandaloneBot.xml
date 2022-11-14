@@ -331,6 +331,11 @@ StandaloneBot
  This method provide to start service processor
  </summary>
 </member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Pairs.PairModule.startReaderProcessor">
+ <summary>
+ This method provide to start a reader processor
+ </summary>
+</member>
 <member name="M:StandaloneBot.AreaCommon.Engines.Pairs.PairModule.testPair(System.String)">
  <summary>
  This method provide to check if the pair exist

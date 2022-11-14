@@ -238,133 +238,150 @@ Public Class Manager
     End Sub
 
     Sub refreshDataCurrencies()
-        Dim rowItem As New ArrayList
+        Try
+            Dim rowItem As New ArrayList
 
-        If (AreaState.products.items.Count <> CurrenciesDataView.Rows.Count) Then
-            CurrenciesDataView.Rows.Clear()
+            If (AreaState.products.items.Count <> CurrenciesDataView.Rows.Count) Then
+                CurrenciesDataView.Rows.Clear()
 
-            For Each item In AreaState.products.items
-                rowItem.Clear()
+                For Each item In AreaState.products.items
+                    rowItem.Clear()
 
-                rowItem.Add(item.header.key)
-                rowItem.Add(item.header.name)
+                    rowItem.Add(item.header.key)
+                    rowItem.Add(item.header.name)
 
-                Select Case item.userData.preference
-                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.automaticDisabled : rowItem.Add("Automatic disabled")
-                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore : rowItem.Add("Ignore")
-                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.prefered : rowItem.Add("Prefered")
-                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.toWork : rowItem.Add("To work")
-                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.undefined : rowItem.Add("Undefined")
-                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.userOnly : rowItem.Add("User Only")
-                End Select
+                    Select Case item.userData.preference
+                        Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.automaticDisabled : rowItem.Add("Automatic disabled")
+                        Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore : rowItem.Add("Ignore")
+                        Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.prefered : rowItem.Add("Prefered")
+                        Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.toWork : rowItem.Add("To work")
+                        Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.undefined : rowItem.Add("Undefined")
+                        Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.userOnly : rowItem.Add("User Only")
+                    End Select
 
-                If item.userData.isCustomized Then
-                    rowItem.Add(1)
-                Else
-                    rowItem.Add(0)
-                End If
+                    If item.userData.isCustomized Then
+                        rowItem.Add(1)
+                    Else
+                        rowItem.Add(0)
+                    End If
 
-                If (item.currentValue = 0) Then
-                    rowItem.Add("---")
-                Else
-                    rowItem.Add(item.currentValue.ToString("#,##0.00000"))
-                End If
+                    If (item.currentValue = 0) Then
+                        rowItem.Add("---")
+                    Else
+                        rowItem.Add(item.currentValue.ToString("#,##0.00000"))
+                    End If
 
-                If (item.currentSpread = 0) Then
-                    rowItem.Add("---")
-                    rowItem.Add("---")
-                Else
-                    rowItem.Add(item.currentSpread.ToString("#,##0.00"))
-                    rowItem.Add(item.currentSpreadPerc.ToString("#,##0.00") & " %")
-                End If
+                    If (item.currentSpread = 0) Then
+                        rowItem.Add("---")
+                        rowItem.Add("---")
+                    Else
+                        rowItem.Add(item.currentSpread.ToString("#,##0.00"))
+                        rowItem.Add(item.currentSpreadPerc.ToString("#,##0.00") & " %")
+                    End If
 
-                If (item.maxTarget = 0) Then
-                    rowItem.Add("---")
-                Else
-                    rowItem.Add(item.maxTarget.ToString("#,##0.00000"))
-                End If
+                    If (item.maxTarget = 0) Then
+                        rowItem.Add("---")
+                    Else
+                        rowItem.Add(item.maxTarget.ToString("#,##0.00000"))
+                    End If
 
-                CurrenciesDataView.Rows.Add(rowItem.ToArray)
+                    CurrenciesDataView.Rows.Add(rowItem.ToArray)
 
-                If (item.currentSpread > 0) Then
-                    CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(6).Style.ForeColor = Color.DarkGreen
-                    CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(7).Style.ForeColor = Color.DarkGreen
-                ElseIf (item.currentSpread = 0) Then
-                    CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(6).Style.ForeColor = Color.Black
-                    CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(7).Style.ForeColor = Color.Black
-                Else
-                    CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(6).Style.ForeColor = Color.Red
-                    CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(7).Style.ForeColor = Color.Red
-                End If
-            Next
-        Else
-            Dim item As AreaCommon.Models.Products.ProductModel
+                    If (item.currentSpread > 0) Then
+                        CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(6).Style.ForeColor = Color.DarkGreen
+                        CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(7).Style.ForeColor = Color.DarkGreen
+                    ElseIf (item.currentSpread = 0) Then
+                        CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(6).Style.ForeColor = Color.Black
+                        CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(7).Style.ForeColor = Color.Black
+                    Else
+                        CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(6).Style.ForeColor = Color.Red
+                        CurrenciesDataView.Rows(CurrenciesDataView.Rows.Count - 1).Cells(7).Style.ForeColor = Color.Red
+                    End If
+                Next
+            Else
+                Dim item As AreaCommon.Models.Products.ProductModel
+                Dim changeValue As Boolean
 
-            For index As Integer = 0 To AreaState.products.items.Count - 1
-                item = AreaState.products.items(index)
+                For index As Integer = 0 To AreaState.products.items.Count - 1
+                    item = AreaState.products.items(index)
 
-                If Not AreaState.pairs.ContainsKey(item.pairID) Then
-                    If item.userData.isCustomized And
+                    If Not AreaState.pairs.ContainsKey(item.pairID) Then
+                        If item.userData.isCustomized And
                        (item.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore) And
                        (item.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.automaticDisabled) Then
-                        AreaState.getPairID(item.pairID)
+                            AreaState.getPairID(item.pairID)
+                        End If
+                    Else
+                        changeValue = (item.value.current.ToString("#,##0.00000").CompareTo(AreaState.pairs(item.pairID).currentValue.ToString("#,##0.00000")) <> 0)
+
+                        If changeValue Then
+                            item.value.current = AreaState.pairs(item.pairID).currentValue
+                        End If
+                        item.value.current = AreaState.pairs(item.pairID).currentValue
                     End If
-                Else
-                    item.value.current = AreaState.pairs(item.pairID).currentValue
-                End If
 
-                Select Case item.userData.preference
-                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore : CurrenciesDataView.Rows(index).Cells(2).Value = "Ignore"
-                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.prefered : CurrenciesDataView.Rows(index).Cells(2).Value = "Prefered"
-                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.toWork : CurrenciesDataView.Rows(index).Cells(2).Value = "To work"
-                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.undefined : CurrenciesDataView.Rows(index).Cells(2).Value = "Undefined"
-                    Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.userOnly : CurrenciesDataView.Rows(index).Cells(2).Value = "User Only"
-                End Select
+                    Select Case item.userData.preference
+                        Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore : CurrenciesDataView.Rows(index).Cells(2).Value = "Ignore"
+                        Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.prefered : CurrenciesDataView.Rows(index).Cells(2).Value = "Prefered"
+                        Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.toWork : CurrenciesDataView.Rows(index).Cells(2).Value = "To work"
+                        Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.undefined : CurrenciesDataView.Rows(index).Cells(2).Value = "Undefined"
+                        Case AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.userOnly : CurrenciesDataView.Rows(index).Cells(2).Value = "User Only"
+                    End Select
 
-                If item.userData.isCustomized Then
-                    CurrenciesDataView.Rows(index).Cells(3).Value = 1
-                Else
-                    CurrenciesDataView.Rows(index).Cells(3).Value = 0
-                End If
+                    If item.userData.isCustomized Then
+                        CurrenciesDataView.Rows(index).Cells(3).Value = 1
+                    Else
+                        CurrenciesDataView.Rows(index).Cells(3).Value = 0
+                    End If
 
-                If (item.value.current = 0) Or Not item.userData.isCustomized Then
-                    CurrenciesDataView.Rows(index).Cells(4).Value = "---"
-                Else
-                    CurrenciesDataView.Rows(index).Cells(4).Value = item.value.current.ToString("#,##0.00000")
-                End If
+                    If (item.value.current = 0) Or Not item.userData.isCustomized Then
+                        CurrenciesDataView.Rows(index).Cells(4).Value = "---"
+                    Else
+                        CurrenciesDataView.Rows(index).Cells(4).Value = item.value.current.ToString("#,##0.00000")
 
-                If (item.currentValue = 0) Then
-                    CurrenciesDataView.Rows(index).Cells(5).Value = "---"
-                Else
-                    CurrenciesDataView.Rows(index).Cells(5).Value = item.currentValue.ToString("#,##0.00000")
-                End If
+                        If changeValue Then
+                            If CurrenciesDataView.Rows(index).Cells(4).Style.BackColor = Color.LightGray Then
+                                CurrenciesDataView.Rows(index).Cells(4).Style.BackColor = Color.Yellow
+                            End If
+                        Else
+                            CurrenciesDataView.Rows(index).Cells(4).Style.BackColor = Color.LightGray
+                        End If
+                    End If
 
-                If (item.currentSpread = 0) Then
-                    CurrenciesDataView.Rows(index).Cells(6).Value = "---"
-                    CurrenciesDataView.Rows(index).Cells(7).Value = "---"
-                Else
-                    CurrenciesDataView.Rows(index).Cells(6).Value = item.currentSpread.ToString("#,##0.00")
-                    CurrenciesDataView.Rows(index).Cells(7).Value = item.currentSpreadPerc.ToString("#,##0.00") & " %"
-                End If
+                    If (item.currentValue = 0) Then
+                        CurrenciesDataView.Rows(index).Cells(5).Value = "---"
+                    Else
+                        CurrenciesDataView.Rows(index).Cells(5).Value = item.currentValue.ToString("#,##0.00000")
+                    End If
 
-                If (item.maxTarget = 0) Then
-                    CurrenciesDataView.Rows(index).Cells(8).Value = "---"
-                Else
-                    CurrenciesDataView.Rows(index).Cells(8).Value = item.maxTarget.ToString("#,##0.00000")
-                End If
+                    If (item.currentSpread = 0) Then
+                        CurrenciesDataView.Rows(index).Cells(6).Value = "---"
+                        CurrenciesDataView.Rows(index).Cells(7).Value = "---"
+                    Else
+                        CurrenciesDataView.Rows(index).Cells(6).Value = item.currentSpread.ToString("#,##0.00")
+                        CurrenciesDataView.Rows(index).Cells(7).Value = item.currentSpreadPerc.ToString("#,##0.00") & " %"
+                    End If
 
-                If (item.currentSpread > 0) Then
-                    CurrenciesDataView.Rows(index).Cells(6).Style.ForeColor = Color.DarkGreen
-                    CurrenciesDataView.Rows(index).Cells(7).Style.ForeColor = Color.DarkGreen
-                ElseIf (item.currentSpread = 0) Then
-                    CurrenciesDataView.Rows(index).Cells(6).Style.ForeColor = Color.Black
-                    CurrenciesDataView.Rows(index).Cells(7).Style.ForeColor = Color.Black
-                Else
-                    CurrenciesDataView.Rows(index).Cells(6).Style.ForeColor = Color.Red
-                    CurrenciesDataView.Rows(index).Cells(7).Style.ForeColor = Color.Red
-                End If
-            Next
-        End If
+                    If (item.maxTarget = 0) Then
+                        CurrenciesDataView.Rows(index).Cells(8).Value = "---"
+                    Else
+                        CurrenciesDataView.Rows(index).Cells(8).Value = item.maxTarget.ToString("#,##0.00000")
+                    End If
+
+                    If (item.currentSpread > 0) Then
+                        CurrenciesDataView.Rows(index).Cells(6).Style.ForeColor = Color.DarkGreen
+                        CurrenciesDataView.Rows(index).Cells(7).Style.ForeColor = Color.DarkGreen
+                    ElseIf (item.currentSpread = 0) Then
+                        CurrenciesDataView.Rows(index).Cells(6).Style.ForeColor = Color.Black
+                        CurrenciesDataView.Rows(index).Cells(7).Style.ForeColor = Color.Black
+                    Else
+                        CurrenciesDataView.Rows(index).Cells(6).Style.ForeColor = Color.Red
+                        CurrenciesDataView.Rows(index).Cells(7).Style.ForeColor = Color.Red
+                    End If
+                Next
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
 
     Sub refreshDailyOrderGrid()
@@ -672,6 +689,8 @@ Public Class Manager
         formatValue(freeFundSummaryValue, AreaState.journal.freeFund)
         formatValue(lockedFundSummaryValue, AreaState.journal.lockedFund)
 
+        formatValue(totalFundValue, AreaState.journal.currentFund + AreaState.journal.freeFund)
+
         formatValue(feeValue, AreaState.journal.totalFee)
         formatValue(volumeValue, AreaState.journal.totalVolume)
         If (AreaState.journal.numPages = 0) Then
@@ -753,6 +772,7 @@ Public Class Manager
         End If
 
         alertValue.Text = AreaState.journal.alert
+        lastSubscriptionTime.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaCommon.Engines.Pairs.lastSubscriptionTicker), True)
 
         Select Case AreaState.automaticBot.workAction
             Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.checkAllBuyDailyProduct : workActionValue.Text = "Check all buy daily"
@@ -1299,6 +1319,31 @@ Public Class Manager
             MessageBox.Show("Cannot convert into Virtual Mode", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
             Return
+        End If
+
+    End Sub
+
+    Private Sub RemoveCryptocurrenciesDuplicateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveCryptocurrenciesDuplicateToolStripMenuItem.Click
+        AreaCommon.Engines.Currencies.removeDuplicate()
+    End Sub
+
+    Private Sub SearchProductToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SearchProductToolStripMenuItem.Click
+        Dim textValue As String
+
+        textValue = InputBox("Insert product or part of this", "Product")
+
+        If (textValue.Trim.Length <> 0) Then
+            tabMain.SelectedIndex = 0
+
+            For index As Integer = 0 To AreaState.products.items.Count - 1
+                If CurrenciesDataView.Rows(index).Cells(0).Value.ToString.ToUpper.Contains(textValue.ToUpper) Then
+                    CurrenciesDataView.Rows(index).Selected = True
+
+                    CurrenciesDataView.Select()
+
+                    Return
+                End If
+            Next
         End If
 
     End Sub

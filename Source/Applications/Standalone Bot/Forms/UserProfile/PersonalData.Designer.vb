@@ -35,10 +35,15 @@ Partial Class PersonalData
         Me.apiURLValue = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.confirmButton = New System.Windows.Forms.Button()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.saveTickerToFileValue = New System.Windows.Forms.CheckBox()
+        Me.readTickerFromFileValue = New System.Windows.Forms.CheckBox()
+        Me.useSubscriptionTicker = New System.Windows.Forms.CheckBox()
+        Me.currencyBaseFundValue = New System.Windows.Forms.TextBox()
+        Me.useVirtualAccount = New System.Windows.Forms.CheckBox()
         Me.baseFundValue = New System.Windows.Forms.TextBox()
         Me.baseFundLabel = New System.Windows.Forms.Label()
-        Me.useVirtualAccount = New System.Windows.Forms.CheckBox()
-        Me.currencyBaseFundValue = New System.Windows.Forms.TextBox()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -149,61 +154,104 @@ Partial Class PersonalData
         '
         'confirmButton
         '
-        Me.confirmButton.Location = New System.Drawing.Point(299, 380)
+        Me.confirmButton.Location = New System.Drawing.Point(571, 288)
         Me.confirmButton.Name = "confirmButton"
         Me.confirmButton.Size = New System.Drawing.Size(75, 27)
         Me.confirmButton.TabIndex = 7
         Me.confirmButton.Text = "Confirm"
         Me.confirmButton.UseVisualStyleBackColor = True
         '
-        'baseFundValue
+        'GroupBox1
         '
-        Me.baseFundValue.Location = New System.Drawing.Point(33, 336)
-        Me.baseFundValue.Name = "baseFundValue"
-        Me.baseFundValue.Size = New System.Drawing.Size(279, 21)
-        Me.baseFundValue.TabIndex = 6
-        Me.baseFundValue.Text = "1522"
-        Me.baseFundValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.GroupBox1.Controls.Add(Me.saveTickerToFileValue)
+        Me.GroupBox1.Controls.Add(Me.readTickerFromFileValue)
+        Me.GroupBox1.Controls.Add(Me.useSubscriptionTicker)
+        Me.GroupBox1.Controls.Add(Me.currencyBaseFundValue)
+        Me.GroupBox1.Controls.Add(Me.useVirtualAccount)
+        Me.GroupBox1.Controls.Add(Me.baseFundValue)
+        Me.GroupBox1.Controls.Add(Me.baseFundLabel)
+        Me.GroupBox1.Location = New System.Drawing.Point(393, 13)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(253, 262)
+        Me.GroupBox1.TabIndex = 17
+        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.Text = "Options"
         '
-        'baseFundLabel
+        'saveTickerToFileValue
         '
-        Me.baseFundLabel.AutoSize = True
-        Me.baseFundLabel.Location = New System.Drawing.Point(33, 319)
-        Me.baseFundLabel.Name = "baseFundLabel"
-        Me.baseFundLabel.Size = New System.Drawing.Size(99, 13)
-        Me.baseFundLabel.TabIndex = 13
-        Me.baseFundLabel.Text = "Initial base fund"
+        Me.saveTickerToFileValue.AutoSize = True
+        Me.saveTickerToFileValue.Location = New System.Drawing.Point(18, 101)
+        Me.saveTickerToFileValue.Name = "saveTickerToFileValue"
+        Me.saveTickerToFileValue.Size = New System.Drawing.Size(127, 17)
+        Me.saveTickerToFileValue.TabIndex = 23
+        Me.saveTickerToFileValue.Text = "Save ticker to file"
+        Me.saveTickerToFileValue.UseVisualStyleBackColor = True
+        '
+        'readTickerFromFileValue
+        '
+        Me.readTickerFromFileValue.AutoSize = True
+        Me.readTickerFromFileValue.Location = New System.Drawing.Point(18, 56)
+        Me.readTickerFromFileValue.Name = "readTickerFromFileValue"
+        Me.readTickerFromFileValue.Size = New System.Drawing.Size(195, 17)
+        Me.readTickerFromFileValue.TabIndex = 22
+        Me.readTickerFromFileValue.Text = "Source Ticker: Read from file"
+        Me.readTickerFromFileValue.UseVisualStyleBackColor = True
+        '
+        'useSubscriptionTicker
+        '
+        Me.useSubscriptionTicker.AutoSize = True
+        Me.useSubscriptionTicker.Location = New System.Drawing.Point(18, 34)
+        Me.useSubscriptionTicker.Name = "useSubscriptionTicker"
+        Me.useSubscriptionTicker.Size = New System.Drawing.Size(209, 17)
+        Me.useSubscriptionTicker.TabIndex = 21
+        Me.useSubscriptionTicker.Text = "Source Ticker: Use Subscription"
+        Me.useSubscriptionTicker.UseVisualStyleBackColor = True
+        '
+        'currencyBaseFundValue
+        '
+        Me.currencyBaseFundValue.Location = New System.Drawing.Point(184, 225)
+        Me.currencyBaseFundValue.Name = "currencyBaseFundValue"
+        Me.currencyBaseFundValue.ReadOnly = True
+        Me.currencyBaseFundValue.Size = New System.Drawing.Size(55, 21)
+        Me.currencyBaseFundValue.TabIndex = 20
+        Me.currencyBaseFundValue.Text = "USDT"
         '
         'useVirtualAccount
         '
         Me.useVirtualAccount.AutoSize = True
         Me.useVirtualAccount.Checked = True
         Me.useVirtualAccount.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.useVirtualAccount.Location = New System.Drawing.Point(12, 294)
+        Me.useVirtualAccount.Location = New System.Drawing.Point(18, 183)
         Me.useVirtualAccount.Name = "useVirtualAccount"
         Me.useVirtualAccount.Size = New System.Drawing.Size(135, 17)
-        Me.useVirtualAccount.TabIndex = 14
+        Me.useVirtualAccount.TabIndex = 19
         Me.useVirtualAccount.Text = "Use virtual account"
         Me.useVirtualAccount.UseVisualStyleBackColor = True
         '
-        'currencyBaseFundValue
+        'baseFundValue
         '
-        Me.currencyBaseFundValue.Location = New System.Drawing.Point(318, 336)
-        Me.currencyBaseFundValue.Name = "currencyBaseFundValue"
-        Me.currencyBaseFundValue.ReadOnly = True
-        Me.currencyBaseFundValue.Size = New System.Drawing.Size(55, 21)
-        Me.currencyBaseFundValue.TabIndex = 15
-        Me.currencyBaseFundValue.Text = "USDT"
+        Me.baseFundValue.Location = New System.Drawing.Point(39, 225)
+        Me.baseFundValue.Name = "baseFundValue"
+        Me.baseFundValue.Size = New System.Drawing.Size(139, 21)
+        Me.baseFundValue.TabIndex = 17
+        Me.baseFundValue.Text = "1522"
+        Me.baseFundValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        '
+        'baseFundLabel
+        '
+        Me.baseFundLabel.AutoSize = True
+        Me.baseFundLabel.Location = New System.Drawing.Point(39, 208)
+        Me.baseFundLabel.Name = "baseFundLabel"
+        Me.baseFundLabel.Size = New System.Drawing.Size(99, 13)
+        Me.baseFundLabel.TabIndex = 18
+        Me.baseFundLabel.Text = "Initial base fund"
         '
         'PersonalData
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(385, 420)
-        Me.Controls.Add(Me.currencyBaseFundValue)
-        Me.Controls.Add(Me.useVirtualAccount)
-        Me.Controls.Add(Me.baseFundValue)
-        Me.Controls.Add(Me.baseFundLabel)
+        Me.ClientSize = New System.Drawing.Size(658, 326)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.confirmButton)
         Me.Controls.Add(Me.apiURLValue)
         Me.Controls.Add(Me.Label6)
@@ -220,12 +268,14 @@ Partial Class PersonalData
         Me.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
-        Me.MaximumSize = New System.Drawing.Size(401, 459)
+        Me.MaximumSize = New System.Drawing.Size(674, 365)
         Me.MinimizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(401, 459)
+        Me.MinimumSize = New System.Drawing.Size(674, 365)
         Me.Name = "PersonalData"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Data Configuration"
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -244,8 +294,12 @@ Partial Class PersonalData
     Friend WithEvents apiURLValue As TextBox
     Friend WithEvents Label6 As Label
     Friend WithEvents confirmButton As Button
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents useSubscriptionTicker As CheckBox
+    Friend WithEvents currencyBaseFundValue As TextBox
+    Friend WithEvents useVirtualAccount As CheckBox
     Friend WithEvents baseFundValue As TextBox
     Friend WithEvents baseFundLabel As Label
-    Friend WithEvents useVirtualAccount As CheckBox
-    Friend WithEvents currencyBaseFundValue As TextBox
+    Friend WithEvents saveTickerToFileValue As CheckBox
+    Friend WithEvents readTickerFromFileValue As CheckBox
 End Class
