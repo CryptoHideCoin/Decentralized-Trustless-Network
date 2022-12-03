@@ -96,6 +96,8 @@ Namespace AreaState
                 dataAccount.change = pairs(Id).currentValue
             End If
 
+            dataAccount.available = dataAccount.valueUSDT
+
             If (Val(dataAccount.amount.ToString("0.00000").Replace(",", ".")) <= 0) Then
                 accounts.Remove(currencyKey)
             End If
@@ -114,6 +116,27 @@ Namespace AreaState
                 dataAccount.change = value
                 dataAccount.valueUSDT = value * dataAccount.amount
             End If
+
+            Return True
+        End Function
+
+        Public Function checkOrders() As Boolean
+            For Each product In AreaState.products.items
+                For Each singleBuy In product.activity.buys
+                    If (singleBuy.orderState = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.placed) Or
+                       (singleBuy.orderState = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
+
+                        AreaCommon.Engines.Orders.startMonitorOrder(product.header.key, singleBuy.internalOrderId, singleBuy.orderNumber)
+
+                    End If
+                Next
+                If (product.activity.sell.orderState = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.placed) Or
+                   (product.activity.sell.orderState = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
+
+                    AreaCommon.Engines.Orders.startMonitorOrder(product.header.key, product.activity.sell.internalOrderId, product.activity.sell.orderNumber)
+
+                End If
+            Next
 
             Return True
         End Function

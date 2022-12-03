@@ -259,7 +259,7 @@ Namespace AreaEngines.IO
 
 
         Public Sub logAction(ByVal message As String)
-            System.IO.File.AppendAllText(logPath, message & vbCrLf)
+            'System.IO.File.AppendAllText(logPath, message & vbCrLf)
         End Sub
 
 

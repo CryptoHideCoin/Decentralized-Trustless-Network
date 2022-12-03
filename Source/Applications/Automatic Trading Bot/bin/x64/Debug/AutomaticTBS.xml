@@ -1,0 +1,567 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+AutomaticTBS
+</name>
+</assembly>
+<members>
+<member name="T:AutomaticTBS.My.Resources.Resources">
+<summary>
+  Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
+</summary>
+</member>
+<member name="P:AutomaticTBS.My.Resources.Resources.ResourceManager">
+<summary>
+  Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
+</summary>
+</member>
+<member name="P:AutomaticTBS.My.Resources.Resources.Culture">
+<summary>
+  Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
+  ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
+</summary>
+</member>
+<member name="M:AutomaticTBS.AreaState.Common.getPairID(System.String)">
+ <summary>
+ This method provide to get the pair id
+ </summary>
+ <param name="pair"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaState.Common.getPairName(System.Int32)">
+ <summary>
+ This method provide to get a pair name from a id
+ </summary>
+ <param name="pairId"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Accounts.AccountModule.startServiceProcessor">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Accounts.AccountModule.refresh">
+ <summary>
+ This method provide to refresh the data
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Accounts.AccountModule.start">
+ <summary>
+ This method provide to start an account job
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.AutomaticBotModule.startServiceBot">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.AutomaticBotModule.start">
+ <summary>
+ This method provide to start a Automatic bot job
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.AutomaticBotModule.stop">
+ <summary>
+ This method provide to stop the Automatic bot job
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.AutomaticBotModule.updateJournalCounter">
+ <summary>
+ This method provide to update journal counter
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.AutomaticBotModule.calculateFeeCost(System.Double)">
+ <summary>
+ This method provide to calculate fee cost of a transaction
+ </summary>
+ <param name="totalValue"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.AcquireEngine.completeReorderProducts">
+ <summary>
+ This method provide to determinate the trade list
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.startUp(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to start the bot
+ </summary>
+ <param name="bot"></param>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.switchTradeToClose(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@,AutomaticTBS.AreaCommon.Models.Bot.TradeModel@)">
+ <summary>
+ This method provide to move a trade from open to close
+ </summary>
+ <param name="botConfiguration"></param>
+ <param name="trade"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.pathOrderToDelivery(System.String)">
+ <summary>
+ This method provide to return a path order to delivery
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.pathOrderToPlaced(System.String)">
+ <summary>
+ This method provide to return a path order to placed
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.pathOrderToClose(System.String)">
+ <summary>
+ This method provide to return a path order to close
+ </summary>
+ <param name="completeName"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.createFileOrder(System.String,AutomaticTBS.AreaCommon.Models.Bot.BotOrderModel@)">
+ <summary>
+ This method provide to create file order
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.createFalseResponseOrder(AutomaticTBS.AreaCommon.Models.Bot.BotOrderModel@)">
+ <summary>
+ This method provide to create a false response order
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.startMonitorOrder(System.String,AutomaticTBS.AreaCommon.Models.Bot.BotOrderModel@)">
+ <summary>
+ This method provide to check if the order is in 
+ </summary>
+ <param name="botId"></param>
+ <param name="order"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.createNewSellOrder(System.Double,AutomaticTBS.AreaCommon.Models.Bot.TradeModel@)">
+ <summary>
+ This method provide to create new buy order
+ </summary>
+ <param name="spread"></param>
+ <param name="trade"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.manageOpenTrades(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to manage open trades
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.getOrderNumber(System.String)">
+ <summary>
+ This method provide to get an order number
+ </summary>
+ <param name="orderBuyId"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.manageOrderStatus(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to manage order status
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.createNewBuyOrder(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to create new buy order
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.haveFund(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to check if in the account is the fund
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.evaluateToBuy(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to evaluate to acquire another quantity
+ </summary>
+ <param name="item"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.actionBot(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to work with action bot
+ </summary>
+ <param name="item"></param>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.process(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to process a pair
+ </summary>
+ <param name="bot"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.startServiceBot">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.start">
+ <summary>
+ This method provide to start a pair job
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Watch.WatchModule.addProductOrder(AutomaticTBS.AreaCommon.Models.Products.ProductModel@)">
+ <summary>
+ This method provide to add a product into internal list
+ </summary>
+ <param name="product"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Watch.WatchModule.startServiceWatch">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Watch.WatchModule.start">
+ <summary>
+ This method provide to start a pair job
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Currencies.CurrenciesModule.startServiceProcessor">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Currencies.CurrenciesModule.start">
+ <summary>
+ This method provide to start an account job
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.calculateFeeCost(System.Double)">
+ <summary>
+ This method provide to calculate fee cost of a transaction
+ </summary>
+ <param name="totalValue"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.testConditionBuy(AutomaticTBS.AreaCommon.Models.Bot.BotOrderModel@,System.String)">
+ <summary>
+ This method provide to test if exist the condition to buy
+ </summary>
+ <param name="tradeBuy"></param>
+ <param name="pairKey"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.makeOrderBuy(System.String,System.String,AutomaticTBS.AreaCommon.Models.Bot.BotOrderModel@)">
+ <summary>
+ This method provide to make order to buy 
+ </summary>
+ <param name="botId"></param>
+ <param name="internalOrderId"></param>
+ <param name="tradeBuy"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.makeOrderSell(System.String,System.String,AutomaticTBS.AreaCommon.Models.Bot.BotOrderModel@)">
+ <summary>
+ This method provide to make and order to sell
+ </summary>
+ <param name="botId"></param>
+ <param name="internalOrderId"></param>
+ <param name="tradeSell"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.verify(AutomaticTBS.AreaCommon.Models.Order.SimplyOrderModel@)">
+ <summary>
+ This method provide to verify the order
+ </summary>
+ <param name="order"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.startServiceBot">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.closeAllOrders(System.String)">
+ <summary>
+ This method provide to check into all active orders the pair
+ </summary>
+ <param name="pair"></param>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.startMonitorOrder(System.String,System.String,System.String,System.Boolean)">
+ <summary>
+ This method provide to add a new order to the service
+ </summary>
+ <param name="productId"></param>
+ <param name="orderId"></param>
+ <param name="orderNumber"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.start">
+ <summary>
+ This method provide to start a pair job
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Pairs.PairModule.updateTick(AutomaticTBS.AreaCommon.Models.Pair.PairInformation)">
+ <summary>
+ This method provide to update tick pair
+ </summary>
+ <param name="pair"></param>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Pairs.PairModule.process(System.Int32)">
+ <summary>
+ This method provide to process a pair
+ </summary>
+ <param name="currentIndex"></param>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Pairs.PairModule.startServiceProcessor">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Pairs.PairModule.startReaderProcessor">
+ <summary>
+ This method provide to start a reader processor
+ </summary>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Pairs.PairModule.testPair(System.String)">
+ <summary>
+ This method provide to check if the pair exist
+ </summary>
+ <param name="value"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Pairs.PairModule.start">
+ <summary>
+ This method provide to start a pair job
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel">
+ <summary>
+ This method provide to collect all configuration parameter of a bot
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotOrderModel">
+ <summary>
+ This class contain all data relative an order bot
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.TradeModel">
+ <summary>
+ This class provide to 
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotDataModel">
+ <summary>
+ This class contain all data relative of a bot data
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotListModel">
+ <summary>
+ This class contain the bot list (GUID)
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotParametersModel">
+ <summary>
+ This class contain the bot parameter
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotParametersModel.HeaderBotConfiguration">
+ <summary>
+ This class contain the header general information of bot
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotParametersModel.FundBotConfiguration">
+ <summary>
+ This class contain the information reguard the source of investiment
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotParametersModel.FundBotConfiguration.ModeTradeConfigEnumeration">
+ <summary>
+ This enumeration contain the mode of trade configuration
+ 
+ undefined - Not define
+ continuousGain - use the job continuousely 
+ continuousGainAlternate - use the job continuousely alternate from one bot and another
+ DCA - Acquire in any moment during normal moment and the reduce market
+ onlyDeal - Only acquire in deal price
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotParametersModel.StartStopJobConfiguration">
+ <summary>
+ This class contain the information reguard the start of job
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotParametersModel.AcquisitionValueConfiguration">
+ <summary>
+ This information contain the information reguard the future acquire of currency
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotParametersModel.BearMarketConfiguration">
+ <summary>
+ This class contain the specification action during bear market
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotParametersModel.BullRunConfiguration">
+ <summary>
+ This class contain the specification action during bull run market
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Bot.BotParametersModel.BotActivityConfiguration">
+ <summary>
+ This class contain the information relative the activity of the bot
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Journal.FundReservationModel">
+ <summary>
+ This class contain all data relative of a fund reservation
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.User.UserDataPersonalModel">
+ <summary>
+ This class contain all data relative of a bot data
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.User.UserDataPersonalModel.ExchangeCredentialUserAccess">
+ <summary>
+ This class contain all information to access into user account exchange
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Order.SimplyOrderModel">
+ <summary>
+ This class contain all element of an order
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Pair.TickInformation">
+ <summary>
+ This class provide to tick information
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Pair.TrendData">
+ <summary>
+ This class contain all information of a trand of a pair
+ </summary>
+</member>
+<member name="T:AutomaticTBS.AreaCommon.Models.Pair.PairInformation">
+ <summary>
+ This class contain all information of a pair
+ </summary>
+</member>
+<member name="M:AutomaticTBS.AreaEngines.IO.IOEngine.checkAndMakeOrderPath">
+ <summary>
+ This method provide to create order path
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaEngines.IO.IOEngine.updatePersonaData">
+ <summary>
+ This method provide to update a user personal data of the tenant
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaEngines.IO.IOEngine.updateBotList">
+ <summary>
+ This method provide to update the botlist into the tenant
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaEngines.IO.IOEngine.updateSummary">
+ <summary>
+ This method provide to save into file the summary
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaEngines.IO.IOEngine.updateWallet">
+ <summary>
+ This method provide to update the data into the wallet
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaEngines.IO.IOEngine.updateTradeClose(System.String,AutomaticTBS.AreaCommon.Models.Bot.TradeModel@)">
+ <summary>
+ This method provide to update the trade close
+ </summary>
+ <param name="botId"></param>
+ <param name="data"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaEngines.IO.IOEngine.updateBotData(System.String,AutomaticTBS.AreaCommon.Models.Bot.BotDataModel@)">
+ <summary>
+ This method provide to save the data trade into the file
+ </summary>
+ <param name="botId"></param>
+ <param name="data"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaEngines.IO.IOEngine.getTradeClose(System.String,System.String)">
+ <summary>
+ This method provide to get a trade close from a db
+ </summary>
+ <param name="tradeId"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaEngines.IO.IOEngine.updateBotSetting(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@)">
+ <summary>
+ This method provide to update the bot settings
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaEngines.IO.IOEngine.archiveBot(System.String)">
+ <summary>
+ This method provide to archive Bot into DB
+ </summary>
+ <param name="id"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaEngines.IO.IOEngine.startMonitorOrder(System.String,System.String,System.String)">
+ <summary>
+ This method provide to add a new order to the service
+ </summary>
+ <param name="productId"></param>
+ <param name="orderId"></param>
+ <param name="orderNumber"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.AreaEngines.IO.IOEngine.init(System.String)">
+ <summary>
+ This method provide to initialize the engine
+ </summary>
+ <param name="path"></param>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.SettingsBot.timeStartIsMajor">
+ <summary>
+ This method provide to check is time is major of now
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.SettingsBot.extractStartConfiguration">
+ <summary>
+ This method provide to extract start configuration
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AutomaticTBS.SettingsBot.checkExist">
+ <summary>
+ This method provide to check the pair exist
+ </summary>
+</member>
+<member name="M:AutomaticTBS.Manager.openPersonalData">
+ <summary>
+ This method show the personal data
+ </summary>
+</member>
+</members>
+</doc>

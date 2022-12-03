@@ -124,8 +124,15 @@ Public Class Manager
                     With AreaState.accounts.ToList
                         For index As Integer = 0 To AreaState.accounts.ToList.Count - 1
                             accountsGridView.Rows(index).Cells(1).Value = .Item(index).Value.amount.ToString("#,##0.00000")
-                            accountsGridView.Rows(index).Cells(2).Value = .Item(index).Value.change.ToString("#,##0.00000")
-                            accountsGridView.Rows(index).Cells(3).Value = .Item(index).Value.valueUSDT.ToString("#,##0.00000")
+
+                            If (.Item(index).Value.change = 0) Then
+                                accountsGridView.Rows(index).Cells(2).Value = "Wait"
+                                accountsGridView.Rows(index).Cells(3).Value = "Wait"
+                            Else
+                                accountsGridView.Rows(index).Cells(2).Value = .Item(index).Value.change.ToString("#,##0.00000")
+                                accountsGridView.Rows(index).Cells(3).Value = .Item(index).Value.valueUSDT.ToString("#,##0.00000")
+                            End If
+
 
                             USDTValue += .Item(index).Value.valueUSDT
                         Next
@@ -819,9 +826,27 @@ Public Class Manager
         updateAllDataMarkets()
     End Sub
 
-    Private Sub manageVirtualAccount()
+    Private Sub manageAccount()
         If Not AreaState.defaultUserDataAccount.useVirtualAccount Then
             AreaCommon.Engines.Accounts.start()
+
+            AreaState.checkOrders()
+
+            Return
+
+            If AreaState.automaticBot.isActive Then
+                For Each item In AreaState.products.items
+                    If item.userData.isCustomized Then
+                        AreaState.automaticBot.isActive = True
+                        AreaState.automaticBot.lastWorkAction = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() - (24 * 60 * 60 * 1000) + 60000
+                        AreaState.automaticBot.workAction = AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.undefined
+
+                        AreaCommon.Engines.Bots.AutomaticBotModule.start()
+
+                        Return
+                    End If
+                Next
+            End If
         ElseIf (AreaState.accounts.Count = 1) Then
             AreaCommon.Engines.Accounts.stop()
 
@@ -874,7 +899,7 @@ Public Class Manager
             End If
         End If
 
-        manageVirtualAccount()
+        manageAccount()
     End Sub
 
     Private Sub marketDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles marketDataView.CellContentClick
@@ -903,6 +928,7 @@ Public Class Manager
 
         AreaState.closeApplication = True
 
+        AreaCommon.Engines.Accounts.stop()
         AreaCommon.Engines.Bots.BotModule.stop()
         AreaCommon.Engines.Bots.AutomaticBotModule.stop()
         AreaCommon.Engines.Pairs.stop()
@@ -1041,7 +1067,7 @@ Public Class Manager
             If tempForm.changeMode Then
                 initialUSDTValue.Text = ""
 
-                manageVirtualAccount()
+                manageAccount()
             Else
                 If (AreaState.accounts.Count = 1) Then
                     initialUSDTValue.Text = ""
@@ -1273,12 +1299,14 @@ Public Class Manager
     Private Sub processConvertAccountToUSDT(ByVal account As String)
         Dim keyPair As String = account & "-USDT"
 
-        AreaCommon.Engines.Orders.closeAllOrders(keyPair)
+        If AreaCommon.Engines.Orders.openOrders(keyPair).Result Then
+            AreaCommon.Engines.Orders.closeAllOrders(keyPair)
 
-        Threading.Thread.Sleep(5000)
+            Threading.Thread.Sleep(5000)
+        End If
 
         If Not AreaCommon.Engines.Orders.openOrders(keyPair).Result Then
-            AreaCommon.Engines.Orders.sellAll(keyPair, AreaState.accounts(account.ToLower & "-usdt").amount, AreaState.products.getCurrency(account).value.current)
+            AreaCommon.Engines.Orders.sellImmediatly(keyPair, AreaState.accounts(account.ToLower & "-usdt").amount)
         Else
             MessageBox.Show("Problem during close all orders", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
@@ -1300,24 +1328,23 @@ Public Class Manager
         If proceed Then
             account = accountsGridView.SelectedRows(0).Cells(0).Value
 
-            proceed = (account.ToUpper.CompareTo("USDT") <> 0)
+            proceed = (account.ToUpper.CompareTo("USDT") <> 0) Or (account.ToUpper.CompareTo("EUR") <> 0)
         Else
             MessageBox.Show("There are not row selected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-            Return
         End If
         If proceed Then
             proceed = Not AreaState.defaultUserDataAccount.useVirtualAccount
         Else
             MessageBox.Show("Cannot convert USDT into USDT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-            Return
+        End If
+        If proceed Then
+            proceed = (MessageBox.Show("Convert this currency in USDT ?", "Request", MessageBoxButtons.YesNo) = DialogResult.Yes)
+        Else
+            MessageBox.Show("Cannot convert into Virtual Mode", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
         If proceed Then
             processConvertAccountToUSDT(account)
         Else
-            MessageBox.Show("Cannot convert into Virtual Mode", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
             Return
         End If
 
@@ -1346,6 +1373,10 @@ Public Class Manager
             Next
         End If
 
+    End Sub
+
+    Private Sub ServiceMenu_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles ServiceMenu.Opening
+        ConvertToUSDTToolStripMenuItem.Enabled = Not AreaState.defaultUserDataAccount.useVirtualAccount
     End Sub
 
 End Class

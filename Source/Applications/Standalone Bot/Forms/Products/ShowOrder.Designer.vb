@@ -53,7 +53,7 @@ Partial Class ShowOrder
         Me.pairIDValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.pairIDValue.Location = New System.Drawing.Point(114, 97)
         Me.pairIDValue.Name = "pairIDValue"
-        Me.pairIDValue.Size = New System.Drawing.Size(244, 21)
+        Me.pairIDValue.Size = New System.Drawing.Size(259, 21)
         Me.pairIDValue.TabIndex = 17
         Me.pairIDValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -72,7 +72,7 @@ Partial Class ShowOrder
         Me.idOrderValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.idOrderValue.Location = New System.Drawing.Point(114, 23)
         Me.idOrderValue.Name = "idOrderValue"
-        Me.idOrderValue.Size = New System.Drawing.Size(244, 21)
+        Me.idOrderValue.Size = New System.Drawing.Size(259, 21)
         Me.idOrderValue.TabIndex = 15
         Me.idOrderValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -91,7 +91,7 @@ Partial Class ShowOrder
         Me.dateAcquireValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.dateAcquireValue.Location = New System.Drawing.Point(114, 142)
         Me.dateAcquireValue.Name = "dateAcquireValue"
-        Me.dateAcquireValue.Size = New System.Drawing.Size(244, 21)
+        Me.dateAcquireValue.Size = New System.Drawing.Size(259, 21)
         Me.dateAcquireValue.TabIndex = 19
         Me.dateAcquireValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -149,7 +149,7 @@ Partial Class ShowOrder
         Me.orderStateValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.orderStateValue.Location = New System.Drawing.Point(114, 323)
         Me.orderStateValue.Name = "orderStateValue"
-        Me.orderStateValue.Size = New System.Drawing.Size(244, 21)
+        Me.orderStateValue.Size = New System.Drawing.Size(259, 21)
         Me.orderStateValue.TabIndex = 25
         Me.orderStateValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -168,7 +168,7 @@ Partial Class ShowOrder
         Me.internalOrderIDValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.internalOrderIDValue.Location = New System.Drawing.Point(114, 53)
         Me.internalOrderIDValue.Name = "internalOrderIDValue"
-        Me.internalOrderIDValue.Size = New System.Drawing.Size(244, 21)
+        Me.internalOrderIDValue.Size = New System.Drawing.Size(259, 21)
         Me.internalOrderIDValue.TabIndex = 27
         Me.internalOrderIDValue.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
@@ -203,7 +203,7 @@ Partial Class ShowOrder
         Me.feeValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.feeValue.Location = New System.Drawing.Point(114, 281)
         Me.feeValue.Name = "feeValue"
-        Me.feeValue.Size = New System.Drawing.Size(244, 21)
+        Me.feeValue.Size = New System.Drawing.Size(259, 21)
         Me.feeValue.TabIndex = 31
         Me.feeValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
@@ -248,7 +248,7 @@ Partial Class ShowOrder
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(385, 357)
+        Me.ClientSize = New System.Drawing.Size(398, 357)
         Me.Controls.Add(Me.priceCurrencyLabel)
         Me.Controls.Add(Me.priceValue)
         Me.Controls.Add(Me.priceLabel)

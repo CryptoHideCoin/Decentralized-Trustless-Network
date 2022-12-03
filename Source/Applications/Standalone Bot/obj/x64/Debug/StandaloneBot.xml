@@ -41,6 +41,12 @@ StandaloneBot
  This method provide to start service processor
  </summary>
 </member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Accounts.AccountModule.refresh">
+ <summary>
+ This method provide to refresh the data
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:StandaloneBot.AreaCommon.Engines.Accounts.AccountModule.start">
  <summary>
  This method provide to start an account job
@@ -307,6 +313,15 @@ StandaloneBot
  This method provide to check into all active orders the pair
  </summary>
  <param name="pair"></param>
+</member>
+<member name="M:StandaloneBot.AreaCommon.Engines.Orders.OrderModule.startMonitorOrder(System.String,System.String,System.String,System.Boolean)">
+ <summary>
+ This method provide to add a new order to the service
+ </summary>
+ <param name="productId"></param>
+ <param name="orderId"></param>
+ <param name="orderNumber"></param>
+ <returns></returns>
 </member>
 <member name="M:StandaloneBot.AreaCommon.Engines.Orders.OrderModule.start">
  <summary>

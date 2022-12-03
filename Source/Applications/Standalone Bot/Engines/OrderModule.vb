@@ -115,6 +115,14 @@ Namespace AreaCommon.Engines.Orders
             Return True
         End Function
 
+        Public Sub deleteOrder(ByVal id As String)
+            If IsNothing(_ClientPro) Then
+                _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
+            End If
+
+            _ClientPro.Orders.CancelOrderByIdAsync(id)
+        End Sub
+
         ''' <summary>
         ''' This method provide to verify the order
         ''' </summary>
@@ -122,11 +130,10 @@ Namespace AreaCommon.Engines.Orders
         ''' <returns></returns>
         Private Function verify(ByRef order As Models.Order.SimplyOrderModel) As Boolean
             Try
-                Dim proceed As Boolean = True
 
-                If proceed Then
+                If AreaState.defaultUserDataAccount.useVirtualAccount Then
                     If (order.productId.Length > 0) Then
-                        Return AreaCommon.Engines.Bots.AutomaticBotModule.manageOrderProduct(order.productId, order.internalOrderId)
+                        Return AreaCommon.Engines.Bots.AutomaticBotModule.manageOrderProductVirtual(order.productId, order.internalOrderId)
                     ElseIf AreaState.bots.ContainsKey(order.botId) Then
                         For Each trade In AreaState.bots(order.botId).data.tradeOpen
                             If (trade.buy.id = order.internalOrderId) Then
@@ -148,7 +155,44 @@ Namespace AreaCommon.Engines.Orders
                             End If
                         Next
                     End If
+                Else
+                    If (order.nextTest) > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime() Then
+                        Return False
+                    End If
 
+                    order.firstVerify = False
+                    order.lastTest = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+
+                    If IsNothing(_ClientPro) Then
+                        _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
+                    End If
+
+                    Dim orders = _ClientPro.Orders.GetAllOrdersAsync("all", order.productId & "-USDT", 1)
+                    Dim removeOrder As Boolean = False
+
+                    If IsNothing(orders.Result) Then
+                        removeOrder = True
+                    ElseIf (orders.Result.Data.Count = 0) Then
+                        removeOrder = True
+                    Else
+                        For Each singleOrder In orders.Result.Data
+                            If singleOrder.Id.CompareTo(order.publicOrderId) = 0 Then
+                                If (singleOrder.Status.CompareTo("done") = 0) Then
+                                    AreaCommon.Engines.Bots.AutomaticBotModule.manageOrderProduct(order.productId, singleOrder, order)
+
+                                    AreaCommon.Engines.Accounts.refresh()
+
+                                    removeOrder = True
+                                End If
+                            End If
+                        Next
+                    End If
+
+                    If removeOrder Then
+                        AreaState.orders.Remove(order.internalOrderId)
+
+                        Return False
+                    End If
                 End If
 
                 Return True
@@ -234,45 +278,94 @@ Namespace AreaCommon.Engines.Orders
             End Try
         End Function
 
-        Private Async Sub placeLimitOrder(ByVal obj As Object)
-            Try
-                Dim order = Await _ClientPro.Orders.PlaceLimitOrderAsync(Coinbase.Pro.Models.OrderSide.Sell, obj.pair, obj.sizeround, obj.limitPriceRound, Coinbase.Pro.Models.TimeInForce.ImmediateOrCancel)
+        ''' <summary>
+        ''' This method provide to add a new order to the service
+        ''' </summary>
+        ''' <param name="productId"></param>
+        ''' <param name="orderId"></param>
+        ''' <param name="orderNumber"></param>
+        ''' <returns></returns>
+        Public Function startMonitorOrder(ByVal productId As String, ByVal orderId As String, ByVal orderNumber As String, Optional ByVal cancelProductInformation As Boolean = False) As Boolean
+            If Not AreaState.orders.ContainsKey(orderId) Then
+                Dim newSimply As New Models.Order.SimplyOrderModel
 
-                MessageBox.Show("Conversion in progress", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                newSimply.accountCredentials = AreaState.defaultUserDataAccount.exchangeAccess
+                newSimply.productId = productId
+                newSimply.internalOrderId = orderId
+                newSimply.publicOrderId = orderNumber
+                newSimply.cancelProductInformation = cancelProductInformation
+
+                AreaState.orders.Add(orderId, newSimply)
+
+                Orders.start()
+            End If
+
+            Return True
+        End Function
+
+        Public Async Sub placeOrder(ByVal typeLimit As Boolean, ByVal sideBuy As Boolean, ByVal pair As String, ByVal postOnlyValue As Boolean, ByVal data As Models.Products.ProductOrderModel, Optional ByVal cancelProductInformation As Boolean = False)
+            Dim order As Coinbase.Pro.Models.Order
+            Dim side As Coinbase.Pro.Models.OrderSide
+            Dim maxPrice As Double = 0
+
+            Try
+                If IsNothing(_ClientPro) Then
+                    _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
+                End If
+
+                If sideBuy Then
+                    side = Coinbase.Pro.Models.OrderSide.Buy
+                Else
+                    side = Coinbase.Pro.Models.OrderSide.Sell
+                End If
+
+                If True Then
+                    If postOnlyValue Then
+                        order = Await _ClientPro.Orders.PlaceLimitOrderAsync(side, pair, CDec(Math.Abs(data.amount)), CDec(data.maxPrice), Coinbase.Pro.Models.TimeInForce.GoodTillCanceled, True)
+                    Else
+                        order = Await _ClientPro.Orders.PlaceLimitOrderAsync(side, pair, CDec(Math.Abs(data.amount)), CDec(data.maxPrice), Coinbase.Pro.Models.TimeInForce.GoodTillCanceled, False)
+                    End If
+                Else
+                    If sideBuy Then
+                        order = Await _ClientPro.Orders.PlaceMarketOrderAsync(side, pair, CDec(data.tcoQuote), Coinbase.Pro.Models.AmountType.UseFunds)
+                    Else
+                        order = Await _ClientPro.Orders.PlaceMarketOrderAsync(side, pair, CDec(data.amount), Coinbase.Pro.Models.AmountType.UseSize)
+                    End If
+                End If
+
+                If Not IsNothing(order) Then
+                    data.orderNumber = order.Id
+
+                    startMonitorOrder(pair.Split("-")(0), data.internalOrderId, order.Id, cancelProductInformation)
+                Else
+                    MessageBox.Show($"no order return")
+                End If
             Catch ex As Exception
-                MessageBox.Show("Problem during sellAll - " & ex.Message)
+                MessageBox.Show($"Problem during placeOrder {side} {pair} {CDec(data.tcoQuote)} {CDec(Math.Abs(data.amount))} {CDec(data.maxPrice)} - " & ex.Message)
             End Try
+
         End Sub
 
-        Public Sub sellAll(ByVal pair As String, ByVal amount As Decimal, ByVal marketPlaceUSDT As Decimal)
+        Public Sub sellImmediatly(ByVal pair As String, ByVal amount As Decimal)
             If IsNothing(_ClientPro) Then
                 _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
             End If
 
-            Dim ordertype As String = "Sell"
-            Dim limitPrice As Decimal = marketPlaceUSDT - (marketPlaceUSDT * 2) / 100
-            Dim sizeround As Decimal = Decimal.Round(amount, 8)
-            Dim limitPriceRound As Decimal = Decimal.Round(limitPrice, 2)
+            Dim sellData As New Models.Products.ProductOrderModel
+            Dim product As Models.Products.ProductModel = AreaState.products.getCurrency(pair.Split("-")(0).ToUpper)
 
-            Try
-                Dim asynchThread As System.Threading.Thread
-                Dim placeObject As New Models.Order.PlaceOrderModel
+            sellData.internalOrderId = Guid.NewGuid.ToString
+            sellData.amount = roundBase(amount, product.header.baseIncrement, True)
+            sellData.maxPrice = roundBase(product.value.current - (product.value.current * 10 / 100), product.header.quoteIncrement, True)
+            sellData.tcoQuote = roundBase(sellData.maxPrice * sellData.amount, product.header.quoteIncrement, True)
 
-                placeObject.pair = pair
-                placeObject.limitPriceRound = limitPriceRound
-                placeObject.sizeround = sizeround
+            If (sellData.tcoQuote > product.header.minMarketFunds) Then
+                product.activity.sell = sellData
 
-                asynchThread = New System.Threading.Thread(AddressOf placeLimitOrder)
+                AreaCommon.Engines.Orders.placeOrder(product.header.limitOnly, False, product.pairID, product.header.postOnly, sellData, True)
 
-                asynchThread.Start(placeObject)
-            Catch ex As Exception
-            End Try
-
-
-            'Dim parameterData As Object
-            'Dim task As New Task(AddressOf placeLimitOrder, parameterData)
-
-            'task.Start()
+                sellData.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.sented
+            End If
 
         End Sub
 

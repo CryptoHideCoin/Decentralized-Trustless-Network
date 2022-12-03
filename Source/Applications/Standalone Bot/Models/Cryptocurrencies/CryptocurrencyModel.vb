@@ -12,6 +12,18 @@ Namespace AreaCommon.Models.Products
         Public Property baseCurrency As String = ""
         Public Property quoteCurrency As String = ""
 
+        Public Property baseIncrement As String = ""
+        Public Property quoteIncrement As String = ""
+
+        Public Property minMarketFunds As String = ""
+
+        Public Property postOnly As Boolean = False
+        Public Property limitOnly As Boolean = False
+
+        Public Property tradingDisabled As Boolean = False
+        Public Property status As String = ""
+        Public Property statusMessage As String = ""
+
     End Class
 
     Public Class ProductValueModel
@@ -78,6 +90,7 @@ Namespace AreaCommon.Models.Products
         Public Property orderNumber As String = ""
         Public Property amount As Double = 0
         Public Property tcoQuote As Double = 0
+        Public Property maxPrice As Double = 0
         Public Property feeCost As Double = 0
         Public Property orderState As Models.Bot.BotOrderModel.OrderStateEnumeration = Bot.BotOrderModel.OrderStateEnumeration.undefined
 
@@ -88,6 +101,8 @@ Namespace AreaCommon.Models.Products
 
     Public Class ProductActivityModel
 
+        Private m_dbl_Target As Double = 0
+
         Public Property inUse As Boolean = False
         Public Property dateLastCheck As Double = 0
 
@@ -95,10 +110,17 @@ Namespace AreaCommon.Models.Products
 
         Public Property sell As New ProductOrderModel
 
-        Public ReadOnly Property target As Double
+        Public Property target As Double
             Get
-                Return sell.tcoQuote
+                If AreaState.defaultUserDataAccount.useVirtualAccount Then
+                    Return sell.tcoQuote
+                Else
+                    Return m_dbl_Target
+                End If
             End Get
+            Set(value As Double)
+                m_dbl_Target = value
+            End Set
         End Property
 
         Public ReadOnly Property earn As Double
@@ -256,6 +278,8 @@ Namespace AreaCommon.Models.Products
 
                 activity.dateLastCheck = 0
                 activity.inUse = False
+
+                activity.target = 0
 
                 minTarget = 0
             End If

@@ -14,6 +14,8 @@ Namespace AreaCommon.Engines.Bots
         Private Property investProductNumber As Integer = 0
         Private Property startCheckBuy As Double = 0
 
+        Private Property _lastInternalWork As Double = 0
+
 
 
 
@@ -62,8 +64,12 @@ Namespace AreaCommon.Engines.Bots
             Return True
         End Function
 
-        Private Function removeOrder(ByVal internalOrderId As String) As Boolean
-            System.IO.File.Delete(pathOrderToPlaced(internalOrderId))
+        Private Function removeOrder(ByVal internalOrderId As String, ByVal orderId As String) As Boolean
+            If AreaState.defaultUserDataAccount.useVirtualAccount Then
+                System.IO.File.Delete(pathOrderToPlaced(internalOrderId))
+            Else
+                AreaCommon.Engines.Orders.deleteOrder(orderId)
+            End If
 
             AreaState.orders.Remove(internalOrderId)
 
@@ -76,7 +82,7 @@ Namespace AreaCommon.Engines.Bots
                     If product.userData.isCustomized Then
                         If (product.value.current * product.activity.totalAmount >= product.minTarget) And (product.minTarget > 0) Then
                             If (product.activity.sell.internalOrderId.Length > 0) Then
-                                removeOrder(product.activity.sell.internalOrderId)
+                                removeOrder(product.activity.sell.internalOrderId, product.activity.sell.orderNumber)
 
                                 product.activity.sell = New Models.Products.ProductOrderModel
                             End If
@@ -282,6 +288,8 @@ Namespace AreaCommon.Engines.Bots
         End Function
 
         Private Function completeInvestProducts(Optional ByVal ordinary As Boolean = True) As Boolean
+            Dim productName As String = ""
+
             Try
                 Dim buy As Models.Products.ProductOrderModel
                 Dim orderNumber As String = ""
@@ -293,45 +301,56 @@ Namespace AreaCommon.Engines.Bots
                 totalValue = fundAvailable()
 
                 For Each product In _InvestmentList
+
                     buy = New Models.Products.ProductOrderModel
 
                     orderValue = determinateOrderValue(product.value.bottomPercentPosition, AreaState.automaticBot.settings.unitStep)
 
-                    If (totalValue > orderValue) Then
+                    If (totalValue > orderValue) And (orderValue <> 0) Then
                         product.activity.inUse = True
                         product.activity.dateLastCheck = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
                         buy.dateAcquire = 0
                         buy.internalOrderId = Guid.NewGuid.ToString
                         buy.tcoQuote = orderValue
-                        buy.amount = orderValue / product.value.current
-                        buy.tcoQuote = product.value.current * buy.amount
+                        buy.amount = roundBase(orderValue / product.value.current, product.header.baseIncrement, True)
+                        buy.maxPrice = roundBase(product.value.current + (product.value.current * 2 / 100), product.header.quoteIncrement, True)
+                        buy.tcoQuote = roundBase(product.value.current * buy.amount, product.header.quoteIncrement, True)
 
-                        product.activity.buys.Add(buy)
+                        If (product.header.minMarketFunds <= buy.tcoQuote) Then
+                            product.activity.buys.Add(buy)
 
-                        createFileOrder(product.pairID, buy.internalOrderId, True, buy.amount, buy.tcoQuote)
+                            If AreaState.defaultUserDataAccount.useVirtualAccount Then
+                                createFileOrder(product.pairID, buy.internalOrderId, True, buy.amount, buy.tcoQuote)
+                            Else
+                                AreaCommon.Engines.Orders.placeOrder(product.header.limitOnly, True, product.pairID, product.header.postOnly, buy)
+                            End If
 
-                        buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.sented
+                            buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.sented
 
-                        createFalseResponseOrder(buy.internalOrderId, orderNumber)
+                            If AreaState.defaultUserDataAccount.useVirtualAccount Then
+                                createFalseResponseOrder(buy.internalOrderId, orderNumber)
 
-                        buy.orderNumber = orderNumber
-                        buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.placed
+                                buy.orderNumber = orderNumber
+                            End If
 
-                        startMonitorOrder(product.header.key, buy.internalOrderId, buy.orderNumber)
+                            buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.placed
 
-                        totalValue -= orderValue
+                            If AreaState.defaultUserDataAccount.useVirtualAccount Then
+                                startMonitorOrder(product.header.key, buy.internalOrderId, buy.orderNumber)
+                            End If
 
-                        investProductNumber += 1
-                    Else
-                        Return True
+                            totalValue -= orderValue
+
+                            investProductNumber += 1
+                        End If
                     End If
                 Next
-
-                Return True
             Catch ex As Exception
-                Return False
+                MessageBox.Show($"Problem during {productName} completeInvestProducts - " & ex.Message)
             End Try
+
+            Return True
         End Function
 
         Private Function createNewOrder(ByRef product As Models.Products.ProductModel, ByVal spread As Double, ByVal forceAmount As Double) As Boolean
@@ -339,6 +358,11 @@ Namespace AreaCommon.Engines.Bots
             Dim orderNumber As String = ""
             Dim orderValue As Double = 0
             Dim futureValue As Double = 0
+
+            If Not AreaState.defaultUserDataAccount.useVirtualAccount Then
+                ' da qui
+                Return True
+            End If
 
             order = New Models.Products.ProductOrderModel
 
@@ -418,6 +442,15 @@ Namespace AreaCommon.Engines.Bots
         End Function
 
         Private Function checkProductInformation() As Boolean
+
+            If (_lastInternalWork = 0) Then
+                _lastInternalWork = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+            ElseIf (_lastInternalWork + 60000 > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) Then
+                _lastInternalWork = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+            Else
+                Return False
+            End If
+
             For Each product In AreaState.products.items
                 If product.activity.inUse Then
 
@@ -454,6 +487,7 @@ Namespace AreaCommon.Engines.Bots
                             End If
                         End If
                     End If
+
                 End If
             Next
 
@@ -536,7 +570,7 @@ Namespace AreaCommon.Engines.Bots
                             AreaCommon.IO.logAction("Run completeInvestProducts")
 
                             If completeInvestProducts() Then
-                                AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.restockProducts
+                                AreaState.automaticBot.workAction = Models.Bot.BotAutomatic.WorkStateEnumeration.completeWork
                             End If
                         Case Models.Bot.BotAutomatic.WorkStateEnumeration.restockProducts
                             AreaCommon.IO.logAction("Run restockProducts")
@@ -691,13 +725,13 @@ Namespace AreaCommon.Engines.Bots
 
         Private Function fundAvailable() As Double
             If AreaState.gainFund.currentLockedFund > 0 Then
-                Return AreaState.accounts("USDT".ToLower()).valueUSDT - AreaState.gainFund.currentLockedFund
+                Return AreaState.accounts("USDT".ToLower()).available - AreaState.gainFund.currentLockedFund
             Else
-                Return AreaState.accounts("USDT".ToLower()).valueUSDT
+                Return AreaState.accounts("USDT".ToLower()).available
             End If
         End Function
 
-        Public Function manageOrderProduct(ByVal productId As String, ByVal internalOrderId As String) As Boolean
+        Public Function manageOrderProductVirtual(ByVal productId As String, ByVal internalOrderId As String) As Boolean
             Try
                 Dim product = AreaState.products.getCurrency(productId)
                 Dim repeat As Boolean = True
@@ -750,7 +784,7 @@ Namespace AreaCommon.Engines.Bots
 
                                         product.minTarget = product.activity.totalInvestment + (product.activity.totalInvestment * AreaState.automaticBot.settings.minDailyEarn / 100)
 
-                                        removeOrder(internalOrderId)
+                                        removeOrder(internalOrderId, buy.orderNumber)
 
                                         AreaState.addIntoAccount(product.pairID, (-1) * buy.tcoQuote, True)
                                         AreaState.addIntoAccount(product.pairID, buy.amount, False)
@@ -766,7 +800,7 @@ Namespace AreaCommon.Engines.Bots
                                         End If
 
                                         If (product.activity.sell.internalOrderId.Length > 0) Then
-                                            removeOrder(product.activity.sell.internalOrderId)
+                                            removeOrder(product.activity.sell.internalOrderId, product.activity.sell.orderNumber)
                                         End If
 
                                         createNewOrder(product, AreaState.automaticBot.settings.maxDailyEarn, product.activity.totalAmount())
@@ -817,10 +851,10 @@ Namespace AreaCommon.Engines.Bots
                         AreaState.journal.totalVolume += CDec(product.activity.sell.tcoQuote)
                         AreaState.journal.currentDayCounters.volumes += CDec(product.activity.sell.tcoQuote)
 
-                        removeOrder(internalOrderId)
+                        removeOrder(internalOrderId, product.activity.sell.orderNumber)
 
                         If (product.activity.openBuy.internalOrderId.Length > 0) Then
-                            removeOrder(product.activity.openBuy.internalOrderId)
+                            removeOrder(product.activity.openBuy.internalOrderId, product.activity.sell.orderNumber)
                         End If
 
                         AreaState.addIntoAccount(product.pairID, product.activity.sell.tcoQuote, True)
@@ -841,6 +875,87 @@ Namespace AreaCommon.Engines.Bots
                         Return False
                     End If
 
+                End If
+
+                Return True
+            Catch ex As Exception
+                MessageBox.Show("An error occurrent during manageOrderProductVirtual - " & ex.Message)
+
+                Return False
+            End Try
+        End Function
+
+        Public Function manageOrderProduct(ByVal productId As String, ByRef singleOrder As Coinbase.Pro.Models.Order, ByRef order As Models.Order.SimplyOrderModel) As Boolean
+            Try
+                Dim product = AreaState.products.getCurrency(order.productId)
+                Dim repeat As Boolean = True
+
+                If order.cancelProductInformation Then
+                    product.resetData()
+                End If
+
+                Do While repeat
+                    repeat = False
+
+                    Try
+                        For Each buy In product.activity.buys
+                            If (buy.internalOrderId.CompareTo(order.internalOrderId) = 0) Then
+
+                                buy.orderState = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
+                                buy.dateAcquire = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                                buy.amount = singleOrder.FilledSize
+                                buy.maxPrice = singleOrder.Price
+                                buy.tcoQuote = CDec(singleOrder.ExecutedValue) - singleOrder.FillFees
+                                buy.feeCost = singleOrder.FillFees
+
+                                AreaState.summary.totalFeesValue += CDec(buy.feeCost)
+                                AreaState.summary.totalVolumeValue += CDec(buy.tcoQuote)
+
+                                AreaState.journal.currentDayCounters.feePayed += buy.feeCost
+                                AreaState.journal.currentDayCounters.volumes += CDec(buy.tcoQuote)
+
+                                AreaState.journal.totalFee += buy.feeCost
+                                AreaState.journal.totalVolume += CDec(buy.tcoQuote)
+
+                                If (AreaState.automaticBot.workAction <> Models.Bot.BotAutomatic.WorkStateEnumeration.undefined) Then
+                                    AreaState.journal.currentDayCounters.dailyBuy += CDec(buy.tcoQuote)
+                                Else
+                                    AreaState.journal.currentDayCounters.extraBuy += CDec(buy.tcoQuote)
+                                End If
+
+                                With AreaState.journal.currentDayCounters.addNewTransaction()
+                                    .amount = buy.amount
+                                    .buy = True
+                                    .daily = (AreaState.automaticBot.workAction <> Models.Bot.BotAutomatic.WorkStateEnumeration.undefined)
+                                    .dateCompletate = buy.dateAcquire
+                                    .orderNumber = singleOrder.Id
+                                    .pairID = product.header.key
+                                    .value = buy.tcoQuote
+                                End With
+
+                                buy.tcoQuote += buy.feeCost
+
+                                product.minTarget = product.activity.totalInvestment + (product.activity.totalInvestment * AreaState.automaticBot.settings.minDailyEarn / 100)
+                                product.activity.target = product.activity.totalInvestment + (product.activity.totalInvestment * AreaState.automaticBot.settings.maxDailyEarn / 100)
+
+                                AreaState.journal.lastUpdate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+
+                                Return False
+                            End If
+                        Next
+                    Catch ex As Exception
+                        repeat = True
+                    End Try
+                Loop
+
+                If (product.activity.sell.internalOrderId.CompareTo(order.internalOrderId) = 0) Then
+                    If (product.activity.sell.amount = singleOrder.Size) Then
+
+                        ' l'ho trovato...
+
+                        ' ora aggiorno la posizione dell'ordine, prezzo d'acquisto e tutto il resto
+
+                    End If
                 End If
 
                 Return True

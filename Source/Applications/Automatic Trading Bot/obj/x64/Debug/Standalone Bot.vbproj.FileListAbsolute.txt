@@ -1,0 +1,40 @@
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\StandaloneBot.exe.config
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\StandaloneBot.exe
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\StandaloneBot.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\StandaloneBot.xml
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\CHCCommonLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\Coinbase.Pro.dll
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\Flurl.dll
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\Flurl.Http.dll
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\CHCModelsLibrary.dll
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\WebSocket4Net.dll
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\SuperSocket.ClientEngine.dll
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\Coinbase.Pro.xml
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.AutomaticBotSetting.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.DataPageDetail.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.DataPageList.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.About.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.DataBot.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.DataTrade.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.EditProduct.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.MultipleBot.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.ShowOrder.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.FundReservations.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.PersonalData.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.SelectPath.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.SettingsBot.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.Manager.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\Standalone Bot.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\Standalone Bot.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.exe
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.xml
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\StandaloneBot.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\obj\x64\Debug\Standalone Bot.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\System.ValueTuple.dll
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\Flurl.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\Flurl.xml
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\Flurl.Http.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\Newtonsoft.Json.xml
+E:\CryptoHideCoinDTN\Source\Applications\Standalone Bot\bin\x64\Debug\System.ValueTuple.xml
