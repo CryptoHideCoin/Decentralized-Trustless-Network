@@ -248,6 +248,7 @@ Partial Class Manager
         Me.valueUSDTColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ServiceMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ConvertToUSDTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ConvertAllToUSDTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.botPage = New System.Windows.Forms.TabPage()
         Me.numCloseBotsValue = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -301,7 +302,6 @@ Partial Class Manager
         Me.currentValue = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.timerMain = New System.Windows.Forms.Timer(Me.components)
         Me.updateBotsTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.ConvertAllToUSDTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.menuMain.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.currenciesPage.SuspendLayout()
@@ -674,9 +674,9 @@ Partial Class Manager
         Me.journalSplit.Panel1.Controls.Add(Me.warningButton)
         Me.journalSplit.Panel1.Controls.Add(Me.daySummaryButton)
         Me.journalSplit.Panel1.Controls.Add(Me.summaryButton)
-        Me.journalSplit.Panel1.Controls.Add(Me.warningPanel)
         Me.journalSplit.Panel1.Controls.Add(Me.SummaryPanel)
         Me.journalSplit.Panel1.Controls.Add(Me.dayPanel)
+        Me.journalSplit.Panel1.Controls.Add(Me.warningPanel)
         '
         'journalSplit.Panel2
         '
@@ -2220,6 +2220,12 @@ Partial Class Manager
         Me.ConvertToUSDTToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
         Me.ConvertToUSDTToolStripMenuItem.Text = "Convert to USDT"
         '
+        'ConvertAllToUSDTToolStripMenuItem
+        '
+        Me.ConvertAllToUSDTToolStripMenuItem.Name = "ConvertAllToUSDTToolStripMenuItem"
+        Me.ConvertAllToUSDTToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
+        Me.ConvertAllToUSDTToolStripMenuItem.Text = "Convert all to USDT"
+        '
         'botPage
         '
         Me.botPage.Controls.Add(Me.numCloseBotsValue)
@@ -2827,12 +2833,6 @@ Partial Class Manager
         '
         Me.updateBotsTimer.Enabled = True
         Me.updateBotsTimer.Interval = 1000
-        '
-        'ConvertAllToUSDTToolStripMenuItem
-        '
-        Me.ConvertAllToUSDTToolStripMenuItem.Name = "ConvertAllToUSDTToolStripMenuItem"
-        Me.ConvertAllToUSDTToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
-        Me.ConvertAllToUSDTToolStripMenuItem.Text = "Convert all to USDT"
         '
         'Manager
         '

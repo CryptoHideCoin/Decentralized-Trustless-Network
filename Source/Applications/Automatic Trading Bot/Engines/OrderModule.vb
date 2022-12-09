@@ -321,9 +321,13 @@ Namespace AreaCommon.Engines.Orders
 
                 order = Await _ClientPro.Orders.PlaceLimitOrderAsync(side, product.pairID, CDec(Math.Abs(data.amount)), CDec(data.maxPrice), Coinbase.Pro.Models.TimeInForce.GoodTillCanceled, product.header.postOnly)
 
+                addLogOperation($"placeOrder {product.header.key}")
+
                 If Not IsNothing(order) Then
                     data.id = order.Id
                     data.state = Models.Bot.BotOrderModel.OrderStateEnumeration.placed
+
+                    addLogOperation($"placeOrder {order.Id}")
 
                     Watch.addProductOrder(product)
                 End If

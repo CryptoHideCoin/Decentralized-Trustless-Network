@@ -7,7 +7,7 @@ Namespace AreaCommon.Engines.Bots
 
     Public Class BlockStartEngine
 
-        Private Const _TimeToSell = 5 * 60 * 10
+        Private Const _TimeToSell = 5 * 60 * 1000
 
 
         Public Function updateJournalCounter() As Boolean
@@ -75,23 +75,26 @@ Namespace AreaCommon.Engines.Bots
 
         Public Function [run]() As Boolean
             Dim proceed As Boolean = True
-            Dim startTimer As Double
 
             If proceed Then
                 Threading.Thread.Sleep(50)
+
+                addLogOperation("BlockStartEngine.run - OpenNewJournal")
 
                 proceed = openNewJournal()
             End If
             If proceed Then
                 Threading.Thread.Sleep(50)
 
+                addLogOperation("BlockStartEngine.run - Change in block sell")
+
                 proceed = changeInBlockSell()
             End If
             If proceed Then
-                startTimer = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                addLogOperation("BlockStartEngine.run - Wait to close run")
 
-                Do While ((startTimer + _TimeToSell) > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
-                    Threading.Thread.Sleep(50)
+                Do While (Watch.productOrderCount > 0)
+                    Threading.Thread.Sleep(100)
                 Loop
             End If
 

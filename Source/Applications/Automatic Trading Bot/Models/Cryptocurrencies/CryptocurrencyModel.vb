@@ -103,6 +103,7 @@ Namespace AreaCommon.Models.Products
         Private m_dbl_Target As Double = 0
 
         Public Property dateLastCheck As Double = 0
+        Public Property fastCheck As Boolean = False
 
         Public Property buys As New List(Of ProductOrderModel)
 
@@ -196,6 +197,18 @@ Namespace AreaCommon.Models.Products
             End Get
         End Property
 
+        Public Function removeOpenBuy() As Boolean
+            For Each buy In buys
+                If (buy.state <> Bot.BotOrderModel.OrderStateEnumeration.filled) Then
+                    buys.Remove(buy)
+
+                    Return True
+                End If
+            Next
+
+            Return False
+        End Function
+
         Public ReadOnly Property lastBuy() As ProductOrderModel
             Get
                 Dim lastOrderBuy As New ProductOrderModel
@@ -212,6 +225,22 @@ Namespace AreaCommon.Models.Products
             End Get
         End Property
 
+        Public ReadOnly Property firstBuy() As ProductOrderModel
+            Get
+                Dim firstOrderBuy As New ProductOrderModel
+
+                For Each buy In buys
+                    If (buy.state = Bot.BotOrderModel.OrderStateEnumeration.filled) Then
+                        If (firstOrderBuy.dateAcquire > buy.dateAcquire) Or (firstOrderBuy.dateAcquire = 0) Then
+                            firstOrderBuy = buy
+                        End If
+                    End If
+                Next
+
+                Return firstOrderBuy
+            End Get
+        End Property
+
     End Class
 
 
@@ -221,6 +250,8 @@ Namespace AreaCommon.Models.Products
         Public Property value As New ProductValueModel
         Public Property userData As New ProductUserDataModel
         Public Property activity As New ProductActivityModel
+        Public Property useMaxTarget As Boolean = True
+        Public Property applyTargetPercent As Double = 0
 
         Public ReadOnly Property pairID As String
             Get
@@ -265,11 +296,18 @@ Namespace AreaCommon.Models.Products
                 Return False
             Else
                 perc = currentSpread / activity.totalInvestment * 100
+
                 If (perc) < 0 Then
                     perc = Math.Abs(perc)
+
+                    If (perc = 0) Then
+                        Return False
+                    Else
+                        Return (perc >= dealPercValue)
+                    End If
                 End If
 
-                Return (perc < dealPercValue)
+                Return False
             End If
         End Function
 
@@ -286,8 +324,20 @@ Namespace AreaCommon.Models.Products
             Return True
         End Function
 
-        Public Function changeTargetInMin() As Boolean
-            activity.target = activity.totalInvestment + (activity.totalInvestment * AreaState.automaticBot.settings.minDailyEarn / 100)
+        Private Function numWeekStock() As Integer
+            Return Math.Truncate((activity.lastBuy.dateAcquire - activity.firstBuy.dateAcquire) / 1000 / 60 / 24 / 7)
+        End Function
+
+        Public Function switchTarget(Optional ByVal useMax As Boolean = True) As Boolean
+            useMaxTarget = useMax
+
+            If useMax Then
+                applyTargetPercent = AreaState.automaticBot.settings.maxDailyEarn + numWeekStock()
+            Else
+                applyTargetPercent = AreaState.automaticBot.settings.minDailyEarn + numWeekStock()
+            End If
+
+            activity.target = activity.totalInvestment + (activity.totalInvestment * applyTargetPercent / 100)
 
             If (activity.sell.state = Bot.BotOrderModel.OrderStateEnumeration.placed) Then
                 Dim clientPro As Coinbase.Pro.CoinbaseProClient
@@ -295,21 +345,11 @@ Namespace AreaCommon.Models.Products
                 clientPro = New Coinbase.Pro.CoinbaseProClient(New Coinbase.Pro.Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
 
                 clientPro.Orders.CancelOrderByIdAsync(activity.sell.id)
-
-                AreaState.orders.Remove(activity.sell.id)
             End If
 
-            Return True
-        End Function
+            Engines.Watch.removeProductTrade(Me)
 
-        Public Function changeTargetInMax() As Boolean
-            activity.target = activity.totalInvestment + (activity.totalInvestment * AreaState.automaticBot.settings.maxDailyEarn / 100)
-
-            If (activity.sell.state = Bot.BotOrderModel.OrderStateEnumeration.placed) Then
-                AreaState.orders.Remove(activity.sell.id)
-            End If
-
-            Return True
+            Return Engines.Watch.addProductTrade(Me)
         End Function
 
     End Class

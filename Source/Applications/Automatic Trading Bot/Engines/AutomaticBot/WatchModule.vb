@@ -10,8 +10,6 @@ Namespace AreaCommon.Engines.Watch
 
     Module WatchModule
 
-        Private Const c_Second As Double = 1000
-
         Private Property _InWorkJob As Boolean = False
         Private Property _ClientPro As CoinbaseProClient
 
@@ -35,6 +33,8 @@ Namespace AreaCommon.Engines.Watch
                 _OrderInMonitor.Add(product)
                 _IndexOrderInMonitor.Add(product.header.key, product.header.key)
 
+                addLogOperation($"addProductOrder - {product.header.key} - count = {_OrderInMonitor.Count}")
+
                 If Not _InWorkJob Then
                     start()
                 End If
@@ -43,11 +43,29 @@ Namespace AreaCommon.Engines.Watch
             Return True
         End Function
 
+        Public ReadOnly Property productOrder(ByVal index As Integer) As Models.Products.ProductModel
+            Get
+                If index <= _OrderInMonitor.Count Then
+                    Return _OrderInMonitor(index)
+                Else
+                    Return New Models.Products.ProductModel
+                End If
+            End Get
+        End Property
+
+        Public ReadOnly Property productOrderCount() As Integer
+            Get
+                Return _OrderInMonitor.Count
+            End Get
+        End Property
+
         Public Function removeProductOrder(ByRef product As Models.Products.ProductModel) As Boolean
             Try
                 If _IndexOrderInMonitor.ContainsKey(product.header.key) Then
                     _IndexOrderInMonitor.Remove(product.header.key)
                     _OrderInMonitor.Remove(product)
+
+                    addLogOperation($"removeProductOrder - {product.header.key} - count = {_OrderInMonitor.Count}")
                 End If
             Catch ex As Exception
             End Try
@@ -63,6 +81,8 @@ Namespace AreaCommon.Engines.Watch
                 _TradeInMonitor.Add(product)
                 _IndexTradeInMonitor.Add(product.header.key, product.header.key)
 
+                addLogOperation($"addProductTrade - {product.header.key} - count = {_TradeInMonitor.Count}")
+
                 If Not _InWorkJob Then
                     start()
                 End If
@@ -76,9 +96,40 @@ Namespace AreaCommon.Engines.Watch
                 If _IndexTradeInMonitor.ContainsKey(product.header.key) Then
                     _IndexTradeInMonitor.Remove(product.header.key)
                     _TradeInMonitor.Remove(product)
+
+                    addLogOperation($"removeProductTrade - {product.header.key} - count = {_TradeInMonitor.Count}")
                 End If
             Catch ex As Exception
             End Try
+
+            Return True
+        End Function
+
+        Public ReadOnly Property productTrade(ByVal index As Integer) As Models.Products.ProductModel
+            Get
+                If index <= _TradeInMonitor.Count Then
+                    Return _TradeInMonitor(index)
+                Else
+                    Return New Models.Products.ProductModel
+                End If
+            End Get
+        End Property
+
+        Public ReadOnly Property productTradeCount() As Integer
+            Get
+                Return _TradeInMonitor.Count
+            End Get
+        End Property
+
+
+        Public Function cancelOrderProduct(ByVal id As String) As Boolean
+            If IsNothing(_ClientPro) Then
+                _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
+            End If
+
+            _ClientPro.Orders.CancelOrderByIdAsync(id)
+
+            addLogOperation($"cancelOrderProduct - {id}")
 
             Return True
         End Function
@@ -87,9 +138,7 @@ Namespace AreaCommon.Engines.Watch
         Private Function updateCounterInformation(ByRef product As AreaCommon.Models.Products.ProductModel, ByRef orderData As Models.Products.ProductOrderModel, Optional ByRef sideBuy As Boolean = False) As Boolean
             AreaState.journal.currentBlockCounters.feePayed += orderData.feeCost
             AreaState.journal.currentBlockCounters.volumes += CDec(orderData.tcoQuote)
-
-            AreaState.journal.totalFee += orderData.feeCost
-            AreaState.journal.totalVolume += CDec(orderData.tcoQuote)
+            AreaState.journal.currentBlockCounters.increase += product.activity.earn
 
             If sideBuy Then
                 If (Bots.currentPhase = Bots.AutomaticBotModule.WorkerPhaseEnum.buyTime) Then
@@ -98,17 +147,21 @@ Namespace AreaCommon.Engines.Watch
                     AreaState.journal.currentBlockCounters.extraBuy += CDec(orderData.tcoQuote)
                 End If
             Else
-                If (Bots.currentPhase = Bots.AutomaticBotModule.WorkerPhaseEnum.buyTime) Then
-                    AreaState.journal.currentBlockCounters.dailySell += CDec(orderData.tcoQuote)
-                Else
+                If (Bots.currentPhase = Bots.AutomaticBotModule.WorkerPhaseEnum.workTime) Then
                     AreaState.journal.currentBlockCounters.extraSell += CDec(orderData.tcoQuote)
+                Else
+                    AreaState.journal.currentBlockCounters.dailySell += CDec(orderData.tcoQuote)
                 End If
             End If
+
+            AreaState.summary.totalFeesValue += CDec(product.activity.sell.feeCost)
+            AreaState.summary.totalVolumeValue += CDec(product.activity.sell.tcoQuote)
+            AreaState.summary.increaseValue += product.activity.earn
 
             With AreaState.journal.currentBlockCounters.addNewTransaction()
                 .amount = orderData.amount
                 .buy = sideBuy
-                .daily = (AreaState.automaticBot.workAction <> Models.Bot.BotAutomatic.WorkStateEnumeration.undefined)
+                .daily = (Bots.currentPhase = Bots.AutomaticBotModule.WorkerPhaseEnum.buyTime)
                 .dateCompletate = orderData.dateAcquire
                 .orderNumber = orderData.id
                 .pairID = product.header.key
@@ -120,13 +173,28 @@ Namespace AreaCommon.Engines.Watch
             Return True
         End Function
 
-        Private Function checkOrderTrade(ByRef product As AreaCommon.Models.Products.ProductModel) As Boolean
+        Public Function checkOrderTrade(ByRef product As AreaCommon.Models.Products.ProductModel) As Boolean
             Dim managePosition As Boolean = False
             Dim orders As Coinbase.Pro.Models.PagedResponse(Of Coinbase.Pro.Models.Order)
             Dim buy As Models.Products.ProductOrderModel
+            Dim thisTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+            Dim proceed As Boolean = True
 
-            If ((product.activity.dateLastCheck <> 0) And (product.activity.dateLastCheck + 60000 < CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())) Then
-                product.activity.dateLastCheck = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+            If (product.activity.dateLastCheck = 0) Then
+                product.activity.dateLastCheck = product.activity.dateLastCheck = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+            End If
+
+            If proceed Then
+                If product.activity.fastCheck Then
+                    proceed = (product.activity.dateLastCheck + 15000 < thisTime)
+                Else
+                    proceed = (product.activity.dateLastCheck + 60000 < thisTime)
+                End If
+            End If
+            If proceed Then
+                product.activity.dateLastCheck = thisTime
+
+                addLogOperation($"checkOrderTrade - {product.header.key}")
 
                 If IsNothing(_ClientPro) Then
                     _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
@@ -139,6 +207,8 @@ Namespace AreaCommon.Engines.Watch
                 If (buy.id.Length > 0) Then
                     If Not IsNothing(orders) Then
                         If (orders.Data.Count = 0) Then
+                            addLogOperation($"checkOrderTrade - removeProductOrder {product.header.key}")
+
                             removeProductOrder(product)
 
                             Return True
@@ -150,23 +220,58 @@ Namespace AreaCommon.Engines.Watch
                     If managePosition Then
                         For Each singleOrder In orders.Data
                             If (singleOrder.Id.CompareTo(buy.id) = 0) Then
-                                removeProductOrder(product)
+                                addLogOperation($"checkOrderTrade - orderFund {product.header.key} - orderId - {singleOrder.Id}")
 
-                                If (singleOrder.Status.CompareTo("done") = 0) And (singleOrder.DoneReason.ToUpper.CompareTo("filled".ToUpper) = 0) Then
+                                If proceed Then
+                                    proceed = (singleOrder.Status.CompareTo("done") = 0)
+                                End If
+                                If proceed Then
+                                    proceed = Not IsNothing(singleOrder.DoneReason)
+                                End If
+                                If proceed Then
+                                    proceed = (singleOrder.DoneReason.ToUpper.CompareTo("filled".ToUpper) = 0)
+                                End If
+
+                                If proceed Then
+                                    addLogOperation($"checkOrderTrade - removeProductOrder {product.header.key} - orderId - {singleOrder.Id}")
+
+                                    removeProductOrder(product)
+
                                     buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
                                     buy.dateAcquire = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(singleOrder.DoneAt.Value.UtcDateTime)
                                     buy.amount = singleOrder.FilledSize
                                     buy.feeCost = singleOrder.FillFees
                                     buy.tcoQuote = (singleOrder.Price * buy.amount)
 
-                                    product.changeTargetInMax()
+                                    product.switchTarget()
 
                                     addProductTrade(product)
                                     updateCounterInformation(product, buy, True)
+
+                                    product.activity.fastCheck = False
+
+                                    Return False
                                 Else
-                                    _ClientPro.Orders.CancelOrderByIdAsync(buy.id)
-                                    removeProductOrder(product)
+                                    If Not product.activity.fastCheck Then
+                                        addLogOperation($"checkOrderTrade - after fastCheck {product.header.key} - orderId - {singleOrder.Id}")
+
+                                        removeProductOrder(product)
+
+                                        _ClientPro.Orders.CancelOrderByIdAsync(buy.id)
+
+                                        product.activity.openBuy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.undefined
+
+                                        product.activity.removeOpenBuy()
+                                    Else
+                                        addLogOperation($"checkOrderTrade - fastCheck {product.header.key} - orderId - {singleOrder.Id}")
+
+                                        product.activity.fastCheck = False
+                                    End If
+
+                                    Return False
                                 End If
+
+                                addLogOperation($"checkOrderTrade - reset dateLastCheck {product.header.key} - orderId - {singleOrder.Id}")
 
                                 product.activity.dateLastCheck = 0
 
@@ -180,10 +285,14 @@ Namespace AreaCommon.Engines.Watch
 
                 With product.activity.sell
                     If (.id.Length = 0) Then
+                        addLogOperation($"checkOrderTrade - sellId=0 {product.header.key}")
+
                         Return True
                     Else
                         If Not IsNothing(orders) Then
                             If (orders.Data.Count = 0) Then
+                                addLogOperation($"checkOrderTrade - orders.data.count=0")
+
                                 product.activity.sell = New Models.Products.ProductOrderModel
 
                                 removeProductOrder(product)
@@ -196,18 +305,43 @@ Namespace AreaCommon.Engines.Watch
                             If managePosition Then
                                 For Each singleOrder In orders.Data
                                     If (singleOrder.Id.CompareTo(.id) = 0) Then
-                                        removeProductOrder(product)
+                                        addLogOperation($"checkOrderTrade - Sell {product.header.key} for singleOrder {singleOrder.Id}")
 
-                                        If (singleOrder.Status.CompareTo("done") = 0) Then
+                                        proceed = True
+
+                                        If proceed Then
+                                            proceed = (singleOrder.Status.CompareTo("done") = 0)
+                                        End If
+                                        If proceed Then
+                                            proceed = Not IsNothing(singleOrder.DoneReason)
+                                        End If
+                                        If proceed Then
+                                            proceed = (singleOrder.DoneReason.ToUpper.CompareTo("filled".ToUpper) = 0)
+                                        End If
+
+                                        If proceed Then
+                                            addLogOperation($"checkOrderTrade - removeProductOrder {product.header.key}")
+
+                                            removeProductOrder(product)
+
                                             .state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled
 
+                                            .dateAcquire = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime(singleOrder.DoneAt.Value.UtcDateTime)
+                                            .amount = singleOrder.FilledSize
+                                            .feeCost = singleOrder.FillFees
+                                            .tcoQuote = (singleOrder.Price * .amount)
+
                                             updateCounterInformation(product, product.activity.sell)
-                                        ElseIf .cancelSellIfSlow Then
+
+                                            product.resetData()
+                                        ElseIf (singleOrder.Status.CompareTo("done") <> 0) And .cancelSellIfSlow Then
+                                            addLogOperation($"checkOrderTrade - CancelOrderByIdAsync {product.header.key}")
+
                                             _ClientPro.Orders.CancelOrderByIdAsync(.id)
                                             removeProductOrder(product)
                                         End If
 
-                                        Return True
+                                        Return False
                                     End If
                                 Next
                             End If
@@ -230,18 +364,23 @@ Namespace AreaCommon.Engines.Watch
 
                     With product.activity.sell
                         If (orderValue <> 0) Then
-                            .dateAcquire = 0
-                            .tcoQuote = orderValue
-                            .amount = roundBase(orderValue / product.value.current, product.header.baseIncrement, True)
-                            .maxPrice = roundBase(product.value.current + (product.value.current / 100), product.header.quoteIncrement, True)
-                            .tcoQuote = roundBase(product.value.current * .amount, product.header.quoteIncrement, True)
+                            addLogOperation($"checkTrade - {product.header.key} with orderValue={orderValue}")
 
-                            Orders.placeOrder(product, product.activity.sell)
+                            .dateAcquire = 0
+
+                            .amount = roundBase(product.activity.totalAmount, product.header.baseIncrement, True)
+                            .maxPrice = roundBase(product.activity.target / product.activity.totalAmount, product.header.quoteIncrement, True)
+                            .tcoQuote = roundBase(product.activity.target, product.header.quoteIncrement, True)
+
+                            Orders.placeOrder(product, product.activity.sell, False)
 
                             .state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented
                         End If
-
                     End With
+
+                    removeProductTrade(product)
+
+                    Return False
                 End If
 
             End If

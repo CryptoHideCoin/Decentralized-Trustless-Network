@@ -120,27 +120,6 @@ Namespace AreaState
             Return True
         End Function
 
-        Public Function checkOrders() As Boolean
-            For Each product In AreaState.products.items
-                For Each singleBuy In product.activity.buys
-                    If (singleBuy.state = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.placed) Or
-                       (singleBuy.state = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
-
-                        'AreaCommon.Engines.Orders.startMonitorOrder(product.header.key, singleBuy.internalOrderId, singleBuy.orderNumber)
-
-                    End If
-                Next
-                If (product.activity.sell.state = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.placed) Or
-                   (product.activity.sell.state = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
-
-                    'AreaCommon.Engines.Orders.startMonitorOrder(product.header.key, product.activity.sell.internalOrderId, product.activity.sell.orderNumber)
-
-                End If
-            Next
-
-            Return True
-        End Function
-
     End Module
 
 End Namespace

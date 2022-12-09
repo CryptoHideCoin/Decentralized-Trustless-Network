@@ -54,7 +54,7 @@ Namespace AreaCommon.Models.Journal
                 If (earn = 0) Or (currentFund = 0) Then
                     Return 0
                 Else
-                    Return (earn / currentFund * 100)
+                    Return (earn / (initialFundFree + initialFundManage) * 100)
                 End If
             End Get
         End Property
@@ -153,6 +153,7 @@ Namespace AreaCommon.Models.Journal
                     Return "0"
                 Else
                     Return ((AreaState.journal.totalEarn + AreaState.journal.currentBlockCounters.earn) / (AreaState.journal.currentBlockCounters.initialFundFree + AreaState.journal.currentBlockCounters.initialFundManage) * 100).ToString("#,##0.00")
+                    'Return ((AreaState.journal.totalEarn + AreaState.journal.currentBlockCounters.earn / AreaState.journal.currentBlockCounters.initialFundFree) * 100).ToString("#,##0.00")
                 End If
             End Get
         End Property

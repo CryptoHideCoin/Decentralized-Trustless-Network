@@ -781,16 +781,7 @@ Public Class Manager
         alertValue.Text = AreaState.journal.alert
         lastSubscriptionTime.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaCommon.Engines.Pairs.lastSubscriptionTicker), True)
 
-        Select Case AreaState.automaticBot.workAction
-            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.checkAllBuyDailyProduct : workActionValue.Text = "Check all buy daily"
-            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.checkAllSellDailyProduct : workActionValue.Text = "Check all sell daily"
-            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.completeRemoveActiveProducts : workActionValue.Text = "Complete remove active products"
-            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.completeWork : workActionValue.Text = "Complete work"
-            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.investProducts : workActionValue.Text = "Invest work"
-            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.reorderProducts : workActionValue.Text = "Reorder products"
-            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.restockProducts : workActionValue.Text = "Restock products"
-            Case AreaCommon.Models.Bot.BotAutomatic.WorkStateEnumeration.undefined : workActionValue.Text = ""
-        End Select
+        workActionValue.Text = AreaCommon.Engines.Bots.AutomaticBotModule.currentPhase.ToString()
 
         refreshDailyOrderGrid()
     End Sub
@@ -830,8 +821,6 @@ Public Class Manager
         If Not AreaState.defaultUserDataAccount.useVirtualAccount Then
             AreaCommon.Engines.Accounts.start()
 
-            AreaState.checkOrders()
-
             Return
 
             If AreaState.automaticBot.isActive Then
@@ -865,7 +854,7 @@ Public Class Manager
 
         AreaState.addIntoAccount("USDT", 1522, False)
 
-        Me.Text = $"Simulator - Standard Bot - rel.{Application.ProductVersion}"
+        Me.Text = $"Automatic Bot - rel.{Application.ProductVersion}"
 
         If (Environment.GetCommandLineArgs.Count = 1) Then
             Dim selectorPath As New SelectPath
@@ -900,6 +889,8 @@ Public Class Manager
         End If
 
         manageAccount()
+
+        AreaState.automaticBot.isActive = False
     End Sub
 
     Private Sub marketDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles marketDataView.CellContentClick
@@ -1309,7 +1300,9 @@ Public Class Manager
         End If
 
         If Not AreaCommon.Engines.Orders.openOrders(keyPair).Result Then
-            AreaCommon.Engines.Orders.sellImmediatly(keyPair, AreaState.accounts(account.ToLower & "-usdt").amount)
+            AreaCommon.Engines.Orders.sellImmediatly(keyPair, AreaState.accounts(keyPair.ToLower).amount)
+
+            AreaState.products.getCurrency(keyPair.Split("-")(0).ToUpper).resetData()
         Else
             MessageBox.Show("Problem during close all orders", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
@@ -1335,10 +1328,17 @@ Public Class Manager
         Else
             MessageBox.Show("There are not row selected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
+
+        If proceed Then
+            proceed = (Val(accountsGridView.SelectedRows(0).Cells(1).Value) > 0)
+        Else
+            MessageBox.Show("Cannot convert USDT into USDT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
         If proceed Then
             proceed = Not AreaState.defaultUserDataAccount.useVirtualAccount
         Else
-            MessageBox.Show("Cannot convert USDT into USDT", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("The amount is zero", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
         If proceed Then
             proceed = (MessageBox.Show("Convert this currency in USDT ?", "Request", MessageBoxButtons.YesNo) = DialogResult.Yes)
@@ -1347,10 +1347,7 @@ Public Class Manager
         End If
         If proceed Then
             processConvertAccountToUSDT(account)
-        Else
-            Return
         End If
-
     End Sub
 
     Private Sub RemoveCryptocurrenciesDuplicateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveCryptocurrenciesDuplicateToolStripMenuItem.Click
@@ -1375,11 +1372,113 @@ Public Class Manager
                 End If
             Next
         End If
-
     End Sub
 
     Private Sub ServiceMenu_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles ServiceMenu.Opening
         ConvertToUSDTToolStripMenuItem.Enabled = Not AreaState.defaultUserDataAccount.useVirtualAccount
+        ConvertAllToUSDTToolStripMenuItem.Enabled = ConvertToUSDTToolStripMenuItem.Enabled
+    End Sub
+
+    Private Sub ConvertAllToUSDTToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConvertAllToUSDTToolStripMenuItem.Click
+        Dim proceed As Boolean = True
+        Dim account As String = ""
+
+        If proceed Then
+            proceed = Not AreaState.defaultUserDataAccount.useVirtualAccount
+        End If
+        If proceed Then
+            proceed = (accountsGridView.Rows.Count > 0)
+        End If
+        If proceed Then
+            proceed = (accountsGridView.Rows.Count > 0)
+        End If
+        If proceed Then
+            Dim index As Integer = 0
+            Dim max As Integer = accountsGridView.Rows.Count - 1
+
+            For index = 0 To max
+                account = accountsGridView.Rows(index).Cells(0).Value
+
+                If (account.ToUpper.CompareTo("USDT") <> 0) And (account.ToUpper.CompareTo("EUR") <> 0) Then
+                    processConvertAccountToUSDT(account)
+                End If
+            Next
+        End If
+
+    End Sub
+
+    Private Sub LogToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogToolStripMenuItem.Click
+        If (AreaCommon.Engine.logOperation.Length > 0) Then
+            Clipboard.SetText(AreaCommon.Engine.logOperation)
+
+            AreaCommon.Engine.logOperation = ""
+
+            MessageBox.Show("Log copy in clipboard")
+        End If
+    End Sub
+
+    Private Sub refreshButton_Click(sender As Object, e As EventArgs) Handles refreshButton.Click
+
+        Dim rowItem As New ArrayList
+        Dim repeat As Boolean = True
+        Dim index As Integer
+        Dim totValue As Integer
+        Dim data As AreaCommon.Models.Products.ProductModel
+
+        Do While repeat
+            repeat = False
+
+            Try
+                watchPlaceOrderGrid.Rows.Clear()
+
+                totValue = AreaCommon.Engines.Watch.productOrderCount - 1
+
+                For index = 0 To totValue
+                    data = AreaCommon.Engines.Watch.productOrder(index)
+
+                    rowItem.Clear()
+
+                    rowItem.Add(data.header.name)
+
+                    rowItem.Add(CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(data.activity.dateLastCheck), True))
+                    rowItem.Add(data.activity.openBuy.id)
+                    rowItem.Add(data.activity.sell.id)
+
+                    watchPlaceOrderGrid.Rows.Add(rowItem.ToArray)
+                Next
+            Catch ex As Exception
+                repeat = True
+            End Try
+        Loop
+
+        repeat = True
+
+        Do While repeat
+            repeat = False
+
+            Try
+                watchProductPlaceGrid.Rows.Clear()
+
+                totValue = AreaCommon.Engines.Watch.productTradeCount - 1
+
+                For index = 0 To totValue
+                    data = AreaCommon.Engines.Watch.productTrade(index)
+
+                    rowItem.Clear()
+
+                    rowItem.Add(data.header.name)
+                    rowItem.Add(CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(data.activity.dateLastCheck), True))
+                    rowItem.Add(data.currentTarget)
+                    rowItem.Add(data.currentTargetReached)
+                    rowItem.Add(data.activity.sell.id)
+
+                    watchProductPlaceGrid.Rows.Add(rowItem.ToArray)
+                Next
+            Catch ex As Exception
+                repeat = True
+            End Try
+        Loop
+
     End Sub
 
 End Class
