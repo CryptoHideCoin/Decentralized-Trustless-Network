@@ -200,6 +200,7 @@
     <Compile Include="Engines\AccountModule.vb" />
     <Compile Include="Engines\AutomaticBot\AutomaticBotModule.vb" />
     <Compile Include="Engines\AutomaticBot\AcquireEngine.vb" />
+    <Compile Include="Engines\AutomaticBot\InternalList.vb" />
     <Compile Include="Engines\AutomaticBot\WatchModule.vb" />
     <Compile Include="Engines\BotModule.vb" />
     <Compile Include="Engines\ProductsModule.vb" />

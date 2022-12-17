@@ -11,20 +11,9 @@ Namespace AreaCommon
         Public Property logOperation As String = ""
         Public Property IO As New AreaEngines.IO.IOEngine
 
-        Private Property lastGetLogOperation As Double
-
-
 
         Public Sub addLogOperation(ByVal value As String)
-            If (value.Length = 0) Then
-                lastGetLogOperation = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
-            ElseIf (lastGetLogOperation + 12 * 60 * 60 * 1000 < CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime) Then
-                logOperation = ""
-
-                lastGetLogOperation = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
-            End If
-
-            logOperation += Now.ToString() & "   " & value & vbNewLine
+            IO.logAction(Now.ToUniversalTime.ToString & "    " & value)
         End Sub
 
     End Module

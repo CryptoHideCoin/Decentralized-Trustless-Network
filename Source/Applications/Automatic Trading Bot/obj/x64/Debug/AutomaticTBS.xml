@@ -76,13 +76,6 @@ AutomaticTBS
  </summary>
  <returns></returns>
 </member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.AutomaticBotModule.calculateFeeCost(System.Double)">
- <summary>
- This method provide to calculate fee cost of a transaction
- </summary>
- <param name="totalValue"></param>
- <returns></returns>
-</member>
 <member name="M:AutomaticTBS.AreaCommon.Engines.Bots.AcquireEngine.completeReorderProducts">
  <summary>
  This method provide to determinate the trade list
@@ -136,27 +129,12 @@ AutomaticTBS
  <param name="item"></param>
  <returns></returns>
 </member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.startMonitorOrder(System.String,AutomaticTBS.AreaCommon.Models.Bot.BotOrderModel@)">
- <summary>
- This method provide to check if the order is in 
- </summary>
- <param name="botId"></param>
- <param name="order"></param>
- <returns></returns>
-</member>
 <member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.createNewSellOrder(System.Double,AutomaticTBS.AreaCommon.Models.Bot.TradeModel@)">
  <summary>
  This method provide to create new buy order
  </summary>
  <param name="spread"></param>
  <param name="trade"></param>
- <returns></returns>
-</member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.manageOpenTrades(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@)">
- <summary>
- This method provide to manage open trades
- </summary>
- <param name="item"></param>
  <returns></returns>
 </member>
 <member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.getOrderNumber(System.String)">
@@ -194,37 +172,6 @@ AutomaticTBS
  <param name="item"></param>
  <returns></returns>
 </member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.actionBot(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@)">
- <summary>
- This method provide to work with action bot
- </summary>
- <param name="item"></param>
-</member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.process(AutomaticTBS.AreaCommon.Models.Bot.BotConfigurationsModel@)">
- <summary>
- This method provide to process a pair
- </summary>
- <param name="bot"></param>
- <returns></returns>
-</member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.startServiceBot">
- <summary>
- This method provide to start service processor
- </summary>
-</member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Bots.BotModule.start">
- <summary>
- This method provide to start a pair job
- </summary>
- <returns></returns>
-</member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Watch.WatchModule.addProductOrder(AutomaticTBS.AreaCommon.Models.Products.ProductModel@)">
- <summary>
- This method provide to add a product into internal list
- </summary>
- <param name="product"></param>
- <returns></returns>
-</member>
 <member name="M:AutomaticTBS.AreaCommon.Engines.Watch.WatchModule.startServiceWatch">
  <summary>
  This method provide to start service processor
@@ -247,71 +194,11 @@ AutomaticTBS
  </summary>
  <returns></returns>
 </member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.calculateFeeCost(System.Double)">
- <summary>
- This method provide to calculate fee cost of a transaction
- </summary>
- <param name="totalValue"></param>
- <returns></returns>
-</member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.testConditionBuy(AutomaticTBS.AreaCommon.Models.Bot.BotOrderModel@,System.String)">
- <summary>
- This method provide to test if exist the condition to buy
- </summary>
- <param name="tradeBuy"></param>
- <param name="pairKey"></param>
- <returns></returns>
-</member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.makeOrderBuy(System.String,System.String,AutomaticTBS.AreaCommon.Models.Bot.BotOrderModel@)">
- <summary>
- This method provide to make order to buy 
- </summary>
- <param name="botId"></param>
- <param name="internalOrderId"></param>
- <param name="tradeBuy"></param>
- <returns></returns>
-</member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.makeOrderSell(System.String,System.String,AutomaticTBS.AreaCommon.Models.Bot.BotOrderModel@)">
- <summary>
- This method provide to make and order to sell
- </summary>
- <param name="botId"></param>
- <param name="internalOrderId"></param>
- <param name="tradeSell"></param>
- <returns></returns>
-</member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.verify(AutomaticTBS.AreaCommon.Models.Order.SimplyOrderModel@)">
- <summary>
- This method provide to verify the order
- </summary>
- <param name="order"></param>
- <returns></returns>
-</member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.startServiceBot">
- <summary>
- This method provide to start service processor
- </summary>
-</member>
 <member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.closeAllOrders(System.String)">
  <summary>
  This method provide to check into all active orders the pair
  </summary>
  <param name="pair"></param>
-</member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.startMonitorOrder(System.String,System.String,System.String,System.Boolean)">
- <summary>
- This method provide to add a new order to the service
- </summary>
- <param name="productId"></param>
- <param name="orderId"></param>
- <param name="orderNumber"></param>
- <returns></returns>
-</member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.start">
- <summary>
- This method provide to start a pair job
- </summary>
- <returns></returns>
 </member>
 <member name="M:AutomaticTBS.AreaCommon.Engines.Pairs.PairModule.updateTick(AutomaticTBS.AreaCommon.Models.Pair.PairInformation)">
  <summary>

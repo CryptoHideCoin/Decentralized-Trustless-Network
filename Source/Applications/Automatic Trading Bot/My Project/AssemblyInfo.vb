@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Controllare i valori degli attributi degli assembly
 
-<Assembly: AssemblyTitle("AutomaticTBS")>
-<Assembly: AssemblyDescription("Automatic Trading Bot System")>
+<Assembly: AssemblyTitle("Automatic Trading Bot System")>
+<Assembly: AssemblyDescription("Software automatic trading bot system")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("Automatic Bot")>
+<Assembly: AssemblyProduct("Automatic Bot System")>
 <Assembly: AssemblyCopyright("Copyright ©  2022")>
 <Assembly: AssemblyTrademark("")>
 
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' usando l'asterisco '*' come illustrato di seguito:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("0.30.0.0")>
-<Assembly: AssemblyFileVersion("0.30.0.0")>
+<Assembly: AssemblyVersion("0.37.0.0")>
+<Assembly: AssemblyFileVersion("0.37.0.0")>

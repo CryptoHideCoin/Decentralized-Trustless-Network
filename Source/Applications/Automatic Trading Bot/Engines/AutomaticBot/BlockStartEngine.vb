@@ -32,12 +32,6 @@ Namespace AreaCommon.Engines.Bots
             AreaState.journal.currentBlockCounters.freeFund = AreaState.journal.freeFund
             AreaState.journal.currentBlockCounters.target = AreaState.journal.futureGain
 
-            If (AreaState.journal.currentFund = 0) Then
-                AreaState.journal.currentBlockCounters.earn = 0
-            Else
-                AreaState.journal.currentBlockCounters.earn = (AreaState.journal.currentBlockCounters.currentFund + AreaState.journal.currentBlockCounters.freeFund) - (AreaState.journal.currentBlockCounters.initialFundFree + AreaState.journal.currentBlockCounters.initialFundManage)
-            End If
-
             AreaState.journal.lastUpdate = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
             Return True
@@ -47,16 +41,18 @@ Namespace AreaCommon.Engines.Bots
             If (AreaState.journal.currentBlockCounters.timeStart > 0) Then
                 updateJournalCounter()
 
-                AreaState.journal.totalEarn += AreaState.journal.currentBlockCounters.earn
+                IO.saveCurrentCounterBlock()
 
-                AreaCommon.IO.saveCurrentCounterBlock()
+                AreaState.journal.history.earn += AreaState.journal.currentBlockCounters.earn
+                AreaState.journal.history.feePayed += AreaState.journal.currentBlockCounters.feePayed
+                AreaState.journal.history.increase += AreaState.journal.currentBlockCounters.increase
+                AreaState.journal.history.volumes += AreaState.journal.currentBlockCounters.volumes
             End If
 
             AreaState.journal.numPages += 1
+            AreaState.journal.currentBlockCounters = New Models.Journal.BlockCounterModel
+
             AreaState.journal.currentBlockCounters.numPage = AreaState.journal.numPages
-
-            AreaState.journal.currentBlockCounters = New AreaCommon.Models.Journal.BlockCounterModel
-
             AreaState.journal.currentBlockCounters.timeStart = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
             AreaState.journal.currentBlockCounters.initialFundFree = AreaState.accounts("USDT".ToLower()).valueUSDT
             AreaState.journal.currentBlockCounters.initialFundManage = 0
@@ -93,7 +89,7 @@ Namespace AreaCommon.Engines.Bots
             If proceed Then
                 addLogOperation("BlockStartEngine.run - Wait to close run")
 
-                Do While (Watch.productOrderCount > 0)
+                Do While (Watch.orders.count > 0)
                     Threading.Thread.Sleep(100)
                 Loop
             End If

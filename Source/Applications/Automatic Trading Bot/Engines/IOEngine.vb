@@ -259,7 +259,7 @@ Namespace AreaEngines.IO
 
 
         Public Sub logAction(ByVal message As String)
-            'System.IO.File.AppendAllText(logPath, message & vbCrLf)
+            System.IO.File.AppendAllText(logPath, message & vbCrLf)
         End Sub
 
 
@@ -316,29 +316,6 @@ Namespace AreaEngines.IO
 
             Return True
         End Function
-
-        Private Sub loadOrderPlaced()
-            Try
-                For Each product In AreaState.products.items
-                    With product.activity.openBuy
-                        If (.state = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.placed) Then
-
-                            'startMonitorOrder(product.header.key, .internalOrderId, .orderNumber)
-
-                        End If
-                    End With
-
-                    If (product.activity.sell.state = AreaCommon.Models.Bot.BotOrderModel.OrderStateEnumeration.placed) Then
-
-                        'startMonitorOrder(product.header.key, product.activity.sell.internalOrderId, product.activity.sell.orderNumber)
-
-                    End If
-                Next
-
-                AreaCommon.Engines.Orders.start()
-            Catch ex As Exception
-            End Try
-        End Sub
 
         ''' <summary>
         ''' This method provide to initialize the engine
@@ -420,10 +397,6 @@ Namespace AreaEngines.IO
 
                     newBot.parameters.configuration.pairId = AreaState.Common.getPairID(newBot.parameters.configuration.pairKey)
                     newBot.data = CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Bot.BotDataModel).read(System.IO.Path.Combine(tenantRootPath, "Bot-" & botItem, "data.json"))
-
-                    If newBot.parameters.header.isActive Then
-                        AreaCommon.Engines.Bots.BotModule.start()
-                    End If
                 Next
             End If
 
@@ -450,8 +423,6 @@ Namespace AreaEngines.IO
                 For Each currency In CHCCommonLibrary.AreaEngine.DataFileManagement.Json.IOFast(Of AreaCommon.Models.Products.ProductsModel).read(productsPath).items
                     AreaState.products.addNew(currency.header.key, currency)
                 Next
-
-                loadOrderPlaced()
             End If
 
             If System.IO.File.Exists(automaticBotPath) Then

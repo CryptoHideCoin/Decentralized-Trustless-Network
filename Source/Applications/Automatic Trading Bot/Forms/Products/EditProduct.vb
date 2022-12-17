@@ -243,6 +243,15 @@ Public Class EditProduct
 
                 Close()
             End If
+        Else
+            currentData.userData.state = stateValue.SelectedIndex
+            currentData.userData.preference = preferenceValue.SelectedIndex
+
+            If Not currentData.userData.isCustomized Then
+                currentData.userData.isCustomized = True
+            End If
+
+            Close()
         End If
     End Sub
 

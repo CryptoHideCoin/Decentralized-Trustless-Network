@@ -311,6 +311,12 @@ Namespace AreaCommon.Models.Products
             End If
         End Function
 
+        Public Function dealValue(ByVal dealPercValue As Double) As Boolean
+            With activity.lastBuy
+                Return .maxPrice - (.maxPrice * dealPercValue / 100)
+            End With
+        End Function
+
         Public Function resetData() As Boolean
             If userData.isCustomized Then
                 activity.buys = New List(Of ProductOrderModel)
@@ -347,9 +353,12 @@ Namespace AreaCommon.Models.Products
                 clientPro.Orders.CancelOrderByIdAsync(activity.sell.id)
             End If
 
-            Engines.Watch.removeProductTrade(Me)
+            Engines.Watch.trades.remove(Me)
+            Engines.Watch.trades.add(Me)
 
-            Return Engines.Watch.addProductTrade(Me)
+            Engines.Watch.start()
+
+            Return True
         End Function
 
     End Class

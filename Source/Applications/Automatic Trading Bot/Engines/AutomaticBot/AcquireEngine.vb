@@ -115,7 +115,7 @@ Namespace AreaCommon.Engines.Bots
             Return temp
         End Function
 
-        Public Function buyProduct(ByRef product As Models.Products.ProductModel) As Models.Products.ProductOrderModel
+        Public Function buyProduct(ByRef product As Models.Products.ProductModel, Optional ByVal reStockMode As Boolean = False) As Models.Products.ProductOrderModel
             Dim buy As New Models.Products.ProductOrderModel
             Dim investInProduct As Boolean
             Dim totalValue As Double = 0
@@ -131,7 +131,7 @@ Namespace AreaCommon.Engines.Bots
                     investInProduct = (totalValue > orderValue)
                 End If
                 If investInProduct Then
-                    investInProduct = (orderValue <> 0)
+                    investInProduct = (orderValue > 0)
                 End If
 
                 If investInProduct Then
@@ -143,24 +143,35 @@ Namespace AreaCommon.Engines.Bots
                     buy.dateAcquire = 0
                     buy.tcoQuote = orderValue
                     buy.amount = roundBase(orderValue / product.value.current, product.header.baseIncrement, True)
-                    buy.maxPrice = roundBase(product.value.current + (product.value.current / 100), product.header.quoteIncrement, True)
-                    buy.tcoQuote = roundBase(product.value.current * buy.amount, product.header.quoteIncrement, True)
+
+                    If reStockMode Then
+                        buy.maxPrice = roundBase(product.dealValue(AreaState.automaticBot.settings.dealAcquireOnPercentage), product.header.quoteIncrement, True)
+                    Else
+                        buy.maxPrice = roundBase(product.value.current + (product.value.current / 100), product.header.quoteIncrement, True)
+                    End If
 
                     orderValue = buy.amount * buy.maxPrice
-                    orderValue += (orderValue / 100)
 
-                    If (product.header.minMarketFunds <= buy.tcoQuote) And (totalValue > orderValue) Then
+                    If Not reStockMode Then
+                        orderValue += (orderValue / 100)
+                    End If
+
+                    buy.tcoQuote = roundBase(orderValue, product.header.quoteIncrement, True)
+
+                    If (buy.tcoQuote > product.header.minMarketFunds) And (totalValue > buy.tcoQuote) Then
                         product.activity.buys.Add(buy)
 
                         Orders.placeOrder(product, buy)
 
                         buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented
                     End If
+                Else
+                    addLogOperation($"buyProduct {product.header.key} orderValue = {orderValue} bottomPercentPosition = {product.value.bottomPercentPosition} unitStep = {AreaState.automaticBot.settings.unitStep}")
                 End If
 
                 Return buy
             Catch ex As Exception
-                MessageBox.Show($"Problem during {product.header.name} buyProduct - " & ex.Message)
+                addLogOperation($"Problem during buyProduct... probabily need fund {product.header.key}")
 
                 Return New Models.Products.ProductOrderModel
             End Try
@@ -227,7 +238,7 @@ Namespace AreaCommon.Engines.Bots
                 proceed = completeInvestProducts()
             End If
             If proceed Then
-                Do While (Watch.productOrderCount > 0)
+                Do While (Watch.orders.count > 0)
                     Threading.Thread.Sleep(100)
                 Loop
             End If

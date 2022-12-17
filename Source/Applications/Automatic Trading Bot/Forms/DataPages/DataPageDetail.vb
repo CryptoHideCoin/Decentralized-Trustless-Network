@@ -61,6 +61,8 @@ Public Class DataPageDetail
     End Sub
 
     Private Sub refreshJournalValue()
+        datePage.refresh()
+
         currentDayValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(datePage.timeStart), True)
 
         formatValue(initialDayFundStableValue, datePage.initialFundFree)

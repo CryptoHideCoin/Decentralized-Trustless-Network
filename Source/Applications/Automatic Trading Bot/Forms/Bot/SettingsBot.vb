@@ -340,8 +340,6 @@ Public Class SettingsBot
             AreaCommon.Engine.IO.updateBotSetting(newJob)
         End If
 
-        AreaCommon.Engines.Bots.BotModule.start()
-
         Me.Close()
     End Sub
 

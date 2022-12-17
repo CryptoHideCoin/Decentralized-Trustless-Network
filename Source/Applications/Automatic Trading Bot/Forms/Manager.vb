@@ -670,11 +670,57 @@ Public Class Manager
 
     Private Sub refreshJournalValue()
         AreaCommon.Engines.Bots.updateJournalCounter()
+        AreaState.journal.currentBlockCounters.refresh()
 
-        If (AreaState.journal.startBlock = 0) Then
+        ' --- PagaBlock data
+
+        If (AreaState.journal.currentBlockCounters.timeStart = 0) Then
+            currentDayValue.Text = "---"
+        Else
+            currentDayValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.currentBlockCounters.timeStart), True)
+        End If
+
+        formatValue(initialDayFundStableValue, AreaState.journal.currentBlockCounters.initialFundFree)
+        formatValue(initialOtherFundDayValue, AreaState.journal.currentBlockCounters.initialFundManage)
+
+        formatValue(freeFundCurrentValue, AreaState.journal.currentBlockCounters.freeFund)
+        formatValue(lockedFundCurrentValue, AreaState.journal.currentBlockCounters.lockedFund)
+
+        formatValue(currentPageValue, AreaState.journal.currentBlockCounters.currentFund)
+        formatValue(increaseCurrentValue, AreaState.journal.currentBlockCounters.increase)
+
+        formatValue(extraBuyDayValue, AreaState.journal.currentBlockCounters.extraBuy)
+        formatValue(dailyBuyDayValue, AreaState.journal.currentBlockCounters.dailyBuy)
+
+        formatValue(extraSellDayValue, AreaState.journal.currentBlockCounters.extraSell)
+        formatValue(dailySellDayValue, AreaState.journal.currentBlockCounters.dailySell)
+
+        numSellValue.Text = AreaState.journal.currentBlockCounters.sellNumber
+        numBuyValue.Text = AreaState.journal.currentBlockCounters.buyNumber
+
+        formatValue(feeDayValue, AreaState.journal.currentBlockCounters.feePayed)
+        formatValue(volumesDayValue, AreaState.journal.currentBlockCounters.volumes)
+
+        formatValue(earnDayValue, AreaState.journal.currentBlockCounters.earn, True)
+
+        If (AreaState.journal.currentBlockCounters.apy = 0) Then
+            apyDayValue.Text = "---"
+
+            apyDayValue.ForeColor = Color.Black
+        Else
+            apyDayValue.Text = AreaState.journal.currentBlockCounters.apy.ToString("#,##0.00")
+
+            apyDayValue.ForeColor = earnDayValue.ForeColor
+        End If
+
+        refreshDailyOrderGrid()
+
+        ' --- Summary information
+
+        If (AreaState.journal.history.startBlock = 0) Then
             startDateJournalDate.Text = "---"
         Else
-            startDateJournalDate.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.startBlock), True)
+            startDateJournalDate.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.history.startBlock), True)
         End If
 
         If (AreaState.journal.currentBlockCounters.timeStart = 0) Then
@@ -689,7 +735,7 @@ Public Class Manager
             updateDate.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.lastUpdate), True)
         End If
 
-        formatValue(initialFundValue, AreaState.journal.initialFund)
+        formatValue(initialFundValue, AreaState.journal.history.initialFund)
         formatValue(currentFundValue, AreaState.journal.currentFund)
         formatValue(futureGainValue, AreaState.journal.futureGain)
 
@@ -698,15 +744,16 @@ Public Class Manager
 
         formatValue(totalFundValue, AreaState.journal.currentFund + AreaState.journal.freeFund)
 
-        formatValue(feeValue, AreaState.journal.totalFee)
-        formatValue(volumeValue, AreaState.journal.totalVolume)
+        formatValue(feeValue, AreaState.journal.history.feePayed + AreaState.journal.currentBlockCounters.feePayed)
+        formatValue(volumeValue, AreaState.journal.history.volumes + AreaState.journal.currentBlockCounters.volumes)
+
         If (AreaState.journal.numPages = 0) Then
             numDaysValue.Text = "---"
         Else
             numDaysValue.Text = AreaState.journal.numPages
         End If
 
-        formatValue(totalEarnValue, AreaState.journal.totalEarn + AreaState.journal.currentBlockCounters.earn, True)
+        formatValue(totalEarnValue, AreaState.journal.earn, True)
 
         If (AreaState.journal.apy = 0) Then
             apyValue.Text = "---"
@@ -738,52 +785,17 @@ Public Class Manager
 
         formatValue(powerTotalValue, AreaState.journal.totalPower)
 
-        If (AreaState.journal.currentBlockCounters.timeStart = 0) Then
-            currentDayValue.Text = "---"
-        Else
-            currentDayValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.journal.currentBlockCounters.timeStart), True)
-        End If
-
-        formatValue(initialDayFundStableValue, AreaState.journal.currentBlockCounters.initialFundFree)
-        formatValue(initialOtherFundDayValue, AreaState.journal.currentBlockCounters.initialFundManage)
-
-        numSellValue.Text = AreaState.journal.currentBlockCounters.sellNumber
-
-        formatValue(freeFundCurrentValue, AreaState.journal.currentBlockCounters.freeFund)
-        formatValue(lockedFundCurrentValue, AreaState.journal.currentBlockCounters.lockedFund)
-
-        numBuyValue.Text = AreaState.journal.currentBlockCounters.buyNumber
-
-        formatValue(currentPageValue, AreaState.journal.currentBlockCounters.currentFund)
-        formatValue(increaseCurrentValue, AreaState.journal.currentBlockCounters.increase)
-
-        formatValue(extraBuyDayValue, AreaState.journal.currentBlockCounters.extraBuy)
-        formatValue(dailyBuyDayValue, AreaState.journal.currentBlockCounters.dailyBuy)
-
-        formatValue(extraSellDayValue, AreaState.journal.currentBlockCounters.extraSell)
-        formatValue(dailySellDayValue, AreaState.journal.currentBlockCounters.dailySell)
-
-        formatValue(feeDayValue, AreaState.journal.currentBlockCounters.feePayed)
-        formatValue(volumesDayValue, AreaState.journal.currentBlockCounters.volumes)
-
-        formatValue(earnDayValue, AreaState.journal.currentBlockCounters.earn, True)
-
-        If (AreaState.journal.currentBlockCounters.apy = 0) Then
-            apyDayValue.Text = "---"
-
-            apyDayValue.ForeColor = Color.Black
-        Else
-            apyDayValue.Text = (AreaState.journal.currentBlockCounters.apy).ToString("#,##0.00")
-
-            apyDayValue.ForeColor = earnDayValue.ForeColor
-        End If
-
         alertValue.Text = AreaState.journal.alert
+
+        ' --- Engines update
+
         lastSubscriptionTime.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaCommon.Engines.Pairs.lastSubscriptionTicker), True)
+        accountsServicePositionValue.Text = AreaCommon.Engines.Accounts.inWorkJob
+        automaticBotPositionValue.Text = AreaCommon.Engines.Bots.AutomaticBotModule.inWorkJob
+        botPhaseValue.Text = AreaCommon.Engines.Bots.AutomaticBotModule.currentPhase.ToString()
+        watchServicePositionValue.Text = AreaCommon.Engines.Watch.inWorkJob
+        stockRestockValue.Text = AreaCommon.Engines.Bots.AutomaticBotModule.stopRestockForFund
 
-        workActionValue.Text = AreaCommon.Engines.Bots.AutomaticBotModule.currentPhase.ToString()
-
-        refreshDailyOrderGrid()
     End Sub
 
     Private Sub updateAllDataMarkets()
@@ -923,7 +935,6 @@ Public Class Manager
         AreaCommon.Engines.Bots.BotModule.stop()
         AreaCommon.Engines.Bots.AutomaticBotModule.stop()
         AreaCommon.Engines.Pairs.stop()
-        AreaCommon.Engines.Orders.stop()
 
         End
     End Sub
@@ -967,7 +978,7 @@ Public Class Manager
         refreshDataCurrencies()
         refreshJournalValue()
 
-        If ((AreaState.bots.Count > 0) Or Not AreaState.defaultUserDataAccount.useVirtualAccount) And Not timerMain.Enabled Then
+        If (AreaState.bots.Count > 0) And Not timerMain.Enabled Then
             timerMain.Enabled = True
 
             updateAllDataMarkets()
@@ -1160,6 +1171,7 @@ Public Class Manager
                 refreshJournalValue()
 
                 AreaState.automaticBot.lastWorkAction = 0
+                AreaCommon.Engines.Bots.AutomaticBotModule.currentPhase = AreaCommon.Engines.Bots.AutomaticBotModule.WorkerPhaseEnum.undefined
                 AreaState.gainFund.currentLockedFund = 0
             End If
         End If
@@ -1212,7 +1224,6 @@ Public Class Manager
         If summaryButton.Checked Then
             SummaryPanel.BringToFront()
             daySummaryButton.Checked = False
-            warningButton.Checked = False
         Else
             SummaryPanel.SendToBack()
         End If
@@ -1222,7 +1233,6 @@ Public Class Manager
         If daySummaryButton.Checked Then
             dayPanel.BringToFront()
             summaryButton.Checked = False
-            warningButton.Checked = False
         Else
             dayPanel.SendToBack()
         End If
@@ -1243,21 +1253,11 @@ Public Class Manager
         dailyReport.Show()
     End Sub
 
-    Private Sub warningButton_CheckedChanged(sender As Object, e As EventArgs) Handles warningButton.CheckedChanged
-        If warningButton.Checked Then
-            warningPanel.BringToFront()
-            summaryButton.Checked = False
-            daySummaryButton.Checked = False
-        Else
-            warningPanel.SendToBack()
-        End If
-    End Sub
-
     Private Sub SaveProductsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveProductsToolStripMenuItem.Click
         AreaCommon.Engine.IO.updateCryptocurrency()
     End Sub
 
-    Private Sub clearButton_Click_1(sender As Object, e As EventArgs) Handles clearButton.Click
+    Private Sub clearButton_Click_1(sender As Object, e As EventArgs)
         AreaState.journal.alert = ""
     End Sub
 
@@ -1283,7 +1283,7 @@ Public Class Manager
                 AreaState.addIntoAccount("USDT", Val(quantity), False)
 
                 AreaState.summary.initialValue += quantity
-                AreaState.journal.initialFund += quantity
+                AreaState.journal.history.initialFund += quantity
                 AreaState.journal.currentBlockCounters.initialFundManage += quantity
             End If
         End If
@@ -1407,16 +1407,6 @@ Public Class Manager
 
     End Sub
 
-    Private Sub LogToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogToolStripMenuItem.Click
-        If (AreaCommon.Engine.logOperation.Length > 0) Then
-            Clipboard.SetText(AreaCommon.Engine.logOperation)
-
-            AreaCommon.Engine.logOperation = ""
-
-            MessageBox.Show("Log copy in clipboard")
-        End If
-    End Sub
-
     Private Sub refreshButton_Click(sender As Object, e As EventArgs) Handles refreshButton.Click
 
         Dim rowItem As New ArrayList
@@ -1431,10 +1421,10 @@ Public Class Manager
             Try
                 watchPlaceOrderGrid.Rows.Clear()
 
-                totValue = AreaCommon.Engines.Watch.productOrderCount - 1
+                totValue = AreaCommon.Engines.Watch.orders.count - 1
 
                 For index = 0 To totValue
-                    data = AreaCommon.Engines.Watch.productOrder(index)
+                    data = AreaCommon.Engines.Watch.orders.getData(index)
 
                     rowItem.Clear()
 
@@ -1459,10 +1449,10 @@ Public Class Manager
             Try
                 watchProductPlaceGrid.Rows.Clear()
 
-                totValue = AreaCommon.Engines.Watch.productTradeCount - 1
+                totValue = AreaCommon.Engines.Watch.trades.count - 1
 
                 For index = 0 To totValue
-                    data = AreaCommon.Engines.Watch.productTrade(index)
+                    data = AreaCommon.Engines.Watch.trades.getData(index)
 
                     rowItem.Clear()
 
@@ -1479,6 +1469,14 @@ Public Class Manager
             End Try
         Loop
 
+    End Sub
+
+    Private Sub accountsServiceValue_TextChanged(sender As Object, e As EventArgs) Handles accountsServicePositionValue.TextChanged
+
+    End Sub
+
+    Private Sub openLogFolderMenu_Click(sender As Object, e As EventArgs) Handles openLogFolderMenu.Click
+        Process.Start("explorer.exe", System.IO.Directory.GetParent(AreaCommon.IO.logPath).FullName)
     End Sub
 
 End Class

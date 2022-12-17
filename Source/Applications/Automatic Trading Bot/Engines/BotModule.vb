@@ -178,29 +178,6 @@ Namespace AreaCommon.Engines.Bots
         End Function
 
         ''' <summary>
-        ''' This method provide to check if the order is in 
-        ''' </summary>
-        ''' <param name="botId"></param>
-        ''' <param name="order"></param>
-        ''' <returns></returns>
-        Private Function startMonitorOrder(ByVal botId As String, ByRef order As Models.Bot.BotOrderModel) As Boolean
-            If Not AreaState.orders.ContainsKey(order.id) Then
-                Dim newSimply As New Models.Order.SimplyOrderModel
-
-                newSimply.accountCredentials = AreaState.defaultUserDataAccount.exchangeAccess
-                newSimply.botId = botId
-                newSimply.internalOrderId = order.id
-                newSimply.publicOrderId = order.number
-
-                AreaState.orders.Add(order.id, newSimply)
-
-                Orders.start()
-            End If
-
-            Return True
-        End Function
-
-        ''' <summary>
         ''' This method provide to create new buy order
         ''' </summary>
         ''' <param name="spread"></param>
@@ -216,62 +193,6 @@ Namespace AreaCommon.Engines.Bots
             trade.sell.orderValue += (trade.sell.orderValue * spread) / 100
 
             trade.sell.pairTradeValue = trade.buy.pairTradeValue + (trade.buy.pairTradeValue * spread) / 100
-
-            Return True
-        End Function
-
-        ''' <summary>
-        ''' This method provide to manage open trades
-        ''' </summary>
-        ''' <param name="item"></param>
-        ''' <returns></returns>
-        Private Function manageOpenTrades(ByRef item As Models.Bot.BotConfigurationsModel) As Boolean
-            If (item.data.tradeOpen.Count > 0) Then
-                For Each trade In item.data.tradeOpen
-                    If (trade.buy.state <> Models.Bot.BotOrderModel.OrderStateEnumeration.undefined) Then
-                        If (trade.buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled And trade.sell.state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled) Then
-                            switchTradeToClose(item, trade)
-
-                            If (item.parameters.configuration.mode = Models.Bot.BotParametersModel.FundBotConfiguration.ModeTradeConfigEnumeration.oneshot) Then
-                                item.parameters.header.isActive = False
-                                item.data.timeEnd = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                            End If
-
-                            Return True
-                        ElseIf trade.sell.state = Models.Bot.BotOrderModel.OrderStateEnumeration.placed Then
-                            startMonitorOrder(item.parameters.header.id, trade.sell)
-                        ElseIf trade.buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.placed Then
-                            startMonitorOrder(item.parameters.header.id, trade.buy)
-                        End If
-                    Else
-                        createFileOrder(item.data.pair, trade.buy)
-                        createFalseResponseOrder(trade.buy)
-
-                        trade.buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented
-
-                        Return True
-                    End If
-
-                    If (trade.buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.filled) And (trade.sell.state = Models.Bot.BotOrderModel.OrderStateEnumeration.undefined) Then
-                        If (trade.sell.timeStart > 0) Then
-                            item.data.lastBuyTime = trade.buy.timeCompleted
-                            item.data.lastBuyValue = trade.buy.tco - trade.buy.feeCost
-                            item.data.lastBuyChange = trade.buy.pairTradeValue
-                            item.data.usedPlafond += item.data.lastBuyValue
-                            item.data.inRecharge = False
-
-                            createFileOrder(item.data.pair, trade.sell)
-                            createFalseResponseOrder(trade.sell)
-
-                            trade.sell.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented
-
-                            Return True
-                        Else
-                            createNewSellOrder(item.parameters.configuration.spread, trade)
-                        End If
-                    End If
-                Next
-            End If
 
             Return True
         End Function
@@ -420,98 +341,6 @@ Namespace AreaCommon.Engines.Bots
             End If
 
             Return False
-        End Function
-
-        ''' <summary>
-        ''' This method provide to work with action bot
-        ''' </summary>
-        ''' <param name="item"></param>
-        Private Sub actionBot(ByRef item As Models.Bot.BotConfigurationsModel)
-            Dim proceed As Boolean = True
-
-            If proceed Then
-                If (item.data.timeStart = 0) Then
-                    item.data.timeStart = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                End If
-            End If
-            If proceed Then
-                proceed = manageOpenTrades(item)
-            End If
-            If proceed Then
-                proceed = manageOrderStatus(item)
-            End If
-            If proceed Then
-                proceed = evaluateToBuy(item)
-            End If
-        End Sub
-
-        ''' <summary>
-        ''' This method provide to process a pair
-        ''' </summary>
-        ''' <param name="bot"></param>
-        ''' <returns></returns>
-        Private Function process(ByRef bot As Models.Bot.BotConfigurationsModel) As Boolean
-            Try
-                Dim proceed As Boolean = True
-
-                If proceed Then
-                    proceed = bot.parameters.header.isActive
-                End If
-                If proceed Then
-                    If (bot.data.state > Models.Bot.BotDataModel.BotStateEnumeration.inBootstrap) Then
-                        actionBot(bot)
-                    Else
-                        startUp(bot)
-                    End If
-                End If
-
-                Return True
-            Catch ex As Exception
-                Return False
-            End Try
-        End Function
-
-        ''' <summary>
-        ''' This method provide to start service processor
-        ''' </summary>
-        Private Sub startServiceBot()
-            Try
-                Dim currentIndex As Integer = 0
-
-                Do While _InWorkJob
-                    If (AreaState.bots.Count > 0) Then
-                        If (currentIndex + 1 > AreaState.bots.Count) Then
-                            currentIndex = 0
-                        End If
-
-                        If process(AreaState.bots.ElementAt(currentIndex).Value) Then
-                            currentIndex += 1
-                        End If
-                    End If
-
-                    Threading.Thread.Sleep(10)
-                Loop
-            Catch ex As Exception
-                _InWorkJob = False
-            End Try
-        End Sub
-
-        ''' <summary>
-        ''' This method provide to start a pair job
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function [start]() As Boolean
-            If Not _InWorkJob Then
-                Dim objWS As Threading.Thread
-
-                _InWorkJob = True
-
-                objWS = New Threading.Thread(AddressOf startServiceBot)
-
-                objWS.Start()
-            End If
-
-            Return True
         End Function
 
         Public Function [stop]() As Boolean

@@ -11,13 +11,14 @@ Namespace AreaCommon.Engines.Accounts
 
     Module AccountModule
 
-        Private Property _InWorkJob As Boolean = False
         Private Property _Init As Boolean = False
         Private Property _ClientPro As CoinbaseProClient
         Private Property _InUnauthorized As Boolean = False
         Private Property _ShowInUnauthorizedMessage As Boolean = False
         Private Property _InWork As Boolean = False
         Private Property _NotStarted As Boolean = True
+
+        Public Property inWorkJob As Boolean = False
 
 
 
@@ -75,7 +76,7 @@ Namespace AreaCommon.Engines.Accounts
 
                 AreaState.accounts = newAccounts
             Catch ex As Exception
-                _InWorkJob = False
+                inWorkJob = False
 
                 _InUnauthorized = (ex.Message Like "*Unauthorized*")
 
@@ -94,7 +95,7 @@ Namespace AreaCommon.Engines.Accounts
         ''' </summary>
         Private Sub startServiceProcessor()
             Try
-                Do While _InWorkJob
+                Do While inWorkJob
                     updateDataAccounts()
 
                     If _NotStarted Then
@@ -105,7 +106,7 @@ Namespace AreaCommon.Engines.Accounts
                 Loop
             Catch ex As InvalidOperationException
             Catch ex As Exception
-                _InWorkJob = False
+                inWorkJob = False
             End Try
         End Sub
 
@@ -142,10 +143,10 @@ Namespace AreaCommon.Engines.Accounts
                 _Init = True
             End If
 
-            If Not _InWorkJob Then
+            If Not inWorkJob Then
                 Dim objWS As Threading.Thread
 
-                _InWorkJob = True
+                inWorkJob = True
 
                 objWS = New Threading.Thread(AddressOf startServiceProcessor)
 
@@ -156,7 +157,7 @@ Namespace AreaCommon.Engines.Accounts
         End Function
 
         Public Function [stop]() As Boolean
-            _InWorkJob = False
+            inWorkJob = False
 
             Return True
         End Function
