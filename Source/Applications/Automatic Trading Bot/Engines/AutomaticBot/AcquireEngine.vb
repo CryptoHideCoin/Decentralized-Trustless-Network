@@ -12,7 +12,7 @@ Namespace AreaCommon.Engines.Bots
 
 
         Public Function changeInBlockSell(Optional ByVal normalMode As Boolean = False) As Boolean
-            addLogOperation("changeInBlockSell")
+            addLogOperation("AcquireEngine.changeInBlockSell - Begin")
 
             inTargetMode = False
 
@@ -27,6 +27,8 @@ Namespace AreaCommon.Engines.Bots
                     End If
                 End If
             Next
+
+            addLogOperation("AcquireEngine.changeInBlockSell - Complete")
 
             Return True
         End Function
@@ -106,6 +108,42 @@ Namespace AreaCommon.Engines.Bots
             End If
         End Function
 
+        Private Function completeInvestProducts(Optional ByVal ordinary As Boolean = True) As Boolean
+            Dim productName As String = ""
+
+            Try
+                Dim buyInSent As Models.Products.ProductOrderModel
+
+                addLogOperation("completeInvestProducts - Begin")
+
+                For Each product In _DealList
+                    productName = product.pairID
+
+                    addLogOperation($"completeInvestProducts - Check previous buy before try buy - {productName}")
+
+                    If (AreaState.automaticBot.settings.unitStep > fundAvailable()) Then
+                        Exit For
+                    End If
+
+                    addLogOperation($"completeInvestProducts - Try to buy {productName}")
+
+                    buyInSent = buyProduct(product)
+
+                    If (buyInSent.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
+                        Threading.Thread.Sleep(1000)
+                    Else
+                        Threading.Thread.Sleep(50)
+                    End If
+                Next
+            Catch ex As Exception
+                MessageBox.Show($"Problem during {productName} completeInvestProducts - " & ex.Message)
+            End Try
+
+            addLogOperation("completeInvestProducts - Complete")
+
+            Return True
+        End Function
+
         Public Function determinateOrderValue(ByVal bottomPercentPosition As Double, ByVal unitStep As Double) As Double
             Dim temp As Double = 0
 
@@ -115,7 +153,7 @@ Namespace AreaCommon.Engines.Bots
             Return temp
         End Function
 
-        Public Function buyProduct(ByRef product As Models.Products.ProductModel, Optional ByVal reStockMode As Boolean = False) As Models.Products.ProductOrderModel
+        Public Function buyProduct(ByVal product As Models.Products.ProductModel, Optional ByVal reStockMode As Boolean = False) As Models.Products.ProductOrderModel
             Dim buy As New Models.Products.ProductOrderModel
             Dim investInProduct As Boolean
             Dim totalValue As Double = 0
@@ -137,9 +175,6 @@ Namespace AreaCommon.Engines.Bots
                 If investInProduct Then
                     product.activity.dateLastCheck = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                     product.activity.fastCheck = True
-
-                    addLogOperation($"buyProduct {product.header.key} totalValue = {totalValue} orderValue = {orderValue}")
-
                     buy.dateAcquire = 0
                     buy.tcoQuote = orderValue
                     buy.amount = roundBase(orderValue / product.value.current, product.header.baseIncrement, True)
@@ -150,6 +185,8 @@ Namespace AreaCommon.Engines.Bots
                         buy.maxPrice = roundBase(product.value.current + (product.value.current / 100), product.header.quoteIncrement, True)
                     End If
 
+                    addLogOperation($"buyProduct {product.header.key} currentFundAvailable = {totalValue} orderValue = {orderValue} qty = {buy.amount} maxPrice = {buy.maxPrice}")
+
                     orderValue = buy.amount * buy.maxPrice
 
                     If Not reStockMode Then
@@ -159,11 +196,11 @@ Namespace AreaCommon.Engines.Bots
                     buy.tcoQuote = roundBase(orderValue, product.header.quoteIncrement, True)
 
                     If (buy.tcoQuote > product.header.minMarketFunds) And (totalValue > buy.tcoQuote) Then
+                        buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented
+
                         product.activity.buys.Add(buy)
 
                         Orders.placeOrder(product, buy)
-
-                        buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented
                     End If
                 Else
                     addLogOperation($"buyProduct {product.header.key} orderValue = {orderValue} bottomPercentPosition = {product.value.bottomPercentPosition} unitStep = {AreaState.automaticBot.settings.unitStep}")
@@ -177,70 +214,32 @@ Namespace AreaCommon.Engines.Bots
             End Try
         End Function
 
-        Private Function completeInvestProducts(Optional ByVal ordinary As Boolean = True) As Boolean
-            Dim productName As String = ""
-
-            Try
-                Dim buyInSent As Models.Products.ProductOrderModel
-
-                addLogOperation("completeInvestProducts")
-
-                For Each product In _DealList
-                    productName = product.pairID
-
-                    addLogOperation($"completeInvestProducts - Try to buy {productName}")
-
-                    If Not IsNothing(buyInSent) Then
-                        If (buyInSent.id.Length = 0) Then
-                            Threading.Thread.Sleep(10)
-                        End If
-
-                        If (buyInSent.id.Length <> 0) Then
-                            Do While (buyInSent.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Or (buyInSent.state = Models.Bot.BotOrderModel.OrderStateEnumeration.placed)
-                                Threading.Thread.Sleep(500)
-                            Loop
-                        End If
-                    End If
-
-                    buyInSent = buyProduct(product)
-
-                    If (buyInSent.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
-                        Threading.Thread.Sleep(1000)
-                    Else
-                        Threading.Thread.Sleep(50)
-                    End If
-
-                    'Return True
-                Next
-            Catch ex As Exception
-                MessageBox.Show($"Problem during {productName} completeInvestProducts - " & ex.Message)
-            End Try
-
-            Return True
-        End Function
-
-
         Public Function [run]() As Boolean
             Dim proceed As Boolean = True
 
             If proceed Then
                 Threading.Thread.Sleep(50)
 
-                addLogOperation("BlockStartEngine.run - CompleteReorderProducts")
+                addLogOperation("AcquireEngine.run - CompleteReorderProducts")
 
                 proceed = completeReorderProducts()
             End If
             If proceed Then
                 Threading.Thread.Sleep(50)
 
-                addLogOperation("BlockStartEngine.run - CompleteInvestProducts")
+                addLogOperation("AcquireEngine.run - CompleteInvestProducts")
 
                 proceed = completeInvestProducts()
             End If
             If proceed Then
+                addLogOperation($"AcquireEngine.run - Check orders.count = {Watch.orders.count}")
+
                 Do While (Watch.orders.count > 0)
                     Threading.Thread.Sleep(100)
                 Loop
+            End If
+            If proceed Then
+                Threading.Thread.Sleep(60000)
             End If
 
             Return proceed

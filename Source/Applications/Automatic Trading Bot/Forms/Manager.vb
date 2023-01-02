@@ -794,7 +794,8 @@ Public Class Manager
         automaticBotPositionValue.Text = AreaCommon.Engines.Bots.AutomaticBotModule.inWorkJob
         botPhaseValue.Text = AreaCommon.Engines.Bots.AutomaticBotModule.currentPhase.ToString()
         watchServicePositionValue.Text = AreaCommon.Engines.Watch.inWorkJob
-        stockRestockValue.Text = AreaCommon.Engines.Bots.AutomaticBotModule.stopRestockForFund
+        watchActivityWorkValue.Text = AreaCommon.Engines.Watch.currentActivityWorkTrade
+        stockRestockValue.Text = AreaCommon.Engines.Watch.stopRestockForFund
 
     End Sub
 
@@ -903,6 +904,22 @@ Public Class Manager
         manageAccount()
 
         AreaState.automaticBot.isActive = False
+
+        For index As Integer = 0 To AreaState.products.items.Count - 1
+            With AreaState.products.items(index)
+                If Not AreaState.pairs.ContainsKey(.pairID) Then
+                    If .userData.isCustomized And
+                      (.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.ignore) And
+                      (.userData.preference <> AreaCommon.Models.Products.ProductUserDataModel.PreferenceEnumeration.automaticDisabled) Then
+                        AreaState.getPairID(.pairID)
+                    End If
+                End If
+            End With
+        Next
+
+        AreaCommon.Engines.Pairs.start()
+
+        updateBotsTimer.Enabled = True
     End Sub
 
     Private Sub marketDataView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles marketDataView.CellContentClick
@@ -977,6 +994,7 @@ Public Class Manager
         refreshDataAccount()
         refreshDataCurrencies()
         refreshJournalValue()
+        refreshWorkCheck()
 
         If (AreaState.bots.Count > 0) And Not timerMain.Enabled Then
             timerMain.Enabled = True
@@ -1407,8 +1425,7 @@ Public Class Manager
 
     End Sub
 
-    Private Sub refreshButton_Click(sender As Object, e As EventArgs) Handles refreshButton.Click
-
+    Private Sub refreshWorkCheck()
         Dim rowItem As New ArrayList
         Dim repeat As Boolean = True
         Dim index As Integer
@@ -1459,8 +1476,18 @@ Public Class Manager
                     rowItem.Add(data.header.name)
                     rowItem.Add(CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(data.activity.dateLastCheck), True))
                     rowItem.Add(data.currentTarget)
-                    rowItem.Add(data.currentTargetReached)
-                    rowItem.Add(data.activity.sell.id)
+
+                    If data.currentTargetReached Then
+                        rowItem.Add("YES")
+                    Else
+                        rowItem.Add("")
+                    End If
+
+                    If data.inDeal(AreaState.automaticBot.settings.dealAcquireOnPercentage) Then
+                        rowItem.Add("YES")
+                    Else
+                        rowItem.Add("")
+                    End If
 
                     watchProductPlaceGrid.Rows.Add(rowItem.ToArray)
                 Next
@@ -1469,6 +1496,11 @@ Public Class Manager
             End Try
         Loop
 
+        watchPlaceOrderValue.Text = $"Watch Trade Product: {AreaCommon.Engines.Watch.trades.count}"
+    End Sub
+
+    Private Sub refreshButton_Click(sender As Object, e As EventArgs) Handles refreshButton.Click
+        refreshWorkCheck()
     End Sub
 
     Private Sub accountsServiceValue_TextChanged(sender As Object, e As EventArgs) Handles accountsServicePositionValue.TextChanged
@@ -1477,6 +1509,10 @@ Public Class Manager
 
     Private Sub openLogFolderMenu_Click(sender As Object, e As EventArgs) Handles openLogFolderMenu.Click
         Process.Start("explorer.exe", System.IO.Directory.GetParent(AreaCommon.IO.logPath).FullName)
+    End Sub
+
+    Private Sub clearButton_Click_2(sender As Object, e As EventArgs) Handles clearButton.Click
+        AreaState.journal.alert = ""
     End Sub
 
 End Class

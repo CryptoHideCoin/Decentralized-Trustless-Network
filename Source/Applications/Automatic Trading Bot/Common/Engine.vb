@@ -13,7 +13,18 @@ Namespace AreaCommon
 
 
         Public Sub addLogOperation(ByVal value As String)
-            IO.logAction(Now.ToUniversalTime.ToString & "    " & value)
+            Dim timeStart As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+            Dim repeat As Boolean = True
+
+            Do While repeat And (timeStart + 1000 > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
+                repeat = False
+
+                Try
+                    IO.logAction(Now.ToUniversalTime.ToString & "    " & value)
+                Catch ex As Exception
+                    repeat = True
+                End Try
+            Loop
         End Sub
 
     End Module

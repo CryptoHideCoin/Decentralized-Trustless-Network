@@ -10,8 +10,8 @@ Namespace AreaCommon.Engines.Watch
 
 
 
-        Public Function add(ByRef product As Models.Products.ProductModel) As Boolean
-            addLogOperation($"add - {product.header.key} ")
+        Public Function add(ByRef product As Models.Products.ProductModel, ByVal descriptionName As String) As Boolean
+            addLogOperation($"{descriptionName}.add - {product.header.key} ")
 
             For Each singleProduct In _List
                 If (singleProduct.header.key.CompareTo(product.header.key) = 0) Then
@@ -40,9 +40,9 @@ Namespace AreaCommon.Engines.Watch
             End Get
         End Property
 
-        Public Function remove(ByRef product As Models.Products.ProductModel) As Boolean
+        Public Function remove(ByRef product As Models.Products.ProductModel, ByVal descriptionName As String) As Boolean
             Try
-                addLogOperation($"remove - {product.header.key} ")
+                addLogOperation($"{descriptionName}.remove - {product.header.key} ")
 
                 For Each singleOrder In _List
                     If (singleOrder.header.key.CompareTo(product.header.key) = 0) Then

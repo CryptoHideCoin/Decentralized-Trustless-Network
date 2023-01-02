@@ -8,6 +8,7 @@ Namespace AreaState
 
     Module Common
 
+        Public Property exchangeProxy As New AreaCommon.Provider.ProviderCoinbasePro
         Public Property automaticBot As New AreaCommon.Models.Bot.BotAutomatic
         Public Property products As New AreaCommon.Models.Products.ProductsModel
         Public Property bots As New Dictionary(Of String, AreaCommon.Models.Bot.BotConfigurationsModel)
@@ -40,8 +41,6 @@ Namespace AreaState
             newPair.key = pair
 
             pairs.Add(pair, newPair)
-
-            AreaCommon.Engines.Pairs.start()
 
             Return newPair.id
         End Function

@@ -17,7 +17,6 @@ E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\bin\x64\Debug\Flu
 E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\bin\x64\Debug\Flurl.Http.pdb
 E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\bin\x64\Debug\Newtonsoft.Json.xml
 E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\bin\x64\Debug\System.ValueTuple.xml
-E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\obj\x64\Debug\Automatic.vbprojAssemblyReference.cache
 E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\obj\x64\Debug\AutomaticTBS.AutomaticBotSetting.resources
 E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\obj\x64\Debug\AutomaticTBS.DataPageDetail.resources
 E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\obj\x64\Debug\AutomaticTBS.DataPageList.resources
@@ -38,3 +37,4 @@ E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\obj\x64\Debug\Aut
 E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\obj\x64\Debug\AutomaticTBS.exe
 E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\obj\x64\Debug\AutomaticTBS.xml
 E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\obj\x64\Debug\AutomaticTBS.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Automatic Trading Bot\obj\x64\Debug\Automatic.vbprojAssemblyReference.cache

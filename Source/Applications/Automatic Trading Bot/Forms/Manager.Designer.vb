@@ -120,11 +120,11 @@ Partial Class Manager
         Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.sellIDColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.currentInDealColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ServiceMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ConvertToUSDTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConvertAllToUSDTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Label68 = New System.Windows.Forms.Label()
+        Me.watchPlaceOrderValue = New System.Windows.Forms.Label()
         Me.watchPlaceOrderGrid = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -318,6 +318,7 @@ Partial Class Manager
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.currentValue = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.enginesPage = New System.Windows.Forms.TabPage()
+        Me.watchActivityWorkValue = New System.Windows.Forms.TextBox()
         Me.openLogFolderMenu = New System.Windows.Forms.Button()
         Me.stockRestockValue = New System.Windows.Forms.TextBox()
         Me.Label61 = New System.Windows.Forms.Label()
@@ -433,7 +434,7 @@ Partial Class Manager
         '
         Me.RestartVirtualToolStripMenuItem.Name = "RestartVirtualToolStripMenuItem"
         Me.RestartVirtualToolStripMenuItem.Size = New System.Drawing.Size(215, 22)
-        Me.RestartVirtualToolStripMenuItem.Text = "Reset virtual data"
+        Me.RestartVirtualToolStripMenuItem.Text = "Reset data"
         '
         'ToolStripSeparator4
         '
@@ -444,7 +445,7 @@ Partial Class Manager
         '
         Me.SaveProductsToolStripMenuItem.Name = "SaveProductsToolStripMenuItem"
         Me.SaveProductsToolStripMenuItem.Size = New System.Drawing.Size(215, 22)
-        Me.SaveProductsToolStripMenuItem.Text = "Update Products"
+        Me.SaveProductsToolStripMenuItem.Text = "Save/Update Products"
         '
         'ToolStripSeparator5
         '
@@ -695,7 +696,7 @@ Partial Class Manager
         '
         Me.workCheckPage.Controls.Add(Me.refreshButton)
         Me.workCheckPage.Controls.Add(Me.watchProductPlaceGrid)
-        Me.workCheckPage.Controls.Add(Me.Label68)
+        Me.workCheckPage.Controls.Add(Me.watchPlaceOrderValue)
         Me.workCheckPage.Controls.Add(Me.watchPlaceOrderGrid)
         Me.workCheckPage.Controls.Add(Me.Label67)
         Me.workCheckPage.Location = New System.Drawing.Point(4, 22)
@@ -732,7 +733,7 @@ Partial Class Manager
         DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.watchProductPlaceGrid.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle12
         Me.watchProductPlaceGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.watchProductPlaceGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn9, Me.DataGridViewTextBoxColumn10, Me.DataGridViewTextBoxColumn11, Me.DataGridViewTextBoxColumn12, Me.sellIDColumn})
+        Me.watchProductPlaceGrid.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn9, Me.DataGridViewTextBoxColumn10, Me.DataGridViewTextBoxColumn11, Me.DataGridViewTextBoxColumn12, Me.currentInDealColumn})
         Me.watchProductPlaceGrid.ContextMenuStrip = Me.ServiceMenu
         Me.watchProductPlaceGrid.Location = New System.Drawing.Point(3, 202)
         Me.watchProductPlaceGrid.MultiSelect = False
@@ -786,15 +787,15 @@ Partial Class Manager
         Me.DataGridViewTextBoxColumn12.ReadOnly = True
         Me.DataGridViewTextBoxColumn12.Width = 150
         '
-        'sellIDColumn
+        'currentInDealColumn
         '
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle17.BackColor = System.Drawing.Color.LightGray
-        DataGridViewCellStyle17.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.sellIDColumn.DefaultCellStyle = DataGridViewCellStyle17
-        Me.sellIDColumn.HeaderText = "Sell ID"
-        Me.sellIDColumn.Name = "sellIDColumn"
-        Me.sellIDColumn.ReadOnly = True
+        DataGridViewCellStyle17.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.currentInDealColumn.DefaultCellStyle = DataGridViewCellStyle17
+        Me.currentInDealColumn.HeaderText = "Current InDeal"
+        Me.currentInDealColumn.Name = "currentInDealColumn"
+        Me.currentInDealColumn.ReadOnly = True
         '
         'ServiceMenu
         '
@@ -814,16 +815,15 @@ Partial Class Manager
         Me.ConvertAllToUSDTToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
         Me.ConvertAllToUSDTToolStripMenuItem.Text = "Convert all to USDT"
         '
-        'Label68
+        'watchPlaceOrderValue
         '
-        Me.Label68.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label68.AutoSize = True
-        Me.Label68.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label68.Location = New System.Drawing.Point(12, 186)
-        Me.Label68.Name = "Label68"
-        Me.Label68.Size = New System.Drawing.Size(143, 13)
-        Me.Label68.TabIndex = 23
-        Me.Label68.Text = "Watch Trade Product"
+        Me.watchPlaceOrderValue.AutoSize = True
+        Me.watchPlaceOrderValue.Font = New System.Drawing.Font("Verdana", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.watchPlaceOrderValue.Location = New System.Drawing.Point(12, 186)
+        Me.watchPlaceOrderValue.Name = "watchPlaceOrderValue"
+        Me.watchPlaceOrderValue.Size = New System.Drawing.Size(151, 13)
+        Me.watchPlaceOrderValue.TabIndex = 23
+        Me.watchPlaceOrderValue.Text = "Watch Trade Product: "
         '
         'watchPlaceOrderGrid
         '
@@ -2973,6 +2973,7 @@ Partial Class Manager
         '
         'enginesPage
         '
+        Me.enginesPage.Controls.Add(Me.watchActivityWorkValue)
         Me.enginesPage.Controls.Add(Me.openLogFolderMenu)
         Me.enginesPage.Controls.Add(Me.stockRestockValue)
         Me.enginesPage.Controls.Add(Me.Label61)
@@ -2996,6 +2997,14 @@ Partial Class Manager
         Me.enginesPage.Text = "Checkup"
         Me.enginesPage.UseVisualStyleBackColor = True
         '
+        'watchActivityWorkValue
+        '
+        Me.watchActivityWorkValue.Location = New System.Drawing.Point(138, 155)
+        Me.watchActivityWorkValue.Name = "watchActivityWorkValue"
+        Me.watchActivityWorkValue.ReadOnly = True
+        Me.watchActivityWorkValue.Size = New System.Drawing.Size(267, 21)
+        Me.watchActivityWorkValue.TabIndex = 82
+        '
         'openLogFolderMenu
         '
         Me.openLogFolderMenu.Location = New System.Drawing.Point(752, 15)
@@ -3007,7 +3016,7 @@ Partial Class Manager
         '
         'stockRestockValue
         '
-        Me.stockRestockValue.Location = New System.Drawing.Point(138, 155)
+        Me.stockRestockValue.Location = New System.Drawing.Point(138, 182)
         Me.stockRestockValue.Name = "stockRestockValue"
         Me.stockRestockValue.ReadOnly = True
         Me.stockRestockValue.Size = New System.Drawing.Size(267, 21)
@@ -3016,7 +3025,7 @@ Partial Class Manager
         'Label61
         '
         Me.Label61.AutoSize = True
-        Me.Label61.Location = New System.Drawing.Point(51, 158)
+        Me.Label61.Location = New System.Drawing.Point(51, 185)
         Me.Label61.Name = "Label61"
         Me.Label61.Size = New System.Drawing.Size(79, 13)
         Me.Label61.TabIndex = 79
@@ -3024,7 +3033,7 @@ Partial Class Manager
         '
         'clearButton
         '
-        Me.clearButton.Location = New System.Drawing.Point(752, 211)
+        Me.clearButton.Location = New System.Drawing.Point(752, 235)
         Me.clearButton.Name = "clearButton"
         Me.clearButton.Size = New System.Drawing.Size(75, 23)
         Me.clearButton.TabIndex = 78
@@ -3035,7 +3044,7 @@ Partial Class Manager
         '
         Me.alertValue.BackColor = System.Drawing.SystemColors.Info
         Me.alertValue.ForeColor = System.Drawing.SystemColors.WindowText
-        Me.alertValue.Location = New System.Drawing.Point(33, 213)
+        Me.alertValue.Location = New System.Drawing.Point(33, 237)
         Me.alertValue.Multiline = True
         Me.alertValue.Name = "alertValue"
         Me.alertValue.ReadOnly = True
@@ -3045,7 +3054,7 @@ Partial Class Manager
         'alertLabel
         '
         Me.alertLabel.AutoSize = True
-        Me.alertLabel.Location = New System.Drawing.Point(30, 197)
+        Me.alertLabel.Location = New System.Drawing.Point(30, 221)
         Me.alertLabel.Name = "alertLabel"
         Me.alertLabel.Size = New System.Drawing.Size(34, 13)
         Me.alertLabel.TabIndex = 76
@@ -3142,7 +3151,6 @@ Partial Class Manager
         '
         'updateBotsTimer
         '
-        Me.updateBotsTimer.Enabled = True
         Me.updateBotsTimer.Interval = 1000
         '
         'Manager
@@ -3432,15 +3440,10 @@ Partial Class Manager
     Friend WithEvents ConvertAllToUSDTToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents workCheckPage As TabPage
     Friend WithEvents watchProductPlaceGrid As DataGridView
-    Friend WithEvents Label68 As Label
+    Friend WithEvents watchPlaceOrderValue As Label
     Friend WithEvents watchPlaceOrderGrid As DataGridView
     Friend WithEvents Label67 As Label
     Friend WithEvents refreshButton As Button
-    Friend WithEvents DataGridViewTextBoxColumn9 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn10 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn11 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn12 As DataGridViewTextBoxColumn
-    Friend WithEvents sellIDColumn As DataGridViewTextBoxColumn
     Friend WithEvents enginesPage As TabPage
     Friend WithEvents lastSubscriptionTime As TextBox
     Friend WithEvents Label64 As Label
@@ -3462,4 +3465,10 @@ Partial Class Manager
     Friend WithEvents DataGridViewTextBoxColumn4 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn8 As DataGridViewTextBoxColumn
+    Friend WithEvents watchActivityWorkValue As TextBox
+    Friend WithEvents DataGridViewTextBoxColumn9 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn10 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn11 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn12 As DataGridViewTextBoxColumn
+    Friend WithEvents currentInDealColumn As DataGridViewTextBoxColumn
 End Class

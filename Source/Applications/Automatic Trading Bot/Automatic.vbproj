@@ -208,6 +208,7 @@
     <Compile Include="Engines\OrderModule.vb" />
     <Compile Include="Engines\PairModule.vb" />
     <Compile Include="Engines\AutomaticBot\BlockStartEngine.vb" />
+    <Compile Include="Engines\Provider\ProviderCoinbasePro.vb" />
     <Compile Include="Forms\Bot\AutomaticBotSetting.Designer.vb">
       <DependentUpon>AutomaticBotSetting.vb</DependentUpon>
     </Compile>

@@ -18,182 +18,18 @@ Namespace AreaCommon.Engines.Bots
         Private Property _StartBlockWork As Double = 0
         Private Property _BlockWork As New BlockStartEngine
         Private Property _AcquireWork As New AcquireEngine
-        Private Property _lastInternalWork As Double = 0
-        Private Property _lastBuy As Models.Products.ProductOrderModel
 
-        Private Property _CurrentFundFree As Double = 0
         Private Property _InReconciliation As Boolean = False
 
         Public Property currentPhase As WorkerPhaseEnum = WorkerPhaseEnum.undefined
         Public Property inWorkJob As Boolean = False
-        Public Property stopRestockForFund As Boolean = False
+        Public Property lastBuy As Models.Products.ProductOrderModel
 
 
 
-        Private Function checkAndRestockIt(ByRef product As Models.Products.ProductModel) As Boolean
-            Dim proceed As Boolean = True
-
-            Try
-                If proceed Then
-                    proceed = ((product.activity.dateLastCheck + 60000) < CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime)
-                End If
-                If proceed Then
-                    product.activity.dateLastCheck = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
-
-                    proceed = product.inDeal(AreaState.automaticBot.settings.dealAcquireOnPercentage)
-                End If
-                If proceed Then
-                    proceed = (product.activity.openBuy.id.Length = 0)
-                End If
-                If proceed Then
-                    proceed = (CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime > product.activity.lastBuy.dateAcquire + (AreaState.automaticBot.settings.dealIntervalMinute * 60000))
-                End If
-                If proceed Then
-                    addLogOperation("Il prodotto is in deal " & product.header.name & " non c'è nessun ordine di acquisto pendente. Posso riassortire in quanto è passato tempo")
-
-                    If (AreaState.automaticBot.settings.plafondOperation = 0) Then
-                        proceed = True
-                    Else
-                        proceed = (product.activity.totalInvestment < AreaState.automaticBot.settings.plafondOperation)
-                    End If
-                End If
-                If proceed Then
-                    addLogOperation("Try to buy. Good Plafond")
-
-                    If Not IsNothing(_lastBuy) Then
-                        Do While (_lastBuy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Or (_lastBuy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.placed)
-                            Threading.Thread.Sleep(500)
-                        Loop
-                    End If
-
-                    _lastBuy = _AcquireWork.buyProduct(product)
-
-                    addLogOperation($"buyProduct created {IsNothing(_lastBuy)}")
-
-                    If (_lastBuy.id.Length = 0) Then
-                        addLogOperation($"  not good!")
-
-                        If (_lastBuy.amount = 0) Then
-                            addLogOperation($"  amount = 0")
-                            stopRestockForFund = True
-
-                            _CurrentFundFree = AreaState.accounts("USDT".ToLower()).valueUSDT
-                        End If
-                    Else
-                        addLogOperation("  buy not complete")
-                    End If
-                End If
-
-                Return True
-            Catch ex As Exception
-                MessageBox.Show($"Problem during {product.header.name} checkAndRestockIt - " & ex.Message)
-
-                Return False
-            End Try
-        End Function
-
-        Private Function tryRestockAll() As Boolean
-            Dim inDeal As New List(Of Models.Products.ProductModel)
-            Dim inDealOrdered As New List(Of Models.Products.ProductModel)
-            Dim currentMaxDeal As Models.Products.ProductModel
-            Dim productName As String
-            Dim index As Integer
-            Dim repeat As Boolean = True
-
-            addLogOperation("TryRestockAll - try to restock all with major deal tecnique")
-
-            Do While repeat
-
-                repeat = False
-
-                Try
-                    For Each product In AreaState.products.items
-                        If product.activity.inUse Then
-                            If product.inDeal(AreaState.automaticBot.settings.dealAcquireOnPercentage) Then
-                                inDeal.Add(product)
-                            End If
-                        End If
-                    Next
-                Catch ex As Exception
-                    inDeal = New List(Of Models.Products.ProductModel)
-
-                    repeat = True
-                End Try
-
-                Threading.Thread.Sleep(10)
-            Loop
-
-            addLogOperation("TryRestockAll - deal list created")
-
-            Do While (inDeal.Count > 1)
-                currentMaxDeal = inDeal(index)
-
-                For index = 1 To inDeal.Count - 1
-                    If currentMaxDeal.currentSpreadPerc < inDeal(index).currentSpreadPerc Then
-                        currentMaxDeal = inDeal(index)
-                    End If
-                Next
-
-                inDealOrdered.Add(currentMaxDeal)
-                inDeal.Remove(currentMaxDeal)
-
-                Threading.Thread.Sleep(10)
-            Loop
-
-            If inDeal.Count > 0 Then
-                inDealOrdered.Add(inDeal(0))
-
-                inDeal.RemoveAt(0)
-            End If
-
-            addLogOperation("TryRestockAll - Reorder list")
-
-            Try
-                Dim buyInSent As Models.Products.ProductOrderModel
-
-                For Each product In inDealOrdered
-                    productName = product.header.name
-
-                    If Not IsNothing(buyInSent) Then
-                        If (buyInSent.id.Length = 0) Then
-                            Threading.Thread.Sleep(10)
-                        End If
-
-                        If (buyInSent.id.Length <> 0) Then
-                            Do While (buyInSent.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Or (buyInSent.state = Models.Bot.BotOrderModel.OrderStateEnumeration.placed)
-                                Threading.Thread.Sleep(500)
-                            Loop
-                        End If
-                    End If
-
-                    addLogOperation("Try to rebuy " & product.header.name)
-
-                    buyInSent = _AcquireWork.buyProduct(product)
-
-                    If (buyInSent.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
-                        Threading.Thread.Sleep(1000)
-                    Else
-                        Threading.Thread.Sleep(50)
-                    End If
-                Next
-            Catch ex As Exception
-                addLogOperation($"Problem during {productName} completeInvestProducts - " & ex.Message)
-            End Try
-
-            stopRestockForFund = False
-            _CurrentFundFree = 0
-
-            Return True
-        End Function
 
         Private Function checkProductInformation() As Boolean
             Dim currentTime As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-
-            If (_lastInternalWork = 0) Or (currentTime > _lastInternalWork + 60000) Then
-                _lastInternalWork = currentTime
-            Else
-                Return False
-            End If
 
             For Each product In AreaState.products.items
                 If product.activity.inUse Then
@@ -220,18 +56,8 @@ Namespace AreaCommon.Engines.Bots
                     End If
 
                     Threading.Thread.Sleep(50)
-
-                    If Not stopRestockForFund Then
-                        checkAndRestockIt(product)
-                    End If
                 End If
             Next
-
-            If stopRestockForFund And (AreaState.accounts("USDT".ToLower).valueUSDT > _CurrentFundFree) Then
-                addLogOperation($"checkProductInformation stopRestockForFund = {stopRestockForFund} USDT={AreaState.accounts("USDT".ToLower).valueUSDT} CurrentFundFree = {_CurrentFundFree}")
-
-                tryRestockAll()
-            End If
 
             Return True
         End Function
@@ -249,30 +75,34 @@ Namespace AreaCommon.Engines.Bots
 
                             addLogOperation("tryReconciliation - addWatchOrder " & product.pairID)
 
-                            Watch.cancelOrderProduct(product.activity.openBuy.id)
+                            AreaState.exchangeProxy.cancelOrderProduct(product.activity.openBuy.id)
                         Else
                             If (product.activity.sell.id.Length > 0) Then
                                 addLogOperation("tryReconciliation - remove " & product.pairID & "  Order = " & product.activity.sell.id)
 
-                                Watch.cancelOrderProduct(product.activity.sell.id)
+                                AreaState.exchangeProxy.cancelOrderProduct(product.activity.sell.id)
 
                                 product.activity.sell = New Models.Products.ProductOrderModel
                             End If
 
-                            Watch.trades.add(product)
+                            Watch.trades.add(product, "Trades")
                             Watch.start()
                         End If
                     End If
                 Else
-                    addLogOperation("tryReconciliation - resetData " & product.pairID)
-
                     product.resetData()
                 End If
 
                 Threading.Thread.Sleep(50)
             Next
 
-            Return tryRestockAll()
+            addLogOperation($"Try reconciliation - InReconciliation = {_InReconciliation}")
+
+            If _InReconciliation Then
+                Return Watch.tryRestockAll()
+            Else
+                Return True
+            End If
         End Function
 
         ''' <summary>
@@ -309,8 +139,8 @@ Namespace AreaCommon.Engines.Bots
 
                     addLogOperation("AutomaticBot - In worktime")
 
-                    Do While ((_StartBlockWork + (24 * 60 * 60000)) > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) And inWorkJob
-                        Threading.Thread.Sleep(100)
+                    Do While ((_StartBlockWork + (12 * 60 * 60000)) > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) And inWorkJob
+                        Threading.Thread.Sleep(60 * 60 * 1000)
 
                         checkProductInformation()
                     Loop
@@ -319,6 +149,43 @@ Namespace AreaCommon.Engines.Bots
                 inWorkJob = False
             End Try
         End Sub
+
+        Public Function buyProduct(ByVal product As AreaCommon.Models.Products.ProductModel) As Boolean
+            Try
+                Dim startTime As Double
+
+                lastBuy = _AcquireWork.buyProduct(product)
+
+                startTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+
+                Do While (lastBuy.id.Length = 0) And ((startTime + 5000) > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
+                    Threading.Thread.Sleep(100)
+                Loop
+
+                Return True
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+
+        Public Function buyProductComplete(ByRef product As AreaCommon.Models.Products.ProductModel) As Models.Products.ProductOrderModel
+            Try
+                Dim result As Models.Products.ProductOrderModel
+                Dim startTime As Double
+
+                result = _AcquireWork.buyProduct(product)
+
+                startTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+
+                Do While (lastBuy.id.Length = 0) And ((startTime + 5000) > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
+                    Threading.Thread.Sleep(100)
+                Loop
+
+                Return result
+            Catch ex As Exception
+                Return New Models.Products.ProductOrderModel
+            End Try
+        End Function
 
         ''' <summary>
         ''' This method provide to start a Automatic bot job
@@ -346,6 +213,7 @@ Namespace AreaCommon.Engines.Bots
             inWorkJob = False
 
             Watch.clear()
+            Watch.stop()
 
             Return True
         End Function

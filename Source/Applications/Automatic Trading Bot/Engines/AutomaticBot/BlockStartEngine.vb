@@ -71,6 +71,7 @@ Namespace AreaCommon.Engines.Bots
 
         Public Function [run]() As Boolean
             Dim proceed As Boolean = True
+            Dim startWait As Double = 5 * 60000
 
             If proceed Then
                 Threading.Thread.Sleep(50)
@@ -87,12 +88,16 @@ Namespace AreaCommon.Engines.Bots
                 proceed = changeInBlockSell()
             End If
             If proceed Then
-                addLogOperation("BlockStartEngine.run - Wait to close run")
+                startWait += CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime
 
-                Do While (Watch.orders.count > 0)
-                    Threading.Thread.Sleep(100)
+                addLogOperation($"BlockStartEngine.run - Wait to close run - Now = {CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime} - startWait = {startWait} - Orders.count = {Watch.orders.count}")
+
+                Do While (Watch.orders.count > 0) And (startWait > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime)
+                    Threading.Thread.Sleep(250)
                 Loop
             End If
+
+            addLogOperation($"BlockStartEngine.run - close")
 
             Return proceed
         End Function

@@ -84,31 +84,6 @@ Namespace AreaCommon.Engines.Orders
             End Try
         End Function
 
-        '        ''' <summary>
-        '        ''' This method provide to add a new order to the service
-        '        ''' </summary>
-        '        ''' <param name="productId"></param>
-        '        ''' <param name="orderId"></param>
-        '        ''' <param name="orderNumber"></param>
-        '        ''' <returns></returns>
-        '        Public Function startMonitorOrder(ByVal productId As String, ByVal orderId As String, ByVal orderNumber As String, Optional ByVal cancelProductInformation As Boolean = False) As Boolean
-        '            If Not AreaState.orders.ContainsKey(orderId) Then
-        '                Dim newSimply As New Models.Order.SimplyOrderModel
-
-        '                newSimply.accountCredentials = AreaState.defaultUserDataAccount.exchangeAccess
-        '                newSimply.productId = productId
-        '                newSimply.internalOrderId = orderId
-        '                newSimply.publicOrderId = orderNumber
-        '                newSimply.cancelProductInformation = cancelProductInformation
-
-        '                AreaState.orders.Add(orderId, newSimply)
-
-        '                Orders.start()
-        '            End If
-
-        '            Return True
-        '        End Function
-
         Public Async Sub placeOrder(ByVal product As AreaCommon.Models.Products.ProductModel, ByVal data As Models.Products.ProductOrderModel, Optional sideBuy As Boolean = True, Optional ByVal cancelProductInformation As Boolean = False)
             Dim order As Coinbase.Pro.Models.Order
             Dim side As Coinbase.Pro.Models.OrderSide
@@ -133,14 +108,17 @@ Namespace AreaCommon.Engines.Orders
                     data.id = order.Id
                     data.state = Models.Bot.BotOrderModel.OrderStateEnumeration.placed
 
-                    addLogOperation($"placeOrder {order.Id}")
+                    Watch.orders.add(product, "Orders")
 
-                    Watch.orders.add(product)
+                    addLogOperation($"placeOrder {order.Id} - Watch.start")
+
                     Watch.start()
 
+                    product.activity.dateLastCheck = 0
                 End If
             Catch ex As Exception
-                MessageBox.Show($"Problem during placeOrder {side} {product.pairID} {CDec(data.tcoQuote)} {CDec(Math.Abs(data.amount))} {CDec(data.maxPrice)} - " & ex.Message)
+                addLogOperation($"Problem during placeOrder {side} {product.pairID} {CDec(data.tcoQuote)} {CDec(Math.Abs(data.amount))} {CDec(data.maxPrice)} - " & ex.Message)
+                'MessageBox.Show($"Problem during placeOrder {side} {product.pairID} {CDec(data.tcoQuote)} {CDec(Math.Abs(data.amount))} {CDec(data.maxPrice)} - " & ex.Message)
             End Try
         End Sub
 

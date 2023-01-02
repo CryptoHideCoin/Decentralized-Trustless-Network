@@ -4,6 +4,7 @@
     <StartArguments>E:\Data\Tenant\Maugeri</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <StartArguments>E:\Data\Tenant\Maugeri</StartArguments>
+    <StartArguments>E:\Data\Tenant\Real</StartArguments>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
 </Project>

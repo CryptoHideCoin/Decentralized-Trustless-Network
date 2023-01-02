@@ -177,10 +177,6 @@ Namespace AreaCommon.Engines.Pairs
 
                         tick = Engine.IO.readTickValue(pair.key)
 
-                        If pair.key.CompareTo("NCT-USDT") = 0 Then
-                            tick.time = tick.time
-                        End If
-
                         If (tick.time > 0) Then
                             If (pair.lastUpdateTick < tick.time) Then
                                 pair.lastUpdateTick = tick.time
@@ -261,7 +257,17 @@ Namespace AreaCommon.Engines.Pairs
                 If (TypeName(msg).ToUpper.CompareTo("ErrorEvent".ToUpper) = 0) Then
                     ee = msg
 
-                    MessageBox.Show("Error subscription ticker = " & ee.Message)
+                    If ee.Reason.ToString.Contains("is not a valid product") Then
+                        Dim keyProduct As String = ee.Reason.ToString.Replace("is not a valid product", "").TrimEnd()
+
+                        AreaState.products.getCurrency(keyProduct).userData.preference = Models.Products.ProductUserDataModel.PreferenceEnumeration.automaticDisabled
+
+                        AreaState.pairs.Remove(keyProduct)
+
+                        addLogOperation("Error message subscription receiver ticker = " & ee.Message & " " & keyProduct & " is removed")
+                    Else
+                        addLogOperation("Error message subscription receiver ticker = " & ee.Message & " " & ee.Reason)
+                    End If
                 End If
             End If
 

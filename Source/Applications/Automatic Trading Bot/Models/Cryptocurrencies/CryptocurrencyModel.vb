@@ -285,33 +285,19 @@ Namespace AreaCommon.Models.Products
 
         Public ReadOnly Property currentTargetReached() As Boolean
             Get
-                Return (currentValue > activity.target)
+                Return (currentValue >= activity.target)
             End Get
         End Property
 
         Public Function inDeal(ByVal dealPercValue As Double) As Boolean
-            Dim perc As Double = 0
-
             If (activity.totalInvestment = 0) Then
                 Return False
             Else
-                perc = currentSpread / activity.totalInvestment * 100
-
-                If (perc) < 0 Then
-                    perc = Math.Abs(perc)
-
-                    If (perc = 0) Then
-                        Return False
-                    Else
-                        Return (perc >= dealPercValue)
-                    End If
-                End If
-
-                Return False
+                Return (dealValue(dealPercValue) >= value.current)
             End If
         End Function
 
-        Public Function dealValue(ByVal dealPercValue As Double) As Boolean
+        Public Function dealValue(ByVal dealPercValue As Double) As Double
             With activity.lastBuy
                 Return .maxPrice - (.maxPrice * dealPercValue / 100)
             End With
@@ -334,7 +320,7 @@ Namespace AreaCommon.Models.Products
             Return Math.Truncate((activity.lastBuy.dateAcquire - activity.firstBuy.dateAcquire) / 1000 / 60 / 24 / 7)
         End Function
 
-        Public Function switchTarget(Optional ByVal useMax As Boolean = True) As Boolean
+        Public Function switchTarget(Optional ByVal useMax As Boolean = True, Optional ByVal fromBuy As Boolean = False) As Boolean
             useMaxTarget = useMax
 
             If useMax Then
@@ -345,18 +331,32 @@ Namespace AreaCommon.Models.Products
 
             activity.target = activity.totalInvestment + (activity.totalInvestment * applyTargetPercent / 100)
 
-            If (activity.sell.state = Bot.BotOrderModel.OrderStateEnumeration.placed) Then
-                Dim clientPro As Coinbase.Pro.CoinbaseProClient
-
-                clientPro = New Coinbase.Pro.CoinbaseProClient(New Coinbase.Pro.Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
-
-                clientPro.Orders.CancelOrderByIdAsync(activity.sell.id)
+            If fromBuy Then
+                Return True
             End If
 
-            Engines.Watch.trades.remove(Me)
-            Engines.Watch.trades.add(Me)
+            ' Devo cancellare l'ordine in corso se non è aperto ...
+            If Not AreaState.exchangeProxy.getOpenOrder(activity.sell.id) Then
+                Try
+                    Dim clientPro As Coinbase.Pro.CoinbaseProClient
 
-            Engines.Watch.start()
+                    clientPro = New Coinbase.Pro.CoinbaseProClient(New Coinbase.Pro.Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
+
+                    clientPro.Orders.CancelOrderByIdAsync(activity.sell.id)
+
+                    addLogOperation($"switchTarget - after Cancel Order {activity.sell.id}")
+
+                    activity.sell = New ProductOrderModel
+
+                    Engines.Watch.orders.remove(Me, "Orders")
+
+                    Engines.Watch.start()
+                Catch ex As Exception
+                    addLogOperation($"switchTarget - Error {activity.sell.id} - {ex.Message}")
+                End Try
+            End If
+
+            Engines.Watch.trades.add(Me, "Trades")
 
             Return True
         End Function

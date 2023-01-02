@@ -172,7 +172,17 @@ AutomaticTBS
  <param name="item"></param>
  <returns></returns>
 </member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Watch.WatchModule.startServiceWatch">
+<member name="M:AutomaticTBS.AreaCommon.Engines.Watch.WatchModule.startServiceOrderWatch">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Watch.WatchModule.startServiceTradeWatch">
+ <summary>
+ This method provide to start service processor
+ </summary>
+</member>
+<member name="M:AutomaticTBS.AreaCommon.Engines.Watch.WatchModule.startServiceTryRestockAll">
  <summary>
  This method provide to start service processor
  </summary>

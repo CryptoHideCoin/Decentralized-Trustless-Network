@@ -78,7 +78,7 @@ Partial Class AutomaticBotSetting
         Me.actionButton.Location = New System.Drawing.Point(435, 300)
         Me.actionButton.Name = "actionButton"
         Me.actionButton.Size = New System.Drawing.Size(84, 38)
-        Me.actionButton.TabIndex = 7
+        Me.actionButton.TabIndex = 9
         Me.actionButton.Text = "START"
         Me.actionButton.UseVisualStyleBackColor = True
         '
@@ -189,7 +189,7 @@ Partial Class AutomaticBotSetting
         Me.earnConfigurationValue.Location = New System.Drawing.Point(158, 225)
         Me.earnConfigurationValue.Name = "earnConfigurationValue"
         Me.earnConfigurationValue.Size = New System.Drawing.Size(179, 21)
-        Me.earnConfigurationValue.TabIndex = 5
+        Me.earnConfigurationValue.TabIndex = 6
         '
         'earnConfigurationLabel
         '
@@ -207,7 +207,7 @@ Partial Class AutomaticBotSetting
         Me.backValue.Location = New System.Drawing.Point(158, 252)
         Me.backValue.Name = "backValue"
         Me.backValue.Size = New System.Drawing.Size(179, 21)
-        Me.backValue.TabIndex = 6
+        Me.backValue.TabIndex = 7
         Me.backValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'backLabel
@@ -308,7 +308,7 @@ Partial Class AutomaticBotSetting
         Me.dealIntervalValue.Location = New System.Drawing.Point(158, 185)
         Me.dealIntervalValue.Name = "dealIntervalValue"
         Me.dealIntervalValue.Size = New System.Drawing.Size(179, 21)
-        Me.dealIntervalValue.TabIndex = 49
+        Me.dealIntervalValue.TabIndex = 5
         Me.dealIntervalValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'dealIntervalLabel
