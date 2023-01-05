@@ -317,7 +317,7 @@ Namespace AreaCommon.Models.Products
         End Function
 
         Private Function numWeekStock() As Integer
-            Return Math.Truncate((activity.lastBuy.dateAcquire - activity.firstBuy.dateAcquire) / 1000 / 60 / 24 / 7)
+            Return Math.Truncate((activity.lastBuy.dateAcquire - activity.firstBuy.dateAcquire) / 1000 / 60 / 60 / 24 / 7)
         End Function
 
         Public Function switchTarget(Optional ByVal useMax As Boolean = True, Optional ByVal fromBuy As Boolean = False) As Boolean
@@ -331,11 +331,16 @@ Namespace AreaCommon.Models.Products
 
             activity.target = activity.totalInvestment + (activity.totalInvestment * applyTargetPercent / 100)
 
+            addLogOperation($"switchTarget {Me.header.key} totalInvestment = {activity.totalInvestment} useMax = {useMaxTarget} numWeekStock = {numWeekStock()} activity.target = {activity.target}")
+
             If fromBuy Then
                 Return True
             End If
 
-            ' Devo cancellare l'ordine in corso se non è aperto ...
+            If (activity.sell.id.Length = 0) Then
+                Return True
+            End If
+
             If Not AreaState.exchangeProxy.getOpenOrder(activity.sell.id) Then
                 Try
                     Dim clientPro As Coinbase.Pro.CoinbaseProClient

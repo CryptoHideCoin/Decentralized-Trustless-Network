@@ -130,7 +130,11 @@ Namespace AreaCommon.Engines.Bots
                     buyInSent = buyProduct(product)
 
                     If (buyInSent.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
-                        Threading.Thread.Sleep(1000)
+                        Threading.Thread.Sleep(2000)
+
+                        If (buyInSent.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
+                            product.activity.removeOpenBuy()
+                        End If
                     Else
                         Threading.Thread.Sleep(50)
                     End If
@@ -185,8 +189,6 @@ Namespace AreaCommon.Engines.Bots
                         buy.maxPrice = roundBase(product.value.current + (product.value.current / 100), product.header.quoteIncrement, True)
                     End If
 
-                    addLogOperation($"buyProduct {product.header.key} currentFundAvailable = {totalValue} orderValue = {orderValue} qty = {buy.amount} maxPrice = {buy.maxPrice}")
-
                     orderValue = buy.amount * buy.maxPrice
 
                     If Not reStockMode Then
@@ -195,12 +197,22 @@ Namespace AreaCommon.Engines.Bots
 
                     buy.tcoQuote = roundBase(orderValue, product.header.quoteIncrement, True)
 
+                    addLogOperation($"buyProduct {product.header.key} currentFundAvailable = {totalValue} orderValue = {orderValue} qty = {buy.amount} maxPrice = {buy.maxPrice} tco = {buy.tcoQuote} minMarketFunds = {product.header.minMarketFunds}")
+
                     If (buy.tcoQuote > product.header.minMarketFunds) And (totalValue > buy.tcoQuote) Then
                         buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented
 
                         product.activity.buys.Add(buy)
 
-                        Orders.placeOrder(product, buy)
+                        AreaState.exchangeProxy.placeOrder(product, buy)
+
+                        If (buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
+                            Threading.Thread.Sleep(2000)
+
+                            If (buy.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
+                                product.activity.removeOpenBuy()
+                            End If
+                        End If
                     End If
                 Else
                     addLogOperation($"buyProduct {product.header.key} orderValue = {orderValue} bottomPercentPosition = {product.value.bottomPercentPosition} unitStep = {AreaState.automaticBot.settings.unitStep}")

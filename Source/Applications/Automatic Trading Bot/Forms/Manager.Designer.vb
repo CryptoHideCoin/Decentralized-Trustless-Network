@@ -337,6 +337,8 @@ Partial Class Manager
         Me.Label69 = New System.Windows.Forms.Label()
         Me.timerMain = New System.Windows.Forms.Timer(Me.components)
         Me.updateBotsTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.nextCloseBlockValue = New System.Windows.Forms.TextBox()
+        Me.Label68 = New System.Windows.Forms.Label()
         Me.menuMain.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.currenciesPage.SuspendLayout()
@@ -927,8 +929,8 @@ Partial Class Manager
         '
         Me.journalSplit.Panel1.Controls.Add(Me.daySummaryButton)
         Me.journalSplit.Panel1.Controls.Add(Me.summaryButton)
-        Me.journalSplit.Panel1.Controls.Add(Me.dayPanel)
         Me.journalSplit.Panel1.Controls.Add(Me.SummaryPanel)
+        Me.journalSplit.Panel1.Controls.Add(Me.dayPanel)
         '
         'journalSplit.Panel2
         '
@@ -1466,6 +1468,8 @@ Partial Class Manager
         '
         'SummaryPanel
         '
+        Me.SummaryPanel.Controls.Add(Me.nextCloseBlockValue)
+        Me.SummaryPanel.Controls.Add(Me.Label68)
         Me.SummaryPanel.Controls.Add(Me.Label62)
         Me.SummaryPanel.Controls.Add(Me.totalFundValue)
         Me.SummaryPanel.Controls.Add(Me.Label63)
@@ -1575,7 +1579,7 @@ Partial Class Manager
         'Label66
         '
         Me.Label66.AutoSize = True
-        Me.Label66.Location = New System.Drawing.Point(34, 180)
+        Me.Label66.Location = New System.Drawing.Point(36, 180)
         Me.Label66.Name = "Label66"
         Me.Label66.Size = New System.Drawing.Size(42, 13)
         Me.Label66.TabIndex = 83
@@ -1797,7 +1801,7 @@ Partial Class Manager
         'earnLabel
         '
         Me.earnLabel.AutoSize = True
-        Me.earnLabel.Location = New System.Drawing.Point(44, 126)
+        Me.earnLabel.Location = New System.Drawing.Point(45, 126)
         Me.earnLabel.Name = "earnLabel"
         Me.earnLabel.Size = New System.Drawing.Size(33, 13)
         Me.earnLabel.TabIndex = 54
@@ -1853,7 +1857,7 @@ Partial Class Manager
         'feeLabel
         '
         Me.feeLabel.AutoSize = True
-        Me.feeLabel.Location = New System.Drawing.Point(49, 99)
+        Me.feeLabel.Location = New System.Drawing.Point(51, 99)
         Me.feeLabel.Name = "feeLabel"
         Me.feeLabel.Size = New System.Drawing.Size(27, 13)
         Me.feeLabel.TabIndex = 48
@@ -1881,7 +1885,7 @@ Partial Class Manager
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(20, 152)
+        Me.Label19.Location = New System.Drawing.Point(21, 152)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(57, 13)
         Me.Label19.TabIndex = 45
@@ -1966,7 +1970,7 @@ Partial Class Manager
         'initialFundLabel
         '
         Me.initialFundLabel.AutoSize = True
-        Me.initialFundLabel.Location = New System.Drawing.Point(9, 45)
+        Me.initialFundLabel.Location = New System.Drawing.Point(10, 45)
         Me.initialFundLabel.Name = "initialFundLabel"
         Me.initialFundLabel.Size = New System.Drawing.Size(68, 13)
         Me.initialFundLabel.TabIndex = 36
@@ -2020,7 +2024,7 @@ Partial Class Manager
         'initialDateLabel
         '
         Me.initialDateLabel.AutoSize = True
-        Me.initialDateLabel.Location = New System.Drawing.Point(13, 18)
+        Me.initialDateLabel.Location = New System.Drawing.Point(14, 18)
         Me.initialDateLabel.Name = "initialDateLabel"
         Me.initialDateLabel.Size = New System.Drawing.Size(64, 13)
         Me.initialDateLabel.TabIndex = 30
@@ -3153,6 +3157,24 @@ Partial Class Manager
         '
         Me.updateBotsTimer.Interval = 1000
         '
+        'nextCloseBlockValue
+        '
+        Me.nextCloseBlockValue.Location = New System.Drawing.Point(83, 204)
+        Me.nextCloseBlockValue.Name = "nextCloseBlockValue"
+        Me.nextCloseBlockValue.ReadOnly = True
+        Me.nextCloseBlockValue.Size = New System.Drawing.Size(163, 21)
+        Me.nextCloseBlockValue.TabIndex = 90
+        Me.nextCloseBlockValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label68
+        '
+        Me.Label68.AutoSize = True
+        Me.Label68.Location = New System.Drawing.Point(12, 207)
+        Me.Label68.Name = "Label68"
+        Me.Label68.Size = New System.Drawing.Size(66, 13)
+        Me.Label68.TabIndex = 89
+        Me.Label68.Text = "Next close"
+        '
         'Manager
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 13.0!)
@@ -3471,4 +3493,6 @@ Partial Class Manager
     Friend WithEvents DataGridViewTextBoxColumn11 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn12 As DataGridViewTextBoxColumn
     Friend WithEvents currentInDealColumn As DataGridViewTextBoxColumn
+    Friend WithEvents nextCloseBlockValue As TextBox
+    Friend WithEvents Label68 As Label
 End Class

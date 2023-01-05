@@ -88,20 +88,20 @@ Namespace AreaCommon.Models.Journal
 
         Public ReadOnly Property increasePerc As Double
             Get
-                If (increase = 0) Or (currentFund = 0) Then
+                If (increase = 0) Or (initialFundFree + initialFundManage = 0) Then
                     Return 0
                 Else
-                    Return (increase / currentFund * 100)
+                    Return (increase / (initialFundFree + initialFundManage) * 100)
                 End If
             End Get
         End Property
 
         Public ReadOnly Property averageIncrease As Double
             Get
-                If increase = 0 Then
+                If (increasePerc = 0) Then
                     Return 0
                 Else
-                    Return (increase / numPage)
+                    Return (increasePerc / numPage)
                 End If
             End Get
         End Property

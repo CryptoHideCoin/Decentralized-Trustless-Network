@@ -204,12 +204,6 @@ AutomaticTBS
  </summary>
  <returns></returns>
 </member>
-<member name="M:AutomaticTBS.AreaCommon.Engines.Orders.OrderModule.closeAllOrders(System.String)">
- <summary>
- This method provide to check into all active orders the pair
- </summary>
- <param name="pair"></param>
-</member>
 <member name="M:AutomaticTBS.AreaCommon.Engines.Pairs.PairModule.updateTick(AutomaticTBS.AreaCommon.Models.Pair.PairInformation)">
  <summary>
  This method provide to update tick pair

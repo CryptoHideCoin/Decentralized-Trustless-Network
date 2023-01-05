@@ -1,10 +1,10 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports Coinbase.Pro
-Imports Coinbase.Pro.WebSockets
-Imports Coinbase.Pro.Models
-Imports WebSocket4Net
+'Imports Coinbase.Pro
+'Imports Coinbase.Pro.WebSockets
+'Imports Coinbase.Pro.Models
+'Imports WebSocket4Net
 
 
 
@@ -24,24 +24,20 @@ Namespace AreaCommon.Engines.Pairs
         Private Const c_Second As Double = 1000
         Private Const c_Minute As Double = c_Second * 60
 
-
-        Private Property _InWorkJob As Boolean = False
-        Private Property _ClientPro As New CoinbaseProClient
-
-        Private Property _Sub As Subscription = New Subscription
-        Private Property _Socket As CoinbaseProWebSocket
+        'Private Property _ClientPro As New CoinbaseProClient
 
         Private Property _LastUpdateTick As Double = 0
         Private Property _SourceMode As SourceTickerEnum = SourceTickerEnum.undefined
 
-        Public Property lastSubscriptionTicker As Double = 0
+        Public Property inWorkJob As Boolean = False
 
 
-        Private Async Sub manageFilledProductInformation(ByVal pair As String)
+        Public Async Sub manageFilledProductInformation(ByVal pair As String)
             With AreaState.products.getCurrency(pair.Split("-")(0)).header
                 If (.name.Length > 0) And (.baseIncrement.Length = 0) Then
 
-                    Dim currency = Await _ClientPro.MarketData.GetSingleProductAsync(pair)
+                    'Dim currency = Await _ClientPro.MarketData.GetSingleProductAsync(pair)
+                    Dim currency = Await AreaState.exchangeProxy.getSingleProduct(pair)
 
                     .baseIncrement = currency.BaseIncrement.ToString()
                     .limitOnly = currency.LimitOnly
@@ -54,7 +50,6 @@ Namespace AreaCommon.Engines.Pairs
 
                 End If
             End With
-
         End Sub
 
         ''' <summary>
@@ -66,7 +61,8 @@ Namespace AreaCommon.Engines.Pairs
                 pair.lastUpdateTick = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
                 _LastUpdateTick = pair.lastUpdateTick
 
-                Dim market = Await _ClientPro.MarketData.GetTickerAsync(pair.key)
+                'Dim market = Await _ClientPro.MarketData.GetTickerAsync(pair.key)
+                Dim market = Await AreaState.exchangeProxy.getTicker(pair.key)
                 Dim tick As New Models.Pair.TickInformation
 
                 pair.currentValue = market.Price
@@ -110,7 +106,6 @@ Namespace AreaCommon.Engines.Pairs
             End Try
         End Sub
 
-
         ''' <summary>
         ''' This method provide to process a pair
         ''' </summary>
@@ -140,7 +135,7 @@ Namespace AreaCommon.Engines.Pairs
             Try
                 Dim currentIndex As Integer = 0
 
-                Do While _InWorkJob
+                Do While inWorkJob
                     If (AreaState.pairs.Count > 0) Then
                         If (currentIndex + 1 > AreaState.pairs.Count) Then
                             currentIndex = 0
@@ -154,7 +149,7 @@ Namespace AreaCommon.Engines.Pairs
                     Threading.Thread.Sleep(100)
                 Loop
             Catch ex As Exception
-                _InWorkJob = False
+                inWorkJob = False
             End Try
         End Sub
 
@@ -167,7 +162,7 @@ Namespace AreaCommon.Engines.Pairs
                 Dim pair As Models.Pair.PairInformation
                 Dim tick As New Models.Pair.TickInformation
 
-                Do While _InWorkJob
+                Do While inWorkJob
                     If (AreaState.pairs.Count > 0) Then
                         If (currentIndex + 1 > AreaState.pairs.Count) Then
                             currentIndex = 0
@@ -183,6 +178,7 @@ Namespace AreaCommon.Engines.Pairs
                                 pair.currentValue = tick.value
 
                                 AreaState.updateChange(pair.key, pair.currentValue)
+
                                 manageFilledProductInformation(pair.key)
 
                                 If (pair.currentRelativeAverageValue = 0) Then
@@ -201,113 +197,7 @@ Namespace AreaCommon.Engines.Pairs
                     Threading.Thread.Sleep(10)
                 Loop
             Catch ex As Exception
-                _InWorkJob = False
-            End Try
-
-        End Sub
-
-        Sub RawSocket_MessageReceived(sender As Object, e As MessageReceivedEventArgs)
-            Dim msg As Object
-            Dim tb As TickerEvent
-            Dim ee As ErrorEvent
-
-            If WebSocketHelper.TryParse(e.Message, msg) Then
-                If (TypeName(msg).ToUpper.CompareTo("TickerEvent".ToUpper) = 0) Then
-                    tb = msg
-
-                    If AreaState.pairs.ContainsKey(tb.ProductId) Then
-                        Dim tick As New Models.Pair.TickInformation
-
-                        With AreaState.pairs(tb.ProductId)
-                            .currentValue = tb.Price
-
-                            tick.time = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-
-                            If (.currentRelativeAverageValue = 0) Then
-                                .currentRelativeAverageValue = tb.Price
-                            Else
-                                .currentRelativeAverageValue = (.currentRelativeAverageValue + tb.Price) / 2
-                            End If
-
-                            tick.value = tb.Price
-
-                            If (tb.Price > .currentRelativeAverageValue) Then
-                                tick.position = Models.Pair.TickInformation.tickPositionEnumeration.increase
-                            ElseIf tb.Price = .currentRelativeAverageValue Then
-                                tick.position = Models.Pair.TickInformation.tickPositionEnumeration.same
-                            Else
-                                tick.position = Models.Pair.TickInformation.tickPositionEnumeration.decrease
-                            End If
-
-                            .addNewItem(tick)
-
-                            If AreaState.defaultUserDataAccount.saveTickToFile Then
-                                Engine.IO.updateTickValue(.key, tick)
-                            End If
-
-                            .lastUpdateTick = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                        End With
-
-                        AreaState.updateChange(tb.ProductId, tb.Price)
-                        manageFilledProductInformation(tb.ProductId)
-
-                        lastSubscriptionTicker = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-                    End If
-                End If
-                If (TypeName(msg).ToUpper.CompareTo("ErrorEvent".ToUpper) = 0) Then
-                    ee = msg
-
-                    If ee.Reason.ToString.Contains("is not a valid product") Then
-                        Dim keyProduct As String = ee.Reason.ToString.Replace("is not a valid product", "").TrimEnd()
-
-                        AreaState.products.getCurrency(keyProduct).userData.preference = Models.Products.ProductUserDataModel.PreferenceEnumeration.automaticDisabled
-
-                        AreaState.pairs.Remove(keyProduct)
-
-                        addLogOperation("Error message subscription receiver ticker = " & ee.Message & " " & keyProduct & " is removed")
-                    Else
-                        addLogOperation("Error message subscription receiver ticker = " & ee.Message & " " & ee.Reason)
-                    End If
-                End If
-            End If
-
-        End Sub
-
-        Private Async Sub startSubscriptionProcessor()
-            Try
-                _Socket = New CoinbaseProWebSocket()
-
-                Dim result = Await _Socket.ConnectAsync()
-
-                If (Not result.Success) Then
-                    _InWorkJob = False
-                End If
-
-                AddHandler _Socket.RawSocket.MessageReceived, AddressOf RawSocket_MessageReceived
-
-                _Socket.RawSocket.AutoSendPingInterval = 60000
-                _Socket.RawSocket.EnableAutoSendPing = True
-
-                For Each pair In AreaState.pairs
-                    _Sub.ProductIds.Add(pair.Key)
-                Next
-
-                _Sub.Channels.Add("ticker")
-
-                Await _Socket.SubscribeAsync(_Sub)
-
-                Dim startTimer As Double = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
-
-                Do While _InWorkJob And (startTimer + 360000 > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
-                    Threading.Thread.Sleep(1000)
-                Loop
-
-                If _InWorkJob Then
-                    [stop]()
-                    start()
-                End If
-            Catch ex As Exception
-                _InWorkJob = False
+                inWorkJob = False
             End Try
         End Sub
 
@@ -320,7 +210,8 @@ Namespace AreaCommon.Engines.Pairs
             Try
                 Threading.Thread.Sleep(100)
 
-                Dim market = Await _ClientPro.MarketData.GetTickerAsync(value)
+                'Dim market = Await _ClientPro.MarketData.GetTickerAsync(value)
+                Dim market = Await AreaState.exchangeProxy.getTicker(value)
 
                 Threading.Thread.Sleep(100)
 
@@ -335,10 +226,10 @@ Namespace AreaCommon.Engines.Pairs
         ''' </summary>
         ''' <returns></returns>
         Public Function [start]() As Boolean
-            If Not _InWorkJob Then
+            If Not inWorkJob Then
                 Dim objWS As Threading.Thread
 
-                _InWorkJob = True
+                inWorkJob = True
 
                 If AreaState.defaultUserDataAccount.readTickFromFile Then
                     _SourceMode = SourceTickerEnum.readFromFile
@@ -347,7 +238,7 @@ Namespace AreaCommon.Engines.Pairs
                 ElseIf AreaState.defaultUserDataAccount.useSubscription Then
                     _SourceMode = SourceTickerEnum.subscription
 
-                    objWS = New Threading.Thread(AddressOf startSubscriptionProcessor)
+                    objWS = New Threading.Thread(AddressOf AreaState.exchangeProxy.startSubscriptionProcessor)
                 Else
                     _SourceMode = SourceTickerEnum.ticker
 
@@ -364,15 +255,7 @@ Namespace AreaCommon.Engines.Pairs
             _InWorkJob = False
 
             If (_SourceMode = SourceTickerEnum.subscription) Then
-                RemoveHandler _Socket.RawSocket.MessageReceived, AddressOf RawSocket_MessageReceived
-
-                _Socket.Dispose()
-
-                _Socket = Nothing
-
-                Task.Delay(TimeSpan.FromMinutes(1))
-
-                _Sub = New Subscription
+                AreaState.exchangeProxy.removeSubscription()
             End If
 
             Return True

@@ -42,13 +42,13 @@ Public Class DataPageDetail
         Next
     End Sub
 
-    Private Sub formatValue(ByRef control As Object, ByVal value As Double, Optional ByVal colorValue As Boolean = False)
+    Private Sub formatValue(ByRef control As Object, ByVal value As Double, Optional ByVal colorValue As Boolean = False, Optional ByVal mask As String = "#,##0.00")
         If (value = 0) Then
             control.Text = "---"
 
             control.ForeColor = Color.Black
         Else
-            control.Text = value.ToString("#,##0.00")
+            control.Text = value.ToString(mask)
 
             If colorValue Then
                 If (value < 0) Then
@@ -77,8 +77,8 @@ Public Class DataPageDetail
         formatValue(earnDayValue, datePage.earn, True)
         formatValue(totalFundValue, datePage.currentFund + datePage.freeFund)
 
-        formatValue(numBuyValue, datePage.buyNumber)
-        formatValue(numSellValue, datePage.sellNumber)
+        formatValue(numBuyValue, datePage.buyNumber,, "#,##0")
+        formatValue(numSellValue, datePage.sellNumber,, "#,##0")
 
         If (datePage.apy = 0) Then
             apyDayValue.Text = "---"

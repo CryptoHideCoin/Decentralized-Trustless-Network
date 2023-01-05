@@ -1,7 +1,7 @@
 ﻿Option Compare Text
 Option Explicit On
 
-Imports Coinbase.Pro
+Imports Coinbase.Pro.Models
 
 
 
@@ -12,7 +12,6 @@ Namespace AreaCommon.Engines.Accounts
     Module AccountModule
 
         Private Property _Init As Boolean = False
-        Private Property _ClientPro As CoinbaseProClient
         Private Property _InUnauthorized As Boolean = False
         Private Property _ShowInUnauthorizedMessage As Boolean = False
         Private Property _InWork As Boolean = False
@@ -30,7 +29,7 @@ Namespace AreaCommon.Engines.Accounts
             _InWork = True
 
             Try
-                Dim accounts = Await _ClientPro.Accounts.GetAllAccountsAsync()
+                Dim accounts = Await AreaState.exchangeProxy.GetAllAccounts()
                 Dim newAccounts As New Dictionary(Of String, Models.Account.AccountModel)
                 Dim singleNewAccount As Models.Account.AccountModel
                 Dim pairKey As String = ""
@@ -112,8 +111,6 @@ Namespace AreaCommon.Engines.Accounts
 
         Private Function init() As Boolean
             Try
-                _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
-
                 _Init = True
 
                 Return True

@@ -205,7 +205,6 @@
     <Compile Include="Engines\BotModule.vb" />
     <Compile Include="Engines\ProductsModule.vb" />
     <Compile Include="Engines\IOEngine.vb" />
-    <Compile Include="Engines\OrderModule.vb" />
     <Compile Include="Engines\PairModule.vb" />
     <Compile Include="Engines\AutomaticBot\BlockStartEngine.vb" />
     <Compile Include="Engines\Provider\ProviderCoinbasePro.vb" />

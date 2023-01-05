@@ -338,7 +338,11 @@ Namespace AreaCommon.Engines.Watch
                         buyInSent = AreaCommon.Engines.Bots.AutomaticBotModule.buyProductComplete(product)
 
                         If (buyInSent.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
-                            Threading.Thread.Sleep(1000)
+                            Threading.Thread.Sleep(2000)
+
+                            If (buyInSent.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
+                                product.activity.removeOpenBuy()
+                            End If
                         Else
                             Threading.Thread.Sleep(50)
                         End If
@@ -575,11 +579,19 @@ Namespace AreaCommon.Engines.Watch
                         .tcoQuote = roundBase(product.activity.target, product.header.quoteIncrement, True)
                         .state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented
 
-                        Engines.Orders.placeOrder(product, product.activity.sell, False)
+                        AreaState.exchangeProxy.placeOrder(product, product.activity.sell, False)
 
                         addLogOperation($"Watch.checkTrade - {product.header.key} order placed")
                     End If
                 End With
+
+                If (product.activity.sell.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
+                    Threading.Thread.Sleep(2000)
+
+                    If (product.activity.sell.state = Models.Bot.BotOrderModel.OrderStateEnumeration.sented) Then
+                        product.activity.sell = New Models.Products.ProductOrderModel
+                    End If
+                End If
 
                 Return False
             End If

@@ -15,7 +15,6 @@ Namespace AreaCommon.Engines.Bots
             workTime
         End Enum
 
-        Private Property _StartBlockWork As Double = 0
         Private Property _BlockWork As New BlockStartEngine
         Private Property _AcquireWork As New AcquireEngine
 
@@ -24,6 +23,7 @@ Namespace AreaCommon.Engines.Bots
         Public Property currentPhase As WorkerPhaseEnum = WorkerPhaseEnum.undefined
         Public Property inWorkJob As Boolean = False
         Public Property lastBuy As Models.Products.ProductOrderModel
+        Public Property startBlockWork As Double = 0
 
 
 
@@ -124,7 +124,11 @@ Namespace AreaCommon.Engines.Bots
                 tryReconciliation()
 
                 Do While inWorkJob
-                    _StartBlockWork = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    If _InReconciliation Then
+                        startBlockWork = AreaState.journal.currentBlockCounters.timeStart
+                    Else
+                        startBlockWork = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
+                    End If
 
                     If Not _InReconciliation Then
                         currentPhase = WorkerPhaseEnum.openNewBlock : _BlockWork.run()
@@ -139,8 +143,8 @@ Namespace AreaCommon.Engines.Bots
 
                     addLogOperation("AutomaticBot - In worktime")
 
-                    Do While ((_StartBlockWork + (12 * 60 * 60000)) > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) And inWorkJob
-                        Threading.Thread.Sleep(60 * 60 * 1000)
+                    Do While ((startBlockWork + (24 * 60 * 60000)) > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()) And inWorkJob
+                        Threading.Thread.Sleep(60 * 1000)
 
                         checkProductInformation()
                     Loop
@@ -177,7 +181,7 @@ Namespace AreaCommon.Engines.Bots
 
                 startTime = CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime()
 
-                Do While (lastBuy.id.Length = 0) And ((startTime + 5000) > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
+                Do While (result.id.Length = 0) And ((startTime + 5000) > CHCCommonLibrary.AreaEngine.Miscellaneous.timeStampFromDateTime())
                     Threading.Thread.Sleep(100)
                 Loop
 

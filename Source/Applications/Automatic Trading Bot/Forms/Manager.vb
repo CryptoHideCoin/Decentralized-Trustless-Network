@@ -713,6 +713,8 @@ Public Class Manager
             apyDayValue.ForeColor = earnDayValue.ForeColor
         End If
 
+        nextCloseBlockValue.Text = (AreaCommon.Engines.Bots.AutomaticBotModule.startBlockWork + (24 * 60 * 60000)).ToString()
+
         refreshDailyOrderGrid()
 
         ' --- Summary information
@@ -789,7 +791,7 @@ Public Class Manager
 
         ' --- Engines update
 
-        lastSubscriptionTime.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaCommon.Engines.Pairs.lastSubscriptionTicker), True)
+        lastSubscriptionTime.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaState.exchangeProxy.lastSubscriptionTicker), True)
         accountsServicePositionValue.Text = AreaCommon.Engines.Accounts.inWorkJob
         automaticBotPositionValue.Text = AreaCommon.Engines.Bots.AutomaticBotModule.inWorkJob
         botPhaseValue.Text = AreaCommon.Engines.Bots.AutomaticBotModule.currentPhase.ToString()
@@ -1311,14 +1313,14 @@ Public Class Manager
     Private Sub processConvertAccountToUSDT(ByVal account As String)
         Dim keyPair As String = account & "-USDT"
 
-        If AreaCommon.Engines.Orders.openOrders(keyPair).Result Then
-            AreaCommon.Engines.Orders.closeAllOrders(keyPair)
+        If AreaState.exchangeProxy.openOrders(keyPair).Result Then
+            AreaState.exchangeProxy.closeAllOrders(keyPair)
 
             Threading.Thread.Sleep(5000)
         End If
 
-        If Not AreaCommon.Engines.Orders.openOrders(keyPair).Result Then
-            AreaCommon.Engines.Orders.sellImmediatly(keyPair, AreaState.accounts(keyPair.ToLower).amount)
+        If Not AreaState.exchangeProxy.openOrders(keyPair).Result Then
+            AreaState.exchangeProxy.sellImmediatly(keyPair, AreaState.accounts(keyPair.ToLower).amount)
 
             AreaState.products.getCurrency(keyPair.Split("-")(0).ToUpper).resetData()
         Else
@@ -1326,7 +1328,6 @@ Public Class Manager
 
             Return
         End If
-
     End Sub
 
     Private Sub ConvertToUSDTToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConvertToUSDTToolStripMenuItem.Click
