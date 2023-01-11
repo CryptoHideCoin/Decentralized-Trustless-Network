@@ -1,0 +1,16 @@
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\net45\Advanced.Trade.csprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\net45\Advanced.Trade.sourcelink.json
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\net45\Advanced.Trade.AssemblyInfoInputs.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\net45\Advanced.Trade.AssemblyInfo.cs
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\bin\Debug\net45\Advanced.Trade.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\bin\Debug\net45\Advanced.Trade.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\bin\Debug\net45\Advanced.Trade.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\bin\Debug\net45\Flurl.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\bin\Debug\net45\Flurl.Http.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\bin\Debug\net45\Newtonsoft.Json.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\bin\Debug\net45\SuperSocket.ClientEngine.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\bin\Debug\net45\WebSocket4Net.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\net45\Advanced.Trade.csproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\net45\Advanced.Trade.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\net45\Advanced.Trade.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\net45\Advanced.Trade.pdb

@@ -90,9 +90,6 @@ Namespace AreaCommon.Provider
 
         End Sub
 
-
-
-
         Public Function cancelOrderProduct(ByVal id As String) As Boolean
             If IsNothing(_ClientPro) Then
                 _ClientPro = New CoinbaseProClient(New Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})

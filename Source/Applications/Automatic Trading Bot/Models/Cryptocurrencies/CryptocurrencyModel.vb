@@ -339,29 +339,31 @@ Namespace AreaCommon.Models.Products
 
             If (activity.sell.id.Length = 0) Then
                 Return True
+            Else
+                Engines.Watch.cancelOpenOrder(activity.sell.id, False, False, True)
             End If
 
-            If Not AreaState.exchangeProxy.getOpenOrder(activity.sell.id) Then
-                Try
-                    Dim clientPro As Coinbase.Pro.CoinbaseProClient
+            'If Not AreaState.exchangeProxy.getOpenOrder(activity.sell.id) Then
+            '    Try
+            '        Dim clientPro As Coinbase.Pro.CoinbaseProClient
 
-                    clientPro = New Coinbase.Pro.CoinbaseProClient(New Coinbase.Pro.Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
+            '        clientPro = New Coinbase.Pro.CoinbaseProClient(New Coinbase.Pro.Config With {.ApiKey = AreaState.defaultUserDataAccount.exchangeAccess.APIKey, .Passphrase = AreaState.defaultUserDataAccount.exchangeAccess.passphrase, .Secret = AreaState.defaultUserDataAccount.exchangeAccess.secret, .ApiUrl = AreaState.defaultUserDataAccount.exchangeAccess.apiURL})
 
-                    clientPro.Orders.CancelOrderByIdAsync(activity.sell.id)
+            '        clientPro.Orders.CancelOrderByIdAsync(activity.sell.id)
 
-                    addLogOperation($"switchTarget - after Cancel Order {activity.sell.id}")
+            '        addLogOperation($"switchTarget - after Cancel Order {activity.sell.id}")
 
-                    activity.sell = New ProductOrderModel
+            '        activity.sell = New ProductOrderModel
 
-                    Engines.Watch.orders.remove(Me, "Orders")
+            '        Engines.Watch.orders.remove(Me, "Orders")
 
-                    Engines.Watch.start()
-                Catch ex As Exception
-                    addLogOperation($"switchTarget - Error {activity.sell.id} - {ex.Message}")
-                End Try
-            End If
+            '        Engines.Watch.start()
+            '    Catch ex As Exception
+            '        addLogOperation($"switchTarget - Error {activity.sell.id} - {ex.Message}")
+            '    End Try
+            'End If
 
-            Engines.Watch.trades.add(Me, "Trades")
+            'Engines.Watch.trades.add(Me, "Trades")
 
             Return True
         End Function

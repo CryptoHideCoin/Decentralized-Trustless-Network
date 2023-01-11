@@ -79,7 +79,7 @@ Namespace AreaCommon.Engines.Watch
             End Try
         End Function
 
-        Private Function cancelOpenOrder(ByVal id As String, ByVal noCancel As Boolean, ByVal forSell As Boolean) As Boolean
+        Public Function cancelOpenOrder(ByVal id As String, ByVal noCancel As Boolean, ByVal forSell As Boolean, Optional ByVal fromSwitch As Boolean = False) As Boolean
             addLogOperation($"Watch.cancelOpenOrder - {id}")
 
             Try
@@ -168,7 +168,9 @@ Namespace AreaCommon.Engines.Watch
                         Else
                             trades.add(product, "Trades")
 
-                            product.switchTarget(, True)
+                            If Not fromSwitch Then
+                                product.switchTarget(, True)
+                            End If
                         End If
 
                         Return True
@@ -562,8 +564,6 @@ Namespace AreaCommon.Engines.Watch
             If sellTime Then
                 Dim orderValue As Double = 0
 
-                addLogOperation($"Watch.checkTrade - {product.header.key} - sellTime")
-
                 orderValue = product.currentTarget
 
                 trades.remove(product, "Trades")
@@ -596,8 +596,6 @@ Namespace AreaCommon.Engines.Watch
                 Return False
             End If
             If buyTime Then
-                addLogOperation($"Watch.checkTrade - {product.header.key} - buyTime")
-
                 If proceed Then
                     proceed = (product.activity.openBuy.id.Length = 0)
                 End If

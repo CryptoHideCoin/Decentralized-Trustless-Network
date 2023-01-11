@@ -73,21 +73,21 @@ Namespace AreaCommon.Engines.Bots
                         If (product.activity.openBuy.id.Length > 0) Then
                             product.activity.fastCheck = False
 
-                            addLogOperation("tryReconciliation - addWatchOrder " & product.pairID)
+                            addLogOperation("tryReconciliation - openBuy " & product.pairID)
 
                             AreaState.exchangeProxy.cancelOrderProduct(product.activity.openBuy.id)
-                        Else
-                            If (product.activity.sell.id.Length > 0) Then
-                                addLogOperation("tryReconciliation - remove " & product.pairID & "  Order = " & product.activity.sell.id)
 
-                                AreaState.exchangeProxy.cancelOrderProduct(product.activity.sell.id)
+                            product.activity.removeOpenBuy()
+                        ElseIf (product.activity.sell.id.Length > 0) Then
+                            addLogOperation("tryReconciliation - openSell " & product.pairID)
 
-                                product.activity.sell = New Models.Products.ProductOrderModel
-                            End If
+                            AreaState.exchangeProxy.cancelOrderProduct(product.activity.sell.id)
 
-                            Watch.trades.add(product, "Trades")
-                            Watch.start()
+                            product.activity.sell = New Models.Products.ProductOrderModel
                         End If
+
+                        Watch.trades.add(product, "Trades")
+                        Watch.start()
                     End If
                 Else
                     product.resetData()
@@ -231,24 +231,29 @@ Namespace AreaCommon.Engines.Bots
         End Function
 
         Public Function changeInBlockSell() As Boolean
-            If _AcquireWork.changeInBlockSell() Then
+            addLogOperation("changeInBlockSell")
 
-                If _AcquireWork.inTargetMode Then
-                    Threading.Thread.Sleep(1000)
-                End If
+            Return _AcquireWork.changeInBlockSell()
+            'If _AcquireWork.changeInBlockSell() Then
 
-                Return True
-            Else
-                Return False
-            End If
+            'If _AcquireWork.inTargetMode Then
+            'Threading.Thread.Sleep(1000)
+            'End If
+
+            'Return True
+            'Else
+            'Return False
+            'End If
         End Function
 
         Public Function changeInBlockInNormalSell() As Boolean
-            If _AcquireWork.inTargetMode Then
-                Return _AcquireWork.changeInBlockSell(True)
-            Else
-                Return False
-            End If
+            addLogOperation("changeInBlockInNormalSell")
+
+            'If _AcquireWork.inTargetMode Then
+            Return _AcquireWork.changeInBlockSell(True)
+            'Else
+            'Return False
+            'End If
         End Function
 
     End Module

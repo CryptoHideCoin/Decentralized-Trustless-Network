@@ -1,0 +1,11 @@
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\netstandard2.0\Advanced.Trade.csprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\netstandard2.0\Advanced.Trade.sourcelink.json
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\netstandard2.0\Advanced.Trade.AssemblyInfoInputs.cache
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\netstandard2.0\Advanced.Trade.AssemblyInfo.cs
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\bin\Debug\netstandard2.0\Advanced.Trade.deps.json
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\bin\Debug\netstandard2.0\Advanced.Trade.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\bin\Debug\netstandard2.0\Advanced.Trade.pdb
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\bin\Debug\netstandard2.0\Advanced.Trade.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\netstandard2.0\Advanced.Trade.dll
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\netstandard2.0\Advanced.Trade.xml
+E:\CryptoHideCoinDTN\Source\Libraries\Providers\Advanced.Trade\obj\Debug\netstandard2.0\Advanced.Trade.pdb

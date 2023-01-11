@@ -713,7 +713,11 @@ Public Class Manager
             apyDayValue.ForeColor = earnDayValue.ForeColor
         End If
 
-        nextCloseBlockValue.Text = (AreaCommon.Engines.Bots.AutomaticBotModule.startBlockWork + (24 * 60 * 60000)).ToString()
+        If (AreaCommon.Engines.Bots.AutomaticBotModule.startBlockWork = 0) Then
+            nextCloseBlockValue.Text = "---"
+        Else
+            nextCloseBlockValue.Text = CHCCommonLibrary.AreaEngine.Miscellaneous.formatDateTimeGMT(CHCCommonLibrary.AreaEngine.Miscellaneous.dateTimeFromTimeStamp(AreaCommon.Engines.Bots.AutomaticBotModule.startBlockWork + (24 * 60 * 60000)), True)
+        End If
 
         refreshDailyOrderGrid()
 

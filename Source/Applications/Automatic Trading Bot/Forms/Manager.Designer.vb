@@ -136,6 +136,8 @@ Partial Class Manager
         Me.daySummaryButton = New System.Windows.Forms.CheckBox()
         Me.summaryButton = New System.Windows.Forms.CheckBox()
         Me.dayPanel = New System.Windows.Forms.Panel()
+        Me.nextCloseBlockValue = New System.Windows.Forms.TextBox()
+        Me.Label68 = New System.Windows.Forms.Label()
         Me.numBuyValue = New System.Windows.Forms.TextBox()
         Me.Label59 = New System.Windows.Forms.Label()
         Me.numSellValue = New System.Windows.Forms.TextBox()
@@ -337,8 +339,6 @@ Partial Class Manager
         Me.Label69 = New System.Windows.Forms.Label()
         Me.timerMain = New System.Windows.Forms.Timer(Me.components)
         Me.updateBotsTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.nextCloseBlockValue = New System.Windows.Forms.TextBox()
-        Me.Label68 = New System.Windows.Forms.Label()
         Me.menuMain.SuspendLayout()
         Me.tabMain.SuspendLayout()
         Me.currenciesPage.SuspendLayout()
@@ -965,6 +965,8 @@ Partial Class Manager
         '
         'dayPanel
         '
+        Me.dayPanel.Controls.Add(Me.nextCloseBlockValue)
+        Me.dayPanel.Controls.Add(Me.Label68)
         Me.dayPanel.Controls.Add(Me.numBuyValue)
         Me.dayPanel.Controls.Add(Me.Label59)
         Me.dayPanel.Controls.Add(Me.numSellValue)
@@ -1017,6 +1019,24 @@ Partial Class Manager
         Me.dayPanel.Name = "dayPanel"
         Me.dayPanel.Size = New System.Drawing.Size(838, 232)
         Me.dayPanel.TabIndex = 33
+        '
+        'nextCloseBlockValue
+        '
+        Me.nextCloseBlockValue.Location = New System.Drawing.Point(417, 15)
+        Me.nextCloseBlockValue.Name = "nextCloseBlockValue"
+        Me.nextCloseBlockValue.ReadOnly = True
+        Me.nextCloseBlockValue.Size = New System.Drawing.Size(163, 21)
+        Me.nextCloseBlockValue.TabIndex = 92
+        Me.nextCloseBlockValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Label68
+        '
+        Me.Label68.AutoSize = True
+        Me.Label68.Location = New System.Drawing.Point(346, 18)
+        Me.Label68.Name = "Label68"
+        Me.Label68.Size = New System.Drawing.Size(66, 13)
+        Me.Label68.TabIndex = 91
+        Me.Label68.Text = "Next close"
         '
         'numBuyValue
         '
@@ -1468,8 +1488,6 @@ Partial Class Manager
         '
         'SummaryPanel
         '
-        Me.SummaryPanel.Controls.Add(Me.nextCloseBlockValue)
-        Me.SummaryPanel.Controls.Add(Me.Label68)
         Me.SummaryPanel.Controls.Add(Me.Label62)
         Me.SummaryPanel.Controls.Add(Me.totalFundValue)
         Me.SummaryPanel.Controls.Add(Me.Label63)
@@ -3156,24 +3174,6 @@ Partial Class Manager
         'updateBotsTimer
         '
         Me.updateBotsTimer.Interval = 1000
-        '
-        'nextCloseBlockValue
-        '
-        Me.nextCloseBlockValue.Location = New System.Drawing.Point(83, 204)
-        Me.nextCloseBlockValue.Name = "nextCloseBlockValue"
-        Me.nextCloseBlockValue.ReadOnly = True
-        Me.nextCloseBlockValue.Size = New System.Drawing.Size(163, 21)
-        Me.nextCloseBlockValue.TabIndex = 90
-        Me.nextCloseBlockValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'Label68
-        '
-        Me.Label68.AutoSize = True
-        Me.Label68.Location = New System.Drawing.Point(12, 207)
-        Me.Label68.Name = "Label68"
-        Me.Label68.Size = New System.Drawing.Size(66, 13)
-        Me.Label68.TabIndex = 89
-        Me.Label68.Text = "Next close"
         '
         'Manager
         '

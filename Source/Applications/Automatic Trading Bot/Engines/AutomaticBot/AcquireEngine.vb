@@ -8,23 +8,23 @@ Namespace AreaCommon.Engines.Bots
 
         Private Property _DealList As New List(Of Models.Products.ProductModel)
 
-        Public Property inTargetMode As Boolean = False
+        'Public Property inTargetMode As Boolean = False
 
 
         Public Function changeInBlockSell(Optional ByVal normalMode As Boolean = False) As Boolean
             addLogOperation("AcquireEngine.changeInBlockSell - Begin")
 
-            inTargetMode = False
+            'inTargetMode = False
 
             For Each product In AreaState.products.items
                 If product.userData.isCustomized And product.activity.inUse Then
                     product.switchTarget(normalMode)
 
-                    If normalMode Then
-                        If product.currentTargetReached Then
-                            inTargetMode = True
-                        End If
-                    End If
+                    'If normalMode Then
+                    '    If product.currentTargetReached Then
+                    '        inTargetMode = True
+                    '    End If
+                    'End If
                 End If
             Next
 

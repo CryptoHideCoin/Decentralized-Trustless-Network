@@ -82,7 +82,8 @@ Namespace AreaCommon.Models.Journal
 
         Public ReadOnly Property power As Double
             Get
-                Return currentFund + freeFund + increase
+                'Return currentFund + freeFund + increase
+                Return initialFundFree + initialFundManage + increase
             End Get
         End Property
 
@@ -260,11 +261,12 @@ Namespace AreaCommon.Models.Journal
 
         Public ReadOnly Property totalPower As Double
             Get
-                Dim value As Double = currentFund + freeFund + totalIncrease
+                'Dim value As Double = currentFund + freeFund + totalIncrease
+                Dim value As Double = history.initialFund + totalIncrease
 
                 currentBlockCounters.totalPower = value
 
-                Return value
+                Return history.initialFund + totalIncrease
             End Get
         End Property
 
