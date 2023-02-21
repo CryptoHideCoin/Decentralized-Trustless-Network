@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using AdvancedTrade.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SuperSocket.ClientEngine;
 using WebSocket4Net;
 
 
@@ -11,21 +13,35 @@ namespace AdvancedTrade.WebSockets
    public class WebSocketConfig
    {
       public string ApiKey { get; set; }
-      public string Secret { get; set; }
-      public string Passphrase { get; set; }
+      public string ApiPrivate { get; set; }
+      /*public string Passphrase { get; set; }*/
 
       public bool UseTimeApi { get; set; } = false;
       public string SocketUri { get; set; } = AdavancedTradeWebSocket.Endpoint;
 
-      public void EnsureValid()
+      /*public void EnsureValid()
       {
-      }
+      }*/
    }
 
-   public class AdavancedTradeWebSocket : IDisposable
-   {
-      public const string Endpoint = "wss://ws-feed.pro.coinbase.com";
+   public class ConnectResult
+    {
+        public ConnectResult(bool success, object sender, EventArgs eventArgs)
+        {
+            this.Success = success;
+            this.Sender = sender;
+            this.EventArgs = eventArgs;
+        }
+        public bool Success { get; }
+        public object Sender { get; }
+        public EventArgs EventArgs { get; }
+    }
 
+    public class AdavancedTradeWebSocket : IDisposable
+   {
+      public const string Endpoint = "wss://advanced-trade-ws.coinbase.com";
+      /*public const string Endpoint = "wss://ws-feed.exchange.coinbase.com";*/
+      
       public WebSocket RawSocket { get; private set; }
 
       public AdavancedTradeWebSocket(WebSocketConfig config = null)
@@ -35,36 +51,61 @@ namespace AdvancedTrade.WebSockets
 
       public WebSocketConfig Config { get; }
 
-      protected TaskCompletionSource<bool> connecting;
+      protected TaskCompletionSource<ConnectResult> connectingTcs;
 
-      public Task ConnectAsync()
-      {
-         if( this.RawSocket != null ) throw new InvalidOperationException(
-            $"The {nameof(RawSocket)} is already created from a previous {nameof(ConnectAsync)} call. " +
-            $"If you get this exception, you'll need to dispose of this {nameof(AdavancedTradeWebSocket)} and create a new instance. " +
-            $"Don't call {nameof(ConnectAsync)} multiple times on the same instance.");
+      protected IProxyConnector Proxy { get; set; }
 
-         this.connecting = new TaskCompletionSource<bool>();
+      public Task<ConnectResult> ConnectAsync()
+        {
+          if (this.RawSocket != null) throw new InvalidOperationException(
+              $"The {nameof(RawSocket)} is already created from a previous {nameof(ConnectAsync)} call. " +
+              $"If you get this exception, you'll need to dispose of this {nameof(AdavancedTradeWebSocket)} and create a new instance. " +
+              $"Don't call {nameof(ConnectAsync)} multiple times on the same instance.");
+            this.connectingTcs = new TaskCompletionSource<ConnectResult>();
+            if (this.RawSocket is null)
+            {
+                this.RawSocket = new WebSocket(this.Config.SocketUri);
+                this.RawSocket.Proxy = this.Proxy;
+                this.RawSocket.Security.EnabledSslProtocols = SslProtocols.Tls12;
+            }
+            this.RawSocket.Opened += RawSocket_Opened;
+            this.RawSocket.Error += RawSocket_Error;
+            this.RawSocket.Open();
+            return this.connectingTcs.Task;
+        }
 
-         this.RawSocket = new WebSocket(this.Config.SocketUri);
-         this.RawSocket.Opened += RawSocket_Opened;
-         this.RawSocket.Open();
-
-         return this.connecting.Task;
-      }
+      private void RawSocket_Error(object sender, ErrorEventArgs e)
+       {
+            TrySetConnectResult(false, sender, e);
+        }
 
       private void RawSocket_Opened(object sender, EventArgs e)
       {
-         this.connecting.SetResult(true);
-      }
+            TrySetConnectResult(true, sender, e);
+       }
 
-      public async Task SubscribeAsync(Subscription subscription)
+      protected void TrySetConnectResult(bool result, object sender, EventArgs args)
+        {
+            var connectResult = new ConnectResult(result, sender, args);
+            if (sender is WebSocket socket)
+            {
+                socket.Opened -= RawSocket_Opened;
+                socket.Error -= RawSocket_Error;
+            }
+            Task.Run(() => this.connectingTcs.TrySetResult(connectResult));
+        }
+        public void EnableFiddlerDebugProxy(IProxyConnector proxy)
+        {
+            this.Proxy = proxy;
+        }
+
+        public async Task SubscribeAsync(Subscription subscription)
       {
          if( this.RawSocket.State != WebSocketState.Open ) throw new InvalidOperationException("Socket must be connected.");
 
-         subscription.ExtraJson.Add("type", JToken.FromObject(MessageType.Subscribe));
+            subscription.Type = "subscribe";
 
-         string subJson;
+            string subJson;
          if( !string.IsNullOrWhiteSpace(this.Config.ApiKey) )
          {
             subJson = await WebSocketHelper.MakeAuthenticatedSubscriptionAsync(subscription, this.Config)
@@ -87,11 +128,10 @@ namespace AdvancedTrade.WebSockets
          this.RawSocket.Send(json);
       }
 
-
-      public void Dispose()
-      {
-         this.RawSocket.Opened -= RawSocket_Opened;
-         this.RawSocket?.Dispose();
-      }
+     public void Dispose()
+     {
+        this.RawSocket?.Dispose();
+        this.RawSocket = null;
+     } 
    }
 }

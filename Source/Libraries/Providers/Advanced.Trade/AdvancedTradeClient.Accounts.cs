@@ -12,19 +12,24 @@ namespace AdvancedTrade
       /// <summary>
       /// Get a list of trading accounts.
       /// </summary>
-      Task<List<Account>> GetAllAccountsAsync(CancellationToken cancellationToken = default);
+      Task<Accounts> GetPagedAccountsAsync(CancellationToken cancellationToken = default, string limit = "250", string cursor = "");
 
       /// <summary>
-      /// Information for a single account. Use this endpoint when you know the account_id.
+      /// Get a list of trading accounts.
       /// </summary>
-      Task<Account> GetAccountAsync(string accountId, CancellationToken cancellationToken = default);
+      List<DataAccount> GetAccountsAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Information for a single account. Use this endpoint when you know the account_id.
+        /// </summary>
+        Task<Account> GetAccountAsync(string accountId, CancellationToken cancellationToken = default);
 
       /// <summary>
       /// Get account activity. Account activity either increases or decreases your account balance. Items are paginated and sorted latest first.
       /// </summary>
       Task<PagedResponse<AccountHistory>> GetAccountHistoryAsync(
          string accountId,
-         int? limit = null, long? before = null, long? after = null,
+         int? limit = null, string before = null, string after = null,
          CancellationToken cancellationToken = default);
 
       /// <summary>
@@ -32,7 +37,7 @@ namespace AdvancedTrade
       /// </summary>
       Task<PagedResponse<AccountHold>> GetAccountHoldAsync(
          string accountId,
-         int? limit = null, long? before = null, long? after = null,
+         int? limit = null, string before = null, string after = null,
          CancellationToken cancellationToken = default);
    }
 
@@ -42,14 +47,49 @@ namespace AdvancedTrade
 
       protected internal Url AccountsEndpoint => this.Config.ApiUrl.AppendPathSegment("accounts");
 
-      Task<List<Account>> IAccountsEndpoint.GetAllAccountsAsync(CancellationToken cancellationToken)
-      {
-         return this.AccountsEndpoint
-            .WithClient(this)
-            .GetJsonAsync<List<Account>>(cancellationToken);
-      }
+      Task<Accounts> IAccountsEndpoint.GetPagedAccountsAsync(CancellationToken cancellationToken, string limit = "250", string cursor = "")
+      {            
+            if (limit.Length > 0)
+            {
+                if (cursor.Length > 0)
+                    return this.AccountsEndpoint.WithClient(this).SetQueryParam("limit", limit).SetQueryParam("cursor", cursor).GetJsonAsync<Accounts>();
+                else
+                    return this.AccountsEndpoint.WithClient(this).SetQueryParam("limit", limit).GetJsonAsync<Accounts>();
+            }
+            else
+                return this.AccountsEndpoint.WithClient(this).GetJsonAsync<Accounts>(cancellationToken);
+        }
 
-      Task<Account> IAccountsEndpoint.GetAccountAsync(string accountId, CancellationToken cancellationToken)
+      List<DataAccount> IAccountsEndpoint.GetAccountsAsync(CancellationToken cancellationToken) 
+        {
+            bool proceed = true;
+            List<DataAccount> result = new List<DataAccount>();
+            Task<Accounts> accounts;
+
+            accounts = Accounts.GetPagedAccountsAsync(cancellationToken);
+
+            while (proceed)
+            {
+                foreach (DataAccount item in accounts.Result.Data)
+                {
+                    decimal numAvailable = 1;
+                    decimal numHold = 1;
+
+                    decimal.TryParse(item.Available.value.Replace(".", ","), out numAvailable);
+                    decimal.TryParse(item.Available.value.Replace(".", ","), out numHold);
+
+                    if ((numAvailable != 0) | (numHold != 0)) result.Add(item);
+                }
+
+                proceed = accounts.Result.Has_Next;
+
+                if (proceed) accounts = Accounts.GetPagedAccountsAsync(cancellationToken, "250", accounts.Result.Cursor);
+            }
+
+            return result;
+        }
+
+        Task<Account> IAccountsEndpoint.GetAccountAsync(string accountId, CancellationToken cancellationToken)
       {
          return this.AccountsEndpoint
             .WithClient(this)
@@ -59,7 +99,7 @@ namespace AdvancedTrade
 
       Task<PagedResponse<AccountHistory>> IAccountsEndpoint.GetAccountHistoryAsync(
          string accountId,
-         int? limit, long? before, long? after,
+         int? limit, string before, string after,
          CancellationToken cancellationToken)
       {
          return this.AccountsEndpoint
@@ -71,7 +111,7 @@ namespace AdvancedTrade
 
       Task<PagedResponse<AccountHold>> IAccountsEndpoint.GetAccountHoldAsync(
          string accountId,
-         int? limit, long? before, long? after,
+         int? limit, string before, string after,
          CancellationToken cancellationToken)
       {
          return this.AccountsEndpoint

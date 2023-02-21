@@ -14,7 +14,7 @@ namespace AdvancedTrade
       /// </summary>
       Task<PagedResponse<Fill>> GetFillsByProductIdAsync(
          string productId,
-         int? limit = null, long? before = null, long? after = null,
+         int? limit = null, string before = null, string after = null,
          CancellationToken cancellationToken = default);
 
       /// <summary>
@@ -22,7 +22,7 @@ namespace AdvancedTrade
       /// </summary>
       Task<PagedResponse<Fill>> GetFillsByOrderIdAsync(
          string orderId,
-         int? limit = null, long? before = null, long? after = null,
+         int? limit = null, string before = null, string after = null,
          CancellationToken cancellationToken = default);
    }
 
@@ -35,7 +35,7 @@ namespace AdvancedTrade
 
       Task<PagedResponse<Fill>> IFillsEndpoint.GetFillsByProductIdAsync(
          string productId,
-         int? limit, long? before, long? after,
+         int? limit, string before, string after,
          CancellationToken cancellationToken)
       {
          return this.FillsEndpoint
@@ -47,7 +47,7 @@ namespace AdvancedTrade
 
       Task<PagedResponse<Fill>> IFillsEndpoint.GetFillsByOrderIdAsync(
          string orderId,
-         int? limit, long? before, long? after,
+         int? limit, string before, string after,
          CancellationToken cancellationToken)
       {
          return this.FillsEndpoint

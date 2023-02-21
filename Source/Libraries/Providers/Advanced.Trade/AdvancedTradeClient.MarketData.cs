@@ -13,7 +13,6 @@ namespace AdvancedTrade
       /// <summary>
       /// Get a list of available currency pairs for trading.
       /// </summary>
-      /// <param name="cancellationToken"></param>
       /// <remarks>
       /// The base_min_size and base_max_size fields define the min and max order size. The quote_increment field specifies the min order price as well as the price increment.
       /// The order price must be a multiple of this increment(i.e. if the increment is 0.01, order prices of 0.001 or 0.021 would be rejected).
@@ -22,12 +21,19 @@ namespace AdvancedTrade
       Task<List<Product>> GetProductsAsync(CancellationToken cancellationToken = default);
 
       /// <summary>
-      /// Get a list of open orders for a product. The amount of detail shown can be customized with the level parameter.
+      /// Get market data for a specific currency pair.
       /// </summary>
-      /// <param name="productId"></param>
-      /// <param name="level">1. Only the best bid and ask. 2. Top 50 bids and asks (aggregated). 3. Full order book (non aggregated)</param>
-      /// <param name="cancellationToken"></param>
-      Task<OrderBook> GetOrderBookAsync(string productId, int level = 1, CancellationToken cancellationToken = default);
+      /// <param name="productId">Required; the product id. eg: 'BTC-USD'</param>
+      /// <returns></returns>
+      Task<Product> GetSingleProductAsync(string productId, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get a list of open orders for a product. The amount of detail shown can be customized with the level parameter.
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="level">1. Only the best bid and ask. 2. Top 50 bids and asks (aggregated). 3. Full order book (non aggregated)</param>
+        /// <param name="cancellationToken"></param>
+        Task<OrderBook> GetOrderBookAsync(string productId, int level = 1, CancellationToken cancellationToken = default);
 
       /// <summary>
       /// Snapshot information about the last trade (tick), best bid/ask and 24h volume.
@@ -43,7 +49,7 @@ namespace AdvancedTrade
       /// <param name="after">Request page after (older) this pagination id.</param>
       Task<PagedResponse<Trade>> GetTradesAsync(
          string productId,
-         int? limit = null, long? before = null, long? after = null,
+         int? limit = null, string before = null, string after = null,
          CancellationToken cancellationToken = default);
 
       /// <summary>
@@ -72,7 +78,6 @@ namespace AdvancedTrade
       Task<Time> GetTimeAsync(CancellationToken cancellationToken = default);
    }
 
-
    public partial class AdvancedTradeClient : IMarketDataEndpoint
    {
       public IMarketDataEndpoint MarketData => this;
@@ -86,7 +91,15 @@ namespace AdvancedTrade
             .GetJsonAsync<List<Product>>(cancellationToken);
       }
 
-      Task<OrderBook> IMarketDataEndpoint.GetOrderBookAsync(string productId, int level, CancellationToken cancellationToken)
+      Task<Product> IMarketDataEndpoint.GetSingleProductAsync(string productId, CancellationToken cancellationToken)
+       {
+           return this.ProductsEndpoint
+              .AppendPathSegment(productId)
+              .WithClient(this)
+              .GetJsonAsync<Product>(cancellationToken);
+       }
+
+        Task<OrderBook> IMarketDataEndpoint.GetOrderBookAsync(string productId, int level, CancellationToken cancellationToken)
       {
          return this.ProductsEndpoint
             .WithClient(this)
@@ -105,7 +118,7 @@ namespace AdvancedTrade
 
       Task<PagedResponse<Trade>> IMarketDataEndpoint.GetTradesAsync(
          string productId,
-         int? limit, long? before, long? after,
+         int? limit, string before, string after,
          CancellationToken cancellationToken)
       {
          return this.ProductsEndpoint
@@ -155,5 +168,24 @@ namespace AdvancedTrade
             .AppendPathSegment("time")
             .GetJsonAsync<Time>(cancellationToken);
       }
-   }
+
+        //private PagedResponse<T> MakePagedResponse<T>(HttpResponseMessage r, T body)
+        //{
+        //   var result = new PagedResponse<T>()
+        //      {
+        //         Data = body
+        //      };
+        //   if( r.Headers.TryGetValues(HeaderNames.Before, out var beforeItems)
+        //       && long.TryParse(beforeItems?.FirstOrDefault(), out var before))
+        //   {
+        //      result.Before = before;
+        //   }
+        //   if( r.Headers.TryGetValues(HeaderNames.After, out var afterItems)
+        //       && long.TryParse(afterItems?.FirstOrDefault(), out var after) )
+        //   {
+        //      result.After = after;
+        //   }
+        //   return result;
+        //}
+    }
 }

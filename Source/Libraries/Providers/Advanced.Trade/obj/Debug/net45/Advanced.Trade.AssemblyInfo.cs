@@ -17,7 +17,7 @@ using System.Reflection;
     "upports REST API and Websocket Feed API. All crypto currencies including Bitcoin" +
     " (BTC), Ethereum (ETH), Litecoin (LTC), 0x (ZRX), and many more!")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("0.1.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.0-localbuild+0ea59d6a1971d90f3ec0866611787fa1dbd56334")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.0-localbuild")]
 [assembly: System.Reflection.AssemblyProductAttribute("Advanced.Trade")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Advanced.Trade")]
 [assembly: System.Reflection.AssemblyVersionAttribute("0.1.0.0")]

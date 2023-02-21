@@ -1,30 +1,33 @@
 {
   "version": 3,
   "targets": {
-    ".NETFramework,Version=v4.5": {
-      "Flurl/2.8.2": {
-        "type": "package",
-        "compile": {
-          "lib/net40/Flurl.dll": {}
-        },
-        "runtime": {
-          "lib/net40/Flurl.dll": {}
-        }
-      },
-      "Flurl.Http/2.4.2": {
+    ".NETFramework,Version=v4.6.1": {
+      "Flurl/3.0.1": {
         "type": "package",
         "dependencies": {
-          "Flurl": "2.8.2",
+          "System.ValueTuple": "4.5.0"
+        },
+        "compile": {
+          "lib/net461/Flurl.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Flurl.dll": {}
+        }
+      },
+      "Flurl.Http/3.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Flurl": "3.0.1",
           "Newtonsoft.Json": "12.0.2"
         },
         "frameworkAssemblies": [
           "System.Net.Http"
         ],
         "compile": {
-          "lib/net45/Flurl.Http.dll": {}
+          "lib/net461/Flurl.Http.dll": {}
         },
         "runtime": {
-          "lib/net45/Flurl.Http.dll": {}
+          "lib/net461/Flurl.Http.dll": {}
         }
       },
       "Microsoft.Build.Tasks.Git/1.0.0": {
@@ -73,11 +76,21 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "Roslynator.Analyzers/2.3.0": {
+      "Roslynator.Analyzers/3.0.0": {
         "type": "package"
       },
       "SuperSocket.ClientEngine.Core/0.10.0": {
         "type": "package",
+        "dependencies": {
+          "System.Collections.Specialized": "4.3.0",
+          "System.Linq": "4.3.0",
+          "System.Net.NameResolution": "4.3.0",
+          "System.Net.Security": "4.3.0",
+          "System.Net.Sockets": "4.3.0",
+          "System.Runtime.Extensions": "4.3.0",
+          "System.Runtime.InteropServices": "4.3.0",
+          "System.Security.Cryptography.X509Certificates": "4.3.0"
+        },
         "compile": {
           "lib/net45/SuperSocket.ClientEngine.dll": {}
         },
@@ -85,10 +98,268 @@
           "lib/net45/SuperSocket.ClientEngine.dll": {}
         }
       },
+      "System.Collections.Specialized/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Collections.Specialized.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Collections.Specialized.dll": {}
+        }
+      },
+      "System.Linq/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System.Core"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Net.NameResolution/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Net.NameResolution.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Net.NameResolution.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard1.3/System.Net.NameResolution.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/net46/System.Net.NameResolution.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Net.Security/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.X509Certificates": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Net.Security.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Net.Security.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard1.6/System.Net.Security.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/net46/System.Net.Security.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Net.Sockets/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Net.Sockets.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Net.Sockets.dll": {}
+        }
+      },
+      "System.Runtime.Extensions/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Runtime.InteropServices/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Security.Cryptography.Algorithms/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.Primitives": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Cryptography.Algorithms.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.Security.Cryptography.Algorithms.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/osx/lib/netstandard1.6/System.Security.Cryptography.Algorithms.dll": {
+            "assetType": "runtime",
+            "rid": "osx"
+          },
+          "runtimes/unix/lib/netstandard1.6/System.Security.Cryptography.Algorithms.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/net461/System.Security.Cryptography.Algorithms.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Security.Cryptography.Encoding/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Security.Cryptography.Encoding.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Security.Cryptography.Encoding.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard1.3/System.Security.Cryptography.Encoding.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/net46/System.Security.Cryptography.Encoding.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Security.Cryptography.Primitives/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Security.Cryptography.Primitives.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Security.Cryptography.Primitives.dll": {}
+        }
+      },
+      "System.Security.Cryptography.X509Certificates/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.Algorithms": "4.3.0",
+          "System.Security.Cryptography.Encoding": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Cryptography.X509Certificates.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.Security.Cryptography.X509Certificates.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard1.6/System.Security.Cryptography.X509Certificates.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/net461/System.Security.Cryptography.X509Certificates.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Text.RegularExpressions/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Threading/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "ref/net45/_._": {}
+        },
+        "runtime": {
+          "lib/net45/_._": {}
+        }
+      },
+      "System.Threading.Timer/4.3.0": {
+        "type": "package",
+        "compile": {
+          "ref/net451/_._": {}
+        },
+        "runtime": {
+          "lib/net451/_._": {}
+        }
+      },
+      "System.ValueTuple/4.5.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.ValueTuple.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.ValueTuple.dll": {}
+        }
+      },
       "WebSocket4Net/0.15.2": {
         "type": "package",
         "dependencies": {
-          "SuperSocket.ClientEngine.Core": "0.10.0"
+          "SuperSocket.ClientEngine.Core": "0.10.0",
+          "System.Linq": "4.3.0",
+          "System.Net.NameResolution": "4.3.0",
+          "System.Net.Sockets": "4.3.0",
+          "System.Text.RegularExpressions": "4.3.0",
+          "System.Threading": "4.3.0",
+          "System.Threading.Timer": "4.3.0"
         },
         "compile": {
           "lib/net45/WebSocket4Net.dll": {}
@@ -120,7 +391,7 @@
           "lib/netstandard1.5/Castle.Core.dll": {}
         }
       },
-      "Flurl/2.8.2": {
+      "Flurl/3.0.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Flurl.dll": {}
@@ -129,10 +400,10 @@
           "lib/netstandard2.0/Flurl.dll": {}
         }
       },
-      "Flurl.Http/2.4.2": {
+      "Flurl.Http/3.0.1": {
         "type": "package",
         "dependencies": {
-          "Flurl": "2.8.2",
+          "Flurl": "3.0.1",
           "Newtonsoft.Json": "12.0.2",
           "System.Text.Encoding.CodePages": "4.5.1"
         },
@@ -248,7 +519,7 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
-      "Roslynator.Analyzers/2.3.0": {
+      "Roslynator.Analyzers/3.0.0": {
         "type": "package"
       },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -1568,44 +1839,40 @@
         "readme.txt"
       ]
     },
-    "Flurl/2.8.2": {
-      "sha512": "3VEYAqkGTGHgla4xuyEB4d8XGLeMX2k05C4WfI7YmKQHsL7RhoGu3L6h1xsKKTPFWjEL13p09XOIGwD1pQ86dg==",
+    "Flurl/3.0.1": {
+      "sha512": "i7CuPSikVroBaWG8sPvO707Ex9C6BP5+r4JufKNU1FGMmiFgLJvNo1ttUg6ZiXIzUNknvIb1VUTIO9iEDucibg==",
       "type": "package",
-      "path": "flurl/2.8.2",
+      "path": "flurl/3.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "flurl.2.8.2.nupkg.sha512",
+        "flurl.3.0.1.nupkg.sha512",
         "flurl.nuspec",
-        "lib/net40/Flurl.dll",
-        "lib/net40/Flurl.xml",
-        "lib/netstandard1.0/Flurl.dll",
-        "lib/netstandard1.0/Flurl.xml",
-        "lib/netstandard1.3/Flurl.dll",
-        "lib/netstandard1.3/Flurl.xml",
+        "icon.png",
+        "lib/net461/Flurl.dll",
+        "lib/net461/Flurl.pdb",
+        "lib/net461/Flurl.xml",
         "lib/netstandard2.0/Flurl.dll",
+        "lib/netstandard2.0/Flurl.pdb",
         "lib/netstandard2.0/Flurl.xml"
       ]
     },
-    "Flurl.Http/2.4.2": {
-      "sha512": "VfSJ0DKzh6kf2IOZGG1/JpHajhtqzGp1t+M1QSyFGse7c4Gg1DpH80LTveYea2hV1BEtvPPEp6A4iZ78D8bxGQ==",
+    "Flurl.Http/3.0.1": {
+      "sha512": "wt4RrmYOPWu8v0sjuuSfhYBFzjfrCz4nJP48Kw2HFGssq0U6pMBPFHcL3zbsBFALJipAjgRET5mf+0Xz4ZnZpQ==",
       "type": "package",
-      "path": "flurl.http/2.4.2",
+      "path": "flurl.http/3.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "flurl.http.2.4.2.nupkg.sha512",
+        "flurl.http.3.0.1.nupkg.sha512",
         "flurl.http.nuspec",
-        "lib/net45/Flurl.Http.dll",
-        "lib/net45/Flurl.Http.xml",
-        "lib/net46/Flurl.Http.dll",
-        "lib/net46/Flurl.Http.xml",
-        "lib/netstandard1.1/Flurl.Http.dll",
-        "lib/netstandard1.1/Flurl.Http.xml",
-        "lib/netstandard1.3/Flurl.Http.dll",
-        "lib/netstandard1.3/Flurl.Http.xml",
+        "icon.png",
+        "lib/net461/Flurl.Http.dll",
+        "lib/net461/Flurl.Http.pdb",
+        "lib/net461/Flurl.xml",
         "lib/netstandard2.0/Flurl.Http.dll",
-        "lib/netstandard2.0/Flurl.Http.xml"
+        "lib/netstandard2.0/Flurl.Http.pdb",
+        "lib/netstandard2.0/Flurl.xml"
       ]
     },
     "GDAX.Api.ClientLibrary/1.0.35": {
@@ -1985,10 +2252,10 @@
         "packageIcon.png"
       ]
     },
-    "Roslynator.Analyzers/2.3.0": {
-      "sha512": "y3pnQzgCkv9rg3ZZpo5dS+M+K+zSKR589AEJ28Qlu4iza9U3acdoNROl1Aa81nfV7ZRe1Q7iJEVBM+YhXcnz8w==",
+    "Roslynator.Analyzers/3.0.0": {
+      "sha512": "UKaYNtbXGGkR83rMA42DbA43fIUebO+WfHvPk29WMZfXzzF9kTKEB0HL6dUmcukgeHwXyTBCj6946DSaoow02A==",
       "type": "package",
-      "path": "roslynator.analyzers/2.3.0",
+      "path": "roslynator.analyzers/3.0.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -2002,7 +2269,7 @@
         "analyzers/dotnet/cs/Roslynator.Workspaces.Common.dll",
         "analyzers/dotnet/cs/Roslynator.Workspaces.Core.dll",
         "icon.png",
-        "roslynator.analyzers.2.3.0.nupkg.sha512",
+        "roslynator.analyzers.3.0.0.nupkg.sha512",
         "roslynator.analyzers.nuspec",
         "tools/install.ps1",
         "tools/uninstall.ps1"
@@ -5266,6 +5533,50 @@
         "system.threading.timer.nuspec"
       ]
     },
+    "System.ValueTuple/4.5.0": {
+      "sha512": "okurQJO6NRE/apDIP23ajJ0hpiNmJ+f0BwOlB/cSqTLQlw5upkf+5+96+iG2Jw40G1fCVCyPz/FhIABUjMR+RQ==",
+      "type": "package",
+      "path": "system.valuetuple/4.5.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net461/System.ValueTuple.dll",
+        "lib/net461/System.ValueTuple.xml",
+        "lib/net47/System.ValueTuple.dll",
+        "lib/net47/System.ValueTuple.xml",
+        "lib/netcoreapp2.0/_._",
+        "lib/netstandard1.0/System.ValueTuple.dll",
+        "lib/netstandard1.0/System.ValueTuple.xml",
+        "lib/netstandard2.0/_._",
+        "lib/portable-net40+sl4+win8+wp8/System.ValueTuple.dll",
+        "lib/portable-net40+sl4+win8+wp8/System.ValueTuple.xml",
+        "lib/uap10.0.16299/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net461/System.ValueTuple.dll",
+        "ref/net47/System.ValueTuple.dll",
+        "ref/netcoreapp2.0/_._",
+        "ref/netstandard2.0/_._",
+        "ref/portable-net40+sl4+win8+wp8/System.ValueTuple.dll",
+        "ref/uap10.0.16299/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.valuetuple.4.5.0.nupkg.sha512",
+        "system.valuetuple.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
     "System.Xml.ReaderWriter/4.3.0": {
       "sha512": "GrprA+Z0RUXaR4N7/eW71j1rgMnEnEVlgii49GZyAjTH7uliMnrOU3HNFBr6fEDBCJCIdlVNq9hHbaDR621XBA==",
       "type": "package",
@@ -5393,22 +5704,20 @@
     }
   },
   "projectFileDependencyGroups": {
-    ".NETFramework,Version=v4.5": [
-      "Flurl >= 2.8.2",
-      "Flurl.Http >= 2.4.2",
+    ".NETFramework,Version=v4.6.1": [
+      "Flurl.Http >= 3.0.1",
       "Microsoft.SourceLink.GitHub >= 1.0.0",
       "Newtonsoft.Json >= 12.0.3",
-      "Roslynator.Analyzers >= 2.3.0",
+      "Roslynator.Analyzers >= 3.0.0",
       "WebSocket4Net >= 0.15.2"
     ],
     ".NETStandard,Version=v2.0": [
-      "Flurl >= 2.8.2",
-      "Flurl.Http >= 2.4.2",
+      "Flurl.Http >= 3.0.1",
       "GDAX.Api.ClientLibrary >= 1.0.35",
       "Microsoft.SourceLink.GitHub >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "Newtonsoft.Json >= 12.0.3",
-      "Roslynator.Analyzers >= 2.3.0",
+      "Roslynator.Analyzers >= 3.0.0",
       "WebSocket4Net >= 0.15.2"
     ]
   },
@@ -5434,7 +5743,7 @@
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net45",
+        "net461",
         "netstandard2.0"
       ],
       "sources": {
@@ -5442,7 +5751,7 @@
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net45": {
+        "net461": {
           "projectReferences": {}
         },
         "netstandard2.0": {
@@ -5456,15 +5765,11 @@
       }
     },
     "frameworks": {
-      "net45": {
+      "net461": {
         "dependencies": {
-          "Flurl": {
-            "target": "Package",
-            "version": "[2.8.2, )"
-          },
           "Flurl.Http": {
             "target": "Package",
-            "version": "[2.4.2, )"
+            "version": "[3.0.1, )"
           },
           "Microsoft.SourceLink.GitHub": {
             "suppressParent": "All",
@@ -5478,7 +5783,7 @@
           "Roslynator.Analyzers": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[2.3.0, )"
+            "version": "[3.0.0, )"
           },
           "WebSocket4Net": {
             "target": "Package",
@@ -5489,13 +5794,9 @@
       },
       "netstandard2.0": {
         "dependencies": {
-          "Flurl": {
-            "target": "Package",
-            "version": "[2.8.2, )"
-          },
           "Flurl.Http": {
             "target": "Package",
-            "version": "[2.4.2, )"
+            "version": "[3.0.1, )"
           },
           "GDAX.Api.ClientLibrary": {
             "target": "Package",
@@ -5519,7 +5820,7 @@
           "Roslynator.Analyzers": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[2.3.0, )"
+            "version": "[3.0.0, )"
           },
           "WebSocket4Net": {
             "target": "Package",

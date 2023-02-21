@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Advanced.Trade", "Advanced.Trade.csproj", "{8AA9FE26-C86C-4096-98F0-B697506E1F50}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SampleAdvancedTrade", "..\..\..\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\SampleAdvancedTrade.vbproj", "{A34401F3-A453-45CA-B21F-3572459A2DE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "..\..\..\Applications\Samples\Test\Test\Test.csproj", "{9068E8EF-D65D-4870-B52A-7C4422A8A2B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{8AA9FE26-C86C-4096-98F0-B697506E1F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AA9FE26-C86C-4096-98F0-B697506E1F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AA9FE26-C86C-4096-98F0-B697506E1F50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A34401F3-A453-45CA-B21F-3572459A2DE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A34401F3-A453-45CA-B21F-3572459A2DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A34401F3-A453-45CA-B21F-3572459A2DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A34401F3-A453-45CA-B21F-3572459A2DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9068E8EF-D65D-4870-B52A-7C4422A8A2B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9068E8EF-D65D-4870-B52A-7C4422A8A2B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9068E8EF-D65D-4870-B52A-7C4422A8A2B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9068E8EF-D65D-4870-B52A-7C4422A8A2B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,320 +5,480 @@ using Newtonsoft.Json.Converters;
 
 namespace AdvancedTrade.Models
 {
-   public partial class CreateOrder
-   {
-      [JsonProperty("client_oid", NullValueHandling = NullValueHandling.Ignore)]
-      public Guid? ClientOid { get; set; }
+    public partial class CreateOrder
+    {
+        [JsonProperty("client_oid", NullValueHandling = NullValueHandling.Ignore)]
+        public Guid? ClientOid { get; set; }
 
-      /// <summary>
-      /// When placing an order, you can specify the order type. The order type
-      /// you specify will influence which other order parameters are required
-      /// as well as how your order will be executed by the matching engine.
-      /// If type is not specified, the order will default to a limit order.
-      /// </summary>
-      [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
-      public OrderType Type { get; set; }
+        /// <summary>
+        /// When placing an order, you can specify the order type. The order type
+        /// you specify will influence which other order parameters are required
+        /// as well as how your order will be executed by the matching engine.
+        /// If type is not specified, the order will default to a limit order.
+        /// </summary>
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        public OrderType Type { get; set; }
 
-      [JsonProperty("side")]
-      public OrderSide Side { get; set; }
+        [JsonProperty("side")]
+        public OrderSide Side { get; set; }
 
-      [JsonProperty("product_id")]
-      public string ProductId { get; set; }
+        [JsonProperty("product_id")]
+        public string ProductId { get; set; }
 
-      /// <summary>
-      /// Self-trading is not allowed on Coinbase Pro. Two orders from the
-      /// same user will not fill one another. When placing an order,
-      /// you can specify the self-trade prevention behavior.
-      /// </summary>
-      [JsonProperty("stp", NullValueHandling = NullValueHandling.Ignore)]
-      public SelfTradePrevention? Stp { get; set; }
+        /// <summary>
+        /// Self-trading is not allowed on Coinbase Pro. Two orders from the
+        /// same user will not fill one another. When placing an order,
+        /// you can specify the self-trade prevention behavior.
+        /// </summary>
+        [JsonProperty("stp", NullValueHandling = NullValueHandling.Ignore)]
+        public SelfTradePrevention? Stp { get; set; }
 
-      /// <summary>
-      /// Stop orders become active and wait to trigger based on the movement
-      /// of the last trade price. There are two types of stop orders,
-      /// stop loss and stop entry:
-      /// </summary>
-      [JsonProperty("stop", NullValueHandling = NullValueHandling.Ignore)]
-      public StopType? Stop { get; set; }
+        /// <summary>
+        /// Stop orders become active and wait to trigger based on the movement
+        /// of the last trade price. There are two types of stop orders,
+        /// stop loss and stop entry:
+        /// </summary>
+        [JsonProperty("stop", NullValueHandling = NullValueHandling.Ignore)]
+        public StopType? Stop { get; set; }
 
-      [JsonProperty("stop_price", NullValueHandling = NullValueHandling.Ignore)]
-      public decimal? StopPrice { get; set; }
+        [JsonProperty("stop_price", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? StopPrice { get; set; }
 
-   }
-   public partial class CreateLimitOrder : CreateOrder
-   {
-      [JsonProperty("price")]
-      public decimal Price { get; set; }
+    }
+    public partial class CreateLimitOrder : CreateOrder
+    {
+        [JsonProperty("price")]
+        public decimal Price { get; set; }
 
-      [JsonProperty("size")]
-      public decimal Size { get; set; }
+        [JsonProperty("size")]
+        public decimal Size { get; set; }
 
-      [JsonProperty("time_in_force", NullValueHandling = NullValueHandling.Ignore)]
-      public TimeInForce? TimeInForce { get; set; }
+        [JsonProperty("time_in_force", NullValueHandling = NullValueHandling.Ignore)]
+        public TimeInForce? TimeInForce { get; set; }
 
-      [JsonProperty("cancel_after", NullValueHandling = NullValueHandling.Ignore)]
-      public GoodTillTime? CancelAfter { get; set; }
+        [JsonProperty("cancel_after", NullValueHandling = NullValueHandling.Ignore)]
+        public GoodTillTime? CancelAfter { get; set; }
 
-      [JsonProperty("post_only", NullValueHandling = NullValueHandling.Ignore)]
-      public bool? PostOnly { get; set; }
-   }
+        [JsonProperty("post_only", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? PostOnly { get; set; }
+    }
 
-   /// <summary>
-   /// Market orders differ from limit orders in that they provide no pricing
-   /// guarantees. They however do provide a way to buy or sell specific
-   /// amounts of cryptocurrency or fiat without having to specify the price.
-   /// Market orders execute immediately and no part of the market order
-   /// will go on the open order book. Market orders are always considered
-   /// takers and incur taker fees. When placing a market order you can
-   /// specify funds and/or size. Funds will limit how much of your quote
-   /// currency account balance is used and size will limit the cryptocurrency
-   /// amount transacted.
-   /// </summary>
-   public partial class CreateMarketOrder : CreateOrder
-   {
-      /// <summary>
-      /// Funds will limit how much of your quote currency account
-      /// balance is used.
-      /// </summary>
-      [JsonProperty("size", NullValueHandling = NullValueHandling.Ignore)]
-      public decimal? Size { get; set; }
+    /// <summary>
+    /// Market orders differ from limit orders in that they provide no pricing
+    /// guarantees. They however do provide a way to buy or sell specific
+    /// amounts of cryptocurrency or fiat without having to specify the price.
+    /// Market orders execute immediately and no part of the market order
+    /// will go on the open order book. Market orders are always considered
+    /// takers and incur taker fees. When placing a market order you can
+    /// specify funds and/or size. Funds will limit how much of your quote
+    /// currency account balance is used and size will limit the cryptocurrency
+    /// amount transacted.
+    /// </summary>
+    public partial class CreateMarketOrder : CreateOrder
+    {
+        /// <summary>
+        /// Funds will limit how much of your quote currency account
+        /// balance is used.
+        /// </summary>
+        [JsonProperty("size", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? Size { get; set; }
 
-      /// <summary>
-      /// Size will limit the cryptocurrency amount transacted.
-      /// </summary>
-      [JsonProperty("funds", NullValueHandling = NullValueHandling.Ignore)]
-      public decimal? Funds { get; set; }
-   }
+        /// <summary>
+        /// Size will limit the cryptocurrency amount transacted.
+        /// </summary>
+        [JsonProperty("funds", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? Funds { get; set; }
+    }
 
-   /// <summary>
-   /// When placing a market order you can specify funds and/or size.
-   /// Funds will limit how much of your quote currency account balance
-   /// is used and size will limit the cryptocurrency amount transacted.
-   /// </summary>
-   public enum AmountType
-   {
-      /// <summary>
-      /// Size will limit the cryptocurrency amount transacted. The size must
-      /// be greater than the base_min_size for the product and no larger
-      /// than the base_max_size. The size can be in any increment of the
-      /// base currency (BTC for the BTC-USD product), which includes satoshi
-      /// units. size indicates the amount of BTC (or base currency) to buy or sell.
-      ///
-      /// A market sell order can also specify the funds. If funds is specified,
-      /// it will limit the sell to the amount of funds specified. You can
-      /// use funds with sell orders to limit the amount of quote
-      /// currency funds received.
-      /// </summary>
-      UseSize,
+    /// <summary>
+    /// When placing a market order you can specify funds and/or size.
+    /// Funds will limit how much of your quote currency account balance
+    /// is used and size will limit the cryptocurrency amount transacted.
+    /// </summary>
+    public enum AmountType
+    {
+        /// <summary>
+        /// Size will limit the cryptocurrency amount transacted. The size must
+        /// be greater than the base_min_size for the product and no larger
+        /// than the base_max_size. The size can be in any increment of the
+        /// base currency (BTC for the BTC-USD product), which includes satoshi
+        /// units. size indicates the amount of BTC (or base currency) to buy or sell.
+        ///
+        /// A market sell order can also specify the funds. If funds is specified,
+        /// it will limit the sell to the amount of funds specified. You can
+        /// use funds with sell orders to limit the amount of quote
+        /// currency funds received.
+        /// </summary>
+        UseSize,
 
-      /// <summary>
-      /// Funds will limit how much of your quote currency account balance
-      /// is used. The funds field is optionally used for market orders.
-      /// When specified it indicates how much of the product quote
-      /// currency to buy or sell. For example, a market buy for
-      /// BTC-USD with funds specified as 150.00 will spend
-      /// 150 USD to buy BTC (including any fees). If the funds
-      /// field is not specified for a market buy order, size
-      /// must be specified and Coinbase Pro will use available
-      /// funds in your account to buy bitcoin.
-      /// </summary>
-      UseFunds,
-   }
-   
+        /// <summary>
+        /// Funds will limit how much of your quote currency account balance
+        /// is used. The funds field is optionally used for market orders.
+        /// When specified it indicates how much of the product quote
+        /// currency to buy or sell. For example, a market buy for
+        /// BTC-USD with funds specified as 150.00 will spend
+        /// 150 USD to buy BTC (including any fees). If the funds
+        /// field is not specified for a market buy order, size
+        /// must be specified and Coinbase Pro will use available
+        /// funds in your account to buy bitcoin.
+        /// </summary>
+        UseFunds,
+    }
 
-   [JsonConverter(typeof(StringEnumConverter))]
-   public enum GoodTillTime
-   {
-      [EnumMember(Value = "min")]
-      Min,
-      [EnumMember(Value = "hour")]
-      Hour,
-      [EnumMember(Value = "day")]
-      Day
-   }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum StopDirectionType
+    {
+        [EnumMember(Value = "UNKNOWN_STOP_DIRECTION")]
+        UnknownStopDirection,
 
-   /// <summary>
-   /// Stop orders become active and wait to trigger based on the
-   /// movement of the last trade price. There are two types of stop
-   /// orders, stop loss and stop entry:
-   /// </summary>
-   [JsonConverter(typeof(StringEnumConverter))]
-   public enum StopType
-   {
-      /// <summary>
-      /// stop: 'loss': Triggers when the last trade price changes to a value at or below the stop_price.
-      /// </summary>
-      [EnumMember(Value = "loss")]
-      Loss,
+        [EnumMember(Value = "STOP_DIRECTION_STOP_UP")]
+        StopDirectionStopUp,
 
-      /// <summary>
-      /// stop: 'entry': Triggers when the last trade price changes to a value at or above the stop_price.
-      /// </summary>
-      [EnumMember(Value = "entry")]
-      Entry
-   }
+        [EnumMember(Value = "STOP_DIRECTION_STOP_DOWN")]
+        StopDirectionStopDown
+    }
 
-   /// <summary>
-   /// Self-trading is not allowed on Coinbase Pro. Two orders from the
-   /// same user will not fill one another. When placing an order,
-   /// you can specify the self-trade prevention behavior.
-   /// </summary>
-   [JsonConverter(typeof(StringEnumConverter))]
-   public enum SelfTradePrevention
-   {
-      /// <summary>
-      /// The default behavior is decrement and cancel. When two orders from
-      /// the same user cross, the smaller order will be canceled and the
-      /// larger order size will be decremented by the smaller order size.
-      /// If the two orders are the same size, both will be canceled.
-      /// </summary>
-      [EnumMember(Value = "dc")]
-      DecreaseAndCancel,
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum SideType
+    {
+        [EnumMember(Value = "UNKNOWN_ORDER_SIDE")]
+        UnknownOrderSide,
 
-      /// <summary>
-      /// Cancel the older (resting) order in full. The new order
-      /// continues to execute.
-      /// </summary>
-      [EnumMember(Value = "co")]
-      CancelOldest,
+        [EnumMember(Value = "BUY")]
+        Buy,
 
-      /// <summary>
-      /// Cancel the newer (taking) order in full. The old resting order
-      /// remains on the order book.
-      /// </summary>
-      [EnumMember(Value = "cn")]
-      CancelNewest,
+        [EnumMember(Value = "SELL")]
+        Sell
+    }
 
-      /// <summary>
-      /// Immediately cancel both orders.
-      /// </summary>
-      [EnumMember(Value = "cb")]
-      CancelBoth
-   }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum StatusType
+    {
+        [EnumMember(Value = "OPEN")]
+        Open,
 
-   public partial class CreatePaymentMethodDeposit
-   {
-      [JsonProperty("amount")]
-      public decimal Amount { get; set; }
+        [EnumMember(Value = "FILLED")]
+        Filled,
 
-      [JsonProperty("currency")]
-      public string Currency { get; set; }
+        [EnumMember(Value = "CANCELLED")]
+        Cancelled,
 
-      [JsonProperty("payment_method_id")]
-      public string PaymentMethodId { get; set; }
-   }
+        [EnumMember(Value = "EXPIRED")]
+        Expired,
 
-   public partial class CreateCoinbaseDeposit
-   {
-      [JsonProperty("amount")]
-      public decimal Amount { get; set; }
+        [EnumMember(Value = "FAILED")]
+        Failed,
 
-      [JsonProperty("currency")]
-      public string Currency { get; set; }
+        [EnumMember(Value = "UNKNOWN_ORDER_STATUS")]
+        UnknownOrderStatus
+    }
 
-      [JsonProperty("coinbase_account_id")]
-      public string CoinbaseAccountId { get; set; }
-   }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum TimeInForceType
+    {
+        [EnumMember(Value = "UNKNOWN_TIME_IN_FORCE")]
+        UnknownTimeInForce,
 
-   public partial class CreatePaymentMethodWithdraw
-   {
-      [JsonProperty("amount")]
-      public decimal Amount { get; set; }
+        [EnumMember(Value = "GOOD_UNTIL_DATE_TIME")]
+        GoodUntilDateTime,
 
-      [JsonProperty("currency")]
-      public string Currency { get; set; }
+        [EnumMember(Value = "GOOD_UNTIL_CANCELLED")]
+        GoodUntilCancelled,
 
-      [JsonProperty("payment_method_id")]
-      public string PaymentMethodId { get; set; }
-   }
+        [EnumMember(Value = "IMMEDIATE_OR_CANCEL")]
+        ImmediateOrCancel,
 
-   public class CreateCoinbaseWithdraw
-   {
-      [JsonProperty("amount")]
-      public decimal Amount { get; set; }
+        [EnumMember(Value = "FILL_OR_KILL")]
+        FillOrKill
+    }
 
-      [JsonProperty("currency")]
-      public string Currency { get; set; }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum TriggerStatusType
+    {
+        [EnumMember(Value = "UNKNOWN_TRIGGER_STATUS")]
+        UnknownTriggerStatus,
 
-      [JsonProperty("coinbase_account_id")]
-      public string CoinbaseAccountId { get; set; }
-   }
+        [EnumMember(Value = "INVALID_ORDER_TYPE")]
+        InvalidOrderType,
 
-   public class CreateCryptAddressWithdrawl
-   {
-      [JsonProperty("amount")]
-      public decimal Amount { get; set; }
+        [EnumMember(Value = "STOP_PENDING")]
+        StopPending,
 
-      [JsonProperty("currency")]
-      public string Currency { get; set; }
+        [EnumMember(Value = "STOP_TRIGGERED")]
+        StopTriggered
+    }
 
-      [JsonProperty("crypto_address")]
-      public string CryptoAddress { get; set; }
-   }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum OrderType
+    {
+        [EnumMember(Value = "UNKNOWN_ORDER_TYPE")]
+        UnknownOrderType,
 
+        [EnumMember(Value = "MARKET")]
+        Market,
 
-   public partial class CreateConversion
-   {
-      [JsonProperty("from")]
-      public string From { get; set; }
+        [EnumMember(Value = "LIMIT")]
+        Limit,
 
-      [JsonProperty("to")]
-      public string To { get; set; }
+        [EnumMember(Value = "STOP")]
+        Stop,
 
-      [JsonProperty("amount")]
-      public decimal Amount { get; set; }
-   }
+        [EnumMember(Value = "STOP_LIMIT")]
+        StopLimit
+    }
 
-   public partial class CreateReport
-   {
-      [JsonProperty("type")]
-      public ReportType Type { get; set; }
-      /// <summary>
-      /// Starting date for the report (inclusive)
-      /// </summary>
-      [JsonProperty("start_date")]
-      public DateTimeOffset StartDate { get; set; }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum RejectReasonType
+    {
+        [EnumMember(Value = "REJECT_REASON_UNSPECIFIED")]
+        RejectReasonUnspecified
+    }
 
-      /// <summary>
-      /// Ending date for the report (inclusive)
-      /// </summary>
-      [JsonProperty("end_date")]
-      public DateTimeOffset EndDate { get; set; }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ProductType
+    {
+        [EnumMember(Value = "SPOT")]
+        Spot
+    }
 
-      /// <summary>
-      /// Report Format
-      /// </summary>
-      [JsonProperty("format")]
-      public ReportFormat Format { get; set; }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum OrderPlacementSourceType
+    {
+        [EnumMember(Value = "UNKNOWN_PLACEMENT_SOURCE")]
+        UnknownPlacementSource,
 
-      /// <summary>
-      /// Email address to send the report to (optional)
-      /// </summary>
-      [JsonProperty("email", NullValueHandling = NullValueHandling.Ignore)]
-      public string Email { get; set; }
+        [EnumMember(Value = "RETAIL_ADVANCED")]
+        RetailAdvanced
+    }
 
-      /// <summary>
-      /// ID of the product to generate a fills report for. E.g. BTC-USD. Required if type is fills
-      /// </summary>
-      [JsonProperty("product_id", NullValueHandling = NullValueHandling.Ignore)]
-      public string ProductId { get; set; }
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum TradeType
+    {
+        [EnumMember(Value = "FILL")]
+        Fill,
 
-      /// <summary>
-      /// ID of the account to generate an account report for. Required if type is account
-      /// </summary>
-      [JsonProperty("account_id", NullValueHandling = NullValueHandling.Ignore)]
-      public string AccountId { get; set; }
-   }
+        [EnumMember(Value = "REVERSAL")]
+        Reversal,
 
+        [EnumMember(Value = "CORRECTION")]
+        Correction,
 
-   [JsonConverter(typeof(StringEnumConverter))]
-   public enum ReportFormat
-   {
-      [EnumMember(Value = "pdf")]
-      Pdf,
-      [EnumMember(Value = "csv")]
-      Csv
-   }
+        [EnumMember(Value = "SYNTHETIC")]
+        Synthetic
+    }
+
+    public enum LiquidityIndicatorType
+    {
+        [EnumMember(Value = "UNKNOWN_LIQUIDITY_INDICATOR")]
+        UnknownLiquidityIndicator,
+
+        [EnumMember(Value = "MAKER")]
+        Maker,
+
+        [EnumMember(Value = "TAKER")]
+        Taker
+    }
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum GoodTillTime
+    {
+        [EnumMember(Value = "min")]
+        Min,
+        [EnumMember(Value = "hour")]
+        Hour,
+        [EnumMember(Value = "day")]
+        Day
+    }
+
+    /// <summary>
+    /// Stop orders become active and wait to trigger based on the
+    /// movement of the last trade price. There are two types of stop
+    /// orders, stop loss and stop entry:
+    /// </summary>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum StopType
+    {
+        /// <summary>
+        /// stop: 'loss': Triggers when the last trade price changes to a value at or below the stop_price.
+        /// </summary>
+        [EnumMember(Value = "loss")]
+        Loss,
+
+        /// <summary>
+        /// stop: 'entry': Triggers when the last trade price changes to a value at or above the stop_price.
+        /// </summary>
+        [EnumMember(Value = "entry")]
+        Entry
+    }
+
+    /// <summary>
+    /// Self-trading is not allowed on Coinbase Pro. Two orders from the
+    /// same user will not fill one another. When placing an order,
+    /// you can specify the self-trade prevention behavior.
+    /// </summary>
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum SelfTradePrevention
+    {
+        /// <summary>
+        /// The default behavior is decrement and cancel. When two orders from
+        /// the same user cross, the smaller order will be canceled and the
+        /// larger order size will be decremented by the smaller order size.
+        /// If the two orders are the same size, both will be canceled.
+        /// </summary>
+        [EnumMember(Value = "dc")]
+        DecreaseAndCancel,
+
+        /// <summary>
+        /// Cancel the older (resting) order in full. The new order
+        /// continues to execute.
+        /// </summary>
+        [EnumMember(Value = "co")]
+        CancelOldest,
+
+        /// <summary>
+        /// Cancel the newer (taking) order in full. The old resting order
+        /// remains on the order book.
+        /// </summary>
+        [EnumMember(Value = "cn")]
+        CancelNewest,
+
+        /// <summary>
+        /// Immediately cancel both orders.
+        /// </summary>
+        [EnumMember(Value = "cb")]
+        CancelBoth
+    }
+
+    public partial class CreatePaymentMethodDeposit
+    {
+        [JsonProperty("amount")]
+        public decimal Amount { get; set; }
+
+        [JsonProperty("currency")]
+        public string Currency { get; set; }
+
+        [JsonProperty("payment_method_id")]
+        public string PaymentMethodId { get; set; }
+    }
+
+    public partial class CreateCoinbaseDeposit
+    {
+        [JsonProperty("amount")]
+        public decimal Amount { get; set; }
+
+        [JsonProperty("currency")]
+        public string Currency { get; set; }
+
+        [JsonProperty("coinbase_account_id")]
+        public string CoinbaseAccountId { get; set; }
+    }
+
+    public partial class CreatePaymentMethodWithdraw
+    {
+        [JsonProperty("amount")]
+        public decimal Amount { get; set; }
+
+        [JsonProperty("currency")]
+        public string Currency { get; set; }
+
+        [JsonProperty("payment_method_id")]
+        public string PaymentMethodId { get; set; }
+    }
+
+    public class CreateCoinbaseWithdraw
+    {
+        [JsonProperty("amount")]
+        public decimal Amount { get; set; }
+
+        [JsonProperty("currency")]
+        public string Currency { get; set; }
+
+        [JsonProperty("coinbase_account_id")]
+        public string CoinbaseAccountId { get; set; }
+    }
+
+    public class CreateCryptoAddressWithdrawl
+    {
+        [JsonProperty("amount")]
+        public decimal Amount { get; set; }
+
+        [JsonProperty("currency")]
+        public string Currency { get; set; }
+
+        [JsonProperty("crypto_address")]
+        public string CryptoAddress { get; set; }
+
+        [JsonProperty("destination_tag", NullValueHandling = NullValueHandling.Ignore)]
+        public string DestinationTag { get; set; }
+
+        [JsonProperty("no_destination_tag", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? NoDestinationTag { get; set; }
+
+        [JsonProperty("add_network_fee_to_total", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? AddNetworkFeeToTotal { get; set; }
+    }
+
+    public partial class CreateConversion
+    {
+        [JsonProperty("from")]
+        public string From { get; set; }
+
+        [JsonProperty("to")]
+        public string To { get; set; }
+
+        [JsonProperty("amount")]
+        public decimal Amount { get; set; }
+    }
+
+    public partial class CreateReport
+    {
+        [JsonProperty("type")]
+        public ReportType Type { get; set; }
+        /// <summary>
+        /// Starting date for the report (inclusive)
+        /// </summary>
+        [JsonProperty("start_date")]
+        public DateTimeOffset StartDate { get; set; }
+
+        /// <summary>
+        /// Ending date for the report (inclusive)
+        /// </summary>
+        [JsonProperty("end_date")]
+        public DateTimeOffset EndDate { get; set; }
+
+        /// <summary>
+        /// Report Format
+        /// </summary>
+        [JsonProperty("format")]
+        public ReportFormat Format { get; set; }
+
+        /// <summary>
+        /// Email address to send the report to (optional)
+        /// </summary>
+        [JsonProperty("email", NullValueHandling = NullValueHandling.Ignore)]
+        public string Email { get; set; }
+
+        /// <summary>
+        /// ID of the product to generate a fills report for. E.g. BTC-USD. Required if type is fills
+        /// </summary>
+        [JsonProperty("product_id", NullValueHandling = NullValueHandling.Ignore)]
+        public string ProductId { get; set; }
+
+        /// <summary>
+        /// ID of the account to generate an account report for. Required if type is account
+        /// </summary>
+        [JsonProperty("account_id", NullValueHandling = NullValueHandling.Ignore)]
+        public string AccountId { get; set; }
+    }
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ReportFormat
+    {
+        [EnumMember(Value = "pdf")]
+        Pdf,
+        [EnumMember(Value = "csv")]
+        Csv
+    }
 
 
 }

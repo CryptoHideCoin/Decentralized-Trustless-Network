@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Globalization;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using AdvancedTrade.Models;
 using Flurl.Http;
@@ -13,8 +11,8 @@ namespace AdvancedTrade
    public class Config
    {
       public string ApiKey { get; set; }
-      public string Secret { get; set; }
-      public string Passphrase { get; set; }
+      public string ApiPrivate { get; set; }
+      /*public string Passphrase { get; set; }*/
 
       public bool UseTimeApi { get; set; } = false;
       public string ApiUrl { get; set; } = AdvancedTradeClient.Endpoint;
@@ -42,11 +40,12 @@ namespace AdvancedTrade
       IUserAccountEndpoint UserAccount { get; }
       IWithdrawalsEndpoint Withdrawals { get; }
       ICoinbaseAccountsEndpoint CoinbaseAccounts { get; }
-   }
+      IFeesEndpoint Fees { get; }
+    }
 
    public partial class AdvancedTradeClient : FlurlClient, IAdvancedTradeClient
     {
-      public const string Endpoint = "https://api.pro.coinbase.com";
+      public const string Endpoint = "https://api.coinbase.com/api/v3/brokerage/";
 
       public AdvancedTradeClient(Config config = null)
       {
@@ -57,10 +56,10 @@ namespace AdvancedTrade
 
       public Config Config { get; }
 
-        internal static readonly string UserAgent = "0.0.0.1";
-         /*$"{AssemblyVersionInformation.AssemblyProduct}/{AssemblyVersionInformation.AssemblyVersion} ({AssemblyVersionInformation.AssemblyTitle}; {AssemblyVersionInformation.AssemblyDescription})";*/
+        internal static readonly string UserAgent =
+         $"{1}/{0} ({"Advanced.Trade"}; {"Advanced.Trade"})";
 
-      protected internal virtual void ConfigureClient()
+        protected internal virtual void ConfigureClient()
       {
          this.WithHeader("User-Agent", UserAgent);
 
@@ -72,26 +71,33 @@ namespace AdvancedTrade
 
       private void ApiKeyAuth(ClientFlurlHttpSettings settings)
       {
-         async Task SetHeaders(HttpCall http)
+         async Task SetHeaders(FlurlCall http)
          {
+            string UTCtime()
+            {
+                DateTimeOffset dto = new DateTimeOffset(DateTime.UtcNow);
+
+                string unixTime = dto.ToUnixTimeSeconds().ToString();
+                return unixTime;
+            }
+
             var body = http.RequestBody;
-            var method = http.Request.Method.Method.ToUpperInvariant();
-            var url = http.Request.RequestUri.PathAndQuery;
-            var timestamp = await TimeHelper.GetCurrentTimestampAsync(this.Config.UseTimeApi)
-               .ConfigureAwait(false);
+            var method = http.Request.Verb.Method.ToUpperInvariant();
+            var url = http.Request.Url.Path;
+
+            var timestamp = UTCtime();
 
             var signature = ApiKeyAuthenticator.GenerateSignature(
                timestamp,
                method,
                url,
                body,
-               this.Config.Secret);
+               this.Config.ApiPrivate);
 
-            http.FlurlRequest
-               .WithHeader(HeaderNames.AccessKey, this.Config.ApiKey)
-               .WithHeader(HeaderNames.AccessSign, signature)
-               .WithHeader(HeaderNames.AccessTimestamp, timestamp)
-               .WithHeader(HeaderNames.AccessPassphrase, this.Config.Passphrase);
+                http.Request
+                   .WithHeader(HeaderNames.AccessKey, this.Config.ApiKey)
+                   .WithHeader(HeaderNames.AccessSign, signature)
+                   .WithHeader(HeaderNames.AccessTimestamp, timestamp);
          }
 
          settings.BeforeCallAsync = SetHeaders;

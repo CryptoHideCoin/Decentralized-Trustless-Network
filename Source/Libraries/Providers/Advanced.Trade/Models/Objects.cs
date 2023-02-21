@@ -1,301 +1,393 @@
 ﻿using System;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
 namespace AdvancedTrade.Models
 {
-   public partial class Product : Json
-   {
-      [JsonProperty("base_currency")]
-      public string BaseCurrency { get; set; }
+    public partial class Product : Json
+    {
+        [JsonProperty("product_id")]
+        public string ProductID { get; set; }
 
-      [JsonProperty("base_max_size")]
-      public decimal BaseMaxSize { get; set; }
+        [JsonProperty("price")]
+        public string Price { get; set; }
 
-      [JsonProperty("base_min_size")]
-      public decimal BaseMinSize { get; set; }
+        [JsonProperty("price_percentage_change_24h")]
+        public string PricePercentageChange24h { get; set; }
 
-      [JsonProperty("cancel_only")]
-      public bool CancelOnly { get; set; }
+        [JsonProperty("volume_24h")]
+        public string Volume24h { get; set; }
 
-      [JsonProperty("display_name")]
-      public string DisplayName { get; set; }
+        [JsonProperty("volume_percentage_change_24h")]
+        public string VolumePercentageChange24h { get; set; }
 
-      [JsonProperty("id")]
-      public string Id { get; set; }
+        [JsonProperty("base_increment")]
+        public string BaseIncrement { get; set; }
 
-      [JsonProperty("limit_only")]
-      public bool LimitOnly { get; set; }
+        [JsonProperty("quote_increment")]
+        public string QuoteIncrement { get; set; }
 
-      [JsonProperty("margin_enabled")]
-      public bool MarginEnabled { get; set; }
+        [JsonProperty("quote_min_size")]
+        public string QuoteMinSize { get; set; }
 
-      [JsonProperty("max_market_funds")]
-      public decimal? MaxMarketFunds { get; set; }
+        [JsonProperty("quote_max_size")]
+        public string QuoteMaxSize { get; set; }
 
-      [JsonProperty("min_market_funds")]
-      public decimal? MinMarketFunds { get; set; }
+        [JsonProperty("base_min_size")]
+        public decimal BaseMinSize { get; set; }
 
-      [JsonProperty("post_only")]
-      public bool PostOnly { get; set; }
+        [JsonProperty("base_max_size")]
+        public decimal BaseMaxSize { get; set; }
 
-      [JsonProperty("quote_currency")]
-      public string QuoteCurrency { get; set; }
+        [JsonProperty("base_name")]
+        public string BaseName { get; set; }
 
-      [JsonProperty("quote_increment")]
-      public decimal QuoteIncrement { get; set; }
+        [JsonProperty("quote_name")]
+        public string QuoteName { get; set; }
 
-      [JsonProperty("status")]
-      public string Status { get; set; }
+        [JsonProperty("watched")]
+        public bool Whatched { get; set; }
 
-      [JsonProperty("status_message")]
-      public object StatusMessage { get; set; }
-   }
+        [JsonProperty("is_disabled")]
+        public bool IsDisabled { get; set; }
 
+        [JsonProperty("new")]
+        public bool New { get; set; }
 
-   public partial class OrderBook : Json
-   {
-      [JsonProperty("asks", ItemConverterType = typeof(OrderBookItemConverter))]
-      public OrderBookEntry[] Asks { get; set; }
+        [JsonProperty("status")]
+        public string Status { get; set; }
 
-      [JsonProperty("bids", ItemConverterType = typeof(OrderBookItemConverter))]
-      public OrderBookEntry[] Bids { get; set; }
+        [JsonProperty("cancel_only")]
+        public bool CancelOnly { get; set; }
 
-      [JsonProperty("sequence")]
-      public long Sequence { get; set; }
-   }
+        [JsonProperty("limit_only")]
+        public bool LimitOnly { get; set; }
 
-   public abstract class JsonConverter2<T> : JsonConverter<T>
-   {
-      public override void WriteJson(JsonWriter writer, T value, JsonSerializer serializer)
-      {
-         serializer.Serialize(writer, value);
-      }
-   }
+        [JsonProperty("post_only")]
+        public bool PostOnly { get; set; }
 
-   public class OrderBookItemConverter : JsonConverter2<OrderBookEntry>
-   {
-      public override OrderBookEntry ReadJson(JsonReader reader, Type objectType, OrderBookEntry existingValue, bool hasExistingValue, JsonSerializer serializer)
-      {
-         var price = reader.ReadAsDecimal();
-         var size = reader.ReadAsDecimal();
+        [JsonProperty("trading_disabled")]
+        public bool TradingDisabled { get; set; }
 
-         var obe = new OrderBookEntry
+        [JsonProperty("auction_mode")]
+        public bool AuctionMode { get; set; }
+
+        [JsonProperty("product_type")]
+        public string ProductType { get; set; }
+
+        [JsonProperty("quote_currency_id")]
+        public string QuoteCurrencyId { get; set; }
+
+        [JsonProperty("base_currency_id")]
+        public string BaseCurrencyId { get; set; }
+
+        [JsonProperty("mid_market_price")]
+        public string MidMarketPrice { get; set; }
+    }
+
+    public partial class OrderBook : Json
+    {
+        [JsonProperty("asks", ItemConverterType = typeof(OrderBookItemConverter))]
+        public OrderBookEntry[] Asks { get; set; }
+
+        [JsonProperty("bids", ItemConverterType = typeof(OrderBookItemConverter))]
+        public OrderBookEntry[] Bids { get; set; }
+
+        [JsonProperty("sequence")]
+        public long Sequence { get; set; }
+    }
+
+    public abstract class JsonConverter2<T> : JsonConverter<T>
+    {
+        public override void WriteJson(JsonWriter writer, T value, JsonSerializer serializer)
+        {
+            serializer.Serialize(writer, value);
+        }
+    }
+
+    public class OrderBookItemConverter : JsonConverter2<OrderBookEntry>
+    {
+        public override OrderBookEntry ReadJson(JsonReader reader, Type objectType, OrderBookEntry existingValue, bool hasExistingValue, JsonSerializer serializer)
+        {
+            var price = reader.ReadAsDecimal();
+            var size = reader.ReadAsDecimal();
+
+            var obe = new OrderBookEntry
             {
-               Price = price.Value,
-               Size = size.Value,
+                Price = price.Value,
+                Size = size.Value,
             };
 
-         reader.Read();
+            reader.Read();
 
-         if (reader.Value is long l)
-         {
-            obe.OrderCount = l;
-         }
-         else if ( reader.Value is string strGuid )
-         {
-            obe.OrderId = strGuid;
-         }
-
-         reader.Read();
-
-         return obe;
-      }
-   }
-
-   public partial class OrderBookEntry
-   {
-      [JsonProperty(Order = 1)]
-      public decimal Price { get; set; }
-      [JsonProperty(Order = 2)]
-      public decimal Size { get; set; }
-      [JsonProperty(Order = 3, NullValueHandling = NullValueHandling.Ignore)]
-      public long? OrderCount { get; set; }
-      [JsonProperty(Order = 3, NullValueHandling = NullValueHandling.Ignore)]
-      public string OrderId { get; set; }
-   }
-
-
-   public partial class Ticker
-   {
-      [JsonProperty("ask")]
-      public decimal Ask { get; set; }
-
-      [JsonProperty("bid")]
-      public decimal Bid { get; set; }
-
-      [JsonProperty("price")]
-      public decimal Price { get; set; }
-
-      [JsonProperty("size")]
-      public decimal Size { get; set; }
-
-      [JsonProperty("time")]
-      public DateTimeOffset Time { get; set; }
-
-      [JsonProperty("trade_id")]
-      public long TradeId { get; set; }
-
-      [JsonProperty("volume")]
-      public decimal Volume { get; set; }
-   }
-
-
-   public partial class Trade 
-   {
-      [JsonProperty("price")]
-      public decimal Price { get; set; }
-
-      [JsonProperty("side")]
-      public OrderSide Side { get; set; }
-
-      [JsonProperty("size")]
-      public decimal Size { get; set; }
-
-      [JsonProperty("time")]
-      public DateTimeOffset Time { get; set; }
-
-      [JsonProperty("trade_id")]
-      public long TradeId { get; set; }
-   }
-
-   [JsonConverter(typeof(StringEnumConverter))]
-   public enum OrderSide
-   {
-      [EnumMember(Value = "buy")]
-      Buy,
-
-      [EnumMember(Value = "sell")]
-      Sell
-   }
-
-   [JsonConverter(typeof(CandleConverter))]
-   public class Candle
-   {
-      [JsonProperty(Order = 1)]
-      public DateTimeOffset Time { get; set; }
-
-      [JsonProperty(Order = 2)]
-      public decimal? Low { get; set; }
-
-      [JsonProperty(Order = 3)]
-      public decimal? High { get; set; }
-
-      [JsonProperty(Order = 4)]
-      public decimal? Open { get; set; }
-
-      [JsonProperty(Order = 5)]
-      public decimal? Close { get; set; }
-
-      [JsonProperty(Order = 6)]
-      public decimal? Volume { get; set; }
-   }
-
-   public class CandleConverter : JsonConverter<Candle>
-   {
-      public override void WriteJson(JsonWriter writer, Candle value, JsonSerializer serializer)
-      {
-         writer.WriteStartObject();
-         writer.WritePropertyName("time");
-         writer.WriteValue(value.Time);
-         writer.WritePropertyName("low");
-         writer.WriteValue(value.Low);
-         writer.WritePropertyName("high");
-         writer.WriteValue(value.High);
-         writer.WritePropertyName("open");
-         writer.WriteValue(value.Open);
-         writer.WritePropertyName("close");
-         writer.WriteValue(value.Close);
-         writer.WritePropertyName("volume");
-         writer.WriteValue(value.Volume);
-         writer.WriteEndObject();
-
-      }
-
-      public override Candle ReadJson(JsonReader reader, Type objectType, Candle existingValue, bool hasExistingValue, JsonSerializer serializer)
-      {
-         var j = JArray.Load(reader);
-
-         var time = j[0].Value<int>();
-         var low = j.ElementAtOrDefault(1)?.Value<decimal?>();
-         var high = j.ElementAtOrDefault(2)?.Value<decimal?>();
-         var open = j.ElementAtOrDefault(3)?.Value<decimal?>();
-         var close = j.ElementAtOrDefault(4)?.Value<decimal?>();
-         var vol = j.ElementAtOrDefault(5)?.Value<decimal?>();
-
-         var c = new Candle
+            if (reader.Value is long l)
             {
-               Time = TimeHelper.FromUnixTimestampSeconds(time),
-               Low = low,
-               High = high,
-               Open = open,
-               Close = close,
-               Volume = vol
+                obe.OrderCount = l;
+            }
+            else if (reader.Value is string strGuid)
+            {
+                obe.OrderId = strGuid;
+            }
+
+            reader.Read();
+
+            return obe;
+        }
+    }
+
+    public partial class OrderBookEntry
+    {
+        [JsonProperty(Order = 1)]
+        public decimal Price { get; set; }
+        [JsonProperty(Order = 2)]
+        public decimal Size { get; set; }
+        [JsonProperty(Order = 3, NullValueHandling = NullValueHandling.Ignore)]
+        public long? OrderCount { get; set; }
+        [JsonProperty(Order = 3, NullValueHandling = NullValueHandling.Ignore)]
+        public string OrderId { get; set; }
+    }
+
+    public partial class Ticker
+    {
+        [JsonProperty("ask")]
+        public decimal Ask { get; set; }
+
+        [JsonProperty("bid")]
+        public decimal Bid { get; set; }
+
+        [JsonProperty("price")]
+        public decimal Price { get; set; }
+
+        [JsonProperty("size")]
+        public decimal Size { get; set; }
+
+        [JsonProperty("time")]
+        public DateTimeOffset Time { get; set; }
+
+        [JsonProperty("trade_id")]
+        public long TradeId { get; set; }
+
+        [JsonProperty("volume")]
+        public decimal Volume { get; set; }
+    }
+
+    public partial class Trade
+    {
+        [JsonProperty("price")]
+        public decimal Price { get; set; }
+
+        [JsonProperty("side")]
+        public OrderSide Side { get; set; }
+
+        [JsonProperty("size")]
+        public decimal Size { get; set; }
+
+        [JsonProperty("time")]
+        public DateTimeOffset Time { get; set; }
+
+        [JsonProperty("trade_id")]
+        public long TradeId { get; set; }
+    }
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum OrderSide
+    {
+        [EnumMember(Value = "buy")]
+        Buy,
+
+        [EnumMember(Value = "sell")]
+        Sell
+    }
+
+    [JsonConverter(typeof(CandleConverter))]
+    public class Candle
+    {
+        [JsonProperty(Order = 1)]
+        public DateTimeOffset Time { get; set; }
+
+        [JsonProperty(Order = 2)]
+        public decimal? Low { get; set; }
+
+        [JsonProperty(Order = 3)]
+        public decimal? High { get; set; }
+
+        [JsonProperty(Order = 4)]
+        public decimal? Open { get; set; }
+
+        [JsonProperty(Order = 5)]
+        public decimal? Close { get; set; }
+
+        [JsonProperty(Order = 6)]
+        public decimal? Volume { get; set; }
+    }
+
+    public class CandleConverter : JsonConverter<Candle>
+    {
+        public override void WriteJson(JsonWriter writer, Candle value, JsonSerializer serializer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("time");
+            writer.WriteValue(value.Time);
+            writer.WritePropertyName("low");
+            writer.WriteValue(value.Low);
+            writer.WritePropertyName("high");
+            writer.WriteValue(value.High);
+            writer.WritePropertyName("open");
+            writer.WriteValue(value.Open);
+            writer.WritePropertyName("close");
+            writer.WriteValue(value.Close);
+            writer.WritePropertyName("volume");
+            writer.WriteValue(value.Volume);
+            writer.WriteEndObject();
+        }
+
+        public override Candle ReadJson(JsonReader reader, Type objectType, Candle existingValue, bool hasExistingValue, JsonSerializer serializer)
+        {
+            var j = JArray.Load(reader);
+
+            var time = j[0].Value<int>();
+            var low = j.ElementAtOrDefault(1)?.Value<decimal?>();
+            var high = j.ElementAtOrDefault(2)?.Value<decimal?>();
+            var open = j.ElementAtOrDefault(3)?.Value<decimal?>();
+            var close = j.ElementAtOrDefault(4)?.Value<decimal?>();
+            var vol = j.ElementAtOrDefault(5)?.Value<decimal?>();
+
+            var c = new Candle
+            {
+                Time = TimeHelper.FromUnixTimestampSeconds(time),
+                Low = low,
+                High = high,
+                Open = open,
+                Close = close,
+                Volume = vol
             };
 
-         return c;
-      }
-   }
+            return c;
+        }
+    }
 
-   public partial class Stats : Json
-   {
-      [JsonProperty("high")]
-      public decimal High { get; set; }
+    public partial class Stats : Json
+    {
+        [JsonProperty("high")]
+        public decimal High { get; set; }
 
-      [JsonProperty("last")]
-      public decimal Last { get; set; }
+        [JsonProperty("last")]
+        public decimal Last { get; set; }
 
-      [JsonProperty("low")]
-      public decimal Low { get; set; }
+        [JsonProperty("low")]
+        public decimal Low { get; set; }
 
-      [JsonProperty("open")]
-      public decimal Open { get; set; }
+        [JsonProperty("open")]
+        public decimal Open { get; set; }
 
-      [JsonProperty("volume")]
-      public decimal Volume { get; set; }
+        [JsonProperty("volume")]
+        public decimal Volume { get; set; }
 
-      [JsonProperty("volume_30day")]
-      public decimal Volume30Day { get; set; }
-   }
+        [JsonProperty("volume_30day")]
+        public decimal Volume30Day { get; set; }
+    }
 
-   public partial class Currency : Json
-   {
-      [JsonProperty("details")]
-      public JObject Details { get; set; }
+    public partial class Currency : Json
+    {
+        [JsonProperty("details")]
+        public JObject Details { get; set; }
 
-      [JsonProperty("id")]
-      public string Id { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
 
-      [JsonProperty("message")]
-      public string Message { get; set; }
+        [JsonProperty("message")]
+        public string Message { get; set; }
 
-      [JsonProperty("min_size")]
-      public decimal MinSize { get; set; }
+        [JsonProperty("min_size")]
+        public decimal MinSize { get; set; }
 
-      [JsonProperty("name")]
-      public string Name { get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
 
-      [JsonProperty("status")]
-      public string Status { get; set; }
+        [JsonProperty("status")]
+        public string Status { get; set; }
 
-      [JsonProperty("convertible_to", NullValueHandling = NullValueHandling.Ignore)]
-      public string[] ConvertibleTo { get; set; }
-   }
+        [JsonProperty("convertible_to", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] ConvertibleTo { get; set; }
+    }
 
-   public partial class Time : Json
-   {
-      [JsonProperty("iso")]
-      public DateTimeOffset Iso { get; set; }
+    public partial class Time : Json
+    {
+        [JsonProperty("iso")]
+        public DateTimeOffset Iso { get; set; }
 
-      [JsonProperty("epoch")]
-      public long Epoch { get; set; }
-   }
+        [JsonProperty("epoch")]
+        public long Epoch { get; set; }
+    }
 
+    public partial class Balance
+    {
+        [JsonProperty("value")]
+        public string value { get; set; }
 
-   public partial class Account : Json
+        [JsonProperty("currency")]
+        public string currency { get; set; }
+    }
+
+    public partial class DataAccount : Json
+    {
+        [JsonProperty("uuid")]
+        public string Uuid { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("currency")]
+        public string Currency { get; set; }
+
+        [JsonProperty("available_balance")]
+        public Balance Available { get; set; }
+
+        [JsonProperty("hold")]
+        public Balance Hold { get; set; }
+
+        [JsonProperty("default")]
+        public bool Default { get; set; }
+
+        [JsonProperty("active")]
+        public bool Active { get; set; }
+
+        [JsonProperty("created_at")]
+        public string Created_At { get; set; }
+
+        [JsonProperty("updated_at")]
+        public string Updated_At { get; set; }
+
+        [JsonProperty("deleted_at")]
+        public string Deleted_At { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("ready")]
+        public bool Ready { get; set; }
+    }
+
+    public partial class Accounts : Json
+    {
+        [JsonProperty("accounts")]
+        public DataAccount[] Data { get; set; }
+
+        [JsonProperty("has_next")]
+        public bool Has_Next { get; set; }
+
+        [JsonProperty("cursor")]
+        public string Cursor { get; set; }
+
+        [JsonProperty("size")]
+        public int Size { get; set; }
+    }
+
+    public partial class Account : Json
    {
       /// <summary>
       /// Account Id
@@ -409,117 +501,288 @@ namespace AdvancedTrade.Models
       public string ProductId { get; set; }
    }
 
-   public partial class Order : Json
+   public class OrderConfigurationMaker
+    {
+        [JsonProperty("quote_size")]
+        public string QuoteSize { get; set; }
+
+        [JsonProperty("base_size")]
+        public string BaseSize { get; set; }
+    }
+
+   public class OrderConfigurationLimitGtc
+    {
+        [JsonProperty("base_size")]
+        public string BaseSize { get; set; }
+
+        [JsonProperty("limit_price")]
+        public decimal LimitPrice { get; set; }
+
+        [JsonProperty("post_only")]
+        public bool PostOnly { get; set; }
+    }
+
+    public class NewOrderConfigurationLimitGtc
+    {
+        [JsonProperty("base_size")]
+        public string BaseSize { get; set; }
+
+        [JsonProperty("limit_price")]
+        public string LimitPrice { get; set; }
+
+        [JsonProperty("post_only")]
+        public bool PostOnly { get; set; }
+    }
+
+    public class OrderConfigurationLimitGtd
+    {
+        [JsonProperty("base_size")]
+        public string BaseSize { get; set; }
+
+        [JsonProperty("limit_price")]
+        public decimal LimitPrice { get; set; }
+
+        [JsonProperty("end_time")]
+        public string EndTime { get; set; }
+
+        [JsonProperty("post_only")]
+        public bool PostOnly { get; set; }
+    }
+
+    public class NewOrderConfigurationLimitGtd
+    {
+        [JsonProperty("base_size")]
+        public string BaseSize { get; set; }
+
+        [JsonProperty("limit_price")]
+        public string LimitPrice { get; set; }
+
+        [JsonProperty("end_time")]
+        public DateTimeOffset EndTime { get; set; }
+
+        [JsonProperty("post_only")]
+        public bool PostOnly { get; set; }
+    }
+
+    public class OrderConfigurationStopLimitGtc
+    {
+        [JsonProperty("base_size")]
+        public string BaseSize { get; set; }
+
+        [JsonProperty("limit_price")]
+        public decimal LimitPrice { get; set; }
+
+        [JsonProperty("stop_price")]
+        public decimal StopPrice { get; set; }
+
+        [JsonProperty("stop_direction")]
+        public StopDirectionType StopDirection { get; set; }
+    }
+
+    public class NewOrderConfigurationStopLimitGtc
+    {
+        [JsonProperty("base_size")]
+        public string BaseSize { get; set; }
+
+        [JsonProperty("limit_price")]
+        public string LimitPrice { get; set; }
+
+        [JsonProperty("stop_price")]
+        public string StopPrice { get; set; }
+
+        [JsonProperty("stop_direction")]
+        public string StopDirection { get; set; }
+    }
+
+    public class OrderConfigurationStopLimitGtd
+    {
+        [JsonProperty("base_size")]
+        public string BaseSize { get; set; }
+
+        [JsonProperty("limit_price")]
+        public decimal LimitPrice { get; set; }
+
+        [JsonProperty("stop_price")]
+        public decimal StopPrice { get; set; }
+
+        [JsonProperty("end_time")]
+        public string EndTime { get; set; }
+
+        [JsonProperty("stop_direction")]
+        public StopDirectionType StopDirection { get; set; }
+    }
+
+    public class NewOrderConfigurationStopLimitGtd
+    {
+        [JsonProperty("base_size")]
+        public string BaseSize { get; set; }
+
+        [JsonProperty("limit_price")]
+        public string LimitPrice { get; set; }
+
+        [JsonProperty("stop_price")]
+        public string StopPrice { get; set; }
+
+        [JsonProperty("end_time")]
+        public DateTimeOffset EndTime { get; set; }
+
+        [JsonProperty("stop_direction")]
+        public string StopDirection { get; set; }
+    }
+
+    public class OrderConfiguration
+    {
+        [JsonProperty("market_market_ioc")]
+        public OrderConfigurationMaker MarketIoc { get; set; }
+
+        [JsonProperty("limit_limit_gtc")]
+        public OrderConfigurationLimitGtc LimitGtc { get; set; }
+
+        [JsonProperty("limit_limit_gtd")]
+        public OrderConfigurationLimitGtd LimitGtd { get; set; }
+
+        [JsonProperty("stop_limit_gtc")]
+        public OrderConfigurationStopLimitGtc StopLimitGtc { get; set; }
+
+        [JsonProperty("stop_limit_gtd")]
+        public OrderConfigurationStopLimitGtd StopLimitGtd { get; set; }
+    }
+
+    public class NewOrderConfiguration
+    {
+        [JsonProperty("market_market_ioc")]
+        public OrderConfigurationMaker MarketIoc { get; set; }
+
+        [JsonProperty("limit_limit_gtc")]
+        public NewOrderConfigurationLimitGtc LimitGtc { get; set; }
+
+        [JsonProperty("limit_limit_gtd")]
+        public NewOrderConfigurationLimitGtd LimitGtd { get; set; }
+
+        [JsonProperty("stop_limit_stop_limit_gtc")]
+        public NewOrderConfigurationStopLimitGtc StopLimitGtc { get; set; }
+
+        [JsonProperty("stop_limit_stop_limit_gtd")]
+        public NewOrderConfigurationStopLimitGtd StopLimitGtd { get; set; }
+    }
+
+    public partial class OrderDetails : Json
    {
-      [JsonProperty("id")]
-      public string Id { get; set; }
-
-      [JsonProperty("price")]
-      public decimal Price { get; set; }
-
-      [JsonProperty("size")]
-      public decimal Size { get; set; }
+      [JsonProperty("order_id")]
+      public string Order_Id { get; set; }
 
       [JsonProperty("product_id")]
       public string ProductId { get; set; }
 
+      [JsonProperty("user_id")]
+      public string UserId { get; set; }
+
+      [JsonProperty("order_configuration")]
+      public OrderConfiguration OrderConfigurationData { get; set; }
+
       [JsonProperty("side")]
-      public OrderSide Side { get; set; }
+      public SideType Side { get; set; }
 
-      /// <summary>
-      /// Self-trading is not allowed on Coinbase Pro. Two orders from the
-      /// same user will not fill one another. When placing an order,
-      /// you can specify the self-trade prevention behavior.
-      /// </summary>
-      [JsonProperty("stp")]
-      public SelfTradePrevention Stp { get; set; }
+      [JsonProperty("client_order_id")]
+      public string ClientOrderId { get; set; }
 
-      /// <summary>
-      /// When placing an order, you can specify the order type. The order type
-      /// you specify will influence which other order parameters are required
-      /// as well as how your order will be executed by the matching engine.
-      /// If type is not specified, the order will default to a limit order.
-      /// </summary>
-      [JsonProperty("type")]
-      public OrderType Type { get; set; }
+      [JsonProperty("status")]
+      public StatusType Status { get; set; }
 
       [JsonProperty("time_in_force")]
-      public TimeInForce TimeInForce { get; set; }
+      public TimeInForceType TimeInForce { get; set; }
 
-      [JsonProperty("post_only")]
-      public bool PostOnly { get; set; }
+      [JsonProperty("created_time")]
+      public DateTimeOffset CreatedTime { get; set; }
 
-      [JsonProperty("created_at")]
-      public DateTimeOffset CreatedAt { get; set; }
-
-      [JsonProperty("fill_fees")]
-      public decimal FillFees { get; set; }
+      [JsonProperty("completion_percentage")]
+      public decimal CompletionPercentage { get; set; }
 
       [JsonProperty("filled_size")]
       public decimal FilledSize { get; set; }
 
-      [JsonProperty("executed_value")]
-      public decimal ExecutedValue { get; set; }
+      [JsonProperty("average_filled_price")]
+      public decimal AverageFilledPrice { get; set; }
 
-      [JsonProperty("status")]
-      public string Status { get; set; }
+      [JsonProperty("fee")]
+      public string Fee { get; set; }
+
+      [JsonProperty("number_of_fills")]
+      public decimal NumberOfFills { get; set; }
+
+      [JsonProperty("filled_value")]
+      public decimal FilledValue { get; set; }
+
+      [JsonProperty("pending_cancel")]
+      public bool PendingCancel { get; set; }
+
+      [JsonProperty("size_in_quote")]
+      public bool SizeInQuote { get; set; }
+
+      [JsonProperty("total_fees")]
+      public decimal TotalFees { get; set; }
+
+      [JsonProperty("size_inclusive_of_fees")]
+      public bool SizeInclusiveOfFees { get; set; }
+
+      [JsonProperty("total_value_after_fees")]
+      public decimal TotalValueAfterFees { get; set; }
+
+      [JsonProperty("trigger_status")]
+      public TriggerStatusType TriggerStatus { get; set; }
+
+      [JsonProperty("order_type")]
+      public OrderType OrderType { get; set; }
+
+      [JsonProperty("reject_reason")]
+      public RejectReasonType RejectReason { get; set; }
 
       [JsonProperty("settled")]
       public bool Settled { get; set; }
 
-      [JsonProperty("funds", NullValueHandling = NullValueHandling.Ignore)]
-      public decimal Funds { get; set; }
+      [JsonProperty("product_type")]
+      public ProductType ProductType { get; set; }
 
-      [JsonProperty("specified_funds", NullValueHandling = NullValueHandling.Ignore)]
-      public decimal SpecifiedFunds { get; set; }
+      [JsonProperty("reject_message")]
+      public string RejectMessage { get; set; }
 
-      [JsonProperty("done_at", NullValueHandling = NullValueHandling.Ignore)]
-      public DateTimeOffset? DoneAt { get; set; }
+      [JsonProperty("cancel_message")]
+      public string CancelMessage { get; set; }
 
-      [JsonProperty("done_reason", NullValueHandling = NullValueHandling.Ignore)]
-      public string DoneReason { get; set; }
-   }
+      [JsonProperty("order_placement_source")]
+      public OrderPlacementSourceType OrderPlacementSource { get; set; }
+    }
 
-   /// <summary>
-   /// When placing an order, you can specify the order type. The order type
-   /// you specify will influence which other order parameters are required
-   /// as well as how your order will be executed by the matching engine.
-   /// If type is not specified, the order will default to a limit order.
-   /// </summary>
-   [JsonConverter(typeof(StringEnumConverter))]
-   public enum OrderType
+    public partial class Order
+    {
+        [JsonProperty("order")]
+        public OrderDetails OrderData { get; set; }
+    }
+
+    public partial class OrderList
+    {
+        [JsonProperty("orders")]
+        public List<OrderDetails> Orders { get; set; }
+
+        [JsonProperty("sequence")]
+        public Int64 Sequence { get; set; }
+
+        [JsonProperty("has_next")]
+        public bool HasNext { get; set; }
+
+        [JsonProperty("cursor")]
+        public string Cursor { get; set; }
+    }
+
+    public partial class OrderCancel
    {
-      /// <summary>
-      /// Limit orders are both the default and basic order type. A limit
-      /// order requires specifying a price and size. The size is the
-      /// number of bitcoin to buy or sell, and the price is the price per
-      /// bitcoin. The limit order will be filled at the price specified or
-      /// better. A sell order can be filled at the specified price per
-      /// bitcoin or a higher price per bitcoin and a buy order can be
-      /// filled at the specified price or a lower price depending on
-      /// market conditions. If market conditions cannot fill the limit
-      /// order immediately, then the limit order will become part of
-      /// the open order book until filled by another incoming order or
-      /// canceled by the user.
-      /// </summary>
-      [EnumMember(Value = "limit")]
-      Limit,
+        [JsonProperty("order_ids")]
+        public List<string> Order_Ids { get; set; }
 
-      /// <summary>
-      /// market orders differ from limit orders in that
-      /// they provide no pricing guarantees.
-      /// They however do provide a way to buy or sell specific
-      /// amounts of bitcoin or fiat without having to specify
-      /// the price. Market orders execute immediately and no
-      /// part of the market order will go on the open order book.
-      /// Market orders are always considered takers and incur taker
-      /// fees. When placing a market order you can specify funds
-      /// and/or size. Funds will limit how much of your quote
-      /// currency account balance is used and size will limit
-      /// the bitcoin amount transacted.
-      /// </summary>
-      [EnumMember(Value = "market")]
-      Market
+        public OrderCancel()
+        {
+            Order_Ids = new List<string>();
+        }
    }
 
    /// <summary>
@@ -562,66 +825,141 @@ namespace AdvancedTrade.Models
       FillOrKill
    }
 
-
    public partial class Fill : Json
    {
-      [JsonProperty("created_at")]
-      public DateTimeOffset CreatedAt { get; set; }
+      [JsonProperty("entry_id")]
+      public string EntryId { get; set; }
 
       [JsonProperty("trade_id")]
-      public long TradeId { get; set; }
-
-      [JsonProperty("product_id")]
-      public string ProductId { get; set; }
+      public string TradeId { get; set; }
 
       [JsonProperty("order_id")]
       public string OrderId { get; set; }
 
-      [JsonProperty("user_id")]
-      public string UserId { get; set; }
+      [JsonProperty("trade_time")]
+      public DateTimeOffset TradeTime { get; set; }
 
-      [JsonProperty("profile_id")]
-      public string ProfileId { get; set; }
-
-      [JsonProperty("liquidity")]
-      public FillLiquidity Liquidity { get; set; }
+      [JsonProperty("trade_type")]
+      public TradeType TradeType { get; set; }
 
       [JsonProperty("price")]
       public decimal Price { get; set; }
 
       [JsonProperty("size")]
-      public string Size { get; set; }
+      public decimal Size { get; set; }
 
-      [JsonProperty("fee")]
-      public decimal Fee { get; set; }
+      [JsonProperty("commission")]
+      public string Commission { get; set; }
+
+      [JsonProperty("product_id")]
+      public string ProductId { get; set; }
+
+      [JsonProperty("sequence_timestamp")]
+      public DateTimeOffset SequenceTimeStamp { get; set; }
+
+      [JsonProperty("liquidity_indicator")]
+      public LiquidityIndicatorType LiquidityIndicator { get; set; }
+
+      [JsonProperty("size_in_quote")]
+      public bool SizeInQuote { get; set; }
+
+      [JsonProperty("user_id")]
+      public string UserId { get; set; }
 
       [JsonProperty("side")]
-      public OrderSide Side { get; set; }
-
-      [JsonProperty("settled")]
-      public bool Settled { get; set; }
-
-      [JsonProperty("usd_volume")]
-      public decimal? UsdVolume { get; set; }
+      public SideType Side { get; set; }
    }
 
-   /// <summary>
-   /// The liquidity field indicates if the fill was the result of a
-   /// liquidity provider or liquidity taker. M indicates Maker and T
-   /// indicates Taker.
-   /// </summary>
-   [JsonConverter(typeof(StringEnumConverter))]
-   public enum FillLiquidity
+   public partial class FillList
    {
-      [EnumMember(Value = "M")]
-      Maker,
+        [JsonProperty("fills")]
+        public List<Fill> Fills { get; set; }
 
-      [EnumMember(Value = "T")]
-      Taker
-   }
+        [JsonProperty("cursor")]
+        public string Cursor { get; set; }
+    }
 
+   public partial class NewOrderParameter
+   {
+        [JsonProperty("client_order_id")]
+        public string ClientOrderId { get; set; }
 
-   public partial class PaymentMethodDeposit : Json
+        [JsonProperty("product_id")]
+        public string ProductId { get; set; }
+
+        [JsonProperty("side")]
+        public string Side { get; set; }
+
+        [JsonProperty("order_configuration")]
+        public NewOrderConfiguration OrderConfiguration { get; set; }
+
+        public NewOrderParameter()
+        {
+            OrderConfiguration = new NewOrderConfiguration();
+
+            /*OrderConfiguration.LimitGtc = new NewOrderConfigurationLimitGtc();
+            OrderConfiguration.LimitGtd = new NewOrderConfigurationLimitGtd();
+            OrderConfiguration.MarketIoc = new OrderConfigurationMaker();
+            OrderConfiguration.StopLimitGtc = new NewOrderConfigurationStopLimitGtc();
+            OrderConfiguration.StopLimitGtd = new NewOrderConfigurationStopLimitGtd();*/
+        }
+    }
+
+    public partial class SuccessResponseInformations
+    {
+        [JsonProperty("order_id")]
+        public string OrderId { get; set; }
+
+        [JsonProperty("product_id")]
+        public string ProductId { get; set; }
+
+        [JsonProperty("side")]
+        public string Side { get; set; }
+
+        [JsonProperty("client_order_id")]
+        public string ClientOrderId { get; set; }
+    }
+
+    public partial class ErrorResponseInformations
+    {
+        [JsonProperty("error")]
+        public string Error { get; set; }
+
+        [JsonProperty("message")]
+        public string Message { get; set; }
+
+        [JsonProperty("error_details")]
+        public string ErrorDetails { get; set; }
+
+        [JsonProperty("preview_failure_reason")]
+        public string PreviewFailureReason { get; set; }
+
+        [JsonProperty("new_order_failure_reason")]
+        public string NewOrderFailureReason { get; set; }
+    }
+
+    public partial class ResponsePlaceOrder
+    {
+        [JsonProperty("success")]
+        public bool Success { get; set; }
+
+        [JsonProperty("failure_reason")]
+        public string FailureReason { get; set; }
+
+        [JsonProperty("order_id")]
+        public string OrderId { get; set; }
+
+        [JsonProperty("success_response")]
+        public SuccessResponseInformations SuccessResponse { get; set; }
+
+        [JsonProperty("error_response")]
+        public ErrorResponseInformations ErrorResponse { get; set; }
+
+        [JsonProperty("order_configuration")]
+        public NewOrderConfiguration OrderConfiguration { get; set; }
+    }
+
+    public partial class PaymentMethodDeposit : Json
    {
       [JsonProperty("id")]
       public string Id { get; set; }
@@ -647,7 +985,6 @@ namespace AdvancedTrade.Models
       [JsonProperty("currency")]
       public string Currency { get; set; }
    }
-
 
    public class PaymentMethodWithdraw : Json
    {
@@ -686,11 +1023,148 @@ namespace AdvancedTrade.Models
 
       [JsonProperty("currency")]
       public string Currency { get; set; }
-   }
 
+      [JsonProperty("fee")]
+      public decimal Fee { get; set; }
 
-   public partial class Conversion
-   {
+      [JsonProperty("subtotal")]
+      public decimal Subtotal { get; set; }
+    }
+
+    public class FeeEstimate : Json
+    {
+        [JsonProperty("fee")]
+        public decimal Fee { get; set; }
+    }
+
+    public partial class Withdrawal : Json
+    {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
+        [JsonProperty("created_at")]
+        public DateTimeOffset? CreatedAt { get; set; }
+        [JsonProperty("completed_at")]
+        public DateTimeOffset? CompletedAt { get; set; }
+        [JsonProperty("canceled_at")]
+        public DateTimeOffset? CanceledAt { get; set; }
+        [JsonProperty("processed_at")]
+        public DateTimeOffset? ProcessedAt { get; set; }
+        [JsonProperty("account_id")]
+        public string AccountId { get; set; }
+        [JsonProperty("user_id")]
+        public string UserId { get; set; }
+        [JsonProperty("user_nonce")]
+        public string UserNonce { get; set; }
+        [JsonProperty("amount")]
+        public decimal Amount { get; set; }
+        [JsonProperty("details")]
+        public WithdrawalDetails Details { get; set; }
+    }
+
+    public partial class WithdrawalDetails : Json
+    {
+        [JsonProperty("destination_tag")]
+        public string DestinationTag { get; set; }
+        [JsonProperty("sent_to_address")]
+        public string SentToAddress { get; set; }
+        [JsonProperty("coinbase_account_id")]
+        public string CoinbaseAccountId { get; set; }
+        [JsonProperty("destination_tag_name")]
+        public string DestinationTagName { get; set; }
+        [JsonProperty("coinbase_withdrawal_id")]
+        public string CoinbaseWithdrawalId { get; set; }
+        [JsonProperty("coinbase_transaction_id")]
+        public string CoinbaseTransactionId { get; set; }
+        [JsonProperty("crypto_transaction_hash")]
+        public string CryptoTransactionHash { get; set; }
+        [JsonProperty("coinbase_payment_method_id")]
+        public string CoinbasePaymentMethodId { get; set; }
+        [JsonProperty("fee")]
+        public decimal Fee { get; set; }
+        [JsonProperty("subtotal")]
+        public decimal Subtotal { get; set; }
+    }
+
+    public partial class Deposit : Json
+    {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
+        [JsonProperty("created_at")]
+        public DateTimeOffset? CreatedAt { get; set; }
+        [JsonProperty("completed_at")]
+        public DateTimeOffset? CompletedAt { get; set; }
+        [JsonProperty("canceled_at")]
+        public DateTimeOffset? CanceledAt { get; set; }
+        [JsonProperty("processed_at")]
+        public DateTimeOffset? ProcessedAt { get; set; }
+        [JsonProperty("account_id")]
+        public string AccountId { get; set; }
+        [JsonProperty("user_id")]
+        public string UserId { get; set; }
+        [JsonProperty("user_nonce")]
+        public string UserNonce { get; set; }
+        [JsonProperty("amount")]
+        public decimal Amount { get; set; }
+        [JsonProperty("details")]
+        public DepositDetails Details { get; set; }
+    }
+
+    public partial class DepositDetails : Json
+    {
+        [JsonProperty("crypto_address")]
+        public string CryptoAddress { get; set; }
+        [JsonProperty("destination_tag")]
+        public string DestinationTag { get; set; }
+        [JsonProperty("coinbase_account_id")]
+        public string CoinbaseAccountId { get; set; }
+        [JsonProperty("destination_tag_name")]
+        public string DestinationTagName { get; set; }
+        [JsonProperty("crypto_transaction_id")]
+        public string CryptoTransactionId { get; set; }
+        [JsonProperty("coinbase_transaction_id")]
+        public string CoinbaseTransactionId { get; set; }
+        [JsonProperty("crypto_transaction_hash")]
+        public string CryptoTransactionHash { get; set; }
+    }
+
+    public partial class GeneratedDepositCryptoAddress : Json
+    {
+        [JsonProperty("id")]
+        public string Id { get; set; }
+        [JsonProperty("address")]
+        public string Address { get; set; }
+        [JsonProperty("destination_tag")]
+        public string DestinationTag { get; set; }
+        [JsonProperty("address_info")]
+        public GeneratedDepositCryptoAddressAddressInfo AddressInfo { get; set; }
+        [JsonProperty("created_at")]
+        public DateTimeOffset? CreatedAt { get; set; }
+        [JsonProperty("updated_at")]
+        public DateTimeOffset? UpdatedAt { get; set; }
+        [JsonProperty("network")]
+        public string Network { get; set; }
+        [JsonProperty("resource")]
+        public string Resource { get; set; }
+        [JsonProperty("deposit_uri")]
+        public string DepositUri { get; set; }
+        [JsonProperty("exchange_deposit_address")]
+        public bool ExchangeDepositAddress { get; set; }
+    }
+
+    public partial class GeneratedDepositCryptoAddressAddressInfo : Json
+    {
+        [JsonProperty("address")]
+        public string Address { get; set; }
+        [JsonProperty("destination_tag")]
+        public string DestinationTag { get; set; }
+    }
+
+    public partial class Conversion : Json
+    {
       [JsonProperty("id")]
       public string Id { get; set; }
 
@@ -781,11 +1255,6 @@ namespace AdvancedTrade.Models
       [JsonProperty("currency")]
       public string Currency { get; set; }
    }
-
-
-
-
-
 
    public partial class CoinbaseAccount : Json
    {
@@ -908,8 +1377,6 @@ namespace AdvancedTrade.Models
       public string Name { get; set; }
    }
 
-
-
    public partial class Report : Json
    {
       [JsonProperty("id")]
@@ -946,7 +1413,6 @@ namespace AdvancedTrade.Models
       public DateTimeOffset EndDate { get; set; }
    }
 
-
    [JsonConverter(typeof(StringEnumConverter))]
    public enum ReportType
    {
@@ -956,8 +1422,8 @@ namespace AdvancedTrade.Models
       Account
    }
 
-   public partial class TrailingVolume
-   {
+   public partial class TrailingVolume : Json
+    {
       [JsonProperty("product_id")]
       public string ProductId { get; set; }
 
@@ -971,5 +1437,13 @@ namespace AdvancedTrade.Models
       public DateTimeOffset RecordedAt { get; set; }
    }
 
-
+   public partial class MakerTakerFees : Json
+   {
+        [JsonProperty("maker_fee_rate")]
+        public decimal MakerFeeRate { get; set; }
+        [JsonProperty("taker_fee_rate")]
+        public decimal TakerFeeRate { get; set; }
+        [JsonProperty("usd_volume")]
+        public decimal? UsdVolume { get; set; }
+    }
 }

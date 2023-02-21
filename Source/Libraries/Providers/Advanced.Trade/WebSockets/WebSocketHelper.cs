@@ -1,42 +1,49 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using AdvancedTrade.Models;
+using System.Security.Cryptography;
 
 namespace AdvancedTrade.WebSockets
 {
    public static class WebSocketHelper
    {
-      public static async Task<string> MakeAuthenticatedSubscriptionAsync(Subscription subscription, WebSocketConfig config)
-      {
-         subscription.ExtraJson.Add("key", config.ApiKey);
-         subscription.ExtraJson.Add("passphrase", config.Passphrase);
+       public static async Task<string> MakeAuthenticatedSubscriptionAsync(Subscription subscription, WebSocketConfig config)
+       {
 
-         var timestamp = await TimeHelper.GetCurrentTimestampAsync(config.UseTimeApi)
-            .ConfigureAwait(false);
+        string UTCtime()
+        {
+            DateTimeOffset dto = new DateTimeOffset(DateTime.UtcNow);
+            
+            string unixTime = dto.ToUnixTimeSeconds().ToString();
+            return unixTime;
+        }
 
-         subscription.ExtraJson.Add("timestamp", timestamp);
+        subscription.ApiKey = config.ApiKey;
+        subscription.Timestamp = UTCtime();
 
-         var signature = ApiKeyAuthenticator.GenerateSignature(timestamp, "GET", "/users/self/verify", null, config.Secret);
+        string body = string.Join(",", subscription.ProductIds);
 
-         subscription.ExtraJson.Add("signature", signature);
+        subscription.Signature = ApiKeyAuthenticator.GenerateSignature(subscription.Channel, subscription.Timestamp, body, config.ApiPrivate);
 
-         return JsonConvert.SerializeObject(subscription);
+        return JsonConvert.SerializeObject(subscription);
       }
 
       public static bool TryParse(string json, out object parsed)
       {
          var obj = JObject.Parse(json);
 
-         if (!obj.ContainsKey("type"))
+         if (!obj.ContainsKey("channel"))
          {
             parsed = null;
             return false;
          }
 
-         var type = obj["type"].Value<string>();
+         var channel = obj["channel"].Value<string>();
 
-         switch( type )
+         switch(channel)
          {
             case "heartbeat":
                parsed = obj.ToObject<HeartbeatEvent>();
@@ -47,7 +54,7 @@ namespace AdvancedTrade.WebSockets
                break;
 
             case "ticker":
-               parsed = obj.ToObject<TickerEvent>();
+               parsed = obj.ToObject<EventTickers>();
                break;
 
             case "snapshot":
@@ -81,6 +88,10 @@ namespace AdvancedTrade.WebSockets
             case "activate":
                parsed = obj.ToObject<ActivateEvent>();
                break;
+
+            case "error":
+                parsed = obj.ToObject<ErrorEvent>();
+                break;
 
             default:
                parsed = null;

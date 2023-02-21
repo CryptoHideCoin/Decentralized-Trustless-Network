@@ -1,0 +1,16 @@
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\obj\Debug\SampleAdvancedTrade.vbprojAssemblyReference.cache
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\obj\Debug\SampleAdvancedTrade.Resources.resources
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\obj\Debug\SampleAdvancedTrade.vbproj.GenerateResource.cache
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\bin\Debug\SampleAdvancedTrade.exe.config
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\bin\Debug\SampleAdvancedTrade.exe
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\bin\Debug\SampleAdvancedTrade.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\bin\Debug\SampleAdvancedTrade.xml
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\bin\Debug\Advanced.Trade.dll
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\bin\Debug\Flurl.dll
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\bin\Debug\System.ValueTuple.dll
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\bin\Debug\Advanced.Trade.pdb
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\bin\Debug\Advanced.Trade.xml
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\obj\Debug\SampleAdvancedTrade.vbproj.CopyComplete
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\obj\Debug\SampleAdvancedTrade.exe
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\obj\Debug\SampleAdvancedTrade.xml
+E:\CryptoHideCoinDTN\Source\Applications\Samples\TestProviderCoinbaseAdvancedTrade\SampleAdvancedTrade\obj\Debug\SampleAdvancedTrade.pdb

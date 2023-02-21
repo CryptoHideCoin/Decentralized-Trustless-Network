@@ -17,7 +17,7 @@ using System.Reflection;
     "API and Websocket Feed API. All crypto currencies including Bitcoin (BTC), Ether" +
     "eum (ETH), Litecoin (LTC), 0x (ZRX), and many more!")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("0.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.0-localbuild+0960e023305209a86955b10a9900a86ab25a4289")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("0.0.0-localbuild")]
 [assembly: System.Reflection.AssemblyProductAttribute("Coinbase.Pro")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Coinbase.Pro")]
 [assembly: System.Reflection.AssemblyVersionAttribute("0.0.0.0")]

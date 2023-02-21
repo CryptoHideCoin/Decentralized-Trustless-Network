@@ -22,7 +22,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net45",
+          "net461",
           "netstandard2.0"
         ],
         "sources": {
@@ -30,7 +30,7 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net45": {
+          "net461": {
             "projectReferences": {}
           },
           "netstandard2.0": {
@@ -44,15 +44,11 @@
         }
       },
       "frameworks": {
-        "net45": {
+        "net461": {
           "dependencies": {
-            "Flurl": {
-              "target": "Package",
-              "version": "[2.8.2, )"
-            },
             "Flurl.Http": {
               "target": "Package",
-              "version": "[2.4.2, )"
+              "version": "[3.0.1, )"
             },
             "Microsoft.SourceLink.GitHub": {
               "suppressParent": "All",
@@ -66,7 +62,7 @@
             "Roslynator.Analyzers": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.3.0, )"
+              "version": "[3.0.0, )"
             },
             "WebSocket4Net": {
               "target": "Package",
@@ -77,13 +73,9 @@
         },
         "netstandard2.0": {
           "dependencies": {
-            "Flurl": {
-              "target": "Package",
-              "version": "[2.8.2, )"
-            },
             "Flurl.Http": {
               "target": "Package",
-              "version": "[2.4.2, )"
+              "version": "[3.0.1, )"
             },
             "GDAX.Api.ClientLibrary": {
               "target": "Package",
@@ -107,7 +99,7 @@
             "Roslynator.Analyzers": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[2.3.0, )"
+              "version": "[3.0.0, )"
             },
             "WebSocket4Net": {
               "target": "Package",

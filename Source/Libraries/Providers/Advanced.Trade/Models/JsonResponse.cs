@@ -19,11 +19,29 @@ namespace AdvancedTrade.Models
       public string Message { get; set; }
    }
 
+   public class JsonResultsValue : Json
+    {
+        [JsonProperty("success")]
+        public string Success { get; set; }
+
+        [JsonProperty("failure_reason")]
+        public string Failure_Reason { get; set; }
+
+        [JsonProperty("order_id")]
+        public string Order_Id { get; set; }
+    }
+
+   public class JsonResults : Json
+    {
+        [JsonProperty("results")]
+        public List<JsonResultsValue> Results { get; set; }
+    }
+
    public interface IPagedResource
    {
-      long? Before { get; }
-      long? After { get; }
-   }
+        string Before { get; }
+        string After { get; }
+    }
 
    public class PagedResponse<T> : JsonResponse, IPagedResource
    {
@@ -45,7 +63,7 @@ namespace AdvancedTrade.Models
       /// current one. The page before is a newer page and not one that
       /// happened before in chronological time.
       /// </summary>
-      public long? Before { get; internal set; }
+      public string Before { get; internal set; }
 
       /// <summary>
       /// To request a page of records before the current one,
@@ -63,6 +81,6 @@ namespace AdvancedTrade.Models
       /// the page after this one. The page after is an older page
       /// and not one that happened after this one in chronological time.
       /// </summary>
-      public long? After { get; internal set; }
+      public string After { get; internal set; }
    }
 }

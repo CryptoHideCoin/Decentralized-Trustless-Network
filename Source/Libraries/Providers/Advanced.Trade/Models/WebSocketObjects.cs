@@ -18,26 +18,92 @@ namespace AdvancedTrade.Models
       Unsubscribe
    }
 
-   public partial class Subscription : Json
-   {
-      //[JsonProperty("type")]
-      //public string Type { get; set; }
+    public partial class Subscription : Json
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
 
-      public Subscription()
-      {
-         this.ProductIds = new List<string>();
-         this.Channels = new JArray();
-      }
+        public Subscription()
+        {
+            this.Type = "";
+            this.ProductIds = new List<string>();
+            this.Channel = "";
+            this.ApiKey = "";
+            this.Timestamp = "";
+            this.Signature = "";
+        }
 
-      [JsonProperty("product_ids")]
-      public List<string> ProductIds { get; set; }
+        [JsonProperty("product_ids")]
+        public List<string> ProductIds { get; set; }
 
-      [JsonProperty("channels")]
-      public JArray Channels { get; set; }
-   }
+        [JsonProperty("channel")]
+        public string Channel { get; set; }
 
-   //public partial class Channel : Json
-   public partial class Channel : Json
+        [JsonProperty("api_key")]
+        public string ApiKey { get; set; }
+
+        [JsonProperty("timestamp")]
+        public string Timestamp { get; set; }
+
+        [JsonProperty("signature")]
+        public string Signature { get; set; }
+    }
+
+    //public partial class Channel : Json
+    public partial class EventTicker : Json
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("product_id")]
+        public string Product_Id { get; set; }
+
+        [JsonProperty("price")]
+        public string Price { get; set; }
+    }
+
+    //public partial class Channel : Json
+    public partial class EventsTickers : Json
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("tickers")]
+        public List<EventTicker> Tickers { get; set; }
+
+        public EventsTickers()
+        {
+            this.Tickers = new List<EventTicker>();
+        }
+    }
+
+    //public partial class Channel : Json
+    public partial class EventTickers : Json
+    {
+        [JsonProperty("channel")]
+        public string Channel { get; set; }
+
+        [JsonProperty("client_id")]
+        public string Client_Id { get; set; }
+
+        [JsonProperty("timestamp")]
+        public string Timestamp { get; set; }
+
+        [JsonProperty("sequence_num")]
+        public long Sequence_Num { get; set; }
+
+        [JsonProperty("events")]
+        public List<EventsTickers> Events { get; set; }
+
+        public EventTickers()
+        {
+            this.Events = new List<EventsTickers>();
+        }
+    }
+
+
+    //public partial class Channel : Json
+    public partial class Channel : Json
    {
       public Channel()
       {
@@ -51,17 +117,21 @@ namespace AdvancedTrade.Models
       public List<string> ProductIds { get; set; }
    }
 
-
-
-
-
    public class Event : Json
    {
       [JsonProperty("type")]
       public string Type { get; set; }
    }
 
-   public partial class SubscriptionsEvent : Event
+   public class ErrorEvent : Event
+    {
+        [JsonProperty("message")]
+        public string Message { get; set; }
+        [JsonProperty("reason")]
+        public string Reason { get; set; }
+    }
+
+    public partial class SubscriptionsEvent : Event
    {
       [JsonProperty("channels")]
       public Channel[] Channels { get; set; }
@@ -84,14 +154,8 @@ namespace AdvancedTrade.Models
 
    public partial class TickerEvent : Event
    {
-      [JsonProperty("trade_id")]
-      public long TradeId { get; set; }
-
       [JsonProperty("sequence")]
       public long Sequence { get; set; }
-
-      [JsonProperty("time")]
-      public DateTimeOffset Time { get; set; }
 
       [JsonProperty("product_id")]
       public string ProductId { get; set; }
@@ -99,19 +163,15 @@ namespace AdvancedTrade.Models
       [JsonProperty("price")]
       public decimal Price { get; set; }
 
-      [JsonProperty("side")]
-      public OrderSide Side { get; set; }
+      [JsonProperty("volume_24h")]
+      public decimal Volume24h { get; set; }
 
-      [JsonProperty("last_size")]
-      public decimal LastSize { get; set; }
+      [JsonProperty("low_24h")]
+      public decimal? Low24h { get; set; }
 
-      [JsonProperty("best_bid")]
-      public decimal? BestBid { get; set; }
-
-      [JsonProperty("best_ask")]
-      public decimal? BestAsk { get; set; }
+      [JsonProperty("high_24h")]
+      public decimal? High24h { get; set; }
    }
-
 
    public partial class SnapshotEvent : Event
    {
@@ -160,7 +220,10 @@ namespace AdvancedTrade.Models
 
       [JsonProperty("changes", ItemConverterType = typeof(L2UpdateChangeConverter))]
       public List<L2UpdateChange> Changes { get; set; }
-   }
+
+      [JsonProperty("time")]
+      public DateTimeOffset? Time { get; set; }
+    }
 
    public class L2UpdateChange
    {
@@ -197,8 +260,6 @@ namespace AdvancedTrade.Models
       }
    }
 
-
-
    public partial class ReceivedEvent : Event
    {
       [JsonProperty("time")]
@@ -231,7 +292,6 @@ namespace AdvancedTrade.Models
       [JsonProperty("client_oid", NullValueHandling = NullValueHandling.Ignore)]
       public Guid? ClientOid { get; set; }
    }
-
 
    public partial class AuthenticatedEvent : Event
    {
@@ -266,7 +326,6 @@ namespace AdvancedTrade.Models
       public OrderSide Side { get; set; }
    }
 
-
    public partial class DoneEvent : AuthenticatedEvent
    {
       [JsonProperty("time")]
@@ -293,7 +352,6 @@ namespace AdvancedTrade.Models
       [JsonProperty("remaining_size")]
       public decimal RemainingSize { get; set; }
    }
-
 
    public partial class MatchEvent : AuthenticatedEvent
    {
@@ -390,6 +448,4 @@ namespace AdvancedTrade.Models
       [JsonProperty("private")]
       public bool Private { get; set; }
    }
-
-
 }

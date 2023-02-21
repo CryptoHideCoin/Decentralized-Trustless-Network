@@ -9,13 +9,12 @@
     ".NETStandard,Version=v2.0/": {
       "Advanced.Trade/0.0.0-localbuild": {
         "dependencies": {
-          "Flurl": "2.8.2",
-          "Flurl.Http": "2.4.2",
+          "Flurl.Http": "3.0.1",
           "GDAX.Api.ClientLibrary": "1.0.35",
           "Microsoft.SourceLink.GitHub": "1.0.0",
           "NETStandard.Library": "2.0.3",
           "Newtonsoft.Json": "12.0.3",
-          "Roslynator.Analyzers": "2.3.0",
+          "Roslynator.Analyzers": "3.0.0",
           "WebSocket4Net": "0.15.2"
         },
         "runtime": {
@@ -42,24 +41,24 @@
           }
         }
       },
-      "Flurl/2.8.2": {
+      "Flurl/3.0.1": {
         "runtime": {
           "lib/netstandard2.0/Flurl.dll": {
-            "assemblyVersion": "2.8.2.0",
-            "fileVersion": "2.8.2.0"
+            "assemblyVersion": "3.0.1.0",
+            "fileVersion": "3.0.1.0"
           }
         }
       },
-      "Flurl.Http/2.4.2": {
+      "Flurl.Http/3.0.1": {
         "dependencies": {
-          "Flurl": "2.8.2",
+          "Flurl": "3.0.1",
           "Newtonsoft.Json": "12.0.3",
           "System.Text.Encoding.CodePages": "4.5.1"
         },
         "runtime": {
           "lib/netstandard2.0/Flurl.Http.dll": {
-            "assemblyVersion": "2.4.2.0",
-            "fileVersion": "2.4.2.0"
+            "assemblyVersion": "3.0.1.0",
+            "fileVersion": "3.0.1.0"
           }
         }
       },
@@ -107,7 +106,7 @@
           }
         }
       },
-      "Roslynator.Analyzers/2.3.0": {},
+      "Roslynator.Analyzers/3.0.0": {},
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.fedora.23-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.fedora.24-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
@@ -1018,19 +1017,19 @@
       "path": "castle.core/4.3.1",
       "hashPath": "castle.core.4.3.1.nupkg.sha512"
     },
-    "Flurl/2.8.2": {
+    "Flurl/3.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-3VEYAqkGTGHgla4xuyEB4d8XGLeMX2k05C4WfI7YmKQHsL7RhoGu3L6h1xsKKTPFWjEL13p09XOIGwD1pQ86dg==",
-      "path": "flurl/2.8.2",
-      "hashPath": "flurl.2.8.2.nupkg.sha512"
+      "sha512": "sha512-i7CuPSikVroBaWG8sPvO707Ex9C6BP5+r4JufKNU1FGMmiFgLJvNo1ttUg6ZiXIzUNknvIb1VUTIO9iEDucibg==",
+      "path": "flurl/3.0.1",
+      "hashPath": "flurl.3.0.1.nupkg.sha512"
     },
-    "Flurl.Http/2.4.2": {
+    "Flurl.Http/3.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-VfSJ0DKzh6kf2IOZGG1/JpHajhtqzGp1t+M1QSyFGse7c4Gg1DpH80LTveYea2hV1BEtvPPEp6A4iZ78D8bxGQ==",
-      "path": "flurl.http/2.4.2",
-      "hashPath": "flurl.http.2.4.2.nupkg.sha512"
+      "sha512": "sha512-wt4RrmYOPWu8v0sjuuSfhYBFzjfrCz4nJP48Kw2HFGssq0U6pMBPFHcL3zbsBFALJipAjgRET5mf+0Xz4ZnZpQ==",
+      "path": "flurl.http/3.0.1",
+      "hashPath": "flurl.http.3.0.1.nupkg.sha512"
     },
     "GDAX.Api.ClientLibrary/1.0.35": {
       "type": "package",
@@ -1095,12 +1094,12 @@
       "path": "newtonsoft.json/12.0.3",
       "hashPath": "newtonsoft.json.12.0.3.nupkg.sha512"
     },
-    "Roslynator.Analyzers/2.3.0": {
+    "Roslynator.Analyzers/3.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-y3pnQzgCkv9rg3ZZpo5dS+M+K+zSKR589AEJ28Qlu4iza9U3acdoNROl1Aa81nfV7ZRe1Q7iJEVBM+YhXcnz8w==",
-      "path": "roslynator.analyzers/2.3.0",
-      "hashPath": "roslynator.analyzers.2.3.0.nupkg.sha512"
+      "sha512": "sha512-UKaYNtbXGGkR83rMA42DbA43fIUebO+WfHvPk29WMZfXzzF9kTKEB0HL6dUmcukgeHwXyTBCj6946DSaoow02A==",
+      "path": "roslynator.analyzers/3.0.0",
+      "hashPath": "roslynator.analyzers.3.0.0.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
       "type": "package",
